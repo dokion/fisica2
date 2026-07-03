@@ -1,25 +1,28 @@
-# FÍSICA-2 (FIS-2) — Syllabus {SEMESTRE/ANO}
+---
+title: "FÍSICA-2 (FIS-2) — Syllabus {SEMESTRE/ANO}"
+---
 
 **Professor:** {INSTRUTOR} · **Carga horária:** 80 h-aula (60 h) · **Pré-requisitos:** Não se aplica
 **Turmas:** FONT + FOMQ · **Contato/atendimento:** {HORÁRIO E LOCAL FIXOS SEMANAIS}
 **Âncora internacional:** IMO Model Courses 7.03 (apêndice 2) e 7.04 (apêndice 1)
 
----
+* * *
 
 ## 1. Descrição
 
 A disciplina aborda os fenômenos físicos relacionados a oscilações, ondas, mecânica dos fluidos e termodinâmica no contexto profissional do Oficial de Náutica e Máquinas da Marinha Mercante. Os conteúdos são ancorados nos Model Courses IMO 7.03 e 7.04, conectando a física de base às competências operacionais exigidas pela Convenção STCW-78. Ao longo do curso, o aluno aprende a reconhecer e analisar os fenômenos físicos presentes em equipamentos de navegação (ecobatímetro, log Doppler, radar), em sistemas de propulsão e fluidos (hélice, bombas, lastro) e em máquinas de bordo (motor diesel, caldeiras, trocadores de calor).
 
----
+* * *
+
 ## 2. Cronograma
 
 > Régua: par de aulas (Apêndice II). CHD = 80 h-aula = 40 pares. 4 h-aula de avaliação = 2 pares.
-pppp
-| Aulas | UE | Tópicos | OE (objetivos esecíficos) | Verificação |
+
+| Aulas | UE | Tópicos | OE (objetivos específicos) | Verificação |
 |---|---|---|---|---|
-| 1-2p | 1 | Oscilações harmônicas; identificação de sistemas | 1.1–1.3 | — |
+| 1-2 | 1 | Oscilações harmônicas; identificação de sistemas | 1.1–1.3 | — |
 | 3-4 | 1 | MHS e MCU; equações do MHS | 1.4–1.6 | — |
-| 5-6 | 1 | Superposição; batimentos; Lissajoppus | 1.7–1.10 | C1 Quiz Dokion |
+| 5-6 | 1 | Superposição; batimentos; Lissajous | 1.7–1.10 | C1 Quiz Dokion |
 | 7-8 | 1 | Oscilações amortecidas; equação do oscilador | 1.11–1.13 | — |
 | 9-10 | 1 | Oscilador forçado; ressonância; velocidades críticas | 1.14–1.19 | — |
 | 11-12 | 1 | Balanço de energia; oscilações acopladas; modos normais | 1.20–1.25 | — |
@@ -40,7 +43,7 @@ pppp
 | 39-40 | 4 | Teoria cinética; equipartição; calores específicos moleculares | 4.46–4.51 | C4 Demo ao vivo |
 | {PAR} | — | **PROVA 2 — Ciclo 2 (UE 1–4, ênfase UE 3+4)** | — | P2 |
 
----
+* * *
 
 ## 3. Política de Avaliação
 
@@ -52,7 +55,7 @@ pppp
 - **Uso de IA:** permitido como ferramenta de estudo; vedado em avaliações síncronas.
 - **Integridade acadêmica:** {REGRA INSTITUCIONAL}.
 
-## 4. Objetivos esecíficos por Unidade de Ensino
+## 4. Objetivos específicos por Unidade de Ensino
 
 > Fonte: Parte C do sumário oficial FIS-2 (fev/2026), navalizados via Model Courses 7.03/7.04.
 > Formato: [OE] [Bloom] Texto navalizado · Âncora · Aplicação naval.
@@ -218,7 +221,7 @@ pppp
 | 4.50 | B2 | Relacionar calores específicos com graus de liberdade das moléculas | Cp/Cv e comportamento do gás no ciclo | A-III/1 |
 | 4.51 | B2 | Explicar o comportamento dos calores específicos em diferentes faixas de temperatura | Variação de γ com temperatura em motores | A-III/1 |
 
----
+* * *
 
 ## 5. Mapa de Avaliação
 
@@ -235,7 +238,7 @@ pppp
 | C4 | Projeto computacional + demo | {PAR DE AULAS} | 50% do trabalho C2 | UE 3 + 4 | Demo ao vivo com alteração de parâmetro |
 | L2 | Listas (compleção) UE 3–4 | contínuo | 25% do trabalho C2 | UE 3 + 4 | Amostragem em sala |
 
----
+* * *
 
 ## 6. Materiais
 
@@ -250,10 +253,8 @@ pppp
 - Listas de exercícios (1 por bloco de tópicos)
 - Simulações: {PhET e outros — versões offline baixadas previamente}
 
----
+* * *
 
 ## 7. Metodologia
 
 Aula expositiva-dialogada em quadro; slides apenas ilustrativos; resolução de situações-problema do contexto marítimo (padrões SP da Seção 6 do Documento Mestre); componente computacional (Python/planilha) no projeto da continuada. Aulas práticas em Laboratório de Física Básica, Termodinâmica e Dinâmica dos Fluidos e Embarcações, grupos de no máximo 6 alunos.
-
----
