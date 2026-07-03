@@ -192,3 +192,31 @@ blockquote {
   background: $paper-2;
   border-bottom: 2px solid rgba(92, 42, 20, 0.25);
 }
+
+// ── Responsividade / mobile ──────────────────────────────────────────────────
+// Nada pode estourar a largura da viewport e criar rolagem horizontal da página.
+html, body { overflow-x: hidden; }
+
+// Equações de display (MathJax) rolam dentro de si em vez de empurrar a página
+.math.display { overflow-x: auto; overflow-y: hidden; max-width: 100%; }
+mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width: 100%; }
+
+// Código, imagens e saídas de célula respeitam a largura
+pre.sourceCode { overflow-x: auto; }
+p img, figure img, .cell-output-display img, .figure img { max-width: 100%; height: auto; }
+
+// Tabelas largas (blueprints/calendário do syllabus) rolam na horizontal no celular
+@media (max-width: 640px) {
+  .table, .cell-output-display > table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  h1, .quarto-title h1.title { font-size: 1.5rem; line-height: 1.2; }
+  h2 { font-size: 1.25rem; }
+  body { font-size: 0.95rem; }
+
+  // caixas didáticas com respiro menor em telas estreitas
+  .sp      { padding: 1rem 0.95rem 0.8rem; }
+  .pergunta { padding: 0.85rem 0.95rem; }
+
+  // não deixar palavras/fórmulas longas empurrarem o texto
+  p, li { overflow-wrap: break-word; }
+}

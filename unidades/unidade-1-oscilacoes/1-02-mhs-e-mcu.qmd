@@ -133,30 +133,28 @@ plt.tight_layout(); plt.show()
 ```
 
 ```{=html}
-<!-- Versão interativa — p5.js (tabela Q4: conceito é MOVIMENTO contínuo).
-     p5 servido de libs/ (offline-first, Q6). Mesmos parâmetros da versão matplotlib:
-     θm = 10°, T = 12 s (ajustável 8–25 s, faixa SP3), φ = 0. Reproduz o applet GeoGebra
-     do professor: fasor girante, projeção vertical, curvas x/v/a e referência de fase. -->
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo). p5 de libs/ (offline, Q6).
+     Responsivo: empilha círculo/gráfico em telas estreitas (mobile). Mesmos parâmetros da
+     versão matplotlib (θm=10°, T=12 s, φ=0). Reproduz o applet GeoGebra do professor:
+     fasor girante, projeção vertical, curvas x/v/a e referência de fase φ=0 (fantasma cinza). -->
 <script src="../../libs/p5.min.js"></script>
 <style>
-  .mf-wrap{max-width:1000px;margin:1rem auto;font-size:14px;}
-  .mf-wrap .row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
-  .mf-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;}
+  .mf-wrap{max-width:1000px;margin:1rem auto;}
+  .mf-wrap .mf-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .mf-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
   .mf-wrap .sld label{font-weight:600;font-size:12.5px;}
   .mf-wrap .sld .val{color:#c85c2e;font-weight:700;}
-  .mf-wrap input[type=range]{width:150px;accent-color:#c85c2e;}
+  .mf-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
   .mf-wrap .chk{display:flex;align-items:center;gap:5px;font-size:13px;white-space:nowrap;}
   .mf-wrap .chk input{accent-color:#c85c2e;width:15px;height:15px;}
   .mf-wrap .sw{width:11px;height:11px;border-radius:2px;display:inline-block;}
-  .mf-wrap #mfPlay{border:1px solid #c9c2b6;background:#fff;border-radius:8px;
-    padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
-  .mf-wrap #mfScroll{overflow-x:auto;}
-  .mf-wrap canvas{max-width:100%;height:auto;border-radius:8px;}
-  .mf-wrap #mfEq{font-size:15px;margin:8px 2px 0;}
+  .mf-wrap #mfPlay{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .mf-wrap #mfSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .mf-wrap #mfEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .mf-wrap #mfEq b{color:#1f47c8;}
 </style>
 <div class="mf-wrap">
-  <div class="row">
+<div class="mf-row">
     <button id="mfPlay">⏸ Pausar</button>
     <div class="sld"><label>Amplitude θ<sub>m</sub> = <span class="val" id="mfAv">10</span>°</label>
       <input type="range" id="mfA" min="4" max="16" value="10" step="1"></div>
@@ -167,35 +165,56 @@ plt.tight_layout(); plt.show()
     <div class="sld"><label>Velocidade anim. = <span class="val" id="mfSv">1</span>×</label>
       <input type="range" id="mfS" min="0.25" max="3" value="1" step="0.25"></div>
   </div>
-  <div class="row">
+  <div class="mf-row">
     <span class="chk"><input type="checkbox" id="mfFas" checked><span class="sw" style="background:#7a2214"></span>Fasor</span>
     <span class="chk"><input type="checkbox" id="mfCir" checked>Círculo (MCU)</span>
     <span class="chk"><input type="checkbox" id="mfPos" checked><span class="sw" style="background:#1f47c8"></span>Posição x(t)</span>
     <span class="chk"><input type="checkbox" id="mfVel"><span class="sw" style="background:#c81f1f"></span>Velocidade v(t)</span>
     <span class="chk"><input type="checkbox" id="mfAce"><span class="sw" style="background:#1f8a3a"></span>Aceleração a(t)</span>
-    <span class="chk"><input type="checkbox" id="mfRef"><span class="sw" style="background:#4d4dff"></span>Referência φ=0</span>
+    <span class="chk"><input type="checkbox" id="mfRef"><span class="sw" style="background:#9a938a"></span>Referência φ=0</span>
   </div>
-  <div id="mfScroll"><div id="mfSketch"></div></div>
+  <div id="mfSketch"></div>
   <div id="mfEq"></div>
 </div>
 <script>
 (function(){
-  const W=980, H=460, el=id=>document.getElementById(id);
+  const el=id=>document.getElementById(id);
   let t=30, playing=true;
-  const faseTxt=deg=>{ if(deg===0) return "0";
-    const f=deg/180, s=f<0?"−":"", a=Math.abs(f),
-      m={0.25:"π/4",0.5:"π/2",0.75:"3π/4",1:"π"};
+  const faseTxt=deg=>{ if(deg==0) return "0";
+    const f=deg/180,s=f<0?"−":"",a=Math.abs(f),m={0.25:"π/4",0.5:"π/2",0.75:"3π/4",1:"π"};
     return m[a]?s+m[a]:s+a.toFixed(2)+"π"; };
+  const GRAY='#9a938a';
+
+  // largura disponível → resolução do canvas (1:1, sem distorção)
+  const cw=()=>{ const w=(el('mfSketch').clientWidth)||960; return Math.max(320,Math.min(1000,w)); };
+  // layout depende só da largura (retorna também a altura necessária)
+  function lay(W){
+    const narrow = W<700;
+    if(!narrow){
+      const H=440, yc=H/2, Rmax=Math.min(W*0.15, H*0.40);
+      return {narrow,H,Rmax,C:{x:W*0.21,y:yc},G:{x0:W*0.42,x1:W-14,yc,half:Rmax*1.05}};
+    }else{
+      const Rmax=Math.min(W*0.34,120), circY=28+Rmax+14;
+      const gyc=circY+Rmax+48+Rmax*1.05, H=gyc+Rmax*1.05+42;
+      return {narrow,H,Rmax,C:{x:W/2,y:circY},G:{x0:30,x1:W-14,yc:gyc,half:Rmax*1.05}};
+    }
+  }
+
   new p5((p)=>{
-    const C={x:210,y:225}, PXDEG=9, G={x0:440,x1:965,yc:225,half:150};
     const grau=v=>v*Math.PI/180;
     const arrow=(x0,y0,x1,y1,col,wt)=>{ p.push(); p.stroke(col); p.strokeWeight(wt); p.fill(col);
       p.line(x0,y0,x1,y1); const a=Math.atan2(y1-y0,x1-x0),s=8;
       p.translate(x1,y1); p.rotate(a); p.noStroke(); p.triangle(0,0,-s,-s*0.5,-s,s*0.5); p.pop(); };
-    p.setup=()=>{ p.createCanvas(W,H).parent('mfSketch'); };
+    const dash=(x0,y0,x1,y1,col,wt,d)=>{ p.push(); p.stroke(col); p.strokeWeight(wt);
+      p.drawingContext.setLineDash(d); p.line(x0,y0,x1,y1); p.drawingContext.setLineDash([]); p.pop(); };
+
+    p.setup=()=>{ const W=cw(),L=lay(W); p.createCanvas(W,L.H).parent('mfSketch'); };
+    p.windowResized=()=>{ const W=cw(),L=lay(W); p.resizeCanvas(W,L.H); };
+
     p.draw=()=>{
+      const W=p.width, L=lay(W), C=L.C, G=L.G;
       const A=+el('mfA').value,T=+el('mfT').value,phi=grau(+el('mfF').value),
-            spd=+el('mfS').value,w=2*Math.PI/T,R=A*PXDEG,vs=PXDEG;
+            spd=+el('mfS').value,w=2*Math.PI/T,vs=L.Rmax/16,R=A*vs;
       const sFas=el('mfFas').checked,sCir=el('mfCir').checked,sPos=el('mfPos').checked,
             sVel=el('mfVel').checked,sAce=el('mfAce').checked,sRef=el('mfRef').checked;
       el('mfAv').textContent=A; el('mfTv').textContent=T;
@@ -203,9 +222,14 @@ plt.tight_layout(); plt.show()
       if(playing) t+=(p.deltaTime/1000)*spd;
       const a1=w*t+phi, aRef=w*t;
       const tipX=C.x-R*Math.sin(a1), tipY=C.y-R*Math.cos(a1);
+      const rTipX=C.x-R*Math.sin(aRef), rTipY=C.y-R*Math.cos(aRef);
+
       p.background('#faf8f4');
       p.noStroke(); p.fill('#7a7367'); p.textSize(12); p.textAlign(p.CENTER,p.TOP);
-      p.text('MCU + fasor',C.x,6); p.text('MHS no tempo',(G.x0+G.x1)/2,6);
+      if(L.narrow){ p.text('MCU + fasor',C.x,8); p.text('MHS no tempo',(G.x0+G.x1)/2,G.yc-G.half-20); }
+      else{ p.text('MCU + fasor',C.x,6); p.text('MHS no tempo',(G.x0+G.x1)/2,6); }
+
+      // ─────────── GRÁFICO ───────────
       const win=2.4*T, pps=(G.x1-G.x0)/win;
       p.stroke('#e7e0d4'); p.strokeWeight(1);
       for(let k=0;k*(T/4)<=win;k++){const gx=G.x1-k*(T/4)*pps; if(gx>=G.x0) p.line(gx,G.yc-G.half,gx,G.yc+G.half);}
@@ -213,47 +237,66 @@ plt.tight_layout(); plt.show()
       p.stroke('#d8cfc0'); p.line(G.x0,G.yc-G.half,G.x0,G.yc+G.half);
       p.noStroke(); p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
       for(let k=0;k*(T/2)<=win;k++){const tt=t-k*(T/2),gx=G.x1-k*(T/2)*pps; if(gx>=G.x0-1&&tt>=0) p.text(tt.toFixed(0)+'s',gx,G.yc+G.half+4);}
-      const xOf=tt=>A*Math.cos(w*tt+phi), vOf=tt=>-A*w*Math.sin(w*tt+phi), aOf=tt=>-A*w*w*Math.cos(w*tt+phi);
+
+      const xOf=tt=>A*Math.cos(w*tt+phi), vOf=tt=>-A*w*Math.sin(w*tt+phi),
+            aOf=tt=>-A*w*w*Math.cos(w*tt+phi), xRef=tt=>A*Math.cos(w*tt);
       const curve=(fn,peak,visual,col,wt)=>{ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(wt); p.beginShape();
         for(let gx=G.x0;gx<=G.x1;gx++){const tt=t-(G.x1-gx)/pps; if(tt<0) continue; p.vertex(gx,G.yc-fn(tt)/peak*visual);}
         p.endShape(); p.pop(); };
       const vis=A*vs*0.98;
-      if(sAce) curve(aOf,A*w*w,vis,'#1f8a3a',2.0);
-      if(sVel) curve(vOf,A*w,vis,'#c81f1f',2.0);
-      if(sPos) curve(xOf,A,A*vs,'#1f47c8',2.6);
+      if(sRef) curve(xRef, A, A*vs, GRAY, 2.0);          // onda de referência φ=0 (cinza)
+      if(sAce) curve(aOf, A*w*w, vis, '#1f8a3a', 2.0);
+      if(sVel) curve(vOf, A*w, vis, '#c81f1f', 2.0);
+      if(sPos) curve(xOf, A, A*vs, '#1f47c8', 2.6);
+      // legendas do gráfico
       p.noStroke(); p.textSize(12); p.textAlign(p.LEFT,p.CENTER); let ly=G.yc-G.half+2;
       if(sPos){p.fill('#1f47c8'); p.text('x(t): posição',G.x0+8,ly); ly+=16;}
-      if(sVel){p.fill('#c81f1f'); p.text('v(t): velocidade  (escala rel.)',G.x0+8,ly); ly+=16;}
-      if(sAce){p.fill('#1f8a3a'); p.text('a(t): aceleração  (escala rel.)',G.x0+8,ly); ly+=16;}
-      const penY=G.yc-xOf(t)*vs;
-      p.push(); p.stroke('#c85c2e'); p.strokeWeight(1.2); p.drawingContext.setLineDash([4,4]);
-      p.line(tipX,tipY,G.x1,penY); p.drawingContext.setLineDash([]); p.pop();
-      p.stroke('#bdb4a4'); p.strokeWeight(1); p.line(C.x,C.y-R-26,C.x,C.y+R+26);
+      if(sVel){p.fill('#c81f1f'); p.text('v(t): velocidade  (esc. rel.)',G.x0+8,ly); ly+=16;}
+      if(sAce){p.fill('#1f8a3a'); p.text('a(t): aceleração  (esc. rel.)',G.x0+8,ly); ly+=16;}
+      if(sRef){p.fill(GRAY); p.text('x₀(t): referência φ=0',G.x0+8,ly); ly+=16;}
+      // cabeças de onda + tie-lines (só no modo largo, onde há alinhamento horizontal)
+      const penY=G.yc-xOf(t)*vs, rPenY=G.yc-xRef(t)*vs;
+      if(!L.narrow){
+        if(sRef) dash(rTipX,rTipY,G.x1,rPenY,GRAY,1,[3,4]);
+        dash(tipX,tipY,G.x1,penY,'#c85c2e',1.2,[4,4]);
+      }
+      if(sRef){ p.noStroke(); p.fill(GRAY); p.circle(G.x1,rPenY,6); }
+      if(sPos){ p.noStroke(); p.fill('#1f47c8'); p.circle(G.x1,penY,7); }
+
+      // ─────────── CÍRCULO + FASOR ───────────
+      p.stroke('#bdb4a4'); p.strokeWeight(1); p.line(C.x,C.y-R-24,C.x,C.y+R+24);
       if(sCir){
         p.push(); p.noFill(); p.stroke('#9a9184'); p.strokeWeight(1.5); p.drawingContext.setLineDash([5,5]);
         p.circle(C.x,C.y,2*R); p.drawingContext.setLineDash([]); p.pop();
         p.noStroke(); p.fill('#8a8ad6'); p.circle(C.x,C.y-R,6); p.circle(C.x,C.y+R,6);
         p.fill('#5a5ab0'); p.textSize(11); p.textAlign(p.LEFT,p.CENTER);
         p.text('+θm',C.x+9,C.y-R); p.text('−θm',C.x+9,C.y+R);
-        const aMod=((a1%(2*Math.PI))+2*Math.PI)%(2*Math.PI);
+        const aMod=((a1%(2*Math.PI))+2*Math.PI)%(2*Math.PI), ar=Math.min(34,R*0.42);
         p.push(); p.noFill(); p.stroke('#1f8a3a'); p.strokeWeight(1.8); p.beginShape();
-        for(let b=0;b<=aMod;b+=0.04) p.vertex(C.x-34*Math.sin(b),C.y-34*Math.cos(b));
+        for(let b=0;b<=aMod;b+=0.04) p.vertex(C.x-ar*Math.sin(b),C.y-ar*Math.cos(b));
         p.endShape(); p.pop();
         p.noStroke(); p.fill('#1f8a3a'); p.textSize(12); p.textAlign(p.CENTER,p.CENTER);
-        p.text('θ',C.x-48*Math.sin(aMod/2),C.y-48*Math.cos(aMod/2));
+        p.text('θ',C.x-(ar+14)*Math.sin(aMod/2),C.y-(ar+14)*Math.cos(aMod/2));
       }
-      if(sRef){ const rX=C.x-R*Math.sin(aRef),rY=C.y-R*Math.cos(aRef);
-        arrow(C.x,C.y,rX,rY,'#4d4dff',2);
-        p.noStroke(); p.fill('#4d4dff'); p.circle(C.x,C.y-R*Math.cos(aRef),7); }
-      p.stroke('#9a9184'); p.strokeWeight(1); p.drawingContext.setLineDash([3,4]);
-      p.line(tipX,tipY,C.x,tipY); p.drawingContext.setLineDash([]);
+      // referência φ=0 (fantasma cinza completo)
+      if(sRef){
+        dash(rTipX,rTipY,C.x,rTipY,GRAY,1,[3,4]);
+        arrow(C.x,C.y,rTipX,rTipY,GRAY,2);
+        p.noStroke(); p.fill(GRAY); p.circle(C.x,rTipY,8);
+      }
+      // fasor com fase (colorido)
+      dash(tipX,tipY,C.x,tipY,'#9a9184',1,[3,4]);
       if(sFas) arrow(C.x,C.y,tipX,tipY,'#7a2214',3);
       p.noStroke(); p.fill('#66308c'); p.circle(C.x,tipY,10);
-      if(sPos){ p.noStroke(); p.fill('#1f47c8'); p.circle(G.x1,penY,7); }
-      p.textSize(11.5); p.textAlign(p.LEFT,p.CENTER);
-      p.fill('#7a2214'); p.text('→ fasor (vetor girante, MCU)',40,H-42);
-      p.fill('#66308c'); p.text('● oscilador = projeção no eixo (MHS)',40,H-24);
-      const fnum=(+el('mfF').value)===0?'':(' + '+faseTxt(+el('mfF').value));
+
+      // mini-legenda (só no modo largo, canto inferior esquerdo)
+      if(!L.narrow){
+        p.textSize(11.5); p.textAlign(p.LEFT,p.CENTER);
+        p.fill('#7a2214'); p.text('→ fasor (vetor girante, MCU)',16,L.H-40);
+        p.fill('#66308c'); p.text('● oscilador = projeção no eixo (MHS)',16,L.H-22);
+      }
+
+      const fnum=(+el('mfF').value)==0?'':(' + '+faseTxt(+el('mfF').value));
       el('mfEq').innerHTML='x(t) = θ<sub>m</sub> cos(ωt + φ) &nbsp;→&nbsp; '+
         '<b>x(t) = '+A+'° · cos( '+w.toFixed(3)+'·t'+fnum+' )</b>'+
         ' &nbsp;|&nbsp; ω = 2π/T = '+w.toFixed(3)+' rad/s, f = '+(1/T).toFixed(3)+' Hz';
