@@ -4,6 +4,17 @@
 **Regra de hierarquia:** em **redação final do RA** (formato, código Bloom, critério), o Documento Mestre (Seções 2–3) VENCE. Este apêndice manda apenas no **método de cruzamento e nas fontes**. Em pesos/ciclos, o Apêndice I vence; em régua de aulas, o Apêndice II vence.
 **Autossuficiência:** este apêndice foi escrito para ser executado por um modelo barato (ex.: Sonnet ou Haiku) recebendo SOMENTE: (a) este arquivo, (b) o sumário oficial da disciplina, e — nas etapas finais — (c) as tabelas extraídas do NotebookLM. Nenhum histórico de conversa é necessário.
 
+> **Nota de método (v1.1, jul/2026) — NotebookLM aposentado.** Os Model Courses 7.03 e
+> 7.04 agora estão no próprio repositório (`_docs/*.pdf`) e seus learning objectives de
+> física já foram destilados, literais e com numeração original, para
+> `_docs/mc-7.03-extrato.md` e `_docs/mc-7.04-extrato.md`. Onde este apêndice disser
+> "rodar o prompt no NotebookLM" / "colar a tabela de volta", leia: **consultar o
+> extrato correspondente** (busca de texto pelo termo-âncora da Seção III3). Os Prompts
+> A–C da Seção III4 continuam valendo como *especificação do formato* de qualquer
+> extração nova (ex.: STCW cru, livro-texto) — que agora é feita na própria sessão,
+> lendo a fonte do repositório, sem ida-e-volta manual. Todo o resto (grupos, tabela de
+> âncoras, hierarquia, III5–III7) permanece inalterado.
+
 ---
 
 ## III0. REGRA DE OURO (igual à dos demais documentos)

@@ -11,7 +11,10 @@ está nos documentos de `_docs/`, todas as convenções de escrita estão em
 insumos novos que o professor precisa fornecer para um curso novo são:
 
 1. **O sumário oficial** do curso (PDF, equivalente ao `18. FIS-2.pdf`);
-2. **Os Model Courses IMO relevantes** (7.03 / 7.04 ou outros), para a navalização.
+2. ~~Os Model Courses IMO~~ → **já resolvido**: os learning objectives de física dos
+   Model Courses 7.03/7.04 estão destilados em `_docs/mc-7.03-extrato.md` e
+   `_docs/mc-7.04-extrato.md` (copiados na Fase 0 como todo o resto). Só seria preciso
+   nova destilação se o curso novo exigir outra fonte IMO ainda não extraída.
 
 Todo o resto se regenera a partir disso.
 
@@ -29,6 +32,7 @@ Todo o resto se regenera a partir disso.
 | `_docs/apendice-iii-cruzamento-stcw-ra.md` | Método de gerar RAs navalizados (usado na Fase 1) |
 | `_docs/mestre_quartus.md` | Publicação Quarto: libs, offline, paridade HTML/PDF |
 | `_docs/PLADIS-template.docx` | Template institucional intocável |
+| `_docs/mc-7.03-extrato.md` + `_docs/mc-7.04-extrato.md` | Extratos dos Model Courses IMO (fonte de âncoras da Fase 1 — dispensam NotebookLM) |
 | `_extensions/curso/` | Shortcodes `{{< aula >}}` e `{{< ra >}}` (Lua) |
 | `theme.scss` | Tema visual + caixas `.sp`, `.pergunta`, badges de aula/RA |
 | `_brand.yml` | Identidade visual |
@@ -49,7 +53,7 @@ Todo o resto se regenera a partir disso.
 | Artefato | Como nasce | Fase |
 |---|---|---|
 | `_docs/<sumário oficial>.pdf` | Professor fornece | 0 |
-| `_docs/FIS_N_RA.md` | Apêndice III (III-P1 → NotebookLM → III-P2) | 1 |
+| `_docs/FIS_N_RA.md` | Apêndice III (III-P1 → extratos `mc-7.0X` → III-P2) | 1 |
 | `unidades/unidade-N-slug/…` | Fusão sumário Parte B + `FIS_N_RA.md` | 2–3 |
 | `index.qmd` (syllabus + cronograma) | Mestre P1 + I6 + Apêndice II (pares de aulas) | 4 |
 
@@ -70,8 +74,11 @@ Todo o resto se regenera a partir disso.
 Seguir o **Apêndice III** literalmente:
 
 1. **III-P1 (triagem):** a partir do sumário oficial, identificar quais seções dos
-   Model Courses ancoram cada UE.
-2. **NotebookLM** (ou sessão com os Model Courses anexados): extrair as âncoras.
+   Model Courses ancoram cada UE (termos-âncora da tabela III3).
+2. **Consultar os extratos** `_docs/mc-7.03-extrato.md` / `mc-7.04-extrato.md` (busca
+   de texto pelo termo-âncora) — o ciclo NotebookLM foi aposentado; ver Nota de método
+   v1.1 no topo do Apêndice III. Os PDFs originais em `_docs/` são o recurso de
+   desempate se o extrato parecer incompleto.
 3. **III-P2 (cruzamento):** produzir a tabela final de RAs.
 
 **O formato de saída deve ser IDÊNTICO ao de `FIS_2_RA.md`** — é isso que a Fase 2
@@ -182,7 +189,8 @@ faltar dado.
 > de qualquer coisa. A infraestrutura (Fase 0) já está copiada; o sumário oficial do
 > curso está em `_docs/<nome>.pdf`. Execute as fases na ordem:
 > **Fase 1** — gere `_docs/FIS_N_RA.md` pelo Apêndice III, no formato idêntico ao
-> `FIS_2_RA.md` de referência (vou anexar os Model Courses quando você pedir).
+> `FIS_2_RA.md` de referência, consultando as âncoras nos extratos
+> `_docs/mc-7.03-extrato.md` e `_docs/mc-7.04-extrato.md` (já copiados na Fase 0).
 > Pare para eu revisar. **Fase 2** — gere o esqueleto completo de `unidades/`
 > (1 `.qmd` por tópico da Parte B, anatomia do §3 do guia) e a sidebar do
 > `_quarto.yml`. Pare para eu revisar o mapeamento tópico↔OE. **Fase 3** — escreva o

@@ -22,6 +22,7 @@ documento vence. Sempre.
 | `PLADIS-template.docx` | Template institucional | Layout do PLADIS — **INTOCÁVEL** (preencher células, nunca alterar estrutura) |
 | `FIS_2_RA.md` | RAs já extraídos e formatados | **Fonte oficial dos RAs de FIS-02.** NÃO reinventar nem reordenar RAs — usar estes. |
 | `guia-replicacao-novo-curso.md` | Guia de replicação | **Como clonar esta estrutura para outro curso** (FIS-1, FIS-3): inventário de arquivos, pipeline em 5 fases, prompt de partida |
+| `mc-7.03-extrato.md` / `mc-7.04-extrato.md` | Extratos das fontes IMO | **Consulta local aos Model Courses** (learning objectives de física, literais). Substituem o ciclo NotebookLM do Apêndice III — consultar estes antes de abrir os PDFs |
 
 Antes de qualquer tarefa, leia o Mestre + o(s) apêndice(s) relevante(s). Não trabalhe de memória.
 
@@ -57,7 +58,7 @@ instruções já prontas dos documentos; siga-os literalmente.
 | Verificar **paridade HTML/PDF** | Apêndice Q §Q4 | **Q-P4** |
 | Preencher o **PLADIS** | Apêndice II §II1–II5 + `PLADIS-template.docx` + sumário | **II-P1** |
 | Conferir **fechamento do PLADIS** | Apêndice II §II1 | **II-P2** |
-| **Cruzar física → STCW/RA** (gerar RAs novos) | Apêndice III | **III-P1** (triagem) → NotebookLM → **III-P2** (cruzamento) |
+| **Cruzar física → STCW/RA** (gerar RAs novos) | Apêndice III | **III-P1** (triagem) → consultar `mc-7.0X-extrato.md` → **III-P2** (cruzamento) |
 
 ---
 
