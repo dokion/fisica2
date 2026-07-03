@@ -84,84 +84,194 @@ $\vec{a}_c$ do MCU.
 
 ## Veja o círculo virar senoide
 
-A simulação abaixo mostra o ponto em MCU (esquerda) e a sua projeção traçando o MHS
-no tempo (direita), com o período de balanço típico de um navio.
+A simulação abaixo mostra o **fasor** — o vetor que gira em MCU (esquerda) — e a sua
+projeção no eixo vertical traçando o MHS no tempo (direita), com o período de balanço
+típico de um navio. A linha horizontal tracejada liga a **ponta do fasor** ao valor
+instantâneo da onda: a altura do fasor *é* a posição. Ligue **Velocidade** e
+**Aceleração** para ver que $v$ adianta a posição em $90°$ e $a$ fica em oposição
+($180°$); ligue **Referência φ=0** para enxergar a defasagem como o ângulo entre dois
+fasores.
 
 ```{python}
-#| fig-cap: "Projeção do MCU (círculo, à esq.) gerando o MHS x(t) (à dir.). Parâmetros de roll típico: amplitude 10°, período T = 12 s."
+#| fig-cap: "Fasor girante (círculo, à esq.) e a projeção vertical gerando o MHS x(t) (à dir.). A tracejada leva a altura do fasor até a onda. Parâmetros de roll típico: amplitude 10°, período T = 12 s."
 #| echo: false
-# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
 import numpy as np
 import matplotlib.pyplot as plt
 
-A, T = 10.0, 12.0            # amplitude (graus), período (s) — faixa SP3
-w = 2*np.pi/T
-t = np.linspace(0, 2*T, 500)
-t0 = 0.75*T                  # instante destacado
+thetam, T, phi = 10.0, 12.0, 0.0   # amplitude (°), período (s), fase — faixa SP3
+w  = 2*np.pi/T
+t  = np.linspace(0, 2*T, 600)
+t0 = 0.30*T                        # instante destacado
+a0 = w*t0 + phi                    # ângulo do fasor (0 = topo, CCW)
 
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9, 3.6),
-                               gridspec_kw={'width_ratios': [1, 2]})
-th = np.linspace(0, 2*np.pi, 200)
-ax1.plot(A*np.cos(th), A*np.sin(th), lw=1, color='0.6')
-ax1.plot([A*np.cos(w*t0)], [A*np.sin(w*t0)], 'o', ms=8, color='#5C2A14')
-ax1.plot([A*np.cos(w*t0)]*2, [A*np.sin(w*t0), -A*1.25], ':', color='0.5')
-ax1.set_aspect('equal'); ax1.set_title('MCU'); ax1.set_xlabel('x (°)')
-ax2.plot(t, A*np.cos(w*t), color='#5C2A14')
-ax2.plot([t0], [A*np.cos(w*t0)], 'o', ms=8, color='#C85C2E')
-ax2.axhline(0, lw=0.5, color='0.7')
-ax2.set_title('Projeção: x(t) = A cos(ωt)')
-ax2.set_xlabel('t (s)'); ax2.set_ylabel('ângulo de banda (°)')
+fig, (axc, axg) = plt.subplots(1, 2, figsize=(9, 3.8),
+                               gridspec_kw={'width_ratios': [1, 1.9]})
+
+# ── esquerda: círculo + fasor, projeção VERTICAL = x(t) ──
+ang = np.linspace(0, 2*np.pi, 200)
+axc.plot(np.sin(ang), np.cos(ang), color='0.7', lw=1, ls='--')     # raio = θm
+tx, ty = -np.sin(a0), np.cos(a0)
+axc.annotate('', xy=(tx, ty), xytext=(0, 0),
+             arrowprops=dict(arrowstyle='-|>', color='#7A2214', lw=2.5))  # fasor
+axc.plot([tx, 0], [ty, ty], ':', color='0.5')                     # projeção horizontal
+axc.plot([0, 0], [-1.15, 1.15], color='0.6', lw=0.8)              # eixo de oscilação
+axc.plot(0, ty, 'o', ms=9, color='#66308C')                       # oscilador (MHS)
+axc.plot([0, 0], [1, -1], 'o', ms=4, color='#4D4DFF')
+axc.text(0.1,  1.02, '+θm', va='center', fontsize=9, color='#5A5AB0')
+axc.text(0.1, -1.02, '−θm', va='center', fontsize=9, color='#5A5AB0')
+axc.set_aspect('equal'); axc.axis('off'); axc.set_title('MCU + fasor')
+
+# ── direita: x(t) com a "tie-line" no valor atual ──
+axg.plot(t, thetam*np.cos(w*t+phi), color='#1F47C8', lw=2)
+axg.plot(t0, thetam*np.cos(a0), 'o', ms=8, color='#1F47C8')
+axg.axhline(thetam*np.cos(a0), color='#C85C2E', ls=':', lw=1.2)   # tie-line
+axg.axhline(0, lw=0.5, color='0.7')
+axg.set_title(r'$x(t) = \theta_m\cos(\omega t + \varphi)$')
+axg.set_xlabel('t (s)'); axg.set_ylabel('ângulo de banda (°)')
 plt.tight_layout(); plt.show()
 ```
 
 ```{=html}
 <!-- Versão interativa — p5.js (tabela Q4: conceito é MOVIMENTO contínuo).
-     Mesmos parâmetros da versão matplotlib: A = 10°, T ajustável 8–25 s (faixa SP3). -->
-<script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js"></script>
-<div id="mcu-mhs" style="max-width:700px;margin:1rem auto;"></div>
-<p style="max-width:700px;margin:0 auto;font-size:0.85rem;">
-  Período T: <input type="range" id="mhsT" min="8" max="25" value="12" step="0.5"
-  style="width:200px;vertical-align:middle;"> <span id="mhsTval">12</span> s
-</p>
+     p5 servido de libs/ (offline-first, Q6). Mesmos parâmetros da versão matplotlib:
+     θm = 10°, T = 12 s (ajustável 8–25 s, faixa SP3), φ = 0. Reproduz o applet GeoGebra
+     do professor: fasor girante, projeção vertical, curvas x/v/a e referência de fase. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .mf-wrap{max-width:1000px;margin:1rem auto;font-size:14px;}
+  .mf-wrap .row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .mf-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;}
+  .mf-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .mf-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .mf-wrap input[type=range]{width:150px;accent-color:#c85c2e;}
+  .mf-wrap .chk{display:flex;align-items:center;gap:5px;font-size:13px;white-space:nowrap;}
+  .mf-wrap .chk input{accent-color:#c85c2e;width:15px;height:15px;}
+  .mf-wrap .sw{width:11px;height:11px;border-radius:2px;display:inline-block;}
+  .mf-wrap #mfPlay{border:1px solid #c9c2b6;background:#fff;border-radius:8px;
+    padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .mf-wrap #mfScroll{overflow-x:auto;}
+  .mf-wrap canvas{max-width:100%;height:auto;border-radius:8px;}
+  .mf-wrap #mfEq{font-size:15px;margin:8px 2px 0;}
+  .mf-wrap #mfEq b{color:#1f47c8;}
+</style>
+<div class="mf-wrap">
+  <div class="row">
+    <button id="mfPlay">⏸ Pausar</button>
+    <div class="sld"><label>Amplitude θ<sub>m</sub> = <span class="val" id="mfAv">10</span>°</label>
+      <input type="range" id="mfA" min="4" max="16" value="10" step="1"></div>
+    <div class="sld"><label>Período T = <span class="val" id="mfTv">12</span> s</label>
+      <input type="range" id="mfT" min="8" max="25" value="12" step="0.5"></div>
+    <div class="sld"><label>Fase φ = <span class="val" id="mfFv">0</span></label>
+      <input type="range" id="mfF" min="-180" max="180" value="0" step="5"></div>
+    <div class="sld"><label>Velocidade anim. = <span class="val" id="mfSv">1</span>×</label>
+      <input type="range" id="mfS" min="0.25" max="3" value="1" step="0.25"></div>
+  </div>
+  <div class="row">
+    <span class="chk"><input type="checkbox" id="mfFas" checked><span class="sw" style="background:#7a2214"></span>Fasor</span>
+    <span class="chk"><input type="checkbox" id="mfCir" checked>Círculo (MCU)</span>
+    <span class="chk"><input type="checkbox" id="mfPos" checked><span class="sw" style="background:#1f47c8"></span>Posição x(t)</span>
+    <span class="chk"><input type="checkbox" id="mfVel"><span class="sw" style="background:#c81f1f"></span>Velocidade v(t)</span>
+    <span class="chk"><input type="checkbox" id="mfAce"><span class="sw" style="background:#1f8a3a"></span>Aceleração a(t)</span>
+    <span class="chk"><input type="checkbox" id="mfRef"><span class="sw" style="background:#4d4dff"></span>Referência φ=0</span>
+  </div>
+  <div id="mfScroll"><div id="mfSketch"></div></div>
+  <div id="mfEq"></div>
+</div>
 <script>
-new p5((p) => {
-  const A = 60;                    // raio em px (representa 10° de banda)
-  let hist = [];
-  p.setup = () => { p.createCanvas(700, 240).parent('mcu-mhs'); };
-  p.draw = () => {
-    const T = +document.getElementById('mhsT').value;
-    document.getElementById('mhsTval').textContent = T;
-    const w = 2*Math.PI/T, t = p.millis()/1000, x = A*Math.cos(w*t);
-    p.background(245, 242, 236);
-    // círculo (MCU)
-    p.push(); p.translate(110, 120);
-    p.noFill(); p.stroke(150); p.circle(0, 0, 2*A);
-    const px = A*Math.cos(w*t), py = -A*Math.sin(w*t);
-    p.stroke(92, 42, 20); p.line(0, 0, px, py);
-    p.fill(92, 42, 20); p.noStroke(); p.circle(px, py, 12);
-    p.stroke(150); p.drawingContext.setLineDash([4, 4]);
-    p.line(px, py, px, 110); p.drawingContext.setLineDash([]);
-    p.fill(200, 92, 46); p.noStroke(); p.circle(px, 110, 10);
-    p.pop();
-    // traço x(t)
-    hist.unshift(x); if (hist.length > 460) hist.pop();
-    p.push(); p.translate(230, 120);
-    p.stroke(180); p.line(0, 0, 460, 0);
-    p.noFill(); p.stroke(92, 42, 20);
-    p.beginShape();
-    hist.forEach((v, i) => p.vertex(i, -v));
-    p.endShape();
-    p.fill(200, 92, 46); p.noStroke(); p.circle(0, -x, 10);
-    p.pop();
-  };
-});
+(function(){
+  const W=980, H=460, el=id=>document.getElementById(id);
+  let t=30, playing=true;
+  const faseTxt=deg=>{ if(deg===0) return "0";
+    const f=deg/180, s=f<0?"−":"", a=Math.abs(f),
+      m={0.25:"π/4",0.5:"π/2",0.75:"3π/4",1:"π"};
+    return m[a]?s+m[a]:s+a.toFixed(2)+"π"; };
+  new p5((p)=>{
+    const C={x:210,y:225}, PXDEG=9, G={x0:440,x1:965,yc:225,half:150};
+    const grau=v=>v*Math.PI/180;
+    const arrow=(x0,y0,x1,y1,col,wt)=>{ p.push(); p.stroke(col); p.strokeWeight(wt); p.fill(col);
+      p.line(x0,y0,x1,y1); const a=Math.atan2(y1-y0,x1-x0),s=8;
+      p.translate(x1,y1); p.rotate(a); p.noStroke(); p.triangle(0,0,-s,-s*0.5,-s,s*0.5); p.pop(); };
+    p.setup=()=>{ p.createCanvas(W,H).parent('mfSketch'); };
+    p.draw=()=>{
+      const A=+el('mfA').value,T=+el('mfT').value,phi=grau(+el('mfF').value),
+            spd=+el('mfS').value,w=2*Math.PI/T,R=A*PXDEG,vs=PXDEG;
+      const sFas=el('mfFas').checked,sCir=el('mfCir').checked,sPos=el('mfPos').checked,
+            sVel=el('mfVel').checked,sAce=el('mfAce').checked,sRef=el('mfRef').checked;
+      el('mfAv').textContent=A; el('mfTv').textContent=T;
+      el('mfFv').textContent=faseTxt(+el('mfF').value); el('mfSv').textContent=spd;
+      if(playing) t+=(p.deltaTime/1000)*spd;
+      const a1=w*t+phi, aRef=w*t;
+      const tipX=C.x-R*Math.sin(a1), tipY=C.y-R*Math.cos(a1);
+      p.background('#faf8f4');
+      p.noStroke(); p.fill('#7a7367'); p.textSize(12); p.textAlign(p.CENTER,p.TOP);
+      p.text('MCU + fasor',C.x,6); p.text('MHS no tempo',(G.x0+G.x1)/2,6);
+      const win=2.4*T, pps=(G.x1-G.x0)/win;
+      p.stroke('#e7e0d4'); p.strokeWeight(1);
+      for(let k=0;k*(T/4)<=win;k++){const gx=G.x1-k*(T/4)*pps; if(gx>=G.x0) p.line(gx,G.yc-G.half,gx,G.yc+G.half);}
+      p.stroke('#bdb4a4'); p.line(G.x0,G.yc,G.x1,G.yc);
+      p.stroke('#d8cfc0'); p.line(G.x0,G.yc-G.half,G.x0,G.yc+G.half);
+      p.noStroke(); p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      for(let k=0;k*(T/2)<=win;k++){const tt=t-k*(T/2),gx=G.x1-k*(T/2)*pps; if(gx>=G.x0-1&&tt>=0) p.text(tt.toFixed(0)+'s',gx,G.yc+G.half+4);}
+      const xOf=tt=>A*Math.cos(w*tt+phi), vOf=tt=>-A*w*Math.sin(w*tt+phi), aOf=tt=>-A*w*w*Math.cos(w*tt+phi);
+      const curve=(fn,peak,visual,col,wt)=>{ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(wt); p.beginShape();
+        for(let gx=G.x0;gx<=G.x1;gx++){const tt=t-(G.x1-gx)/pps; if(tt<0) continue; p.vertex(gx,G.yc-fn(tt)/peak*visual);}
+        p.endShape(); p.pop(); };
+      const vis=A*vs*0.98;
+      if(sAce) curve(aOf,A*w*w,vis,'#1f8a3a',2.0);
+      if(sVel) curve(vOf,A*w,vis,'#c81f1f',2.0);
+      if(sPos) curve(xOf,A,A*vs,'#1f47c8',2.6);
+      p.noStroke(); p.textSize(12); p.textAlign(p.LEFT,p.CENTER); let ly=G.yc-G.half+2;
+      if(sPos){p.fill('#1f47c8'); p.text('x(t): posição',G.x0+8,ly); ly+=16;}
+      if(sVel){p.fill('#c81f1f'); p.text('v(t): velocidade  (escala rel.)',G.x0+8,ly); ly+=16;}
+      if(sAce){p.fill('#1f8a3a'); p.text('a(t): aceleração  (escala rel.)',G.x0+8,ly); ly+=16;}
+      const penY=G.yc-xOf(t)*vs;
+      p.push(); p.stroke('#c85c2e'); p.strokeWeight(1.2); p.drawingContext.setLineDash([4,4]);
+      p.line(tipX,tipY,G.x1,penY); p.drawingContext.setLineDash([]); p.pop();
+      p.stroke('#bdb4a4'); p.strokeWeight(1); p.line(C.x,C.y-R-26,C.x,C.y+R+26);
+      if(sCir){
+        p.push(); p.noFill(); p.stroke('#9a9184'); p.strokeWeight(1.5); p.drawingContext.setLineDash([5,5]);
+        p.circle(C.x,C.y,2*R); p.drawingContext.setLineDash([]); p.pop();
+        p.noStroke(); p.fill('#8a8ad6'); p.circle(C.x,C.y-R,6); p.circle(C.x,C.y+R,6);
+        p.fill('#5a5ab0'); p.textSize(11); p.textAlign(p.LEFT,p.CENTER);
+        p.text('+θm',C.x+9,C.y-R); p.text('−θm',C.x+9,C.y+R);
+        const aMod=((a1%(2*Math.PI))+2*Math.PI)%(2*Math.PI);
+        p.push(); p.noFill(); p.stroke('#1f8a3a'); p.strokeWeight(1.8); p.beginShape();
+        for(let b=0;b<=aMod;b+=0.04) p.vertex(C.x-34*Math.sin(b),C.y-34*Math.cos(b));
+        p.endShape(); p.pop();
+        p.noStroke(); p.fill('#1f8a3a'); p.textSize(12); p.textAlign(p.CENTER,p.CENTER);
+        p.text('θ',C.x-48*Math.sin(aMod/2),C.y-48*Math.cos(aMod/2));
+      }
+      if(sRef){ const rX=C.x-R*Math.sin(aRef),rY=C.y-R*Math.cos(aRef);
+        arrow(C.x,C.y,rX,rY,'#4d4dff',2);
+        p.noStroke(); p.fill('#4d4dff'); p.circle(C.x,C.y-R*Math.cos(aRef),7); }
+      p.stroke('#9a9184'); p.strokeWeight(1); p.drawingContext.setLineDash([3,4]);
+      p.line(tipX,tipY,C.x,tipY); p.drawingContext.setLineDash([]);
+      if(sFas) arrow(C.x,C.y,tipX,tipY,'#7a2214',3);
+      p.noStroke(); p.fill('#66308c'); p.circle(C.x,tipY,10);
+      if(sPos){ p.noStroke(); p.fill('#1f47c8'); p.circle(G.x1,penY,7); }
+      p.textSize(11.5); p.textAlign(p.LEFT,p.CENTER);
+      p.fill('#7a2214'); p.text('→ fasor (vetor girante, MCU)',40,H-42);
+      p.fill('#66308c'); p.text('● oscilador = projeção no eixo (MHS)',40,H-24);
+      const fnum=(+el('mfF').value)===0?'':(' + '+faseTxt(+el('mfF').value));
+      el('mfEq').innerHTML='x(t) = θ<sub>m</sub> cos(ωt + φ) &nbsp;→&nbsp; '+
+        '<b>x(t) = '+A+'° · cos( '+w.toFixed(3)+'·t'+fnum+' )</b>'+
+        ' &nbsp;|&nbsp; ω = 2π/T = '+w.toFixed(3)+' rad/s, f = '+(1/T).toFixed(3)+' Hz';
+    };
+  });
+  el('mfPlay').onclick=()=>{ playing=!playing; el('mfPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+})();
 </script>
 ```
 
 ::: {.pergunta}
-Aumente o período de 12 s para 24 s. O que acontece com a *amplitude* da senoide? E
-com o "espaçamento" dela no tempo? Confirme com $x(t) = A\cos(2\pi t/T)$: qual dos
-dois parâmetros o slider está mudando?
+1. Aumente o período de 12 s para 24 s. O que acontece com a *amplitude* da senoide?
+   E com o "espaçamento" dela no tempo? Confirme com $x(t) = \theta_m\cos(2\pi t/T)$:
+   qual dos dois parâmetros o slider está mudando?
+2. Mova a fase $\varphi$ e ligue **Referência φ=0**: o ângulo entre o fasor e a
+   referência é sempre igual a $\varphi$? O que ele representa fisicamente?
+3. Com **Velocidade** ligada, em que ponto da onda $x(t)$ a velocidade é máxima — na
+   crista ou no cruzamento por zero? Explique pela posição do fasor.
 :::
 
 ## Exemplo resolvido naval — período de balanço (SP3)
