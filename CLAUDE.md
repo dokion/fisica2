@@ -21,6 +21,7 @@ documento vence. Sempre.
 | `mestre_quartus.md` | Apêndice Q | **Publicação**: Quarto, libs JS, modo offline, paridade HTML/PDF |
 | `PLADIS-template.docx` | Template institucional | Layout do PLADIS — **INTOCÁVEL** (preencher células, nunca alterar estrutura) |
 | `FIS_2_RA.md` | RAs já extraídos e formatados | **Fonte oficial dos RAs de FIS-02.** NÃO reinventar nem reordenar RAs — usar estes. |
+| `guia-replicacao-novo-curso.md` | Guia de replicação | **Como clonar esta estrutura para outro curso** (FIS-1, FIS-3): inventário de arquivos, pipeline em 5 fases, prompt de partida |
 
 Antes de qualquer tarefa, leia o Mestre + o(s) apêndice(s) relevante(s). Não trabalhe de memória.
 
