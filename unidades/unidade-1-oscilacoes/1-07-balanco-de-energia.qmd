@@ -1,0 +1,119 @@
+---
+title: "1.7 — Balanço de energia"
+categories: [UE1, OE1.20-B3, OE1.21-B2, OE1.22-B4]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 1.20 [B3] Derivar expressões para energia cinética e potencial no oscilador
+             → naval: —
+OE 1.21 [B2] Explicar como a energia se conserva em oscilador sem amortecimento
+             → naval: —
+OE 1.22 [B4] Analisar a dissipação de energia em oscilações amortecidas
+             → naval: Estresse reversivo em componentes de bordo
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 11-12 >}}
+
+Energia é a moeda universal da física: flui, se transforma, mas nunca é criada nem destruída.
+Em um oscilador, a energia migra entre forma cinética (movimento) e forma potencial
+(deformação, altura). Quando amortecimento entra em cena, parte dessa energia é dissipada
+em calor. Ler esse fluxo energético é essencial para entender fadiga de estruturas navais.
+
+## Energia cinética e potencial do oscilador {{< ra OE1.20 B3 >}}
+
+Para um MHS $x(t) = A\cos(\omega t + \varphi)$, velocidade é $v(t) = \dot{x}(t) = -A\omega\sin(\omega t + \varphi)$.
+
+**Energia cinética:**
+$$E_c(t) = \frac{1}{2}mv^2 = \frac{1}{2}mA^2\omega^2\sin^2(\omega t + \varphi)$$
+
+**Energia potencial** (armazenada na mola ou campo restaurador):
+$$E_p(t) = \frac{1}{2}kx^2 = \frac{1}{2}kA^2\cos^2(\omega t + \varphi)$$
+
+Usando $k = m\omega^2$ (relação fundamental do MHS):
+$$E_p(t) = \frac{1}{2}m\omega^2 A^2\cos^2(\omega t + \varphi)$$
+
+Ambas oscilam no tempo, mas note que quando $E_c$ é máxima (em $x=0$, velocidade no pico),
+$E_p$ é zero. E vice-versa — é uma dança: cinética e potencial trocam lugar a cada meio ciclo.
+
+## Conservação de energia sem amortecimento {{< ra OE1.21 B2 >}}
+
+Somando as duas:
+$$E_{\text{total}} = E_c + E_p = \frac{1}{2}mA^2\omega^2[\sin^2(\omega t + \varphi) + \cos^2(\omega t + \varphi)]$$
+
+$$E_{\text{total}} = \frac{1}{2}mA^2\omega^2 = \frac{1}{2}kA^2$$
+
+**A energia total é constante!** Não depende do tempo. Ela é determinada por dois parâmetros
+que não mudam no MHS ideal: amplitude $A$ e frequência $\omega$ (ou constante de mola $k$).
+
+Essa conservação reflete um princípio profundo: sem força dissipativa, nada pode tirar energia
+do sistema. Um pêndulo ideal bate para frente e para trás para sempre; um casco em água calma
+(idealizado sem amortecimento) balança eternamente após uma pancada.
+
+## Dissipação de energia em osciladores amortecidos {{< ra OE1.22 B4 >}}
+
+Na realidade, a força dissipativa $F_{\text{damp}} = -b\dot{x}$ remove energia a cada ciclo. A taxa
+instantânea de dissipação é:
+
+$$P(t) = F_{\text{damp}} \cdot v = -b\dot{x}^2$$
+
+Energia dissipada em um período $T$:
+$$\Delta E = \int_0^T |P(t)| \, dt = b\int_0^T \dot{x}^2 \, dt$$
+
+Para um MHS amortecido com amplitude exponencialmente decrescente $A(t) = A_0 e^{-\gamma t}$,
+a energia total cai exponencialmente:
+
+$$E(t) = E_0 e^{-2\gamma t}$$
+
+Tempo de decaimento de energia: $\tau_E = 1/(2\gamma)$ (metade do tempo de decaimento de amplitude).
+
+**Implicação prática em navios:** um navio balançado por onda (excitação impulsiva) perde
+metade de sua energia cinética de balanço em alguns minutos a horas, dependendo do amortecimento
+estrutural. Se $\gamma = 0{,}01$ rad/s (típico), $\tau_E \approx 50$ s — o casco "esquece" da
+perturbação em menos de 2 minutos.
+
+<!-- SIMULAÇÃO SUGERIDA: barras de energia cinética/potencial/total ao longo do ciclo,
+     com e sem amortecimento — p5.js (movimento + barras animadas, tabela Q4).
+     Parâmetros do exemplo do texto (T na faixa SP3). -->
+
+::: {.sp}
+Um navio ro-ro (roro) de 12 mil toneladas é excitado por pancada de onda, adquirindo ângulo de
+balanço inicial $\theta_0 = 6°$. Período natural $T_0 = 11$ s. Amortecimento é estimado em
+$\gamma = 0{,}008$ rad/s. Quanto tempo leva para a energia de balanço cair a 10% do valor inicial?
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+## Estresse reversivo em componentes {{< ra OE1.22 B4 >}}
+
+Energia dissipada em amortecimento viscoso é convertida em calor. Mas onde? Nos materiais e
+ligações que sustentam a oscilação. Cada ciclo de movimento causa deformação local seguida de
+recuperação — é o **estresse reversivo** (alternating stress).
+
+Componentes estruturais (costados, anteparas, nervuras) sofrem fadiga quando submetidos a
+centenas de milhares de ciclos de tensão. Quanto maior o amortecimento, mais rápida a queda
+de amplitude, mas enquanto a oscilação dura, cada ciclo adiciona dano acumulativo (integração
+de ciclos de tensão).
+
+Engenheiros navais usam curvas S-N (Stress vs. Number of cycles) de fadiga para estimar vida
+útil sob oscilação. Um navio em operação no Atlântico Sul (ondas moderadas a pesadas) pode
+sofrer milhões de ciclos de balanço em um ano — dimensionamento inadequado de estrutura leva
+a trincas prematuras.
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Confundir energia total com amplitude:** energia é proporcional a $A^2$, não a $A$. Reduzir
+  amplitude à metade reduz energia a um quarto.
+- **Achar que amortecimento "cria" energia:** não, apenas a retira e a transforma em calor.
+- **Usar fórmula de conservação em sistema amortecido:** $E = \frac{1}{2}kA^2$ vale só se $A$ é
+  constante. Com amortecimento, $A(t) = A_0 e^{-\gamma t}$, então $E(t) = E_0 e^{-2\gamma t}$.
+:::
+
+**Conexão com o próximo tópico:** osciladores podem estar acoplados — a energia não flui só
+entre cinética e potencial, mas também entre osciladores vizinhos. Tópico 1.8.

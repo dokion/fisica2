@@ -1,0 +1,208 @@
+---
+title: "1.2 — Movimento harmônico simples e movimento circular uniforme"
+categories: [UE1, OE1.4-B2, OE1.5-B3, OE1.6-B3]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 1.4 [B2] Explicar a relação entre MHS e MCU
+OE 1.5 [B3] Derivar as equações do MHS a partir da projeção do MCU
+            → naval: período de balanço do navio (SP3)
+OE 1.6 [B3] Determinar amplitude, frequência e fase do MHS
+            → naval: T = 8–25 s; boca 15–40 m (SP3)
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 3-4 >}}
+
+O tópico anterior definiu o MHS pela sua assinatura senoidal. Agora vamos ganhar essa
+senoide de dois jeitos independentes — pela **lei de força** e pela **projeção do
+movimento circular uniforme** — e ver que são o mesmo movimento visto de ângulos
+diferentes. É essa dupla visão que permite ler amplitude, frequência e fase direto da
+equação.
+
+## Lei de força para o movimento {{< ra OE1.5 B3 >}}
+
+Todo MHS nasce de uma **força restauradora proporcional ao deslocamento**: afastou do
+equilíbrio, a força puxa de volta — e puxa tanto mais forte quanto maior o
+afastamento.
+
+$$F = -kx$$
+
+O sinal negativo é a física inteira da equação: força e deslocamento têm sempre
+sentidos opostos. Onde você encontrar $F \propto -x$, encontrará oscilação senoidal.
+
+<!-- << place holder para uma imagem: massa-mola na horizontal, três quadros
+     (x<0, x=0, x>0) com o vetor força apontando sempre para o equilíbrio >> -->
+
+## Equação de movimento
+
+Aplicando a 2ª lei de Newton ao oscilador massa–mola:
+
+$$m\ddot{x} = -kx
+\quad\Longrightarrow\quad
+\ddot{x} + \omega^2 x = 0,
+\qquad \omega^2 \equiv \frac{k}{m}$$
+
+A equação diz que a aceleração é sempre contrária e proporcional ao deslocamento. A
+constante $\omega$ — que por enquanto é só uma abreviação de $\sqrt{k/m}$ — vai se
+revelar a frequência angular do movimento.
+
+## Solução da equação {{< ra OE1.6 B3 >}}
+
+Procuramos uma função cuja segunda derivada seja ela mesma com sinal trocado (a menos
+de $\omega^2$). Seno e cosseno fazem exatamente isso:
+
+$$x(t) = A\cos(\omega t + \varphi)$$
+
+Derivando duas vezes para conferir:
+
+$$\dot{x}(t) = -A\omega\,\mathrm{sen}(\omega t + \varphi)
+\qquad
+\ddot{x}(t) = -A\omega^2\cos(\omega t + \varphi) = -\omega^2 x(t)\ \checkmark$$
+
+Cada constante da solução tem leitura física direta:
+
+- $A$ — **amplitude**: o afastamento máximo do equilíbrio (fixada pelas condições
+  iniciais);
+- $\omega = \sqrt{k/m}$ — **frequência angular** (rad/s): propriedade do sistema,
+  não de como ele foi posto a oscilar;
+- $\varphi$ — **constante de fase**: em que ponto do ciclo o movimento começou;
+- Período e frequência: $T = \dfrac{2\pi}{\omega}$, $f = \dfrac{1}{T} = \dfrac{\omega}{2\pi}$.
+
+## A relação MHS ↔ MCU {{< ra OE1.4 B2 >}}
+
+Aqui entra a imagem geométrica que resolve o capítulo inteiro: imagine um ponto
+girando com velocidade angular constante $\omega$ num círculo de raio $A$. A **sombra**
+desse ponto sobre um diâmetro (a projeção no eixo $x$) executa exatamente:
+
+$$x(t) = A\cos(\omega t + \varphi)$$
+
+Ou seja: **MHS é a projeção unidimensional de um MCU**. O ângulo do ponto no círculo é
+a fase $(\omega t + \varphi)$; o raio é a amplitude; a velocidade angular do círculo é
+a frequência angular da oscilação. Toda a trigonometria do MHS vira geometria de um
+círculo — inclusive velocidade e aceleração, que são as projeções de $\vec{v}$ e
+$\vec{a}_c$ do MCU.
+
+## Veja o círculo virar senoide
+
+A simulação abaixo mostra o ponto em MCU (esquerda) e a sua projeção traçando o MHS
+no tempo (direita), com o período de balanço típico de um navio.
+
+```{python}
+#| fig-cap: "Projeção do MCU (círculo, à esq.) gerando o MHS x(t) (à dir.). Parâmetros de roll típico: amplitude 10°, período T = 12 s."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa
+import numpy as np
+import matplotlib.pyplot as plt
+
+A, T = 10.0, 12.0            # amplitude (graus), período (s) — faixa SP3
+w = 2*np.pi/T
+t = np.linspace(0, 2*T, 500)
+t0 = 0.75*T                  # instante destacado
+
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9, 3.6),
+                               gridspec_kw={'width_ratios': [1, 2]})
+th = np.linspace(0, 2*np.pi, 200)
+ax1.plot(A*np.cos(th), A*np.sin(th), lw=1, color='0.6')
+ax1.plot([A*np.cos(w*t0)], [A*np.sin(w*t0)], 'o', ms=8, color='#5C2A14')
+ax1.plot([A*np.cos(w*t0)]*2, [A*np.sin(w*t0), -A*1.25], ':', color='0.5')
+ax1.set_aspect('equal'); ax1.set_title('MCU'); ax1.set_xlabel('x (°)')
+ax2.plot(t, A*np.cos(w*t), color='#5C2A14')
+ax2.plot([t0], [A*np.cos(w*t0)], 'o', ms=8, color='#C85C2E')
+ax2.axhline(0, lw=0.5, color='0.7')
+ax2.set_title('Projeção: x(t) = A cos(ωt)')
+ax2.set_xlabel('t (s)'); ax2.set_ylabel('ângulo de banda (°)')
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: conceito é MOVIMENTO contínuo).
+     Mesmos parâmetros da versão matplotlib: A = 10°, T ajustável 8–25 s (faixa SP3). -->
+<script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js"></script>
+<div id="mcu-mhs" style="max-width:700px;margin:1rem auto;"></div>
+<p style="max-width:700px;margin:0 auto;font-size:0.85rem;">
+  Período T: <input type="range" id="mhsT" min="8" max="25" value="12" step="0.5"
+  style="width:200px;vertical-align:middle;"> <span id="mhsTval">12</span> s
+</p>
+<script>
+new p5((p) => {
+  const A = 60;                    // raio em px (representa 10° de banda)
+  let hist = [];
+  p.setup = () => { p.createCanvas(700, 240).parent('mcu-mhs'); };
+  p.draw = () => {
+    const T = +document.getElementById('mhsT').value;
+    document.getElementById('mhsTval').textContent = T;
+    const w = 2*Math.PI/T, t = p.millis()/1000, x = A*Math.cos(w*t);
+    p.background(245, 242, 236);
+    // círculo (MCU)
+    p.push(); p.translate(110, 120);
+    p.noFill(); p.stroke(150); p.circle(0, 0, 2*A);
+    const px = A*Math.cos(w*t), py = -A*Math.sin(w*t);
+    p.stroke(92, 42, 20); p.line(0, 0, px, py);
+    p.fill(92, 42, 20); p.noStroke(); p.circle(px, py, 12);
+    p.stroke(150); p.drawingContext.setLineDash([4, 4]);
+    p.line(px, py, px, 110); p.drawingContext.setLineDash([]);
+    p.fill(200, 92, 46); p.noStroke(); p.circle(px, 110, 10);
+    p.pop();
+    // traço x(t)
+    hist.unshift(x); if (hist.length > 460) hist.pop();
+    p.push(); p.translate(230, 120);
+    p.stroke(180); p.line(0, 0, 460, 0);
+    p.noFill(); p.stroke(92, 42, 20);
+    p.beginShape();
+    hist.forEach((v, i) => p.vertex(i, -v));
+    p.endShape();
+    p.fill(200, 92, 46); p.noStroke(); p.circle(0, -x, 10);
+    p.pop();
+  };
+});
+</script>
+```
+
+::: {.pergunta}
+Aumente o período de 12 s para 24 s. O que acontece com a *amplitude* da senoide? E
+com o "espaçamento" dela no tempo? Confirme com $x(t) = A\cos(2\pi t/T)$: qual dos
+dois parâmetros o slider está mudando?
+:::
+
+## Exemplo resolvido naval — período de balanço (SP3)
+
+::: {.sp}
+Um navio graneleiro de boca $B = 32\ \text{m}$ oscila em balanço (roll) com período
+natural medido $T = 14\ \text{s}$. Em pequenos ângulos, o roll é um MHS angular
+$\theta(t) = \theta_0\cos(\omega t + \varphi)$. No instante $t = 0$, o navio passa
+pela vertical ($\theta = 0$) adernando para boreste com velocidade angular máxima, e
+o ângulo máximo observado é $\theta_0 = 8°$.
+
+**(a) Modelagem.** Roll em pequenos ângulos ≈ MHS angular; desprezamos amortecimento
+neste tópico (será corrigido em 1.4). Incógnitas: $\omega$, $\varphi$ e a função
+$\theta(t)$ completa.
+
+**(b) Desenvolvimento.**
+$$\omega = \frac{2\pi}{T} = \frac{2\pi}{14} \approx 0{,}449\ \text{rad/s}$$
+Em $t=0$: $\theta(0) = \theta_0\cos\varphi = 0 \Rightarrow \varphi = \pm\pi/2$.
+A velocidade $\dot\theta(0) = -\theta_0\,\omega\,\mathrm{sen}\,\varphi$ deve ser
+positiva (adernando para boreste) $\Rightarrow \varphi = -\pi/2$.
+
+**(c) Resultado.**
+$$\theta(t) = 8°\cos\!\left(0{,}449\,t - \tfrac{\pi}{2}\right)
+= 8°\,\mathrm{sen}(0{,}449\,t)$$
+
+**(d) Análise crítica.** $T = 14\ \text{s}$ está dentro da faixa típica de 8–25 s
+para navios mercantes — plausível para um graneleiro de boca 32 m. O modelo sem
+amortecimento prevê oscilação eterna, o que contraria a experiência de bordo: a
+correção vem no tópico 1.4.
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Trocar $\omega$ por $f$:** $\omega = 2\pi f$, não $\omega = f$. Com $T = 14$ s,
+  $f \approx 0{,}071$ Hz mas $\omega \approx 0{,}449$ rad/s.
+- **Fase pelo "chute":** $\varphi$ sai das **duas** condições iniciais (posição *e*
+  velocidade), nunca só da posição — o item (b) acima mostra por quê.
+- **Amplitude na frequência:** no MHS ideal, $\omega$ não depende de $A$. Dobrar o
+  ângulo de banda não muda o período do navio (em pequenos ângulos).
+:::
+
+**Conexão com o próximo tópico:** sabendo somar ângulos no círculo, sabemos somar
+oscilações — superposição, batimentos e figuras de Lissajous são o tópico 1.3.

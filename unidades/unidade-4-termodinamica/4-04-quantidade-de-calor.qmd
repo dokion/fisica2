@@ -1,0 +1,129 @@
+---
+title: "4.4 — Quantidade de calor"
+categories: [UE4, OE4.12-B3, OE4.13-B2, OE4.14-B3]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 4.12 [B3] Determinar a quantidade de calor envolvida em processos térmicos
+            → naval: Balanço térmico do motor; Q1−Q2 = W
+OE 4.13 [B2] Explicar o conceito de capacidade térmica e calor específico
+            → naval: Valor calorífico de combustíveis marinhos (HFO/MGO)
+OE 4.14 [B3] Aplicar o conceito de calor latente em mudanças de fase
+            → naval: Vaporização em caldeiras; refrigeração de bordo
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 31-32 >}}
+
+Quanto calor é necessário para aquecer um litro de água de 20 °C a 80 °C? Quanto uma
+caldeira consome para vaporizar 1 tonelada de água? Essas são perguntas sobre **quantidade
+de calor** — a energia medida em joules que flui entre corpos. A resposta depende de três
+coisas: massa do material, mudança de temperatura, e uma propriedade chamada calor
+específico. Além disso, há processos especiais — mudanças de fase — onde o calor flui sem
+mudança de temperatura. Esses conceitos são a base do balanço térmico de um motor diesel:
+combustível entra, libera calor, parte vira trabalho, parte é rejeitada como calor perdido.
+
+## Quantidade de calor sensível {{< ra OE4.12 B3 >}}
+
+A quantidade de calor necessária para mudar a temperatura de um corpo é:
+
+$$Q = m \cdot c \cdot \Delta T$$
+
+onde:
+- $m$ é a massa (kg)
+- $c$ é o calor específico (J/(kg·K))
+- $\Delta T$ é a mudança de temperatura (K ou °C — mesma diferença)
+
+O **calor específico** é a energia necessária para aquecer 1 kg de uma substância em 1 K.
+
+Exemplos em máquinas de bordo:
+
+| Substância | c [kJ/(kg·K)] | Uso de bordo |
+|---|---|---|
+| Água | 4,18 | Refrigeração, caldeira |
+| Óleo diesel | 1,9 | Combustível, lubrificante |
+| Ar | 1,0 | Ambiente da praça de máquinas |
+| Ferro/aço | 0,46 | Estrutura de motor e cilindro |
+
+Cálculo: quantos kJ são necessários para aquecer 1000 kg de água de refrigeração de 30 °C
+a 70 °C?
+
+$$Q = 1000 \times 4{,}18 \times (70 - 30) = 1000 \times 4{,}18 \times 40 = 167{,}2\ \text{kJ}$$
+
+## Capacidade térmica e calor específico {{< ra OE4.13 B2 >}}
+
+Dois conceitos relacionados:
+
+**Calor específico** ($c$): calor por unidade de massa por unidade de temperatura. Depende
+da substância (água tem c alto; ar tem c baixo). Unidade: J/(kg·K).
+
+**Capacidade térmica** ($C = m \cdot c$): calor por unidade de temperatura para um objeto
+específico. Se uma caldeira com 500 kg de aço tem $c = 0{,}46$ kJ/(kg·K), então sua
+capacidade térmica é $C = 500 \times 0{,}46 = 230$ kJ/K. Aquecer a caldeira em 1 K exige
+230 kJ.
+
+Em máquinas marinhas, combustíveis (HFO — Heavy Fuel Oil, ou MGO — Marine Gas Oil) têm
+valores caloríficos tabelados:
+
+| Combustível | Valor calorífico [MJ/kg] |
+|---|---|
+| HFO 380 | ~40 |
+| MGO | ~46 |
+
+Isso significa: 1 kg de HFO, se completamente queimado, libera ~40 MJ de energia térmica.
+
+## Calor latente e mudanças de fase {{< ra OE4.14 B3 >}}
+
+Em mudanças de fase (sólido ↔ líquido ↔ gás), a temperatura permanece constante enquanto o
+calor flui. A energia vai para "quebrar" as ligações entre moléculas, não para acelerá-las.
+
+$$Q = m \cdot L$$
+
+onde $L$ é o calor latente de mudança (J/kg) — específico de cada transição.
+
+Para água pura (a 1 atm):
+
+| Processo | L [kJ/kg] | Aplicação de bordo |
+|---|---|---|
+| Fusão (gelo → água) | 334 | Raramente relevante em clima quente |
+| Vaporização (água → vapor) | 2257 | Caldeira; serpentina de vapor |
+| Sublimação (gelo → vapor) | 2591 | Não ocorre em máquinas normais |
+
+Exemplo: uma caldeira produz 1 tonelada de vapor por hora. Qual é a potência térmica
+necessária apenas para vaporizar a água (sem contar aquecimento prévio)?
+
+$$Q_{\text{vap}} = 1000\ \text{kg} \times 2257\ \text{kJ/kg} = 2{,}257 \times 10^6\ \text{kJ}$$
+
+$$\dot{Q}_{\text{vap}} = \frac{2{,}257 \times 10^6\ \text{kJ}}{3600\ \text{s}} \approx 627\ \text{kW}$$
+
+Apenas para evaporar, não para aquecer de 20 °C a 100 °C!
+
+::: {.sp}
+Um motor diesel consome 50 kg/h de combustível HFO (valor calorífico 40 MJ/kg).
+Instrumentação mostra que apenas 45% dessa energia é convertida em trabalho mecânico
+(eficiência térmica). A potência de saída é 1000 kW. Quanto calor é rejeitado?
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Confundir "mudança de temperatura" com "mudança de fase":** Q = m·c·ΔT só vale se o
+  material não muda de estado. Se há vaporização, use Q = m·L, não o ΔT.
+- **Esquecer que o calor latente é enorme:** vaporizar água exige 2257 kJ/kg; aquecer água
+  em 1 K exige só 4,18 kJ/kg. Diferença de 500×! Caldeiras precisam de muita energia para
+  vapor porque quase tudo vai em L, não em aumento de T.
+- **Usar calor específico na mudança de fase:** para 1 kg de água passando de 99 °C a 100 °C
+  = vapor (em processo isobárico), use Q = 2257 kJ, não Q = 1 × 4,18 × 1 = 4,18 kJ.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: dois painéis lado a lado — (esquerda) barra de água com slider T (0–120 °C), mostrando Q em função de T com mudança de declive no ponto de vaporização; (direita) diagrama de fase (P–T) mostrando as três regiões e os calores latentes visualmente; lib Plotly -->
+
+**Conexão com o próximo tópico:** calor flui entre dois lugares. Como ele passa através de um
+sólido (parede de cilindro, parede de trocador)? Resposta: condução térmica, regida pela Lei de Fourier.

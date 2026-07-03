@@ -1,0 +1,97 @@
+---
+title: "4.14 — Máquinas térmicas e refrigeradores: ideais e reais"
+categories: [UE4, OE4.43-B2, OE4.44-B4, OE4.45-B4]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 4.43 [B2] Explicar o funcionamento de máquinas térmicas e refrigeradores
+             → naval: motor diesel e sistema de refrigeração de bordo
+OE 4.44 [B4] Comparar a eficiência de ciclos ideais e reais
+             → naval: diagrama indicador real vs. ideal
+OE 4.45 [B4] Analisar o impacto da irreversibilidade em máquinas térmicas
+             → naval: perdas mecânicas e térmicas no motor diesel real
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 37-38 >}}
+
+Toda a termodinâmica do curso converge aqui: o motor diesel que move o navio é uma
+máquina térmica, e a planta de refrigeração da praça de máquinas é o mesmo ciclo
+rodando ao contrário. Este tópico mede o desempenho dessas máquinas e mostra por que
+a máquina real nunca alcança a ideal.
+
+## Máquinas térmicas e refrigeradores {{< ra OE4.43 B2 >}}
+
+Uma **máquina térmica** opera em ciclo entre uma fonte quente ($T_q$) e uma fria
+($T_f$): recebe $Q_q$, realiza trabalho $W$ e rejeita $Q_f$. Pela 1ª Lei, num ciclo
+$\Delta U = 0$, logo:
+
+$$W = Q_q - Q_f
+\qquad
+\eta = \frac{W}{Q_q} = 1 - \frac{Q_f}{Q_q}$$
+
+O **refrigerador** é a mesma máquina invertida: consome trabalho $W$ para retirar
+$Q_f$ da fonte fria e despejar $Q_q$ na quente. Seu desempenho é o coeficiente de
+performance:
+
+$$\text{COP} = \frac{Q_f}{W} = \frac{Q_f}{Q_q - Q_f}$$
+
+## Ciclo ideal vs. real: o limite de Carnot {{< ra OE4.44 B4 >}}
+
+O rendimento máximo entre duas temperaturas é o de **Carnot** (ciclo reversível):
+
+$$\eta_{\text{Carnot}} = 1 - \frac{T_f}{T_q}$$
+
+Nenhuma máquina real alcança esse valor, porque toda máquina real tem
+irreversibilidades. No **diagrama indicador** (P–V) de um motor diesel real, a área
+fechada — o trabalho por ciclo — é menor que a do ciclo ideal: os cantos "arredondam"
+por causa de combustão não-instantânea, troca de calor pelas paredes e atrito.
+
+| | Ciclo ideal | Ciclo real |
+|---|---|---|
+| Processos | reversíveis | irreversíveis |
+| Rendimento | $\eta_{\text{Carnot}}$ | $\eta < \eta_{\text{Carnot}}$ |
+| Diagrama P–V | cantos vivos | cantos arredondados, área menor |
+
+## Irreversibilidade e perdas {{< ra OE4.45 B4 >}}
+
+Cada fonte de irreversibilidade gera entropia (tópico 4.13) e "come" trabalho útil:
+
+- **Térmicas:** combustão com gradiente finito, calor perdido pelas paredes do cilindro
+  e pelos gases de exaustão quentes;
+- **Mecânicas:** atrito em pistões, mancais e engrenagens;
+- **De escoamento:** perdas de carga na admissão e no escapamento.
+
+O rendimento efetivo do motor é o produto de rendimentos parciais (térmico × mecânico),
+sempre abaixo do limite de Carnot.
+
+<!-- SIMULAÇÃO SUGERIDA: diagrama P–V com sobreposição do ciclo ideal e do ciclo real
+     (área hachurada = trabalho), com slider de irreversibilidade — Plotly (gráfico
+     explorável, tabela Q4). Ligar a área perdida ao rendimento. -->
+
+::: {.sp}
+Um motor diesel marítimo opera com temperatura de combustão $T_q = 1100\ \text{K}$ e
+rejeita calor aos gases de exaustão a $T_f = 550\ \text{K}$. O rendimento efetivo
+medido no banco é $\eta_{\text{real}} = 45\%$.
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Temperaturas em °C na fórmula de Carnot:** $T_q$ e $T_f$ são absolutas (K); usar °C
+  dá rendimentos absurdos.
+- **Confundir $\eta$ com COP:** rendimento de máquina térmica é $\le 1$; COP de
+  refrigerador costuma ser $> 1$ — são grandezas diferentes, não compare diretamente.
+- **Achar que basta melhorar a máquina para bater Carnot:** o limite é imposto pelas
+  temperaturas $T_f$ e $T_q$, não pela engenharia do motor — Carnot é intransponível.
+:::
+
+**Conexão com o próximo tópico:** vista a máquina do lado macroscópico, voltamos ao
+microscópico — pressão e temperatura como movimento das moléculas (4.15).

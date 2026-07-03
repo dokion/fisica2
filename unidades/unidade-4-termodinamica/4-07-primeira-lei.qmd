@@ -1,0 +1,131 @@
+---
+title: "4.7 — Primeira Lei da Termodinâmica"
+categories: [UE4, OE4.21-B1, OE4.22-B2, OE4.23-B3, OE4.24-B4]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 4.21 [B1] Enunciar a Primeira Lei da Termodinâmica
+            → naval: Conservação de energia no ciclo do motor
+OE 4.22 [B2] Interpretar a Primeira Lei da Termodinâmica
+            → naval: Balanço energético: combustível → trabalho + calor rejeitado
+OE 4.23 [B3] Aplicar a conservação de energia em sistemas termodinâmicos
+            → naval: Eficiência do ciclo: η = W/Q1
+OE 4.24 [B4] Analisar a variação de energia interna em diferentes processos
+            → naval: Processos no ciclo Diesel/Otto/Dual — diagramas P-V
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 33-34 >}}
+
+A Primeira Lei da Termodinâmica é o enunciado formal da conservação de energia em
+contextos onde calor e trabalho interagem. Em máquinas navais, ela é a regra de ouro: todo
+joule de calor que entra no cilindro OU vira trabalho nas bielas, OU sai como calor
+rejeitado. Nada desaparece, nada é criado. Entender essa lei é entender por que não existe
+motor com eficiência > 100% e por que o balanço energético de um motor diesel real descreve
+onde vai cada unidade de combustível queimado.
+
+## Enunciado da Primeira Lei {{< ra OE4.21 B1 >}}
+
+**Primeira Lei da Termodinâmica:** A variação da energia interna de um sistema é igual ao
+calor adicionado ao sistema menos o trabalho realizado pelo sistema.
+
+$$\Delta U = Q - W$$
+
+ou, em forma diferencial para um processo infinitesimal:
+
+$$\text{d}U = \delta Q - \delta W$$
+
+Convenção de sinais:
+- $Q > 0$: calor entra no sistema
+- $Q < 0$: calor sai do sistema
+- $W > 0$: sistema realiza trabalho (expande, faz força)
+- $W < 0$: trabalho é feito sobre o sistema (comprime, força aplica-se)
+
+## Interpretação e aplicação {{< ra OE4.22 B2 >}} {{< ra OE4.23 B3 >}}
+
+A Primeira Lei diz três coisas simultaneamente:
+
+1. **Conservação de energia:** energia não é criada nem destruída. Se você coloca calor Q
+   em um sistema e ele realiza trabalho W, a energia restante Q − W fica armazenada como
+   energia interna U.
+
+2. **Equivalência:** calor e trabalho são intercambiáveis. Um joule de trabalho retirado
+   pode ser substituído por um joule de calor, e vice-versa.
+
+3. **Impossibilidade de perpétuo:** não há máquina que transforme 100% do calor em trabalho.
+   Sempre há um resto Q₂ que escapa (veremos por quê na Segunda Lei).
+
+Para um motor diesel em um ciclo completo:
+
+$$\Delta U_{\text{ciclo}} = 0$$
+
+(energia interna volta ao estado inicial após um ciclo). Logo:
+
+$$Q_1 - Q_2 = W$$
+
+ou
+
+$$W = Q_1 - Q_2$$
+
+A **eficiência térmica** é:
+
+$$\eta = \frac{W}{Q_1} = \frac{Q_1 - Q_2}{Q_1} = 1 - \frac{Q_2}{Q_1}$$
+
+Para um motor diesel real, η ≈ 0,40–0,50 (40–50%). Os 50–60% restantes saem como Q₂ na
+água de refrigeração, gases quentes de exaustão e radiação da parede.
+
+## Análise em diferentes processos {{< ra OE4.24 B4 >}}
+
+A Primeira Lei tem forma diferente conforme o processo:
+
+**Processo isocórico (volume constante):** W = 0 (não há expansão), logo ΔU = Q.
+
+**Processo isobárico (pressão constante):** trabalho W = P·ΔV. Parte do calor vira trabalho,
+parte vira ΔU.
+
+**Processo adiabático:** Q = 0 (sem troca de calor), logo ΔU = −W. Trabalho realizado sai
+integralmente de redução de energia interna (temperatura cai).
+
+**Processo cíclico:** ΔU = 0 (volta ao estado inicial), logo W = Q_entrada − Q_saída.
+
+No ciclo Diesel típico:
+
+| Processo | Tipo | ΔU | Q | W |
+|---|---|---|---|---|
+| Compressão (2 → 3) | Adiabático | ↑ | 0 | −(trabalho entra) |
+| Combustão (3 → 4) | Isobárico | ↑ | ↑↑ (grande) | + |
+| Expansão (4 → 1) | Adiabático | ↓ | 0 | ↑↑ (grande) |
+| Exaustão/admissão | Isocórico | — | ↓ | — |
+
+::: {.sp}
+Um motor diesel em carga nominal consome 200 kg/h de combustível (valor calorífico 40
+MJ/kg). Instrumentação mede: potência no eixo = 2500 kW. Água de refrigeração carrega
+2600 kg/h a temperatura de aumento de 8 K (c = 4,18 kJ/(kg·K)). Estimar Q₁, W, Q₂ e
+eficiência.
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Confundir ΔU com Q:** ΔU é mudança de energia interna (propriedade do sistema). Q é
+  calor transferido (processo). Num ciclo, ΔU = 0, mas Q ≠ 0.
+- **Esquecer de levar em conta TODOS os caminhos de saída de calor:** água de refrigeração
+  é ~30–40% do calor total. Exaustão é ~20–30%. Radiação da parede é 10–20%. Se você conta
+  só a água, perde 50% do Q₂.
+- **Usar "eficiência" como se fosse um número mágico:** η = 45% não significa que 45% do
+  combustível vira trabalho e 55% desaparece. Significa que dos 100 J de energia do
+  combustível, 45 J saem como trabalho (útil) e 55 J saem como calor (perda). Nada some.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: diagrama de fluxo de energia (Sankey diagram) mostrando 100 unidades de combustível dividindo-se em trabalho (45), água quente (30), exaustão (20), radiação (5); sliders para ajustar eficiência η do motor e ver como as proporções mudam (W sobe, mas Q₂ também); lib Plotly para diagrama de Sankey -->
+
+**Conexão com o próximo tópico:** a Primeira Lei aplicada a gases ideais — onde energia
+interna depende apenas de temperatura — abre o caminho para análise de ciclos reais
+(Otto, Diesel) usando diagramas P-V.

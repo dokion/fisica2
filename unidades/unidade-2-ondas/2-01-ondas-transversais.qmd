@@ -1,0 +1,74 @@
+---
+title: "2.1 — Ondas transversais"
+categories: [UE2, OE2.1-B1, OE2.2-B1, OE2.3-B2]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 2.1 [B1] Conceituar ondas transversais e suas características
+            → naval: Pulso sonoro do ecobatímetro
+OE 2.2 [B1] Identificar exemplos de ondas transversais em diferentes meios
+OE 2.3 [B2] Diferenciar ondas transversais de longitudinais
+            → naval: Som = longitudinal; radar = transversal (EM)
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 13-14 >}}
+
+Uma onda é uma perturbação que se propaga no espaço, transportando energia e informação. Nesta unidade começamos com **ondas transversais**, onde a perturbação ocorre *perpendicular* à direção de propagação. Este é o tipo mais visível em cordas e na superfície da água — mas também é o tipo que a engenharia de navegação usa em radar para detectar alvos, e que governa a estrutura eletromagnética do escâner de ecobatímetro moderno.
+
+## Conceito de onda transversal {{< ra OE2.1 B1 >}}
+
+Uma **onda transversal** é uma perturbação em que as partículas do meio oscilam *perpendicular* à direção de propagação. Imagine uma corda tensa: quando você "sacode" uma extremidade para cima e para baixo, a frente de onda viaja ao longo do comprimento da corda — mas cada ponto da corda sobe e desce, nunca se move na direção de propagação.
+
+Formalmente, para uma onda 1D propagando no eixo $x$, a perturbação $y(x, t)$ (deslocamento transversal) é função de $x$ e $t$, mas a velocidade de cada partícula é sempre no eixo $y$:
+
+$$v_{\text{partícula}} = \frac{\partial y}{\partial t} \perp \hat{x} = \text{direção de propagação}$$
+
+A velocidade da frente de onda (velocidade de grupo ou de fase) — chamada **velocidade de propagação** ou **velocidade de fase** — é uma propriedade do meio, não do oscilador:
+
+$$v_{\text{onda}} = \frac{\lambda}{T} = \lambda f$$
+
+onde $\lambda$ é o comprimento de onda, $T$ o período e $f$ a frequência.
+
+## Exemplos e meios {{< ra OE2.2 B1 >}}
+
+Ondas transversais aparecem em contextos muito diversos:
+
+- **Cordas e cabos:** uma corda vibrante (como em um violão) propaga pulsos transversais;
+- **Superfície da água:** ondulações num tanque ou no oceano são transversais — a partícula sobe e desce, o comprimento de onda avança;
+- **Radiação eletromagnética:** campos elétrico e magnético oscilam *perpendicular* à direção de propagação (fundamental para radar, comunicações navais);
+- **Vibração de estruturas:** laminas e membranas vibram transversalmente.
+
+## Diferença entre ondas transversais e longitudinais {{< ra OE2.3 B2 >}}
+
+Nem toda onda é transversal. Existem **ondas longitudinais**, em que a partícula oscila *paralela* à direção de propagação.
+
+| Tipo | Direção da partícula | Direção de propagação | Exemplo | Naval |
+|---|---|---|---|---|
+| **Transversal** | Perpendicular | Paralela | Corda vibrante; onda na água; radar (EM) | Pulsos EM de radar; scanner de ecobatímetro transdutor |
+| **Longitudinal** | Paralela | Paralela | Som em fluido ou sólido; onda de compressão | Som em água (ecobatímetro e sonar); ultrassom de diagnóstico |
+
+A distinção é crucial: som viaja como *onda longitudinal* na água (compressões e rarefações sucessivas), mas o pulso de ativação do transdutor de um ecobatímetro é um trem *transversal* de EM que viaja ao transdutor — depois *converte-se* em longitudinal (som) dentro da água.
+
+::: {.sp}
+Um transdutor de ecobatímetro dual-frequência opera a 30 kHz e 200 kHz em água do mar. O comprimento de onda da propagação longitudinal a 30 kHz na água é $\lambda_{30} \approx 50\,\text{mm}$ (a velocidade do som no local é $\approx 1500\,\text{m/s}$ — faixa típica da costa).
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **"Onda = movimento de matéria"?** Não: a onda transporta energia, mas a partícula apenas oscila — em onda transversal, a partícula nunca se move junto com a frente de onda, só perpendicular a ela.
+- **Confundir "transversal" com "direção":** transversal não é uma direção absoluta no espaço — é *relativa à propagação*. Uma onda que sobe-desce é transversal se propaga horizontalmente, mas seria longitudinal se propagasse na vertical.
+- **Som na água é transversal?** Não — som é sempre longitudinal (compressões). O radar (EM) é transversal. O pulso que *ativa* o transdutor é EM (transversal), mas o pulso que sai na água é sonoro (longitudinal).
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Animação de uma corda vibrante mostrando partículas subindo-descendo enquanto a frente de onda avança (p5.js). Parâmetros: λ = 0,5 m (no canvas), f = 2 Hz (ajustável 1–5 Hz), mostrar também a onda transversal EM de um radar — amplitude reduzida, frequência 1000× maior (ordem visual). Comparar lado a lado com uma onda longitudinal (compressões/rarefações) para contrastar. -->
+
+**Conexão com o próximo tópico:** definida a existência de dois tipos de onda, aprendemos agora que **duas ondas da mesma natureza podem somar-se** — é o princípio da superposição, que gera interferência construtiva, destrutiva e fasores.

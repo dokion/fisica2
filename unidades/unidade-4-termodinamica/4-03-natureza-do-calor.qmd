@@ -1,0 +1,114 @@
+---
+title: "4.3 — Natureza do calor"
+categories: [UE4, OE4.9-B2, OE4.10-B2, OE4.11-B2]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 4.9 [B2] Conceituar calor como uma forma de energia em trânsito
+            → naval: Fluxo de calor no ciclo do motor diesel
+OE 4.10 [B2] Diferenciar calor de temperatura
+            → naval: Distinção operacional em monitoramento de máquinas
+OE 4.11 [B2] Explicar os mecanismos de transferência de calor
+             → naval: Condução/convecção/radiação em trocadores e caldeiras
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 31-32 >}}
+
+Durante séculos, pensava-se que calor era um "fluido invisível" chamado flogisto. Hoje
+sabemos que calor é **energia em movimento microscópico** — o resultado macroscópico das
+colisões entre moléculas que vibram. Essa mudança conceitual é decisiva em máquinas navais:
+não há "quantidade de calor armazenada" em um corpo; há energia interna (que depende de
+temperatura), e calor é o que flui de um lado para o outro quando há diferença de
+temperatura. Compreender essa distinção é entender por que o operador monitora
+temperaturas (não "quantidade de calor") e por que um motor diesel desperdiça tanta energia
+em radiação para o ar da praça de máquinas.
+
+## Calor e temperatura — duas grandezas diferentes {{< ra OE4.10 B2 >}}
+
+**Temperatura:** propriedade intensiva do sistema — não depende da quantidade de matéria.
+Medida em K ou °C.
+
+**Calor:** energia transferida entre dois sistemas por diferença de temperatura. Medida em
+joules (J). Depende de quanto material está envolvido.
+
+Exemplo:
+
+- Uma xícara de água a 80 °C: alta temperatura, **pouco calor** disponível.
+- Uma piscina a 20 °C: baixa temperatura, **muito calor** disponível (muito mais que a
+  xícara).
+
+Se você mergulhasse a xícara quente na piscina, a xícara esfriaria porque o calor flui da
+xícara para a água — apesar de a xícara ter maior temperatura. Fluxo de calor vai sempre de
+alta para baixa temperatura, independentemente de qual corpo "tem mais calor" em volume
+total.
+
+## Conceituar calor como energia em trânsito {{< ra OE4.9 B2 >}}
+
+Microscopicamente, temperatura é energia cinética média das moléculas:
+
+$$\langle E_c \rangle \propto T$$
+
+**Calor** é energia que passa de um corpo a outro porque suas moléculas têm energias
+cinéticas médias diferentes. Não é uma propriedade do corpo — é um processo.
+
+Isso tem implicação prática: não se pergunta "quanto calor tem o motor diesel?" (pergunta
+sem sentido). Pergunta-se "quanto calor o motor está gerando por hora?" (resposta: potência
+térmica em kW). Ou "quanto calor sai pela água de refrigeração?" (resposta: fluxo de calor
+em kJ/s).
+
+## Mecanismos de transferência {{< ra OE4.11 B2 >}}
+
+Existem três caminhos pelos quais o calor flui:
+
+**Condução:** em sólidos e fluidos em repouso. Moléculas vibrando conferem energia às
+vizinhas. Sem movimento macroscópico. Exemplo: parede do cilindro de um motor aquecido de
+dentro transmite calor para a água de refrigeração do lado de fora.
+
+**Convecção:** em fluidos (líquidos e gases). O fluido quente sobe; o frio desce. Há
+movimento macroscópico de massa. Exemplo: ar quente da praça de máquinas sobe por
+ventilação natural; trocadores de calor usam bombas para forçar convecção.
+
+**Radiação:** sem meio material. Toda superfície aquecida emite radiação eletromagnética.
+Exemplo: chaminé de vapor de uma caldeira irradia energia para o céu; corpo do motor
+irradia para o ar ambiente.
+
+Em máquinas navais, todos os três ocorrem:
+
+| Processo | Onde aparece | Importância em bordo |
+|---|---|---|
+| Condução | Paredes de cilindro, tubulações | Principal transferência do ciclo |
+| Convecção | Água de refrigeração, ar da praça | Remoção eficiente de calor residual |
+| Radiação | Superfícies externas do motor | Perdas parasitas, contribui ao calor ambiente |
+
+::: {.sp}
+Um trocador de calor de bordo recebe óleo de motor a 95 °C na entrada e água de refrigeração
+a 35 °C. O trocador está isolado (caixa com espuma poliuretana). A potência térmica
+esperada é 500 kW.
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **"Calor é uma propriedade do corpo":** não. Temperatura é propriedade; calor é
+  transferência. Um corpo **tem** temperatura; um corpo **troca** calor.
+- **Confundir "calor necessário para aquecer" com "temperatura do corpo":** para aquecer
+  um litro de água em 10 K são ~42 kJ. Para aquecer 1 m³ de água (1000 L) em 1 K são
+  ~4200 kJ. Quantidades muito diferentes, mas ambas começam a 20 °C.
+- **Esquecer que radiação ocorre sempre:** a praça de máquinas está sempre irradiando
+  energia. Se não houvesse convecção (ventilação), a radiação sozinha nunca seria suficiente
+  para resfriar — daí por que ventiladores são críticos.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: trocador de calor visual com dois fluidos (cores quentes/frias), sliders de temperatura de entrada e vazão, mostrando as três formas de transferência ativas (condução através da parede destacada, convecção dos fluidos em movimento, radiação das superfícies externas); lib p5.js para animação de movimento de fluido + Plotly para gráfico T de saída vs. vazão -->
+
+**Conexão com o próximo tópico:** se calor é energia em trânsito, quanto de energia passa?
+Resposta: quantidade de calor (Q) em joules, que relaciona massa, temperatura e uma
+propriedade do material chamada calor específico.

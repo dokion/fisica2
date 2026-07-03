@@ -1,0 +1,93 @@
+---
+title: "2.5 — Ondas sonoras progressivas"
+categories: [UE2, OE2.14-B2, OE2.15-B2, OE2.16-B4]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 2.14 [B2] Caracterizar ondas sonoras progressivas e sua equação de onda
+OE 2.15 [B2] Explicar a propagação de ondas sonoras em meios homogêneos
+            → naval: Propagação do pulso no ecobatímetro
+OE 2.16 [B4] Analisar a relação entre frequência, comprimento de onda e velocidade
+            → naval: Cálculo de profundidade: d = v·t/2
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 15-16 >}}
+
+Uma onda sonora progressiva é aquela que se propaga numa única direção, levando energia do ponto de emissão ao de recepção. No ecobatímetro e no sonar, o pulso sonoro é justamente uma onda progressiva — emitida pelo transdutor, viaja até o fundo, reflete e retorna. Neste tópico, descrevemos formalmente como caracterizar uma onda sonora progressiva, qual é a equação que governa sua propagação e como relacionar os parâmetros observáveis (frequência, comprimento de onda, tempo de viagem).
+
+## Caracterização de ondas sonoras progressivas {{< ra OE2.14 B2 >}}
+
+Uma **onda sonora progressiva** se propaga numa única direção (ex.: $+x$) e é descrita por uma função que depende de $x$ e $t$ na forma:
+
+$$p(x, t) = p_0\cos(kx - \omega t + \varphi)$$
+
+onde:
+- $p(x, t)$ é a pressão acústica (desvio da pressão atmosférica);
+- $p_0$ é a amplitude de pressão;
+- $k = \frac{2\pi}{\lambda}$ é o número de onda;
+- $\omega = 2\pi f$ é a frequência angular;
+- $\varphi$ é a fase inicial.
+
+A relação fundamental entre $k$, $\omega$ e velocidade de propagação é a **relação de dispersão**:
+
+$$\omega = kv \quad \Rightarrow \quad v = \frac{\omega}{k} = \frac{2\pi f}{2\pi / \lambda} = f\lambda$$
+
+Esta é a equação de **relação entre frequência, comprimento de onda e velocidade**. Para uma onda sonora progressiva num meio homogêneo (velocidade constante), ela descreve completamente o comportamento ondulação.
+
+## Propagação em meios homogêneos {{< ra OE2.15 B2 >}}
+
+Num meio homogêneo (densidade e compressibilidade constantes), a velocidade do som é constante, e uma onda sonora progressiva mantém sua forma enquanto propaga. A equação diferencial que governa a propagação é a **equação de onda**:
+
+$$\frac{\partial^2 p}{\partial x^2} = \frac{1}{v^2}\frac{\partial^2 p}{\partial t^2}$$
+
+Podemos verificar que $p(x, t) = p_0\cos(kx - \omega t)$ satisfaz esta equação, desde que $\omega = kv$.
+
+**Fisicamente:** no ecobatímetro, um transdutor piezoelétrico oscila numa frequência fixa $f$ (ex.: 50 kHz), criando uma onda de compressão na água. Essa onda se propaga com velocidade $v \approx 1500\,\text{m/s}$ (temperatura e pressão dependentes). O comprimento de onda é $\lambda = v/f \approx 0{,}030\,\text{m}$ — muito menor que a profundidade, o que justifica a aproximação de "raio" (propagação praticamente reta em camadas homogêneas).
+
+## Frequência, comprimento de onda e velocidade {{< ra OE2.16 B4 >}}
+
+A relação $v = f\lambda$ é tão central que vale examinar casos práticos em detalhe.
+
+**Exemplo 1:** Um transdutor de 200 kHz emite num tanque com água doce ($v = 1480\,\text{m/s}$).
+$$\lambda = \frac{v}{f} = \frac{1480}{200\,000} = 7{,}4\,\text{mm}$$
+
+Comprimento de onda muito curto — excelente resolução vertical (capacidade de diferenciar estruturas pequenas no fundo).
+
+**Exemplo 2:** Mesmo transdutor em água salgada ($v = 1540\,\text{m/s}$).
+$$\lambda = \frac{1540}{200\,000} = 7{,}7\,\text{mm}$$
+
+Pequena mudança de velocidade → pequena mudança de comprimento de onda. Mas o tempo de viagem (usado para calcular profundidade) **é inversamente proporcional a $v$**: se $v$ muda de 1480 para 1540 m/s, o tempo cai, e uma profundidade lida incorretamente será subestimada sem correção.
+
+**Cálculo de profundidade:** o ecobatímetro envia um pulso no instante $t=0$ e recebe o eco no instante $t_r$ (tempo de retorno). A profundidade é:
+
+$$d = \frac{v \times t_r}{2}$$
+
+O fator 2 aparece porque o som viaja de ida (transdutor → fundo) e volta (fundo → transdutor). Se o tempo medido é $t_r = 0{,}267\,\text{s}$ e $v = 1500\,\text{m/s}$:
+
+$$d = \frac{1500 \times 0{,}267}{2} = 200{,}25\,\text{m}$$
+
+Qualquer incerteza em $v$ (por termoclina, salinidade) afeta diretamente a profundidade calculada — é por isso que ecobatímetros modernos incluem sensores de temperatura.
+
+::: {.sp}
+Um navio em navegação coastal usa ecobatímetro de 38 kHz para mapear o fundo. No momento da medida, a profundidade verdadeira é 150 m. A temperatura é 15 °C (velocidade $v = 1485\,\text{m/s}$), salinidade 30 PSU (pequena redução de $v$ em relação a 35 PSU).
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Confundir $v$ (velocidade de propagação da onda) com velocidade da partícula:** $v$ é uma propriedade do meio; a partícula oscila com amplitude e frequência muito menores.
+- **Esquecer o fator 2 em $d = vt/2$:** o som vai e volta — comum cometer o erro $d = vt$ (sem dividir por 2), gerando profundidade dobrada.
+- **Assumir que frequência e comprimento de onda são independentes:** não são — estão vinculados por $v = f\lambda$. Se $v$ muda, ou $f$ muda ou $\lambda$ muda (ou ambos), mas o produto fica determinado.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Mostrar onda progressiva $p(x,t)$ num instante fixo $t$ (gráfico p vs. x) e em posição fixa $x$ (gráfico p vs. t). Entrada: frequência (20–200 kHz), velocidade (1400–1540 m/s, ajustável por slider "Temperatura"). Saída em tempo real: comprimento de onda $\lambda$, período $T$, visualização de "marcadores" em cristas e vales mostrando movimento (para $t$ crescente, o padrão se desloca). Mostrar também: tempo para percorrer profundidade de 100, 200, 500 m. Lib p5.js ou Plotly. -->
+
+**Conexão com o próximo tópico:** definida a forma e a propagação de uma onda sonora, falta quantificar sua "força" — *quanto* de energia ela carrega, e como essa energia varia com a amplitude e a frequência. Isso é **intensidade e nível sonoro**, tema do tópico 2.6.

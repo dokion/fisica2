@@ -1,0 +1,107 @@
+---
+title: "4.1 — Temperatura e Lei Zero da Termodinâmica"
+categories: [UE4, OE4.1-B2, OE4.2-B1, OE4.3-B2, OE4.4-B2]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 4.1 [B2] Explicar o conceito de temperatura e sua relação com o equilíbrio térmico
+            → naval: Equilíbrio térmico em trocadores de calor
+OE 4.2 [B1] Enunciar a Lei Zero da Termodinâmica
+            → naval: Base para instrumentação de temperatura de bordo
+OE 4.3 [B2] Interpretar a Lei Zero da Termodinâmica
+            → naval: Calibração de termômetros em praça de máquinas
+OE 4.4 [B2] Justificar a necessidade de escalas termométricas
+            → naval: Escalas usadas em instrumentos de máquinas
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 31-32 >}}
+
+Antes de qualquer máquina térmica — motor diesel, caldeira ou trocador de calor — vem a
+pergunta fundamental: como a gente mede o quanto um corpo está quente? Temperatura é a
+grandeza central da termodinâmica de bordo, e entender seu significado físico é
+entender por que um termômetro funciona, por que os instrumentos de máquinas precisam
+de calibração e por que dois corpos em contato sempre trocam calor até ficarem em
+equilíbrio.
+
+## O conceito de temperatura e equilíbrio térmico {{< ra OE4.1 B2 >}}
+
+Dois corpos "próximos" trocam calor. Depois de tempo suficiente, param de trocar calor.
+Nesse momento, a gente diz que os corpos atingiram **equilíbrio térmico** — e a
+propriedade que mede essa condição é a **temperatura**. Formalmente:
+
+**Temperatura** é a propriedade de um sistema que determina se ele está ou não em
+equilíbrio térmico com outro sistema. Quando dois corpos têm a mesma temperatura,
+nenhum calor flui entre eles.
+
+Não é "quanto calor tem dentro". É a propriedade que governa quando a troca de calor
+para. Em trocadores de bordo, é justamente por diferença de temperatura que água quente
+passa seu calor para óleo de refrigeração.
+
+## Lei Zero da Termodinâmica {{< ra OE4.2 B1 >}} {{< ra OE4.3 B2 >}}
+
+Se o corpo A está em equilíbrio térmico com B, e B está em equilíbrio com C, então A
+está em equilíbrio com C. Parece óbvio, mas é profundo — é o fundamento lógico de toda
+medição de temperatura:
+
+**Lei Zero da Termodinâmica:** Se dois sistemas estão em equilíbrio térmico com um
+terceiro, então estão em equilíbrio térmico um com o outro.
+
+Essa lei justifica por que um termômetro funciona: o termômetro (corpo B) toca o sistema
+quente (corpo A), ambos entram em equilíbrio, e depois comparamos o termômetro com uma
+escala calibrada (corpo C). A lei nos garante que se o termômetro tem a mesma
+temperatura que uma marca na escala, então o sistema original A tem essa temperatura.
+
+Em praça de máquinas, é por isso que a calibração periódica dos termômetros é crítica —
+se o termômetro não entra em equilíbrio real com o óleo ou a água, a leitura mente, e o
+operador não sabe a temperatura verdadeira do sistema.
+
+## Escalas termométricas {{< ra OE4.4 B2 >}}
+
+A temperatura é uma propriedade, mas como medimos números? Precisamos de uma **escala
+termométrica** — uma convenção de como associar números a estados térmicos.
+
+As escalas mais usadas em máquinas marítimas são:
+
+- **Celsius (°C):** água congela em 0 °C, ferve em 100 °C (a 1 atm). Padrão em
+  instrumentos de máquinas.
+- **Kelvin (K):** começa em zero absoluto (−273,15 °C). Única escala científica para
+  gases. Diferenças em K são iguais a diferenças em °C: ΔT[K] = ΔT[°C].
+- **Fahrenheit (°F):** ainda aparece em cartas de navegação antigas; raro em máquinas
+  modernas.
+
+Conversão essencial:
+
+$$T[\text{K}] = T[°\text{C}] + 273{,}15$$
+
+::: {.sp}
+Um trocador de calor de bordo recebe água quente a 75 °C na entrada. Simultaneamente,
+o sistema de refrigeração do motor mede 45 °C. O operador precisa verificar se há
+diferença de temperatura suficiente para que a troca de calor funcione.
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Confundir temperatura com calor:** temperatura é propriedade do corpo (K ou °C);
+  calor é energia em trânsito (J). Um litro de água a 60 °C tem menos calor que 100
+  litros de água a 50 °C.
+- **Esquecer de converter para Kelvin em cálculos:** razões de pressão, volume ou
+  energia envolvem **sempre** Kelvin, não Celsius.
+- **Pensar que "zero Celsius = nada":** zero Celsius é uma convenção de escala (ponto de
+  fusão da água). Zero Kelvin (−273,15 °C) é o verdadeiro vazio térmico — energia
+  cinética mínima possível.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: termômetro virtual calibrado em duas escalas (Celsius e Kelvin), slider de temperatura (−50 °C a +100 °C), mostrando em tempo real a conversão e indicador visual de "em equilíbrio com..." para demonstrar Lei Zero; lib Plotly (gráfico de temperatura real vs. tempo) -->
+
+**Conexão com o próximo tópico:** sabendo medir temperatura, perguntamos: o que acontece
+com tamanhos e volumes quando um corpo é aquecido? Resposta: dilatação térmica (tópico
+4.2).

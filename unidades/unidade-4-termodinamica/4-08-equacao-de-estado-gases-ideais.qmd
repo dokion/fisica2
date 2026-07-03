@@ -1,0 +1,129 @@
+---
+title: "4.8 — Equação de estado dos gases ideais"
+categories: [UE4, OE4.25-B2, OE4.26-B3, OE4.27-B3]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 4.25 [B2] Explicar o comportamento macroscópico dos gases ideais
+            → naval: Gás de trabalho no ciclo ideal do motor
+OE 4.26 [B3] Derivar a equação de estado dos gases ideais
+            → naval: Estado dos gases no ciclo Otto/Diesel/Dual
+OE 4.27 [B3] Aplicar a equação de estado em diferentes condições físicas
+            → naval: Cálculo de pressões e temperaturas no ciclo
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 33-34 >}}
+
+O gás dentro de um cilindro de motor diesel está a pressões de 40–200 bar e temperaturas
+de 400–2000 K, em volume que muda continuamente. Como saber P, V, T em cada ponto do ciclo?
+A resposta vem de uma equação simples mas poderosa, a **equação de estado dos gases ideais**
+— que relaciona pressão, volume e temperatura de forma determinística. Em máquinas navais,
+essa equação é a ponte entre o que você mede na agulha do manômetro e o que acontece
+termicamente dentro do cilindro.
+
+## Comportamento macroscópico de gases {{< ra OE4.25 B2 >}}
+
+Experimentalmente, observa-se que para um gás puro confinado em volume constante:
+
+- Se $T$ aumenta, $P$ aumenta proporcionalmente (Lei de Gay-Lussac).
+- Se $V$ aumenta (a $T$ constante), $P$ cai (Lei de Boyle).
+- Se $n$ (quantidade de mols) aumenta (V, T constantes), $P$ aumenta.
+
+Essas três leis independentes condensam-se em uma única relação:
+
+$$PV \propto nT$$
+
+## Derivação formal {{< ra OE4.26 B3 >}}
+
+Postulando proporcionalidade e introduzindo a **constante dos gases R** (universal):
+
+$$PV = nRT$$
+
+**Constante universal:** $R = 8{,}314\ \text{J/(mol·K)}$
+
+Se você tem $n$ mols de gás, pode prever P, V, T desde que conheça dois dos três. A forma
+mais prática separa massa do número de mols:
+
+$$PV = mR_{\text{esp}} T$$
+
+onde $R_{\text{esp}} = R / M$ é a constante específica (J/(kg·K)), com M sendo massa molar
+(kg/mol).
+
+Para gases comuns:
+
+| Gás | M [g/mol] | R_esp [J/(kg·K)] | Aplicação de bordo |
+|---|---|---|---|
+| Ar (média) | 29 | 287 | Ciclo diesel |
+| N₂ (nitrogênio) | 28 | 297 | [VERIFICAR] |
+| O₂ (oxigênio) | 32 | 260 | Combustão |
+| H₂O (vapor) | 18 | 462 | Caldeira, condensação |
+
+No ciclo diesel, o gás é principalmente ar + produtos de combustão (aproximadamente ar).
+
+## Aplicações práticas {{< ra OE4.27 B3 >}}
+
+**Exemplo 1 — Compressão inicial (ponto 1 do ciclo):**
+
+Cilindro de motor (volume V₁ = 1000 cm³ = 0,001 m³), ar a T₁ = 300 K (27 °C), P₁ = 1 bar.
+
+Quantos mols de ar?
+
+$$n = \frac{P_1 V_1}{RT_1} = \frac{1 \times 10^5 \times 0{,}001}{8{,}314 \times 300}
+\approx 0{,}040\ \text{mol}$$
+
+(ou em massa: 0,040 mol × 0,029 kg/mol ≈ 0,0012 kg = 1,2 g)
+
+**Exemplo 2 — Após compressão adiabática até P₂ = 40 bar (ponto 2):**
+
+Volume cai para V₂ (incógnita); temperatura sobe para T₂ (incógnita). Adiabático: nenhum
+calor entra.
+
+Para gás ideal com adiabático, vale $PV^\gamma = \text{constante}$ (veremos no tópico 4.11).
+Com γ = 1,4 (ar):
+
+$$P_1 V_1^{1{,}4} = P_2 V_2^{1{,}4}$$
+
+$$1 \times (0{,}001)^{1{,}4} = 40 \times V_2^{1{,}4}$$
+
+$$V_2 = \left(\frac{1}{40}\right)^{1/1{,}4} \times 0{,}001 \approx 0{,}000145\ \text{m}^3$$
+
+Temperatura após compressão:
+
+$$T_2 = T_1 \left(\frac{P_2}{P_1}\right)^{(\gamma-1)/\gamma}
+= 300 \times (40)^{0{,}2857} \approx 800\ \text{K}$$
+
+(Muito quente, mas abaixo da combustão — combustível não ignita ainda em diesel, precisa de
+injeção)
+
+::: {.sp}
+Cilindro de motor diesel duplo de 2 tempos, volume total V = 500 cm³. No ponto de máxima
+compressão antes da injeção de combustível (ponto 2): P = 80 bar, T = 900 K. Após
+combustão a volume constante (queimador súbito), pressão sobe para P = 150 bar. Qual a
+temperatura após a combustão (ponto 3)?
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Esquecer de usar Kelvin:** PV = nRT **exige sempre** T em Kelvin, nunca Celsius. Se você
+  usar T em °C, as contas dão valores errados de ordens de magnitude.
+- **Confundir "gás ideal" com "gás real":** a equação PV = nRT é uma aproximação. Gases
+  reais (CO₂, H₂O em vapor de alta pressão) desviam dela. Mas ar/nitrogênio em condições
+  de motor são aproximadamente ideais.
+- **Assumir que n é constante:** se queimador abre e gases escapam, n muda. Equação
+  continua válida, mas n₁ ≠ n₂. Ciclos com vazamento são mais complexos.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: gráfico P-V interativo mostrando um cilindro de motor, com sliders para T (variando cor do gás visualmente: azul frio, vermelho quente), mostrando em tempo real as curvas PV = constante (isotérmicas) e PV^γ = constante (adiabáticas) no plano P-V; lib Plotly com múltiplas curvas de gás -->
+
+**Conexão com o próximo tópico:** sabendo P, V, T em cada ponto do ciclo, você quer saber
+**quanto de energia** está armazenada no gás. Resposta: energia interna, que depende de
+temperatura — e da entalpia, no caso de sistemas abertos como trocadores.

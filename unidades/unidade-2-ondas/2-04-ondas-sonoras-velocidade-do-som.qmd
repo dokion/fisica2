@@ -1,0 +1,86 @@
+---
+title: "2.4 — Ondas sonoras e velocidade do som"
+categories: [UE2, OE2.11-B1, OE2.12-B2, OE2.13-B2]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 2.11 [B1] Definir ondas sonoras e sua propagação em diferentes meios
+            → naval: Velocidade do som na água do mar
+OE 2.12 [B2] Explicar os fatores que influenciam a velocidade do som
+            → naval: Temperatura, salinidade, pressão — erros do ecobatímetro
+OE 2.13 [B2] Comparar a velocidade do som em sólidos, líquidos e gases
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 15-16 >}}
+
+O som é a onda mais comum que experimentamos — e, na navegação, é a mais importante para sensorear o ambiente submarino. Diferentemente de ondas eletromagnéticas (que não se propagam bem na água), o som se propaga com velocidade relativamente alta na água e em sólidos, permitindo que ecobatímetros e sonares "vejam" o que está embaixo. Neste tópico definimos ondas sonoras formalmente, explicamos o que determina sua velocidade e por que essa velocidade varia dramaticamente com a profundidade.
+
+## O que é uma onda sonora {{< ra OE2.11 B1 >}}
+
+Uma **onda sonora** é uma onda **longitudinal** de compressão e rarefação que se propaga num meio elástico (sólido, líquido ou gás). Diferentemente de uma onda transversal (que move as partículas perpendicular à propagação), o som move as partículas *paralelo* à direção de propagação — gerando regiões onde a densidade e a pressão são maiores (compressão) e menores (rarefação) que o valor de equilíbrio.
+
+Formalmente, a **pressão acústica** $p(x, t)$ (desvio da pressão de equilíbrio) em uma onda sonora progressiva é:
+
+$$p(x, t) = p_0\cos(kx - \omega t)$$
+
+onde $p_0$ é a amplitude de pressão e $k$ é o número de onda.
+
+A velocidade de propagação de uma onda sonora num meio elástico é determinada pelas propriedades *inerciais* (massa específica $\rho$) e *elásticas* (módulo de compressibilidade $B$) do meio:
+
+$$v_{\text{som}} = \sqrt{\frac{B}{\rho}}$$
+
+Esta fórmula é universal: vale para sólidos, líquidos e gases, desde que o som se propague linearmente.
+
+## Fatores que influenciam a velocidade do som {{< ra OE2.12 B2 >}}
+
+Na água do mar, a velocidade do som **não é constante** — varia com temperatura, salinidade e pressão (profundidade). Essas variações têm efeitos profundos nos equipamentos de navegação.
+
+**Temperatura:** é o fator mais importante. A água mais quente tem moléculas movendo-se mais rapidamente, facilitando a propagação. Na superfície tropical, $v \approx 1540\,\text{m/s}$; em águas polares, $v \approx 1400\,\text{m/s}$.
+
+**Salinidade:** aumenta a velocidade ligeiramente. Água destilada: $v \approx 1480\,\text{m/s}$; água salgada (35 PSU): $v \approx 1535\,\text{m/s}$ na mesma temperatura.
+
+**Pressão (profundidade):** em águas profundas, a compressão aumenta a velocidade novamente. A dependência é:
+
+$$v(z) = v_{\text{sup}} + \alpha z$$
+
+onde $z$ é a profundidade, $\alpha \approx 1{,}6 \text{ (m/s)/(100\,\text{m})}$ é um coeficiente empírico.
+
+**Efeito combinado — o perfil de velocidade:** em oceanos reais, a temperatura cai com profundidade (até ~1000 m), mas a pressão sobe continuamente. Resultado: existe uma profundidade (de 400–1000 m em regiões tropicais) onde a velocidade é **mínima** — é o **canal SOFAR** (Sound Fixing And Ranging), uma zona de velocidade mínima onde o som se propaga com eficiência máxima devido à refração.
+
+**Erros no ecobatímetro:** se um ecobatímetro assume velocidade constante (ex.: 1500 m/s) mas a velocidade real varia com a profundidade, o cálculo de profundidade $d = v \cdot t / 2$ **fica errado**. Em águas profundas com termoclina acentuada, o erro pode ser de 5–15% — crítico para navegação de segurança.
+
+## Comparação entre sólidos, líquidos e gases {{< ra OE2.13 B2 >}}
+
+A fórmula $v = \sqrt{B/\rho}$ explica a hierarquia de velocidades. Sólidos têm módulo de compressibilidade muito maior que líquidos, que por sua vez têm módulos maiores que gases (a compressibilidade de um gás é ~10$^4$ vezes maior que a de um líquido).
+
+| Meio | Densidade $\rho$ (kg/m³) | Módulo $B$ (Pa) | Velocidade $v$ (m/s) |
+|---|---|---|---|
+| Ar (20 °C) | 1,2 | $1{,}4 \times 10^5$ | 343 |
+| Água (20 °C) | 998 | $2{,}2 \times 10^9$ | 1480 |
+| Aço | 7850 | $160 \times 10^9$ | 4500 |
+
+O som viaja ~4× mais rápido na água que no ar, e ~3× mais rápido no aço que na água. Consequência prática: em navios militares, o barulho se propaga muito bem pela estrutura de aço — importante para acústica de sigilo.
+
+::: {.sp}
+Um navio oceanogrăfico mede a profundidade usando ecobatímetro de frequência dupla (30 e 200 kHz). Na superfície, a temperatura é 28 °C (velocidade $v_0 = 1540\,\text{m/s}$), a profundidade real é $h = 400\,\text{m}$. A salinidade é 35 PSU (constante). Supor variação linear de temperatura com profundidade: $T(z) = 28 - 0{,}05z$ (°C), onde $z$ é profundidade em metros. Usar aproximação: $v(T) = 1540 - 2{,}1(28 - T) = 1540 - 2{,}1 \times 0{,}05z \approx 1540 - 0{,}105z$ (m/s).
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **"Som é mais rápido no ar que na água"?** Não — é ~4× mais lento no ar (343 m/s vs. 1480 m/s). A confusão vem de confundir som com luz.
+- **Assumir velocidade constante:** especialmente em sistemas costeiros com termoclina forte, isso leva a erros grandes de profundidade.
+- **Não diferenciar frequência de som:** a velocidade de fase $v = \lambda f$ é independente de frequência no regime linear. Logo, 30 kHz e 200 kHz viajam à mesma velocidade na mesma água — a diferença está na atenuação (absorção), que cresce com frequência.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Mostrar perfil de temperatura T(z) em tempo real (eixo Z de 0 a 4000 m, realista de oceano tropical). Calcular e exibir v(z) com a aproximação dada. Mostrar trilho de raio (traço do som) — se gradiente forte, raio se curva (refração). Entrada: temperatura superficial (8–30 °C), gradiente termoclina (0,01–0,1 °C/m). Lib Plotly ou p5.js. -->
+
+**Conexão com o próximo tópico:** agora que sabemos como e por que o som se propaga, aprendemos a **caracterizar uma onda sonora** de forma completa — sua equação diferencial, como escrever a solução em termos de amplitude e fase, e como relacionar frequência, comprimento de onda e velocidade.

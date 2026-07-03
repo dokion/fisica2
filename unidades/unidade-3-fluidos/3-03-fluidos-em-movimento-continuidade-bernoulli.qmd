@@ -1,0 +1,108 @@
+---
+title: "3.3 — Fluidos em movimento: equação da continuidade e equação de Bernoulli"
+categories: [UE3, OE3.9-B2, OE3.10-B3, OE3.11-B3, OE3.12-B3]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 3.9 [B2] Explicar o conceito de escoamento e sua classificação em laminar ou turbulento
+            → naval: Escoamento em tubulações de lastro e porão
+OE 3.10 [B3] Derivar a equação da continuidade e aplicá-la à conservação de massa em fluidos
+            → naval: Vazão em sistemas de bombeamento de bordo
+OE 3.11 [B3] Aplicar a equação de Bernoulli para analisar variações de pressão e velocidade
+            → naval: Propulsão por hélice; ação do leme
+OE 3.12 [B3] Resolver problemas práticos envolvendo escoamento em tubos e dutos
+            → naval: Sistemas de porão e lastro; válvulas de não-retorno
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 23-24 >}}
+
+Quando o fluido está em movimento, as coisas mudam drasticamente. Pressão, velocidade e altura se conectam por leis que governam bombas, sistema de propulsão, leme e toda a circulação de água e óleo a bordo. Este tópico é o coração da hidráulica naval: aprenderemos a **conservação de massa** (continuidade) — que liga vazão à velocidade — e a **conservação de energia** (Bernoulli) — que liga pressão à velocidade. Juntas, essas leis explicam por que a hélice empurra o navio e por que o leme funciona.
+
+## Escoamento: descrição e classificação {{< ra OE3.9 B2 >}}
+
+Um **escoamento** descreve como o fluido se move no espaço. Duas classificações são centrais:
+
+**Escoamento laminar vs. turbulento:**
+- **Laminar:** o fluido flui em camadas paralelas, sem mistura lateral. As partículas se movem em trajetórias ordenadas. Típico a baixas velocidades ou em tubos de diâmetro pequeno.
+- **Turbulento:** o escoamento é caótico. Redemoinhes e vórtices aparecem, aumentando a mistura. Típico a velocidades altas ou em geometrias complexas.
+
+Nos sistemas de bombeamento de bordo (porão, lastro, refrigeração), o escoamento pode ser laminar (óleos viscosos em tubos finos) ou turbulento (água em tubos largos de alta velocidade). A classificação depende do **número de Reynolds**, que veremos em detalhes no próximo tópico.
+
+**Escoamento permanente vs. transiente:**
+- **Permanente:** em cada ponto do espaço, a velocidade não muda no tempo (pode mudar de um ponto a outro, mas em cada ponto é constante).
+- **Transiente:** velocidade muda no tempo — ex., abrindo ou fechando uma válvula.
+
+Neste tópico, tratamos escoamento permanente.
+
+## Equação da continuidade {{< ra OE3.10 B3 >}}
+
+A **equação da continuidade** expressa a conservação de massa: toda a massa que entra em um tubo deve sair (se não há vazamento). A **vazão volumétrica** é:
+
+$$Q = A \cdot v$$
+
+onde $A$ é a área da seção transversal e $v$ é a velocidade média do fluido.
+
+Se o tubo tem dois trechos — seção 1 de área $A_1$ e velocidade $v_1$, seção 2 de área $A_2$ e velocidade $v_2$ — a continuidade de massa exige:
+
+$$\rho_1 A_1 v_1 = \rho_2 A_2 v_2$$
+
+Para fluido incompressível (água, óleos), $\rho$ é constante:
+
+$$A_1 v_1 = A_2 v_2 = Q$$
+
+Interpretação: se o tubo estreita ($A_2 < A_1$), a velocidade cresce ($v_2 > v_1$) para manter a mesma vazão. Essa propriedade é usada em medidores de vazão e em tubos de sucção de bombas — quanto menor a secção, maior a velocidade e, consequentemente, maior a queda de pressão (como veremos em Bernoulli).
+
+## Equação de Bernoulli {{< ra OE3.11 B3 >}}
+
+A **equação de Bernoulli** é a forma da conservação de energia para escoamento de fluido. Ela afirma que ao longo de uma linha de corrente (uma trajetória que o fluido segue), a soma de três formas de energia por unidade de volume é constante:
+
+$$P + \frac{1}{2}\rho v^2 + \rho g h = \text{constante}$$
+
+Cada termo tem unidade de pressão (Pa):
+- $P$: pressão estática (força por unidade de área)
+- $\frac{1}{2}\rho v^2$: pressão dinâmica (energia cinética por unidade de volume)
+- $\rho g h$: pressão hidrostática (energia potencial por unidade de volume)
+
+Entre dois pontos 1 e 2 em um escoamento permanente, sem perdas por atrito:
+
+$$P_1 + \frac{1}{2}\rho v_1^2 + \rho g h_1 = P_2 + \frac{1}{2}\rho v_2^2 + \rho g h_2$$
+
+Rearrajando:
+
+$$P_1 - P_2 = \frac{1}{2}\rho (v_2^2 - v_1^2) + \rho g (h_2 - h_1)$$
+
+Interpretação física: se a velocidade aumenta, a pressão estática diminui. Se a altura aumenta, a pressão hidrostática cresce. A soma das três é a energia total conservada.
+
+## Aplicações navais: tubo Pitot, hélice e leme {{< ra OE3.12 B3 >}}
+
+**Medição de velocidade:** um tubo Pitot (tubo de pressão dinâmica) tem uma abertura frontal voltada para o escoamento (ponto de estagnação, onde $v = 0$) e uma abertura lateral (pressão estática). A diferença de pressão entre elas dá a velocidade:
+
+$$P_{\text{dinâmica}} = \frac{1}{2}\rho v^2 \quad \Rightarrow \quad v = \sqrt{\frac{2(P_{\text{dinâmica}} - P_{\text{estática}})}{\rho}}$$
+
+**Tubo Venturi:** um tubo que estreita (como no carburador). Pela continuidade, a velocidade aumenta; pela Bernoulli, a pressão cai — esse vácuo pode ser usado para sugar fluido (ex., sucção de bomba).
+
+**Hélice e leme:** a hélice cria um escoamento de água ao redor de suas pás. A pressão mais baixa de um lado da pá (sucção) e mais alta do outro (pressão) gera uma força de empuxo — explicado completamente pela Bernoulli e mais adiante pelo Teorema de Kutta-Joukowski (Tópico 3.8).
+
+::: {.sp}
+Uma bomba de porão de navio graneleiro move água de lastro entre tanques a uma vazão $Q = 500$ m³/h ≈ 0.139 m³/s. A tubulação de sucção tem diâmetro $D_s = 250$ mm (seção 1); a tubulação de descarga tem diâmetro $D_d = 200$ mm (seção 2). A bomba eleva a água 15 m verticamente. Calcule as velocidades em cada seção e a diferença de pressão necessária (sem considerar perdas por atrito).
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Bernoulli com perdas:** a equação clássica assume fluido ideal, sem atrito. Fluidos reais perdem energia por viscosidade — Bernoulli com perdas inclui termo de dissipação $h_f$.
+- **Confundir pressão dinâmica com velocidade:** $\frac{1}{2}\rho v^2$ é energia cinética por volume; a velocidade é $v = \sqrt{2P_{\text{din}} / \rho}$.
+- **Nível de referência errado:** altura $h$ em Bernoulli deve sempre referir-se ao mesmo nível. Errar a referência erra toda a conta.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Gráfico de Bernoulli (Plotly) mostrando P, v², gh ao longo de um tubo convergente/divergente; ou animação de partículas em escoamento laminar/turbulento (p5.js, com toggle de viscosidade). -->
+
+**Conexão com o próximo tópico:** as equações de continuidade e Bernoulli valem para fluidos ideais. Mas no navio, a viscosidade importa — regime laminar vs. turbulento é a questão central, e o número de Reynolds classifica tudo. Tópico 3.4.

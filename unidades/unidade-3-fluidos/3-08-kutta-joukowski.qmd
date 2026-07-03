@@ -1,0 +1,103 @@
+---
+title: "3.8 — Teorema de Kutta-Joukowski"
+categories: [UE3, OE3.30-B2, OE3.31-B3, OE3.32-B2, OE3.33-B3]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 3.30 [B2] Explicar o Teorema de Kutta-Joukowski e sua relação com a circulação
+            → naval: Circulação ao redor da pá; vórtice de esteira
+OE 3.31 [B3] Determinar a força de sustentação sobre corpos imersos usando o teorema
+            → naval: Força propulsiva da pá do hélice
+OE 3.32 [B2] Relacionar o teorema com vórtices e o funcionamento de asas e hélices
+            → naval: Hélice skew-back; cavitação
+OE 3.33 [B3] Aplicar o conceito de vórtice de esteira para análise de escoamentos ao redor de perfis
+            → naval: Esteira do hélice; singing do hélice
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 29-30 >}}
+
+Até aqui, usamos coeficientes empíricos (como $C_L$) para calcular sustentação. Mas existe uma teoria **analítica** fundada em primeiros princípios que liga sustentação diretamente a uma propriedade do escoamento chamada **circulação**. O **Teorema de Kutta-Joukowski** é essa ponte: uma equação elegante que diz que sustentação é proporcional à circulação ao redor do corpo. Esse teorema não só explica por que um perfil gera sustentação, mas também prevê anomalias como cavitação e o "cantarolar" do hélice quando a velocidade é muito alta. É a última peça da teoria clássica de fluidos aplicada ao navio.
+
+## Circulação e vórtice {{< ra OE3.30 B2 >}}
+
+A **circulação** $\Gamma$ (gama) é uma medida de quanta "rotação" o fluido tem ao redor de um corpo. Formalmente, é a integral da velocidade tangencial ao longo de um caminho fechado:
+
+$$\Gamma = \oint \vec{v} \cdot d\vec{l}$$
+
+Se você traçar um caminho fechado em volta de um perfil e integrar a componente tangencial da velocidade, obtém $\Gamma$. Unidade SI: m²/s.
+
+Um **vórtice** é um padrão de escoamento onde a velocidade tangencial decresce com a distância do eixo: $v_{\theta} = \Gamma / (2\pi r)$. Vórtices aparecem naturalmente atrás de objetos — ex., a esteira turbilhonante de um hélice quando ele empurra água. O padrão de vórtices deixado para trás pelo hélice é chamado de **esteira de vórtice** ou **vortex street**.
+
+A circulação ao redor de um perfil (asa, pá de hélice) resulta da combinação de dois efeitos:
+1. O perfil, por sua forma e ângulo de ataque, **redireciona** o escoamento, criando um padrão de velocidades tangenciais.
+2. Essa redireção concentra-se na esteira do perfil, onde forma um vórtice de esteira — a contrapartida necessária (pelo teorema de Helmholtz sobre conservação de circulação).
+
+## Teorema de Kutta-Joukowski {{< ra OE3.31 B3 >}}
+
+O **Teorema de Kutta-Joukowski** afirma que a sustentação por unidade de envergadura (ou por unidade de comprimento axial, para uma pá) é:
+
+$$\frac{L}{b} = \rho v \Gamma$$
+
+ou, para uma pá inteira:
+
+$$L = \rho v \Gamma$$
+
+onde:
+- $\rho$ é a densidade do fluido
+- $v$ é a velocidade do escoamento não perturbado
+- $\Gamma$ é a circulação ao redor da seção (ou pá)
+- $b$ é a envergadura (ou "altura" da pá, de raiz a ponta)
+
+Essa é uma das relações mais elegantes da mecânica de fluidos: **sustentação é diretamente proporcional à circulação**. Sem circulação ($\Gamma = 0$), sem sustentação.
+
+A circulação $\Gamma$ é determinada pela forma do perfil e pelo ângulo de ataque. Para um perfil NACA típico, a circulação cresce linearmente com o ângulo até o stall, onde decresce abruptamente (separação do escoamento destrói a circulação).
+
+## Vórtices e funcionamento de asas, pás e hélices {{< ra OE3.32 B2 >}}
+
+Quando uma asa (ou pá de hélice) gera sustentação, ela cria um padrão de vórtices. O mais importante é o **vórtice de esteira (or trailing vortex)** — um vórtice que se forma na ponta da asa / pá e se propaga para trás. Essa é a "mancha" visível na esteira de um avião ou de um hélice de navio fotografado de cima.
+
+Para uma hélice:
+- Cada pá, ao girar, gera um vórtice de esteira.
+- Múltiplas pás (ex., 4 pás) geram múltiplos vórtices em sequência.
+- O padrão de vórtices deixado para trás interfere com as pás que vêm atrás, causando variação periódica de carga e vibração.
+
+**Hélice skew-back:** uma hélice com pás "torcidas" ou "skewed" (inclinadas angularmente ao longo do raio) distribui a geração de vórtices ao longo do tempo, reduzindo picos de vibração. É projeto mais sofisticado e mais caro, mas importante para navios que exigem baixa vibração.
+
+## Vórtice de esteira e análise de escoamento {{< ra OE3.33 B3 >}}
+
+A **esteira de vórtice** deixada por uma pá (ou asa) pode ser modelada como um par de vórtices — um no bordo de ataque e outro no bordo de fuga. O escoamento na ponta da pá, onde a circulação transiciona de um valor finito para zero (fora da pá), cria um vórtice intenso chamado de **vórtice marginal**.
+
+O comportamento dessa esteira de vórtice tem consequências práticas:
+1. **Indução de velocidade:** o vórtice de esteira induz uma velocidade a montante (upstream) que reduz efetivamente o ângulo de ataque aparente da pá. Isso reduz a sustentação — fenômeno chamado de "perdas induzidas".
+2. **Cavitação:** em regiões de baixa pressão (lado de sucção) próximas à ponta da pá, a circulação intensa reduz pressão ainda mais, aumentando risco de cavitação.
+3. **Ruído:** vórtices colidem com a estrutura do navio ou interagem com o leme, gerando som de alta frequência ("singing" do hélice ou "cavitation noise").
+
+A circulação ao longo do raio da pá varia: máxima perto do raiz (diâmetro maior), mínima na ponta. Essa distribuição de circulação é descrita pela **linha carregada** (loading line) do projeto de hélice — uma curva que otimiza sustentação local e minimiza perdas e cavitação.
+
+::: {.sp}
+Uma pá de hélice de navio experimenta uma velocidade média de fluxo $v = 7$ m/s e circulação média ao longo da envergadura $\Gamma = 8$ m²/s. A densidade de água é $\rho = 1025$ kg/m³. O navio tem 4 pás e o hélice gira a $N = 120$ rpm. Calcule:
+(a) A sustentação (força propulsiva) de uma pá usando Kutta-Joukowski.
+(b) O empuxo total do hélice (soma das 4 pás).
+(c) A potência necessária se a velocidade do navio é 12 nós.
+(d) Qual será a variação de pressão na pá se ela gera um vórtice marginal de circulação $\Gamma_{\text{ponta}} = 4$ m²/s?
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Confundir circulação com rotação angular:** circulação Γ tem dimensão [L²/T]; rotação angular ω tem dimensão [1/T]. Não são a mesma coisa — um hélice pode girar e ter circulação, ou estar parado (hidro-dinâmica) e ter circulação do escoamento ao seu redor.
+- **Vórtice de Rankine vs. vórtice irrotacional:** o vórtice idealizado em Kutta-Joukowski é **irrotacional** (fluido não rotaciona globalmente, só ao redor do núcleo); fluidos reais têm um núcleo viscoso onde há rotação. Modelo de Rankine combina os dois.
+- **Esteira de vórtice é "invisível" em água:** diferentemente de aviões (onde a esteira é visível em céu claro), em água é difícil ver diretamente — mas seus efeitos (vibração, cavitação) são bem reais.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Campo vetorial (p5.js ou SVG) mostrando escoamento ao redor de perfil, com cores indicando circulação local e magnitude de velocidade; slider de ângulo de ataque mudando circulação; ou visualizador de vórtice: mostrar linhas de corrente formando vórtice e magnitude de pressão (Plotly contour). -->
+
+**Conexão com o próximo tópico:** com o Teorema de Kutta-Joukowski, completamos a Mecânica dos Fluidos (UE 3). Os tópicos 3.1–3.8 fornecem toda a teoria necessária para entender flutuabilidade, estabilidade, propulsão e controle do navio. O próximo passo — a Unidade 4 — é **Termodinâmica**: compreender como a máquina propulsiva (motor diesel, turbina) converte combustível em trabalho mecânico que, acoplado ao hélice, move a embarcação. FIM DA UNIDADE 3.

@@ -1,0 +1,113 @@
+---
+title: "2.9 — Velocidades supersônicas e ondas de choque"
+categories: [UE2, OE2.25-B1, OE2.26-B2, OE2.27-B4]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 2.25 [B1] Conceituar velocidades subsônicas, sônicas e supersônicas
+OE 2.26 [B2] Explicar a formação de ondas de choque e suas consequências
+            → naval: Propagação anômala de radar
+OE 2.27 [B4] Analisar o cone de Mach e sua relação com a velocidade do objeto
+            → naval: Erros de radar em altas latitudes
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 19-20 >}}
+
+Quando um objeto se move tão rápido que ultrapassar a velocidade de propagação da onda que ele próprio gera, os princípios ondulatórios usuais quebram. Em vez de a onda preceder o objeto, o objeto alcança e ultrapassa a onda — criando uma **onda de choque** de grande amplitude. Embora em navio mercante as velocidades nunca atinjam regime supersônico no ar, na **água** as velocidades podem ficar próximas à do som (torpedos, propelentes cavitantes), e em **radar** (propagação EM atmosférica) as anomalias de propagação em altas latitudes são parcialmente explicadas por mecanismos similares. Compreender este regime extremo completa a física ondulatória.
+
+## Velocidades subsônicas, sônicas e supersônicas {{< ra OE2.25 B1 >}}
+
+Define-se o **número de Mach** como a razão entre velocidade do objeto e velocidade do som:
+
+$$M = \frac{v_{\text{obj}}}{v_{\text{som}}}$$
+
+Classificação:
+- **Subsônico:** $M < 1$ (velocidade abaixo do som). Ondas da fonte precedem o objeto.
+- **Sônico:** $M = 1$ (velocidade igual ao som). O objeto "alcança" a onda que emite.
+- **Supersônico:** $M > 1$ (velocidade acima do som). O objeto ultrapassa suas próprias ondas, criando "gap" de baixa pressão.
+
+Para referência:
+- Ar a 15 °C: $v_{\text{som}} \approx 340\,\text{m/s}$ (~1224 km/h, ~670 nós).
+- Água do mar: $v_{\text{som}} \approx 1500\,\text{m/s}$ (~5400 km/h, ~2919 nós).
+
+Um navio típico navega a 20 nós (~10 m/s), logo $M \approx 0{,}0067$ na água — profundamente subsônico. Um torpedo moderno pode atingir 40–50 nós, ainda subsônico na água ($M \approx 0{,}014$), mas um cavitador de alta velocidade pode chegar a velocidades onde cavitação (bolhas de vapor) cria efeitos acústicos próximos ao regime transônico.
+
+Em **radar (EM na atmosfera):** a velocidade não é a do objeto, mas a da onda EM distorcida pela refração atmosférica. Inversões térmicas em altas latitudes criam "dutos de propagação" onde a onda EM é redireciona — simulando velocidades aparentes que podem parecer supersônicas localmente.
+
+## Formação de ondas de choque {{< ra OE2.26 B2 >}}
+
+Quando um objeto atinge $M = 1$ (velocidade do som), a onda que ele emite fica "congelada" à sua frente — não consegue se propagar mais rápido que o objeto. Quando $M > 1$, o objeto ultrapassa a onda continuamente.
+
+Geometricamente, a onda acumulada forma um **cone** cuja superfície é perpendicular à direção de movimento. Toda a energia ondulatória que seria dispersa em todas as direções em regime subsônico agora se "comprime" nessa superfície cônica — a **onda de choque**, uma onda de amplitude *extremamente alta* e frente abrupta (descontinuidade).
+
+A **pressão dentro do choque** salta instantaneamente — causa efeitos destrutivos. Em regime de explosão (ex.: TNT), a onda de choque é letal a distâncias onde a pressão ultrapassa ~50 kPa. Em aplicações navais, cavitação com colapso de bolhas pode gerar micro-choques acústicos que danificam hélices.
+
+**Consequências práticas:**
+- **Mudança abrupta de pressão:** pode danificar estruturas se não preparadas.
+- **Atenuação:** mesmo que a onda de choque irradie energia, esta se dissipa rapidamente em regime de alta amplitude (não-linearidade).
+- **Propagação anômala em radar:** inversões térmicas criam "dutos" onde raios EM são refratados — simulam caminhos que parecem superar a velocidade do som em aparência (mas não de facto, já que é refração, não movimento).
+
+## O cone de Mach {{< ra OE2.27 B4 >}}
+
+Para um objeto em regime supersônico ($M > 1$), o **ângulo do cone de Mach** $\alpha$ (ângulo entre o eixo de movimento e a superfície do cone) é determinado por:
+
+$$\sin(\alpha) = \frac{1}{M}$$
+
+Equivalentemente:
+
+$$\alpha = \arcsin\left(\frac{1}{M}\right)$$
+
+**Interpretação:** o som emitido no instante $t_0$ da posição do objeto percorre distância $v_{\text{som}} \times \Delta t$ no tempo $\Delta t$. O objeto percorre $v_{\text{obj}} \times \Delta t = M v_{\text{som}} \times \Delta t$. A razão entre essas distâncias determina a geometria do cone:
+
+$$\tan(\alpha) = \frac{v_{\text{som}} \times \Delta t}{v_{\text{obj}} \times \Delta t} = \frac{1}{M}$$
+
+(em realidade é seno, não tangente, porque o cone é 3D).
+
+**Exemplos:**
+- $M = 2$: $\alpha = \arcsin(1/2) = 30°$ — cone estreito (frente muito afiada).
+- $M = 5$: $\alpha = \arcsin(1/5) \approx 11{,}5°$ — cone ainda mais estreito.
+- $M \to \infty$: $\alpha \to 0$ — cone degenera em "agulha" (velocidade infinita).
+
+A **largura da frente de onda** decresce com $M$ — quanto mais rápido, mais concentrada a energia, mais destrutiva a onda de choque.
+
+## Aplicação: propagação anômala de radar {{< ra OE2.26 B2 >}} e {{< ra OE2.27 B4 >}} (complementação)
+
+Embora radar use ondas eletromagnéticas (não sonoras), a **refração atmosférica** cria efeitos similares a ondas de choque em altas latitudes.
+
+Inversões térmicas (camadas quentes acima de camadas frias) criam **dutos de propagação**: raios EM são aprisionados numa faixa horizontal, viajando distâncias muito maiores que o horizonte óptico. Isso pode:
+
+1. Permitir detecção de alvos além do horizonte geométrico.
+2. Criar **"miragens" de radar** — sinais fantasma de objetos não presentes.
+3. Produzir efeitos de interferência e foco anômalo que simula movimento supersônico local.
+
+Em regiões polares (Ártico, Antártida) e em tropicodutos oceânicos, esses efeitos são bem conhecidos. Manuais de radar alertam: "em águas polares, interprete contatos com cautela — propagação anômala é comum."
+
+::: {.sp}
+Um navio em operação em latitudes altas (60° N) detecta um contato de radar a 50 km aparente. A altura do antena do navio é 25 m; a altura do alvo presumido é típica de navio (15 m). O horizonte óptico (linha reta sem refração) seria:
+
+$$R_{\text{óptico}} = \sqrt{2Rh_1} + \sqrt{2Rh_2} \approx \sqrt{2 \times 6{,}371 \times 10^6 \times 25} + \sqrt{2 \times 6{,}371 \times 10^6 \times 15}$$
+
+(usando $R = 6{,}371 \times 10^6\,\text{m}$, raio da Terra; resultado $\approx 17{,}9$ km + $\approx 13{,}9$ km ≈ 31{,}8 km).
+
+Distância detectada (50 km) > horizonte óptico (31,8 km) — há refração não-padrão.
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Confundir onda de choque com "frente de onda" normal:** em subsônico, há emissão contínua em todas as direções. Em supersônico, há *compressão* violenta numa superfície — toda a energia se concentra, criando mudança abrupta de pressão/densidade.
+- **Aplicar "cone de Mach" a objetos subsônicos:** em $M < 1$, não há cone — há ondas esféricas precedendo o objeto. Cone só existe para $M \geq 1$.
+- **Ignorar não-linearidade em choques:** acima de certo nível de pressão, equações lineares de onda (incluindo Doppler simples) falham. Shocks têm atraso de energia, absorção, e comportamento altamente não-linear.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Mostrar objeto (ponto) movendo-se em plano 2D, emitindo ondas sonoras (círculos). Controle deslizador: número de Mach M (0,5–3, em tempo real). Para M < 1: ondas precedem o objeto (subsônico usual). Para M = 1: onda "congela" à frente. Para M > 1: cone de Mach se forma, com ângulo α = arcsin(1/M). Mostrar também: "histórico" de ondas (10–20 quadros anteriores) como anéis concêntricos que formam o cone. Lib p5.js (animação contínua, renderização de círculos com degradação de opacidade). Exibir M, α (em graus) em tempo real no canto. -->
+
+**Conexão com o próximo tópico:** Completamos o estudo de **ondas em meios elásticos e ondas sonoras** (UE 2). O próximo grande tópico, UE 3, aborda **Mecânica dos Fluidos** — que, embora estude escoamentos e forças em fluidos, está intimamente ligado à ondulatória acústica via conceitos de pressão, densidade e propagação de perturbações.

@@ -1,0 +1,97 @@
+---
+title: "2.2 — Princípio da superposição, interferência e fasores"
+categories: [UE2, OE2.4-B2, OE2.5-B4, OE2.6-B3, OE2.7-B3]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 2.4 [B2] Descrever o princípio da superposição e sua aplicação em ondas
+            → naval: Interferência em sinais de sonar
+OE 2.5 [B4] Analisar interferência construtiva e destrutiva
+            → naval: Ecos múltiplos no ecobatímetro
+OE 2.6 [B3] Aplicar o conceito de fasores para representar ondas
+OE 2.7 [B3] Resolver problemas de interferência
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 13-14 >}}
+
+Quando duas ondas viajam no mesmo meio, elas não "colidem" e desaparecem — em vez disso, **somam-se**. Esse princípio, válido para ondas em regimes lineares, é a base para entender como dois ecos no sonar se reforçam ou se cancelam, e como o engenheiro de sistemas navais interpreta a assinatura acústica de um contato. Aqui estudamos o princípio da superposição e duas ferramentas poderosas: fasores e interferência.
+
+## Princípio da superposição {{< ra OE2.4 B2 >}}
+
+O **princípio da superposição** afirma que, quando duas ou mais ondas ocupam a mesma região do espaço, o deslocamento resultante é a **soma algébrica** dos deslocamentos individuais:
+
+$$y_{\text{total}}(x, t) = y_1(x, t) + y_2(x, t) + \cdots$$
+
+Isso é válido enquanto as amplitudes forem pequenas o suficiente para que o meio responda linearmente (assumido em toda esta unidade). Consequência: a presença de uma onda não altera a trajetória da outra — apenas somam-se.
+
+Em navegação acústica, duas reflexões do fundo (eco primário e eco fantasma por múltipla reflexão) chegam ao receptor em tempos ligeiramente diferentes e com fases diferentes. O algoritmo de processamento de sonar usa exatamente esse princípio: detecta a soma e deduz qual onda corresponde ao alvo e qual ao ruído.
+
+## Interferência construtiva e destrutiva {{< ra OE2.5 B4 >}}
+
+Suponha duas ondas harmônicas de mesma frequência $f$ e comprimento de onda $\lambda$, mas com amplitudes $A_1$ e $A_2$ e fases iniciais $\varphi_1$ e $\varphi_2$:
+
+$$y_1 = A_1\cos(kx - \omega t + \varphi_1), \quad y_2 = A_2\cos(kx - \omega t + \varphi_2)$$
+
+A soma é outra onda harmônica de mesma frequência, mas com amplitude resultante que depende da **diferença de fase** $\Delta\varphi = \varphi_2 - \varphi_1$:
+
+$$A_{\text{res}} = \sqrt{A_1^2 + A_2^2 + 2A_1 A_2\cos(\Delta\varphi)}$$
+
+Casos-limite:
+
+- **Interferência construtiva** ($\Delta\varphi = 0, 2\pi, 4\pi, \ldots$): $A_{\text{res}} = A_1 + A_2$ (máximo)
+- **Interferência destrutiva** ($\Delta\varphi = \pi, 3\pi, 5\pi, \ldots$): $A_{\text{res}} = |A_1 - A_2|$ (mínimo; se $A_1 = A_2$, anulam-se completamente)
+
+Na prática naval, um eco múltiplo (reflexão do fundo que bate novamente na superfície antes de retornar ao navio) chega com atraso e possível inversão de fase. O sonar detecta a interferência e subtrai a contribuição espúria do sinal útil.
+
+## Representação por fasores {{< ra OE2.6 B3 >}}
+
+A ferramenta mais prática para somar ondas é o **fasor**: uma seta num plano, de comprimento igual à amplitude e ângulo igual à fase no instante $t = 0$.
+
+Para $y_1 = A_1\cos(\omega t + \varphi_1)$ e $y_2 = A_2\cos(\omega t + \varphi_2)$, desenhamos:
+
+- Um vetor de módulo $A_1$ fazendo ângulo $\varphi_1$ com o eixo real;
+- Um vetor de módulo $A_2$ fazendo ângulo $\varphi_2$ com o eixo real.
+
+A soma $y_1 + y_2$ é representada pelo vetor resultante: sua projeção no eixo real (ou imaginário, dependendo da convenção) é o deslocamento total, e seu módulo é a amplitude resultante.
+
+Vantagem: operações trigonométricas complicadas viram somas de vetores — geometria plana resolve o problema.
+
+## Resolução de problemas de interferência {{< ra OE2.7 B3 >}}
+
+Um ecobatímetro transmite um pulso de 50 kHz em água com profundidade $d = 100\,\text{m}$ e velocidade do som $v = 1500\,\text{m/s}$. O pulso reflete no fundo (amplitude $A_0$) e em uma interface de sedimento a 80 m de profundidade (amplitude $0{,}4A_0$). Os dois ecos retornam com diferença de atraso temporal.
+
+Diferença de distância: $\Delta d = 2(100 - 80) = 40\,\text{m}$ (ida e volta).
+Atraso temporal: $\Delta t = \frac{40}{1500} \approx 26{,}7\,\text{ms}$.
+Diferença de fase: $\Delta\varphi = 2\pi f \Delta t = 2\pi \times 50\,000 \times 0{,}0267 \approx 8{,}39\,\text{rad} \approx 480° \approx 120°$.
+
+Usando a fórmula de amplitude resultante com $A_1 = A_0$, $A_2 = 0{,}4A_0$, $\Delta\varphi = 120°$:
+
+$$A_{\text{res}} = \sqrt{A_0^2 + (0{,}4A_0)^2 + 2 \times A_0 \times 0{,}4A_0 \times \cos(120°)}$$
+
+$$= A_0\sqrt{1 + 0{,}16 + 0{,}8 \times (-0{,}5)} = A_0\sqrt{1 + 0{,}16 - 0{,}4} = A_0\sqrt{0{,}76} \approx 0{,}87A_0$$
+
+A amplitude resultante é levemente menor que o eco principal — há interferência *parcialmente destrutiva*. O operador de sonar vê dois picos distintos (resolvidos pela diferença de atraso), mas com o segundo reduzido. Marcação correta do fundo: requer limiares ajustados e rejeição de eco fantasma (tópico 2.3).
+
+::: {.sp}
+Um sonar ativo em freqüência 37,5 kHz detecta dois ecos de um contato submerso. O primeiro eco (reflexão da popa) retorna após 4,0 s; o segundo (reflexão do costado) após 4,8 s. Na água, $v = 1500\,\text{m/s}$. Ambos os ecos têm amplitude nominal $A_0$ na origem.
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Somar amplitudes diretamente:** $A_{\text{res}} \neq A_1 + A_2$ em geral — depende da fase. Só vale se $\Delta\varphi = 0$ (interferência construtiva).
+- **Confundir diferença de fase com diferença de caminho:** $\Delta\varphi \neq \Delta d$ — a relação é $\Delta\varphi = 2\pi \Delta d / \lambda = k \Delta d$ (k = número de onda).
+- **Esquecer que "mesma frequência" é condição para superposição simples:** se frequências diferem, há batimentos (tópico 2.7), não interferência estacionária.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Diagrama de fasores interativo. Entrada: frequência (30–200 kHz, realista para ecobatímetro), amplitude (A₁ e A₂, cada uma 0–2 unidades), diferença de fase (0–360°, slider). Saída: círculo com dois vetores (fasores 1 e 2) em cores diferentes, vetor resultante em preto, amplitude resultante numérica, gráfico y(t) da onda resultante (senoide). Lib: p5.js ou Plotly. Parâmetros realistas de sonar. -->
+
+**Conexão com o próximo tópico:** quando ondas viajam num meio com contornos (superfícies sólidas, fundos, mudanças de propriedade), elas não apenas interferem — **refletem**. A reflexão é a origem dos ecos de sonar e ecobatímetro, e a chave para entender modos normais de vibração.

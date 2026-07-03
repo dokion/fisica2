@@ -1,0 +1,137 @@
+---
+title: "4.11 — Processos adiabáticos num gás ideal"
+categories: [UE4, OE4.34-B2, OE4.35-B3, OE4.36-B3]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 4.34 [B2] Caracterizar processos adiabáticos em sistemas termodinâmicos
+            → naval: Compressão adiabática no ciclo diesel
+OE 4.35 [B3] Derivar a equação de Poisson para transformações adiabáticas
+            → naval: Relação P-V na compressão do motor
+OE 4.36 [B3] Aplicar a equação de estado em processos adiabáticos
+            → naval: Temperatura de ignição por compressão no diesel
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 35-36 >}}
+
+Quando um gás é comprimido muito rapidamente (como dentro de um cilindro de motor diesel),
+não há tempo para calor sair para o ambiente — a compressão é **adiabática** (Q = 0). Nesse
+caso, toda a energia de compressão W entra na energia interna do gás, aumentando sua
+temperatura dramaticamente. É por isso que um motor diesel consegue ignição sem vela de
+ignição: a compressão adiabática aquece o ar de 27 °C até ~600 °C ou mais, o suficiente
+para inflamar diesel injetado. A relação entre P, V e T em um processo adiabático é
+governada pela **equação de Poisson** — a ferramenta central para analisar motores.
+
+## Caracterização de adiabáticos {{< ra OE4.34 B2 >}}
+
+Um processo adiabático é aquele onde não há troca de calor: Q = 0. Da Primeira Lei:
+
+$$\Delta U = Q - W = 0 - W = -W$$
+
+Ou seja, trabalho realizado sobre o gás (W negativo) vira integralmente aumento de energia
+interna. Trabalho realizado pelo gás (W positivo) reduz energia interna, arrefecendo o gás.
+
+Conseqüências:
+
+- **Compressão adiabática:** W < 0 (trabalho entra), ΔU > 0 (temperatura sobe). Mais
+  rápido e mais quente que compressão isotérmica.
+- **Expansão adiabática:** W > 0 (gás faz trabalho), ΔU < 0 (temperatura cai). Mais
+  rápido e mais frio que expansão isotérmica.
+
+Em cilindro de motor, as fases rápidas são aproximadamente adiabáticas; as lentas (troca de
+calor com parede) são mais complexas.
+
+## Equação de Poisson {{< ra OE4.35 B3 >}}
+
+Para um gás ideal em processo adiabático, a Primeira Lei associada com PV = nRT dá:
+
+$$PV^\gamma = \text{constante}$$
+
+ou equivalentemente:
+
+$$TV^{\gamma-1} = \text{constante}$$
+
+$$P^{1-\gamma}T^\gamma = \text{constante}$$
+
+onde γ = C_P / C_V (razão de calores específicos — 1,4 para ar).
+
+**Derivação rápida:** na Primeira Lei diferencial, dU = −PdV (Q = 0). Para gás ideal,
+dU = n·C_V·dT. Logo:
+
+$$n \cdot C_V \cdot dT = -P \, dV$$
+
+Combinando com PV = nRT (diferencial: PdV + VdP = nRdT):
+
+$$n \cdot C_V \cdot dT = -P \, dV$$
+$$nR \, dT = P \, dV + V \, dP$$
+
+Dividindo a primeira pela segunda:
+
+$$\frac{C_V}{R} = -\frac{P \, dV}{P \, dV + V \, dP}$$
+
+Simplificando (álgebra standard de equações diferenciais):
+
+$$\frac{dP}{P} + \gamma \frac{dV}{V} = 0$$
+
+Integrando: $\ln P + \gamma \ln V = \text{const}$, ou $PV^\gamma = \text{const}$ ✓
+
+## Aplicações em motor diesel {{< ra OE4.36 B3 >}}
+
+**Ponto 1 (admissão):** ar a T₁ = 300 K, P₁ = 1 bar, V₁ (volume total do cilindro).
+
+**Ponto 2 (fim da compressão):** volume comprimido para V₂ = V₁ / r (onde r ≈ 16–20 é a
+razão de compressão). Sem combustão ainda.
+
+$$P_2 V_2^\gamma = P_1 V_1^\gamma$$
+
+$$P_2 = P_1 \left(\frac{V_1}{V_2}\right)^\gamma = P_1 \cdot r^\gamma$$
+
+Com r = 16, γ = 1,4:
+
+$$P_2 = 1 \times 16^{1{,}4} \approx 50\ \text{bar}$$
+
+Temperatura:
+
+$$T_2 = T_1 \left(\frac{P_2}{P_1}\right)^{(\gamma-1)/\gamma}
+= 300 \times (50)^{0{,}286} \approx 880\ \text{K} \approx 607\ °\text{C}$$
+
+A temperatura sobe para ~880 K — suficiente para diesel inflamar (ponto de ignição de HFO
+≈ 620 K).
+
+**Ponto 3 (após combustão):** injeção de combustível, queimadura rápida em volume
+praticamente constante (diesel com injeção direta), pressão sobe para P₃ ≈ 140 bar,
+temperatura ~2000 K.
+
+::: {.sp}
+Um cilindro de motor 4 tempos tem volume total 500 mL. Razão de compressão r = 18.
+Condição inicial: T₁ = 25 °C, P₁ = 1 bar. Combustível é injetado no ponto de máxima
+compressão. Calcular:
+(a) P e T no fim da compressão (ponto 2), supondo adiabático.
+(b) Se a combustão aquece o gás em 1000 K a volume constante, qual é a P_3 resultante?
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Confundir "adiabático" com "isotérmico":** adiabático = Q = 0 (isolado termicamente);
+  isotérmico = T = cte (em contato com banho térmico). São processos opostos. Adiabático
+  aquece na compressão; isotérmico não.
+- **Usar γ errado:** γ = 1,4 para ar diatômico. Se o gás tiver outras moléculas (CO₂ de
+  combustão, vapor de água), γ pode ser ~1,3. Diferença de 7% em T resultante.
+- **Esquecer que a equação é $PV^\gamma$, não $PV^c$:** expoente é SEMPRE γ =
+  C_P/C_V, não qualquer outro c. Confundir com calor específico é erro comum.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: diagrama P-V interativo mostrando um cilindro com êmbolo (visual), slider de razão de compressão r (8–25), exibindo as curvas adiabática (PV^γ = const) e isotérmica (PV = const) no plano P-V; cores das regiões indicando temperatura (gradient azul-vermelho); lib p5.js para cilindro visual, Plotly para diagrama P-V com marcação de pontos 1, 2, 3 -->
+
+**Conexão com o próximo tópico:** a compressão adiabática no motor diesel é a "perna que
+sobe" do ciclo. A combustão e expansão seguem — e revelam um limite fundamental de como
+eficiência de motor melhora. Esse limite é a Segunda Lei da Termodinâmica.

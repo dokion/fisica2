@@ -1,0 +1,117 @@
+---
+title: "4.6 — O equivalente mecânico da caloria"
+categories: [UE4, OE4.18-B3, OE4.19-B2, OE4.20-B3]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 4.18 [B3] Demonstrar a equivalência entre calor e trabalho
+            → naval: W = Q1−Q2 no ciclo diesel
+OE 4.19 [B2] Explicar a importância do experimento de Joule na formulação da 1ª Lei
+            → naval: Base histórica da conservação de energia em máquinas
+OE 4.20 [B3] Determinar a conversão entre calorias e joules
+            → naval: Conversão de unidades em balanços energéticos
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 33-34 >}}
+
+Durante séculos, calor foi considerado uma substância — o "flogisto" ou "calórico" — diferente
+de trabalho mecânico. A revolução veio em 1840 quando James Joule, em uma série de
+experimentos simples mas decisivos, mostrou que trabalho mecânico produz exatamente a mesma
+quantidade de **aquecimento** que uma quantidade equivalente de calor. Essa descoberta abriu
+caminho para a Primeira Lei da Termodinâmica: calor e trabalho são **duas formas da mesma
+coisa — energia**. Em máquinas navais, é essa equivalência que transforma combustível (energia
+química) em trabalho (propulsão) e calor residual (perdas).
+
+## O experimento de Joule {{< ra OE4.19 B2 >}}
+
+Joule usou um recipiente isolado com água. Dentro, um sistema de pás rotava, agitando a água.
+Um peso pendurado fornecia trabalho mecânico ao cair e girar as pás. Resultado: a água
+aquecia. Ele mediu o trabalho mecânico (m·g·h) e a quantidade de calor (m_água · c · ΔT) e
+descobriu uma constante universal:
+
+**1 caloria ≡ 4,186 joules**
+
+Não é coincidência: é uma conversão fundamental. Trabalhar contra o atrito, compressão,
+viscosidade — tudo vira calor microscópico no final. Joule provou experimentalmente que essa
+conversão é determinística e universal.
+
+## Equivalência entre calor e trabalho {{< ra OE4.18 B3 >}}
+
+Se trabalho $W$ produz aquecimento de uma massa $m$ de água em $\Delta T$:
+
+$$W = m \cdot c \cdot \Delta T$$
+
+A quantidade de "calor" produzido numericamente é a mesma. Não são grandezas diferentes
+— são duas formas de medir a mesma energia. Por isso:
+
+**Unidades de energia:**
+- **Joule (J):** unidade SI para energia, calor e trabalho.
+- **Caloria (cal):** 1 cal = 4,186 J. Legado histórico, ainda aparece em tabelas (valor
+  calorífico de combustíveis, "capacidade calorífica de alimentos").
+- **Kilocaloria (kcal):** 1 kcal = 1000 cal = 4186 J. Aparece em eficiência de caldeiras.
+- **BTU (British Thermal Unit):** 1 BTU ≈ 1055 J. Raro em navios modernos, mas em
+  documentação antiga.
+
+Em máquinas navais, o balanço de energia é expresso como:
+
+$$Q_1 = W + Q_2$$
+
+onde $Q_1$ é calor da combustão (energia química do combustível), $W$ é trabalho mecânico
+(propulsão), e $Q_2$ é calor rejeitado (radiação + água quente).
+
+## Conversão de unidades {{< ra OE4.20 B3 >}}
+
+Exemplo prático: um motor diesel queima 100 kg de HFO com valor calorífico 40 MJ/kg.
+
+$$Q_1 = 100 \times 40 = 4000\ \text{MJ} = 4 \times 10^9\ \text{J}$$
+
+Convertendo para calorias (usadas em literatura histórica ou em tabelas de combustíveis):
+
+$$Q_1 = \frac{4 \times 10^9\ \text{J}}{4{,}186\ \text{J/cal}} \approx 9{,}56 \times 10^8\ \text{cal}
+= 956\ \text{Mcal}$$
+
+(1 Mcal = 1 megacaloria = 10⁶ cal)
+
+Se o motor tem eficiência 45%, trabalho produzido:
+
+$$W = 0{,}45 \times 4000\ \text{MJ} = 1800\ \text{MJ}$$
+
+Calor rejeitado:
+
+$$Q_2 = 4000 - 1800 = 2200\ \text{MJ}$$
+
+Toda essa energia (W e Q₂) sai do motor em diferentes formas — trabalho mecânico nos eixos,
+calor na água de refrigeração, radiação do cilindro, etc. — mas conserva-se.
+
+::: {.sp}
+Uma caldeira de bordo aquece 2 toneladas de água de 20 °C a 100 °C (pressão 1 atm).
+Simultaneamente, produz 300 kg de vapor. Valor calorífico do combustível: 42 MJ/kg.
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Misturar unidades:** não use calorias em cálculos de eficiência com J. Sempre converta
+  para SI (joules) ou sempre para calorias, nunca misture.
+- **Pensar que Joule "criou calor do nada":** não. Seu experimento prova que trabalho
+  mecânico se converte em calor com eficiência 100%. Energia entra (queda de peso),
+  energia sai (aquecimento). Conserva.
+- **Confundir "equivalente mecânico" (4,186 J/cal — um número de conversão) com
+  "eficiência" (porcentagem de conversão em um motor real):** Joule descobriu que 1 cal
+  SEMPRE = 4,186 J. Um motor diesel converte apenas 45% do calor em trabalho; o resto vira
+  Q₂. Não é o número de Joule que muda; é a fração do total que segue cada caminho.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: recipiente virtual com pás (como no experimento de Joule), slider de "peso caindo" (trabalho em J), mostrando em tempo real o aumento de temperatura da água correspondente (ΔT em K) pela relação W = m·c·ΔT, com equivalência em calorias exibida lado a lado; lib p5.js para animação das pás, Plotly para gráfico T vs. tempo -->
+
+**Conexão com o próximo tópico:** a equivalência calor-trabalho é tão profunda que motiva a
+Primeira Lei da Termodinâmica — a conservação de energia em forma diferencial para processos
+termodinâmicos.

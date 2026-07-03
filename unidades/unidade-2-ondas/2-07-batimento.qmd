@@ -1,0 +1,84 @@
+---
+title: "2.7 — Batimento"
+categories: [UE2, OE2.20-B2, OE2.21-B3]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 2.20 [B2] Explicar o fenômeno do batimento sonoro
+            → naval: Batimento entre sinais de sonar
+OE 2.21 [B3] Determinar a frequência dos batimentos
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 17-18 >}}
+
+Quando **duas ondas sonoras de frequências ligeiramente diferentes** propagam-se simultaneamente, o ouvido não percebe duas frequências distintas — percebe *uma* frequência média que oscila em amplitude lentamente. Esse efeito é chamado **batimento**. Na navegação acústica, batimentos aparecem quando ecos de múltiplas frequências ou reflexões fantasmas se sobrepõem — conhecê-los permite ao operador de sonar distinguir sinais úteis de ruído estruturado.
+
+## O fenômeno do batimento {{< ra OE2.20 B2 >}}
+
+Suponha duas ondas de mesma amplitude $A$ mas frequências ligeiramente diferentes, $f_1$ e $f_2$, onde $f_2 - f_1 = \Delta f$ é pequeno:
+
+$$y_1 = A\cos(2\pi f_1 t), \quad y_2 = A\cos(2\pi f_2 t)$$
+
+Pelo princípio da superposição:
+
+$$y_{\text{total}} = y_1 + y_2 = A[\cos(2\pi f_1 t) + \cos(2\pi f_2 t)]$$
+
+Usando a identidade trigonométrica $\cos A + \cos B = 2\cos\left(\frac{A+B}{2}\right)\cos\left(\frac{A-B}{2}\right)$:
+
+$$y_{\text{total}} = 2A\cos\left(\pi (f_1 + f_2)t\right)\cos\left(\pi (f_2 - f_1)t\right)$$
+
+$$= 2A\cos(\pi \Delta f \cdot t)\cos\left(\pi f_{\text{méd}} \cdot t\right)$$
+
+onde $f_{\text{méd}} = (f_1 + f_2)/2$ é a frequência média e $\Delta f = f_2 - f_1$.
+
+Esta forma revela a estrutura do batimento: é uma **onda de frequência média** $f_{\text{méd}}$ com **amplitude modulada** por $2A\cos(\pi \Delta f \cdot t)$. A amplitude oscila com frequência $\Delta f$ — é muito mais lenta que $f_{\text{méd}}$ quando $\Delta f \ll f_{\text{méd}}$.
+
+O ouvido percebe a variação lenta de amplitude — o "batimento" — enquanto a frequência média soa como uma nota contínua levemente pulsante.
+
+## Frequência de batimento {{< ra OE2.21 B3 >}}
+
+A **frequência de batimento** é a frequência com que a amplitude varia:
+
+$$f_{\text{batimento}} = |f_2 - f_1| = \Delta f$$
+
+Por exemplo, se um sonar transmite em 37,5 kHz e capta um eco fantasma (reflexão múltipla) que é ligeiramente deslocado por efeito Doppler para 37,6 kHz, o batimento tem frequência:
+
+$$f_{\text{batimento}} = 37{,}6 - 37{,}5 = 0{,}1\,\text{kHz} = 100\,\text{Hz}$$
+
+O operador ouvirá um "buzzer" de 100 Hz — um som grave e repetitivo que identifica a presença de múltiplas reflexões de frequências próximas. Este é o método clássico de diagnóstico acústico: sonares monofeixe usam batimentos para distinguir ecos múltiplos de contatos verdadeiros.
+
+**Período de batimento:** o intervalo de tempo entre dois máximos de amplitude consecutivos é:
+
+$$T_{\text{batimento}} = \frac{1}{f_{\text{batimento}}} = \frac{1}{\Delta f}$$
+
+Com $\Delta f = 100$ Hz, $T_{\text{batimento}} = 10$ ms — dez ciclos de batimento por segundo.
+
+## Aplicação prática: batimento entre sinais de sonar
+
+No exemplo acima, se o operador ouve um batimento de 100 Hz, ele sabe que há dois componentes de frequência separados por 100 Hz no retorno. Ao aumentar a frequência de transmissão ligeiramente (ex.: de 37,5 para 37,4 kHz), o batimento mudaria para $|37{,}4 - 37{,}6| = 0{,}2$ kHz = 200 Hz (mais agudo). Essa variação permite ao operador ajustar a frequência de transmissão para "sair" de ressonâncias da coluna de água ou cancelar ecos fantasma.
+
+Em sistemas digitais modernos, a detecção de batimento é feita por análise de espectro (transformada de Fourier rápida — FFT). Componentes de frequência próximas à transmitida são identificadas, medidas e subtraídas do sinal útil.
+
+::: {.sp}
+Um sonar ativo de navio oceanogrăfico opera em freqüência nominal $f_0 = 120\,\text{kHz}$. O transdutor transmite um pulso curto. Em águas rasas, a reflexão múltipla (fundo + superfície + fundo novamente) cria um eco à frequência $f_0$, porém ligeiramente atenuado. Ao mesmo tempo, uma reflectência em camada de sal cria um eco em freqüência $f_0 + 80\,\text{Hz} = 120{,}00008\,\text{kHz}$ (deslocamento Doppler negativo pelo movimento vertical da coluna).
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Confundir frequência de batimento com frequência média:** $f_{\text{bat}} = \Delta f$, não $f_{\text{méd}}$. Uma diferença de 1 Hz entre 100 kHz e 100,001 kHz produz batimento a 1 Hz, não 100 kHz.
+- **Assumir que batimento só ocorre em acústica:** batimentos aparecem sempre que duas ondas de frequências próximas se somam — em eletromagnetismo (interferência de duas frequências de rádio), ótica (figura de batimento de duas cores próximas), etc.
+- **Esquecer que magnitude importa:** para detectar batimento, $\Delta f$ deve ser pequeno comparado a $f_{\text{méd}}$. Se $\Delta f \sim f_{\text{méd}}$ (diferença de 50% de frequência), o resultado não é um batimento audível — são duas notas distintas.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Mostrar duas ondas senoidais (em cores diferentes, ex. vermelho e azul) com frequências próximas. Controle deslizante: frequência 1 (fixa, ex. 100 Hz), frequência 2 (variável, 95–105 Hz). Gráfico 1: y₁(t), y₂(t) sobrepostos; Gráfico 2: y_total(t) = y₁ + y₂ mostrando envoltória lentamente variável (amplitude modulada). Exibir em tempo real: Δf (diferença de frequência) e f_bat = Δf. Linha de "envoltória" destacando a modulação. Lib p5.js (animação contínua de seno/envoltória) ou Plotly (gráficos estáticos atualizados). -->
+
+**Conexão com o próximo tópico:** batimentos são um efeito de interferência entre duas frequências *próximas*. Agora consideramos o caso oposto: **o que acontece quando o *observador* se move** em relação à fonte? A frequência percebida muda — este é o **efeito Doppler**, crucial para o log Doppler de velocidade de um navio.

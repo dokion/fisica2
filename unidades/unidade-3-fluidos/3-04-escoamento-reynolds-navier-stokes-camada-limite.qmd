@@ -1,0 +1,115 @@
+---
+title: "3.4 — Escoamento: número de Reynolds, Navier-Stokes e camada limite"
+categories: [UE3, OE3.13-B3, OE3.14-B2, OE3.15-B2, OE3.16-B2, OE3.17-B4]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 3.13 [B3] Determinar o número de Reynolds
+            → naval: Regime de escoamento ao redor do casco e hélice
+OE 3.14 [B2] Classificar regimes de escoamento
+            → naval: Escoamento laminar vs. turbulento no casco
+OE 3.15 [B2] Explicar a equação de Navier-Stokes e sua importância na dinâmica dos fluidos
+            → naval: Base teórica da resistência ao avanço do navio
+OE 3.16 [B2] Descrever a formação e influência da camada limite em superfícies sólidas
+            → naval: Arrasto de atrito no casco; incrustações
+OE 3.17 [B4] Analisar a transição do escoamento laminar para turbulento
+            → naval: Número de Reynolds crítico para cascos de navio
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 25-26 >}}
+
+A viscosidade que definimos no Tópico 3.1 volta agora como protagonista. Quando um fluido viscoso escoa, forças de atrito (fricção) aparecem e competem com forças de inércia. O equilíbrio entre essas duas determina se o escoamento é laminar (ordenado, viscoso) ou turbulento (caótico, inercial). Este tópico é a ponte entre a mecânica de fluidos clássica (continuidade, Bernoulli) e a realidade do navio: cascos em movimento geram uma camada de fluido viscoso junto à superfície — a **camada limite** — que é responsável por até 80% da resistência ao avanço. Compreender Reynolds, Navier-Stokes e camada limite é compreender a resistência do navio.
+
+## Número de Reynolds {{< ra OE3.13 B3 >}}
+
+O **número de Reynolds** é um número adimensional que compara forças de inércia com forças viscosas:
+
+$$\text{Re} = \frac{\text{forças de inércia}}{\text{forças viscosas}} = \frac{\rho v L}{\mu}$$
+
+ou equivalentemente:
+
+$$\text{Re} = \frac{v L}{\nu}$$
+
+onde:
+- $v$ é a velocidade característica (m/s)
+- $L$ é um comprimento característico (ex.: diâmetro do tubo, comprimento do casco)
+- $\mu$ é a viscosidade dinâmica (Pa·s)
+- $\nu = \mu/\rho$ é a viscosidade cinemática (m²/s)
+
+Reynolds é adimensional (sem unidade). Seu valor classifica o tipo de escoamento:
+
+**Em tubos:** Re < 2300 → laminar; 2300 < Re < 4000 → transição; Re > 4000 → turbulento.
+
+**Ao redor de um casco:** Re < 5×10⁵ → tendência laminar; Re > 5×10⁶ → turbulento.
+
+Um navio comercial de 200 m de comprimento viajando a 15 nós em água a 15°C tem:
+
+$$\text{Re} = \frac{7.7 \text{ m/s} \times 200 \text{ m}}{1.14 \times 10^{-6} \text{ m}^2/\text{s}} \approx 1.35 \times 10^9$$
+
+Esse é um Reynolds **muito grande**, significando que o escoamento ao redor do navio é altamente turbulento. Mesmo assim, bem pertinho do casco, uma fina camada laminar persiste — a camada limite.
+
+## Classificação de regimes de escoamento {{< ra OE3.14 B2 >}}
+
+O número de Reynolds governa a classificação:
+
+| Regime | Reynolds | Características | Exemplo naval |
+|---|---|---|---|
+| Laminar | Re < 2300 (tubo) | Camadas paralelas; sem mistura transversal; padrão previsível | Óleo em tubulação fina; escoamento muito lento |
+| Transição | 2300 < Re < 4000 (tubo) | Laminar e turbulência coexistem; comportamento instável | Raro de encontrar em navios |
+| Turbulento | Re > 4000 (tubo), Re > 5×10⁶ (casco) | Redemoinhes e vórtices; mistura caótica; arrasto muito maior | Água ao redor do casco; escoamento de alta velocidade |
+
+A transição laminar → turbulento ocorre a um Reynolds crítico que depende da geometria e da rugosidade da superfície. Para cascos de navio, a transição típica está ao redor de Re = 5×10⁵ a 10⁶, mas complexidades (corrosão, incrustações biológicas) movem o ponto crítico.
+
+## Equação de Navier-Stokes {{< ra OE3.15 B2 >}}
+
+A **equação de Navier-Stokes** é a extensão de Bernoulli que inclui os efeitos da viscosidade. Na sua forma mais geral (para escoamento incompressível em uma direção x):
+
+$$\rho \left( \frac{\partial v}{\partial t} + v \frac{\partial v}{\partial x} \right) = -\frac{\partial P}{\partial x} + \mu \frac{\partial^2 v}{\partial y^2}$$
+
+Leitura: o lado esquerdo é a aceleração (inércia); o lado direito soma a força de gradiente de pressão com a força viscosa. A viscosidade aparece como derivada segunda da velocidade — quanto maior a curvatura do perfil de velocidade, maior a dissipação viscosa.
+
+Navier-Stokes é a equação fundamental da dinâmica de fluidos. Sua solução, em geral, é muito difícil (problema em aberto em matemática pura). Mas para geometrias simples (tubo reto, placa plana) e condições especiais (escoamento laminar permanente), ela tem solução analítica — que fornece perfis de velocidade usados em modelos de resistência.
+
+## Camada limite {{< ra OE3.16 B2 >}}
+
+Quando um fluido escoa ao redor de um corpo sólido, a condição de contorno é que a velocidade do fluido na superfície do corpo é **zero** (o fluido não escorrega na parede — hipótese de não-deslizamento). Mas a uma distância $\delta$ da parede, a velocidade volta ao valor do escoamento livre. Essa fina camada de transição é a **camada limite**.
+
+Dentro da camada limite, há um **gradiente de velocidade**: próximo à parede, é quase zero; longe da parede, é quase a velocidade do fluxo livre. Esse gradiente gera uma **tensão de cisalhamento** viscosa:
+
+$$\tau = \mu \frac{dv}{dy}$$
+
+A integração dessa tensão sobre toda a superfície do casco fornece o **arrasto viscoso** ou **arrasto de atrito** — que para navios é tipicamente 75–85% da resistência total.
+
+A espessura da camada limite cresce ao longo do casco: $\delta \approx 0.37 x / \text{Re}_x^{0.2}$ (para escoamento turbulento). Para um casco de 200 m a 15 nós, $\delta$ no final do navio é da ordem de 0.5–1 m.
+
+## Transição laminar-turbulento {{< ra OE3.17 B4 >}}
+
+A transição da camada limite laminar para turbulenta acontece a um Reynolds local crítico $\text{Re}_{x,\text{crit}}$. Para superfícies lisas, $\text{Re}_{x,\text{crit}} \approx 5 \times 10^5$. Para superfícies rugosas (cascos com incrustações, corrosão), a transição pode ocorrer a valores muito menores.
+
+Uma vez que a camada limite fica turbulenta, o arrasto aumenta drasticamente: aumenta de um fator 5–10 em relação ao regime laminar. Por isso, manter o casco liso (pintura anti-incrustação, limpeza) é crítico para a eficiência do navio.
+
+Outra consideração prática: a **rugosidade relativa** $k/L$ (tamanho da rugosidade / comprimento) afeta o ponto de transição. Cascos sujos têm transição mais cedo e arrasto maior.
+
+::: {.sp}
+Um navio-tanque de comprimento $L = 240$ m viaja a $v = 12$ nós (6.17 m/s) em água de temperatura $T = 20°C$ (viscosidade cinemática $\nu = 1.0 \times 10^{-6}$ m²/s). Calcule o número de Reynolds e classifique o escoamento. Se a rugosidade média do casco é $k = 150$ μm, em que ponto do casco a camada limite transiciona para turbulenta? Qual será a espessura da camada limite no final do navio?
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Confundir Re global com Re local:** escoamento pode ser laminar perto da proa e turbulento na popa. Re global diz a tendência, mas a camada limite localmente transiciona.
+- **Negligenciar rugosidade:** para Reynolds baixos (Re < 10⁵), rugosidade não importa; para Re alto (cascos de navio), rugosidade adianta a transição em ordens de magnitude.
+- **Viscosidade de fluido incompressível:** água tem $\nu \approx 1.0 \times 10^{-6}$ m²/s a 20°C; óleo ISO 46 tem $\nu \approx 46 \times 10^{-6}$ m²/s — diferença de 46 vezes muda a classificação de escoamento.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Perfil de velocidade na camada limite (Plotly, mostrando log-law para turbulent, linear para laminar), com slider de Re para ver transição; ou animação de partículas em campo vetorial (p5.js, camada limite formando-se ao longo de placa plana). -->
+
+**Conexão com o próximo tópico:** conhecendo Reynolds e camada limite, agora reduzimos problemas complexos de fluidos usando **análise dimensional** — o Teorema π de Buckingham — que permite prever o comportamento de um navio real a partir de testes em modelo reduzido. Tópico 3.5.

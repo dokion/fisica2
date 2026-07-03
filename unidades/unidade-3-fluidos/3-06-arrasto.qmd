@@ -1,0 +1,119 @@
+---
+title: "3.6 — Arrasto: pressão, atrito e arrasto total"
+categories: [UE3, OE3.22-B1, OE3.23-B2, OE3.24-B3, OE3.25-B4]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 3.22 [B1] Definir os tipos de arrasto (pressão, atrito e total) e suas causas
+            → naval: Resistência total ao avanço do navio
+OE 3.23 [B2] Explicar a relação entre arrasto e formato geométrico dos corpos imersos
+            → naval: Forma do casco e eficiência propulsiva
+OE 3.24 [B3] Determinar o coeficiente de arrasto em diferentes situações de escoamento
+            → naval: Cálculo de resistência para previsão de potência
+OE 3.25 [B4] Analisar a influência da viscosidade no arrasto de atrito
+            → naval: Arrasto de atrito; incrustações no casco
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 29-30 >}}
+
+Toda embarcação que se move encontra resistência do meio: a água "segura" a proa, o casco sofre atrito, as formas geram ondas. Esse é o **arrasto** — a força que a máquina do navio deve vencer para manter velocidade. Este tópico decompõe a resistência em dois componentes fundamentais: **arrasto de atrito** (resulta da viscosidade na camada limite) e **arrasto de pressão** (resulta da distribuição de pressões ao redor do casco). Dominar essa distinção e o **coeficiente de arrasto** é dominar a engenharia naval — determina diretamente a potência necessária e, portanto, o tamanho da máquina e o custo de operação do navio.
+
+## Tipos de arrasto {{< ra OE3.22 B1 >}}
+
+O arrasto total que age sobre um navio é a soma de dois componentes:
+
+**1. Arrasto de atrito (ou arrasto viscoso):**
+Originário da tensão de cisalhamento viscosa na camada limite. A viscosidade da água faz o fluido "grudar" na parede do casco. Essa aderência gera uma força tangencial (paralela à superfície) ao longo de toda a área molhada. O arrasto de atrito é proporcional à velocidade (a baixa velocidade) e cresce com a área de contato com a água.
+
+**2. Arrasto de pressão (ou arrasto de forma):**
+Originário da diferença de pressão entre o lado dianteiro (proa) e o lado traseiro (popa) do casco. Na proa, o escoamento é comprimido (pressão alta); na popa, o escoamento se separa e deixa uma esteira de baixa pressão. Essa assimetria de pressão cria uma força de arrasto. Para cascos bem-projetados, essa separação é minimizada. Para corpos com formato muito rombudo (cilindros, esferas), o arrasto de pressão é dominante.
+
+Para um navio típico em velocidade de serviço:
+- Arrasto de atrito: ~75–85% do arrasto total.
+- Arrasto de pressão (onda): ~15–25% do arrasto total.
+
+A proporção depende da velocidade (medida pelo número de Froude) e da forma do casco.
+
+## Forma do casco e coeficiente de arrasto {{< ra OE3.23 B2 >}}
+
+Um navio graneleiro (corpo volumoso, boca grande, calado fundo) tem um casco com proporções que minimizam o arrasto de pressão e maximizam a capacidade de carga. Um iate de corrida (corpo fino, alongado) minimiza a área molhada. A **finura** do casco é medida pelo **coeficiente de bloco** Cb = volume deslocado / (L × B × T).
+
+A relação entre forma e arrasto é descrita pelo **coeficiente de arrasto** (adimensional):
+
+$$C_D = \frac{R}{q \cdot A}$$
+
+onde:
+- $R$ é o arrasto total (N)
+- $q = \frac{1}{2}\rho v^2$ é a pressão dinâmica (Pa)
+- $A$ é a área de referência (m²) — para navios, geralmente a área molhada
+
+O coeficiente de arrasto típico para cascos de navio é $C_D \approx 0.003 - 0.01$ (dependendo de forma, velocidade, rugosidade). Um cilindro liso tem $C_D \approx 1.0$; uma esfera lisa, $C_D \approx 0.47$ — muito maior que um navio.
+
+A forma do casco importa: proa fina reduz a elevação de onda (arrasto de pressão); popa bem-desenhada evita separação do escoamento; apreço da água (bulbosa) reduz o padrão de onda gerada.
+
+## Coeficiente de arrasto e fórmulas de engenharia {{< ra OE3.24 B3 >}}
+
+Na prática de engenharia, o arrasto é calculado separando atrito e pressão:
+
+$$R_{\text{total}} = R_{\text{atrito}} + R_{\text{onda}}$$
+
+**Arrasto de atrito** é calculado usando fórmulas empíricas como a de Kármán-Schoenherr (baseada em experimentos de placa plana):
+
+$$C_F = \frac{0.075}{(\log_{10} \text{Re} - 2)^2}$$
+
+A resistência de atrito é então:
+
+$$R_{\text{atrito}} = \frac{1}{2} \rho v^2 A_{\text{molhada}} C_F$$
+
+**Arrasto de onda** vem de testes em modelo (porque sua previsão teórica é complexa). A relação entre arrasto do modelo e do navio é garantida pelo número de Froude constante.
+
+A potência necessária é:
+
+$$P = R_{\text{total}} \times v$$
+
+Um navio de 50 mil toneladas a 14 nós pode ter resistência de ~400 kN, requerendo ~3 MW de potência propulsiva (considerar eficiências de hélice e motor reduzem a potência entregue pela máquina).
+
+## Influência da viscosidade e incrustações {{< ra OE3.25 B4 >}}
+
+A viscosidade do fluido aparece indiretamente no coeficiente de atrito via número de Reynolds. Mas há uma dependência mais direta: uma mudança na temperatura da água muda a viscosidade cinemática $\nu$.
+
+Agua doce a 20°C: $\nu \approx 1.0 \times 10^{-6}$ m²/s.
+Agua salgada a 20°C: $\nu \approx 1.05 \times 10^{-6}$ m²/s.
+Agua salgada a 0°C: $\nu \approx 1.9 \times 10^{-6}$ m²/s.
+
+Uma redução de temperatura pode aumentar $\nu$ (e reduzir Re), deslocando a transição laminar-turbulenta e alterando $C_F$.
+
+**Incrustações no casco** aumentam a rugosidade relativa $k/L$ drasticamente. Uma incrustação biológica típica adiciona $k \approx 200-500$ μm. Isso afeta:
+1. Aumenta o coeficiente de friction $C_F$ (placa áspera vs. lisa).
+2. Antecipa a transição laminar → turbulenta na camada limite.
+3. Pode aumentar arrasto em 10–30% dependendo da extensão.
+
+Tanques de provas modelos tentam reproduzir esse efeito adicionando uma "margem de correlação" $\Delta C_F$ (típico: +0.0005 a +0.001) ao coeficiente de atrito extrapolado, simulando um casco moderadamente sujo.
+
+::: {.sp}
+Um navio-tanque de área molhada $A_{\text{molhada}} = 8000$ m² e comprimento $L = 240$ m viaja a $v = 12$ nós (6.17 m/s) em água salgada a $T = 15°C$ ($\nu = 1.14 \times 10^{-6}$ m²/s, $\rho = 1025$ kg/m³). Calcule:
+(a) O número de Reynolds.
+(b) O coeficiente de friction $C_F$ (Kármán-Schoenherr).
+(c) A resistência de atrito e potência correspondente.
+(d) Como a resistência muda se o casco ficar incrustado (adicionar ~0.0005 a $C_F$)?
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Área de referência errada:** para navio, usa-se área molhada (S), não projeção frontal. Cilindro usa área frontal; navio usa área de contato com água.
+- **Confundir $C_D$ com $C_F$:** $C_D$ é adimensional para arrasto total; $C_F$ é apenas para atrito. São números diferentes de magnitudes diferentes.
+- **Negligenciar número de Froude na extrapolação:** resistência de onda não escala linearmente com velocidade. Fórmulas de engenharia usam Froude para isso.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Gráfico (Plotly) de Resistência vs. Velocidade (ou vs. Número de Froude), mostrando contribuições de atrito e onda; slider de rugosidade/incrustação mostrando impacto em C_F. Ou: perfil de pressão ao redor de casco (p5.js, com animação de escoamento laminar vs. turbulento). -->
+
+**Conexão com o próximo tópico:** o arrasto que acabamos de estudar é uma face da resistência. A outra face é a **sustentação** — a força perpendicular ao escoamento que move a água de modo produtivo, impulsionando o navio pela hélice e governando-o pelo leme. Tópico 3.7.

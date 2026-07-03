@@ -1,0 +1,105 @@
+---
+title: "2.6 — Intensidade e nível sonoro"
+categories: [UE2, OE2.17-B1, OE2.18-B2, OE2.19-B3]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 2.17 [B1] Definir intensidade sonora e nível sonoro em dB
+OE 2.18 [B2] Relacionar intensidade sonora com amplitude e potência da onda
+            → naval: Alcance de detecção acústica
+OE 2.19 [B3] Resolver problemas envolvendo nível sonoro e sua variação
+            → naval: Log acústico de correlação
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 17-18 >}}
+
+Uma onda sonora carrega energia. Quando o transdutor de um sonar emite um pulso, essa energia se distribui por todas as direções (no espaço) e diminui com a distância. A noção de **intensidade** cuantifica essa energia por unidade de área, e o **nível sonoro em decibéis** é a escala logarítmica universal para compará-la. Nestes conceitos residem a razão de por que um sonar consegue detectar um alvo a 50 km de distância e por que o "ruído de fundo" do oceano limita essa capacidade.
+
+## Intensidade sonora {{< ra OE2.17 B1 >}}
+
+A **intensidade sonora** $I$ é a **potência média por unidade de área** perpendicular à direção de propagação:
+
+$$I = \frac{P_{\text{média}}}{A}$$
+
+com unidade $[\text{W/m}^2]$. Ela é directamente relacionada à amplitude de pressão da onda sonora:
+
+$$I = \frac{p_0^2}{2\rho v}$$
+
+onde $p_0$ é a amplitude de pressão, $\rho$ é a densidade do meio e $v$ é a velocidade do som.
+
+Esta fórmula revela um facto importante: **intensidade é proporcional ao quadrado da amplitude** de pressão. Logo, dobrar a amplitude de pressão aumenta a intensidade 4 vezes.
+
+Para uma fonte de potência acústica $P$ que irradia uniformemente em todas as direções (fonte esférica isotrópica), a intensidade a distância $r$ é:
+
+$$I(r) = \frac{P}{4\pi r^2}$$
+
+Portanto, a **intensidade decresce com o quadrado da distância** — lei do inverso do quadrado. A distância máxima a que um sonar consegue detectar um alvo é limitada por quando a intensidade cai para um nível mínimo detectável pelo receptor.
+
+## Relação com amplitude e potência {{< ra OE2.18 B2 >}}
+
+A intensidade depende de:
+1. **Amplitude de pressão $p_0$:** quantificar "força" da vibração. Ondas mais vigorosas têm $p_0$ maior.
+2. **Propriedades do meio** ($\rho$, $v$): água salgada tem densidade ~5% maior que água doce, afetando a transmissão acústica.
+3. **Frequência** (indiretamente): ondas de frequência maior têm menor comprimento de onda, o que altera a radiação pela fonte.
+
+Na prática naval, o **alcance de detecção acústica** é determinado pela razão sinal-ruído (SNR):
+
+$$\text{SNR} = \frac{I_{\text{sinal}}}{I_{\text{ruído}}}$$
+
+Um sonar ativo que emite pulsos com potência $P_{\text{tx}}$ consegue detectar alvos até uma distância onde $\text{SNR} > \text{SNR}_{\text{mín}}$ (tipicamente 3–10 dB). Solos com perdas acústicas altas (sedimento fino, silte) atenuam o eco — reduzem a detectabilidade. A profundidade também importa: em águas rasas (< 50 m), reverberação do fundo e superfície degradam o SNR.
+
+## Nível sonoro em decibéis {{< ra OE2.17 B1 >}} (complementação)
+
+Como a intensidade varia sobre 13+ ordens de magnitude (de $10^{-12}\,\text{W/m}^2$ — limiar de audição humana em 1 kHz — a $10^{1}\,\text{W/m}^2$ — som que causa lesão auditiva), uma escala logarítmica é mais prática:
+
+$$L_I = 10\log_{10}\left(\frac{I}{I_0}\right) \quad [\text{dB}]$$
+
+onde $I_0 = 10^{-12}\,\text{W/m}^2$ é a intensidade de referência (limiar de audição no ar a 1 kHz). O resultado é chamado **nível de intensidade sonora** em decibéis.
+
+Da mesma forma, o **nível de pressão sonora** (NPL ou SPL em inglês) é:
+
+$$L_p = 20\log_{10}\left(\frac{p}{p_0}\right) \quad [\text{dB}]$$
+
+onde $p_0 = 20\,\mu\text{Pa} = 2 \times 10^{-5}\,\text{Pa}$ é a pressão de referência. Nota: $L_p$ é a grandeza mais usada em engenharia acústica.
+
+A escala é intuitiva: cada 10 dB corresponde a 10× de aumento de intensidade. Cada 6 dB corresponde a ~2× de aumento (já que $10\log_{10}(2) \approx 3$ dB, e $20\log_{10}(2) \approx 6$ dB para pressão).
+
+**Exemplos de referência:**
+- Limiar de audição: 0 dB
+- Respiração silenciosa: 10 dB
+- Tráfego urbano: 70 dB
+- Sonar ativo em transmissão: 180–200 dB (re 1 μPa em água)
+
+## Variação de nível sonoro com distância {{< ra OE2.19 B3 >}}
+
+Se uma fonte irradia com potência $P$ e a intensidade a distância $r$ é $I(r) = P / (4\pi r^2)$, então o nível de pressão sonora varia como:
+
+$$L_p(r) = L_p(r_0) - 20\log_{10}\left(\frac{r}{r_0}\right)$$
+
+isto é, **cai 20 dB cada vez que a distância aumenta de um fator 10**. Isto é a "regra de atenuação": a cada duplicação de distância, o nível cai ~6 dB.
+
+Exemplo prático: um log acústico (medidor de velocidade por correlação de micro-ruídos turbulentos sob a quilha) emite pulsos de ~120 dB re 1 μPa a 1 m. A distância de medida típica é 1–5 metros. A 1 m, $L_p = 120$ dB; a 5 m, $L_p = 120 - 20\log_{10}(5) \approx 120 - 14 = 106$ dB. Se o ruído de fundo é ~90 dB, o SNR a 1 m é 30 dB (excelente); a 5 m é 16 dB (aceitável).
+
+::: {.sp}
+Um sonar ativo de um navio patrulha transmite em freqüência 30 kHz com potência $P_{\text{tx}} = 5\,\text{kW}$. A água tem densidade $\rho = 1025\,\text{kg/m}^3$, velocidade do som $v = 1500\,\text{m/s}$. Um alvo submarino (pequeno contato) reflete ~1% da potência incidente — isto é, a potência recebida de volta é $P_{\text{rx}} = 0{,}01 P_{\text{tx}}$.
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Confundir dB de intensidade com dB de pressão:** $L_I = 10\log_{10}(I/I_0)$, mas $L_p = 20\log_{10}(p/p_0)$. O fator 2 é crucial: relação linear $I \propto p^2$.
+- **Somar dB linearmente:** 100 dB + 100 dB ≠ 200 dB. A soma de duas fontes de mesma intensidade é $L_{\text{total}} = L_{\text{uma}} + 10\log_{10}(2) \approx L_{\text{uma}} + 3$ dB, não o dobro.
+- **Esquecer a lei do inverso do quadrado:** alcance máximo de sonar cresce com $\sqrt{P_{\text{tx}}}$, não linearmente com potência.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Mostrar fonte pontual de som num plano 2D, com cores representando intensidade (mapa de calor) ou nível em dB (escala de cores). Parâmetros: potência da fonte (slider, 1–100 kW), frequência (20–200 kHz), propriedades do meio (ρ, v). Mostrar: intensidade vs. distância (gráfico I vs. r), nível de pressão em dB vs. distância. Linha horizontal de "ruído de fundo" e "limiar de detecção" do sonar. Indicar máximo alcance onde SNR > 0 dB. Lib Plotly (intensidade vs distância) + mapa de calor em Canvas/p5.js. -->
+
+**Conexão com o próximo tópico:** definida a intensidade de uma onda sonora, estudamos agora o que acontece quando **duas frequências** estão presentes simultaneamente — ocorre o fenômeno de **batimento**, onde a onda resultante oscila em amplitude lentamente no tempo.

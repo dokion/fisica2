@@ -1,0 +1,128 @@
+---
+title: "4.10 — Capacidades térmicas molares de um gás ideal"
+categories: [UE4, OE4.31-B1, OE4.32-B2, OE4.33-B3]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 4.31 [B1] Definir calor específico molar a volume e pressão constantes
+            → naval: Processos a volume/pressão constante no ciclo diesel
+OE 4.32 [B2] Explicar a relação entre calores específicos e grau de liberdade molecular
+            → naval: Base microscópica do comportamento do gás de trabalho
+OE 4.33 [B3] Determinar a razão entre calores específicos (γ = Cp/Cv)
+            → naval: γ no cálculo de processos adiabáticos (equação de Poisson)
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 35-36 >}}
+
+Um gas pode ser aquecido de duas maneiras: a volume constante (cilindro fechado, paredes
+rígidas) ou a pressão constante (pistão livre). Os calores necessários são diferentes —
+em pressão constante, parte da energia entra em expansão, não só em temperatura. Essas duas
+capacidades — C_V e C_P — determinam completamente como um gás responde a qualquer
+processo. Além disso, há uma ligação profunda com **graus de liberdade molecular** — quantas
+maneiras independentes uma molécula tem de armazenar energia (translação, rotação,
+vibração). Entender isso é entender por que um motor diesel (ar diatômico, γ = 1,4) tem
+características diferentes de um motor operando com gás monoatômico (argônio, γ = 1,67).
+
+## Definições: C_V e C_P {{< ra OE4.31 B1 >}}
+
+**Calor específico molar a volume constante** ($C_V$): quantidade de calor necessária para
+aquecer 1 mol de gás em 1 K, mantendo o volume constante.
+
+À volume constante, W = 0 (não há expansão), logo:
+
+$$Q = \Delta U = n \cdot C_V \cdot \Delta T$$
+
+Para um gás ideal, U = n·C_V·T, então:
+
+$$C_V = \left(\frac{\partial U}{\partial T}\right)_V$$
+
+**Calor específico molar a pressão constante** ($C_P$): quantidade de calor necessária para
+aquecer 1 mol em 1 K, a pressão constante.
+
+A pressão constante, há expansão W = P·ΔV. Logo:
+
+$$Q = \Delta U + W = n \cdot C_V \cdot \Delta T + P \cdot \Delta V$$
+
+Para um gás ideal, PV = nRT, então P·ΔV = nR·ΔT. Portanto:
+
+$$Q = n(C_V + R)\Delta T \quad \Rightarrow \quad C_P = C_V + R$$
+
+Relação fundamental:
+
+$$C_P - C_V = R = 8{,}314\ \text{J/(mol·K)}$$
+
+## Relação com graus de liberdade {{< ra OE4.32 B2 >}}
+
+Microscopicamente, **equipartição da energia** diz que cada grau de liberdade independente
+contribui $\frac{1}{2}kT$ de energia cinética média por molécula (k = constante de
+Boltzmann).
+
+Para 1 mol:
+
+$$U = \frac{f}{2} \cdot R \cdot T$$
+
+onde $f$ é o número de graus de liberdade. Logo:
+
+$$C_V = \frac{f}{2} R$$
+
+**Exemplos:**
+
+| Tipo de gás | Graus de liberdade | C_V [J/(mol·K)] | C_P [J/(mol·K)] | γ |
+|---|---|---|---|---|
+| Monoatômico (He, Ar) | 3 (transl. x, y, z) | 12,5 | 20,8 | 1,67 |
+| Diatômico (N₂, O₂, ar) | 5 (transl. 3 + rot. 2) | 20,8 | 29,1 | 1,40 |
+| Poliatômico (CO₂, H₂O) | 6+ (transl. 3 + rot. 3 ± vibr.) | 24,9+ | 33,3+ | ~1,30 |
+
+Ar é principalmente N₂ + O₂ (ambos diatômicos), logo f = 5, C_V ≈ 20,8 J/(mol·K).
+
+## Razão entre calores específicos {{< ra OE4.33 B3 >}}
+
+$$\gamma = \frac{C_P}{C_V} = \frac{C_V + R}{C_V} = 1 + \frac{R}{C_V} = 1 + \frac{2}{f}$$
+
+Para ar (f = 5): $\gamma = 1 + \frac{2}{5} = 1{,}4$
+
+Essa razão é crítica em processos adiabáticos (sem troca de calor). A equação de Poisson,
+que veremos no tópico 4.11, depende diretamente de γ.
+
+Cálculo: num cilindro com ar, se você comprime adiabaticamente:
+
+$$T_2 = T_1 \left(\frac{P_2}{P_1}\right)^{(\gamma-1)/\gamma}$$
+
+Com γ = 1,4 (ar real), temos (γ − 1)/γ = 0,2/1,4 ≈ 0,286. Para P₂/P₁ = 16 (compressão
+usual em diesel):
+
+$$\frac{T_2}{T_1} = 16^{0{,}286} \approx 2{,}1$$
+
+Se T₁ = 300 K (27 °C), então T₂ ≈ 630 K. Sem combustão!
+
+::: {.sp}
+Um cilindro de motor diesel contém 0,050 mol de ar a 20 °C e 1 bar. Processo 1: aquecimento
+isobárico (pistão livre) até 100 °C. Processo 2: compressão isocórica (cilindro fechado)
+de 1 bar a 10 bar. Calcular Q e W em cada processo.
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Confundir C_V com c (calor específico mássico):** C_V é em J/(mol·K); c é em
+  J/(kg·K). Conversão: c = C_V / M (onde M é massa molar em kg/mol).
+- **Usar C_P quando deveria ser C_V:** em processo isocórico, SEMPRE use C_V, mesmo se o
+  sistema está a pressão variável. O critério é se o volume é constante, não a pressão.
+- **Esquecer que graus de liberdade podem "congelar":** a temperaturas muito baixas
+  (<100 K), vibrações molecular não contribuem; f cai. A tabela acima vale apenas em
+  faixa de temperatura usual de máquinas (~250–3000 K).
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: dois paineís lado a lado — (esquerda) duas moléculas de N₂ com setas indicando graus de liberdade (3 translação em cores RGB, 2 rotação em cor diferente), slider de temperatura mostrando movimento mais rápido; (direita) diagrama das capacidades C_V e C_P em função de f, com dropdown para escolher tipo de gás (monoatômico, diatômico, poliatômico) e ver γ mudar; lib p5.js para molecular visualization, Plotly para gráficos -->
+
+**Conexão com o próximo tópico:** sabendo C_V e γ, você consegue analisar processos
+adiabáticos de um gás ideal — o caso crítico da compressão no motor diesel antes da
+injeção de combustível.

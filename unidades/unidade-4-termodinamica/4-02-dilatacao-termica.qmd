@@ -1,0 +1,114 @@
+---
+title: "4.2 — Dilatação térmica"
+categories: [UE4, OE4.5-B1, OE4.6-B2, OE4.7-B3, OE4.8-B2]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 4.5 [B1] Definir os tipos de dilatação térmica (linear, superficial e volumétrica)
+            → naval: Dilatação em tubulações e estruturas de bordo
+OE 4.6 [B2] Diferenciar os tipos de dilatação térmica
+            → naval: Juntas de expansão em sistemas de vapor
+OE 4.7 [B3] Determinar coeficientes de dilatação e suas aplicações práticas
+            → naval: Cálculo de folgas em componentes de motor
+OE 4.8 [B2] Explicar os efeitos da dilatação térmica em estruturas e materiais
+            → naval: Tensões térmicas em casco e tubulações
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 31-32 >}}
+
+Quando a temperatura sobe, as moléculas vibram mais. Em sólidos e líquidos, essa vibração
+maior força um afastamento médio entre átomos, causando aumento de tamanho. Essa é a
+**dilatação térmica** — fenômeno crítico em máquinas navais, onde tubulações de vapor,
+cilindros e estruturas de aço sofrem variações de temperatura de 20 °C (praça fria) até
+200 °C (vapores de motor). Sem levar em conta a dilatação, tubos racham, juntas vazam,
+rotores emperram.
+
+## Três tipos de dilatação {{< ra OE4.5 B1 >}} {{< ra OE4.6 B2 >}}
+
+Conforme o que muda — comprimento, área ou volume — temos três casos:
+
+**Dilatação linear:** uma barra ou tubo cresce em comprimento.
+
+$$L = L_0 [1 + \alpha(T - T_0)]$$
+
+onde $\alpha$ é o coeficiente de dilatação linear (unidade: 1/K ou 1/°C), $L_0$ é o
+comprimento inicial à temperatura $T_0$.
+
+**Dilatação superficial:** uma chapa ou película muda de área. O coeficiente $\beta = 2\alpha$:
+
+$$A = A_0 [1 + \beta(T - T_0)]$$
+
+**Dilatação volumétrica:** um líquido ou gás expande o volume. O coeficiente $\gamma = 3\alpha$:
+
+$$V = V_0 [1 + \gamma(T - T_0)]$$
+
+Essa progressão ($1\alpha$, $2\alpha$, $3\alpha$) vem da geometria: uma mudança de 1% em cada
+dimensão causa 1% de mudança linear, $1 + 1 + 1 = 3$% de mudança volumétrica.
+
+## Coeficientes e aplicações {{< ra OE4.7 B3 >}}
+
+Para materiais comuns em máquinas marítimas:
+
+| Material | α [×10⁻⁶ K⁻¹] | Aplicação de bordo |
+|---|---|---|
+| Aço | 12 | Tubulações de vapor, cilindros de motor |
+| Latão | 19 | Tubos de trocador de calor |
+| Cobre | 17 | Sistemas de refrigeração |
+| Alumínio | 23 | Estruturas leves (raros em máquinas) |
+
+Exemplo: uma tubulação de aço de 10 m de comprimento passa de 20 °C (saída da praça) a
+180 °C (vapor superaquecido). A dilatação linear é:
+
+$$\Delta L = L_0 \cdot \alpha \cdot \Delta T = 10 \times 12 \times 10^{-6} \times 160 = 1{,}92\ \text{m}$$
+
+Isso não cabe — a tubulação precisa de uma **junta de expansão** para absorver esses 1,92 cm
+(arredondado), senão o tubo sofre compressão, empetra em seus apoios ou sai da linha de
+eixo.
+
+## Efeitos em estruturas {{< ra OE4.8 B2 >}}
+
+A dilatação térmica gera **tensões** quando o material é confinado. Se a tubulação não pode
+se expandir livremente (fixada em ambas as pontas), surge uma tensão de compressão:
+
+$$\sigma = E \cdot \alpha \cdot \Delta T$$
+
+onde $E$ é o módulo de Young (Pa). Para aço, $E \approx 200\ \text{GPa}$. Com $\Delta T = 160$ K:
+
+$$\sigma \approx 200 \times 10^9 \times 12 \times 10^{-6} \times 160 \approx 380\ \text{MPa}$$
+
+Limite de escoamento do aço é ~250 MPa — a tubulação cede, deforma permanentemente.
+
+Por isso, sistemas de vapor de bordo têm juntas de expansão, ancoragens bem espaçadas e
+folgas calculadas de fábrica.
+
+::: {.sp}
+Um cilindro de motor diesel (aço com paredes de 30 mm) opera entre 20 °C (parado) e
+280 °C (carga máxima). O cilindro tem diâmetro interno de 200 mm. O operador quer
+saber se há risco de travamento devido à dilatação térmica.
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Usar diferenças em Celsius como razão:** ΔT de 160 °C para dilatação é o mesmo
+  que 160 K (porque Celsius é uma escala de diferenças), mas α está em 1/K, não em 1/°C.
+  Sempre converter.
+- **Esquecer que linear, superficial e volumétrica são interdependentes:** não há três
+  coeficientes independentes. Se você conhece α, sabe β = 2α e γ = 3α.
+- **Ignorar confinamento:** dilatação "livre" (tubulação com junta) é segura; dilatação
+  confinada gera tensão. Uma junta de expansão ondulada absorve o movimento.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: barra de aço visual com slider de temperatura (20–300 °C), mostrando expansão em cores graduais (dilatação linear marcada) e indicador de tensão (mudança de cor conforme σ se aproxima do limite de escoamento); lib Plotly com diagrama ΔL vs. T -->
+
+**Conexão com o próximo tópico:** a dilatação é efeito da vibração térmica das moléculas.
+Essa vibração é energia — trazendo o conceito de **calor** como forma de transferência dessa
+energia.

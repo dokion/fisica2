@@ -1,0 +1,259 @@
+# FÍSICA-2 (FIS-2) — Syllabus {SEMESTRE/ANO}
+
+**Professor:** {INSTRUTOR} · **Carga horária:** 80 h-aula (60 h) · **Pré-requisitos:** Não se aplica
+**Turmas:** FONT + FOMQ · **Contato/atendimento:** {HORÁRIO E LOCAL FIXOS SEMANAIS}
+**Âncora internacional:** IMO Model Courses 7.03 (apêndice 2) e 7.04 (apêndice 1)
+
+---
+
+## 1. Descrição
+
+A disciplina aborda os fenômenos físicos relacionados a oscilações, ondas, mecânica dos fluidos e termodinâmica no contexto profissional do Oficial de Náutica e Máquinas da Marinha Mercante. Os conteúdos são ancorados nos Model Courses IMO 7.03 e 7.04, conectando a física de base às competências operacionais exigidas pela Convenção STCW-78. Ao longo do curso, o aluno aprende a reconhecer e analisar os fenômenos físicos presentes em equipamentos de navegação (ecobatímetro, log Doppler, radar), em sistemas de propulsão e fluidos (hélice, bombas, lastro) e em máquinas de bordo (motor diesel, caldeiras, trocadores de calor).
+
+---
+## 2. Cronograma
+
+> Régua: par de aulas (Apêndice II). CHD = 80 h-aula = 40 pares. 4 h-aula de avaliação = 2 pares.
+pppp
+| Aulas | UE | Tópicos | OE (objetivos esecíficos) | Verificação |
+|---|---|---|---|---|
+| 1-2p | 1 | Oscilações harmônicas; identificação de sistemas | 1.1–1.3 | — |
+| 3-4 | 1 | MHS e MCU; equações do MHS | 1.4–1.6 | — |
+| 5-6 | 1 | Superposição; batimentos; Lissajoppus | 1.7–1.10 | C1 Quiz Dokion |
+| 7-8 | 1 | Oscilações amortecidas; equação do oscilador | 1.11–1.13 | — |
+| 9-10 | 1 | Oscilador forçado; ressonância; velocidades críticas | 1.14–1.19 | — |
+| 11-12 | 1 | Balanço de energia; oscilações acopladas; modos normais | 1.20–1.25 | — |
+| 13-14 | 2 | Ondas transversais/longitudinais; superposição; interferência | 2.1–2.7 | — |
+| 15-16 | 2 | Reflexão; modos normais; ondas sonoras; velocidade do som | 2.8–2.15 | — |
+| 17-18 | 2 | Intensidade sonora; batimentos; efeito Doppler | 2.16–2.24 | C2 Estudo de caso (ecobatímetro/log Doppler) |
+| 19-20 | 2 | Velocidades supersônicas; ondas de choque; cone de Mach | 2.25–2.27 | — |
+| {PAR} | — | **PROVA 1 — Ciclo 1 (UE 1 + UE 2)** | — | P1 |
+| 21-22 | 3 | Propriedades dos fluidos; Pascal; Arquimedes; hidrostática | 3.1–3.7 | — |
+| 23-24 | 3 | Equilíbrio de flutuantes; escoamento; continuidade; Bernoulli | 3.8–3.12 | — |
+| 25-26 | 3 | Reynolds; Navier-Stokes; camada limite; transição | 3.13–3.17 | C3 Quiz Dokion |
+| 27-28 | 3 | Análise dimensional; Buckingham; grandezas adimensionais | 3.18–3.21 | — |
+| 29-30 | 3 | Arrasto; sustentação; Kutta-Joukowski; vórtice de esteira | 3.22–3.33 | — |
+| 31-32 | 4 | Lei Zero; temperatura; dilatação térmica; calor | 4.1–4.14 | — |
+| 33-34 | 4 | Condução; Fourier; 1ª Lei; gases ideais; entalpia | 4.15–4.30 | C4 Projeto computacional (início) |
+| 35-36 | 4 | Calores específicos; adiabáticos; Poisson | 4.31–4.36 | — |
+| 37-38 | 4 | 2ª Lei; entropia; máquinas térmicas; refrigeradores | 4.37–4.45 | — |
+| 39-40 | 4 | Teoria cinética; equipartição; calores específicos moleculares | 4.46–4.51 | C4 Demo ao vivo |
+| {PAR} | — | **PROVA 2 — Ciclo 2 (UE 1–4, ênfase UE 3+4)** | — | P2 |
+
+---
+
+## 3. Política de Avaliação
+
+- **Composição da nota:** 2 ciclos · Prova 80% + Trabalho 20% por ciclo (Apêndice I).
+- **Critério de aprovação:** {REGRA INSTITUCIONAL — ex.: média ≥ 5,0 em cada ciclo}.
+- **2ª chamada:** {REGRA INSTITUCIONAL}.
+- **Provas individualizadas** via Dokion (instâncias únicas por aluno).
+- **Trabalhos:** defesa oral obrigatória — IA não defende oralmente.
+- **Uso de IA:** permitido como ferramenta de estudo; vedado em avaliações síncronas.
+- **Integridade acadêmica:** {REGRA INSTITUCIONAL}.
+
+## 4. Objetivos esecíficos por Unidade de Ensino
+
+> Fonte: Parte C do sumário oficial FIS-2 (fev/2026), navalizados via Model Courses 7.03/7.04.
+> Formato: [OE] [Bloom] Texto navalizado · Âncora · Aplicação naval.
+> STCW indicada é exemplo de aplicação profissional — FIS-2 não tem vínculo normativo STCW direto.
+
+### UE 1 — Oscilações (18 h-aula)
+*Âncora: 7.04 §3.1.3.3.2 · Aplicação: vibração de máquinas, roll do navio*
+
+| Obj. | Bloom | Resultado de Aprendizagem navalizado | Aplicação naval |
+|---|---|---|---|
+| 1.1 | B1 | Definir o conceito de oscilação harmônica e sua importância na física | Vibração de máquinas com componentes recíprocos |
+| 1.2 | B1 | Identificar sistemas que apresentam oscilações harmônicas na natureza | Roll do navio; vibração de hélice |
+| 1.3 | B2 | Classificar oscilações quanto à periodicidade e amplitude | Classificação de vibração de bordo |
+| 1.4 | B2 | Explicar a relação entre MHS e MCU | — |
+| 1.5 | B3 | Derivar as equações do MHS a partir da projeção do MCU | Período de balanço do navio |
+| 1.6 | B3 | Determinar amplitude, frequência e fase do MHS | T = 8–25 s; boca 15–40 m |
+| 1.7 | B3 | Aplicar o princípio da superposição para combinação de oscilações | Superposição de fontes de vibração de bordo |
+| 1.8 | B2 | Explicar o fenômeno de batimentos | Cilindros desequilibrados; batimento de vibração |
+| 1.9 | B3 | Determinar a frequência do fenômeno de batimentos | Análise de sinal de vibração de máquina |
+| 1.10 | B2 | Interpretar as curvas de Lissajous e suas aplicações na análise de sinais | Diagnóstico de vibração de bordo |
+| 1.11 | B2 | Explicar os mecanismos de amortecimento em oscilações | Materiais anti-vibração entre partes conectadas |
+| 1.12 | B3 | Derivar a equação do movimento para um oscilador amortecido | — |
+| 1.13 | B2 | Classificar oscilações amortecidas (sub/crítico/super) | Amortecimento estrutural de casco |
+| 1.14 | B2 | Descrever a equação do oscilador forçado e suas soluções | — |
+| 1.15 | B2 | Explicar o conceito de ressonância e seus efeitos | Ressonância em velocidades críticas de máquinas |
+| 1.16 | B4 | Analisar exemplos práticos de ressonância em estruturas | Dano permanente se operado em vel. crítica |
+| 1.17 | B3 | Determinar a equação do movimento com forças externas e amortecimento | — |
+| 1.18 | B4 | Analisar a resposta do sistema a diferentes frequências de excitação | Transposição rápida de velocidades críticas |
+| 1.19 | B2 | Explicar o impacto da ressonância em sistemas amortecidos | Dispositivos de fixação que se soltam por vibração |
+| 1.20 | B3 | Derivar expressões para energia cinética e potencial no oscilador | — |
+| 1.21 | B2 | Explicar como a energia se conserva em oscilador sem amortecimento | — |
+| 1.22 | B4 | Analisar a dissipação de energia em oscilações amortecidas | Estresse reversivo em componentes de bordo |
+| 1.23 | B2 | Explicar o conceito de oscilações acopladas e suas características | Sistemas acoplados de bordo |
+| 1.24 | B3 | Derivar as equações do movimento para sistemas acoplados simples | — |
+| 1.25 | B4 | Analisar a formação de modos normais em sistemas acoplados | Modos normais em estrutura do navio |
+
+### UE 2 — Ondas em Meios Elásticos e Ondas Sonoras (14 h-aula expositiva + 2 h-aula prática)
+*Âncora: 7.03 §1.1.4 (ecobatímetro/log) · §1.3 (radar/ARPA) · STCW A-II/1*
+
+| Obj. | Bloom | Resultado de Aprendizagem navalizado | Aplicação naval | STCW |
+|---|---|---|---|---|
+| 2.1 | B1 | Conceituar ondas transversais e suas características | Pulso sonoro do ecobatímetro | A-II/1 |
+| 2.2 | B1 | Identificar exemplos de ondas transversais em diferentes meios | — | A-II/1 |
+| 2.3 | B2 | Diferenciar ondas transversais de longitudinais | Som = longitudinal; radar = transversal (EM) | A-II/1 |
+| 2.4 | B2 | Descrever o princípio da superposição e sua aplicação em ondas | Interferência em sinais de sonar | A-II/1 |
+| 2.5 | B4 | Analisar interferência construtiva e destrutiva | Ecos múltiplos no ecobatímetro | A-II/1 |
+| 2.6 | B3 | Aplicar o conceito de fasores para representar ondas | — | — |
+| 2.7 | B3 | Resolver problemas de interferência | — | — |
+| 2.8 | B2 | Descrever a reflexão de ondas e suas condições de contorno | Reflexão no fundo — princípio do ecobatímetro | A-II/1 |
+| 2.9 | B2 | Explicar a formação de modos normais de vibração em meios limitados | Ecos falsos por múltipla reflexão | A-II/1 |
+| 2.10 | B4 | Analisar exemplos de modos normais em cordas e tubos sonoros | — | — |
+| 2.11 | B1 | Definir ondas sonoras e sua propagação em diferentes meios | Velocidade do som na água do mar | A-II/1 |
+| 2.12 | B2 | Explicar os fatores que influenciam a velocidade do som | Temperatura, salinidade, pressão — erros do ecobatímetro | A-II/1 |
+| 2.13 | B2 | Comparar a velocidade do som em sólidos, líquidos e gases | — | A-II/1 |
+| 2.14 | B2 | Caracterizar ondas sonoras progressivas e sua equação de onda | — | — |
+| 2.15 | B2 | Explicar a propagação de ondas sonoras em meios homogêneos | Propagação do pulso no ecobatímetro | A-II/1 |
+| 2.16 | B4 | Analisar a relação entre frequência, comprimento de onda e velocidade | Cálculo de profundidade: d = v·t/2 | A-II/1 |
+| 2.17 | B1 | Definir intensidade sonora e nível sonoro em dB | — | — |
+| 2.18 | B2 | Relacionar intensidade sonora com amplitude e potência da onda | Alcance de detecção acústica | A-II/1 |
+| 2.19 | B3 | Resolver problemas envolvendo nível sonoro e sua variação | Log acústico de correlação | A-II/1 |
+| 2.20 | B2 | Explicar o fenômeno do batimento sonoro | Batimento entre sinais de sonar | — |
+| 2.21 | B3 | Determinar a frequência dos batimentos | — | — |
+| 2.22 | B2 | Explicar o efeito Doppler e sua aplicação na percepção de frequência | Princípio do log Doppler | A-II/1 |
+| 2.23 | B2 | Diferenciar casos de fontes e observadores em movimento | Navio em movimento vs. fundo como refletor | A-II/1 |
+| 2.24 | B3 | Resolver problemas práticos envolvendo o efeito Doppler | Cálculo de velocidade pelo log Doppler | A-II/1 |
+| 2.25 | B1 | Conceituar velocidades subsônicas, sônicas e supersônicas | — | — |
+| 2.26 | B2 | Explicar a formação de ondas de choque e suas consequências | Propagação anômala de radar | A-II/1 |
+| 2.27 | B4 | Analisar o cone de Mach e sua relação com a velocidade do objeto | Erros de radar em altas latitudes | A-II/1 |
+
+### UE 3 — Mecânica dos Fluidos (16 h-aula expositiva + 4 h-aula prática)
+*Âncora: 7.03 §3.2.1 / §3.2.2.6 · 7.04 §1.5.2.2 / §1.4.1.5 · STCW A-II/1 + A-III/1*
+
+| Obj. | Bloom | Resultado de Aprendizagem navalizado | Aplicação naval | STCW |
+|---|---|---|---|---|
+| 3.1 | B1 | Definir pressão, tensão superficial, massa específica e viscosidade | Calado, deslocamento, TPC | A-II/1 |
+| 3.2 | B2 | Explicar como essas propriedades influenciam o comportamento dos fluidos | Variação de TPC com calado | A-II/1 |
+| 3.3 | B4 | Analisar a relação entre tensão superficial e fenômenos capilares | [VERIFICAR — sem âncora direta] | — |
+| 3.4 | B2 | Identificar o impacto da viscosidade no escoamento dos fluidos | Sistemas de bombeamento; tubulações de porão | A-III/1 |
+| 3.5 | B2 | Explicar o princípio de Pascal e suas aplicações em sistemas hidráulicos | Bombas hidráulicas de bordo | A-III/1 |
+| 3.6 | B3 | Aplicar o princípio de Arquimedes para calcular empuxo em corpos imersos | Força de empuxo = deslocamento; reserva de flutuabilidade | A-II/1 |
+| 3.7 | B3 | Determinar a pressão em diferentes profundidades usando a equação da hidrostática | Pressão no casco submerso; centro de empuxo B | A-II/1 |
+| 3.8 | B3 | Resolver problemas sobre equilíbrio de corpos flutuantes | Curva deslocamento/calado; carga/descarga e variação de calado | A-II/1 |
+| 3.9 | B2 | Explicar o conceito de escoamento e sua classificação em laminar ou turbulento | Escoamento em tubulações de lastro e porão | A-III/1 |
+| 3.10 | B3 | Derivar a equação da continuidade e aplicá-la à conservação de massa em fluidos | Vazão em sistemas de bombeamento de bordo | A-III/1 |
+| 3.11 | B3 | Aplicar a equação de Bernoulli para analisar variações de pressão e velocidade | Propulsão por hélice; ação do leme | A-II/1 |
+| 3.12 | B3 | Resolver problemas práticos envolvendo escoamento em tubos e dutos | Sistemas de porão e lastro; válvulas de não-retorno | A-III/1 |
+| 3.13 | B3 | Determinar o número de Reynolds | Regime de escoamento ao redor do casco e hélice | A-II/1 |
+| 3.14 | B2 | Classificar regimes de escoamento | Escoamento laminar vs. turbulento no casco | A-II/1 |
+| 3.15 | B2 | Explicar a equação de Navier-Stokes e sua importância na dinâmica dos fluidos | Base teórica da resistência ao avanço do navio | A-II/1 |
+| 3.16 | B2 | Descrever a formação e influência da camada limite em superfícies sólidas | Arrasto de atrito no casco; incrustações | A-II/1 |
+| 3.17 | B4 | Analisar a transição do escoamento laminar para turbulento | Número de Reynolds crítico para cascos de navio | A-II/1 |
+| 3.18 | B2 | Explicar o conceito de análise dimensional e suas aplicações | Semelhança dinâmica em modelos de navio | A-II/1 |
+| 3.19 | B3 | Aplicar o Teorema π de Buckingham para reduzir variáveis em problemas fluidodinâmicos | Número de Froude em testes de modelo | A-II/1 |
+| 3.20 | B3 | Resolver exemplos práticos de análise dimensional em engenharia | Previsão de resistência por semelhança | A-II/1 |
+| 3.21 | B3 | Relacionar grandezas adimensionais como coeficiente de arrasto e número de Froude | Coeficiente de bloco Cb; número de Froude | A-II/1 |
+| 3.22 | B1 | Definir os tipos de arrasto (pressão, atrito e total) e suas causas | Resistência total ao avanço do navio | A-II/1 |
+| 3.23 | B2 | Explicar a relação entre arrasto e formato geométrico dos corpos imersos | Forma do casco e eficiência propulsiva | A-II/1 |
+| 3.24 | B3 | Determinar o coeficiente de arrasto em diferentes situações de escoamento | Cálculo de resistência para previsão de potência | A-II/1 |
+| 3.25 | B4 | Analisar a influência da viscosidade no arrasto de atrito | Arrasto de atrito; incrustações no casco | A-II/1 |
+| 3.26 | B2 | Explicar o conceito de sustentação e sua importância na aerodinâmica | Sustentação do leme; geometria do hélice | A-II/1 |
+| 3.27 | B2 | Relacionar a distribuição de pressões ao redor do corpo com a força de sustentação | Lado de pressão e sucção da pá do hélice | A-III/1 |
+| 3.28 | B3 | Aplicar a equação da sustentação para perfis aerodinâmicos | Perfil da pá e geração de empuxo propulsivo | A-III/1 |
+| 3.29 | B4 | Comparar a sustentação em diferentes condições de escoamento | Hélice de passo fixo vs. passo controlável | A-III/1 |
+| 3.30 | B2 | Explicar o Teorema de Kutta-Joukowski e sua relação com a circulação | Circulação ao redor da pá; vórtice de esteira | A-III/1 |
+| 3.31 | B3 | Determinar a força de sustentação sobre corpos imersos usando o teorema | Força propulsiva da pá do hélice | A-III/1 |
+| 3.32 | B2 | Relacionar o teorema com vórtices e o funcionamento de asas e hélices | Hélice skew-back; cavitação | A-III/1 |
+| 3.33 | B3 | Aplicar o conceito de vórtice de esteira para análise de escoamentos ao redor de perfis | Esteira do hélice; singing do hélice | A-III/1 |
+
+### UE 4 — Termodinâmica (22 h-aula expositiva + 0 h-aula prática)
+*Âncora: 7.04 §1.4.1.1.1–1.4.1.1.5 · STCW A-III/1*
+
+| Obj. | Bloom | Resultado de Aprendizagem navalizado | Aplicação naval | STCW |
+|---|---|---|---|---|
+| 4.1 | B2 | Explicar o conceito de temperatura e sua relação com o equilíbrio térmico | Equilíbrio térmico em trocadores de calor | A-III/1 |
+| 4.2 | B1 | Enunciar a Lei Zero da Termodinâmica | Base para instrumentação de temperatura de bordo | A-III/1 |
+| 4.3 | B2 | Interpretar a Lei Zero da Termodinâmica | Calibração de termômetros em praça de máquinas | A-III/1 |
+| 4.4 | B2 | Justificar a necessidade de escalas termométricas | Escalas usadas em instrumentos de máquinas | A-III/1 |
+| 4.5 | B1 | Definir os tipos de dilatação térmica (linear, superficial e volumétrica) | Dilatação em tubulações e estruturas de bordo | A-III/1 |
+| 4.6 | B2 | Diferenciar os tipos de dilatação térmica | Juntas de expansão em sistemas de vapor | A-III/1 |
+| 4.7 | B3 | Determinar coeficientes de dilatação e suas aplicações práticas | Cálculo de folgas em componentes de motor | A-III/1 |
+| 4.8 | B2 | Explicar os efeitos da dilatação térmica em estruturas e materiais | Tensões térmicas em casco e tubulações | A-III/1 |
+| 4.9 | B2 | Conceituar calor como uma forma de energia em trânsito | Fluxo de calor no ciclo do motor diesel | A-III/1 |
+| 4.10 | B2 | Diferenciar calor de temperatura | Distinção operacional em monitoramento de máquinas | A-III/1 |
+| 4.11 | B2 | Explicar os mecanismos de transferência de calor | Condução/convecção/radiação em trocadores e caldeiras | A-III/1 |
+| 4.12 | B3 | Determinar a quantidade de calor envolvida em processos térmicos | Balanço térmico do motor; Q1−Q2 = W | A-III/1 |
+| 4.13 | B2 | Explicar o conceito de capacidade térmica e calor específico | Valor calorífico de combustíveis marinhos (HFO/MGO) | A-III/1 |
+| 4.14 | B3 | Aplicar o conceito de calor latente em mudanças de fase | Vaporização em caldeiras; refrigeração de bordo | A-III/1 |
+| 4.15 | B2 | Explicar o processo de condução térmica em sólidos | Condução em paredes do cilindro e trocadores | A-III/1 |
+| 4.16 | B3 | Aplicar a Lei de Fourier para calcular fluxos de calor | Fluxo de calor em trocadores de bordo | A-III/1 |
+| 4.17 | B4 | Analisar a condutividade térmica de diferentes materiais | Materiais de isolamento térmico de bordo | A-III/1 |
+| 4.18 | B3 | Demonstrar a equivalência entre calor e trabalho | W = Q1−Q2 no ciclo diesel | A-III/1 |
+| 4.19 | B2 | Explicar a importância do experimento de Joule na formulação da 1ª Lei | Base histórica da conservação de energia em máquinas | A-III/1 |
+| 4.20 | B3 | Determinar a conversão entre calorias e joules | Conversão de unidades em balanços energéticos | A-III/1 |
+| 4.21 | B1 | Enunciar a Primeira Lei da Termodinâmica | Conservação de energia no ciclo do motor | A-III/1 |
+| 4.22 | B2 | Interpretar a Primeira Lei da Termodinâmica | Balanço energético: combustível → trabalho + calor rejeitado | A-III/1 |
+| 4.23 | B3 | Aplicar a conservação de energia em sistemas termodinâmicos | Eficiência do ciclo: η = W/Q1 | A-III/1 |
+| 4.24 | B4 | Analisar a variação de energia interna em diferentes processos | Processos no ciclo Diesel/Otto/Dual — diagramas P-V | A-III/1 |
+| 4.25 | B2 | Explicar o comportamento macroscópico dos gases ideais | Gás de trabalho no ciclo ideal do motor | A-III/1 |
+| 4.26 | B3 | Derivar a equação de estado dos gases ideais | Estado dos gases no ciclo Otto/Diesel/Dual | A-III/1 |
+| 4.27 | B3 | Aplicar a equação de estado em diferentes condições físicas | Cálculo de pressões e temperaturas no ciclo | A-III/1 |
+| 4.28 | B2 | Explicar a relação entre energia interna e temperatura de um gás ideal | Energia interna no ciclo de motor de 2 e 4 tempos | A-III/1 |
+| 4.29 | B2 | Descrever as experiências de Joule e Joule-Thomson e suas implicações | Entalpia em processos de bordo | A-III/1 |
+| 4.30 | B2 | Conceituar entalpia e sua importância em processos termodinâmicos | Entalpia em trocadores e caldeiras | A-III/1 |
+| 4.31 | B1 | Definir calor específico molar a volume e pressão constantes | Processos a volume/pressão constante no ciclo diesel | A-III/1 |
+| 4.32 | B2 | Explicar a relação entre calores específicos e grau de liberdade molecular | Base microscópica do comportamento do gás de trabalho | A-III/1 |
+| 4.33 | B3 | Determinar a razão entre calores específicos (γ = Cp/Cv) | γ no cálculo de processos adiabáticos (equação de Poisson) | A-III/1 |
+| 4.34 | B2 | Caracterizar processos adiabáticos em sistemas termodinâmicos | Compressão adiabática no ciclo diesel | A-III/1 |
+| 4.35 | B3 | Derivar a equação de Poisson para transformações adiabáticas | Relação P-V na compressão do motor | A-III/1 |
+| 4.36 | B3 | Aplicar a equação de estado em processos adiabáticos | Temperatura de ignição por compressão no diesel | A-III/1 |
+| 4.37 | B1 | Enunciar a Segunda Lei da Termodinâmica e suas diferentes formulações | Limite de eficiência de máquinas térmicas reais | A-III/1 |
+| 4.38 | B2 | Explicar a irreversibilidade dos processos naturais | Perdas reais no ciclo do motor vs. ciclo ideal | A-III/1 |
+| 4.39 | B2 | Interpretar a eficiência de máquinas térmicas a partir da 2ª Lei | η = 1 − Q2/Q1; eficiência de Carnot como limite | A-III/1 |
+| 4.40 | B1 | Definir entropia e sua relação com processos reversíveis e irreversíveis | Entropia crescente em processos reais de bordo | A-III/1 |
+| 4.41 | B2 | Explicar a variação de entropia em sistemas fechados e abertos | Sistemas abertos: caldeiras, trocadores | A-III/1 |
+| 4.42 | B3 | Aplicar a 2ª Lei na análise de processos naturais | Análise de irreversibilidade em ciclos reais | A-III/1 |
+| 4.43 | B2 | Explicar o funcionamento de máquinas térmicas e refrigeradores | Motor diesel e sistema de refrigeração de bordo | A-III/1 |
+| 4.44 | B4 | Comparar a eficiência de ciclos ideais e reais | Diagrama indicador real vs. ideal | A-III/1 |
+| 4.45 | B4 | Analisar o impacto da irreversibilidade em máquinas térmicas | Perdas mecânicas e térmicas no motor diesel real | A-III/1 |
+| 4.46 | B2 | Relacionar pressão e temperatura ao movimento das partículas de um gás | Teoria cinética aplicada ao gás de trabalho | A-III/1 |
+| 4.47 | B3 | Derivar a equação fundamental da teoria cinética dos gases | Base microscópica da equação de estado | A-III/1 |
+| 4.48 | B2 | Explicar a interpretação microscópica da temperatura | Temperatura como energia cinética média das moléculas | A-III/1 |
+| 4.49 | B3 | Aplicar o teorema da equipartição da energia para calores específicos | Graus de liberdade do gás de trabalho | A-III/1 |
+| 4.50 | B2 | Relacionar calores específicos com graus de liberdade das moléculas | Cp/Cv e comportamento do gás no ciclo | A-III/1 |
+| 4.51 | B2 | Explicar o comportamento dos calores específicos em diferentes faixas de temperatura | Variação de γ com temperatura em motores | A-III/1 |
+
+---
+
+## 5. Mapa de Avaliação
+
+> Estrutura: 2 ciclos avaliativos (Apêndice I). Prova = 80% · Trabalho = 20% por ciclo.
+
+| Cód | Instrumento | Par de aulas | Peso no ciclo | UEs medidas | Mecanismo anti-IA |
+|---|---|---|---|---|---|
+| P1 | Prova escrita — Ciclo 1 | {PAR DE AULAS — semana de provas} | 80% | UE 1 + UE 2 | Síncrono, individualizado |
+| P2 | Prova escrita — Ciclo 2 | {PAR DE AULAS — semana de provas} | 80% | UE 1–4 (ênfase UE 3 + 4) | Síncrono, individualizado |
+| C1 | Quiz Dokion | {PAR DE AULAS} | 25% do trabalho C1 | UE 1 | Síncrono em sala, timer |
+| C2 | Estudo de caso + defesa oral | {PAR DE AULAS} | 50% do trabalho C1 | UE 2 | Defesa oral 5 min |
+| L1 | Listas (compleção) UE 1–2 | contínuo | 25% do trabalho C1 | UE 1 + 2 | Amostragem em sala |
+| C3 | Quiz Dokion | {PAR DE AULAS} | 25% do trabalho C2 | UE 3 | Síncrono em sala, timer |
+| C4 | Projeto computacional + demo | {PAR DE AULAS} | 50% do trabalho C2 | UE 3 + 4 | Demo ao vivo com alteração de parâmetro |
+| L2 | Listas (compleção) UE 3–4 | contínuo | 25% do trabalho C2 | UE 3 + 4 | Amostragem em sala |
+
+---
+
+## 6. Materiais
+
+- Notas de aula próprias (publicadas após cada par de aulas)
+- Referências bibliográficas do sumário oficial FIS-2:
+  - Nussenzveig, H. M. — *Curso de Física Básica vol. 2* (Fluidos, Oscilações, Ondas e Calor)
+  - Resnick, R.; Halliday, D. — *Fundamentos de Física vol. 2*
+  - Bistafa, S. R. — *Mecânica dos Fluidos: Noções e Aplicações*
+  - Brunetti, F. — *Mecânica dos Fluidos*
+  - Santos, E. M. dos — *Princípios de Hidrodinâmica e a Ação das Ondas sobre o Movimento do Navio*
+  - Shames, I. H. — *Mecânica dos Fluidos vols. 1 e 2*
+- Listas de exercícios (1 por bloco de tópicos)
+- Simulações: {PhET e outros — versões offline baixadas previamente}
+
+---
+
+## 7. Metodologia
+
+Aula expositiva-dialogada em quadro; slides apenas ilustrativos; resolução de situações-problema do contexto marítimo (padrões SP da Seção 6 do Documento Mestre); componente computacional (Python/planilha) no projeto da continuada. Aulas práticas em Laboratório de Física Básica, Termodinâmica e Dinâmica dos Fluidos e Embarcações, grupos de no máximo 6 alunos.
+
+---

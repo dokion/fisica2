@@ -1,0 +1,98 @@
+---
+title: "4.16 — Calores específicos de um gás perfeito e equipartição da energia"
+categories: [UE4, OE4.49-B3, OE4.50-B2, OE4.51-B2]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 4.49 [B3] Aplicar o teorema da equipartição da energia para calores específicos
+             → naval: graus de liberdade do gás de trabalho
+OE 4.50 [B2] Relacionar calores específicos com graus de liberdade das moléculas
+             → naval: Cp/Cv e comportamento do gás no ciclo
+OE 4.51 [B2] Explicar o comportamento dos calores específicos em diferentes faixas de temperatura
+             → naval: variação de γ com temperatura em motores
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 39-40 >}}
+
+Este tópico fecha a unidade conectando o microscópico (4.15) ao que os motores de fato
+usam: o calor específico e a razão $\gamma$ que governam a compressão adiabática do
+ciclo diesel. A ponte é o teorema da equipartição — a regra que reparte a energia
+térmica entre os movimentos possíveis da molécula.
+
+## Teorema da equipartição {{< ra OE4.49 B3 >}}
+
+O teorema da equipartição afirma que, no equilíbrio, cada **grau de liberdade**
+quadrático da molécula guarda, em média, a mesma energia:
+
+$$\langle E \rangle_{\text{por grau}} = \frac{1}{2} k_B T$$
+
+Uma molécula com $f$ graus de liberdade ativos tem energia média $\tfrac{f}{2}k_B T$.
+Para $n$ mols, a energia interna do gás ideal é:
+
+$$U = \frac{f}{2} n R T$$
+
+Daí saem os calores específicos molares, direto da definição $C_V = (\partial U/\partial T)_V$:
+
+$$C_V = \frac{f}{2} R
+\qquad
+C_P = C_V + R = \frac{f+2}{2} R
+\qquad
+\gamma = \frac{C_P}{C_V} = \frac{f+2}{f}$$
+
+## Graus de liberdade e a razão γ {{< ra OE4.50 B2 >}}
+
+O número de graus de liberdade depende da geometria da molécula:
+
+| Molécula | Graus ativos $f$ | $C_V$ | $\gamma$ |
+|---|---|---|---|
+| Monoatômica (He, Ar) | 3 (translação) | $\tfrac{3}{2}R$ | 1,67 |
+| Diatômica (N₂, O₂ — ar) | 5 (3 transl. + 2 rot.) | $\tfrac{5}{2}R$ | 1,40 |
+| Poliatômica | 6 ou mais | $\ge 3R$ | $\le$ 1,33 |
+
+Para o ar (gás de trabalho do motor), $\gamma \approx 1{,}4$ — o valor que entra na
+equação de Poisson da compressão adiabática (tópico 4.11) e fixa a temperatura de
+ignição por compressão do diesel.
+
+## Variação com a temperatura {{< ra OE4.51 B2 >}}
+
+Os graus de liberdade **não estão todos ativos sempre**: eles "acordam" por faixas de
+temperatura (efeito quântico). Para uma molécula diatômica:
+
+- **baixa T:** só translação ($f=3$, $\gamma \approx 1{,}67$);
+- **T ambiente/motor:** translação + rotação ($f=5$, $\gamma \approx 1{,}40$);
+- **alta T:** entra a vibração ($f=7$, $\gamma \approx 1{,}29$).
+
+Por isso $\gamma$ do gás de trabalho **cai** nas altas temperaturas da combustão — um
+refinamento que os cálculos de ciclo real precisam considerar.
+
+<!-- SIMULAÇÃO SUGERIDA: Cv(T) em degraus (3/2 R → 5/2 R → 7/2 R) mostrando a ativação
+     de rotação e vibração — Plotly (gráfico explorável, tabela Q4). Marcar a faixa de
+     temperatura do ar num motor. -->
+
+::: {.sp}
+O ar ($\gamma \approx 1{,}4$ à admissão) é comprimido no cilindro de um motor diesel.
+Durante a combustão, a temperatura sobe o suficiente para ativar modos vibracionais,
+e $\gamma$ efetivo cai para $\approx 1{,}30$.
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Usar $\gamma = 1{,}67$ para o ar:** ar é diatômico, $\gamma \approx 1{,}40$; 1,67 é
+  de gás monoatômico.
+- **Esquecer a relação de Mayer:** $C_P = C_V + R$ vale por mol; confundir molar com
+  específico (por kg) troca $R$ por $R/M$.
+- **Tratar $\gamma$ como constante universal:** ele depende da molécula e da faixa de
+  temperatura — nas temperaturas de combustão, $\gamma$ do ar já não é 1,40.
+:::
+
+**Conexão com a próxima unidade:** encerrada a termodinâmica, o curso completa o
+percurso oscilações → ondas → fluidos → calor previsto no sumário oficial do FIS-2.

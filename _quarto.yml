@@ -1,0 +1,37 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "Física — CIABA"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Syllabus
+  sidebar:
+    style: docked
+    search: true
+    contents:
+      - href: index.qmd
+        text: Syllabus
+      - section: "UE 1 — Oscilações"
+        contents: unidades/unidade-1-oscilacoes/*.qmd
+      - section: "UE 2 — Ondas"
+        contents: unidades/unidade-2-ondas/*.qmd
+      - section: "UE 3 — Mecânica dos Fluidos"
+        contents: unidades/unidade-3-fluidos/*.qmd
+      - section: "UE 4 — Termodinâmica"
+        contents: unidades/unidade-4-termodinamica/*.qmd
+
+format:
+  html:
+    theme: [brand, theme.scss]
+    toc: true
+    toc-title: "Nesta página"
+    number-sections: false
+    lang: pt-BR
+    html-math-method: mathjax
+
+execute:
+  echo: true
+  warning: false

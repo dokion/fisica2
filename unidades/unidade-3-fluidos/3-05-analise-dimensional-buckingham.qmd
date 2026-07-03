@@ -1,0 +1,121 @@
+---
+title: "3.5 — Análise dimensional: Teorema π de Buckingham"
+categories: [UE3, OE3.18-B2, OE3.19-B3, OE3.20-B3, OE3.21-B3]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 3.18 [B2] Explicar o conceito de análise dimensional e suas aplicações
+            → naval: Semelhança dinâmica em modelos de navio
+OE 3.19 [B3] Aplicar o Teorema π de Buckingham para reduzir variáveis em problemas fluidodinâmicos
+            → naval: Número de Froude em testes de modelo
+OE 3.20 [B3] Resolver exemplos práticos de análise dimensional em engenharia
+            → naval: Previsão de resistência por semelhança
+OE 3.21 [B3] Relacionar grandezas adimensionais como coeficiente de arrasto e número de Froude
+            → naval: Coeficiente de bloco Cb; número de Froude
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 27-28 >}}
+
+Calcular a resistência ao avanço de um navio inteiro a partir de primeiros princípios (Navier-Stokes, camada limite, turbulência) é inviável — o problema é muito complexo. Mas existe um caminho prático: **semelhança dinâmica** — a ideia de que um modelo reduzido, testado em tanque de provas, pode revelar o comportamento do navio real se construído e ensaiado sob as condições certas. A ferramenta que torna isso possível é a **análise dimensional**, baseada no **Teorema π de Buckingham**. Este tópico mostra como reduzir o número de variáveis em um problema e como extrair leis de escala que permitem prever o desempenho de um navio a partir de testes em modelo.
+
+## Análise dimensional: conceito e objetivo {{< ra OE3.18 B2 >}}
+
+A **análise dimensional** é a técnica de descrever um fenômeno físico usando apenas as dimensões das variáveis envolvidas (comprimento L, massa M, tempo T, temperatura Θ), sem resolver as equações diferenciais. A ideia é que toda equação física válida **deve ter dimensionalidade consistente**: os dois lados de uma igualdade têm as mesmas dimensões.
+
+Exemplo: força tem dimensão $\text{MLT}^{-2}$ (massa × aceleração). Se uma força $F$ depende de massa $m$, velocidade $v$ e comprimento $L$, a forma geral é:
+
+$$F = f(m, v, L)$$
+
+A análise dimensional não diz o que é $f$, mas reduz as variáveis a grupos adimensionais — números sem unidade que têm o mesmo significado em qualquer sistema de unidades.
+
+## Teorema π de Buckingham {{< ra OE3.19 B3 >}}
+
+O **Teorema π de Buckingham** afirma que se um fenômeno físico envolve $n$ variáveis com dimensões expressas usando $k$ dimensões fundamentais (no máximo 7: L, M, T, Θ, I, J, N), então o fenômeno pode ser descrito por $(n - k)$ grupos adimensionais independentes, chamados de **números π**.
+
+**Procedimento:**
+
+1. Listar todas as $n$ variáveis envolvidas (variáveis dependentes e independentes).
+2. Contar as $k$ dimensões fundamentais que aparecem.
+3. Calcular $m = n - k$ (número de grupos π).
+4. Escolher um conjunto de $k$ variáveis "pivô" (linearly independent em termos dimensionais).
+5. Expressar cada um dos $m$ grupos π como produto de potências das variáveis.
+
+**Exemplo prático:** Suponha que a resistência ao avanço de um navio $R$ dependa de:
+- Comprimento $L$ (m)
+- Velocidade $v$ (m/s)
+- Densidade $\rho$ (kg/m³)
+- Viscosidade dinâmica $\mu$ (Pa·s)
+- Aceleração da gravidade $g$ (m/s²)
+
+Total de variáveis: $n = 6$. Dimensões: L, M, T (k = 3). Logo, $m = 6 - 3 = 3$ grupos π.
+
+Um conjunto de 3 números π são:
+- $\pi_1 = \text{Cd} = \dfrac{R}{\frac{1}{2}\rho v^2 A}$ (coeficiente de arrasto)
+- $\pi_2 = \text{Re} = \dfrac{\rho v L}{\mu}$ (número de Reynolds)
+- $\pi_3 = \text{Fr} = \dfrac{v}{\sqrt{gL}}$ (número de Froude)
+
+A relação geral é: $\text{Cd} = f(\text{Re}, \text{Fr})$.
+
+## Números adimensionais em navios {{< ra OE3.21 B3 >}}
+
+Para o projeto de um navio, vários números π têm significado específico:
+
+| Número | Definição | Significado |
+|---|---|---|
+| $\text{Re} = \rho v L / \mu$ | Razão inércia / viscosidade | Tipo de escoamento (laminar vs. turbulento) |
+| $\text{Fr} = v / \sqrt{gL}$ | Razão inércia / gravitação | Importância da elevação de onda |
+| $\text{Cd}$ (coeficiente de arrasto) | $R / (\frac{1}{2}\rho v^2 A)$ | Eficiência aerodinâmica (ou hidrodinâmica) |
+| $\text{Cb}$ (coeficiente de bloco) | $\Delta / (L \times B \times T)$ | Proporção de "rechonchudice" do casco |
+
+Para navios:
+- Re é sempre muito alto (>10⁶), indicando escoamento turbulento.
+- Fr depende da velocidade e é crítico para projeto: Fr ~ 0.1–0.4 para navios mercantes. Baixo Fr significa menor geração de onda (e menos resistência); alto Fr significa onda grande (e arrasto maior).
+- Cb típico é 0.6–0.85 para navios mercantes; 0.8–0.9 para graneleiros (volumosos); 0.5–0.65 para navios-tanque (mais finos).
+
+## Semelhança dinâmica em modelos {{< ra OE3.20 B3 >}}
+
+Para que um modelo reduzido $(1:n)$ reproduza o comportamento do navio real, seus números π devem ser **iguais** aos do navio. Mas manter $\text{Re}$ e $\text{Fr}$ simultaneamente iguais é impossível em água:
+
+$$\text{Re}_{\text{modelo}} = \rho v_m L_m / \mu = \text{Re}_{\text{real}}$$
+$$\text{Fr}_{\text{modelo}} = v_m / \sqrt{g L_m} = \text{Fr}_{\text{real}}$$
+
+Dividindo a segunda equação pela primeira:
+
+$$\frac{v_m}{v_{\text{real}}} = \sqrt{\frac{L_m}{L_{\text{real}}}} = \sqrt{1/n}$$
+
+$$v_m / v_{\text{real}} = 1 / \sqrt{n}$$
+
+Substituindo na primeira equação, obtemos que $\text{Re}_{\text{modelo}} \ll \text{Re}_{\text{real}}$ — impossível igualar ambos.
+
+**Solução:** a regra de **Froude** ensaia o modelo mantendo Fr constante (iguais velocidades de Froude) e depois **corrigi-se o arrasto** para Reynolds real usando **coeficiente de fricção** de placas planas (ITTC, Kármán-Schoenherr). A resistência total predita é:
+
+$$R_{\text{real}} = R_{\text{onda}} + R_{\text{fricção (real)}}$$
+
+onde $R_{\text{onda}}$ vem do modelo (mantém Fr) e $R_{\text{fricção}}$ é extrapolado usando fórmulas de engenharia.
+
+::: {.sp}
+Um navio-graneleiro de comprimento $L = 200$ m, velocidade de serviço $v = 14$ nós (7.2 m/s), é testado em modelo reduzido na escala $1:50$. O modelo mede $L_m = 4$ m. Calcule:
+(a) A velocidade de ensaio do modelo mantendo número de Froude constante.
+(b) Os números de Reynolds real e modelo, e verifique a diferença.
+(c) O coeficiente de bloco do navio sendo $\Delta = 45000$ t, $L = 200$ m, $B = 32$ m, calado $T = 10$ m.
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Pensar que o modelo é exato:** nenhum modelo é perfeitamente semelhante. A regra de Froude é um compromisso — traz a onda certo, mas fricção precisa ser corrigida.
+- **Negligenciar escala de rugosidade:** um modelo pintado liso tem rugosidade relativa $k/L_m$ maior que o navio, mudando a transição laminar-turbulenta e o perfil de fricção.
+- **Confundir Froude com Mach:** Mach é para gases compressíveis; Froude é para líquidos com superfície livre. Navio = Froude; aviação = Mach/Reynolds.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Gráfico interativo (Plotly) de Resistência vs. Velocidade, mostrando contribuições de onda e fricção para escala real e modelo (com slider de escala); ou visualizador de escala: sliders de L, v, mostrando Fr, Re, Cb em tempo real. -->
+
+**Conexão com o próximo tópico:** usando análise dimensional e semelhança, agora podemos falar de **arrasto** em detalhe — seus componentes (pressão, atrito, total) — e como a geometria do casco e escoamento afetam a resistência. Tópico 3.6.

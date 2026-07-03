@@ -1,0 +1,113 @@
+---
+title: "1.5 — Oscilações forçadas e ressonância"
+categories: [UE1, OE1.14-B2, OE1.15-B2, OE1.16-B4]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 1.14 [B2] Descrever a equação do oscilador forçado e suas soluções
+             → naval: —
+OE 1.15 [B2] Explicar o conceito de ressonância e seus efeitos
+             → naval: Ressonância em velocidades críticas de máquinas
+OE 1.16 [B4] Analisar exemplos práticos de ressonância em estruturas
+             → naval: Dano permanente se operado em vel. crítica
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 9-10 >}}
+
+Quando um sistema é forçado por uma excitação periódica externa — como a vibração que o motor
+impõe ao casco — ocorre um fenômeno devastador se a frequência da força se aproximar da
+frequência natural do sistema. É a **ressonância**, o mecanismo por trás de falhas catastróficas
+de equipamentos, fraturas de estrutura e desconforto de tripulação em bordo.
+
+## Equação do oscilador forçado {{< ra OE1.14 B2 >}}
+
+Adicionando uma força externa periódica $F_0\cos(\omega t)$ à equação de movimento não-amortecido:
+
+$$m\ddot{x} + kx = F_0\cos(\omega t)$$
+
+ou, em forma padrão:
+
+$$\ddot{x} + \omega_0^2 x = \frac{F_0}{m}\cos(\omega t)$$
+
+A solução geral é $x(t) = x_h(t) + x_p(t)$, onde $x_h$ é a solução homogênea (oscilação livre
+com frequência $\omega_0$) e $x_p$ é a solução particular (oscilação forçada na frequência da excitação $\omega$).
+
+Para $\omega \neq \omega_0$, após o transiente inicial dissipar (em um sistema real com amortecimento),
+a solução particular é:
+
+$$x_p(t) = \frac{F_0/m}{\omega_0^2 - \omega^2}\cos(\omega t)$$
+
+**Amplitude da resposta:** $A(\omega) = \left|\frac{F_0/m}{\omega_0^2 - \omega^2}\right|$
+
+Quando $\omega \to \omega_0$, o denominador tende a zero — a amplitude diverge teoricamente.
+Na prática, o amortecimento que sempre existe evita a divergência, mas permite amplitudes
+muito grandes (tópico 1.6).
+
+## Ressonância — amplificação na frequência natural {{< ra OE1.15 B2 >}}
+
+**Ressonância** é o fenômeno de amplificação máxima quando a frequência da força externa
+iguala (ou é muito próxima) a frequência natural do sistema. Nesta condição:
+
+$$\omega = \omega_0 \quad \Rightarrow \quad A(\omega_0) \text{ é máxima}$$
+
+Fisicamente, a cada ciclo, a força externa dá um "empurrão" no momento exato em que o
+oscilador retorna — não há "desperdício" de força em fases que a contradizem. A energia
+da força se acumula no sistema.
+
+Em um navio, as velocidades críticas são aquelas nas quais a frequência de rotação do motor
+(ou de precessão de uma pá de hélice danificada) coincide com uma frequência natural da
+estrutura (balanço, arfagem, torção, etc.). Navios modernos são projetados com margens para
+evitar essas velocidades em operação normal, mas se a manutenção for negligenciada, o risco
+é real.
+
+## Análise prática — dano por ressonância em estruturas {{< ra OE1.16 B4 >}}
+
+Quando um navio é forçado a operar em velocidade crítica (ressonância):
+
+1. **Amplificação de amplitude:** ângulo de balanço pode quadruplicar ou mais em relação a
+   uma oscilação em frequência não-ressonante.
+
+2. **Concentração de tensão:** tensões nos membros estruturais (costados, anteparas) aumentam
+   ao quadrado (proporcionais a $A^2$), acelerando fadiga.
+
+3. **Possível falha catastrófica:** se a velocidade não for alterada rapidamente (em operação
+   normal de máquinas, reduz-se ou aumenta-se RPM para "sair" da ressonância), fraturas por
+   fadiga podem ocorrer em horas ou dias — leme pode se soltar, costados podem desenvolver
+   trincas, e em casos extremos, estrutura pode sofrer dano permanente (colapso local).
+
+4. **Desconforto extremo:** tripulação sofre com a vibração amplificada (náusea, lesão de
+   tecidos moles em longos períodos).
+
+<!-- SIMULAÇÃO SUGERIDA: curva de amplitude A(ω) da resposta forçada com slider da
+     frequência de excitação — Plotly (gráfico explorável, tabela Q4). Marcar ω₀ e a
+     zona de ressonância; parâmetros na faixa SP3 (T natural 8–25 s). -->
+
+::: {.sp}
+Um navio cargueiro com período natural de balanço $T_0 = 12$ s ($\omega_0 = 2\pi/12 \approx 0{,}524$ rad/s)
+opera com máquinas que, em regime de 90 RPM, geram uma frequência de excitação (via desbalanceamento)
+de $f_e = 90/60 = 1{,}5$ Hz ($\omega_e = 2\pi \times 1{,}5 \approx 9{,}42$ rad/s). De repente, há uma falha
+e o motor fica preso em 0,087 Hz (aproximadamente 0,55 rad/s) — muito próximo a $\omega_0$.
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Confundir "força grande" com "ressonância":** uma força pequena pode causar ressonância se a
+  frequência é certa. Reciprocamente, uma força gigantesca em frequência errada mal move o sistema.
+- **Achar que ressonância só existe em oscilador ideal:** sim, é mais dramática sem amortecimento,
+  mas ocorre mesmo com amortecimento moderado (tópico 1.6).
+- **Usar fórmula sem amortecimento para prever amplitude em ressonância real:** nunca. Sempre incluir
+  $\gamma$ (Seção 6).
+:::
+
+**Conexão com o próximo tópico:** ressonância em sistemas reais (com amortecimento) é moderada
+mas ainda perigosa. Como reduzi-la? Aumentando o amortecimento ou desviando a frequência natural
+— tópico 1.6 mostra como excitação e amortecimento se combinam.

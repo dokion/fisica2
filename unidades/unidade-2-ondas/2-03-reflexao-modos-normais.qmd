@@ -1,0 +1,90 @@
+---
+title: "2.3 — Reflexão de ondas e modos normais de vibração"
+categories: [UE2, OE2.8-B2, OE2.9-B2, OE2.10-B4]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 2.8 [B2] Descrever a reflexão de ondas e suas condições de contorno
+            → naval: Reflexão no fundo — princípio do ecobatímetro
+OE 2.9 [B2] Explicar a formação de modos normais de vibração em meios limitados
+            → naval: Ecos falsos por múltipla reflexão
+OE 2.10 [B4] Analisar exemplos de modos normais em cordas e tubos sonoros
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 15-16 >}}
+
+Quando uma onda atinge uma superfície sólida ou uma mudança abrupta de meio, ela **reflete**. O ecobatímetro funciona exatamente assim: envia um pulso que reflete no fundo e retorna. Mas reflexão não é meramente um fenômeno isolado — em geometrias confinadas (como uma coluna de água entre a superfície e o fundo), as ondas refletidas somam-se às incidentes, criando padrões estacionários chamados **modos normais**. Essas estruturas podem produzir "ecos falsos" e são fundamentais para prever comportamentos inesperados de sistemas acústicos navais.
+
+## Reflexão de ondas {{< ra OE2.8 B2 >}}
+
+Quando uma onda progressiva atinge uma **superfície rígida** (contorno onde a velocidade das partículas deve ser nula), ocorre **reflexão**. A onda refletida tem mesma frequência e comprimento de onda da incidente, mas propaga-se em sentido oposto.
+
+Para uma onda incidente $y_i = A\cos(kx - \omega t)$ e uma refletida $y_r = A\cos(kx + \omega t + \pi)$ (o fator $\pi$ representa a inversão de fase na reflexão rígida), a soma é:
+
+$$y_{\text{total}} = A[\cos(kx - \omega t) - \cos(kx + \omega t)] = -2A\sin(kx)\sin(\omega t)$$
+
+O resultado **não é uma onda progressiva** — é uma **onda estacionária**: cada ponto oscila em fase com seus vizinhos (sem "viajar"), com amplitude variando de zero (nós) a $2A$ (antinós) dependendo da posição $x$.
+
+Nós estão em $x = n\frac{\lambda}{2}$ (onde a onda refletida cancela a incidente).
+Antinós estão em $x = (n + 1/2)\frac{\lambda}{2}$ (onde construtivamente se reforçam).
+
+Esta é a assinatura de uma onda refletida: o padrão se torna **estacionário**, não progressivo.
+
+## Modos normais em meios limitados {{< ra OE2.9 B2 >}}
+
+Considere uma camada de água entre a superfície (refletor perfeito) e o fundo (também refletor). Uma onda que se propaga para baixo reflete no fundo e volta para cima. Se a profundidade for tal que um número inteiro de meios-comprimentos de onda caiba entre os dois refletores, a onda refletida interfere *construtivamente* com novas ondas incidentes — ocorre **ressonância**. Isso é um **modo normal**.
+
+A condição para um modo normal é:
+
+$$h = n\frac{\lambda}{2}, \quad n = 1, 2, 3, \ldots$$
+
+onde $h$ é a profundidade e $n$ é o número do modo. Cada modo tem uma **frequência característica**:
+
+$$f_n = n\frac{v}{2h}$$
+
+Exemplo: água do mar com $v = 1500\,\text{m/s}$ e profundidade $h = 50\,\text{m}$ (faixa típica de ecobatímetro costeiro):
+- Modo 1 ($n=1$): $f_1 = 1 \times \frac{1500}{2 \times 50} = 15\,\text{Hz}$
+- Modo 2 ($n=2$): $f_2 = 30\,\text{Hz}$
+- Modo 3 ($n=3$): $f_3 = 45\,\text{Hz}$
+
+Se o transdutor de um sonar transmite em uma frequência que coincida com um modo da coluna de água, o sinal "ressoa" — amplifica-se anormalmente e cria um eco fantasma que o operador pode confundir com um contato real.
+
+## Exemplos: cordas e tubos sonoros {{< ra OE2.10 B4 >}}
+
+**Cordas fixas em ambas extremidades** (como uma corda de violão) formam modos normais exatamente como descritos acima. O comprimento da corda deve conter um número inteiro de meios-comprimentos de onda. As frequências são:
+
+$$f_n = n\frac{v}{2L}, \quad n = 1, 2, 3, \ldots$$
+
+onde $L$ é o comprimento. Modo 1 é a **frequência fundamental** (som mais grave); modos 2, 3, ... são os **harmônicos** (som mais agudo).
+
+**Tubos abertos ou fechados** também formam modos. Um tubo **fechado em uma extremidade** (como um cachimbo) tem nós numa extremidade e antinó na outra — a condição muda ligeiramente:
+
+$$f_n = (2n-1)\frac{v}{4L}, \quad n = 1, 2, 3, \ldots$$
+
+(só frequências ímpares dos modos).
+
+Na navegação, sistemas de tubulações de bordo, shafts e até a caverna do motor do navio podem formar modos acústicos que amplificam certos ruídos e reverberam o som — fenômeno importante para controle de ruído no navio.
+
+::: {.sp}
+Um ecobatímetro mono-feixe transmite em frequência $f_0 = 50\,\text{kHz}$ numa coluna de água com profundidade $h = 200\,\text{m}$ (navegação em águas profundas), $v = 1500\,\text{m/s}$. O operador observa um eco principal em $t_1 = 0{,}267\,\text{s}$ (distância correta: $d = \frac{1500 \times 0{,}267}{2} = 200\,\text{m}$). Porém, detecta também um eco fantasma em $t_2 = 0{,}400\,\text{s}$.
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Reflexão = inversão de fase sempre?** Não: reflexão em extremidade fixa inverte fase ($+\pi$), mas reflexão em extremidade livre **não inverte**. Condições de contorno determinam o tipo.
+- **Confundir "modo normal" com "frequência fundamental":** a fundamental é o modo 1 ($n=1$). Os outros são harmônicos (modos $n \geq 2$). Todos são modos normais.
+- **Assumir que ecos distantes sempre são profundidade maior:** ecos falsos por múltipla reflexão podem dar tempos muito maiores sem corresponder à realidade geométrica. Requer validação de modelo.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Mostrar onda incidente (vermelha, progressiva para baixo) + onda refletida (azul, progressiva para cima) + onda resultante (preta, estacionária com nós e antinós). Parâmetros: profundidade h (50–1000 m), frequência (30–200 kHz, ambas aplicáveis a ecobatímetro), velocidade do som (ajustável 1400–1540 m/s, faixa água doce/salgada). Mostrar modo número (n = f·2h/v) em tempo real. Lib p5.js (animação contínua) + Plotly (gráfico de nós/antinós). -->
+
+**Conexão com o próximo tópico:** sabemos agora como ondas se comportam em geometrias simples. Mas o que *é* uma onda sonora? Qual é a física microscópica que a produz, e como sua velocidade depende do meio? Essas respostas vêm no tópico 2.4.

@@ -1,0 +1,125 @@
+---
+title: "2.8 — Efeito Doppler"
+categories: [UE2, OE2.22-B2, OE2.23-B2, OE2.24-B3]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 2.22 [B2] Explicar o efeito Doppler e sua aplicação na percepção de frequência
+            → naval: Princípio do log Doppler
+OE 2.23 [B2] Diferenciar casos de fontes e observadores em movimento
+            → naval: Navio em movimento vs. fundo como refletor
+OE 2.24 [B3] Resolver problemas práticos envolvendo o efeito Doppler
+            → naval: Cálculo de velocidade pelo log Doppler
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 17-18 >}}
+
+Quando a **fonte** de uma onda (ex.: transdutor de sonar) ou o **observador** (receptor) se move em relação ao meio de propagação, a frequência percebida muda — é o **efeito Doppler**. Este é um dos fenômenos mais práticos da ondulatória em navegação: o log Doppler de um navio mede a **velocidade sobre o fundo** enviando sons para baixo e analisando o deslocamento de frequência do eco. Entender o efeito Doppler em diferentes situações (navio em movimento, fundo fixo; ambos móveis; fonte vs. observador) é essencial para operar sistemas de navegação modernos.
+
+## Efeito Doppler: conceito {{< ra OE2.22 B2 >}}
+
+O **efeito Doppler** descreve como a frequência de uma onda muda quando há movimento relativo entre fonte e observador.
+
+**Caso 1: observador em movimento, fonte fixa.**
+Um observador que se aproxima de uma fonte ouve frequência **maior** que a emitida; que se afasta ouve frequência **menor**.
+
+A frequência percebida é:
+
+$$f' = f\left(1 + \frac{v_{\text{obs}}}{v}\right)$$
+
+onde $f$ é a frequência emitida, $v_{\text{obs}}$ é a velocidade do observador (positiva se se aproxima) e $v$ é a velocidade do som no meio.
+
+**Caso 2: fonte em movimento, observador fixo.**
+Uma fonte que se aproxima do observador emite frequência percebida mais alta; que se afasta, mais baixa.
+
+$$f' = f\left(\frac{1}{1 - v_{\text{fonte}}/v}\right) \approx f\left(1 + \frac{v_{\text{fonte}}}{v}\right)$$
+
+(fórmula aproximada para velocidades pequenas comparadas a $v$).
+
+**Caso 3: ambos em movimento.**
+Se ambos se movem, importa apenas a velocidade *relativa*. A fórmula geral é:
+
+$$f' = f\frac{v + v_{\text{obs}}}{v - v_{\text{fonte}}}$$
+
+A **mudança de frequência** é chamada **desvio Doppler**:
+
+$$\Delta f = f' - f$$
+
+A **razão Doppler** é a razão entre a frequência percebida e a emitida:
+
+$$\frac{f'}{f} = \frac{v + v_{\text{obs}}}{v - v_{\text{fonte}}}$$
+
+## Casos de fonte e observador em movimento {{< ra OE2.23 B2 >}}
+
+**Situação típica do log Doppler:** o navio transmite um pulso sonoro de frequência $f_0$ (ex.: 400 kHz) para baixo, em direção ao fundo. Pelo efeito Doppler:
+
+1. **Do ponto de vista do fundo:** o navio (observador) aproxima-se a velocidade $v_{\text{navio}}$. A frequência percebida no fundo é:
+$$f_1 = f_0\left(1 + \frac{v_{\text{navio}}}{v_{\text{som}}}\right)$$
+
+2. **Reflexão no fundo:** o fundo reflete o som na frequência $f_1$ que recebeu (não em $f_0$).
+
+3. **Do ponto de vista do navio:** o fundo afasta-se (porque o navio se move para frente) a velocidade $v_{\text{navio}}$. A frequência percebida pelo receptor do navio é:
+$$f_2 = f_1\left(1 - \frac{v_{\text{navio}}}{v_{\text{som}}}\right) = f_0\left(1 + \frac{v_{\text{navio}}}{v}\right)\left(1 - \frac{v_{\text{navio}}}{v}\right)$$
+
+Expandindo para velocidades pequenas ($v_{\text{navio}} \ll v$):
+$$f_2 \approx f_0\left(1 - \frac{v_{\text{navio}}^2}{v^2}\right) \approx f_0$$
+
+O termo de segunda ordem é pequeno. Mas o **desvio total** é:
+
+$$\Delta f = f_2 - f_0 = -f_0\frac{2v_{\text{navio}}}{v} + O\left(\frac{v_{\text{navio}}^2}{v^2}\right)$$
+
+(O sinal negativo ocorre se o navio se afasta do fundo; convenção inversa se se aproxima.)
+
+A **velocidade é recuperada** medindo o desvio Doppler:
+
+$$v_{\text{navio}} = \frac{v}{2f_0}|\Delta f|$$
+
+Esta é a base do **log Doppler**: mede $\Delta f$ e calcula $v_{\text{navio}}$ diretamente.
+
+## Aplicação prática: cálculo de velocidade {{< ra OE2.24 B3 >}}
+
+Um navio em navegação costeira usa log Doppler de frequência central $f_0 = 400\,\text{kHz}$ na água com profundidade $h = 80\,\text{m}$, temperatura 18 °C (velocidade $v = 1480\,\text{m/s}$). O receptor detecta um desvio Doppler de $\Delta f = -1200\,\text{Hz}$ (sinal negativo: fundo se afasta, navio avança).
+
+A velocidade sobre o fundo é:
+
+$$v = \frac{v_{\text{som}}}{2f_0}|\Delta f| = \frac{1480}{2 \times 400\,000} \times 1200 = \frac{1480 \times 1200}{800\,000} = \frac{1{,}776 \times 10^6}{800\,000} \approx 2{,}22\,\text{m/s}$$
+
+Convertendo para nós (1 nó = 0,5144 m/s):
+
+$$v \approx \frac{2{,}22}{0{,}5144} \approx 4{,}3\,\text{nós}$$
+
+Isto é uma velocidade típica de cruzeiro — aproximadamente 8 km/h.
+
+## Comparação com medições por corrente {{< ra OE2.24 B3 >}} (complementação)
+
+O log Doppler mede a velocidade *sobre o fundo* (velocidade de deslocamento do navio relativa ao leito marinho). Isto é diferente da velocidade *sobre a água* (velocidade do navio relativa à massa de água). Se há corrente de 0,5 nós na mesma direção, o log mostraria 4,8 nós enquanto a velocidade de propulsão seria 4,3 nós. Esse distingue é importante em navegação de segurança (aproximação a portos, ancoragem).
+
+::: {.sp}
+Um navio patrulha em aproximação ao porto usa log Doppler de banda única (400 kHz) em água profunda com $v_{\text{som}} = 1500\,\text{m/s}$. Durante uma manobra, o velocímetro de corrente (ADCP — Acoustic Doppler Current Profiler, que mede velocidade em várias profundidades) registra:
+
+- Camada superior (0–10 m): corrente de 0,5 nós para a direita (leste)
+- Camada intermediária (10–50 m): corrente de 0,2 nós (leste)
+- Camada profunda (50–150 m): corrente negligenciável
+
+O log Doppler simples (usa uma frequência única a uma profundidade fixa, ~80% da profundidade total) registra uma velocidade média ponderada pelo padrão de reflexão.
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Confundir velocidade sobre água com velocidade sobre fundo:** log Doppler mede sobre o fundo; deve-se subtrair/somar corrente para obter velocidade de propulsão real.
+- **Aplicar fórmula clássica de Doppler sem conta do "duplo efeito":** o som vai e volta, logo o desvio Doppler é 2× o de uma única passagem. Sem isso, a velocidade calculada fica errada por um fator 2.
+- **Assumir Doppler é observação instantânea:** na realidade, log Doppler integra sobre um volume de água (células de profundidade). Gradientes de corrente podem produzir resultados inesperados se não entendidos.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Mostrar movimento de navio (quadrado representando quilha) com fundo abaixo. Controle deslizante: velocidade do navio (0–10 nós, realista). Entrada: frequência de transmissão (200–500 kHz), velocidade do som (1400–1540 m/s ajustável por "temperatura"). Saída em tempo real: frequência recebida f₂, desvio Doppler Δf, velocidade calculada. Mostrar também "corrente" como um deslizador (−1 a +1 nó) que afeta a velocidade sobre o fundo. Gráfico: desvio Doppler vs velocidade do navio (linear). Lib p5.js (animação do navio) + Plotly (gráfico Δf vs v). -->
+
+**Conexão com o próximo tópico:** estudamos até agora ondas com velocidades pequenas comparadas à velocidade do som ($v_{\text{obj}} \ll v_{\text{som}}$), onde o desvio Doppler é linear. Mas o que acontece quando objetos se movem a velocidades comparáveis ou superiores à velocidade do som? Surgem **ondas de choque** e fenômenos exóticos de propagação — tema do tópico final 2.9.

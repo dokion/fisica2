@@ -1,0 +1,118 @@
+---
+title: "4.12 — Segunda Lei da Termodinâmica"
+categories: [UE4, OE4.37-B1, OE4.38-B2, OE4.39-B2]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 4.37 [B1] Enunciar a Segunda Lei da Termodinâmica e suas diferentes formulações
+            → naval: Limite de eficiência de máquinas térmicas reais
+OE 4.38 [B2] Explicar a irreversibilidade dos processos naturais
+            → naval: Perdas reais no ciclo do motor vs. ciclo ideal
+OE 4.39 [B2] Interpretar a eficiência de máquinas térmicas a partir da 2ª Lei
+            → naval: η = 1 − Q2/Q1; eficiência de Carnot como limite
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 37-38 >}}
+
+A Primeira Lei diz que energia se conserva. A Segunda Lei diz algo mais profundo: nem
+toda transformação de energia é possível. Você pode transformar trabalho em calor
+completamente (pense num freio aquecendo); mas não pode transformar calor em trabalho
+com 100% de eficiência — sempre há resto de calor que "escapa". Essa limitação não vem
+de imperfeições de engenharia, mas de um princípio fundamental da natureza:
+**processos naturais são irreversíveis**. Em máquinas navais, a Segunda Lei fixa o teto
+de eficiência: nenhum motor diesel real pode ultrapassar a eficiência de Carnot (tipicamente
+60–70% para a diferença de temperatura operacional). Entender essa lei é entender por que
+mesmo um motor "perfeito" jamais recuperará todo o calor como trabalho.
+
+## Enunciado da Segunda Lei {{< ra OE4.37 B1 >}}
+
+Existem várias formulações equivalentes:
+
+**Formulação de Clausius:** É impossível construir uma máquina que funcione em um ciclo e
+que tenha apenas o efeito de transferir calor de um corpo mais frio para um corpo mais
+quente, sem qualquer trabalho externo.
+
+(Tradução: refrigerador ou ar-condicionado não funciona sem energia — você precisa fazer
+trabalho para tirar calor de um lugar frio.)
+
+**Formulação de Kelvin-Planck:** É impossível construir uma máquina que funcione em um
+ciclo e que tenha apenas o efeito de absorver calor de um único depósito térmico e
+converter todo esse calor em trabalho mecânico.
+
+(Tradução: não existe "motor do nada" — sempre há um depósito frio onde parte do calor é
+rejeitado.)
+
+**Enunciado geral (equipotente):** A entropia de um sistema isolado nunca decresce.
+
+$$\Delta S_{\text{universo}} \geq 0$$
+
+## Irreversibilidade de processos naturais {{< ra OE4.38 B2 >}}
+
+Observe a diferença:
+
+- Um bloco quente em contato com um bloco frio: **espontaneamente**, o quente esfria e o
+  frio aquece. Depois, nunca volta atrás sem intervenção externa.
+- Uma máquina térmica: absorve calor Q₁ de um depósito quente, produz trabalho W, rejeita
+  calor Q₂ para depósito frio. O processo é cíclico, mas não reversível — não dá para girar
+  a máquina de trás para frente e recuperar exatamente a mesma quantidade de trabalho.
+
+Todos os processos reais têm **dissipação** — atrito, turbulência, diferenças finitas de
+temperatura causam irreversibilidade. A Segunda Lei quantifica isso: em cada processo
+irreversível, há aumento de entropia.
+
+## Eficiência térmica e ciclo de Carnot {{< ra OE4.39 B2 >}}
+
+Para uma máquina térmica qualquer:
+
+$$\eta = \frac{W}{Q_1} = 1 - \frac{Q_2}{Q_1} \leq \eta_{\text{Carnot}} = 1 - \frac{T_2}{T_1}$$
+
+onde T₁ é temperatura da fonte quente e T₂ é temperatura da fonte fria (em Kelvin).
+
+**Ciclo de Carnot** é um ciclo reversível (ideal) que opera entre dois depósitos térmicos:
+duas expansões/compressões adiabáticas + duas isotérmicas. Sua eficiência é um limite
+superior.
+
+Exemplo: motor diesel operando entre T₁ = 1800 K (combustão) e T₂ = 300 K (ambiente):
+
+$$\eta_{\text{Carnot}} = 1 - \frac{300}{1800} = 1 - 0{,}167 = 0{,}833 = 83{,}3\%$$
+
+Mas motores reais atingem ~40–50%. A diferença (30–40 pontos percentuais) vem de:
+
+- Transferência de calor com diferenças finitas (não isotérmico)
+- Atrito e perdas mecânicas
+- Processos não-ideais (combustão não-instantânea, vazamentos)
+
+A Carnot é o limite teórico — nenhuma engenharia vai aproximar-se dela no diesel.
+
+::: {.sp}
+Um motor diesel opera com combustão (Q₁) absorvida em média a T₁ = 1500 K. Refrigeração
+rejeita calor Q₂ a T₂ = 350 K. Motor real tem eficiência η_real = 45%. Qual é a
+eficiência de Carnot? Qual é a fração de "ineficiência teórica" vs. "irreversibilidade
+prática"?
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Confundir "Segunda Lei impossibilita" com "nunca acontece":** processos violam a Segunda
+  Lei não acontecem, mas "processos permitidos" ocorrem com diversos graus de
+  irreversibilidade. Um motor com η = 45% está permitido; um com η = 120% não é.
+- **Usar temperaturas em Celsius na fórmula de Carnot:** η = 1 − (T₂/T₁) **exige Kelvin**.
+  Com Celsius, dá lixo. T em °C + 273,15.
+- **Pensar que eficiência de Carnot se aplica a ciclo específico:** Carnot é limite superior
+  para QUALQUER máquina operando entre T₁ e T₂, não só para ciclo Diesel ou Otto.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: gráfico interativo de η vs. T₁ (slider, 800–2500 K) com T₂ fixo em 300 K, mostrando duas curvas — Carnot (superior) e ciclo real (inferior), zona entre elas destacada como "perdas práticas"; lib Plotly -->
+
+**Conexão com o próximo tópico:** a medida quantitativa da irreversibilidade é a
+**entropia**. Cada processo real aumenta entropia do universo — e a Segunda Lei é,
+fundamentalmente, sobre entropia nunca decrescer.

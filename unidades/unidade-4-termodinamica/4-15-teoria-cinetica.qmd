@@ -1,0 +1,91 @@
+---
+title: "4.15 — Pressão e temperatura sob o ponto de vista da teoria cinética"
+categories: [UE4, OE4.46-B2, OE4.47-B3, OE4.48-B2]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 4.46 [B2] Relacionar pressão e temperatura ao movimento das partículas de um gás
+             → naval: teoria cinética aplicada ao gás de trabalho
+OE 4.47 [B3] Derivar a equação fundamental da teoria cinética dos gases
+             → naval: base microscópica da equação de estado
+OE 4.48 [B2] Explicar a interpretação microscópica da temperatura
+             → naval: temperatura como energia cinética média das moléculas
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 39-40 >}}
+
+Até aqui, pressão e temperatura foram grandezas medidas por manômetros e termômetros.
+A teoria cinética revela o que elas *são* por baixo: pressão é o tamborilar de bilhões
+de moléculas contra a parede, e temperatura é a energia do movimento delas. É a ponte
+entre o gás de trabalho do motor e as moléculas que o compõem.
+
+## Pressão e temperatura como movimento {{< ra OE4.46 B2 >}}
+
+O modelo do gás ideal: moléculas puntiformes, em movimento desordenado, colidindo
+elasticamente com as paredes e entre si, sem forças à distância. Nesse quadro:
+
+- **pressão** é o resultado macroscópico da transferência de momento nas colisões
+  contra a parede;
+- **temperatura** mede a agitação — quanto mais quente, mais rápidas as moléculas.
+
+## Equação fundamental da teoria cinética {{< ra OE4.47 B3 >}}
+
+Considere $N$ moléculas de massa $m$ num cubo de aresta $L$. Uma molécula com velocidade
+$v_x$ transfere momento $2mv_x$ a cada colisão com uma parede, e colide a cada intervalo
+$\Delta t = 2L/v_x$. A força média de uma molécula é $mv_x^2/L$; somando sobre todas e
+usando $\langle v_x^2\rangle = \tfrac{1}{3}\langle v^2\rangle$, a pressão fica:
+
+$$PV = \frac{1}{3} N m \langle v^2 \rangle$$
+
+Reescrevendo com a energia cinética média $\langle E_c\rangle = \tfrac{1}{2}m\langle v^2\rangle$:
+
+$$PV = \frac{2}{3} N \langle E_c \rangle$$
+
+Essa é a **equação fundamental**: liga a grandeza macroscópica $PV$ à energia cinética
+microscópica média.
+
+## Interpretação microscópica da temperatura {{< ra OE4.48 B2 >}}
+
+Comparando a equação fundamental com a equação de estado $PV = Nk_B T$:
+
+$$\langle E_c \rangle = \frac{3}{2} k_B T$$
+
+O resultado é uma das ideias mais importantes da física: **temperatura é, a menos de uma
+constante, a energia cinética média de translação por molécula**. Zero absoluto seria
+o repouso translacional; aquecer o gás de trabalho é literalmente acelerar as suas
+moléculas.
+
+A velocidade quadrática média correspondente:
+
+$$v_{\text{rms}} = \sqrt{\langle v^2\rangle} = \sqrt{\frac{3k_B T}{m}}$$
+
+<!-- SIMULAÇÃO SUGERIDA: gás de partículas em caixa com temperatura ajustável, mostrando
+     colisões com a parede e a distribuição de velocidades se alargando com T — p5.js
+     (movimento contínuo de muitos corpos, tabela Q4). Contador de pressão nas paredes. -->
+
+::: {.sp}
+O ar admitido num motor diesel de bordo entra a $T = 320\ \text{K}$. Modele-o como gás
+ideal de moléculas de massa molar $M \approx 29\ \text{g/mol}$.
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Temperatura em °C:** $\langle E_c\rangle = \tfrac{3}{2}k_B T$ exige $T$ em kelvin;
+  °C não tem sentido cinético (não há "meia agitação" a 0 °C).
+- **Confundir $v_{\text{rms}}$ com velocidade média:** $v_{\text{rms}} = \sqrt{\langle v^2\rangle}$
+  é ligeiramente maior que $\langle v\rangle$; não são a mesma coisa.
+- **Achar que moléculas mais pesadas são mais lentas "sempre":** à mesma $T$ têm a mesma
+  energia média, logo maior $m$ implica menor $v_{\text{rms}}$ — mas mesma $\langle E_c\rangle$.
+:::
+
+**Conexão com o próximo tópico:** a energia $\tfrac{3}{2}k_BT$ vale só para translação —
+generalizá-la aos demais graus de liberdade leva aos calores específicos (4.16).

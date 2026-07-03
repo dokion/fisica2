@@ -1,0 +1,121 @@
+---
+title: "4.5 — Condução de calor"
+categories: [UE4, OE4.15-B2, OE4.16-B3, OE4.17-B4]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 4.15 [B2] Explicar o processo de condução térmica em sólidos
+            → naval: Condução em paredes do cilindro e trocadores
+OE 4.16 [B3] Aplicar a Lei de Fourier para calcular fluxos de calor
+            → naval: Fluxo de calor em trocadores de bordo
+OE 4.17 [B4] Analisar a condutividade térmica de diferentes materiais
+            → naval: Materiais de isolamento térmico de bordo
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 33-34 >}}
+
+A parede de um cilindro de motor diesel está quente de um lado (combustão a ~1800 K) e
+fria do outro (água de refrigeração a ~350 K). Calor flui de quente para frio por
+**condução** — colisões microscópicas passando energia para frente. A Lei de Fourier
+governa essa transferência: fluxo de calor é proporcional à diferença de temperatura e ao
+inverso da espessura. Entender condução é dimensionar trocadores, escolher isolamentos e
+calcular se uma estrutura de máquina pode sobreviver à diferença de temperatura entre
+cilindro e água.
+
+## Processo de condução térmica {{< ra OE4.15 B2 >}}
+
+Em um sólido, moléculas vibram em torno de posições de equilíbrio. Uma molé­cula mais
+energética (temperatura alta) colide com vizinhas, transferindo energia. Essa energia
+propaga-se em cascata de colisão para colisão, sem movimento macroscópico de matéria.
+
+O fluxo de calor é chamado **fluxo condutivo** $\dot{Q}$ (potência térmica em W). Depende de:
+
+1. **Diferença de temperatura ΔT** entre os lados
+2. **Área A** de contato (maior área = mais calor)
+3. **Espessura da parede d** (mais grosso = menos calor)
+4. **Condutividade térmica κ** (propriedade do material)
+
+## Lei de Fourier {{< ra OE4.16 B3 >}}
+
+$$\dot{Q} = -\kappa \cdot A \cdot \frac{\text{d}T}{\text{d}x}$$
+
+Para um caso simples (parede plana, temperatura constante de cada lado):
+
+$$\dot{Q} = \kappa \cdot A \cdot \frac{\Delta T}{d}$$
+
+onde:
+- $\kappa$ é a condutividade térmica (W/(m·K))
+- $A$ é a área (m²)
+- $\Delta T$ é a diferença de temperatura entre as faces (K)
+- $d$ é a espessura (m)
+
+A condutividade térmica é uma propriedade do material. Materiais "quentes" (bons
+condutores) têm κ alto; isolantes têm κ baixo.
+
+## Condutividade térmica de materiais {{< ra OE4.17 B4 >}}
+
+| Material | κ [W/(m·K)] | Aplicação de bordo |
+|---|---|---|
+| Cobre | 400 | Tubos de trocador (raro, caro) |
+| Latão | 120 | Tubos de trocador (comum) |
+| Aço | 50 | Paredes de cilindro e tubulações |
+| Água | 0,6 | Fluido de refrigeração (ruim condutor) |
+| Ar | 0,026 | Espaço entre camadas de isolamento |
+| Poliuretano | 0,025 | Espuma de isolamento de tanques |
+| Lã de vidro | 0,040 | Isolamento de tubulações de vapor |
+
+Observe a disparidade: cobre é ~15 000× melhor que ar. Por isso tubos de trocador são de
+metal, não de plástico. E por isso isolamento funciona: camadas de ar aprisionado
+(convecção impedida) reduzem drasticamente o fluxo.
+
+## Aplicação: resistência térmica
+
+Muitas vezes é útil escrever a Lei de Fourier como:
+
+$$\dot{Q} = \frac{\Delta T}{R_{\text{t}}}$$
+
+onde $R_{\text{t}} = \frac{d}{\kappa \cdot A}$ é a **resistência térmica** (K/W). É análogo à
+Lei de Ohm ($V = I \cdot R$), mas para térmica.
+
+Exemplo: parede de cilindro de aço (d = 8 mm, A = 0,5 m² de superfície interna),
+κ = 50 W/(m·K), com ΔT = 1450 K entre interior e exterior:
+
+$$R_{\text{t}} = \frac{0{,}008}{50 \times 0{,}5} = \frac{0{,}008}{25} = 0{,}00032\ \text{K/W}$$
+
+$$\dot{Q} = \frac{1450}{0{,}00032} \approx 4{,}5 \times 10^6\ \text{W} = 4{,}5\ \text{MW}$$
+
+Fluxo colossal — por isso a água de refrigeração é crítica. Sem ela, o cilindro funde em
+minutos.
+
+::: {.sp}
+Um trocador de calor de bordo tem tubos de latão (κ = 120 W/(m·K)) com diâmetro externo
+20 mm e espessura 1 mm. Comprimento do tubo = 2 m. Dentro passa óleo a 90 °C; fora passa
+água a 30 °C. A área interna é ~0,12 m².
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Esquecer o sinal negativo de Fourier:** $\dot{Q} = -\kappa A \frac{\text{d}T}{\text{d}x}$
+  significa calor flui NO SENTIDO DE DIMINUIÇÃO de temperatura (negativo se T cresce
+  com x). Nas contas práticas, use a forma positiva com ΔT = T_quente − T_frio.
+- **Confundir "bom condutor de calor" com "isolante":** cobre é um ótimo condutor; por
+  isso não serve para isolamento. Um bom isolante tem κ muito baixo (ar, espuma).
+- **Ignorar incrustações e depósitos:** a resistência térmica de uma parede sujo é
+  MUITO maior que a da parede limpa. Condutividade de sujeira é ~1 W/(m·K), e uma
+  camada de 0,5 mm adiciona resistência equivalente a 10 cm de latão puro.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: corte transversal de parede de trocador com cores de temperatura gradient (quente-vermelho, frio-azul), slider de espessura d e material κ, mostrando em tempo real o fluxo Q pela Lei de Fourier e como incrustação afeta o resultado; lib Plotly com mapa de calor (heatmap de T através da parede) -->
+
+**Conexão com o próximo tópico:** condução é uma forma de transferência de calor, mas há
+outra fundamental: o reconhecimento histórico de que calor e trabalho são equivalentes —
+a descoberta do equivalente mecânico da caloria.

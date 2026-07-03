@@ -1,0 +1,126 @@
+---
+title: "4.13 — Entropia: processos irreversíveis e variação de entropia"
+categories: [UE4, OE4.40-B1, OE4.41-B2, OE4.42-B3]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 4.40 [B1] Definir entropia e sua relação com processos reversíveis e irreversíveis
+            → naval: Entropia crescente em processos reais de bordo
+OE 4.41 [B2] Explicar a variação de entropia em sistemas fechados e abertos
+            → naval: Sistemas abertos: caldeiras, trocadores
+OE 4.42 [B3] Aplicar a 2ª Lei na análise de processos naturais
+            → naval: Análise de irreversibilidade em ciclos reais
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 37-38 >}}
+
+**Entropia** é a medida quantitativa da desordem ou da "indisponibilidade de energia" de um
+sistema. Diferente de energia (que se conserva), entropia cresce em processos irreversíveis.
+Um gás espalhado pela sala nunca se recolhe sozinho na caixa — sua entropia aumentou. Um
+motor diesel, ao transformar calor em trabalho, aumenta a entropia total do universo. A
+Segunda Lei da Termodinâmica é, essencialmente, o princípio de que entropia do universo
+nunca decresce. Em máquinas navais, análise de entropia prediz onde ocorrem perdas maiores e
+como otimizar a eficiência.
+
+## Definição e significado de entropia {{< ra OE4.40 B1 >}}
+
+Para um processo reversível (ideal) entre dois estados:
+
+$$\Delta S = \int \frac{\delta Q_{\text{rev}}}{T}$$
+
+onde $Q_{\text{rev}}$ é o calor reversível e T é temperatura.
+
+Para um processo real (irreversível):
+
+$$\Delta S > \int \frac{\delta Q_{\text{real}}}{T}$$
+
+A diferença é a entropia criada pela irreversibilidade.
+
+**Interpretação microscópica:** entropia mede o número de micro-estados possíveis compatíveis
+com um macro-estado observável. Um gás espalhado tem muitos mais micro-estados (moléculas
+aleatórias) que o mesmo gás confinado numa caixa (configurações mais ordenadas). Portanto,
+entropia do gás espalhado é maior.
+
+**Interpretação prática em máquinas:** entropia crescente = energia se torna "menos útil".
+Num motor, combustão libera calor (alta temperatura, baixa entropia da energia). Esse calor
+é parcialmente convertido em trabalho (ainda com alguma "utilidade"). O resto sai como calor
+em água morna ou gases quentes (alta temperatura, mas baixa concentração — alta entropia).
+A energia "perdeu qualidade".
+
+## Variação de entropia em sistemas {{< ra OE4.41 B2 >}}
+
+**Sistema fechado (massa fixa, volume rígido ou móvel):**
+
+$$\Delta S_{\text{sistema}} = \int \frac{Q}{T}$$
+
+Se Q > 0 (recebe calor), ΔS > 0. Se Q < 0 (cede calor), ΔS < 0.
+
+Exemplo: cilindro de motor diesel durante a combustão isocórica (V constante, Q entra).
+$$\Delta S > 0$$ — entropia do gás sobe.
+
+**Sistema aberto (fluxo contínuo de massa, como caldeira ou trocador):**
+
+Há termo adicional — transporte de entropia pela massa que entra/sai. Para regime estacionário:
+
+$$\dot{S}_{\text{entrada}} - \dot{S}_{\text{saída}} + \frac{\dot{Q}}{T} = \dot{S}_{\text{gerada}}$$
+
+Entropia gerada é sempre ≥ 0. Em trocador ideal (reversível), seria zero; em trocadores reais,
+sempre há perdas e geração de entropia.
+
+## Análise de processos pela 2ª Lei {{< ra OE4.42 B3 >}}
+
+Para verificar se um processo é possível, calcula-se ΔS_universo:
+
+$$\Delta S_{\text{universo}} = \Delta S_{\text{sistema}} + \Delta S_{\text{ambiente}}$$
+
+Se ΔS_universo > 0: processo é possível (irreversível).
+Se ΔS_universo = 0: processo é reversível (ideal, nunca ocorre).
+Se ΔS_universo < 0: processo é impossível (viola Segunda Lei).
+
+Exemplo: gás expande livremente de volume V a 2V em container isolado.
+
+$$\Delta S_{\text{gás}} = n R \ln\left(\frac{V_f}{V_i}\right) = n R \ln(2) \approx 5{,}76\ \text{J/K}$$
+(para 1 mol)
+
+Não há troca com ambiente (isolado), logo ΔS_universo = ΔS_gás > 0. Processo possível e
+irreversível.
+
+Compare com compressão adiabática: gás é comprimido por pistão (trabalho entra). ΔU > 0,
+T sobe. Entropia do gás aumenta? Depende do quanto T sobe:
+
+$$\Delta S = n C_V \ln\left(\frac{T_f}{T_i}\right)$$
+
+Se compressão é rápida (quase adiabática), há perda mínima por atrito, e ΔS é pequeno.
+Se há muito atrito, ΔS é grande. Sempre ΔS ≥ 0.
+
+::: {.sp}
+Um trocador de calor de bordo recebe 100 kg/h de água a 30 °C, aquecendo-a a 70 °C com
+vapor que condensa de 100 °C. Calcular ΔS do sistema água, ΔS do vapor, e verificar se
+Segunda Lei é satisfeita.
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Confundir ΔS do sistema com ΔS do universo:** ΔS_sistema pode ser < 0 (gás resfria).
+  Mas ΔS_universo = ΔS_sistema + ΔS_ambiente sempre ≥ 0. Segunda Lei fala de universo.
+- **Esquecer de usar Kelvin em ln(T_f/T_i):** T tem que estar em Kelvin para a fórmula
+  ΔS = n·C_V·ln(T_f/T_i). Celsius não funciona.
+- **Pensar que "Se ΔS_universo > 0 então posso descartar energia":** não. ΔS > 0 significa
+  irreversibilidade (perda), NÃO que energia desaparece. Energia se conserva; entropia
+  cresce.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: trocador de calor visual com duas correntes (cores quentes/frias), slider de T fria inicial (20–50 °C), mostrando em tempo real ΔS de cada corrente e ΔS_universo como indicador (barra de progresso da "irreversibilidade"); lib Plotly com diagrama T-S mostrando ciclos reversível vs. real -->
+
+**Conexão com o próximo tópico:** Entropia permite medir irreversibilidades em máquinas
+térmicas reais — e, inversamente, máquinas que operam entre dois depósitos (motores,
+refrigeradores) têm estruturas bem definidas. São o tópico 4.14.

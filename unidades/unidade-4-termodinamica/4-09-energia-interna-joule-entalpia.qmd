@@ -1,0 +1,125 @@
+---
+title: "4.9 — Energia interna de um gás ideal: Joule, Joule-Thomson e entalpia"
+categories: [UE4, OE4.28-B2, OE4.29-B2, OE4.30-B2]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 4.28 [B2] Explicar a relação entre energia interna e temperatura de um gás ideal
+            → naval: Energia interna no ciclo de motor de 2 e 4 tempos
+OE 4.29 [B2] Descrever as experiências de Joule e Joule-Thomson e suas implicações
+            → naval: Entalpia em processos de bordo
+OE 4.30 [B2] Conceituar entalpia e sua importância em processos termodinâmicos
+            → naval: Entalpia em trocadores e caldeiras
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 33-34 >}}
+
+Um gás aquecido tem energia. Essa energia está inteiramente no movimento caótico das
+moléculas — é a **energia interna**. Para gases ideais, há uma relação direta: energia
+interna depende APENAS de temperatura, não de pressão ou volume. Isso simplifica enormemente
+cálculos de ciclos de motor. Além disso, em sistemas abertos como caldeiras e trocadores,
+uma grandeza chamada **entalpia** (energia + trabalho de fluxo) é mais natural que energia
+interna. Joule e Joule-Thomson descobriram experimentalmente essas propriedades, abrindo
+o caminho para a engenharia térmica moderna.
+
+## Energia interna de um gás ideal {{< ra OE4.28 B2 >}}
+
+Para um gás ideal:
+
+$$U = n \cdot C_V \cdot T$$
+
+onde:
+- $C_V$ é a capacidade térmica molar a volume constante (J/(mol·K))
+- $T$ é temperatura absoluta (K)
+- $n$ é número de mols
+
+Consequência crucial: **U depende APENAS de T**. Não importa se o gás é comprimido ou
+expandido — enquanto T for a mesma, U é a mesma.
+
+Para ar/nitrogênio (gás diatômico), $C_V = \frac{5}{2}R \approx 20{,}8$ J/(mol·K).
+
+## Experiência de Joule {{< ra OE4.29 B2 >}}
+
+Joule fez um experimento clássico: dois frascos isolados, um com gás comprimido e outro
+vazio, conectados por uma válvula. Ao abrir a válvula, o gás expande livremente para o
+vazio.
+
+Resultado experimental: **temperatura não muda** (até a precisão dos termômetros da época).
+
+Interpretação: se T não muda, ΔU = 0. Na expansão livre, W = 0 (nenhum trabalho é feito
+contra forças externas). Logo, da Primeira Lei, ΔU = Q − W = 0 − 0, confirmando Q = 0.
+
+**Conclusão:** para um gás ideal, U depende APENAS de T. Essa foi uma prova experimental de
+que a energia interna é intrínseca ao movimento microscópico das moléculas, independente da
+configuração macroscópica (P, V).
+
+## Experiência de Joule-Thomson {{< ra OE4.29 B2 >}}
+
+Diferente da livre: Joule-Thomson forçava o gás através de um estrangulamento (válvula
+parcialmente fechada). O gás tinha que empurrar o que estava à frente contra uma pressão.
+
+Resultado: **temperatura MUDA** (em geral, cai para gases reais; não muda para ideais).
+
+Para gases ideais, Joule-Thomson provou experimentalmente que o gás não muda de temperatura
+ao passar por uma válvula sob pressão constante (processo isentálpico). Isso é coerente com
+U(T) — o trabalho "de fluxo" (ao empurrar contra pressão) não é trabalho "mecânico" de
+expansão, e os dois se compensam em termos de energia total.
+
+## Entalpia {{< ra OE4.30 B2 >}}
+
+**Entalpia** é uma função de estado definida como:
+
+$$H = U + PV$$
+
+Para um gás ideal:
+
+$$H = n \cdot C_P \cdot T$$
+
+onde $C_P$ é a capacidade térmica molar a pressão constante. Vale a relação:
+
+$$C_P = C_V + R$$
+
+Para ar (diatômico), $C_P = \frac{7}{2}R \approx 29{,}1$ J/(mol·K).
+
+A razão entre calores específicos:
+
+$$\gamma = \frac{C_P}{C_V} = \frac{7/2}{5/2} = 1{,}4$$
+
+**Por que entalpia importa em máquinas navais:** em processos de fluxo (caldeira recebendo
+água, trocador com fluido entrando/saindo), a quantidade relevante é H, não U. A água que
+entra numa caldeira traz consigo energia interna + energia para "abrir caminho" na pressão
+(PV). Quando sai como vapor, sai com H mais alta. A entalpia é a energia verdadeiramente
+transferida em sistemas abertos.
+
+::: {.sp}
+Uma caldeira de bordo recebe água líquida a 50 °C e 1 bar, transformando-a em vapor
+saturado a 200 °C (pressão de vapor ~16 bar). Utilizando aproximações: considerar água
+líquida com c = 4,18 kJ/(kg·K), vapor como gás ideal com R_esp = 462 J/(kg·K).
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Confundir U com H:** U = n·C_V·T (energia interna, depende de T). H = U + PV = n·C_P·T
+  (entalpia, também depende de T, mas com "pré-fator" maior). Em ciclos fechados (cilindro
+  de motor), use U. Em ciclos abertos (caldeira, trocador), use H.
+- **Pensar que Joule-Thomson "prova que gás não tem energia":** não. Prova que energia
+  interna é função só de T, não de P ou V para ideais. O trabalho de fluxo é internamente
+  compensado.
+- **Usar C_V em vez de C_P em processo isobárico:** num aquecimento a pressão constante
+  (caldeira), Q = n·C_P·ΔT, não Q = n·C_V·ΔT. Diferença de 40% (C_P/C_V = 1,4).
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: diagrama de fluxo de fluido em trocador de calor, mostrando duas correntes (entrada fria, saída quente), com sliders para T entrada (40–60 °C) e vazão molar (0,01–0,1 mol/s), exibindo em tempo real H entrada, H saída, e transferência de calor Q = ṅ·ΔH; lib Plotly com dois paineís (temperatura vs. posição no trocador, e balanço de entalpia) -->
+
+**Conexão com o próximo tópico:** sabendo U e H, você quer cálculos específicos dos
+aquecimentos/resfriamentos num gás. Resposta: capacidades térmicas molares — C_V e C_P —
+na base de graus de liberdade molecular.

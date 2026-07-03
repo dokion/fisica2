@@ -1,0 +1,80 @@
+---
+title: "3.1 — Propriedades dos fluidos: pressão, tensão superficial, massa específica e viscosidade"
+categories: [UE3, OE3.1-B1, OE3.2-B2, OE3.3-B4, OE3.4-B2]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 3.1 [B1] Definir pressão, tensão superficial, massa específica e viscosidade
+            → naval: Calado, deslocamento, TPC
+OE 3.2 [B2] Explicar como essas propriedades influenciam o comportamento dos fluidos
+            → naval: Variação de TPC com calado
+OE 3.3 [B4] Analisar a relação entre tensão superficial e fenômenos capilares
+            → naval: [VERIFICAR — sem âncora direta]
+OE 3.4 [B2] Identificar o impacto da viscosidade no escoamento dos fluidos
+            → naval: Sistemas de bombeamento; tubulações de porão
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 21-22 >}}
+
+A Mecânica dos Fluidos que abre esta unidade é o alicerce de tudo que um oficial de máquinas ou navegação precisa saber sobre o seu navio. Toda manobra — calado que você lê no costado, carga que você distribui entre tanques, bombeamento de porão, até o leme que governa a proa — depende intimamente de quatro propriedades fundamentais dos fluidos: **pressão**, **massa específica**, **viscosidade** e **tensão superficial**. Este tópico define cada uma e mostra como a variação delas ao longo da profundidade e da temperatura governam a flutuabilidade, a estabilidade e o desempenho do casco no mar.
+
+## Pressão {{< ra OE3.1 B1 >}}
+
+A **pressão** é a força por unidade de área exercida por um fluido perpendicularmente a uma superfície. Formalmente:
+
+$$P = \frac{F}{A}$$
+
+Sua unidade SI é o pascal (Pa = N/m²). No navio, conversões práticas são essenciais: 1 bar ≈ 10⁵ Pa ≈ 1 kgf/cm²; as cartas de carga listam valores em toneladas de água doce (TPC — tonnes per centimetre immersion), que relaciona massa específica e área de flutuação. A pressão não tem direção — é um escalar que atua em todas as direções em um ponto dentro do fluido.
+
+## Massa específica e densidade relativa {{< ra OE3.2 B2 >}}
+
+A **massa específica** (ou densidade) $\rho$ é a massa por unidade de volume:
+
+$$\rho = \frac{m}{V}$$
+
+Unidade SI: kg/m³. Dois valores são críticos para o navio:
+- Água doce: $\rho_{\text{doce}} \approx 1000\ \text{kg/m}^3$
+- Água salgada: $\rho_{\text{salgada}} \approx 1025\ \text{kg/m}^3$
+
+Esses valores variam com temperatura e salinidade, e essa variação afeta diretamente o calado do navio quando ele troca águas (deflection em cartas de carga). A **densidade relativa** é o quociente entre a massa específica de um fluido e a da água doce padrão; ela não tem unidade e é usada para comparar óleos, combustíveis marinhos e salmoura de lastro.
+
+## Viscosidade {{< ra OE3.4 B2 >}}
+
+A **viscosidade** é a resistência que o fluido oferece ao escoamento — a medida da coesão interna das camadas do fluido. Existem duas formas de expressá-la:
+
+- **Viscosidade dinâmica** $\mu$: unidade SI = Pa·s (pascal·segundo). Relacionada à força necessária para fazer duas camadas de fluido deslizar uma sobre a outra.
+- **Viscosidade cinemática** $\nu = \mu / \rho$: unidade SI = m²/s.
+
+Um fluido com viscosidade elevada (mel, óleo ISO 46) flui lentamente; um fluido com baixa viscosidade (água, ar) flui rapidamente. No navio, a viscosidade do combustível, do óleo de cilindro e da água de lastro impacta sistemas de bombeamento, tubulações de porão e resfriamento de máquinas. Quanto maior a temperatura, menor a viscosidade (os líquidos se tornam "mais finos").
+
+## Tensão superficial {{< ra OE3.3 B4 >}}
+
+A **tensão superficial** $\gamma$ é a energia (ou força por unidade de comprimento) necessária para criar uma nova superfície em um fluido. Formalmente, é o trabalho por unidade de área:
+
+$$\gamma = \frac{E_{\text{sup}}}{A} = \frac{F}{L}$$
+
+Unidade SI: N/m. Causa fenômenos como a forma esférica das gotas, a ascensão capilar em tubos finos e a "pele" invisível que se forma na superfície de um líquido. Em contextos navais, a tensão superficial afeta a formação de bolhas em sistemas de refrigeração e o comportamento de surfactantes (agentes de limpeza) em águas de lastro. Relaciona-se ao movimento de fluido em capilares — ex., umidade ascendendo pelas paredes de um tubo de pequeno diâmetro — fenômeno raramente crítico em engenharia de navio, mas presente em instrumentação fina.
+
+::: {.sp}
+Um navio-tanque com deslocamento de 50 mil toneladas flutua em água salgada de densidade 1025 kg/m³. Ao sair de um porto fluvial (água doce, ρ = 1000 kg/m³) e entrar em mar aberto, observa-se que o calado aumenta em cerca de 20 cm. A transição ocorre em águas salobras (ρ intermediária) ao longo de 30 km.
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Confundir ρ doce/salgada:** água doce = 1000 kg/m³; salgada = 1025 kg/m³. Navio com calado maior em água doce — precisa deslocar **mais volume** da água menos densa.
+- **Viscosidade não é só temperatura:** fluidos não-newtonianos (suspensões, emulsões) não obedecem $\mu = f(T)$ simples. Exemplo: salmoura de lastro muda viscosidade com concentração de sal.
+- **Tensão superficial negligenciada em escala grande:** em navios, negligenciável; em instrumentação fina (manômetros de tubo em U), crítica.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Gráfico interativo (Plotly) mostrando calado vs. densidade (1000–1030 kg/m³) para deslocamento fixo; barco em perfil com TPC indicado. Ou: animação de bolha em líquido viscoso vs. não viscoso (p5.js, esfera caindo em dois meios). -->
+
+**Conexão com o próximo tópico:** definidas as quatro propriedades, agora veremos como a pressão em repouso varia com a profundidade (Lei de Pascal) — e como essa variação de pressão é o fundamento da flutuabilidade (Princípio de Arquimedes).

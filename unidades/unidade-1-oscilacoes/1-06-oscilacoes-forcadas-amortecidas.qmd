@@ -1,0 +1,117 @@
+---
+title: "1.6 — Oscilações forçadas amortecidas"
+categories: [UE1, OE1.17-B3, OE1.18-B4, OE1.19-B2]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 1.17 [B3] Determinar a equação do movimento com forças externas e amortecimento
+             → naval: —
+OE 1.18 [B4] Analisar a resposta do sistema a diferentes frequências de excitação
+             → naval: Transposição rápida de velocidades críticas
+OE 1.19 [B2] Explicar o impacto da ressonância em sistemas amortecidos
+             → naval: Dispositivos de fixação que se soltam por vibração
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 9-10 >}}
+
+Toda máquina e estrutura real vibram dentro de um meio dissipativo — fluido, material estrutural,
+suportes. O amortecimento sempre presente reduz a amplitude de ressonância, mas não a elimina.
+Este tópico mostra como força excitadora e amortecimento competem, e por que engenheiros de
+máquinas navais precisam entender essa dança para evitar falhas.
+
+## Equação do movimento forçado amortecido {{< ra OE1.17 B3 >}}
+
+Somando força externa periódica, força restauradora e força dissipativa:
+
+$$m\ddot{x} + b\dot{x} + kx = F_0\cos(\omega t)$$
+
+Em forma adimensional:
+
+$$\ddot{x} + 2\gamma\dot{x} + \omega_0^2 x = \frac{F_0}{m}\cos(\omega t)$$
+
+onde $\gamma = b/(2m)$ é a taxa de amortecimento e $\omega_0 = \sqrt{k/m}$ é a frequência natural.
+
+A solução completa é $x(t) = x_h(t) + x_p(t)$. A parte homogênea $x_h$ decai exponencialmente
+(tópico 1.4). Em regime permanente (tempo suficientemente longo), apenas $x_p$ persiste:
+
+$$x_p(t) = A(\omega)\cos(\omega t - \phi(\omega))$$
+
+onde a **amplitude da resposta** é:
+
+$$A(\omega) = \frac{F_0/m}{\sqrt{(\omega_0^2 - \omega^2)^2 + (2\gamma\omega)^2}}$$
+
+e **diferença de fase:**
+
+$$\tan\phi(\omega) = \frac{2\gamma\omega}{\omega_0^2 - \omega^2}$$
+
+Diferentemente do caso ideal (tópico 1.5), $A(\omega)$ não diverge em $\omega = \omega_0$ — o
+denominador sempre tem o termo $(2\gamma\omega)^2 > 0$. A máxima amplitude é:
+
+$$A_{\max} = \frac{F_0}{2\gamma m\omega_0}$$
+
+e ocorre ligeiramente abaixo de $\omega_0$.
+
+## Resposta em frequência — fator de qualidade {{< ra OE1.18 B4 >}}
+
+A "largura" da ressonância (quão aguda é o pico) é quantificada pelo **fator de qualidade**:
+
+$$Q = \frac{\omega_0}{2\gamma}$$
+
+Amortecimento baixo ($\gamma$ pequeno) → $Q$ grande → pico agudo e alto (ressonância dramática).
+Amortecimento alto ($\gamma$ grande) → $Q$ pequeno → pico arredondado e baixo (ressonância suave).
+
+Na prática naval:
+- Casco de navio em ondas: $Q \approx 5{,}0$ (moderado) — ressonância é preocupante mas não
+  catastrófica se velocidades críticas forem evitadas.
+- Motor diesel mal amortecido: $Q \approx 15$ — risco alto de vibração amplificada.
+- Sistema com absorvedores: $Q \approx 1$ — ressonância é praticamente eliminada (custo é
+  aumento de peso e custo de manutenção).
+
+A **largura de banda** da ressonância (intervalo de $\omega$ onde $A > A_{\max}/\sqrt{2}$) é
+aproximadamente $\Delta\omega \approx 2\gamma$, ou em frequência: $\Delta f \approx \gamma/\pi$.
+
+<!-- SIMULAÇÃO SUGERIDA: família de curvas A(ω) para vários amortecimentos b,
+     mostrando o achatamento do pico — Plotly (comparar curvas, tabela Q4).
+     Ligar à transposição rápida de velocidades críticas de máquinas. -->
+
+::: {.sp}
+Um navio porta-contêineres tem período natural de balanço $T_0 = 14$ s ($\omega_0 = 2\pi/14 \approx 0{,}449$ rad/s).
+Motores principais podem variar RPM de 40 a 120. A frequência de excitação é (RPM/60) Hz. Amortecimento
+estrutural é avaliado como $\gamma = 0{,}01$ rad/s (correspondente a $Q \approx 22{,}5$ — bastante agudo).
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+## Impacto da ressonância em sistemas amortecidos {{< ra OE1.19 B2 >}}
+
+Mesmo com amortecimento, a ressonância deixa cicatrizes:
+
+1. **Parafusos e rebites:** sob vibração amplificada em ressonância, ligações mecânicas podem se afrouxar
+   (fadiga por micro-deslizamento). Fixadores de casco, máquinas e equipamentos são os primeiros a sofrer.
+
+2. **Ruptura por fadiga:** estrutura metal submetida a ciclos de tensão em ressonância (mesmo que amplitude
+   final seja menor que em sistema ideal) acumula dano microestrutural — trincas nucleiam mais rápido.
+
+3. **Deslocamento de fases:** em ressonância, a resposta fica atrasada de $\phi = \pi/2$ em relação à
+   excitação (força puxa para frente, sistema se move para trás). Isso causa distribuição de tensão
+   desigual em componentes, aumentando concentração de tensão em cantos e furos.
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Pensar que amortecimento elimina ressonância:** não, apenas reduz pico. Em $\omega = \omega_0$,
+  sempre há amplificação em comparação a frequências baixas.
+- **Confundir $\omega_0$ com frequência de pico de resposta:** em sistema amortecido, o pico ocorre
+  em $\omega_{\text{pico}} = \omega_0\sqrt{1 - 2(\gamma/\omega_0)^2} < \omega_0$.
+- **Aplicar aproximação $Q$ alto quando $Q$ é pequeno:** fórmulas simplificadas para fator de
+  qualidade valem só quando $Q \gtrsim 5$.
+:::
+
+**Conexão com o próximo tópico:** toda essa energia que entra no sistema (via excitação) sai
+dele (via amortecimento). O balanço energético é o assunto de 1.7.

@@ -1,0 +1,117 @@
+---
+title: "1.3 — Superposição de MHS, batimentos e curvas de Lissajous"
+categories: [UE1, OE1.7-B3, OE1.8-B2, OE1.9-B3, OE1.10-B2]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 1.7 [B3] Aplicar o princípio da superposição para combinação de oscilações
+            → naval: Superposição de fontes de vibração de bordo
+OE 1.8 [B2] Explicar o fenômeno de batimentos
+            → naval: Cilindros desequilibrados; batimento de vibração
+OE 1.9 [B3] Determinar a frequência do fenômeno de batimentos
+            → naval: Análise de sinal de vibração de máquina
+OE 1.10 [B2] Interpretar as curvas de Lissajous e suas aplicações na análise de sinais
+             → naval: Diagnóstico de vibração de bordo
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 5-6 >}}
+
+Quando dois ou mais osciladores atuam simultaneamente sobre um mesmo corpo — como ocorre
+quando o motor e a hélice viram simultaneamente a estrutura de um navio — o movimento
+resultante não é a soma simples das amplitudes, mas sim uma interferência complexa no
+espaço e no tempo. Este tópico ensina a descrever essa superposição e a ler a "impressão
+digital" do sinal quando duas frequências próximas interagem.
+
+## Superposição linear e interferência {{< ra OE1.7 B3 >}}
+
+O princípio da superposição diz que se $x_1(t)$ e $x_2(t)$ são duas soluções da equação de
+movimento, então $x(t) = x_1(t) + x_2(t)$ também é solução. Para dois MHS de mesma frequência,
+a soma é ainda um MHS de mesma frequência, mas com amplitude e fase alteradas:
+
+$$x_1(t) = A_1\cos(\omega t + \varphi_1), \quad x_2(t) = A_2\cos(\omega t + \varphi_2)$$
+
+$$x(t) = x_1(t) + x_2(t) = A_{\text{res}}\cos(\omega t + \varphi_{\text{res}})$$
+
+onde:
+
+$$A_{\text{res}} = \sqrt{A_1^2 + A_2^2 + 2A_1 A_2\cos(\varphi_1 - \varphi_2)}$$
+
+O termo $\cos(\varphi_1 - \varphi_2)$ captura o "atraso relativo" entre os osciladores.
+Se em fase ($\Delta\varphi = 0$), amplitudes somam-se (interferência construtiva);
+se em oposição ($\Delta\varphi = \pi$), subtraem-se (interferência destrutiva).
+
+## Batimentos — encontro de frequências próximas {{< ra OE1.8 B2 >}}
+
+Quando as frequências diferem ligeiramente, a superposição produz uma batida periódica na
+amplitude — o fenômeno de batimento. Isso é exatamente o que um engenheiro de máquinas de
+um navio observa ao sintonizar dois cilindros que giram desalinhados.
+
+Somando dois MHS com frequências $\omega_1$ e $\omega_2$ muito próximas:
+
+$$x(t) = A\cos(\omega_1 t) + A\cos(\omega_2 t)$$
+
+Usando identidade trigonométrica $\cos\alpha + \cos\beta = 2\cos\left(\frac{\alpha+\beta}{2}\right)\cos\left(\frac{\alpha-\beta}{2}\right)$:
+
+$$x(t) = 2A\cos\left(\frac{\omega_1-\omega_2}{2}t\right)\cos\left(\frac{\omega_1+\omega_2}{2}t\right)$$
+
+O fator lento $2A\cos\left(\frac{\omega_1-\omega_2}{2}t\right)$ é o envelope de amplitude.
+A amplitude varia no tempo, e o ouvido/sensor percebe uma "pulsação" com frequência de batimento.
+
+## Frequência de batimento {{< ra OE1.9 B3 >}}
+
+A frequência com que a amplitude sobe e desce é chamada frequência de batimento:
+
+$$f_{\text{bat}} = \left|\frac{\omega_1 - \omega_2}{2\pi}\right| = |f_1 - f_2|$$
+
+Período de batimento: $T_{\text{bat}} = \frac{1}{f_{\text{bat}}}$.
+
+Na prática naval, se dois motores oscilam a $f_1 = 20{,}0$ Hz e $f_2 = 19{,}5$ Hz,
+a vibração do casco varia com $f_{\text{bat}} = 0{,}5$ Hz, um batimento bem perceptível
+a cada 2 segundos — sinal de desalinhamento que exige ajuste.
+
+::: {.sp}
+Um navio porta-contêineres opera com dois geradores diesel auxiliares de frequência nominal
+50 Hz. Devido a desgaste de componentes, o gerador 1 oscila a $f_1 = 50{,}2$ Hz e o gerador 2 a
+$f_2 = 49{,}8$ Hz. A vibração elétrica de cada um tem amplitude 0,3 mm.
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+## Curvas de Lissajous — retrato da relação entre dois osciladores {{< ra OE1.10 B2 >}}
+
+Quando dois osciladores atuam em direções *perpendiculares* (não na mesma linha), o ponto
+em movimento traça uma curva no plano. Essa curva é chamada **figura de Lissajous** e revela,
+à primeira vista, a razão de frequências $\omega_x / \omega_y$ e a diferença de fase entre eles.
+
+Oscilador em $x$: $x(t) = A_x \cos(\omega_x t + \varphi)$
+Oscilador em $y$: $y(t) = A_y \cos(\omega_y t)$
+
+Se $\omega_x = \omega_y = \omega$, a figura é uma elipse (ou reta, se $\varphi = 0$ ou $\pi$).
+Se as frequências diferem, a trajetória é mais complexa — por exemplo, para $\omega_x = 2\omega_y$,
+o ponto traça uma figura em forma de 8. Cada razão inteira de frequências e cada diferença de
+fase produz uma forma característica que engenheiros usam para diagnosticar o tipo de vibração
+acoplada que há no navio.
+
+<!-- SIMULAÇÃO SUGERIDA: Traçar curvas de Lissajous em tempo real variando a razão de frequências (1:1, 1:2, 2:3, 3:2)
+     e diferença de fase (0, π/4, π/2, π). Lib: p5.js (traço contínuo) + matplotlib estático (grade de 6 exemplos).
+     Parâmetros: Ax, Ay iguais (escala 1:1); ωx, ωy ajustáveis 1–4 rad/s; φ 0 a 2π. -->
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Confundir batimento com ressonância:** batimento é a modulação de amplitude quando duas
+  frequências próximas se superpõem (fenômeno temporal, transitório ou quase-periódico);
+  ressonância é a amplificação máxima quando a frequência da força iguala a frequência natural
+  (fenômeno energético, permanente — tópico 1.5).
+- **Ler "número de laços" de Lissajous errado:** a figura tem $m$ laços na direção $x$ e $n$ laços
+  em $y$ se $\omega_x / \omega_y = n/m$. Não contar as vezes que a curva toca os eixos.
+:::
+
+**Conexão com o próximo tópico:** superposição sem amortecimento é uma idealização.
+Qualquer oscilador real perde energia ao vizinho — é o tópico 1.4.

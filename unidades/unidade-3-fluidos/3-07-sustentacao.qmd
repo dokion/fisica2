@@ -1,0 +1,119 @@
+---
+title: "3.7 — Sustentação a partir da distribuição de pressões"
+categories: [UE3, OE3.26-B2, OE3.27-B2, OE3.28-B3, OE3.29-B4]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 3.26 [B2] Explicar o conceito de sustentação e sua importância na aerodinâmica
+            → naval: Sustentação do leme; geometria do hélice
+OE 3.27 [B2] Relacionar a distribuição de pressões ao redor do corpo com a força de sustentação
+            → naval: Lado de pressão e sucção da pá do hélice
+OE 3.28 [B3] Aplicar a equação da sustentação para perfis aerodinâmicos
+            → naval: Perfil da pá e geração de empuxo propulsivo
+OE 3.29 [B4] Comparar a sustentação em diferentes condições de escoamento
+            → naval: Hélice de passo fixo vs. passo controlável
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 29-30 >}}
+
+Enquanto o arrasto resiste o movimento (força contrária à velocidade), a **sustentação** é uma força perpendicular ao escoamento que faz trabalho útil. Uma asa de avião gera sustentação para voar; uma pá de hélice gera sustentação para empurrar o navio; um leme gera sustentação para governar. Este tópico explora como a **distribuição de pressões** ao redor de um corpo imerso cria sustentação e como a forma do perfil (asimetria, ângulo de ataque) governa a sua magnitude. Compreender sustentação é compreender por que a hélice funciona e como o leme muda a proa.
+
+## Conceito de sustentação {{< ra OE3.26 B2 >}}
+
+A **sustentação** é a componente de força perpendicular ao escoamento (e perpendicular também ao arrasto). Nasce de uma **assimetria** na distribuição de pressões ao redor do corpo. Um cilindro redondo imerso em fluxo simétrico gera pressões iguais na frente e atrás — sem sustentação. Mas um **perfil aerodinâmico** (uma forma alongada, curva de um lado) gera pressão **menor** de um lado (lado de sucção) e **maior** do outro (lado de pressão), resultando em força perpendicular.
+
+Para um perfil de asa ou pá de hélice:
+
+$$L = \frac{1}{2} \rho v^2 A C_L$$
+
+onde:
+- $L$ é a sustentação (N)
+- $\rho$ é a densidade do fluido
+- $v$ é a velocidade do escoamento relativo
+- $A$ é a área de referência (asa / pá)
+- $C_L$ é o **coeficiente de sustentação** (adimensional), que depende da forma do perfil e do **ângulo de ataque**.
+
+## Distribuição de pressões e geração de sustentação {{< ra OE3.27 B2 >}}
+
+Quando um fluido escoa ao redor de um perfil, a geometria **desvia** as linhas de corrente. Pela continuidade, onde as linhas se aproximam (região de convergência), a velocidade aumenta e, por Bernoulli, a pressão cai. Onde as linhas se afastam (região de divergência), a velocidade cai e a pressão sobe.
+
+Um perfil aerodinâmico típico (asa):
+- **Lado de sucção (dorso):** curvatura maior, escoamento converge, velocidade alta, **pressão baixa**.
+- **Lado de pressão (ventre):** curvatura menor, escoamento diverge, velocidade baixa, **pressão alta**.
+
+A **diferença de pressão** entre os dois lados integrada sobre a área gera sustentação vertical.
+
+Para uma pá de hélice:
+- O lado de sucção (dorso da pá) tem pressão mais baixa.
+- O lado de pressão (ventre da pá) tem pressão mais alta.
+- A diferença de pressão puxa a água para trás, empurrando o navio para frente (reação).
+
+O coeficiente $C_L$ típico para um perfil bem-projetado varia com o ângulo de ataque $\alpha$:
+- A baixo $\alpha$ (0–10°), $C_L$ cresce linearmente.
+- Próximo a $\alpha \approx 15-20°$, $C_L$ atinge máximo.
+- Além disso, **stall** (perda de sustentação) ocorre; separação do escoamento destrói a sustentação.
+
+## Equação da sustentação em perfis aerodinâmicos {{< ra OE3.28 B3 >}}
+
+Para um perfil de pá de hélice ou de leme operando em regime normal:
+
+$$L = \frac{1}{2} \rho v^2 A C_L$$
+
+O coeficiente $C_L$ é determinado experimentalmente (tabelas de perfis NACA, e.g. NACA 63A517) ou computacionalmente. Típicos valores:
+- $C_L = 0.5$ para $\alpha = 5°$
+- $C_L = 1.0$ para $\alpha = 10°$
+- $C_L = 1.5$ para $\alpha = 15°$ (aproximação do stall)
+
+A **força total** sobre a pá é a soma de sustentação e arrasto:
+
+$$F_{\text{total}} = \sqrt{L^2 + D^2}$$
+
+onde $D$ é o arrasto da pá (calculado de forma similar: $D = \frac{1}{2} \rho v^2 A C_D$).
+
+Para uma **hélice propulsiva**, o objetivo é maximizar a razão $L/D$ (eficiência) — gerar muita sustentação com pouco arrasto. Isso é alcançado com ângulos de ataque moderados (5–15°) e perfis bem-escolhidos.
+
+## Sustentação em diferentes regimes de escoamento {{< ra OE3.29 B4 >}}
+
+A sustentação depende de como o perfil está imerso no escoamento:
+
+**Número de Reynolds baixo (Re < 10⁴):**
+Escoamento laminar prevalece; transição entre sustentação linear e separação é gradual. Perfis delgados funcionam bem.
+
+**Número de Reynolds alto (Re > 10⁶):**
+Escoamento turbulento; camada limite turbulenta oferece resistência maior; mas sustentação está bem-estabelecida. Perfis espessos (robustos) funcionam bem. Caso da maioria dos navios.
+
+**Ângulo de ataque variável:**
+Uma pá de hélice de **passo fixo** funciona em um ângulo de ataque projetado. Se a velocidade do navio muda drasticamente, o ângulo efetivo muda e a eficiência cai.
+
+Uma pá de **passo variável (controlável)** pode girar em torno de seu eixo, alterando o ângulo. Isso permite otimizar a eficiência em diferentes velocidades — crítico para navios que operam em larga faixa de velocidades (ex.: navios de pesquisa, embarcações de trabalho offshore).
+
+**Cavitação:**
+A uma velocidade muito alta, a pressão no lado de sucção pode cair abaixo da pressão de vapor da água. Bolhas se formam (cavitação), destruindo a sustentação e danificando a pá. Hélices navais são projetados com margem para evitar cavitação até velocidades máximas esperadas.
+
+::: {.sp}
+Uma pá de hélice de navio graneleiro tem área aproximada $A = 12$ m² e opera em água salgada ($\rho = 1025$ kg/m³) a uma velocidade relativa (navio + rotação) $v = 8$ m/s. O coeficiente de sustentação do perfil é $C_L = 0.8$ e o coeficiente de arrasto é $C_D = 0.04$. Calcule:
+(a) A sustentação e arrasto da pá em uma rotação (suponha mudança negligenciável de $v$ durante a rotação).
+(b) A potência requerida para gerar essa sustentação (negligenciando perdas).
+(c) Como a sustentação muda se a velocidade aumenta de 8 para 10 m/s.
+(d) Se o ângulo de ataque aumentar em 5° (aumentando $C_L$ para 1.0 e $C_D$ para 0.06), qual é o novo ponto de operação?
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Sustentação sempre perpendicular ao escoamento?** Em teoria, sim; na prática, há uma pequena componente paralela (componente de arrasto que depende de $\alpha$). Não são perfeitamente desacopladas.
+- **Confundir ângulo de ataque com ângulo de passo:** ângulo de passo é a inclinação geométrica da pá; ângulo de ataque é o ângulo entre a corda da pá e a velocidade do escoamento relativo. Diferem se há velocidade rotacional.
+- **Stall é cataclismático:** não é um evento instantâneo, mas transição gradual. Além disso, asa-delta (delta wing) e alguns perfis especiais têm "stall suave" onde sustentação degrada lentamente.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Gráfico (Plotly) de C_L vs. ângulo de ataque, mostrando zona linear, máximo, e stall; ou campo vetorial de pressão ao redor de perfil NACA (p5.js ou SVG animado), com slider de ângulo de ataque mudando distribuição de pressões em tempo real. -->
+
+**Conexão com o próximo tópico:** calculamos sustentação usando coeficientes empíricos $C_L$. Mas existe uma **teoria** que fundamenta essa sustentação sem usar dados experimentais — o **Teorema de Kutta-Joukowski** — que liga sustentação à **circulação** ao redor da pá. Tópico 3.8, o último desta unidade.

@@ -1,0 +1,124 @@
+---
+title: "1.8 — Oscilações acopladas"
+categories: [UE1, OE1.23-B2, OE1.24-B3, OE1.25-B4]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 1.23 [B2] Explicar o conceito de oscilações acopladas e suas características
+             → naval: Sistemas acoplados de bordo
+OE 1.24 [B3] Derivar as equações do movimento para sistemas acoplados simples
+             → naval: —
+OE 1.25 [B4] Analisar a formação de modos normais em sistemas acoplados
+             → naval: Modos normais em estrutura do navio
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 11-12 >}}
+
+Um navio não é um oscilador único. Casco, mastro, estrutura de máquinas, carga — todos vibram
+em conjunto, acoplados mecanicamente. Quando um oscila, puxa o outro. Essa interação cria
+padrões de movimento chamados **modos normais**, em que toda a estrutura oscila de forma sincronizada.
+Entender modos é fundamental para prever comportamento dinâmico de navios e estruturas offshore.
+
+## Conceito de acoplamento {{< ra OE1.23 B2 >}}
+
+Dois osciladores estão **acoplados** quando há um mecanismo de transferência de energia entre eles.
+Exemplos navais:
+
+- **Motor ↔ Casco:** vibração do motor transmite-se ao casco via suportes (engine beds).
+- **Casco ↔ Carga:** carga lashing suspenso no convés participa da dinâmica do casco.
+- **Torre ↔ Mastro:** uma torre de comunicação presa ao mastro oscila junto com ele sob vento
+  ou movimento do navio.
+
+Sem acoplamento, cada oscilador teria apenas sua frequência natural $\omega_1$, $\omega_2$, etc.
+Com acoplamento, surgem **frequências normais** $\Omega_1$, $\Omega_2$ diferentes das naturais —
+energias "embaralhadas" entre os dois.
+
+A força de acoplamento é geralmente proporcional à *diferença* de posição ou velocidade entre
+os osciladores. Exemplo clássico: mola conectando duas massas.
+
+## Equações do movimento para dois osciladores acoplados {{< ra OE1.24 B3 >}}
+
+Seja $m_1 x_1$ e $m_2 x_2$ as posições de duas massas. Molas individuais têm constantes $k_1$, $k_2$;
+uma mola de acoplamento tem constante $k_c$ conectando as duas:
+
+$$m_1 \ddot{x}_1 = -k_1 x_1 - k_c(x_1 - x_2)$$
+$$m_2 \ddot{x}_2 = -k_2 x_2 - k_c(x_2 - x_1)$$
+
+Rearranjando:
+$$m_1 \ddot{x}_1 + (k_1 + k_c)x_1 - k_c x_2 = 0$$
+$$m_2 \ddot{x}_2 - k_c x_1 + (k_2 + k_c)x_2 = 0$$
+
+Este é um **sistema de equações diferenciais acopladas**. A estratégia de solução é procurar
+**modos normais** — soluções em que ambas as massas oscilam em fase (ou em oposição) com uma
+única frequência $\Omega$.
+
+Supondo $x_1(t) = A_1 e^{i\Omega t}$ e $x_2(t) = A_2 e^{i\Omega t}$, o sistema fica:
+
+$$[k_1 + k_c - m_1\Omega^2] A_1 - k_c A_2 = 0$$
+$$-k_c A_1 + [k_2 + k_c - m_2\Omega^2] A_2 = 0$$
+
+Para solução não-trivial ($A_1, A_2 \neq 0$), o determinante deve ser zero — isso dá as
+**frequências normais** $\Omega_1$ e $\Omega_2$.
+
+Para caso simples (massas e molas iguais: $m_1 = m_2 = m$, $k_1 = k_2 = k$):
+
+$$\Omega_1^2 = \frac{k}{m}, \quad \Omega_2^2 = \frac{k + 2k_c}{m}$$
+
+Note: $\Omega_1 = \omega_0$ é a frequência como se não houvesse acoplamento;
+$\Omega_2 > \Omega_1$ reflete o acoplamento.
+
+## Modos normais — padrões de movimento coerente {{< ra OE1.25 B4 >}}
+
+Cada frequência normal tem um padrão de movimento associado (a relação entre as amplitudes $A_1$ e $A_2$).
+
+**Modo 1** ($\Omega_1 = \sqrt{k/m}$): as duas massas oscilam *em fase* (para o mesmo lado simultaneamente).
+Mola de acoplamento não se estica nem comprime (desafio nulo) — é como se os osciladores fossem
+independentes. A estrutura "salta como um bloco".
+
+**Modo 2** ($\Omega_2 = \sqrt{(k + 2k_c)/m}$): as duas massas oscilam *em oposição* (quando uma
+vai para a direita, a outra vai para a esquerda). Mola de acoplamento está sempre esticada, oferecendo
+resistência — frequência é maior. A estrutura "vibra internamente", com pontos internos estacionários
+(nós).
+
+::: {.sp}
+Um navio com mastro (massa $m_m = 5$ t) conectado ao casco (massa efetiva $m_c = 50$ t) via suportes
+que funcionam como mola de acoplamento com $k_c = 10^5$ N/m. Casco tem frequência natural de balanço
+$\omega_c = 0{,}5$ rad/s (período 12,6 s); mastro, isolado, teria $\omega_m = 0{,}8$ rad/s.
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+## Importância de modos normais em estruturas navais
+
+Cada estrutura complexa (casco, mastro, tubulações, tanques) tem muitos modos normais. Alguns são
+"globais" (todo navio se mexe); outros "locais" (partes se deformam sem afetar o todo). Engenheiros
+fazem análises modais (finite element analysis, FEA) para encontrar essas frequências e evitar
+que excitações operacionais (motor, hélice, ondas) casem com elas.
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Achar que modo normal é simplesmente "a estrutura oscila":** não, é um padrão *específico*
+  em que partes diferentes se movem em relação definida (fase, razão de amplitude). Há tantos
+  modos quantas graus de liberdade.
+- **Confundir frequência natural isolada com frequência normal:** oscilador isolado tem uma
+  frequência natural; acoplado, tem tantas frequências normais quantos modos.
+- **Negligenciar acoplamento porque é "pequeno":** mesmo acoplamento fraco pode causar mudanças
+  mensuráveis em frequência e permitir transferência de energia lenta entre osciladores.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Visualizar dois osciladores acoplados com amplitude variando ao longo do tempo.
+     Mostrar modo em fase (massas se movem juntas) e modo em oposição (massas se movem invertidas).
+     Lib: p5.js (animação em tempo real, dois retângulos com mola entre eles) + matplotlib estático
+     (gráfico de posição vs. tempo para cada massa em cada modo, 2 x 2 grid).
+     Parâmetros: m1 = m2 = 1 kg, k1 = k2 = 10 N/m, kc = 5 N/m (ajustável 0–20). -->
+
+**Conexão com o próximo tópico:** o capítulo de oscilações fecha aqui. Próximo capítulo (UE 2)
+estuda **ondas em meios elásticos** — que são, essencialmente, osciladores continuamente acoplados
+no espaço.

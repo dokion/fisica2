@@ -1,0 +1,89 @@
+---
+title: "3.2 — Fluidos em repouso: princípios de Pascal e Arquimedes"
+categories: [UE3, OE3.5-B2, OE3.6-B3, OE3.7-B3, OE3.8-B3]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 3.5 [B2] Explicar o princípio de Pascal e suas aplicações em sistemas hidráulicos
+            → naval: Bombas hidráulicas de bordo
+OE 3.6 [B3] Aplicar o princípio de Arquimedes para calcular empuxo em corpos imersos
+            → naval: Força de empuxo = deslocamento; reserva de flutuabilidade
+OE 3.7 [B3] Determinar a pressão em diferentes profundidades usando a equação da hidrostática
+            → naval: Pressão no casco submerso; centro de empuxo B
+OE 3.8 [B3] Resolver problemas sobre equilíbrio de corpos flutuantes
+            → naval: Curva deslocamento/calado; carga/descarga e variação de calado
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 21-22 >}}
+
+Quando um fluido está em repouso (ou em movimento muito lento), as forças de inércia desaparecem e o que governa tudo é o **equilíbrio de pressões**. Este tópico explora dois princípios que nasceram da estática de fluidos e moldam a engenharia naval: o **Princípio de Pascal** — que permite amplificar forças em sistemas hidráulicos — e o **Princípio de Arquimedes** — que explica por que um navio flutua. Veremos também como a pressão varia com a profundidade, informação que você consulta toda vez que abre uma carta de estabilidade ou calcula o centro de empuxo.
+
+## Equação fundamental da hidrostática {{< ra OE3.7 B3 >}}
+
+Quando um fluido está em equilíbrio estático, a variação de pressão com a profundidade segue uma lei simples: a mudança de pressão é proporcional à profundidade, à densidade do fluido e ao campo gravitacional:
+
+$$\frac{dP}{dz} = -\rho g$$
+
+Integrando de uma profundidade zero (superfície, onde $P = P_0$) até profundidade $h$ (medida para baixo):
+
+$$P(h) = P_0 + \rho g h$$
+
+Essa é a **equação da hidrostática**. A pressão aumenta linearmente com a profundidade. No contexto do navio: a pressão na quilha é muito maior que na linha d'água; por isso, o casco é mais espesso (reforçado) nas partes mais profundas.
+
+## Princípio de Pascal {{< ra OE3.5 B2 >}}
+
+O **Princípio de Pascal** afirma que uma mudança de pressão aplicada a um ponto em um fluido confinado é transmitida, sem diminuição, a todos os outros pontos do fluido e às paredes do recipiente. Formalmente: se você aumenta a pressão em um ponto por $\Delta P$, a pressão em qualquer outro ponto aumenta da mesma quantidade $\Delta P$.
+
+Consequência prática: uma força pequena aplicada em uma área pequena pode ser amplificada em uma área grande. Se um êmbolo de área $A_1$ é comprimido com força $F_1$, a pressão sobe por $\Delta P = F_1 / A_1$. Essa pressão atua em um segundo êmbolo de área $A_2 > A_1$, gerando força:
+
+$$F_2 = \Delta P \times A_2 = F_1 \frac{A_2}{A_1}$$
+
+Aplicações navais: sistemas de frenagem hidráulica, macacos hidráulicos para levantar maquinário, prensas de selagem. Toda bomba hidráulica de bordo funciona nesse princípio.
+
+## Princípio de Arquimedes e empuxo {{< ra OE3.6 B3 >}}
+
+O **Princípio de Arquimedes** afirma que todo corpo imerso (ou parcialmente imerso) em um fluido experimenta uma força vertical ascendente igual ao peso do fluido deslocado. Formalmente:
+
+$$F_{\text{empuxo}} = \rho_{\text{fluido}} \cdot g \cdot V_{\text{imerso}}$$
+
+Interpretação física: a pressão é maior nas profundidades maiores; a diferença de pressão entre a face inferior e superior de um corpo imerso resulta em uma força vertical para cima.
+
+Para um navio em equilíbrio, o peso da embarcação iguala o empuxo:
+
+$$W_{\text{navio}} = F_{\text{empuxo}}$$
+
+$$M_{\text{navio}} \cdot g = \rho_{\text{água}} \cdot g \cdot V_{\text{imerso}}$$
+
+A massa de água deslocada é chamada de **deslocamento** do navio. Conhecer o deslocamento é conhecer exatamente quanta água o navio afasta — informação crítica para cartas de estabilidade e documentos de carga.
+
+## Flutuabilidade e equilíbrio de corpos flutuantes {{< ra OE3.8 B3 >}}
+
+Um corpo flutua quando está em equilíbrio entre seu peso e o empuxo. Se o navio ganhar peso (por carregamento de cargo), o equilíbrio é quebrado: a embarcação pesa mais que o fluido que desloca e começa a submergir. Para restaurar o equilíbrio, mais volume é imerso, aumentando o empuxo até igualar o novo peso.
+
+Esse processo é contínuo: à medida que o navio carrega, seu calado aumenta ao longo de uma **curva de deslocamento vs. calado** que é específica de cada embarcação. A curva é não-linear (porque a área de flutuação varia com a altura) e é tabelada em documentos de carga.
+
+A **reserva de flutuabilidade** é o volume de compartimentos estanques acima da linha d'água. Quanto maior, melhor — garante que o navio não afunda rapidamente se sofrer uma pequena inundação.
+
+::: {.sp}
+Um navio-graneleiro de boca $B = 32$ m, comprimento $L = 190$ m, com área de flutuação ≈ 5800 m² no calado de projeto ($T = 10$ m), é carregado no porto de Rio Grande (água doce, $\rho = 1000$ kg/m³) até deslocamento $\Delta = 50000$ t. Qual será seu calado? Se depois sai para o mar aberto (água salgada, $\rho = 1025$ kg/m³), qual será o novo calado, mantendo o mesmo deslocamento?
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Deslocamento vs. tonelagem bruta:** deslocamento é massa de água (em toneladas métricas, t ou ton); tonelagem bruta (GT) é medida de volume interno registrado. Não são a mesma coisa.
+- **Pressão não é força:** $P = F/A$. Em diferentes profundidades de um mesmo navio, a pressão é diferente mesmo com o mesmo fluido — pressão aumenta com profundidade.
+- **Reserva de flutuabilidade não cresce indefinidamente:** quanto mais se carrega, maior o calado; eventualmente, margem até o convés inferior diminui e, se chover ou houver onda, água entra.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Gráfico (Plotly) interativo de deslocamento vs. calado; barra de carregamento que move o navio na seção transversal (p5.js). Ou: navio em perfil mostrando centros de gravidade G, centro de flutuação B, e linha de flutuação mudando com carga. -->
+
+**Conexão com o próximo tópico:** dominado o equilíbrio em repouso, agora veremos o que acontece quando o fluido **se move** — equações de continuidade e Bernoulli abrem a porta para entender bombas, propulsão e resistência do navio ao avanço.

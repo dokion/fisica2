@@ -1,0 +1,104 @@
+---
+title: "1.4 — Oscilações amortecidas"
+categories: [UE1, OE1.11-B2, OE1.12-B3, OE1.13-B2]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_2_RA.md (não editar) ═══
+OE 1.11 [B2] Explicar os mecanismos de amortecimento em oscilações
+             → naval: Materiais anti-vibração entre partes conectadas
+OE 1.12 [B3] Derivar a equação do movimento para um oscilador amortecido
+             → naval: —
+OE 1.13 [B2] Classificar oscilações amortecidas (sub/crítico/super)
+             → naval: Amortecimento estrutural de casco
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 7-8 >}}
+
+Todo oscilador real em um navio dissipa energia — pela resistência do ar, atrito nos
+mancais, conversão em calor na estrutura. Sem reposição de energia, a amplitude decresce
+e o oscilador eventualmente para. Este tópico mostra como descrever essa perda e como
+ela muda a assinatura do movimento.
+
+## Mecanismos de amortecimento {{< ra OE1.11 B2 >}}
+
+A dissipação de energia ocorre por pelo menos três caminhos:
+
+- **Atrito viscoso:** força proporcional à velocidade, $F_{\text{damp}} = -b\dot{x}$ (comum em
+  fluidos e materiais viscoelásticos — suspensões do motor, amortecedores do casco).
+- **Atrito seco (Coulomb):** força constante independente da velocidade — menos comum em
+  oscilações senoidas (e fora do escopo deste tópico).
+- **Radiação:** a estrutura que oscila emite energia sonora (vibração de hélice irradiando
+  som na água) — importante em problemas de ruído de bordo.
+
+O **amortecimento viscoso** é a escolha padrão para MHS porque mantém a equação de movimento
+linear. Uma placa vibratória submersa em óleo perde força proporcional à sua velocidade; um
+casco amortecido por materiais viscoelásticos segue o mesmo padrão.
+
+## Equação do movimento para oscilador amortecido {{< ra OE1.12 B3 >}}
+
+Com força restauradora $F = -kx$ e força dissipativa $F = -b\dot{x}$, a segunda lei fica:
+
+$$m\ddot{x} + b\dot{x} + kx = 0$$
+
+Dividindo por $m$ e definindo $2\gamma \equiv b/m$ (taxa de amortecimento) e $\omega_0 \equiv \sqrt{k/m}$
+(frequência natural não-amortecida):
+
+$$\ddot{x} + 2\gamma\dot{x} + \omega_0^2 x = 0$$
+
+A solução depende da razão $\gamma/\omega_0$, que determina se o sistema é sub-, crítico ou sobre-amortecido.
+
+## Classificação: sub, crítico e sobre-amortecimento {{< ra OE1.13 B2 >}}
+
+Procuramos soluções da forma $x(t) = e^{rt}$. Substituindo, chegamos à equação característica:
+
+$$r^2 + 2\gamma r + \omega_0^2 = 0 \quad \Rightarrow \quad r = -\gamma \pm \sqrt{\gamma^2 - \omega_0^2}$$
+
+Três casos:
+
+**1. Sub-amortecimento** ($\gamma < \omega_0$): Há oscilação com amplitude decrescente.
+$$x(t) = Ae^{-\gamma t}\cos(\omega_d t + \varphi)$$
+onde $\omega_d = \sqrt{\omega_0^2 - \gamma^2}$ é a frequência amortecida (menor que $\omega_0$).
+Físico: o casco bate para frente e para trás, perdendo força a cada ciclo — caso típico de navios.
+
+**2. Amortecimento crítico** ($\gamma = \omega_0$): Ausência de oscilação; retorno mais rápido possível
+ao equilíbrio sem overshoot.
+$$x(t) = (A + Bt)e^{-\gamma t}$$
+Físico: suspensão de automóvel bem ajustada (ou amortecedor ideal de navio).
+
+**3. Sobre-amortecimento** ($\gamma > \omega_0$): Também sem oscilação, mas retorno mais lento.
+$$x(t) = A_1 e^{r_1 t} + A_2 e^{r_2 t}, \quad r_1, r_2 = -\gamma \pm \sqrt{\gamma^2 - \omega_0^2} < 0$$
+Físico: casco em fluido muito viscoso (não realista para água salgada, mas aparece em alguns
+sistemas de absorção de choque).
+
+<!-- SIMULAÇÃO SUGERIDA: x(t) = A e^(-γt) cos(ωt) com slider de γ mostrando os três
+     regimes (sub/crítico/super) — Plotly (gráfico explorável, tabela Q4).
+     Parâmetros: T = 12 s (roll, faixa SP3), γ variando de 0 até acima do crítico. -->
+
+::: {.sp}
+Um navio de carga geral, boca 18 m, sofre excitação impulsiva (pancada de onda). A frequência natural
+de balanço é $\omega_0 = 2\pi/12 \approx 0{,}524$ rad/s (período 12 s). O amortecimento estrutural é
+tal que $\gamma = 0{,}05$ rad/s.
+
+**(a) Modelagem.** << >>
+
+**(b) Desenvolvimento.** << >>
+
+**(c) Resultado.** << >>
+
+**(d) Análise crítica.** << >>
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **Confundir $\omega_0$ com $\omega_d$:** $\omega_0$ é a frequência se não houvesse amortecimento;
+  $\omega_d$ é a frequência real observada. Sempre $\omega_d < \omega_0$.
+- **Achar que crítico = parado:** amortecimento crítico é o que para *mais rápido* sem oscilar.
+  Sobre-amortecido para ainda mais lentamente.
+- **Esquecer que amortecimento reduz período:** se seu sistema é sub-amortecido, o período
+  da oscilação aumenta (frequência diminui) em relação ao ideal.
+:::
+
+**Conexão com o próximo tópico:** amortecimento sem excitação externa leva ao repouso.
+Se uma força externa periódica for aplicada simultaneamente, o sistema atinge um regime
+permanente — tópico 1.5 e 1.6.
