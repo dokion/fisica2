@@ -12,7 +12,7 @@ OE 1.3 [B2] Classificar oscilações quanto à periodicidade e amplitude
             → naval: classificação de vibração de bordo
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 1-2 >}}
+{{< aula 1 >}}
 
 Neste curso, o capítulo de oscilações abre a Física-2 em posição natural: logo depois
 da Física-1, porque oscilar é, antes de tudo, **um tipo de movimento** — e todo o
@@ -22,18 +22,10 @@ profundas para quem opera um navio.
 
 ## O que é uma oscilação harmônica {{< ra OE1.1 B1 >}}
 
-Um **movimento oscilatório** é aquele em que o sistema vai e volta em torno de uma
-posição de equilíbrio. Quando essa repetição acontece em intervalos de tempo iguais,
-o movimento é **periódico**, e chamamos de **oscilação harmônica** o caso em que a
-grandeza oscilante varia no tempo como uma função senoidal. No caso unidimensional
-mais simples — uma única coordenada $x(t)$ oscilando harmonicamente — o movimento
-recebe o nome de **Movimento Harmônico Simples (MHS)**.
-
-$$x(t) = A\cos(\omega t + \varphi)$$
-
-Essa forma senoidal não é uma curiosidade matemática: ela é a resposta universal de
-qualquer sistema levemente perturbado em torno de um equilíbrio estável. É por isso
-que o MHS aparece em todo lugar — do átomo ao casco do navio.
+**Movimento oscilatório** é aquele em que o sistema vai e volta em torno de uma
+posição de equilíbrio. Quando o movimento acontece em intervalos de tempo iguais,
+o movimento é **periódico**. Uma **oscilação harmônica** é um movimento oscilatório 
+também é periódico.
 
 ## Onde o MHS vive: da natureza ao navio {{< ra OE1.2 B1 >}}
 
@@ -87,5 +79,12 @@ independentes:
   (ex.: $f = 25\ \text{Hz}$) — são a mesma física.
 :::
 
-**Conexão com o próximo tópico:** definido *o que é* MHS, falta a pergunta central —
-*por que* a solução é senoidal? A resposta vem da lei de força, no tópico 1.2.
+**Conexão com o próximo tópico:** 
+
+No caso unidimensional mais simples — uma única coordenada $x(t)$ oscilando harmonicamente — o movimento
+recebe o nome de **Movimento Harmônico Simples (MHS)**.
+
+$$x(t) = A\cos(\omega t + \varphi)$$
+
+Essa forma trigonométrica é a resposta universal de qualquer sistema levemente perturbado em torno 
+de um equilíbrio estável. Esta equação será deduzida a partir da lei de força no no tópico 1.2.

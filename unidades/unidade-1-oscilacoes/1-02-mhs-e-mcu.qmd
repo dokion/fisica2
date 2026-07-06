@@ -11,13 +11,12 @@ OE 1.6 [B3] Determinar amplitude, frequência e fase do MHS
             → naval: T = 8–25 s; boca 15–40 m (SP3)
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 3-4 >}}
+{{< aula 2 >}}
 
-O tópico anterior definiu o MHS pela sua assinatura senoidal. Agora vamos ganhar essa
-senoide de dois jeitos independentes — pela **lei de força** e pela **projeção do
-movimento circular uniforme** — e ver que são o mesmo movimento visto de ângulos
-diferentes. É essa dupla visão que permite ler amplitude, frequência e fase direto da
-equação.
+O tópico anterior definiu o MHS pela sua definição conceitual. Nesta seção vamos
+ganhar essa senoide de dois jeitos independentes — pela **lei de força** e associá-la 
+à **projeção do movimento circular uniforme** — e ver que são o mesmo movimento pode 
+ser interpretado e descrito de duas maneiras alternativas. 
 
 ## Lei de força para o movimento {{< ra OE1.5 B3 >}}
 
@@ -29,6 +28,7 @@ $$F = -kx$$
 
 O sinal negativo é a física inteira da equação: força e deslocamento têm sempre
 sentidos opostos. Onde você encontrar $F \propto -x$, encontrará oscilação senoidal.
+a constante $k$ representa o agente físicao que provoca a oscilação.
 
 <!-- << place holder para uma imagem: massa-mola na horizontal, três quadros
      (x<0, x=0, x>0) com o vetor força apontando sempre para o equilíbrio >> -->
@@ -37,21 +37,41 @@ sentidos opostos. Onde você encontrar $F \propto -x$, encontrará oscilação s
 
 Aplicando a 2ª lei de Newton ao oscilador massa–mola:
 
-$$m\ddot{x} = -kx
+$$m\ddot{x} = -kx 
 \quad\Longrightarrow\quad
 \ddot{x} + \omega^2 x = 0,
-\qquad \omega^2 \equiv \frac{k}{m}$$
+\qquad \omega^2 \equiv \frac{k}{m}.$$
 
-A equação diz que a aceleração é sempre contrária e proporcional ao deslocamento. A
-constante $\omega$ — que por enquanto é só uma abreviação de $\sqrt{k/m}$ — vai se
-revelar a frequência angular do movimento.
+Esta é a *Equação de Movimento* para a partícula e sua solução é a função horária paa
+a posiçao do móvel que executa o MHS. $\omega$ neste caso é apenas uma abreviação de 
+$\sqrt{k/m}$, mas vai se revelar a frequência angular do movimento quando chegar na hora da
+interpretação física da equação.
+
+Existem alguns métodos de solução da equação e a maioria está fora do escopo da disciplina. 
+em sala de aula foi escolhido um desses métodos para encontrar a solução desta EDO.
 
 ## Solução da equação {{< ra OE1.6 B3 >}}
 
 Procuramos uma função cuja segunda derivada seja ela mesma com sinal trocado (a menos
-de $\omega^2$). Seno e cosseno fazem exatamente isso:
+de $\omega^2$). Seno e cosseno satisfazem exatamente isso, então a combinação 
+linear de ambas também é solução:
 
-$$x(t) = A\cos(\omega t + \varphi)$$
+$$x(t) = a \cos(\omega t + \varphi) + b \sin(\omega t + \varphi)$$.
+
+O próximo passo é aplicar as condições iniciais para que $a$ e $b$ sejam 
+estabeleciadas a partir da intepretação física do movimento. Neste caso o 
+oscilador está com uma determinada velocidae inicial $v_0$ e uma posição 
+inicial $x_0$ quando $t=0$, ou seja,
+
+$$x(t=0) = x_0 \,\, \mathrm{e}\,\, \dot{x}(t=0) = v(t=0) = v_0$$.
+
+Temos então que 
+
+$$ x(t) = x_0 \cos(\ometa t + \varphi) + {v_0 \over \omega} \sin(\omega t + \varphi)$$.
+
+e, para um caso caso específico em que $x_0=A$ e $v_0=0$ Temos
+
+$$ x(t) = A \cos(\ometa t + \varphi)$$.
 
 Derivando duas vezes para conferir:
 
@@ -59,7 +79,7 @@ $$\dot{x}(t) = -A\omega\,\mathrm{sen}(\omega t + \varphi)
 \qquad
 \ddot{x}(t) = -A\omega^2\cos(\omega t + \varphi) = -\omega^2 x(t)\ \checkmark$$
 
-Cada constante da solução tem leitura física direta:
+Cada constante da solução tem leitura física direta, a qual será apresentada na seção seguinte:
 
 - $A$ — **amplitude**: o afastamento máximo do equilíbrio (fixada pelas condições
   iniciais);
@@ -68,6 +88,8 @@ Cada constante da solução tem leitura física direta:
 - $\varphi$ — **constante de fase**: em que ponto do ciclo o movimento começou;
 - Período e frequência: $T = \dfrac{2\pi}{\omega}$, $f = \dfrac{1}{T} = \dfrac{\omega}{2\pi}$.
 
+
+*A solução complexa:* (...)
 ## A relação MHS ↔ MCU {{< ra OE1.4 B2 >}}
 
 Aqui entra a imagem geométrica que resolve o capítulo inteiro: imagine um ponto
