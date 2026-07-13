@@ -163,6 +163,7 @@ plt.tight_layout(); plt.show()
 <div class="pw-wrap">
   <div class="pw-row">
     <button id="pwPlay">⏸ Pausar</button>
+    <button id="pwZero">↺ t = 0</button>
     <div class="sld"><label>Frequência f = <span class="val" id="pwFv">1.0</span> Hz</label>
       <input type="range" id="pwF" min="0.5" max="2" value="1.0" step="0.1"></div>
     <div class="sld"><label>Velocidade v = <span class="val" id="pwVv">1.0</span> m/s</label>
@@ -234,6 +235,7 @@ plt.tight_layout(); plt.show()
   });
   el('pwPlay').onclick=()=>{ playing=!playing;
     el('pwPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+  el('pwZero').onclick=()=>{ t=0; playing=false; el('pwPlay').textContent='▶ Reproduzir'; };
 })();
 </script>
 ```

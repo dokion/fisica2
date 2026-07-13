@@ -138,6 +138,7 @@ plt.tight_layout(); plt.show()
 <div class="tw-wrap">
   <div class="tw-row">
     <button id="twPlay">⏸ Pausar</button>
+    <button id="twZero">↺ t = 0</button>
     <div class="sld"><label>Frequência f = <span class="val" id="twFv">1.0</span> Hz</label>
       <input type="range" id="twF" min="0.5" max="2" value="1.0" step="0.1"></div>
     <div class="sld"><label>Comprimento de onda λ = <span class="val" id="twLv">1.0</span> m</label>
@@ -211,6 +212,7 @@ plt.tight_layout(); plt.show()
   });
   el('twPlay').onclick=()=>{ playing=!playing;
     el('twPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+  el('twZero').onclick=()=>{ t=0; playing=false; el('twPlay').textContent='▶ Reproduzir'; };
 })();
 </script>
 ```

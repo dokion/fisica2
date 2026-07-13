@@ -160,6 +160,7 @@ plt.tight_layout(); plt.show()
 <div class="sw-wrap">
   <div class="sw-row">
     <button id="swPlay">⏸ Pausar</button>
+    <button id="swZero">↺ t = 0</button>
     <div class="sld"><label>Modo n = <span class="val" id="swNv">3</span></label>
       <input type="range" id="swN" min="1" max="5" value="3" step="1"></div>
     <div class="sld"><label>Profundidade h = <span class="val" id="swHv">100</span> m</label>
@@ -238,6 +239,7 @@ plt.tight_layout(); plt.show()
   });
   el('swPlay').onclick=()=>{ playing=!playing;
     el('swPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+  el('swZero').onclick=()=>{ t=0; playing=false; el('swPlay').textContent='▶ Reproduzir'; };
 })();
 </script>
 ```
