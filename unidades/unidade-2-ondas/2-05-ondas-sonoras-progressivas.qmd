@@ -71,13 +71,30 @@ Qualquer incerteza em $v$ (por termoclina, salinidade) afeta diretamente a profu
 ::: {.sp}
 Um navio em navegação coastal usa ecobatímetro de 38 kHz para mapear o fundo. No momento da medida, a profundidade verdadeira é 150 m. A temperatura é 15 °C (velocidade $v = 1485\,\text{m/s}$), salinidade 30 PSU (pequena redução de $v$ em relação a 35 PSU).
 
-**(a) Modelagem.** << >>
+<!-- [VERIFICAR: o enunciado não informa a velocidade de calibração do aparelho;
+     interpretei como o valor-padrão 1500 m/s.] -->
 
-**(b) Desenvolvimento.** << >>
+**(a) Modelagem.** O eco real obedece $t = 2d/v$ com a velocidade local
+$v = 1485$ m/s; o aparelho, calibrado com $v_c = 1500$ m/s, indica
+$d_{\text{ind}} = v_c\,t/2$. Incógnitas: $t$, $d_{\text{ind}}$, o erro e o comprimento
+de onda de trabalho.
 
-**(c) Resultado.** << >>
+**(b) Desenvolvimento.**
+$$t = \frac{2 \times 150}{1485} = 0{,}2020\ \text{s}$$
 
-**(d) Análise crítica.** << >>
+$$d_{\text{ind}} = \frac{1500 \times 0{,}2020}{2} = 151{,}5\ \text{m}
+\qquad(\text{erro } +1{,}5\ \text{m} = +1{,}0\%)$$
+
+$$\lambda = \frac{v}{f} = \frac{1485}{38\,000} \approx 39\ \text{mm}$$
+
+**(c) Resultado.** O aparelho indica 151,5 m para um fundo real a 150 m; o pulso de
+38 kHz trabalha com $\lambda \approx 39$ mm.
+
+**(d) Análise crítica.** O erro de 1% é pequeno em 150 m, mas o sentido é inseguro
+(indica mais água do que há) e o mesmo percentual em uma barra de porto com folga de
+1 m sob a quilha seria inaceitável. Parte da diferença entre 1500 e 1485 m/s vem da
+temperatura (15 °C) e parte da salinidade reduzida (30 PSU) — ambas diminuem $v$; a
+correção é ajustar o aparelho à velocidade local ou aplicar a tabela T/S do fabricante.
 :::
 
 ::: {.callout-warning}

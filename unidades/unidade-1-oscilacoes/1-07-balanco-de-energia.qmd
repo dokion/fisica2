@@ -80,13 +80,24 @@ Um navio ro-ro (roro) de 12 mil toneladas é excitado por pancada de onda, adqui
 balanço inicial $\theta_0 = 6°$. Período natural $T_0 = 11$ s. Amortecimento é estimado em
 $\gamma = 0{,}008$ rad/s. Quanto tempo leva para a energia de balanço cair a 10% do valor inicial?
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** Oscilação livre amortecida após a pancada; a energia decai como
+$E(t) = E_0\,e^{-2\gamma t}$. Incógnita: o instante em que $E/E_0 = 0{,}10$.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.**
+$$e^{-2\gamma t} = 0{,}10 \quad\Rightarrow\quad
+t = \frac{\ln 10}{2\gamma} = \frac{2{,}303}{2 \times 0{,}008} \approx 144\ \text{s}$$
 
-**(c) Resultado.** << >>
+Número de ciclos de balanço nesse intervalo: $144/11 \approx 13$.
 
-**(d) Análise crítica.** << >>
+**(c) Resultado.** A energia cai a 10% em cerca de 2 min 24 s — aproximadamente 13
+períodos de balanço.
+
+**(d) Análise crítica.** Como $E \propto \theta^2$, a amplitude nesse instante é
+$\theta = \theta_0\sqrt{0{,}1} \approx 1{,}9°$ — o navio ainda balança visivelmente
+com só 10% da energia inicial; a percepção de bordo decai mais devagar que a energia.
+O valor $\gamma = 0{,}008$ rad/s é representativo de casco sem apêndices; bolinas ou
+tanques estabilizadores elevam o $\gamma$ efetivo e encurtam esse tempo na mesma
+proporção.
 :::
 
 ## Estresse reversivo em componentes {{< ra OE1.22 B4 >}}

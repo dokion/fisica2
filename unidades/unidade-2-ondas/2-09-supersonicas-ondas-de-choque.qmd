@@ -91,13 +91,28 @@ $$R_{\text{óptico}} = \sqrt{2Rh_1} + \sqrt{2Rh_2} \approx \sqrt{2 \times 6{,}37
 
 Distância detectada (50 km) > horizonte óptico (31,8 km) — há refração não-padrão.
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** O horizonte calculado no enunciado é o óptico (linha reta). Para
+radar, a refração padrão da atmosfera é modelada pelo raio terrestre efetivo
+$kR$ com $k = 4/3$ — é contra esse horizonte, maior, que se deve comparar a detecção.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.**
+$$R_{\text{radar}} = \sqrt{2kRh_1} + \sqrt{2kRh_2}
+= \sqrt{2 \times \tfrac{4}{3} \times 6{,}371 \times 10^6 \times 25}
++ \sqrt{2 \times \tfrac{4}{3} \times 6{,}371 \times 10^6 \times 15}$$
 
-**(c) Resultado.** << >>
+$$R_{\text{radar}} \approx 20{,}6 + 16{,}0 = 36{,}6\ \text{km}$$
 
-**(d) Análise crítica.** << >>
+**(c) Resultado.** A detecção a 50 km excede não só o horizonte óptico (31,8 km) mas
+também o horizonte radar padrão (36,6 km) em cerca de 37% — há propagação anômala:
+super-refração ou duto, típico de inversão térmica em latitudes altas.
+
+**(d) Análise crítica.** O contato pode ser real — a distância medida (tempo de
+trânsito) permanece confiável em primeira ordem —, mas a *detectabilidade* não segue o
+padrão: o alvo pode desaparecer abruptamente ao sair do duto e reaparecer, degradando o
+acompanhamento e o cálculo de CPA/TCPA. Conduta: tratar o contato como intermitente,
+confrontar com AIS, registrar a condição de propagação anômala e não inferir "alvo
+pequeno/distante demais para importar" da força do eco, que dentro do duto não segue a
+lei usual de atenuação.
 :::
 
 ::: {.callout-warning}

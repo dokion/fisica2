@@ -83,13 +83,36 @@ Exemplo prático: um log acústico (medidor de velocidade por correlação de mi
 ::: {.sp}
 Um sonar ativo de um navio patrulha transmite em freqüência 30 kHz com potência $P_{\text{tx}} = 5\,\text{kW}$. A água tem densidade $\rho = 1025\,\text{kg/m}^3$, velocidade do som $v = 1500\,\text{m/s}$. Um alvo submarino (pequeno contato) reflete ~1% da potência incidente — isto é, a potência recebida de volta é $P_{\text{rx}} = 0{,}01 P_{\text{tx}}$.
 
-**(a) Modelagem.** << >>
+<!-- [VERIFICAR: interpretei "potência recebida de volta é 0,01·P_tx" como a potência
+     reirradiada pelo alvo (P_ref = 50 W), espalhando-se esfericamente no retorno.] -->
 
-**(b) Desenvolvimento.** << >>
+**(a) Modelagem.** Espalhamento esférico nos dois trechos: a intensidade incidente no
+alvo a distância $r$ é $I(r) = P_{\text{tx}}/(4\pi r^2)$; o alvo reirradia
+$P_{\text{ref}} = 0{,}01\,P_{\text{tx}} = 50$ W, e o eco chega ao navio com
+$I_{\text{eco}}(r) = P_{\text{ref}}/(4\pi r^2)$. Avaliar em $r = 1$ km e $r = 5$ km,
+expressando também em dB (referência $I_0 = 10^{-12}$ W/m²).
 
-**(c) Resultado.** << >>
+**(b) Desenvolvimento.** Em $r = 1$ km:
+$$I_{\text{eco}} = \frac{50}{4\pi (10^3)^2} \approx 4{,}0 \times 10^{-6}\ \text{W/m}^2
+\quad\Rightarrow\quad
+L_I = 10\log_{10}\frac{4{,}0\times 10^{-6}}{10^{-12}} \approx 66\ \text{dB}$$
 
-**(d) Análise crítica.** << >>
+Em $r = 5$ km:
+$$I_{\text{eco}} = \frac{4{,}0 \times 10^{-6}}{25} \approx 1{,}6 \times 10^{-7}\ \text{W/m}^2
+\quad\Rightarrow\quad
+L_I \approx 52\ \text{dB}$$
+
+**(c) Resultado.** O nível do eco cai de $\approx 66$ dB (1 km) para $\approx 52$ dB
+(5 km) — queda de 20 dB por década de distância, conforme a lei do inverso do quadrado
+aplicada ao trecho de retorno.
+
+**(d) Análise crítica.** O modelo do enunciado é otimista: na realidade a potência que
+o alvo intercepta também cai com $1/r^2$, de modo que o eco real decai com $1/r^4$
+(40 dB por década) — é a forma elementar da equação do sonar. Faltam ainda a absorção
+na água (que cresce com a frequência) e a reverberação. Nota de convenção: em acústica
+submarina o nível é usualmente referido a 1 μPa de pressão, não a $10^{-12}$ W/m²
+(referência do ar usada aqui por coerência com o texto) — os números absolutos em dB
+não são comparáveis entre as duas convenções.
 :::
 
 ::: {.callout-warning}

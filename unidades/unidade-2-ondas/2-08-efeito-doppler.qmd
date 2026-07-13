@@ -103,13 +103,34 @@ Um navio patrulha em aproximação ao porto usa log Doppler de banda única (400
 
 O log Doppler simples (usa uma frequência única a uma profundidade fixa, ~80% da profundidade total) registra uma velocidade média ponderada pelo padrão de reflexão.
 
-**(a) Modelagem.** << >>
+<!-- [VERIFICAR: o enunciado não informa a velocidade do navio nem o rumo; assumi
+     velocidade sobre o fundo de 6,0 nós com proa na direção da corrente (leste).] -->
 
-**(b) Desenvolvimento.** << >>
+**(a) Modelagem.** O log com referência a ~80% da profundidade "ancora" a medida na
+camada profunda (50–150 m), onde a corrente é desprezível — nessa condição a leitura
+aproxima a velocidade sobre o fundo (SOG). Se a referência cair numa camada com
+corrente $u$, a leitura passa a ser $v_{\text{log}} = v_{\text{SOG}} - u$ (componente
+na direção do rumo). Assumir $v_{\text{SOG}} = 6{,}0$ nós, proa leste.
 
-**(c) Resultado.** << >>
+**(b) Desenvolvimento.** Leitura conforme a camada que serve de referência:
 
-**(d) Análise crítica.** << >>
+$$\text{profunda } (u \approx 0):\quad v_{\text{log}} \approx 6{,}0\ \text{nós} = \text{SOG}$$
+$$\text{intermediária } (u = 0{,}2):\quad v_{\text{log}} = 6{,}0 - 0{,}2 = 5{,}8\ \text{nós}$$
+$$\text{superficial } (u = 0{,}5):\quad v_{\text{log}} = 6{,}0 - 0{,}5 = 5{,}5\ \text{nós}$$
+
+Velocidade através da água superficial (a relevante para a manobra junto ao cais):
+$$v_{\text{água}} = v_{\text{SOG}} - u_{\text{sup}} = 5{,}5\ \text{nós}$$
+
+**(c) Resultado.** Com referência profunda o log lê a SOG (6,0 nós); a velocidade pela
+água superficial é 0,5 nós menor. A escolha da camada de referência muda a leitura em
+até 0,5 nós.
+
+**(d) Análise crítica.** Um único número de log não descreve o cisalhamento de
+corrente: na aproximação final, o que desloca o navio em relação ao cais é a corrente
+superficial, mesmo com SOG corretamente medida — daí o valor do ADCP, que resolve o
+perfil por células. O sinal da correção inverte se a corrente for de proa; e em águas
+rasas o log pode perder o retorno da camada profunda e mudar sozinho de referência
+(bottom track → water track), saltando a leitura em 0,5 nó sem aviso.
 :::
 
 ::: {.callout-warning}

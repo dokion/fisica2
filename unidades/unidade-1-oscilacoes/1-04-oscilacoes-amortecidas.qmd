@@ -79,13 +79,29 @@ Um navio de carga geral, boca 18 m, sofre excitação impulsiva (pancada de onda
 de balanço é $\omega_0 = 2\pi/12 \approx 0{,}524$ rad/s (período 12 s). O amortecimento estrutural é
 tal que $\gamma = 0{,}05$ rad/s.
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** Após a excitação impulsiva, o balanço é oscilação livre amortecida:
+$\ddot\theta + 2\gamma\dot\theta + \omega_0^2\theta = 0$. O regime é definido pela
+comparação entre $\gamma$ e $\omega_0$. Incógnitas: $\omega_d$, o período amortecido
+$T_d$ e o tempo para a amplitude cair à metade.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.** Como $\gamma/\omega_0 = 0{,}05/0{,}524 \approx 0{,}095 < 1$,
+o regime é sub-amortecido:
 
-**(c) Resultado.** << >>
+$$\omega_d = \sqrt{\omega_0^2 - \gamma^2} = \sqrt{0{,}524^2 - 0{,}05^2} \approx 0{,}522\ \text{rad/s}
+\quad\Rightarrow\quad T_d = \frac{2\pi}{\omega_d} \approx 12{,}05\ \text{s}$$
 
-**(d) Análise crítica.** << >>
+$$e^{-\gamma t_{1/2}} = \tfrac{1}{2} \quad\Rightarrow\quad
+t_{1/2} = \frac{\ln 2}{\gamma} = \frac{0{,}693}{0{,}05} \approx 13{,}9\ \text{s}$$
+
+**(c) Resultado.** $\theta(t) = \theta_0\, e^{-0{,}05t}\cos(0{,}522\,t + \varphi)$:
+o período quase não muda (12,00 → 12,05 s) e a amplitude cai à metade a cada
+13,9 s — pouco mais de um ciclo.
+
+**(d) Análise crítica.** Com $\gamma \ll \omega_0$, o amortecimento desloca o período
+em só 0,4%, mas extingue a oscilação em poucos ciclos — comportamento típico de casco
+com bolinas. Se $\gamma$ fosse dez vezes maior ($\approx \omega_0$), o regime seria
+quase crítico e o navio retornaria à vertical sem oscilar; nenhum casco real chega a
+esse nível de amortecimento passivo.
 :::
 
 ::: {.callout-warning}

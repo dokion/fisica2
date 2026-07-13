@@ -88,13 +88,31 @@ opera com máquinas que, em regime de 90 RPM, geram uma frequência de excitaç�
 de $f_e = 90/60 = 1{,}5$ Hz ($\omega_e = 2\pi \times 1{,}5 \approx 9{,}42$ rad/s). De repente, há uma falha
 e o motor fica preso em 0,087 Hz (aproximadamente 0,55 rad/s) — muito próximo a $\omega_0$.
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** Regime permanente do oscilador forçado sem amortecimento:
+$A(\omega) = \dfrac{F_0/m}{|\omega_0^2 - \omega^2|}$. O valor de $F_0/m$ não é dado,
+mas a razão entre as amplitudes nas duas condições (normal e falha) o elimina.
+Incógnita: fator de amplificação $A_{\text{falha}}/A_{\text{normal}}$.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.** Denominadores nas duas condições:
 
-**(c) Resultado.** << >>
+$$|\omega_0^2 - \omega_e^2| = |0{,}524^2 - 9{,}42^2| \approx 88{,}5\ \text{rad}^2/\text{s}^2
+\qquad(\text{regime normal})$$
 
-**(d) Análise crítica.** << >>
+$$|\omega_0^2 - \omega^2| = |0{,}275 - 0{,}55^2| \approx 0{,}028\ \text{rad}^2/\text{s}^2
+\qquad(\text{falha})$$
+
+$$\frac{A_{\text{falha}}}{A_{\text{normal}}} = \frac{88{,}5}{0{,}028} \approx 3 \times 10^3$$
+
+**(c) Resultado.** A amplitude de resposta cresce por um fator da ordem de $3 \times 10^3$
+em relação ao regime normal de operação.
+
+**(d) Análise crítica.** O número não é previsão quantitativa: perto de $\omega_0$ o
+modelo sem amortecimento superestima a amplitude (divergiria em $\omega = \omega_0$) —
+o valor real do pico exige $\gamma$ (tópico 1.6). Como ordem de grandeza, porém, basta
+para a decisão operacional: não se permanece com excitação próxima de $\omega_0$;
+altera-se RPM imediatamente. Observação de plausibilidade: 0,087 Hz é frequência típica
+de encontro de ondas, não de rotação de máquinas — em serviço, a ressonância de balanço
+é excitada com mais frequência pelo mar do que pelo motor.
 :::
 
 ::: {.callout-warning}

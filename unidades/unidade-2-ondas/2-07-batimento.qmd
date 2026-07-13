@@ -62,13 +62,32 @@ Em sistemas digitais modernos, a detecção de batimento é feita por análise d
 ::: {.sp}
 Um sonar ativo de navio oceanogrăfico opera em freqüência nominal $f_0 = 120\,\text{kHz}$. O transdutor transmite um pulso curto. Em águas rasas, a reflexão múltipla (fundo + superfície + fundo novamente) cria um eco à frequência $f_0$, porém ligeiramente atenuado. Ao mesmo tempo, uma reflectência em camada de sal cria um eco em freqüência $f_0 + 80\,\text{Hz} = 120{,}00008\,\text{kHz}$ (deslocamento Doppler negativo pelo movimento vertical da coluna).
 
-**(a) Modelagem.** << >>
+<!-- [VERIFICAR: o enunciado escreve f₀ + 80 Hz = 120,00008 kHz, mas 120 kHz + 80 Hz
+     = 120,08 kHz. Adotei Δf = 80 Hz como dado governante do problema.] -->
 
-**(b) Desenvolvimento.** << >>
+**(a) Modelagem.** Dois sinais de frequências próximas chegam simultaneamente ao
+receptor: o eco múltiplo em $f_1 = f_0 = 120\,\text{kHz}$ e o eco da camada em
+$f_2 = f_0 + 80\,\text{Hz}$. Como $\Delta f = 80\,\text{Hz} \ll f_0$, a superposição
+produz batimento: portadora em $f_{\text{méd}} \approx f_0$ com amplitude modulada.
+Incógnitas: frequência e período de batimento.
 
-**(c) Resultado.** << >>
+**(b) Desenvolvimento.**
+$$f_{\text{batimento}} = |f_2 - f_1| = 80\,\text{Hz}$$
 
-**(d) Análise crítica.** << >>
+$$T_{\text{batimento}} = \frac{1}{f_{\text{batimento}}} = \frac{1}{80} = 12{,}5\,\text{ms}$$
+
+$$\frac{\Delta f}{f_0} = \frac{80}{120\,000} \approx 6{,}7 \times 10^{-4}$$
+
+**(c) Resultado.** O sinal composto no receptor pulsa em amplitude 80 vezes por segundo,
+com máximos separados por $12{,}5\,\text{ms}$.
+
+**(d) Análise crítica.** A razão $\Delta f / f_0 \sim 10^{-4}$ garante batimento bem
+definido ($\Delta f \ll f_{\text{méd}}$). Há, porém, uma condição de observabilidade que
+o operador precisa conhecer: o batimento só se manifesta se os dois ecos se sobrepõem no
+tempo por pelo menos um período de batimento. Um pulso de sonar de $1\,\text{ms}$ é curto
+demais para exibir modulação de $12{,}5\,\text{ms}$ — a detecção exige pulso longo (ou
+emissão contínua) ou, em sistemas digitais, FFT com janela maior que
+$1/\Delta f = 12{,}5\,\text{ms}$ para resolver as duas raias espectrais.
 :::
 
 ::: {.callout-warning}
@@ -79,6 +98,172 @@ Um sonar ativo de navio oceanogrăfico opera em freqüência nominal $f_0 = 120\
 - **Esquecer que magnitude importa:** para detectar batimento, $\Delta f$ deve ser pequeno comparado a $f_{\text{méd}}$. Se $\Delta f \sim f_{\text{méd}}$ (diferença de 50% de frequência), o resultado não é um batimento audível — são duas notas distintas.
 :::
 
-<!-- SIMULAÇÃO SUGERIDA: Mostrar duas ondas senoidais (em cores diferentes, ex. vermelho e azul) com frequências próximas. Controle deslizante: frequência 1 (fixa, ex. 100 Hz), frequência 2 (variável, 95–105 Hz). Gráfico 1: y₁(t), y₂(t) sobrepostos; Gráfico 2: y_total(t) = y₁ + y₂ mostrando envoltória lentamente variável (amplitude modulada). Exibir em tempo real: Δf (diferença de frequência) e f_bat = Δf. Linha de "envoltória" destacando a modulação. Lib p5.js (animação contínua de seno/envoltória) ou Plotly (gráficos estáticos atualizados). -->
+## Veja e ouça o batimento
+
+O painel superior mostra as duas ondas ($f_1 = 100\,\text{Hz}$ fixa; $f_2$ ajustável)
+numa janela de 60 ms que avança em câmera lenta — observe as duas senoides escorregando
+de fase uma em relação à outra. O painel inferior mostra a soma $y_1 + y_2$ em 1 s de
+sinal, com a envoltória $\pm 2A\cos(\pi\,\Delta f\,t)$ tracejada. O botão de áudio
+reproduz as duas frequências nos alto-falantes: o pulsar audível é o batimento.
+
+```{python}
+#| fig-cap: "Batimento entre f₁ = 100 Hz e f₂ = 103 Hz, amplitudes iguais. Acima: as duas componentes numa janela de 60 ms. Abaixo: a soma em 1 s de sinal, com a envoltória ±2A cos(π Δf t); a amplitude pulsa com f_bat = 3 Hz. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+A, f1, f2 = 1.0, 100.0, 103.0
+df, fmed = f2 - f1, (f1 + f2)/2
+
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(9, 5.2),
+                               gridspec_kw={'height_ratios': [1, 1.4]})
+tz = np.linspace(0, 0.06, 1200)
+ax1.plot(tz*1000, A*np.cos(2*np.pi*f1*tz), color='#C81F1F', lw=1.4,
+         label=f'$y_1$: {f1:.0f} Hz')
+ax1.plot(tz*1000, A*np.cos(2*np.pi*f2*tz), color='#1F47C8', lw=1.4,
+         label=f'$y_2$: {f2:.0f} Hz')
+ax1.set_xlabel('t (ms)'); ax1.set_ylabel('y'); ax1.legend(loc='upper right', fontsize=8)
+
+t = np.linspace(0, 1.0, 8000)
+ax2.plot(t, A*np.cos(2*np.pi*f1*t) + A*np.cos(2*np.pi*f2*t), color='#333333', lw=0.7)
+ax2.plot(t,  2*A*np.cos(np.pi*df*t), '--', color='#C85C2E', lw=1.6)
+ax2.plot(t, -2*A*np.cos(np.pi*df*t), '--', color='#C85C2E', lw=1.6)
+ax2.set_xlabel('t (s)'); ax2.set_ylabel('$y_1+y_2$')
+ax2.set_title(f'$f_{{bat}} = |f_2-f_1|$ = {abs(df):.0f} Hz  →  '
+              f'$T_{{bat}}$ = {1/abs(df):.3f} s', fontsize=10)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo — o deslizamento de fase e
+     a pulsação da envoltória são o fenômeno a observar). p5 de libs/ (offline, Q6).
+     Áudio via WebAudio nativo (sem lib). Mesmos parâmetros da versão matplotlib:
+     f1 = 100 Hz fixa, f2 = 95–105 Hz (padrão 103), amplitudes iguais. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .bt-wrap{max-width:960px;margin:1rem auto;}
+  .bt-wrap .bt-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .bt-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .bt-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .bt-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .bt-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .bt-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .bt-wrap #btSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .bt-wrap #btEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .bt-wrap #btEq b{color:#1f47c8;}
+</style>
+<div class="bt-wrap">
+  <div class="bt-row">
+    <button id="btPlay">⏸ Pausar</button>
+    <button id="btSom">🔊 Ouvir</button>
+    <div class="sld"><label>f<sub>2</sub> = <span class="val" id="btF2v">103</span> Hz &nbsp;(f<sub>1</sub> = 100 Hz fixa)</label>
+      <input type="range" id="btF2" min="95" max="105" value="103" step="0.25"></div>
+    <div class="sld"><label>Velocidade anim. = <span class="val" id="btSv">1</span>× &nbsp;(câmera lenta 100×)</label>
+      <input type="range" id="btS" min="0.25" max="3" value="1" step="0.25"></div>
+  </div>
+  <div id="btSketch"></div>
+  <div id="btEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  const F1=100, A=1;
+  let ts=0, playing=true, tocando=false, ac=null, o1=null, o2=null, ga=null;
+
+  const cw=()=>{ const w=(el('btSketch').clientWidth)||900; return Math.max(320,Math.min(960,w)); };
+
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),430).parent('btSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),430); };
+
+    p.draw=()=>{
+      const W=p.width, x0=46, x1=W-16;
+      const f2=+el('btF2').value, spd=+el('btS').value, df=f2-F1;
+      el('btF2v').textContent=f2; el('btSv').textContent=spd;
+      // tempo de sinal em câmera lenta 100× (1 s real = 10 ms de sinal, em spd = 1)
+      if(playing) ts+=(p.deltaTime/1000)*spd/100;
+      if(o2) o2.frequency.value=f2;
+
+      p.background('#faf8f4');
+      p.textSize(12); p.noStroke(); p.fill('#7a7367'); p.textAlign(p.LEFT,p.TOP);
+      p.text('Componentes — janela de 60 ms a partir de t = '+ts.toFixed(3)+' s',x0,8);
+      p.text('Soma y₁ + y₂ — 1 s de sinal, com envoltória ±2A cos(π Δf t)',x0,218);
+
+      const eixo=(yc,half)=>{ p.stroke('#bdb4a4'); p.strokeWeight(1);
+        p.line(x0,yc,x1,yc); p.stroke('#d8cfc0'); p.line(x0,yc-half,x0,yc+half); };
+      const curva=(fn,t0,win,yc,esc,col,wt)=>{ p.push(); p.noFill(); p.stroke(col);
+        p.strokeWeight(wt); p.beginShape();
+        for(let gx=x0;gx<=x1;gx++){ const tt=t0+(gx-x0)/(x1-x0)*win;
+          p.vertex(gx,yc-fn(tt)*esc); }
+        p.endShape(); p.pop(); };
+
+      // ── painel 1: as duas componentes, janela deslizante de 60 ms ──
+      const y1=tt=>A*Math.cos(2*Math.PI*F1*tt), y2=tt=>A*Math.cos(2*Math.PI*f2*tt);
+      const yc1=128, h1=88;
+      eixo(yc1,h1);
+      curva(y1,ts,0.06,yc1,h1*0.9,'#c81f1f',1.6);
+      curva(y2,ts,0.06,yc1,h1*0.9,'#1f47c8',1.6);
+      p.noStroke(); p.textAlign(p.LEFT,p.CENTER);
+      p.fill('#c81f1f'); p.text('y₁: 100 Hz',x0+8,yc1-h1+10);
+      p.fill('#1f47c8'); p.text('y₂: '+f2+' Hz',x0+8,yc1-h1+26);
+
+      // ── painel 2: soma + envoltória, janela fixa de 1 s ──
+      const soma=tt=>y1(tt)+y2(tt), env=tt=>2*A*Math.cos(Math.PI*df*tt);
+      const yc2=330, h2=92, esc2=h2*0.45;
+      eixo(yc2,h2);
+      p.noStroke(); p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      for(let k=0;k<=5;k++){ const gx=x0+(x1-x0)*k/5;
+        p.stroke('#e7e0d4'); p.line(gx,yc2-h2,gx,yc2+h2);
+        p.noStroke(); p.text((k*0.2).toFixed(1)+' s',gx,yc2+h2+4); }
+      curva(soma,0,1.0,yc2,esc2,'#55524c',0.9);
+      p.push(); p.drawingContext.setLineDash([6,5]);
+      curva(env,0,1.0,yc2,esc2,'#c85c2e',1.8);
+      curva(tt=>-env(tt),0,1.0,yc2,esc2,'#c85c2e',1.8);
+      p.drawingContext.setLineDash([]); p.pop();
+      // marcador: posição da janela do painel 1 dentro do 1 s de sinal
+      const gxm=x0+(x1-x0)*(ts%1.0);
+      p.stroke('#66308c'); p.strokeWeight(1.5); p.line(gxm,yc2-h2,gxm,yc2+h2);
+      p.noStroke(); p.fill('#66308c'); p.circle(gxm,yc2-env(ts%1.0)*esc2,7);
+
+      const fbat=Math.abs(df);
+      el('btEq').innerHTML='Δf = '+df.toFixed(2)+' Hz &nbsp;|&nbsp; '+
+        '<b>f<sub>bat</sub> = |f₂ − f₁| = '+fbat.toFixed(2)+' Hz</b> &nbsp;|&nbsp; '+
+        'T<sub>bat</sub> = '+(fbat>0?(1/fbat).toFixed(2)+' s':'—')+
+        ' &nbsp;|&nbsp; f<sub>méd</sub> = '+((F1+f2)/2).toFixed(2)+' Hz';
+    };
+  });
+
+  el('btPlay').onclick=()=>{ playing=!playing;
+    el('btPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+  el('btSom').onclick=()=>{
+    if(!tocando){
+      try{
+        ac=ac||new (window.AudioContext||window.webkitAudioContext)();
+        ga=ac.createGain(); ga.gain.value=0.12; ga.connect(ac.destination);
+        o1=ac.createOscillator(); o1.frequency.value=F1;
+        o2=ac.createOscillator(); o2.frequency.value=+el('btF2').value;
+        o1.connect(ga); o2.connect(ga); o1.start(); o2.start();
+        tocando=true; el('btSom').textContent='🔇 Silenciar';
+      }catch(e){ el('btSom').textContent='áudio indisponível'; }
+    }else{
+      o1.stop(); o2.stop(); o1=o2=null;
+      tocando=false; el('btSom').textContent='🔊 Ouvir';
+    }
+  };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Leve $f_2$ até $100\,\text{Hz}$ ($\Delta f = 0$). O que acontece com a envoltória e
+   com o som? A amplitude da soma depende de quê, nesse caso?
+2. Com $f_2 = 103\,\text{Hz}$, meça na tela o intervalo entre dois nós consecutivos da
+   envoltória e compare com $T_{\text{bat}} = 1/\Delta f$. A função
+   $\cos(\pi\,\Delta f\,t)$ tem período $2/\Delta f$ — o dobro. Por que a pulsação
+   percebida ocorre, ainda assim, $\Delta f$ vezes por segundo?
+3. Ouvindo o áudio: por que se percebe um único tom pulsante, e não duas notas
+   distintas? Estime a partir de que $\Delta f$ o ouvido passaria a separar os dois tons.
+:::
 
 **Conexão com o próximo tópico:** batimentos são um efeito de interferência entre duas frequências *próximas*. Agora consideramos o caso oposto: **o que acontece quando o *observador* se move** em relação à fonte? A frequência percebida muda — este é o **efeito Doppler**, crucial para o log Doppler de velocidade de um navio.

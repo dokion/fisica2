@@ -68,13 +68,33 @@ Na navegação, sistemas de tubulações de bordo, shafts e até a caverna do mo
 ::: {.sp}
 Um ecobatímetro mono-feixe transmite em frequência $f_0 = 50\,\text{kHz}$ numa coluna de água com profundidade $h = 200\,\text{m}$ (navegação em águas profundas), $v = 1500\,\text{m/s}$. O operador observa um eco principal em $t_1 = 0{,}267\,\text{s}$ (distância correta: $d = \frac{1500 \times 0{,}267}{2} = 200\,\text{m}$). Porém, detecta também um eco fantasma em $t_2 = 0{,}400\,\text{s}$.
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** Converter tempos em distâncias com $d = v\,t/2$ e testar hipóteses
+para o eco fantasma: (i) múltipla reflexão vertical (trajeto fundo–superfície–fundo,
+comprimento $4h$); (ii) trajeto oblíquo com uma única reflexão fora da vertical.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.** Profundidade aparente do fantasma:
+$$d_2 = \frac{1500 \times 0{,}400}{2} = 300\ \text{m} > h = 200\ \text{m}$$
+— impossível como eco vertical direto.
 
-**(c) Resultado.** << >>
+Hipótese (i), múltipla vertical:
+$$t = \frac{4h}{v} = \frac{800}{1500} = 0{,}533\ \text{s} \neq 0{,}400\ \text{s}
+\quad\text{(descartada)}$$
 
-**(d) Análise crítica.** << >>
+Hipótese (ii), trajeto oblíquo de comprimento $L$ (ida) com reflexão única:
+$$L = \frac{v\,t_2}{2} = 300\ \text{m}
+\quad\Rightarrow\quad
+x = \sqrt{L^2 - h^2} = \sqrt{300^2 - 200^2} \approx 224\ \text{m}$$
+
+**(c) Resultado.** O fantasma não é múltipla vertical; é consistente com reflexão única
+em uma feição do fundo a cerca de 224 m para o través — eco de lóbulo lateral ou de
+fundo inclinado.
+
+**(d) Análise crítica.** Ecos com profundidade aparente maior que a real nunca devem
+ser registrados como fundo. Verificação prática: uma pequena alteração de rumo muda o
+atraso do eco oblíquo, mas não o do vertical; a múltipla vertical, se presente,
+apareceria em 0,533 s com o dobro da profundidade aparente. O modelo supõe fundo plano
+e velocidade constante — gradientes de velocidade (tópico 2.4) curvam o raio e alteram
+o valor de $x$.
 :::
 
 ::: {.callout-warning}

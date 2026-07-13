@@ -64,13 +64,30 @@ O som viaja ~4× mais rápido na água que no ar, e ~3× mais rápido no aço qu
 ::: {.sp}
 Um navio oceanogrăfico mede a profundidade usando ecobatímetro de frequência dupla (30 e 200 kHz). Na superfície, a temperatura é 28 °C (velocidade $v_0 = 1540\,\text{m/s}$), a profundidade real é $h = 400\,\text{m}$. A salinidade é 35 PSU (constante). Supor variação linear de temperatura com profundidade: $T(z) = 28 - 0{,}05z$ (°C), onde $z$ é profundidade em metros. Usar aproximação: $v(T) = 1540 - 2{,}1(28 - T) = 1540 - 2{,}1 \times 0{,}05z \approx 1540 - 0{,}105z$ (m/s).
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** O tempo de eco é governado pela velocidade local:
+$t = 2\int_0^h dz/v(z)$ com $v(z) = 1540 - 0{,}105\,z$. O aparelho, calibrado com
+$v_0 = 1540$ m/s constante, calcula $d_{\text{ind}} = v_0\,t/2$. Incógnitas: $t$,
+$d_{\text{ind}}$ e o erro em relação a $h = 400$ m.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.**
+$$\int_0^{400}\frac{dz}{1540 - 0{,}105\,z}
+= \frac{1}{0{,}105}\ln\!\left(\frac{1540}{1540 - 42}\right)
+= \frac{\ln(1{,}0280)}{0{,}105} \approx 0{,}2634\ \text{s}$$
 
-**(c) Resultado.** << >>
+$$t = 2 \times 0{,}2634 = 0{,}5267\ \text{s}
+\qquad\left(\bar v = \frac{800}{0{,}5267} \approx 1519\ \text{m/s}\right)$$
 
-**(d) Análise crítica.** << >>
+$$d_{\text{ind}} = \frac{1540 \times 0{,}5267}{2} \approx 405{,}6\ \text{m}$$
+
+**(c) Resultado.** O ecobatímetro indica $\approx 406$ m para um fundo real a 400 m —
+erro sistemático de $+5{,}6$ m ($+1{,}4\%$).
+
+**(d) Análise crítica.** O erro tem o sinal inseguro: o aparelho assume água mais
+"rápida" do que ela é e indica **mais** profundidade do que existe — em navegação com
+folga sob a quilha crítica, é o pior sentido possível. O erro cresce com a espessura e
+a intensidade da termoclina; a correção padrão é inserir o perfil de velocidade medido
+(XBT/CTD) ou ao menos a velocidade média local. A verificação por $\bar v \approx 1519$
+m/s (média entre superfície e fundo) confirma a ordem do resultado.
 :::
 
 ::: {.callout-warning}

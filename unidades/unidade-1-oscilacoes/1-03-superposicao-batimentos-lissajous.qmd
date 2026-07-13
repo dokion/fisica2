@@ -74,13 +74,31 @@ Um navio porta-contêineres opera com dois geradores diesel auxiliares de frequ�
 50 Hz. Devido a desgaste de componentes, o gerador 1 oscila a $f_1 = 50{,}2$ Hz e o gerador 2 a
 $f_2 = 49{,}8$ Hz. A vibração elétrica de cada um tem amplitude 0,3 mm.
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** As vibrações dos dois geradores chegam ao mesmo ponto da estrutura
+como dois MHS de mesma amplitude $A = 0{,}3\ \text{mm}$ e frequências próximas
+$f_1 = 50{,}2\ \text{Hz}$ e $f_2 = 49{,}8\ \text{Hz}$. Como $|f_1 - f_2| \ll f_1$, o
+deslocamento resultante segue o modelo de batimento deduzido acima. Incógnitas:
+frequência média, frequência e período de batimento, amplitude máxima.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.**
+$$f_{\text{méd}} = \frac{f_1 + f_2}{2} = 50{,}0\ \text{Hz},
+\qquad
+f_{\text{bat}} = |f_1 - f_2| = 0{,}4\ \text{Hz}$$
 
-**(c) Resultado.** << >>
+$$x(t) = 2A\cos(\pi f_{\text{bat}}\, t)\cos(2\pi f_{\text{méd}}\, t)
+= 0{,}6\cos(1{,}26\,t)\cos(314\,t)\ \text{mm}$$
 
-**(d) Análise crítica.** << >>
+$$T_{\text{bat}} = \frac{1}{f_{\text{bat}}} = 2{,}5\ \text{s}$$
+
+**(c) Resultado.** A estrutura vibra a $50{,}0\ \text{Hz}$ com amplitude modulada entre
+$0$ e $0{,}6\ \text{mm}$; o máximo de vibração repete-se a cada $2{,}5\ \text{s}$.
+
+**(d) Análise crítica.** A condição $f_{\text{bat}} = 0{,}4\ \text{Hz} \ll f_{\text{méd}} = 50\ \text{Hz}$
+valida o tratamento como batimento. Um máximo a cada 2,5 s é perceptível ao tato e a
+qualquer sensor de vibração — assinatura direta de dessincronização entre os geradores.
+A amplitude de pico ($0{,}6\ \text{mm}$) é o dobro da de um gerador isolado, o que agrava
+a fadiga dos suportes; a correção é sincronizar os geradores ou isolar mecanicamente as
+fontes.
 :::
 
 ## Curvas de Lissajous — retrato da relação entre dois osciladores {{< ra OE1.10 B2 >}}
@@ -98,9 +116,146 @@ o ponto traça uma figura em forma de 8. Cada razão inteira de frequências e c
 fase produz uma forma característica que engenheiros usam para diagnosticar o tipo de vibração
 acoplada que há no navio.
 
-<!-- SIMULAÇÃO SUGERIDA: Traçar curvas de Lissajous em tempo real variando a razão de frequências (1:1, 1:2, 2:3, 3:2)
-     e diferença de fase (0, π/4, π/2, π). Lib: p5.js (traço contínuo) + matplotlib estático (grade de 6 exemplos).
-     Parâmetros: Ax, Ay iguais (escala 1:1); ωx, ωy ajustáveis 1–4 rad/s; φ 0 a 2π. -->
+## Veja a figura se formar
+
+A simulação traça a trajetória do ponto $(x(t),\, y(t))$ com os dois osciladores em
+direções perpendiculares. A curva completa aparece em cinza; o ponto colorido percorre a
+trajetória em tempo real. Ajuste a razão $\omega_x : \omega_y$ e a fase $\varphi$ e
+observe a forma resultante.
+
+```{python}
+#| fig-cap: "Curvas de Lissajous x(t) = A cos(ωx t + φ), y(t) = A cos(ωy t), com amplitudes iguais nos dois eixos. Cada razão de frequências e cada fase produz uma forma característica — mesma grade de parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+A = 1.0
+casos = [(1, 1, 0, '0'), (1, 1, np.pi/2, 'π/2'), (1, 2, 0, '0'),
+         (2, 1, np.pi/2, 'π/2'), (2, 3, 0, '0'), (3, 2, np.pi/2, 'π/2')]
+t = np.linspace(0, 8*np.pi, 4000)
+
+fig, axs = plt.subplots(2, 3, figsize=(9, 6))
+for ax, (wx, wy, phi, rot) in zip(axs.flat, casos):
+    ax.plot(A*np.cos(wx*t + phi), A*np.cos(wy*t), color='#1F47C8', lw=1.4)
+    ax.set_title(f'$\\omega_x{{:}}\\omega_y$ = {wx}:{wy},  $\\varphi$ = {rot}', fontsize=10)
+    ax.set_aspect('equal'); ax.set_xticks([]); ax.set_yticks([])
+    for s in ax.spines.values(): s.set_color('0.8')
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo — o RA pede interpretar a
+     formação da figura, não só a forma final). p5 de libs/ (offline, Q6). Mesmos
+     parâmetros da grade matplotlib: A igual nos dois eixos, ωx, ωy de 0,5 a 4 rad/s,
+     φ de 0 a 2π. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .lj-wrap{max-width:760px;margin:1rem auto;}
+  .lj-wrap .lj-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .lj-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .lj-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .lj-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .lj-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .lj-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .lj-wrap #ljSketch canvas{display:block;border-radius:8px;max-width:100%;margin:0 auto;}
+  .lj-wrap #ljEq{font-size:14px;margin:8px 2px 0;line-height:1.5;text-align:center;}
+  .lj-wrap #ljEq b{color:#1f47c8;}
+</style>
+<div class="lj-wrap">
+  <div class="lj-row">
+    <button id="ljPlay">⏸ Pausar</button>
+    <div class="sld"><label>ω<sub>x</sub> = <span class="val" id="ljWxv">2</span> rad/s</label>
+      <input type="range" id="ljWx" min="0.5" max="4" value="2" step="0.5"></div>
+    <div class="sld"><label>ω<sub>y</sub> = <span class="val" id="ljWyv">1</span> rad/s</label>
+      <input type="range" id="ljWy" min="0.5" max="4" value="1" step="0.5"></div>
+    <div class="sld"><label>Fase φ = <span class="val" id="ljFv">π/2</span></label>
+      <input type="range" id="ljF" min="0" max="360" value="90" step="15"></div>
+    <div class="sld"><label>Velocidade anim. = <span class="val" id="ljSv">1</span>×</label>
+      <input type="range" id="ljS" min="0.25" max="3" value="1" step="0.25"></div>
+  </div>
+  <div id="ljSketch"></div>
+  <div id="ljEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let t=0, playing=true;
+  const faseTxt=deg=>{ if(deg==0) return "0";
+    const f=deg/180,m={0.25:"π/4",0.5:"π/2",0.75:"3π/4",1:"π",1.25:"5π/4",1.5:"3π/2",1.75:"7π/4",2:"2π"};
+    return m[f]?m[f]:f.toFixed(2)+"π"; };
+  const gcd=(a,b)=>b?gcd(b,a%b):a;
+  const razao=(wx,wy)=>{ const a=Math.round(2*wx),b=Math.round(2*wy),d=gcd(a,b);
+    return (a/d)+":"+(b/d); };
+
+  const cw=()=>{ const w=(el('ljSketch').clientWidth)||560; return Math.max(300,Math.min(560,w)); };
+
+  new p5((p)=>{
+    let pts=[], chave='';
+    p.setup=()=>{ const W=cw(); p.createCanvas(W,W).parent('ljSketch'); };
+    p.windowResized=()=>{ const W=cw(); p.resizeCanvas(W,W); chave=''; };
+
+    p.draw=()=>{
+      const W=p.width, cx=W/2, cy=W/2, R=0.40*W;
+      const wx=+el('ljWx').value, wy=+el('ljWy').value,
+            phi=(+el('ljF').value)*Math.PI/180, spd=+el('ljS').value;
+      el('ljWxv').textContent=wx; el('ljWyv').textContent=wy;
+      el('ljFv').textContent=faseTxt(+el('ljF').value); el('ljSv').textContent=spd;
+      if(playing) t+=(p.deltaTime/1000)*spd;
+
+      // curva completa em cache: fecha em T = 4π / gcd(2ωx, 2ωy)
+      const k=wx+'|'+wy+'|'+phi+'|'+W;
+      if(k!==chave){ chave=k; pts=[];
+        const T=4*Math.PI/gcd(Math.round(2*wx),Math.round(2*wy));
+        for(let i=0;i<=1600;i++){ const tt=T*i/1600;
+          pts.push([cx+R*Math.cos(wx*tt+phi), cy-R*Math.cos(wy*tt)]); } }
+
+      p.background('#faf8f4');
+      // moldura ±A
+      p.push(); p.noFill(); p.stroke('#d8cfc0'); p.strokeWeight(1);
+      p.drawingContext.setLineDash([5,5]); p.rect(cx-R,cy-R,2*R,2*R);
+      p.drawingContext.setLineDash([]); p.pop();
+      p.stroke('#e7e0d4'); p.line(cx-R-14,cy,cx+R+14,cy); p.line(cx,cy-R-14,cx,cy+R+14);
+
+      // trajetória completa (guia)
+      p.push(); p.noFill(); p.stroke('#bdb4a4'); p.strokeWeight(1.2); p.beginShape();
+      for(const q of pts) p.vertex(q[0],q[1]); p.endShape(); p.pop();
+
+      // cauda recente (últimos 1,2 "s" de fase) + ponto atual
+      p.push(); p.noFill();
+      const NC=60, dt=1.2/NC;
+      for(let i=0;i<NC;i++){ const t0=t-(NC-i)*dt, t1=t0+dt;
+        p.stroke(31,71,200,255*(i/NC)); p.strokeWeight(1+1.8*(i/NC));
+        p.line(cx+R*Math.cos(wx*t0+phi), cy-R*Math.cos(wy*t0),
+               cx+R*Math.cos(wx*t1+phi), cy-R*Math.cos(wy*t1)); }
+      p.pop();
+      const px=cx+R*Math.cos(wx*t+phi), py=cy-R*Math.cos(wy*t);
+      // projeções instantâneas nos dois eixos
+      p.push(); p.stroke('#9a9184'); p.strokeWeight(1);
+      p.drawingContext.setLineDash([3,4]); p.line(px,py,px,cy); p.line(px,py,cx,py);
+      p.drawingContext.setLineDash([]); p.pop();
+      p.noStroke(); p.fill('#c85c2e'); p.circle(px,cy,7); p.circle(cx,py,7);
+      p.fill('#66308c'); p.circle(px,py,11);
+
+      el('ljEq').innerHTML='x(t) = A cos('+wx+'t'+((+el('ljF').value)?' + '+faseTxt(+el('ljF').value):'')+
+        ')  |  y(t) = A cos('+wy+'t)  →  <b>ω<sub>x</sub> : ω<sub>y</sub> = '+razao(wx,wy)+'</b>';
+    };
+  });
+  el('ljPlay').onclick=()=>{ playing=!playing; el('ljPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Com $\omega_x : \omega_y = 1:1$, varie a fase de $0$ a $\pi$. Para quais valores de
+   $\varphi$ a elipse degenera em reta? Qual $\varphi$ produz circunferência?
+2. Ajuste $2:3$ e conte quantas vezes a curva tangencia a borda horizontal e a vertical
+   da moldura. Confirme que a razão entre as contagens reproduz $\omega_x/\omega_y$.
+3. Compare $\omega_x : \omega_y = 2:2$ com $2:2{,}5$ (razão $4:5$): a curva continua
+   fechando, mas fica mais complexa. O que aconteceria com a trajetória se a razão fosse
+   irracional? Num osciloscópio de bordo, o que indica uma figura que gira lentamente,
+   quase fechando a cada volta?
+:::
 
 ::: {.callout-warning}
 ## Erros clássicos

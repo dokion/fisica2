@@ -75,13 +75,30 @@ A amplitude resultante é levemente menor que o eco principal — há interferê
 ::: {.sp}
 Um sonar ativo em freqüência 37,5 kHz detecta dois ecos de um contato submerso. O primeiro eco (reflexão da popa) retorna após 4,0 s; o segundo (reflexão do costado) após 4,8 s. Na água, $v = 1500\,\text{m/s}$. Ambos os ecos têm amplitude nominal $A_0$ na origem.
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** Cada eco corresponde a uma distância $d = v\,t/2$. Antes de aplicar
+qualquer fórmula de interferência, é preciso verificar se os dois ecos se sobrepõem no
+tempo — condição necessária para interferirem — ou se chegam resolvidos.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.**
+$$d_1 = \frac{1500 \times 4{,}0}{2} = 3\,000\ \text{m},
+\qquad
+d_2 = \frac{1500 \times 4{,}8}{2} = 3\,600\ \text{m}$$
 
-**(c) Resultado.** << >>
+$$\Delta t = 0{,}8\ \text{s}
+\quad\Rightarrow\quad
+\Delta d = 600\ \text{m (diferença de percurso, ida e volta)}$$
 
-**(d) Análise crítica.** << >>
+**(c) Resultado.** Dois ecos resolvidos, separados por 0,8 s — não há superposição
+temporal, portanto não há interferência: o receptor os detecta como eventos
+independentes, a 3000 m e 3600 m.
+
+**(d) Análise crítica.** A separação de 600 m entre "popa" e "costado" é incompatível
+com as dimensões de qualquer navio — o segundo eco é, com maior probabilidade,
+multitrajeto (reflexão adicional em superfície ou fundo) ou um segundo contato. A
+fórmula de $A_{\text{res}}$ com diferença de fase só se aplica quando os pulsos
+coincidem no tempo; com pulsos de duração típica de milissegundos, um atraso de 0,8 s
+os torna eventos distintos. Interferência de fato ocorreria entre reflexões de partes
+do casco separadas por metros — atrasos da ordem de ms — dentro de um mesmo pulso longo.
 :::
 
 ::: {.callout-warning}

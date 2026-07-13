@@ -52,13 +52,24 @@ A distinção é crucial: som viaja como *onda longitudinal* na água (compress�
 ::: {.sp}
 Um transdutor de ecobatímetro dual-frequência opera a 30 kHz e 200 kHz em água do mar. O comprimento de onda da propagação longitudinal a 30 kHz na água é $\lambda_{30} \approx 50\,\text{mm}$ (a velocidade do som no local é $\approx 1500\,\text{m/s}$ — faixa típica da costa).
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** Propagação longitudinal na água com $v = 1500$ m/s; para cada canal
+do transdutor vale $\lambda = v/f$. Incógnitas: $\lambda$ nos dois canais e a comparação
+entre eles.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.**
+$$\lambda_{30} = \frac{v}{f} = \frac{1500}{30\,000} = 0{,}050\ \text{m} = 50\ \text{mm}$$
 
-**(c) Resultado.** << >>
+$$\lambda_{200} = \frac{1500}{200\,000} = 7{,}5\ \text{mm}$$
 
-**(d) Análise crítica.** << >>
+**(c) Resultado.** O canal de 200 kHz opera com comprimento de onda quase 7 vezes menor
+que o de 30 kHz (7,5 mm contra 50 mm), confirmando o valor dado no enunciado para 30 kHz.
+
+**(d) Análise crítica.** A resolução vertical do ecobatímetro escala com $\lambda$: o
+canal de 200 kHz distingue estruturas menores do fundo, mas sofre absorção maior e
+alcança menos — daí o par 30/200 kHz: baixa frequência para águas profundas, alta para
+detalhe em águas rasas. Note a cadeia de conversão: o sinal que excita o transdutor é
+eletromagnético (onda transversal); a onda que sai na água é sonora (longitudinal) — a
+conversão ocorre no elemento piezoelétrico.
 :::
 
 ::: {.callout-warning}

@@ -79,13 +79,36 @@ Um navio porta-contêineres tem período natural de balanço $T_0 = 14$ s ($\ome
 Motores principais podem variar RPM de 40 a 120. A frequência de excitação é (RPM/60) Hz. Amortecimento
 estrutural é avaliado como $\gamma = 0{,}01$ rad/s (correspondente a $Q \approx 22{,}5$ — bastante agudo).
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** Resposta em regime permanente $A(\omega)$ da seção anterior.
+Velocidade crítica: RPM em que $\omega_{\text{exc}} = \omega_0$. Verificar se a faixa
+40–120 RPM contém a crítica; quantificar a amplificação em ressonância (fator $Q$) e a
+largura da banda crítica em RPM.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.** A excitação de 1ª ordem é $\omega_{\text{exc}} = 2\pi\,\text{RPM}/60$,
+que varre de $4{,}19$ a $12{,}57$ rad/s na faixa de operação. A crítica ocorre em:
 
-**(c) Resultado.** << >>
+$$\text{RPM}_{\text{crit}} = \frac{60\,\omega_0}{2\pi} = \frac{60 \times 0{,}449}{2\pi} \approx 4{,}3\ \text{RPM}$$
 
-**(d) Análise crítica.** << >>
+Amplificação e largura da banda:
+
+$$Q = \frac{\omega_0}{2\gamma} = \frac{0{,}449}{0{,}02} \approx 22{,}4
+\quad\Rightarrow\quad A_{\max} \approx 22\,A_{\text{estática}}$$
+
+$$\Delta\omega \approx 2\gamma = 0{,}02\ \text{rad/s}
+\quad\Rightarrow\quad \Delta\text{RPM} = \frac{60 \times 0{,}02}{2\pi} \approx 0{,}19\ \text{RPM}$$
+
+**(c) Resultado.** Não há velocidade crítica dentro da faixa de operação: a crítica
+($\approx 4{,}3$ RPM) fica abaixo de 40 RPM e só é atravessada nas rampas de partida e
+parada, numa banda de aproximadamente 0,2 RPM de largura.
+
+**(d) Análise crítica.** Com $Q$ alto a banda crítica é estreitíssima: na rampa de
+partida ela é cruzada em fração de segundo e o sistema não acumula amplitude — é a
+justificativa física da prescrição de *transposição rápida* de velocidades críticas,
+sem jamais estabilizar RPM dentro da banda. A análise considera só a excitação de
+1ª ordem; ordens superiores (número de pás × rotação) têm críticas ainda mais baixas.
+O balanço em si é excitado com mais eficiência pelo período de encontro das ondas,
+que pode coincidir com $T_0 = 14$ s — condição tratada por mudança de rumo/velocidade,
+não de RPM apenas.
 :::
 
 ## Impacto da ressonância em sistemas amortecidos {{< ra OE1.19 B2 >}}
