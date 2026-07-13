@@ -70,9 +70,180 @@ $$x(t) = A_1 e^{r_1 t} + A_2 e^{r_2 t}, \quad r_1, r_2 = -\gamma \pm \sqrt{\gamm
 Físico: casco em fluido muito viscoso (não realista para água salgada, mas aparece em alguns
 sistemas de absorção de choque).
 
-<!-- SIMULAÇÃO SUGERIDA: x(t) = A e^(-γt) cos(ωt) com slider de γ mostrando os três
-     regimes (sub/crítico/super) — Plotly (gráfico explorável, tabela Q4).
-     Parâmetros: T = 12 s (roll, faixa SP3), γ variando de 0 até acima do crítico. -->
+## Veja os três regimes
+
+À esquerda, uma massa presa a uma mola oscila imersa em um fluido; o slider
+$\gamma/\omega_0$ controla a viscosidade. À direita, o gráfico $x(t)$ correspondente,
+com a envoltória $\pm A\,e^{-\gamma t}$ quando há oscilação. Atravesse os três regimes
+com o slider e observe o que muda no movimento e na curva.
+
+```{python}
+#| fig-cap: "Oscilador amortecido solto de x₀ = A com v₀ = 0, para três razões γ/ω₀ (T₀ = 4 s): sub-amortecido (0,15) com a envoltória ±A e^(−γt), crítico (1) e sobre-amortecido (2). Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+A, T0 = 1.0, 4.0
+w0 = 2*np.pi/T0
+t = np.linspace(0, 5*T0, 2000)
+
+def x_amortecido(zeta):
+    g = zeta*w0
+    if zeta < 1:
+        wd = np.sqrt(w0**2 - g**2)
+        return A*np.exp(-g*t)*(np.cos(wd*t) + (g/wd)*np.sin(wd*t))
+    if zeta == 1:
+        return A*(1 + g*t)*np.exp(-g*t)
+    s = np.sqrt(g**2 - w0**2)
+    r1, r2 = -g + s, -g - s
+    return A*(r2*np.exp(r1*t) - r1*np.exp(r2*t))/(r2 - r1)
+
+fig, ax = plt.subplots(figsize=(9, 4))
+ax.plot(t, x_amortecido(0.15), color='#1F47C8', lw=1.8,
+        label='sub ($\\gamma/\\omega_0$ = 0,15)')
+ax.plot(t, x_amortecido(1.0), color='#1F8A3A', lw=1.8, label='crítico (1)')
+ax.plot(t, x_amortecido(2.0), color='#C81F1F', lw=1.8, label='sobre (2)')
+g = 0.15*w0
+ax.plot(t,  A*np.exp(-g*t), '--', color='#C85C2E', lw=1.2)
+ax.plot(t, -A*np.exp(-g*t), '--', color='#C85C2E', lw=1.2)
+ax.axhline(0, lw=0.5, color='0.7')
+ax.set_xlabel('t (s)'); ax.set_ylabel('x(t)/A'); ax.legend(fontsize=9)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo — o RA pede classificar
+     regimes, e a diferença entre eles é o comportamento no tempo). p5 de libs/ (offline,
+     Q6). Mesmos parâmetros da versão matplotlib: T0 = 4 s, γ/ω0 de 0 a 2, x0 = A, v0 = 0. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .am-wrap{max-width:1000px;margin:1rem auto;}
+  .am-wrap .am-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .am-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .am-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .am-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .am-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .am-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .am-wrap #amSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .am-wrap #amEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .am-wrap #amEq b{color:#1f47c8;}
+</style>
+<div class="am-wrap">
+  <div class="am-row">
+    <button id="amPlay">⏸ Pausar</button>
+    <button id="amRst">↺ Soltar de novo</button>
+    <div class="sld"><label>γ/ω<sub>0</sub> = <span class="val" id="amZv">0.15</span></label>
+      <input type="range" id="amZ" min="0" max="2" value="0.15" step="0.05"></div>
+    <div class="sld"><label>Período natural T<sub>0</sub> = <span class="val" id="amTv">4</span> s</label>
+      <input type="range" id="amT" min="2" max="12" value="4" step="0.5"></div>
+    <div class="sld"><label>Velocidade anim. = <span class="val" id="amSv">1</span>×</label>
+      <input type="range" id="amS" min="0.25" max="3" value="1" step="0.25"></div>
+  </div>
+  <div id="amSketch"></div>
+  <div id="amEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let t=0, playing=true;
+  const cw=()=>{ const w=(el('amSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+
+  new p5((p)=>{
+    const mola=(x,y0,y1,n,w)=>{ p.push(); p.noFill(); p.stroke('#8a8073'); p.strokeWeight(2);
+      p.beginShape(); p.vertex(x,y0);
+      const L=y1-y0, seg=L/(2*n);
+      for(let i=0;i<2*n;i++) p.vertex(x+((i%2)?-w:w), y0+seg*(i+0.5));
+      p.vertex(x,y1); p.endShape(); p.pop(); };
+
+    // solução analítica com x(0)=A, v(0)=0
+    const xt=(tt,w0,z)=>{
+      const g=z*w0;
+      if(z<0.995){ const wd=Math.sqrt(w0*w0-g*g);
+        return Math.exp(-g*tt)*(Math.cos(wd*tt)+(g/wd)*Math.sin(wd*tt)); }
+      if(z<1.005) return (1+g*tt)*Math.exp(-g*tt);
+      const s=Math.sqrt(g*g-w0*w0), r1=-g+s, r2=-g-s;
+      return (r2*Math.exp(r1*tt)-r1*Math.exp(r2*tt))/(r2-r1); };
+
+    p.setup=()=>{ p.createCanvas(cw(),400).parent('amSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),400); };
+
+    p.draw=()=>{
+      const W=p.width;
+      const z=+el('amZ').value, T0=+el('amT').value, spd=+el('amS').value;
+      const w0=2*Math.PI/T0, g=z*w0, A=52, Tview=5*T0;
+      el('amZv').textContent=z.toFixed(2); el('amTv').textContent=T0; el('amSv').textContent=spd;
+      if(playing) t+=(p.deltaTime/1000)*spd;
+      if(t>Tview) t=0;
+      const x=A*xt(t,w0,z);
+
+      p.background('#faf8f4');
+      // ── esquerda: tanque com fluido + massa-mola ──
+      const cx=90, topo=28, eq=200, tqx=cx-62, tqy=120, tqw=124, tqh=250;
+      const visc=Math.min(1,z/2);
+      p.noStroke(); p.fill(120,160,205,60+120*visc); p.rect(tqx,tqy,tqw,tqh,0,0,8,8);
+      p.stroke('#8a8073'); p.strokeWeight(2); p.noFill();
+      p.line(tqx,tqy,tqx,tqy+tqh); p.line(tqx+tqw,tqy,tqx+tqw,tqy+tqh);
+      p.line(tqx,tqy+tqh,tqx+tqw,tqy+tqh);
+      p.stroke('#bdb4a4'); p.strokeWeight(3); p.line(cx-40,topo,cx+40,topo);
+      mola(cx,topo,eq+x-16,8,10);
+      p.noStroke(); p.fill('#1f47c8'); p.rect(cx-18,eq+x-16,36,32,5);
+      p.stroke('#c9c2b6'); p.strokeWeight(1);
+      p.drawingContext.setLineDash([3,4]); p.line(cx-52,eq,cx+52,eq);
+      p.drawingContext.setLineDash([]);
+      p.noStroke(); p.fill('#7a7367'); p.textSize(11); p.textAlign(p.LEFT,p.CENTER);
+      p.text('x = 0',cx+56,eq);
+      const regime=z<0.995?['SUB-AMORTECIDO','#1f47c8']:(z<1.005?['CRÍTICO','#1f8a3a']:['SOBRE-AMORTECIDO','#c81f1f']);
+      p.textAlign(p.CENTER,p.TOP); p.textSize(12.5); p.fill(regime[1]);
+      p.text(regime[0],cx,376);
+
+      // ── direita: x(t) de 0 a 5·T0 com marcador ──
+      const gx0=205, gx1=W-14, gyc=200, half=130, pps=(gx1-gx0)/Tview;
+      p.stroke('#e7e0d4');
+      for(let k=1;k*T0<=Tview;k++) p.line(gx0+k*T0*pps,gyc-half,gx0+k*T0*pps,gyc+half);
+      p.stroke('#bdb4a4'); p.line(gx0,gyc,gx1,gyc);
+      p.stroke('#d8cfc0'); p.line(gx0,gyc-half,gx0,gyc+half);
+      p.noStroke(); p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      for(let k=1;k*T0<=Tview;k++) p.text((k*T0).toFixed(0)+'s',gx0+k*T0*pps,gyc+half+4);
+      const esc=half*0.9/1;
+      const curva=(fn,col,wt,dash)=>{ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(wt);
+        if(dash) p.drawingContext.setLineDash([6,5]);
+        p.beginShape();
+        for(let gx=gx0;gx<=gx1;gx++) p.vertex(gx,gyc-fn((gx-gx0)/pps)*esc);
+        p.endShape(); p.drawingContext.setLineDash([]); p.pop(); };
+      if(z>0&&z<0.995){
+        curva(tt=>Math.exp(-g*tt),'#c85c2e',1.4,true);
+        curva(tt=>-Math.exp(-g*tt),'#c85c2e',1.4,true); }
+      curva(tt=>xt(tt,w0,z),regime[1],2.2,false);
+      p.noStroke(); p.fill(regime[1]); p.circle(gx0+t*pps,gyc-xt(t,w0,z)*esc,9);
+
+      let info;
+      if(z<0.995){ const wd=Math.sqrt(w0*w0-g*g);
+        info='ω<sub>d</sub> = √(ω₀²−γ²) = '+wd.toFixed(3)+' rad/s &nbsp;|&nbsp; T<sub>d</sub> = '+(2*Math.PI/wd).toFixed(2)+' s (T₀ = '+T0+' s)'; }
+      else if(z<1.005) info='retorno mais rápido possível sem oscilar';
+      else { const s=Math.sqrt(g*g-w0*w0);
+        info='r₁ = '+(-g+s).toFixed(3)+' s⁻¹, r₂ = '+(-g-s).toFixed(3)+' s⁻¹ (dois decaimentos)'; }
+      el('amEq').innerHTML='<b>'+regime[0].toLowerCase()+'</b> &nbsp;|&nbsp; γ = '+g.toFixed(3)+
+        ' rad/s, ω₀ = '+w0.toFixed(3)+' rad/s &nbsp;|&nbsp; '+info;
+    };
+  });
+  el('amPlay').onclick=()=>{ playing=!playing;
+    el('amPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+  el('amRst').onclick=()=>{ t=0; };
+  ['amZ','amT'].forEach(id=>el(id).addEventListener('input',()=>{ t=0; }));
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Com $\gamma/\omega_0 = 0{,}15$, compare $T_d$ com $T_0$ no painel de valores. O
+   desvio é visível no gráfico? A partir de que $\gamma/\omega_0$ ele passa a ser?
+2. Compare $\gamma/\omega_0 = 1$ (crítico) com $2$ (sobre-amortecido): qual retorna ao
+   equilíbrio mais rápido? Por que "mais amortecido" não significa "para mais rápido"?
+3. O balanço de um navio real é sempre sub-amortecido ($\gamma/\omega_0 \sim 0{,}05$ a
+   $0{,}2$). O que seria necessário, fisicamente, para levar um casco ao regime crítico
+   — e por que isso não é viável?
+:::
 
 ::: {.sp}
 Um navio de carga geral, boca 18 m, sofre excitação impulsiva (pancada de onda). A frequência natural

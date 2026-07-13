@@ -71,9 +71,175 @@ metade de sua energia cinética de balanço em alguns minutos a horas, dependend
 estrutural. Se $\gamma = 0{,}01$ rad/s (típico), $\tau_E \approx 50$ s — o casco "esquece" da
 perturbação em menos de 2 minutos.
 
-<!-- SIMULAÇÃO SUGERIDA: barras de energia cinética/potencial/total ao longo do ciclo,
-     com e sem amortecimento — p5.js (movimento + barras animadas, tabela Q4).
-     Parâmetros do exemplo do texto (T na faixa SP3). -->
+## Veja a energia migrar
+
+A massa oscila à esquerda; as barras mostram, no mesmo instante, a energia cinética
+(vermelha), a potencial (azul) e a total (roxa). Com $\gamma = 0$ a barra roxa não se
+mexe — cinética e potencial apenas trocam de lugar. Ligue o amortecimento no slider e
+observe a total escorrer como $E_0\,e^{-2\gamma t}$.
+
+```{python}
+#| fig-cap: "Energias do oscilador (m = 1, T₀ = 4 s, x₀ = A, v₀ = 0). Esq.: sem amortecimento — E_c e E_p oscilam em oposição e a soma é constante. Dir.: com γ/ω₀ = 0,1 — a total decai como E₀e^(−2γt) (tracejada). Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+A, T0 = 1.0, 4.0
+w0 = 2*np.pi/T0
+t = np.linspace(0, 4*T0, 3000)
+
+def energias(zeta):
+    g = zeta*w0
+    if zeta == 0:
+        x, v = A*np.cos(w0*t), -A*w0*np.sin(w0*t)
+    else:
+        wd = np.sqrt(w0**2 - g**2)
+        x = A*np.exp(-g*t)*(np.cos(wd*t) + (g/wd)*np.sin(wd*t))
+        v = -A*(w0**2/wd)*np.exp(-g*t)*np.sin(wd*t)
+    return 0.5*v**2, 0.5*w0**2*x**2
+
+E0 = 0.5*w0**2*A**2
+fig, axs = plt.subplots(1, 2, figsize=(9, 4), sharey=True)
+for ax, z, titulo in [(axs[0], 0.0, 'γ = 0'), (axs[1], 0.1, 'γ/ω₀ = 0,1')]:
+    Ec, Ep = energias(z)
+    ax.plot(t, Ec/E0, color='#C81F1F', lw=1.2, label='$E_c$')
+    ax.plot(t, Ep/E0, color='#1F47C8', lw=1.2, label='$E_p$')
+    ax.plot(t, (Ec + Ep)/E0, color='#66308C', lw=2, label='$E$')
+    if z > 0:
+        ax.plot(t, np.exp(-2*z*w0*t), '--', color='#C85C2E', lw=1.4,
+                label='$e^{-2\\gamma t}$')
+    ax.set_title(titulo, fontsize=10); ax.set_xlabel('t (s)')
+axs[0].set_ylabel('$E/E_0$'); axs[0].legend(fontsize=8, loc='upper right')
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo — a troca E_c ↔ E_p é um
+     processo no tempo, sincronizado com a posição da massa). p5 de libs/ (offline, Q6).
+     Mesmos parâmetros da versão matplotlib: T0 = 4 s, γ/ω0 de 0 a 0,3, x0 = A, v0 = 0. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .en-wrap{max-width:1000px;margin:1rem auto;}
+  .en-wrap .en-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .en-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .en-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .en-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .en-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .en-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .en-wrap #enSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .en-wrap #enEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .en-wrap #enEq b{color:#66308c;}
+</style>
+<div class="en-wrap">
+  <div class="en-row">
+    <button id="enPlay">⏸ Pausar</button>
+    <button id="enRst">↺ Soltar de novo</button>
+    <div class="sld"><label>γ/ω<sub>0</sub> = <span class="val" id="enZv">0</span></label>
+      <input type="range" id="enZ" min="0" max="0.3" value="0" step="0.02"></div>
+    <div class="sld"><label>Velocidade anim. = <span class="val" id="enSv">1</span>×</label>
+      <input type="range" id="enS" min="0.25" max="3" value="1" step="0.25"></div>
+  </div>
+  <div id="enSketch"></div>
+  <div id="enEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let t=0, playing=true;
+  const cw=()=>{ const w=(el('enSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+
+  new p5((p)=>{
+    const mola=(x,y0,y1,n,w)=>{ p.push(); p.noFill(); p.stroke('#8a8073'); p.strokeWeight(2);
+      p.beginShape(); p.vertex(x,y0);
+      const L=y1-y0, seg=L/(2*n);
+      for(let i=0;i<2*n;i++) p.vertex(x+((i%2)?-w:w), y0+seg*(i+0.5));
+      p.vertex(x,y1); p.endShape(); p.pop(); };
+
+    const T0=4, w0=2*Math.PI/T0, A=1;
+    const estado=(tt,z)=>{ // retorna [x, v] com x(0)=A, v(0)=0 (unidades de A)
+      if(z<1e-6) return [Math.cos(w0*tt), -w0*Math.sin(w0*tt)];
+      const g=z*w0, wd=Math.sqrt(w0*w0-g*g), e=Math.exp(-g*tt);
+      return [e*(Math.cos(wd*tt)+(g/wd)*Math.sin(wd*tt)),
+              -(w0*w0/wd)*e*Math.sin(wd*tt)]; };
+
+    p.setup=()=>{ p.createCanvas(cw(),420).parent('enSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),420); };
+
+    p.draw=()=>{
+      const W=p.width;
+      const z=+el('enZ').value, spd=+el('enS').value, Tview=4*T0;
+      el('enZv').textContent=z.toFixed(2); el('enSv').textContent=spd;
+      if(playing) t+=(p.deltaTime/1000)*spd;
+      if(t>Tview) t=0;
+      const [x,v]=estado(t,z);
+      const E0=0.5*w0*w0*A*A, Ec=0.5*v*v/E0, Ep=0.5*w0*w0*x*x/E0, E=Ec+Ep;
+
+      p.background('#faf8f4');
+      // ── oscilador ──
+      const cx=70, topo=30, eq=190, Apx=56;
+      p.stroke('#bdb4a4'); p.strokeWeight(3); p.line(cx-34,topo,cx+34,topo);
+      mola(cx,topo,eq+x*Apx-15,8,9);
+      p.noStroke(); p.fill('#66308c'); p.rect(cx-16,eq+x*Apx-15,32,30,5);
+      p.stroke('#c9c2b6'); p.strokeWeight(1);
+      p.drawingContext.setLineDash([3,4]); p.line(cx-42,eq,cx+42,eq);
+      p.drawingContext.setLineDash([]);
+
+      // ── barras de energia ──
+      const bx=150, bw=34, by1=330, bh=270;
+      const barra=(i,frac,col,rot)=>{ const xx=bx+i*(bw+26);
+        p.stroke('#d8cfc0'); p.strokeWeight(1); p.noFill(); p.rect(xx,by1-bh,bw,bh,4);
+        p.noStroke(); p.fill(col);
+        const h=Math.min(frac,1.02)*bh; p.rect(xx,by1-h,bw,h,3);
+        p.fill('#7a7367'); p.textSize(11.5); p.textAlign(p.CENTER,p.TOP);
+        p.text(rot,xx+bw/2,by1+8); };
+      barra(0,Ec,'#c81f1f','E꜀'); barra(1,Ep,'#1f47c8','Eₚ'); barra(2,E,'#66308c','E');
+
+      // ── gráfico E(t) ──
+      const gx0=340, gx1=W-14, gy1=330, gy0=46, pps=(gx1-gx0)/Tview;
+      p.stroke('#d8cfc0'); p.line(gx0,gy1,gx1,gy1); p.line(gx0,gy0,gx0,gy1);
+      p.noStroke(); p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      for(let k=1;k*T0<=Tview;k++) p.text((k*T0).toFixed(0)+'s',gx0+k*T0*pps,gy1+4);
+      const Y=f=>gy1-Math.min(f,1.05)*(gy1-gy0)/1.05;
+      const curva=(fn,col,wt,dash)=>{ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(wt);
+        if(dash) p.drawingContext.setLineDash([6,5]);
+        p.beginShape();
+        for(let gx=gx0;gx<=gx1;gx++){ const tt=(gx-gx0)/pps; p.vertex(gx,Y(fn(tt))); }
+        p.endShape(); p.drawingContext.setLineDash([]); p.pop(); };
+      const eFns=tt=>{ const [xx,vv]=estado(tt,z);
+        return [0.5*vv*vv/E0, 0.5*w0*w0*xx*xx/E0]; };
+      curva(tt=>eFns(tt)[0],'#c81f1f',1.2,false);
+      curva(tt=>eFns(tt)[1],'#1f47c8',1.2,false);
+      curva(tt=>{const e=eFns(tt); return e[0]+e[1];},'#66308c',2.2,false);
+      if(z>1e-6) curva(tt=>Math.exp(-2*z*w0*tt),'#c85c2e',1.4,true);
+      p.noStroke(); p.fill('#66308c'); p.circle(gx0+t*pps,Y(E),8);
+      p.textSize(11); p.textAlign(p.LEFT,p.CENTER);
+      p.fill('#c81f1f'); p.text('E꜀(t)',gx0+8,gy0+8);
+      p.fill('#1f47c8'); p.text('Eₚ(t)',gx0+8,gy0+24);
+      p.fill('#66308c'); p.text('E(t) total',gx0+8,gy0+40);
+
+      el('enEq').innerHTML='<b>E/E₀ = '+E.toFixed(2)+'</b> &nbsp;|&nbsp; '+
+        'E꜀/E₀ = '+Ec.toFixed(2)+' &nbsp;|&nbsp; Eₚ/E₀ = '+Ep.toFixed(2)+
+        (z>1e-6?' &nbsp;|&nbsp; τ_E = 1/2γ = '+(1/(2*z*w0)).toFixed(1)+' s':' &nbsp;|&nbsp; sem amortecimento: E constante');
+    };
+  });
+  el('enPlay').onclick=()=>{ playing=!playing;
+    el('enPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+  el('enRst').onclick=()=>{ t=0; };
+  el('enZ').addEventListener('input',()=>{ t=0; });
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Com $\gamma = 0$, em que posição da massa a barra vermelha ($E_c$) é máxima? E a
+   azul ($E_p$)? Quantas vezes por período cada barra zera?
+2. As curvas $E_c(t)$ e $E_p(t)$ oscilam duas vezes mais rápido que a massa. Mostre por
+   quê, a partir de $\sin^2$ e $\cos^2$.
+3. Ligue $\gamma/\omega_0 = 0{,}1$: a total decai sobre a tracejada $e^{-2\gamma t}$.
+   Se a amplitude cai à metade em um dado tempo, quanto caiu a energia? Verifique nas
+   barras.
+:::
 
 ::: {.sp}
 Um navio ro-ro (roro) de 12 mil toneladas é excitado por pancada de onda, adquirindo ângulo de

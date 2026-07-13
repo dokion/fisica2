@@ -70,9 +70,164 @@ Na prática naval:
 A **largura de banda** da ressonância (intervalo de $\omega$ onde $A > A_{\max}/\sqrt{2}$) é
 aproximadamente $\Delta\omega \approx 2\gamma$, ou em frequência: $\Delta f \approx \gamma/\pi$.
 
-<!-- SIMULAÇÃO SUGERIDA: família de curvas A(ω) para vários amortecimentos b,
-     mostrando o achatamento do pico — Plotly (comparar curvas, tabela Q4).
-     Ligar à transposição rápida de velocidades críticas de máquinas. -->
+## Veja o amortecimento domar o pico
+
+O mesmo sistema do tópico 1.5, agora com um amortecedor em paralelo com a mola. Dois
+sliders: $\gamma/\omega_0$ (o amortecimento) e $\omega/\omega_0$ (o ponto de operação).
+À direita, a família de curvas $A(\omega)$ — a curva do amortecimento atual em destaque
+sobre as demais. Repare que agora o pico é finito, ocorre um pouco abaixo de
+$\omega_0$, e a fase varia continuamente (não salta mais de $0$ para $\pi$).
+
+```{python}
+#| fig-cap: "Resposta do oscilador forçado amortecido para vários γ/ω₀: a amplitude (esq.) tem pico finito ≈ Q·A_est que se achata com o amortecimento; a fase (dir.) passa por π/2 exatamente em ω₀. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+r = np.linspace(0.2, 2.5, 1200)
+zetas = [0.05, 0.1, 0.2, 0.5]
+cores = ['#C81F1F', '#C85C2E', '#1F8A3A', '#1F47C8']
+
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9, 4))
+for z, c in zip(zetas, cores):
+    R = 1/np.sqrt((1 - r**2)**2 + (2*z*r)**2)
+    fase = np.arctan2(2*z*r, 1 - r**2)
+    ax1.plot(r, R, color=c, lw=1.8, label=f'γ/ω₀ = {z}')
+    ax2.plot(r, np.degrees(fase), color=c, lw=1.8)
+ax1.axvline(1, ls=':', color='0.6', lw=1)
+ax1.set_xlabel('$\\omega/\\omega_0$'); ax1.set_ylabel('$A/A_{est}$')
+ax1.set_ylim(0, 11); ax1.legend(fontsize=8)
+ax2.axvline(1, ls=':', color='0.6', lw=1); ax2.axhline(90, ls=':', color='0.6', lw=1)
+ax2.set_xlabel('$\\omega/\\omega_0$'); ax2.set_ylabel('fase φ (graus)')
+ax2.set_yticks([0, 45, 90, 135, 180])
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo — o atraso de fase entre
+     suporte e massa é visível no movimento). p5 de libs/ (offline, Q6). Mesmos
+     parâmetros da versão matplotlib: γ/ω0 de 0,05 a 0,8; ω/ω0 de 0,2 a 2,5; T0 = 4 s. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .fa-wrap{max-width:1000px;margin:1rem auto;}
+  .fa-wrap .fa-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .fa-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .fa-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .fa-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .fa-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .fa-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .fa-wrap #faSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .fa-wrap #faEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .fa-wrap #faEq b{color:#1f47c8;}
+</style>
+<div class="fa-wrap">
+  <div class="fa-row">
+    <button id="faPlay">⏸ Pausar</button>
+    <div class="sld"><label>γ/ω<sub>0</sub> = <span class="val" id="faZv">0.1</span></label>
+      <input type="range" id="faZ" min="0.05" max="0.8" value="0.1" step="0.05"></div>
+    <div class="sld"><label>ω/ω<sub>0</sub> = <span class="val" id="faRv">0.5</span></label>
+      <input type="range" id="faR" min="0.2" max="2.5" value="0.5" step="0.05"></div>
+    <div class="sld"><label>Velocidade anim. = <span class="val" id="faSv">1</span>×</label>
+      <input type="range" id="faS" min="0.25" max="3" value="1" step="0.25"></div>
+  </div>
+  <div id="faSketch"></div>
+  <div id="faEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let t=0, playing=true;
+  const cw=()=>{ const w=(el('faSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+
+  new p5((p)=>{
+    const mola=(x,y0,y1,n,w)=>{ p.push(); p.noFill(); p.stroke('#8a8073'); p.strokeWeight(2);
+      p.beginShape(); p.vertex(x,y0);
+      const L=y1-y0, seg=L/(2*n);
+      for(let i=0;i<2*n;i++) p.vertex(x+((i%2)?-w:w), y0+seg*(i+0.5));
+      p.vertex(x,y1); p.endShape(); p.pop(); };
+    const amortecedor=(x,y0,y1)=>{ // cilindro fixo em y0, haste até y1
+      const cy=(y0+y1)/2;
+      p.push(); p.stroke('#8a8073'); p.strokeWeight(2); p.noFill();
+      p.line(x,y0,x,cy-14); p.rect(x-8,cy-14,16,28);
+      p.line(x,y1,x,cy+6); p.line(x-6,cy+6,x+6,cy+6); p.pop(); };
+
+    p.setup=()=>{ p.createCanvas(cw(),420).parent('faSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),420); };
+
+    p.draw=()=>{
+      const W=p.width;
+      const z=+el('faZ').value, r=+el('faR').value, spd=+el('faS').value;
+      const T0=4, w0=2*Math.PI/T0, w=r*w0, d=13;
+      el('faZv').textContent=z.toFixed(2); el('faRv').textContent=r.toFixed(2);
+      el('faSv').textContent=spd;
+      if(playing) t+=(p.deltaTime/1000)*spd;
+
+      const Rf=1/Math.sqrt((1-r*r)**2+(2*z*r)**2);
+      const fase=Math.atan2(2*z*r,1-r*r);
+      const Q=1/(2*z), RMAX=11;
+      const ys=d*Math.cos(w*t), xm=Math.min(Rf,RMAX)*d*Math.cos(w*t-fase);
+
+      p.background('#faf8f4');
+      // ── esquerda: suporte + mola‖amortecedor + massa ──
+      const cx=95, ytopo=64, eq=250;
+      p.stroke('#9a9184'); p.strokeWeight(1);
+      p.line(cx-52,ytopo-d-6,cx-52,ytopo+d+6); p.line(cx+52,ytopo-d-6,cx+52,ytopo+d+6);
+      p.stroke('#bdb4a4'); p.strokeWeight(5); p.line(cx-50,ytopo+ys,cx+50,ytopo+ys);
+      mola(cx-22,ytopo+ys,eq+xm-16,9,8);
+      amortecedor(cx+22,ytopo+ys,eq+xm-16);
+      p.noStroke(); p.fill('#1f47c8'); p.rect(cx-38,eq+xm-16,76,30,5);
+      p.stroke('#c9c2b6'); p.strokeWeight(1);
+      p.drawingContext.setLineDash([3,4]); p.line(cx-60,eq,cx+60,eq);
+      p.drawingContext.setLineDash([]);
+      p.noStroke(); p.fill('#7a7367'); p.textSize(11); p.textAlign(p.CENTER,p.TOP);
+      p.text('mola + amortecedor',cx,14);
+
+      // ── direita: família de curvas R(ω) ──
+      const gx0=225, gx1=W-14, gy1=376, gy0=40;
+      const rmin=0.2, rmax=2.5, X=rr=>gx0+(rr-rmin)/(rmax-rmin)*(gx1-gx0),
+            Y=RR=>gy1-Math.min(RR,RMAX)/RMAX*(gy1-gy0);
+      p.stroke('#d8cfc0'); p.line(gx0,gy1,gx1,gy1); p.line(gx0,gy0,gx0,gy1);
+      p.noStroke(); p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      for(const rr of [0.5,1,1.5,2,2.5]) p.text(rr,X(rr),gy1+4);
+      p.textAlign(p.RIGHT,p.CENTER);
+      for(const k of [1,3,5,7,9,11]) p.text(k,gx0-4,Y(k));
+      p.textAlign(p.CENTER,p.TOP); p.text('ω/ω₀',(gx0+gx1)/2,gy1+18);
+      p.stroke('#c9c2b6'); p.drawingContext.setLineDash([3,4]);
+      p.line(X(1),gy0,X(1),gy1); p.line(gx0,Y(1),gx1,Y(1));
+      p.drawingContext.setLineDash([]);
+      const curvaR=(zz,col,wt)=>{ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(wt);
+        p.beginShape();
+        for(let rr=rmin;rr<=rmax;rr+=0.005)
+          p.vertex(X(rr),Y(1/Math.sqrt((1-rr*rr)**2+(2*zz*rr)**2)));
+        p.endShape(); p.pop(); };
+      for(const zz of [0.05,0.1,0.2,0.5]) if(Math.abs(zz-z)>1e-6) curvaR(zz,'#d8cfc0',1.2);
+      curvaR(z,'#1f47c8',2.4);
+      p.noStroke(); p.fill('#c85c2e'); p.circle(X(r),Y(Rf),10);
+
+      el('faEq').innerHTML='<b>A/A<sub>est</sub> = '+Rf.toFixed(2)+'</b> &nbsp;|&nbsp; '+
+        'fase φ = '+(fase*180/Math.PI).toFixed(0)+'° &nbsp;|&nbsp; '+
+        'Q = ω₀/2γ = '+Q.toFixed(1)+' &nbsp;|&nbsp; pico em ω/ω₀ = '+
+        (z<Math.SQRT1_2?Math.sqrt(1-2*z*z).toFixed(2):'—')+
+        ' &nbsp;|&nbsp; largura Δω ≈ 2γ = '+(2*z*w0).toFixed(2)+' rad/s';
+    };
+  });
+  el('faPlay').onclick=()=>{ playing=!playing;
+    el('faPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Com $\gamma/\omega_0 = 0{,}05$ ($Q = 10$), leve $\omega$ até o pico. Agora aumente o
+   amortecimento até $0{,}5$. Quanto o pico caiu? Compare com a previsão
+   $A_{\max} \approx Q\,A_{\text{est}}$.
+2. Ponha $\omega/\omega_0 = 1$ e observe a fase: exatamente $90°$, qualquer que seja o
+   amortecimento. O que isso significa sobre o instante em que a força empurra a massa?
+3. A curva destacada tem largura $\Delta\omega \approx 2\gamma$. Use-a para explicar a
+   regra operacional de "transposição rápida": por que atravessar a banda crítica
+   depressa impede a amplitude de crescer?
+:::
 
 ::: {.sp}
 Um navio porta-contêineres tem período natural de balanço $T_0 = 14$ s ($\omega_0 = 2\pi/14 \approx 0{,}449$ rad/s).

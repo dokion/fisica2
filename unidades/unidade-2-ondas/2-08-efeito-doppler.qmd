@@ -141,6 +141,140 @@ rasas o log pode perder o retorno da camada profunda e mudar sozinho de referên
 - **Assumir Doppler é observação instantânea:** na realidade, log Doppler integra sobre um volume de água (células de profundidade). Gradientes de corrente podem produzir resultados inesperados se não entendidos.
 :::
 
-<!-- SIMULAÇÃO SUGERIDA: Mostrar movimento de navio (quadrado representando quilha) com fundo abaixo. Controle deslizante: velocidade do navio (0–10 nós, realista). Entrada: frequência de transmissão (200–500 kHz), velocidade do som (1400–1540 m/s ajustável por "temperatura"). Saída em tempo real: frequência recebida f₂, desvio Doppler Δf, velocidade calculada. Mostrar também "corrente" como um deslizador (−1 a +1 nó) que afeta a velocidade sobre o fundo. Gráfico: desvio Doppler vs velocidade do navio (linear). Lib p5.js (animação do navio) + Plotly (gráfico Δf vs v). -->
+## Veja as frentes de onda se comprimirem
+
+A fonte (círculo laranja) emite cristas em intervalos iguais enquanto se move. À frente
+dela as cristas ficam **comprimidas** (comprimento de onda menor → frequência maior);
+atrás, **esticadas**. O slider de cima controla a razão $v_{\text{fonte}}/v_{\text{som}}$
+— exagerada para o efeito ser visível. O painel de baixo aplica as fórmulas ao caso
+naval real: log Doppler de 400 kHz, som a 1500 m/s, navio na velocidade que você
+escolher.
+
+```{python}
+#| fig-cap: "Frentes de onda de uma fonte que se move para a direita com v_fonte = 0,5·v_som. Cada círculo foi emitido quando a fonte estava no ponto marcado: à frente as cristas se comprimem (f' > f), atrás se afastam (f' < f). Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+beta, c, Te, N = 0.5, 1.0, 0.55, 8
+t_agora = N*Te
+
+fig, ax = plt.subplots(figsize=(9, 4.4))
+for i in range(N):
+    t_e = i*Te
+    xc = beta*c*t_e
+    R = c*(t_agora - t_e)
+    ax.add_patch(plt.Circle((xc, 0), R, fill=False, color='#1F47C8',
+                            alpha=0.25 + 0.7*i/N, lw=1.6))
+    ax.plot(xc, 0, '.', ms=4, color='0.7')
+x_fonte = beta*c*t_agora
+ax.plot(x_fonte, 0, 'o', ms=11, color='#C85C2E')
+ax.annotate('v_fonte', xy=(x_fonte + 0.9, 0), xytext=(x_fonte + 0.15, 0.9),
+            fontsize=9, color='#C85C2E')
+ax.annotate('', xy=(x_fonte + 0.85, 0), xytext=(x_fonte, 0),
+            arrowprops=dict(arrowstyle='-|>', color='#C85C2E', lw=2))
+ax.text(x_fonte + 2.4, -3.6, 'à frente:\nλ comprimido', fontsize=9, ha='center')
+ax.text(x_fonte - 5.4, -3.6, 'atrás:\nλ esticado', fontsize=9, ha='center')
+ax.set_xlim(-5.5, 8.5); ax.set_ylim(-4.6, 4.6)
+ax.set_aspect('equal'); ax.axis('off')
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo — a compressão das
+     frentes é um processo geométrico no tempo). p5 de libs/ (offline, Q6). Animação
+     com razão v/c exagerada (didática); o painel numérico usa os valores navais reais
+     (f0 = 400 kHz, c = 1500 m/s), mesmos do exemplo resolvido do texto. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .dp-wrap{max-width:1000px;margin:1rem auto;}
+  .dp-wrap .dp-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .dp-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .dp-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .dp-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .dp-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .dp-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .dp-wrap #dpSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .dp-wrap #dpEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .dp-wrap #dpEq b{color:#1f47c8;}
+</style>
+<div class="dp-wrap">
+  <div class="dp-row">
+    <button id="dpPlay">⏸ Pausar</button>
+    <div class="sld"><label>Animação: v<sub>fonte</sub>/v<sub>som</sub> = <span class="val" id="dpBv">0.5</span></label>
+      <input type="range" id="dpB" min="0" max="0.9" value="0.5" step="0.05"></div>
+    <div class="sld"><label>Caso real: navio a <span class="val" id="dpVv">10</span> nós</label>
+      <input type="range" id="dpV" min="0" max="25" value="10" step="1"></div>
+    <div class="sld"><label>Velocidade anim. = <span class="val" id="dpSv">1</span>×</label>
+      <input type="range" id="dpS" min="0.25" max="3" value="1" step="0.25"></div>
+  </div>
+  <div id="dpSketch"></div>
+  <div id="dpEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let t=0, playing=true, fontes=[], tEmit=0;
+  const cw=()=>{ const w=(el('dpSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),380).parent('dpSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),380); fontes=[]; t=0; tEmit=0; };
+
+    p.draw=()=>{
+      const W=p.width;
+      const beta=+el('dpB').value, vkn=+el('dpV').value, spd=+el('dpS').value;
+      el('dpBv').textContent=beta.toFixed(2); el('dpVv').textContent=vkn;
+      el('dpSv').textContent=spd;
+      const c=95, Te=0.55, cy=190;                  // px/s, s
+      if(playing) t+=(p.deltaTime/1000)*spd;
+      const x0=70, xf=x0+beta*c*t;
+      if(xf>W-60){ t=0; tEmit=0; fontes=[]; }
+      if(t>=tEmit){ fontes.push({x:x0+beta*c*t,t0:t}); tEmit+=Te; }
+      fontes=fontes.filter(fr=>c*(t-fr.t0)<W*1.2);
+
+      p.background('#faf8f4');
+      p.noFill();
+      for(const fr of fontes){ const R=c*(t-fr.t0);
+        const a=Math.max(30,200-R*0.55);
+        p.stroke(31,71,200,a); p.strokeWeight(1.8); p.circle(fr.x,cy,2*R);
+        p.noStroke(); p.fill('#c9c2b6'); p.circle(fr.x,cy,3); p.noFill(); }
+      // fonte
+      p.noStroke(); p.fill('#c85c2e'); p.circle(xf,cy,15);
+      p.stroke('#c85c2e'); p.strokeWeight(2); p.line(xf+10,cy,xf+34,cy);
+      p.noStroke(); p.fill('#c85c2e'); p.triangle(xf+40,cy,xf+30,cy-5,xf+30,cy+5);
+      p.fill('#7a7367'); p.textSize(11.5); p.textAlign(p.CENTER,p.TOP);
+      p.text('à frente: cristas comprimidas → f′ > f',Math.min(xf+140,W-120),330);
+      p.textAlign(p.CENTER,p.TOP);
+      p.text('atrás: cristas esticadas → f′ < f',Math.max(xf-160,120),330);
+
+      const fFrente=beta<1?1/(1-beta):Infinity, fTras=1/(1+beta);
+      // caso naval real
+      const v=vkn*0.5144, f0=400e3, cs=1500, df=2*f0*v/cs;
+      el('dpEq').innerHTML='animação: f′/f à frente = 1/(1−β) = <b>'+
+        (isFinite(fFrente)?fFrente.toFixed(2):'∞')+'</b>, atrás = 1/(1+β) = '+fTras.toFixed(2)+
+        ' &nbsp;|&nbsp; <b>log Doppler real:</b> '+vkn+' nós = '+v.toFixed(2)+
+        ' m/s → Δf = 2f₀v/c = <b>'+df.toFixed(0)+' Hz</b> (f₀ = 400 kHz, ida e volta)';
+    };
+  });
+  el('dpPlay').onclick=()=>{ playing=!playing;
+    el('dpPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+  el('dpB').addEventListener('input',()=>{ t=0; tEmit=0; fontes=[]; });
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Com $\beta = 0$, as cristas são círculos concêntricos. Aumente $\beta$ devagar: quem
+   se move são as *cristas já emitidas* ou os *centros de emissão*? Por que isso basta
+   para mudar a frequência recebida?
+2. Um observador parado à frente da fonte recebe as cristas comprimidas. Meça na tela
+   (pause!) a razão entre os espaçamentos atrás/à frente para $\beta = 0{,}5$ e compare
+   com $(1+\beta)/(1-\beta) = 3$.
+3. No painel real: a 10 nós o desvio é $\Delta f \approx 2{,}7$ kHz em 400 kHz — uma
+   parte em 146. Por que o log mede $\Delta f$ (e não $f_2$ diretamente) e por que o
+   fator 2 aparece na fórmula?
+:::
 
 **Conexão com o próximo tópico:** estudamos até agora ondas com velocidades pequenas comparadas à velocidade do som ($v_{\text{obj}} \ll v_{\text{som}}$), onde o desvio Doppler é linear. Mas o que acontece quando objetos se movem a velocidades comparáveis ou superiores à velocidade do som? Surgem **ondas de choque** e fenômenos exóticos de propagação — tema do tópico final 2.9.

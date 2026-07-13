@@ -69,6 +69,168 @@ Na prática naval, se dois motores oscilam a $f_1 = 20{,}0$ Hz e $f_2 = 19{,}5$ 
 a vibração do casco varia com $f_{\text{bat}} = 0{,}5$ Hz, um batimento bem perceptível
 a cada 2 segundos — sinal de desalinhamento que exige ajuste.
 
+## Veja o batimento acontecer
+
+À esquerda, duas massas em molas oscilam com frequências próximas ($f_1$ e $f_2$); o
+ponto roxo mostra a superposição $x_1 + x_2$ — é ele que "bate". À direita, o gráfico
+da superposição com a envoltória $\pm 2A\cos(\pi\,\Delta f\,t)$ tracejada. Observe as
+massas entrando e saindo de fase: quando estão em fase o ponto roxo tem amplitude
+máxima; em oposição, ele quase para.
+
+```{python}
+#| fig-cap: "Batimento entre dois MHS de f₁ = 1,0 Hz e f₂ = 1,1 Hz e amplitudes iguais. Acima: as duas componentes (janela curta). Abaixo: a superposição x₁+x₂ com a envoltória ±2A cos(π Δf t); a amplitude pulsa com f_bat = 0,1 Hz. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+A, f1, f2 = 1.0, 1.0, 1.1
+df = f2 - f1
+
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(9, 5.2),
+                               gridspec_kw={'height_ratios': [1, 1.4]})
+tz = np.linspace(0, 6, 1200)
+ax1.plot(tz, A*np.cos(2*np.pi*f1*tz), color='#C81F1F', lw=1.4, label='$x_1$: 1,0 Hz')
+ax1.plot(tz, A*np.cos(2*np.pi*f2*tz), color='#1F47C8', lw=1.4, label='$x_2$: 1,1 Hz')
+ax1.set_xlabel('t (s)'); ax1.set_ylabel('x'); ax1.legend(loc='upper right', fontsize=8)
+
+t = np.linspace(0, 24, 6000)
+ax2.plot(t, A*np.cos(2*np.pi*f1*t) + A*np.cos(2*np.pi*f2*t), color='#66308C', lw=1.0)
+ax2.plot(t,  2*A*np.cos(np.pi*df*t), '--', color='#C85C2E', lw=1.6)
+ax2.plot(t, -2*A*np.cos(np.pi*df*t), '--', color='#C85C2E', lw=1.6)
+ax2.set_xlabel('t (s)'); ax2.set_ylabel('$x_1+x_2$')
+ax2.set_title(f'$f_{{bat}}$ = {abs(df):.1f} Hz  →  $T_{{bat}}$ = {1/abs(df):.0f} s',
+              fontsize=10)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo — o RA pede explicar o
+     fenômeno, e o fenômeno é o entra-e-sai de fase dos dois osciladores). p5 de libs/
+     (offline, Q6). Mesmos parâmetros da versão matplotlib: f1 = 1,0 Hz, f2 = 1,1 Hz
+     (ajustáveis 0,5–1,5 Hz), amplitudes iguais. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .sb-wrap{max-width:1000px;margin:1rem auto;}
+  .sb-wrap .sb-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .sb-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .sb-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .sb-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .sb-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .sb-wrap .chk{display:flex;align-items:center;gap:5px;font-size:13px;white-space:nowrap;}
+  .sb-wrap .chk input{accent-color:#c85c2e;width:15px;height:15px;}
+  .sb-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .sb-wrap #sbSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .sb-wrap #sbEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .sb-wrap #sbEq b{color:#66308c;}
+</style>
+<div class="sb-wrap">
+  <div class="sb-row">
+    <button id="sbPlay">⏸ Pausar</button>
+    <div class="sld"><label>f<sub>1</sub> = <span class="val" id="sbF1v">1.0</span> Hz</label>
+      <input type="range" id="sbF1" min="0.5" max="1.5" value="1.0" step="0.05"></div>
+    <div class="sld"><label>f<sub>2</sub> = <span class="val" id="sbF2v">1.1</span> Hz</label>
+      <input type="range" id="sbF2" min="0.5" max="1.5" value="1.1" step="0.05"></div>
+    <div class="sld"><label>Velocidade anim. = <span class="val" id="sbSv">1</span>×</label>
+      <input type="range" id="sbS" min="0.25" max="3" value="1" step="0.25"></div>
+  </div>
+  <div class="sb-row">
+    <span class="chk"><input type="checkbox" id="sbComp">Mostrar x₁ e x₂ no gráfico</span>
+    <span class="chk"><input type="checkbox" id="sbEnv" checked>Envoltória</span>
+  </div>
+  <div id="sbSketch"></div>
+  <div id="sbEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let t=0, playing=true;
+  const cw=()=>{ const w=(el('sbSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+
+  new p5((p)=>{
+    const mola=(x,y0,y1,n,w)=>{ p.push(); p.noFill(); p.stroke('#8a8073'); p.strokeWeight(2);
+      p.beginShape(); p.vertex(x,y0);
+      const L=y1-y0, seg=L/(2*n);
+      for(let i=0;i<2*n;i++) p.vertex(x+((i%2)?-w:w), y0+seg*(i+0.5));
+      p.vertex(x,y1); p.endShape(); p.pop(); };
+
+    p.setup=()=>{ p.createCanvas(cw(),400).parent('sbSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),400); };
+
+    p.draw=()=>{
+      const W=p.width, narrow=W<640;
+      const f1=+el('sbF1').value, f2=+el('sbF2').value, spd=+el('sbS').value,
+            df=f2-f1, A=44;
+      el('sbF1v').textContent=f1.toFixed(2); el('sbF2v').textContent=f2.toFixed(2);
+      el('sbSv').textContent=spd;
+      if(playing) t+=(p.deltaTime/1000)*spd;
+      const x1=A*Math.cos(2*Math.PI*f1*t), x2=A*Math.cos(2*Math.PI*f2*t);
+
+      p.background('#faf8f4');
+      // ── esquerda: dois osciladores + ponto da superposição ──
+      const cxs=narrow?[40,105,180]:[60,150,255], topo=34, eq=150;
+      p.stroke('#bdb4a4'); p.strokeWeight(3);
+      p.line(cxs[0]-28,topo,cxs[1]+28,topo);
+      mola(cxs[0],topo,eq+x1-14,8,9); mola(cxs[1],topo,eq+x2-14,8,9);
+      p.noStroke();
+      p.fill('#c81f1f'); p.rect(cxs[0]-14,eq+x1-14,28,28,5);
+      p.fill('#1f47c8'); p.rect(cxs[1]-14,eq+x2-14,28,28,5);
+      // trilho da superposição (curso ±2A)
+      p.stroke('#d8cfc0'); p.strokeWeight(1); p.line(cxs[2],eq-2*A-8,cxs[2],eq+2*A+8);
+      p.stroke('#bdb4a4'); p.line(cxs[2]-7,eq,cxs[2]+7,eq);
+      p.noStroke(); p.fill('#66308c'); p.circle(cxs[2],eq+x1+x2,17);
+      p.textSize(12); p.textAlign(p.CENTER,p.TOP); p.fill('#c81f1f');
+      p.text('x₁',cxs[0],eq+2*A+16);
+      p.fill('#1f47c8'); p.text('x₂',cxs[1],eq+2*A+16);
+      p.fill('#66308c'); p.text('x₁+x₂',cxs[2],eq+2*A+16);
+
+      // ── direita: gráfico da superposição com envoltória ──
+      const gx0=cxs[2]+55, gx1=W-14, gyc=195, half=118, win=24, pps=(gx1-gx0)/win;
+      p.stroke('#e7e0d4');
+      for(let k=0;k*4<=win;k++){ const gx=gx1-k*4*pps; if(gx>=gx0) p.line(gx,gyc-half,gx,gyc+half); }
+      p.stroke('#bdb4a4'); p.line(gx0,gyc,gx1,gyc);
+      p.stroke('#d8cfc0'); p.line(gx0,gyc-half,gx0,gyc+half);
+      p.noStroke(); p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      for(let k=0;k*4<=win;k++){ const tt=t-k*4, gx=gx1-k*4*pps;
+        if(gx>=gx0-1&&tt>=0) p.text(tt.toFixed(0)+'s',gx,gyc+half+4); }
+      const esc=half/(2.2*A)*A/1;   // 2A ocupa ~90% da meia-altura
+      const fx1=tt=>A*Math.cos(2*Math.PI*f1*tt), fx2=tt=>A*Math.cos(2*Math.PI*f2*tt);
+      const curva=(fn,col,wt,dash)=>{ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(wt);
+        if(dash) p.drawingContext.setLineDash([6,5]);
+        p.beginShape();
+        for(let gx=gx0;gx<=gx1;gx++){ const tt=t-(gx1-gx)/pps; if(tt<0) continue;
+          p.vertex(gx,gyc-fn(tt)/A*esc); }
+        p.endShape(); p.drawingContext.setLineDash([]); p.pop(); };
+      if(el('sbComp').checked){ curva(fx1,'#e5b8b8',1.2,false); curva(fx2,'#b8c2e5',1.2,false); }
+      if(el('sbEnv').checked && Math.abs(df)>1e-6){
+        curva(tt=>2*A*Math.cos(Math.PI*df*tt),'#c85c2e',1.6,true);
+        curva(tt=>-2*A*Math.cos(Math.PI*df*tt),'#c85c2e',1.6,true); }
+      curva(tt=>fx1(tt)+fx2(tt),'#66308c',2.2,false);
+      p.noStroke(); p.fill('#66308c'); p.circle(gx1,gyc-(x1+x2)/A*esc,8);
+
+      const fbat=Math.abs(df);
+      el('sbEq').innerHTML='x₁+x₂ = 2A cos(π Δf t)·cos(2π f<sub>méd</sub> t) &nbsp;|&nbsp; '+
+        'Δf = '+df.toFixed(2)+' Hz &nbsp;|&nbsp; <b>f<sub>bat</sub> = '+fbat.toFixed(2)+' Hz</b>'+
+        ' &nbsp;|&nbsp; T<sub>bat</sub> = '+(fbat>1e-6?(1/fbat).toFixed(1)+' s':'—')+
+        ' &nbsp;|&nbsp; f<sub>méd</sub> = '+((f1+f2)/2).toFixed(2)+' Hz';
+    };
+  });
+  el('sbPlay').onclick=()=>{ playing=!playing;
+    el('sbPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. As duas massas oscilam com amplitude constante o tempo todo. Por que, então, o ponto
+   roxo $x_1 + x_2$ quase para periodicamente? Onde está a "amplitude que some"?
+2. Meça na tela o intervalo entre duas paradas consecutivas do ponto roxo e compare com
+   $T_{\text{bat}} = 1/|f_1 - f_2|$.
+3. Aproxime $f_2$ de $f_1$ até igualar. O que acontece com $T_{\text{bat}}$? Relacione
+   com o procedimento de sincronizar dois geradores a bordo: o que o operador ouve/sente
+   quando a sincronização está quase perfeita?
+:::
+
 ::: {.sp}
 Um navio porta-contêineres opera com dois geradores diesel auxiliares de frequência nominal
 50 Hz. Devido a desgaste de componentes, o gerador 1 oscila a $f_1 = 50{,}2$ Hz e o gerador 2 a

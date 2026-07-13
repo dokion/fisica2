@@ -147,11 +147,177 @@ que excitações operacionais (motor, hélice, ondas) casem com elas.
   mensuráveis em frequência e permitir transferência de energia lenta entre osciladores.
 :::
 
-<!-- SIMULAÇÃO SUGERIDA: Visualizar dois osciladores acoplados com amplitude variando ao longo do tempo.
-     Mostrar modo em fase (massas se movem juntas) e modo em oposição (massas se movem invertidas).
-     Lib: p5.js (animação em tempo real, dois retângulos com mola entre eles) + matplotlib estático
-     (gráfico de posição vs. tempo para cada massa em cada modo, 2 x 2 grid).
-     Parâmetros: m1 = m2 = 1 kg, k1 = k2 = 10 N/m, kc = 5 N/m (ajustável 0–20). -->
+## Veja os modos — e a energia trocando de dono
+
+Duas massas iguais, três molas ($k$, $k_c$, $k$). Os botões lançam o sistema em cada
+condição inicial notável: **Modo 1** (juntas, em fase), **Modo 2** (em oposição) e
+**Transferência** (só a massa 1 deslocada) — este último é o caso mais instrutivo: a
+energia migra de uma massa para a outra e volta, num batimento mecânico com período
+$T_{\text{transf}} = 2\pi/(\Omega_2 - \Omega_1)$. O slider $k_c/k$ controla a força do
+acoplamento.
+
+```{python}
+#| fig-cap: "Osciladores acoplados idênticos (m = 1, T₁ = 4 s, kc/k = 0,3). Acima: nos modos normais, cada massa oscila com frequência única (Ω₁ em fase; Ω₂ > Ω₁ em oposição). Abaixo: partindo com só a massa 1 deslocada, a energia é transferida integralmente entre as massas — as envoltórias são batimentos entre Ω₁ e Ω₂. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+T1, razao_kc = 4.0, 0.3
+O1 = 2*np.pi/T1
+O2 = O1*np.sqrt(1 + 2*razao_kc)
+t = np.linspace(0, 30, 4000)
+
+def solucao(x10, x20):
+    q1 = (x10 + x20)*np.cos(O1*t)
+    q2 = (x10 - x20)*np.cos(O2*t)
+    return (q1 + q2)/2, (q1 - q2)/2
+
+fig, axs = plt.subplots(2, 2, figsize=(9, 5.4), sharex=True)
+for ax, (ics, titulo) in zip(axs[0], [((1, 1), 'Modo 1 — em fase (Ω₁)'),
+                                      ((1, -1), 'Modo 2 — oposição (Ω₂)')]):
+    x1, x2 = solucao(*ics)
+    ax.plot(t, x1, color='#1F47C8', lw=1.3, label='$x_1$')
+    ax.plot(t, x2, color='#C81F1F', lw=1.3, ls='--', label='$x_2$')
+    ax.set_title(titulo, fontsize=10); ax.legend(fontsize=8, loc='upper right')
+x1, x2 = solucao(1, 0)
+for ax, x, rot in zip(axs[1], [x1, x2], ['$x_1$ (transferência)', '$x_2$ (transferência)']):
+    ax.plot(t, x, color='#66308C', lw=1.1)
+    ax.set_title(rot, fontsize=10); ax.set_xlabel('t (s)')
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo — modo normal é um padrão
+     de movimento; a transferência de energia é um processo no tempo). p5 de libs/
+     (offline, Q6). Mesmos parâmetros da versão matplotlib: m iguais, T1 = 4 s,
+     kc/k de 0,05 a 2 (padrão 0,3). -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .ac-wrap{max-width:1000px;margin:1rem auto;}
+  .ac-wrap .ac-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .ac-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .ac-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .ac-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .ac-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .ac-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .ac-wrap button.on{background:#c85c2e;color:#fff;border-color:#c85c2e;}
+  .ac-wrap #acSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .ac-wrap #acEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .ac-wrap #acEq b{color:#1f47c8;}
+</style>
+<div class="ac-wrap">
+  <div class="ac-row">
+    <button id="acPlay">⏸ Pausar</button>
+    <button id="acM1">Modo 1 (em fase)</button>
+    <button id="acM2">Modo 2 (oposição)</button>
+    <button id="acTr" class="on">Transferência</button>
+    <div class="sld"><label>k<sub>c</sub>/k = <span class="val" id="acKv">0.3</span></label>
+      <input type="range" id="acK" min="0.05" max="2" value="0.3" step="0.05"></div>
+    <div class="sld"><label>Velocidade anim. = <span class="val" id="acSv">1</span>×</label>
+      <input type="range" id="acS" min="0.25" max="3" value="1" step="0.25"></div>
+  </div>
+  <div id="acSketch"></div>
+  <div id="acEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let t=0, playing=true, ics=[1,0], modo='Transferência';
+  const cw=()=>{ const w=(el('acSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+
+  new p5((p)=>{
+    const molaH=(x0,x1,y,n,w)=>{ p.push(); p.noFill(); p.stroke('#8a8073'); p.strokeWeight(2);
+      p.beginShape(); p.vertex(x0,y);
+      const L=x1-x0, seg=L/(2*n);
+      for(let i=0;i<2*n;i++) p.vertex(x0+seg*(i+0.5), y+((i%2)?-w:w));
+      p.vertex(x1,y); p.endShape(); p.pop(); };
+
+    const T1=4, O1=2*Math.PI/T1;
+    const sol=(tt,rk)=>{ const O2=O1*Math.sqrt(1+2*rk);
+      const q1=(ics[0]+ics[1])*Math.cos(O1*tt), q2=(ics[0]-ics[1])*Math.cos(O2*tt);
+      return [(q1+q2)/2,(q1-q2)/2]; };
+
+    p.setup=()=>{ p.createCanvas(cw(),430).parent('acSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),430); };
+
+    p.draw=()=>{
+      const W=p.width;
+      const rk=+el('acK').value, spd=+el('acS').value, Tview=30;
+      const O2=O1*Math.sqrt(1+2*rk);
+      el('acKv').textContent=rk.toFixed(2); el('acSv').textContent=spd;
+      if(playing) t+=(p.deltaTime/1000)*spd;
+      if(t>Tview) t=0;
+      const [x1,x2]=sol(t,rk), Apx=42;
+
+      p.background('#faf8f4');
+      // ── animação: parede—k—m1—kc—m2—k—parede ──
+      const ay=86, wall0=30, wall1=W-30;
+      const e1=wall0+(wall1-wall0)*0.36, e2=wall0+(wall1-wall0)*0.64;  // equilíbrios
+      const p1=e1+x1*Apx, p2=e2+x2*Apx;
+      p.stroke('#8a8073'); p.strokeWeight(3);
+      p.line(wall0,ay-42,wall0,ay+42); p.line(wall1,ay-42,wall1,ay+42);
+      molaH(wall0,p1-17,ay,8,8);
+      molaH(p1+17,p2-17,ay,6,6);
+      molaH(p2+17,wall1,ay,8,8);
+      p.stroke('#c9c2b6'); p.strokeWeight(1); p.drawingContext.setLineDash([3,4]);
+      p.line(e1,ay-52,e1,ay+52); p.line(e2,ay-52,e2,ay+52);
+      p.drawingContext.setLineDash([]);
+      p.noStroke();
+      p.fill('#1f47c8'); p.rect(p1-17,ay-17,34,34,5);
+      p.fill('#c81f1f'); p.rect(p2-17,ay-17,34,34,5);
+      p.fill('#7a7367'); p.textSize(11); p.textAlign(p.CENTER,p.TOP);
+      p.text('m₁',p1,ay+24); p.text('m₂',p2,ay+24);
+      p.textAlign(p.LEFT,p.TOP); p.text('k',(wall0+e1)/2-4,ay-30);
+      p.text('k꜀',(e1+e2)/2-6,ay-26); p.text('k',(e2+wall1)/2-4,ay-30);
+
+      // ── gráficos x1(t) e x2(t) ──
+      const gx0=52, gx1=W-14, pps=(gx1-gx0)/Tview;
+      const paineis=[[196,52,'#1f47c8','x₁(t)',0],[330,52,'#c81f1f','x₂(t)',1]];
+      for(const [gyc,half,col,rot,idx] of paineis){
+        p.stroke('#e7e0d4');
+        for(let k=5;k<=Tview;k+=5) p.line(gx0+k*pps,gyc-half,gx0+k*pps,gyc+half);
+        p.stroke('#bdb4a4'); p.line(gx0,gyc,gx1,gyc);
+        p.stroke('#d8cfc0'); p.line(gx0,gyc-half,gx0,gyc+half);
+        p.push(); p.noFill(); p.stroke(col); p.strokeWeight(1.8); p.beginShape();
+        for(let gx=gx0;gx<=gx1;gx++){ const tt=(gx-gx0)/pps;
+          p.vertex(gx,gyc-sol(tt,rk)[idx]*half*0.92); }
+        p.endShape(); p.pop();
+        p.noStroke(); p.fill(col); p.circle(gx0+t*pps,gyc-sol(t,rk)[idx]*half*0.92,7);
+        p.textSize(11); p.textAlign(p.LEFT,p.CENTER); p.text(rot,gx0+6,gyc-half+8);
+      }
+      p.noStroke(); p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      for(let k=5;k<=Tview;k+=5) p.text(k+'s',gx0+k*pps,330+52+6);
+
+      const dO=O2-O1;
+      el('acEq').innerHTML='<b>'+modo+'</b> &nbsp;|&nbsp; Ω₁ = '+O1.toFixed(3)+
+        ' rad/s, Ω₂ = Ω₁√(1+2k꜀/k) = '+O2.toFixed(3)+' rad/s'+
+        (modo==='Transferência'&&dO>1e-6?
+          ' &nbsp;|&nbsp; T<sub>transf</sub> = 2π/(Ω₂−Ω₁) = '+(2*Math.PI/dO).toFixed(1)+' s':'');
+    };
+  });
+  const setIC=(v,m,btn)=>{ ics=v; modo=m; t=0;
+    for(const b of ['acM1','acM2','acTr']) el(b).classList.remove('on');
+    el(btn).classList.add('on'); };
+  el('acM1').onclick=()=>setIC([1,1],'Modo 1 — em fase','acM1');
+  el('acM2').onclick=()=>setIC([1,-1],'Modo 2 — oposição','acM2');
+  el('acTr').onclick=()=>setIC([1,0],'Transferência','acTr');
+  el('acPlay').onclick=()=>{ playing=!playing;
+    el('acPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+  el('acK').addEventListener('input',()=>{ t=0; });
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Nos modos 1 e 2, cada massa oscila com uma única frequência — confira que o modo 2 é
+   mais rápido e explique pela mola central: por que ela "não existe" no modo 1?
+2. No modo **Transferência**, meça o tempo para a massa 1 parar completamente e compare
+   com $T_{\text{transf}}/2 = \pi/(\Omega_2-\Omega_1)$. Onde foi parar a energia dela?
+3. Reduza $k_c/k$ para 0,05: o que acontece com $T_{\text{transf}}$? Relacione com a
+   afirmação do texto de que "mesmo acoplamento fraco permite transferência de energia
+   lenta". A transferência é um batimento — entre quais duas frequências?
+:::
 
 **Conexão com o próximo tópico:** o capítulo de oscilações fecha aqui. Próximo capítulo (UE 2)
 estuda **ondas em meios elásticos** — que são, essencialmente, osciladores continuamente acoplados

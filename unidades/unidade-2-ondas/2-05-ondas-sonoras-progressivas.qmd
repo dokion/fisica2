@@ -105,6 +105,147 @@ correção é ajustar o aparelho à velocidade local ou aplicar a tabela T/S do 
 - **Assumir que frequência e comprimento de onda são independentes:** não são — estão vinculados por $v = f\lambda$. Se $v$ muda, ou $f$ muda ou $\lambda$ muda (ou ambos), mas o produto fica determinado.
 :::
 
-<!-- SIMULAÇÃO SUGERIDA: Mostrar onda progressiva $p(x,t)$ num instante fixo $t$ (gráfico p vs. x) e em posição fixa $x$ (gráfico p vs. t). Entrada: frequência (20–200 kHz), velocidade (1400–1540 m/s, ajustável por slider "Temperatura"). Saída em tempo real: comprimento de onda $\lambda$, período $T$, visualização de "marcadores" em cristas e vales mostrando movimento (para $t$ crescente, o padrão se desloca). Mostrar também: tempo para percorrer profundidade de 100, 200, 500 m. Lib p5.js ou Plotly. -->
+## Uma onda, dois retratos
+
+A mesma função $p(x,t) = p_0\cos(kx - \omega t)$ pode ser lida de dois jeitos. Painel de
+cima: uma **foto** — $p$ contra $x$ num instante; o padrão inteiro desliza para a
+direita com velocidade $v$, e a distância entre cristas é $\lambda$. Painel de baixo: um
+**registro num ponto fixo** (o hidrofone laranja) — $p$ contra $t$; o intervalo entre
+máximos é o período $T$. Os sliders mudam $f$ e $v$; observe o que muda em cada retrato.
+
+```{python}
+#| fig-cap: "Os dois retratos de p(x,t) = p₀cos(kx − ωt) com f = 1 Hz e v = 1 m/s. Acima: p vs. x num instante (a separação entre cristas é λ = v/f = 1 m). Abaixo: p vs. t na posição do hidrofone (a separação entre máximos é T = 1/f = 1 s). Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+p0, f, v = 1.0, 1.0, 1.0
+lam, T = v/f, 1/f
+k, w = 2*np.pi/lam, 2*np.pi*f
+x0 = 2.0
+
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(9, 4.8))
+x = np.linspace(0, 4, 800)
+ax1.plot(x, p0*np.cos(k*x), color='#1F47C8', lw=1.6)
+ax1.axvline(x0, color='#C85C2E', lw=1.4)
+ax1.annotate('λ', xy=(lam*1.5, 1.06), xytext=(lam*0.5, 1.06), fontsize=11,
+             arrowprops=dict(arrowstyle='<->', color='0.4'), color='0.3')
+ax1.set_xlabel('x (m) — foto no instante t = 0'); ax1.set_ylabel('p/p₀')
+ax1.set_ylim(-1.3, 1.45)
+
+t = np.linspace(0, 3, 900)
+ax2.plot(t, p0*np.cos(k*x0 - w*t), color='#C85C2E', lw=1.6)
+ax2.annotate('T', xy=(T*1.6, 1.06), xytext=(T*0.6, 1.06), fontsize=11,
+             arrowprops=dict(arrowstyle='<->', color='0.4'), color='0.3')
+ax2.set_xlabel(f'tempo (s) — registro do hidrofone em x = {x0} m')
+ax2.set_ylabel('p/p₀'); ax2.set_ylim(-1.3, 1.45)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo — a distinção
+     foto/registro só faz sentido com o padrão viajando). p5 de libs/ (offline, Q6).
+     Mesmos parâmetros da versão matplotlib: f = 1 Hz, v = 1 m/s (ajustáveis). -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .pw-wrap{max-width:1000px;margin:1rem auto;}
+  .pw-wrap .pw-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .pw-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .pw-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .pw-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .pw-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .pw-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .pw-wrap #pwSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .pw-wrap #pwEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .pw-wrap #pwEq b{color:#1f47c8;}
+</style>
+<div class="pw-wrap">
+  <div class="pw-row">
+    <button id="pwPlay">⏸ Pausar</button>
+    <div class="sld"><label>Frequência f = <span class="val" id="pwFv">1.0</span> Hz</label>
+      <input type="range" id="pwF" min="0.5" max="2" value="1.0" step="0.1"></div>
+    <div class="sld"><label>Velocidade v = <span class="val" id="pwVv">1.0</span> m/s</label>
+      <input type="range" id="pwV" min="0.5" max="2" value="1.0" step="0.1"></div>
+    <div class="sld"><label>Velocidade anim. = <span class="val" id="pwSv">1</span>×</label>
+      <input type="range" id="pwS" min="0.25" max="3" value="1" step="0.25"></div>
+  </div>
+  <div id="pwSketch"></div>
+  <div id="pwEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let t=0, playing=true;
+  const cw=()=>{ const w=(el('pwSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),400).parent('pwSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),400); };
+
+    p.draw=()=>{
+      const W=p.width;
+      const f=+el('pwF').value, v=+el('pwV').value, spd=+el('pwS').value;
+      el('pwFv').textContent=f.toFixed(1); el('pwVv').textContent=v.toFixed(1);
+      el('pwSv').textContent=spd;
+      if(playing) t+=(p.deltaTime/1000)*spd;
+      const lam=v/f, k=2*Math.PI/lam, w=2*Math.PI*f;
+      const gx0=46, gx1=W-20, ppm=(gx1-gx0)/4, x0=2.0, A=58;
+
+      p.background('#faf8f4');
+      p.noStroke(); p.fill('#7a7367'); p.textSize(12); p.textAlign(p.LEFT,p.TOP);
+      p.text('FOTO: p × x (o padrão viaja com v)',gx0,8);
+      p.text('REGISTRO NO HIDROFONE: p × t (o que passa pelo ponto laranja)',gx0,208);
+
+      // ── painel 1: p(x) no instante t ──
+      const yc1=118;
+      p.stroke('#bdb4a4'); p.line(gx0,yc1,gx1,yc1);
+      p.push(); p.noFill(); p.stroke('#1f47c8'); p.strokeWeight(2); p.beginShape();
+      for(let gx=gx0;gx<=gx1;gx++){ const xm=(gx-gx0)/ppm;
+        p.vertex(gx,yc1-A*Math.cos(k*xm-w*t)); }
+      p.endShape(); p.pop();
+      // hidrofone em x0
+      p.stroke('#c85c2e'); p.strokeWeight(1.6); p.line(gx0+x0*ppm,yc1-A-8,gx0+x0*ppm,yc1+A+8);
+      p.noStroke(); p.fill('#c85c2e'); p.circle(gx0+x0*ppm,yc1-A*Math.cos(k*x0-w*t),10);
+      // crista marcada viajando
+      const xc=((w*t/k)+lam*0)%4;
+      p.fill('#66308c'); p.circle(gx0+xc*ppm,yc1-A,8);
+      p.textSize(10.5); p.textAlign(p.CENTER,p.BOTTOM);
+      p.text('crista → v = '+v.toFixed(1)+' m/s',gx0+xc*ppm,yc1-A-10);
+      p.fill('#8a8073'); p.textAlign(p.CENTER,p.TOP);
+      for(let m=0;m<=4;m++) p.text(m+' m',gx0+m*ppm,yc1+A+12);
+
+      // ── painel 2: p(t) em x0 (o traço rola para a esquerda) ──
+      const yc2=320, win=4, pps=(gx1-gx0)/win;
+      p.stroke('#bdb4a4'); p.line(gx0,yc2,gx1,yc2);
+      p.push(); p.noFill(); p.stroke('#c85c2e'); p.strokeWeight(2); p.beginShape();
+      for(let gx=gx0;gx<=gx1;gx++){ const tt=t-(gx1-gx)/pps; if(tt<0) continue;
+        p.vertex(gx,yc2-A*Math.cos(k*x0-w*tt)); }
+      p.endShape(); p.pop();
+      p.noStroke(); p.fill('#c85c2e'); p.circle(gx1,yc2-A*Math.cos(k*x0-w*t),9);
+      p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      for(let s=0;s<=win;s++){ const tt=t-s; if(tt>=0) p.text(tt.toFixed(1)+'s',gx1-s*pps,yc2+A+12); }
+
+      el('pwEq').innerHTML='p(x,t) = p₀cos(kx − ωt) &nbsp;|&nbsp; '+
+        '<b>λ = v/f = '+lam.toFixed(2)+' m</b> (foto) &nbsp;|&nbsp; '+
+        '<b>T = 1/f = '+(1/f).toFixed(2)+' s</b> (registro) &nbsp;|&nbsp; '+
+        'v = λf = '+(lam*f).toFixed(2)+' m/s';
+    };
+  });
+  el('pwPlay').onclick=()=>{ playing=!playing;
+    el('pwPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Aumente $v$ mantendo $f$: o que muda na foto ($\lambda$) e o que **não** muda no
+   registro do hidrofone ($T$)? Explique com $v = \lambda f$.
+2. Aumente $f$ mantendo $v$: agora os dois retratos mudam. Qual grandeza é imposta pela
+   fonte e qual pelo meio?
+3. O ponto roxo (crista) leva quanto tempo para cruzar a tela de 4 m? Cronometrie e
+   compare com $4/v$. É esse o tempo que o ecobatímetro explora quando calcula
+   $d = v\,t/2$.
+:::
 
 **Conexão com o próximo tópico:** definida a forma e a propagação de uma onda sonora, falta quantificar sua "força" — *quanto* de energia ela carrega, e como essa energia varia com a amplitude e a frequência. Isso é **intensidade e nível sonoro**, tema do tópico 2.6.

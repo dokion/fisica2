@@ -80,6 +80,149 @@ conversão ocorre no elemento piezoelétrico.
 - **Som na água é transversal?** Não — som é sempre longitudinal (compressões). O radar (EM) é transversal. O pulso que *ativa* o transdutor é EM (transversal), mas o pulso que sai na água é sonoro (longitudinal).
 :::
 
-<!-- SIMULAÇÃO SUGERIDA: Animação de uma corda vibrante mostrando partículas subindo-descendo enquanto a frente de onda avança (p5.js). Parâmetros: λ = 0,5 m (no canvas), f = 2 Hz (ajustável 1–5 Hz), mostrar também a onda transversal EM de um radar — amplitude reduzida, frequência 1000× maior (ordem visual). Comparar lado a lado com uma onda longitudinal (compressões/rarefações) para contrastar. -->
+## Veja os dois tipos de onda lado a lado
+
+No painel de cima, uma corda: cada ponto (as bolinhas) sobe e desce, mas a *forma* viaja
+para a direita — acompanhe a partícula vermelha e a crista marcada em laranja. No painel
+de baixo, uma onda longitudinal no mesmo meio: as partículas vão e vêm na direção da
+propagação, formando compressões e rarefações que viajam. A partícula vermelha de baixo
+nunca sai da vizinhança dela.
+
+```{python}
+#| fig-cap: "Instantâneo dos dois tipos de onda com os mesmos λ = 1,0 m e f = 1,0 Hz. Acima: transversal — deslocamento perpendicular à propagação. Abaixo: longitudinal — as partículas se deslocam ao longo da propagação, formando compressões (adensamentos) e rarefações. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+A, lam, f, t0 = 0.25, 1.0, 1.0, 0.0
+k = 2*np.pi/lam
+
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(9, 4.6))
+x = np.linspace(0, 4, 800)
+ax1.plot(x, A*np.sin(k*x - 2*np.pi*f*t0), color='#1F47C8', lw=1.6)
+xp = np.arange(0.1, 4, 0.2)
+ax1.plot(xp, A*np.sin(k*xp - 2*np.pi*f*t0), 'o', ms=4, color='#8a8073')
+ax1.plot(xp[5], A*np.sin(k*xp[5]), 'o', ms=8, color='#C81F1F')
+ax1.annotate('v', xy=(2.9, 0.3), xytext=(2.45, 0.3), color='#C85C2E',
+             arrowprops=dict(arrowstyle='-|>', color='#C85C2E'))
+ax1.set_ylim(-0.45, 0.45); ax1.set_ylabel('y (transversal)')
+ax1.set_xticks([])
+
+xp2 = np.arange(0, 4, 0.055)
+ax2.plot(xp2 + A*0.35*np.cos(k*xp2 - 2*np.pi*f*t0), 0*xp2, 'o',
+         ms=3.5, color='#8a8073')
+ax2.plot(xp2[36] + A*0.35*np.cos(k*xp2[36]), 0, 'o', ms=8, color='#C81F1F')
+ax2.set_ylim(-0.5, 0.5); ax2.set_yticks([])
+ax2.set_xlabel('x (m)'); ax2.set_ylabel('longitudinal')
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo — a diferença entre os
+     dois tipos É a direção do movimento das partículas). p5 de libs/ (offline, Q6).
+     Mesmos parâmetros da versão matplotlib: λ = 1,0 m, f = 1,0 Hz (ajustáveis). -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .tw-wrap{max-width:1000px;margin:1rem auto;}
+  .tw-wrap .tw-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .tw-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .tw-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .tw-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .tw-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .tw-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .tw-wrap #twSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .tw-wrap #twEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .tw-wrap #twEq b{color:#1f47c8;}
+</style>
+<div class="tw-wrap">
+  <div class="tw-row">
+    <button id="twPlay">⏸ Pausar</button>
+    <div class="sld"><label>Frequência f = <span class="val" id="twFv">1.0</span> Hz</label>
+      <input type="range" id="twF" min="0.5" max="2" value="1.0" step="0.1"></div>
+    <div class="sld"><label>Comprimento de onda λ = <span class="val" id="twLv">1.0</span> m</label>
+      <input type="range" id="twL" min="0.5" max="2" value="1.0" step="0.1"></div>
+    <div class="sld"><label>Velocidade anim. = <span class="val" id="twSv">1</span>×</label>
+      <input type="range" id="twS" min="0.25" max="3" value="1" step="0.25"></div>
+  </div>
+  <div id="twSketch"></div>
+  <div id="twEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let t=0, playing=true;
+  const cw=()=>{ const w=(el('twSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),380).parent('twSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),380); };
+
+    p.draw=()=>{
+      const W=p.width;
+      const f=+el('twF').value, lam=+el('twL').value, spd=+el('twS').value;
+      el('twFv').textContent=f.toFixed(1); el('twLv').textContent=lam.toFixed(1);
+      el('twSv').textContent=spd;
+      if(playing) t+=(p.deltaTime/1000)*spd;
+      const ppm=(W-60)/4;                       // 4 m visíveis
+      const k=2*Math.PI/lam, w=2*Math.PI*f, x0=30;
+      const Apx=52;
+
+      p.background('#faf8f4');
+      p.noStroke(); p.fill('#7a7367'); p.textSize(12); p.textAlign(p.LEFT,p.TOP);
+      p.text('TRANSVERSAL — partícula ⊥ propagação (corda, onda EM de radar)',x0,10);
+      p.text('LONGITUDINAL — partícula ∥ propagação (som na água: ecobatímetro, sonar)',x0,206);
+
+      // ── transversal ──
+      const yc1=110;
+      p.push(); p.noFill(); p.stroke('#1f47c8'); p.strokeWeight(1.6); p.beginShape();
+      for(let gx=x0;gx<=W-30;gx++){ const xm=(gx-x0)/ppm;
+        p.vertex(gx,yc1-Apx*Math.sin(k*xm-w*t)); }
+      p.endShape(); p.pop();
+      p.noStroke();
+      for(let i=0;i<20;i++){ const xm=0.1+i*0.2, gx=x0+xm*ppm; if(gx>W-30) break;
+        p.fill(i===5?'#c81f1f':'#8a8073');
+        p.circle(gx,yc1-Apx*Math.sin(k*xm-w*t),i===5?13:8); }
+      // crista marcada (viaja com v = λf)
+      const xc=((0.25*lam)+ (w*t/k))%4;
+      p.fill('#c85c2e'); p.circle(x0+xc*ppm,yc1-Apx,7);
+      p.textSize(10.5); p.textAlign(p.CENTER,p.BOTTOM); p.text('crista →',x0+xc*ppm,yc1-Apx-8);
+      // trilho da partícula vermelha
+      p.stroke('#e5b8b8'); p.strokeWeight(1); p.line(x0+1.1*ppm,yc1-Apx,x0+1.1*ppm,yc1+Apx);
+
+      // ── longitudinal ──
+      const yc2=300, u=0.35*Apx;
+      p.noStroke();
+      for(let i=0;i<73;i++){ const xm=i*0.055, gx0m=x0+xm*ppm; if(gx0m>W-30) break;
+        const gx=gx0m+u*Math.cos(k*xm-w*t);
+        p.fill(i===20?'#c81f1f':'#8a8073');
+        p.circle(gx,yc2,i===20?13:7); }
+      // marcador de compressão: máx. densidade onde ∂u/∂x é mínimo → fase π/2
+      const xcomp=((0.25*lam)+(w*t/k))%4;
+      p.fill('#c85c2e'); p.textAlign(p.CENTER,p.BOTTOM);
+      p.circle(x0+xcomp*ppm,yc2-26,7); p.text('compressão →',x0+xcomp*ppm,yc2-34);
+      p.stroke('#e5b8b8'); p.strokeWeight(1);
+      p.line(x0+20*0.055*ppm-u,yc2+20,x0+20*0.055*ppm+u,yc2+20);
+
+      el('twEq').innerHTML='y(x,t) = A sen(kx − ωt) &nbsp;|&nbsp; '+
+        '<b>v = λf = '+(lam*f).toFixed(2)+' m/s</b> &nbsp;|&nbsp; '+
+        'T = '+(1/f).toFixed(2)+' s &nbsp;|&nbsp; k = 2π/λ = '+(2*Math.PI/lam).toFixed(2)+' rad/m';
+    };
+  });
+  el('twPlay').onclick=()=>{ playing=!playing;
+    el('twPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Pause a animação e anote a posição da partícula vermelha de cima. Rode meio período
+   e pause de novo: ela andou na direção da onda? E a crista laranja, quanto andou?
+2. Dobre $\lambda$ mantendo $f$: o que acontece com a velocidade da crista? Confirme
+   com $v = \lambda f$ no painel de valores.
+3. No painel de baixo, a partícula vermelha oscila *horizontalmente* em torno de um
+   ponto fixo (trilho rosa). Aponte na tela onde está uma compressão e uma rarefação —
+   qual das duas corresponde a pressão acima da atmosférica no som?
+:::
 
 **Conexão com o próximo tópico:** definida a existência de dois tipos de onda, aprendemos agora que **duas ondas da mesma natureza podem somar-se** — é o princípio da superposição, que gera interferência construtiva, destrutiva e fasores.

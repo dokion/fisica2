@@ -78,9 +78,161 @@ Quando um navio é forçado a operar em velocidade crítica (ressonância):
 4. **Desconforto extremo:** tripulação sofre com a vibração amplificada (náusea, lesão de
    tecidos moles em longos períodos).
 
-<!-- SIMULAÇÃO SUGERIDA: curva de amplitude A(ω) da resposta forçada com slider da
-     frequência de excitação — Plotly (gráfico explorável, tabela Q4). Marcar ω₀ e a
-     zona de ressonância; parâmetros na faixa SP3 (T natural 8–25 s). -->
+## Veja a ressonância se aproximar
+
+À esquerda, o suporte (barra superior) balança com frequência $\omega$ ajustável e
+arrasta a massa pela mola; o sistema tem frequência natural $\omega_0$ fixa. À direita,
+a curva de resposta $A(\omega)/A_{\text{est}} = \omega_0^2/|\omega_0^2 - \omega^2|$ com
+o ponto de operação marcado. Aproxime $\omega$ de $\omega_0$ e observe a amplitude — e
+o que acontece com a *fase* ao cruzar a ressonância.
+
+```{python}
+#| fig-cap: "Curva de resposta do oscilador forçado sem amortecimento: amplitude relativa à deflexão estática em função de ω/ω₀. Em ω = ω₀ o modelo diverge (assíntota tracejada) — a zona de ressonância. Mesmos parâmetros da versão interativa (T₀ = 4 s)."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+w0 = 2*np.pi/4.0
+r = np.linspace(0.2, 2.5, 1200)
+R = 1/np.abs(1 - r**2)
+
+fig, ax = plt.subplots(figsize=(9, 4))
+for lado in [r < 0.99, r > 1.01]:
+    ax.plot(r[lado], R[lado], color='#1F47C8', lw=2)
+ax.axvline(1, ls='--', color='#C81F1F', lw=1.4)
+ax.text(1.03, 5.4, 'ω = ω₀ (ressonância)', color='#C81F1F', fontsize=9)
+ax.axhline(1, ls=':', color='0.6', lw=1)
+ax.text(2.0, 1.12, 'deflexão estática', color='0.4', fontsize=8)
+ax.set_ylim(0, 6); ax.set_xlim(0.2, 2.5)
+ax.set_xlabel('$\\omega/\\omega_0$'); ax.set_ylabel('$A(\\omega)/A_{est}$')
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo — a inversão de fase ao
+     cruzar ω₀ só se percebe vendo suporte e massa se moverem). p5 de libs/ (offline,
+     Q6). Mesmos parâmetros da versão matplotlib: T0 = 4 s, ω/ω0 de 0,2 a 2,5. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .rs-wrap{max-width:1000px;margin:1rem auto;}
+  .rs-wrap .rs-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .rs-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .rs-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .rs-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .rs-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .rs-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .rs-wrap #rsSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .rs-wrap #rsEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .rs-wrap #rsEq b{color:#1f47c8;}
+</style>
+<div class="rs-wrap">
+  <div class="rs-row">
+    <button id="rsPlay">⏸ Pausar</button>
+    <div class="sld"><label>ω/ω<sub>0</sub> = <span class="val" id="rsRv">0.5</span></label>
+      <input type="range" id="rsR" min="0.2" max="2.5" value="0.5" step="0.05"></div>
+    <div class="sld"><label>Velocidade anim. = <span class="val" id="rsSv">1</span>×</label>
+      <input type="range" id="rsS" min="0.25" max="3" value="1" step="0.25"></div>
+  </div>
+  <div id="rsSketch"></div>
+  <div id="rsEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let t=0, playing=true;
+  const cw=()=>{ const w=(el('rsSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+
+  new p5((p)=>{
+    const mola=(x,y0,y1,n,w)=>{ p.push(); p.noFill(); p.stroke('#8a8073'); p.strokeWeight(2);
+      p.beginShape(); p.vertex(x,y0);
+      const L=y1-y0, seg=L/(2*n);
+      for(let i=0;i<2*n;i++) p.vertex(x+((i%2)?-w:w), y0+seg*(i+0.5));
+      p.vertex(x,y1); p.endShape(); p.pop(); };
+
+    p.setup=()=>{ p.createCanvas(cw(),400).parent('rsSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),400); };
+
+    p.draw=()=>{
+      const W=p.width;
+      const r=+el('rsR').value, spd=+el('rsS').value;
+      const T0=4, w0=2*Math.PI/T0, w=r*w0, d=14;      // d = curso do suporte (px)
+      el('rsRv').textContent=r.toFixed(2); el('rsSv').textContent=spd;
+      if(playing) t+=(p.deltaTime/1000)*spd;
+
+      // resposta em regime permanente (sem amortecimento):
+      // fator de amplificação e fase 0 (ω<ω0) ou π (ω>ω0)
+      const Rf=1/Math.abs(1-r*r), RMAX=6;
+      const clamp=Rf>RMAX, Rv=Math.min(Rf,RMAX);
+      const fase=(r<1)?0:Math.PI;
+      const ys=d*Math.cos(w*t);                        // suporte
+      const xm=Rv*d*Math.cos(w*t-fase);                // massa (escala do gráfico)
+
+      p.background('#faf8f4');
+      // ── esquerda: suporte móvel + mola + massa ──
+      const cx=95, ytopo=60, eq=235;
+      p.stroke('#9a9184'); p.strokeWeight(1);
+      p.line(cx-46,ytopo-d-6,cx-46,ytopo+d+6); p.line(cx+46,ytopo-d-6,cx+46,ytopo+d+6);
+      p.stroke('#bdb4a4'); p.strokeWeight(5); p.line(cx-44,ytopo+ys,cx+44,ytopo+ys);
+      mola(cx,ytopo+ys,eq+xm-16,9,10);
+      p.noStroke(); p.fill(clamp?'#c81f1f':'#1f47c8'); p.rect(cx-18,eq+xm-16,36,32,5);
+      p.stroke('#c9c2b6'); p.strokeWeight(1);
+      p.drawingContext.setLineDash([3,4]); p.line(cx-56,eq,cx+56,eq);
+      p.drawingContext.setLineDash([]);
+      p.noStroke(); p.fill('#7a7367'); p.textSize(11); p.textAlign(p.CENTER,p.TOP);
+      p.text('suporte: F(t) = F₀cos(ωt)',cx,14);
+      if(clamp){ p.fill('#c81f1f'); p.textSize(12);
+        p.text('FORA DE ESCALA',cx,364); p.text('(modelo diverge)',cx,380); }
+
+      // ── direita: curva de resposta R(ω) com ponto de operação ──
+      const gx0=215, gx1=W-14, gy1=356, gy0=40;
+      const rmin=0.2, rmax=2.5, X=rr=>gx0+(rr-rmin)/(rmax-rmin)*(gx1-gx0),
+            Y=RR=>gy1-Math.min(RR,RMAX)/RMAX*(gy1-gy0);
+      p.stroke('#d8cfc0'); p.strokeWeight(1);
+      p.line(gx0,gy1,gx1,gy1); p.line(gx0,gy0,gx0,gy1);
+      p.noStroke(); p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      for(const rr of [0.5,1,1.5,2,2.5]) p.text(rr,X(rr),gy1+4);
+      p.textAlign(p.RIGHT,p.CENTER);
+      for(let k=1;k<=RMAX;k+=1) p.text(k,gx0-4,Y(k));
+      p.textAlign(p.CENTER,p.TOP); p.text('ω/ω₀',(gx0+gx1)/2,gy1+18);
+      // linha da estática e assíntota
+      p.stroke('#c9c2b6'); p.drawingContext.setLineDash([3,4]);
+      p.line(gx0,Y(1),gx1,Y(1));
+      p.stroke('#c81f1f'); p.line(X(1),gy0,X(1),gy1);
+      p.drawingContext.setLineDash([]);
+      p.noStroke(); p.fill('#c81f1f'); p.textSize(10.5); p.textAlign(p.LEFT,p.TOP);
+      p.text('ω₀',X(1)+4,gy0);
+      // curva (dois ramos)
+      p.push(); p.noFill(); p.stroke('#1f47c8'); p.strokeWeight(2.2);
+      for(const [a,b] of [[rmin,0.99],[1.01,rmax]]){
+        p.beginShape();
+        for(let rr=a;rr<=b;rr+=0.005) p.vertex(X(rr),Y(1/Math.abs(1-rr*rr)));
+        p.endShape(); }
+      p.pop();
+      p.noStroke(); p.fill(clamp?'#c81f1f':'#c85c2e'); p.circle(X(r),Y(Rf),10);
+
+      el('rsEq').innerHTML='A/A<sub>est</sub> = ω₀²/|ω₀²−ω²| = '+
+        (clamp?'<b style="color:#c81f1f">'+Rf.toFixed(1)+' (fora de escala)</b>':'<b>'+Rf.toFixed(2)+'</b>')+
+        ' &nbsp;|&nbsp; fase: massa '+(r<1?'<b>em fase</b> com o suporte':'em <b>oposição</b> (π)')+
+        ' &nbsp;|&nbsp; ω = '+w.toFixed(2)+' rad/s, ω₀ = '+w0.toFixed(2)+' rad/s';
+    };
+  });
+  el('rsPlay').onclick=()=>{ playing=!playing;
+    el('rsPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Compare $\omega/\omega_0 = 0{,}3$ e $2{,}0$: em qual caso a massa acompanha o
+   suporte em fase? O que acontece com a fase ao cruzar $\omega_0$?
+2. Aproxime $\omega/\omega_0$ de 1 pelos dois lados. A amplitude cresce sem limite no
+   modelo — que ingrediente físico, ausente aqui, limita a amplitude em qualquer
+   sistema real (tópico 1.6)?
+3. Em $\omega/\omega_0 = 2{,}5$ a amplificação é menor que 0,2: a massa quase não se
+   move embora a força continue a mesma. Use isso para explicar por que "força grande
+   em frequência errada" é inofensiva e "força pequena em $\omega_0$" é perigosa.
+:::
 
 ::: {.sp}
 Um navio cargueiro com período natural de balanço $T_0 = 12$ s ($\omega_0 = 2\pi/12 \approx 0{,}524$ rad/s)

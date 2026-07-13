@@ -105,6 +105,151 @@ o valor de $x$.
 - **Assumir que ecos distantes sempre são profundidade maior:** ecos falsos por múltipla reflexão podem dar tempos muito maiores sem corresponder à realidade geométrica. Requer validação de modelo.
 :::
 
-<!-- SIMULAÇÃO SUGERIDA: Mostrar onda incidente (vermelha, progressiva para baixo) + onda refletida (azul, progressiva para cima) + onda resultante (preta, estacionária com nós e antinós). Parâmetros: profundidade h (50–1000 m), frequência (30–200 kHz, ambas aplicáveis a ecobatímetro), velocidade do som (ajustável 1400–1540 m/s, faixa água doce/salgada). Mostrar modo número (n = f·2h/v) em tempo real. Lib p5.js (animação contínua) + Plotly (gráfico de nós/antinós). -->
+## Veja a onda estacionária nascer de duas progressivas
+
+O eixo horizontal é a coluna d'água: superfície à esquerda, fundo à direita. A onda
+vermelha viaja para o fundo, a azul é a reflexão viajando de volta, e a preta é a soma —
+que **não viaja**: os nós (pontos laranja) ficam parados. Escolha o modo $n$ e a
+profundidade $h$; a frequência real do modo, $f_n = n\,v/2h$, aparece no painel.
+
+```{python}
+#| fig-cap: "Modo normal n = 3 numa coluna de h = 100 m: instantâneos da onda resultante em vários momentos do ciclo (cinza→preto) dentro da envoltória ±2A|sen(kx)| (tracejada). Os nós (laranja) não se movem — a onda é estacionária. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+n, h, A = 3, 100.0, 1.0
+k = n*np.pi/h
+x = np.linspace(0, h, 800)
+
+fig, ax = plt.subplots(figsize=(9, 3.6))
+for i, wt in enumerate(np.linspace(0, np.pi, 6)):
+    ax.plot(x, -2*A*np.cos(wt)*np.sin(k*x), color=str(0.75 - 0.13*i), lw=1.1)
+ax.plot(x,  2*A*np.abs(np.sin(k*x)), '--', color='#C85C2E', lw=1.4)
+ax.plot(x, -2*A*np.abs(np.sin(k*x)), '--', color='#C85C2E', lw=1.4)
+nos = np.arange(0, n + 1)*h/n
+ax.plot(nos, 0*nos, 'o', ms=8, color='#C85C2E')
+ax.axhline(0, lw=0.5, color='0.8')
+ax.set_xlabel('posição na coluna (m) — 0 = superfície, 100 = fundo')
+ax.set_ylabel('deslocamento'); ax.set_title('n = 3: nós fixos, ventres pulsando', fontsize=10)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo — "estacionária" só faz
+     sentido vendo as progressivas se moverem e a soma não). p5 de libs/ (offline, Q6).
+     Mesmos parâmetros da versão matplotlib: n = 3, h = 100 m (ajustáveis); v ajustável
+     1400–1540 m/s para o cálculo de f_n. A animação usa período visual, não o real
+     (f_n real está no painel de valores). -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .sw-wrap{max-width:1000px;margin:1rem auto;}
+  .sw-wrap .sw-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .sw-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .sw-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .sw-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .sw-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .sw-wrap .chk{display:flex;align-items:center;gap:5px;font-size:13px;white-space:nowrap;}
+  .sw-wrap .chk input{accent-color:#c85c2e;width:15px;height:15px;}
+  .sw-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .sw-wrap #swSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .sw-wrap #swEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .sw-wrap #swEq b{color:#1f47c8;}
+</style>
+<div class="sw-wrap">
+  <div class="sw-row">
+    <button id="swPlay">⏸ Pausar</button>
+    <div class="sld"><label>Modo n = <span class="val" id="swNv">3</span></label>
+      <input type="range" id="swN" min="1" max="5" value="3" step="1"></div>
+    <div class="sld"><label>Profundidade h = <span class="val" id="swHv">100</span> m</label>
+      <input type="range" id="swH" min="50" max="200" value="100" step="10"></div>
+    <div class="sld"><label>Velocidade do som v = <span class="val" id="swVv">1500</span> m/s</label>
+      <input type="range" id="swV" min="1400" max="1540" value="1500" step="10"></div>
+    <div class="sld"><label>Velocidade anim. = <span class="val" id="swSv">1</span>×</label>
+      <input type="range" id="swS" min="0.25" max="3" value="1" step="0.25"></div>
+  </div>
+  <div class="sw-row">
+    <span class="chk"><input type="checkbox" id="swI" checked><span style="color:#c81f1f">▬</span> incidente (desce)</span>
+    <span class="chk"><input type="checkbox" id="swR" checked><span style="color:#1f47c8">▬</span> refletida (sobe)</span>
+    <span class="chk"><input type="checkbox" id="swT" checked><span style="color:#333">▬</span> resultante</span>
+  </div>
+  <div id="swSketch"></div>
+  <div id="swEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let t=0, playing=true;
+  const cw=()=>{ const w=(el('swSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),340).parent('swSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),340); };
+
+    p.draw=()=>{
+      const W=p.width;
+      const n=+el('swN').value, h=+el('swH').value, v=+el('swV').value,
+            spd=+el('swS').value;
+      el('swNv').textContent=n; el('swHv').textContent=h; el('swVv').textContent=v;
+      el('swSv').textContent=spd;
+      if(playing) t+=(p.deltaTime/1000)*spd;
+      const wv=2*Math.PI*0.35;                       // período visual
+      const gx0=60, gx1=W-30, yc=175, A=52;
+      const k=n*Math.PI, X=u=>gx0+u*(gx1-gx0);       // u = x/h de 0 a 1
+
+      p.background('#faf8f4');
+      // contornos: superfície e fundo
+      p.stroke('#8a8073'); p.strokeWeight(3);
+      p.line(gx0,yc-A*2.3,gx0,yc+A*2.3); p.line(gx1,yc-A*2.3,gx1,yc+A*2.3);
+      p.noStroke(); p.fill('#7a7367'); p.textSize(11); p.textAlign(p.CENTER,p.TOP);
+      p.text('SUPERFÍCIE',gx0,yc+A*2.3+6); p.text('FUNDO',gx1,yc+A*2.3+6);
+      p.stroke('#e7e0d4'); p.strokeWeight(1); p.line(gx0,yc,gx1,yc);
+
+      const curva=(fn,col,wt)=>{ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(wt);
+        p.beginShape();
+        for(let gx=gx0;gx<=gx1;gx++){ const u=(gx-gx0)/(gx1-gx0);
+          p.vertex(gx,yc-fn(u)*A); }
+        p.endShape(); p.pop(); };
+      if(el('swI').checked) curva(u=>Math.sin(wv*t-k*u),'#c81f1f',1.4);
+      if(el('swR').checked) curva(u=>-Math.sin(wv*t+k*u),'#1f47c8',1.4);
+      if(el('swT').checked){
+        curva(u=>-2*Math.cos(wv*t)*Math.sin(k*u),'#333333',2.6);
+        // envoltória + nós
+        p.push(); p.drawingContext.setLineDash([5,5]);
+        curva(u=>2*Math.abs(Math.sin(k*u)),'#c85c2e',1.1);
+        curva(u=>-2*Math.abs(Math.sin(k*u)),'#c85c2e',1.1);
+        p.drawingContext.setLineDash([]); p.pop();
+        p.noStroke(); p.fill('#c85c2e');
+        for(let j=0;j<=n;j++) p.circle(X(j/n),yc,9);
+      }
+      // setas de sentido
+      p.noStroke(); p.textSize(11);
+      if(el('swI').checked){ p.fill('#c81f1f'); p.textAlign(p.LEFT,p.TOP);
+        p.text('incidente →',gx0+8,16); }
+      if(el('swR').checked){ p.fill('#1f47c8'); p.textAlign(p.RIGHT,p.TOP);
+        p.text('← refletida',gx1-8,16); }
+
+      const fn=n*v/(2*h), lam=2*h/n;
+      el('swEq').innerHTML='condição de modo: h = n·λ/2 → λ = '+lam.toFixed(1)+' m &nbsp;|&nbsp; '+
+        '<b>f<sub>'+n+'</sub> = n·v/2h = '+fn.toFixed(1)+' Hz</b> &nbsp;|&nbsp; '+
+        'nós: '+(n+1)+' (fixos) &nbsp;|&nbsp; ventres: '+n;
+    };
+  });
+  el('swPlay').onclick=()=>{ playing=!playing;
+    el('swPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Deixe só a resultante ligada: os nós laranja se movem? Agora ligue só a incidente:
+   ela viaja. De onde "vem" a imobilidade da soma de duas ondas que viajam?
+2. Pause no instante em que a resultante fica **reta** (zero em toda parte). As ondas
+   vermelha e azul também estão zeradas nesse instante? Para onde foi a energia?
+3. Com $h = 100$ m e $v = 1500$ m/s, anote $f_n$ para $n = 1$ a $5$. Que relação os
+   valores guardam entre si? Por que um transdutor de 50 kHz não excita nenhum desses
+   modos (compare as ordens de grandeza)?
+:::
 
 **Conexão com o próximo tópico:** sabemos agora como ondas se comportam em geometrias simples. Mas o que *é* uma onda sonora? Qual é a física microscópica que a produz, e como sua velocidade depende do meio? Essas respostas vêm no tópico 2.4.

@@ -98,6 +98,181 @@ m/s (média entre superfície e fundo) confirma a ordem do resultado.
 - **Não diferenciar frequência de som:** a velocidade de fase $v = \lambda f$ é independente de frequência no regime linear. Logo, 30 kHz e 200 kHz viajam à mesma velocidade na mesma água — a diferença está na atenuação (absorção), que cresce com frequência.
 :::
 
-<!-- SIMULAÇÃO SUGERIDA: Mostrar perfil de temperatura T(z) em tempo real (eixo Z de 0 a 4000 m, realista de oceano tropical). Calcular e exibir v(z) com a aproximação dada. Mostrar trilho de raio (traço do som) — se gradiente forte, raio se curva (refração). Entrada: temperatura superficial (8–30 °C), gradiente termoclina (0,01–0,1 °C/m). Lib Plotly ou p5.js. -->
+## Veja o pulso atravessar a termoclina
+
+À esquerda, o perfil vertical: temperatura (vermelho) cai com a profundidade até
+estabilizar em 4 °C, e a velocidade do som (azul) cai junto. O ponto preto é o pulso do
+ecobatímetro descendo e subindo **com a velocidade local** (em câmera lenta). À direita,
+o erro que o aparelho comete ao assumir a velocidade da superfície, em função da
+profundidade. Os valores iniciais reproduzem o exemplo resolvido acima
+($T_{\text{sup}} = 28$ °C, gradiente 0,05 °C/m, fundo a 400 m).
+
+```{python}
+#| fig-cap: "Esq.: perfis T(z) e v(z) = 1540 − 2,1(28 − T) para T_sup = 28 °C e gradiente 0,05 °C/m (termoclina até T = 4 °C). Dir.: erro do ecobatímetro calibrado com v(0) em função da profundidade real — no fundo a 400 m, +5,6 m, o caso do exemplo. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+Tsup, grad = 28.0, 0.05
+z = np.linspace(0, 1000, 2000)
+T = np.maximum(Tsup - grad*z, 4.0)
+v = 1540 - 2.1*(28 - T)
+v0 = v[0]
+
+# tempo acumulado de descida (trapézios) e erro por profundidade
+dt = np.concatenate([[0], np.cumsum((z[1:] - z[:-1]) * 0.5*(1/v[1:] + 1/v[:-1]))])
+d_ind = v0*dt          # = v0 · (t_ida_e_volta)/2
+erro = d_ind - z
+
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9, 4.2))
+ax1.plot(T, z, color='#C81F1F', lw=1.8, label='T(z) (°C)')
+ax1.set_xlabel('T (°C)', color='#C81F1F')
+ax1b = ax1.twiny()
+ax1b.plot(v, z, color='#1F47C8', lw=1.8, label='v(z)')
+ax1b.set_xlabel('v (m/s)', color='#1F47C8')
+ax1.invert_yaxis(); ax1.set_ylabel('profundidade z (m)')
+
+ax2.plot(erro, z, color='#66308C', lw=2)
+ax2.plot(erro[np.argmin(np.abs(z - 400))], 400, 'o', ms=9, color='#C85C2E')
+ax2.annotate('+5,6 m em 400 m\n(exemplo do texto)', xy=(5.6, 400),
+             xytext=(2.0, 640), fontsize=9,
+             arrowprops=dict(arrowstyle='->', color='0.5'))
+ax2.invert_yaxis(); ax2.set_xlabel('erro de profundidade indicada (m)')
+ax2.set_ylabel('profundidade real do fundo (m)')
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo — o pulso desce com a
+     velocidade local; o atraso acumulado É o erro do aparelho). p5 de libs/ (offline,
+     Q6). Mesmos parâmetros da versão matplotlib: T_sup = 28 °C, grad = 0,05 °C/m,
+     h = 400 m (ajustáveis); animação em câmera lenta (tempo real no relógio). -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .sv-wrap{max-width:1000px;margin:1rem auto;}
+  .sv-wrap .sv-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .sv-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .sv-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .sv-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .sv-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .sv-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .sv-wrap #svSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .sv-wrap #svEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .sv-wrap #svEq b{color:#66308c;}
+</style>
+<div class="sv-wrap">
+  <div class="sv-row">
+    <button id="svPlay">⏸ Pausar</button>
+    <div class="sld"><label>T na superfície = <span class="val" id="svTv">28</span> °C</label>
+      <input type="range" id="svT" min="8" max="30" value="28" step="1"></div>
+    <div class="sld"><label>Gradiente da termoclina = <span class="val" id="svGv">0.05</span> °C/m</label>
+      <input type="range" id="svG" min="0.01" max="0.1" value="0.05" step="0.01"></div>
+    <div class="sld"><label>Profundidade do fundo h = <span class="val" id="svHv">400</span> m</label>
+      <input type="range" id="svH" min="100" max="1000" value="400" step="50"></div>
+  </div>
+  <div id="svSketch"></div>
+  <div id="svEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let tau=0, playing=true;                       // tau = tempo real do pulso (s)
+  const cw=()=>{ const w=(el('svSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+
+  new p5((p)=>{
+    let cache={key:'',z:[],v:[],ct:[],tTot:0,erroH:[],v0:0};
+    const N=400, ZMAX=1000;
+    const recalc=(Ts,g,h)=>{
+      const z=[],v=[],ct=[0];
+      for(let i=0;i<=N;i++){ const zz=ZMAX*i/N;
+        const T=Math.max(Ts-g*zz,4);
+        z.push(zz); v.push(1540-2.1*(28-T)); }
+      for(let i=1;i<=N;i++)
+        ct.push(ct[i-1]+(z[i]-z[i-1])*0.5*(1/v[i]+1/v[i-1]));
+      const idx=zz=>Math.min(N,Math.round(zz/ZMAX*N));
+      const erroH=[];
+      for(let i=0;i<=N;i++) erroH.push(v[0]*ct[i]-z[i]);
+      cache={key:Ts+'|'+g+'|'+h, z,v,ct,tTot:2*ct[idx(h)], erroH, v0:v[0], idx};
+    };
+
+    p.setup=()=>{ p.createCanvas(cw(),420).parent('svSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),420); };
+
+    p.draw=()=>{
+      const W=p.width;
+      const Ts=+el('svT').value, g=+el('svG').value, h=+el('svH').value;
+      el('svTv').textContent=Ts; el('svGv').textContent=g.toFixed(2); el('svHv').textContent=h;
+      if(cache.key!==Ts+'|'+g+'|'+h){ recalc(Ts,g,h); tau=0; }
+      const C=cache;
+      // câmera lenta: viagem completa em ~6 s de animação
+      if(playing) tau+=(p.deltaTime/1000)*(C.tTot/6);
+      if(tau>C.tTot) tau=0;
+      // posição do pulso: descida (0..tTot/2), subida (tTot/2..tTot)
+      const tt=tau<=C.tTot/2?tau:C.tTot-tau;
+      let iz=0; while(iz<N&&C.ct[iz]<tt) iz++;
+      const zp=C.z[iz];
+
+      p.background('#faf8f4');
+      const gy0=36, gy1=386, Yz=zz=>gy0+zz/ZMAX*(gy1-gy0);
+      // ── esquerda: perfis T e v ──
+      const px0=70, px1=300;
+      p.noStroke(); p.fill(140,175,215,40); p.rect(px0,gy0,px1-px0,Yz(h)-gy0);
+      p.fill('#8a8073'); p.rect(px0,Yz(h),px1-px0,6);
+      p.stroke('#d8cfc0'); p.strokeWeight(1); p.line(px0,gy0,px0,gy1);
+      const XT=T=>px0+(T-2)/30*(px1-px0),
+            XV=vv=>px0+(vv-1480)/62*(px1-px0);
+      const perfil=(fx,arr,col)=>{ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(2);
+        p.beginShape();
+        for(let i=0;i<=N;i++) p.vertex(fx(arr[i]),Yz(C.z[i]));
+        p.endShape(); p.pop(); };
+      perfil(XT,C.z.map((zz,i)=>Math.max(Ts-g*zz,4)),'#c81f1f');
+      perfil(XV,C.v,'#1f47c8');
+      p.noStroke(); p.textSize(11); p.textAlign(p.LEFT,p.TOP);
+      p.fill('#c81f1f'); p.text('T(z)',px0+6,gy0+4);
+      p.fill('#1f47c8'); p.text('v(z)',px0+56,gy0+4);
+      p.fill('#7a7367'); p.text('fundo: '+h+' m',px0+6,Yz(h)+10);
+      // pulso
+      p.fill('#333'); p.circle(px0+ (px1-px0)*0.5, Yz(zp), 11);
+      p.textSize(10.5); p.textAlign(p.LEFT,p.CENTER);
+      p.fill('#333'); p.text((tau<=C.tTot/2?'▼ descendo':'▲ subindo')+'  t = '+(tau*1000).toFixed(0)+' ms',
+        px0+(px1-px0)*0.5+12,Yz(zp));
+
+      // ── direita: erro × profundidade ──
+      const qx0=380, qx1=W-20;
+      const emax=Math.max(2,C.erroH[N]*1.1);
+      const Xe=e=>qx0+e/emax*(qx1-qx0);
+      p.stroke('#d8cfc0'); p.line(qx0,gy0,qx0,gy1); p.line(qx0,gy1,qx1,gy1);
+      p.noStroke(); p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      for(const e of [0,Math.round(emax/2),Math.round(emax)]) p.text(e+' m',Xe(e),gy1+4);
+      p.text('erro de profundidade indicada',(qx0+qx1)/2,gy1+18);
+      p.push(); p.noFill(); p.stroke('#66308c'); p.strokeWeight(2.2); p.beginShape();
+      for(let i=0;i<=N;i++) p.vertex(Xe(Math.max(0,C.erroH[i])),Yz(C.z[i]));
+      p.endShape(); p.pop();
+      const ih=C.idx(h), erro=C.erroH[ih], dInd=h+erro;
+      p.noStroke(); p.fill('#c85c2e'); p.circle(Xe(Math.max(0,erro)),Yz(h),10);
+
+      el('svEq').innerHTML='eco: t = '+(C.tTot*1000).toFixed(0)+' ms &nbsp;|&nbsp; '+
+        'aparelho (v = v(0) = '+C.v0.toFixed(0)+' m/s) indica <b>'+dInd.toFixed(1)+' m</b>'+
+        ' para fundo real de '+h+' m &nbsp;|&nbsp; erro = <b>+'+erro.toFixed(1)+' m ('+
+        (100*erro/h).toFixed(1)+'%)</b> — sentido inseguro';
+    };
+  });
+  el('svPlay').onclick=()=>{ playing=!playing;
+    el('svPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Com os valores do exemplo (28 °C, 0,05 °C/m, 400 m), confira no painel o erro
+   $+5{,}6$ m. Aumente o gradiente para 0,10 °C/m: o erro dobra? Por quê não exatamente?
+2. Reduza $T_{\text{sup}}$ para 8 °C (águas frias, termoclina fraca). O que acontece
+   com o erro? Que conclusão operacional tira disso sobre navegar em águas tropicais
+   estratificadas?
+3. O pulso passa mais tempo na parte funda (lenta) ou rasa (rápida) da coluna? Observe
+   o relógio na descida e explique por que o aparelho — que assume a água toda "rápida"
+   como a superfície — indica **mais** profundidade do que existe.
+:::
 
 **Conexão com o próximo tópico:** agora que sabemos como e por que o som se propaga, aprendemos a **caracterizar uma onda sonora** de forma completa — sua equação diferencial, como escrever a solução em termos de amplitude e fase, e como relacionar frequência, comprimento de onda e velocidade.

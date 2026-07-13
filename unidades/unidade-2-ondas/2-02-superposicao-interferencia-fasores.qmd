@@ -109,6 +109,173 @@ do casco separadas por metros — atrasos da ordem de ms — dentro de um mesmo 
 - **Esquecer que "mesma frequência" é condição para superposição simples:** se frequências diferem, há batimentos (tópico 2.7), não interferência estacionária.
 :::
 
-<!-- SIMULAÇÃO SUGERIDA: Diagrama de fasores interativo. Entrada: frequência (30–200 kHz, realista para ecobatímetro), amplitude (A₁ e A₂, cada uma 0–2 unidades), diferença de fase (0–360°, slider). Saída: círculo com dois vetores (fasores 1 e 2) em cores diferentes, vetor resultante em preto, amplitude resultante numérica, gráfico y(t) da onda resultante (senoide). Lib: p5.js ou Plotly. Parâmetros realistas de sonar. -->
+## Veja a soma de fasores
+
+À esquerda, os dois fasores giram juntos (a diferença de fase $\Delta\varphi$ entre eles
+é fixa) e o fasor cinza mostra a soma vetorial — a ponta dele é a ponta do segundo fasor
+transladado (regra do paralelogramo). À direita, a projeção de cada fasor gera a
+respectiva onda; a onda roxa é a soma. Os valores iniciais reproduzem o exemplo do
+texto: $A_1 = A_0$, $A_2 = 0{,}4A_0$, $\Delta\varphi = 120°$.
+
+```{python}
+#| fig-cap: "Soma por fasores com A₁ = 1, A₂ = 0,4 e Δφ = 120° (o exemplo do texto). Esq.: diagrama de fasores em t = 0 — o resultante (roxo) é a soma vetorial. Dir.: as ondas correspondentes; a resultante tem A_res = 0,87, interferência parcialmente destrutiva. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+A1, A2, dphi = 1.0, 0.4, np.radians(120)
+Ares = np.sqrt(A1**2 + A2**2 + 2*A1*A2*np.cos(dphi))
+
+fig, (axc, axg) = plt.subplots(1, 2, figsize=(9, 3.8),
+                               gridspec_kw={'width_ratios': [1, 1.8]})
+for ang, A, c in [(0, A1, '#C81F1F'), (dphi, A2, '#1F47C8')]:
+    axc.annotate('', xy=(A*np.cos(ang), A*np.sin(ang)), xytext=(0, 0),
+                 arrowprops=dict(arrowstyle='-|>', color=c, lw=2))
+rx, ry = A1 + A2*np.cos(dphi), A2*np.sin(dphi)
+axc.plot([A1, rx], [0, ry], ':', color='0.6')
+axc.annotate('', xy=(rx, ry), xytext=(0, 0),
+             arrowprops=dict(arrowstyle='-|>', color='#66308C', lw=2.6))
+axc.add_patch(plt.Circle((0, 0), 1.45, fill=False, ls='--', color='0.85'))
+axc.set_xlim(-1.5, 1.5); axc.set_ylim(-1.5, 1.5)
+axc.set_aspect('equal'); axc.axis('off')
+axc.set_title(f'$A_{{res}}$ = {Ares:.2f}', fontsize=10)
+
+t = np.linspace(0, 3, 900)
+w = 2*np.pi
+axg.plot(t, A1*np.cos(w*t), color='#C81F1F', lw=1.1, label='$y_1$')
+axg.plot(t, A2*np.cos(w*t + dphi), color='#1F47C8', lw=1.1, label='$y_2$')
+axg.plot(t, A1*np.cos(w*t) + A2*np.cos(w*t + dphi), color='#66308C', lw=2.2,
+         label='$y_1+y_2$')
+axg.axhline(0, lw=0.5, color='0.7'); axg.legend(fontsize=8, loc='upper right')
+axg.set_xlabel('t (períodos)'); axg.set_ylabel('y')
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo — o fasor é um vetor
+     girante; a construção geométrica da soma é o que o RA pede aplicar). p5 de libs/
+     (offline, Q6). Mesmos parâmetros da versão matplotlib: A1 = 1, A2 = 0,4, Δφ = 120°
+     (ajustáveis). -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .ph-wrap{max-width:1000px;margin:1rem auto;}
+  .ph-wrap .ph-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .ph-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .ph-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .ph-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .ph-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .ph-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .ph-wrap #phSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .ph-wrap #phEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .ph-wrap #phEq b{color:#66308c;}
+</style>
+<div class="ph-wrap">
+  <div class="ph-row">
+    <button id="phPlay">⏸ Pausar</button>
+    <div class="sld"><label>A<sub>1</sub> = <span class="val" id="phA1v">1.0</span></label>
+      <input type="range" id="phA1" min="0" max="1.5" value="1.0" step="0.05"></div>
+    <div class="sld"><label>A<sub>2</sub> = <span class="val" id="phA2v">0.4</span></label>
+      <input type="range" id="phA2" min="0" max="1.5" value="0.4" step="0.05"></div>
+    <div class="sld"><label>Δφ = <span class="val" id="phDv">120</span>°</label>
+      <input type="range" id="phD" min="0" max="360" value="120" step="5"></div>
+    <div class="sld"><label>Velocidade anim. = <span class="val" id="phSv">1</span>×</label>
+      <input type="range" id="phS" min="0.25" max="3" value="1" step="0.25"></div>
+  </div>
+  <div id="phSketch"></div>
+  <div id="phEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let t=0, playing=true;
+  const cw=()=>{ const w=(el('phSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+
+  new p5((p)=>{
+    const seta=(x0,y0,x1,y1,col,wt)=>{ p.push(); p.stroke(col); p.strokeWeight(wt); p.fill(col);
+      p.line(x0,y0,x1,y1); const a=Math.atan2(y1-y0,x1-x0),s=9;
+      p.translate(x1,y1); p.rotate(a); p.noStroke(); p.triangle(0,0,-s,-s*0.45,-s,s*0.45); p.pop(); };
+
+    p.setup=()=>{ p.createCanvas(cw(),400).parent('phSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),400); };
+
+    p.draw=()=>{
+      const W=p.width;
+      const A1=+el('phA1').value, A2=+el('phA2').value,
+            dphi=(+el('phD').value)*Math.PI/180, spd=+el('phS').value;
+      el('phA1v').textContent=A1.toFixed(2); el('phA2v').textContent=A2.toFixed(2);
+      el('phDv').textContent=el('phD').value; el('phSv').textContent=spd;
+      if(playing) t+=(p.deltaTime/1000)*spd;
+      const w=2*Math.PI*0.4;                 // giro visual lento
+      const Ares=Math.sqrt(A1*A1+A2*A2+2*A1*A2*Math.cos(dphi));
+
+      p.background('#faf8f4');
+      // ── esquerda: círculo de fasores ──
+      const cx=150, cy=200, R=52;            // R = escala px por unidade de amplitude
+      p.noFill(); p.stroke('#d8cfc0'); p.strokeWeight(1);
+      p.drawingContext.setLineDash([5,5]); p.circle(cx,cy,2*R*1.5);
+      p.drawingContext.setLineDash([]);
+      p.line(cx-R*1.6,cy,cx+R*1.6,cy); p.line(cx,cy-R*1.6,cx,cy+R*1.6);
+      const a1=w*t, a2=w*t+dphi;
+      const x1=cx+A1*R*Math.cos(a1), y1=cy-A1*R*Math.sin(a1);
+      const x2=cx+A2*R*Math.cos(a2), y2=cy-A2*R*Math.sin(a2);
+      const xr=cx+(A1*Math.cos(a1)+A2*Math.cos(a2))*R,
+            yr=cy-(A1*Math.sin(a1)+A2*Math.sin(a2))*R;
+      // A2 transladado (tip-to-tail)
+      p.stroke('#b8c2e5'); p.strokeWeight(1.4);
+      p.drawingContext.setLineDash([4,4]); p.line(x1,y1,xr,yr); p.drawingContext.setLineDash([]);
+      seta(cx,cy,x1,y1,'#c81f1f',2.4);
+      seta(cx,cy,x2,y2,'#1f47c8',2.4);
+      seta(cx,cy,xr,yr,'#66308c',3);
+      p.noStroke(); p.textSize(11); p.fill('#7a7367'); p.textAlign(p.CENTER,p.TOP);
+      p.text('fasores girando com ω',cx,368);
+
+      // ── direita: ondas y(t) ──
+      const gx0=310, gx1=W-14, gyc=200, half=150, win=8, pps=(gx1-gx0)/win;
+      p.stroke('#bdb4a4'); p.line(gx0,gyc,gx1,gyc);
+      p.stroke('#d8cfc0'); p.line(gx0,gyc-half,gx0,gyc+half);
+      const esc=half/(3.1);
+      const curva=(fn,col,wt)=>{ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(wt);
+        p.beginShape();
+        for(let gx=gx0;gx<=gx1;gx++){ const tt=t-(gx-gx0)/pps;
+          p.vertex(gx,gyc-fn(tt)*esc); }
+        p.endShape(); p.pop(); };
+      curva(tt=>A1*Math.cos(w*tt),'#e5b8b8',1.2);
+      curva(tt=>A2*Math.cos(w*tt+dphi),'#b8c2e5',1.2);
+      curva(tt=>A1*Math.cos(w*tt)+A2*Math.cos(w*tt+dphi),'#66308c',2.4);
+      // liga a ponta do resultante à onda
+      p.stroke('#c85c2e'); p.strokeWeight(1.2);
+      p.drawingContext.setLineDash([4,4]); p.line(xr,yr,gx0,yr);
+      p.drawingContext.setLineDash([]);
+      p.noStroke(); p.fill('#66308c'); p.circle(gx0,gyc-(A1*Math.cos(w*t)+A2*Math.cos(w*t+dphi))*esc,8);
+      p.textSize(11); p.textAlign(p.LEFT,p.CENTER);
+      p.fill('#c81f1f'); p.text('y₁',gx0+6,gyc-half+10);
+      p.fill('#1f47c8'); p.text('y₂',gx0+6,gyc-half+26);
+      p.fill('#66308c'); p.text('y₁+y₂',gx0+6,gyc-half+42);
+
+      const tipo=Math.abs(Ares-(A1+A2))<0.02?'construtiva (máxima)':
+                 (Math.abs(Ares-Math.abs(A1-A2))<0.02?'destrutiva (mínima)':'parcial');
+      el('phEq').innerHTML='A<sub>res</sub> = √(A₁² + A₂² + 2A₁A₂cos Δφ) = <b>'+
+        Ares.toFixed(2)+'</b> &nbsp;|&nbsp; A₁+A₂ = '+(A1+A2).toFixed(2)+
+        ', |A₁−A₂| = '+Math.abs(A1-A2).toFixed(2)+' &nbsp;|&nbsp; interferência '+tipo;
+    };
+  });
+  el('phPlay').onclick=()=>{ playing=!playing;
+    el('phPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Com $A_1 = A_2 = 1$, varra $\Delta\varphi$ de $0°$ a $360°$. Em que ângulos
+   $A_{\text{res}} = 2$? Em qual $A_{\text{res}} = 0$? Confira no gráfico que a onda
+   roxa desaparece de fato.
+2. O fasor cinza tracejado é $A_2$ transladado para a ponta de $A_1$. Por que a soma de
+   ondas de mesma frequência vira geometria de triângulo? Que papel o giro comum
+   $\omega t$ desempenha?
+3. Reproduza o eco duplo do texto ($A_1 = 1$, $A_2 = 0{,}4$, $\Delta\varphi = 120°$) e
+   verifique $A_{\text{res}} \approx 0{,}87$. Se o operador pudesse ajustar a
+   frequência para levar $\Delta\varphi$ a $0°$, qual seria o ganho de amplitude?
+:::
 
 **Conexão com o próximo tópico:** quando ondas viajam num meio com contornos (superfícies sólidas, fundos, mudanças de propriedade), elas não apenas interferem — **refletem**. A reflexão é a origem dos ecos de sonar e ecobatímetro, e a chave para entender modos normais de vibração.

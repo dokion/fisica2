@@ -123,6 +123,137 @@ lei usual de atenuação.
 - **Ignorar não-linearidade em choques:** acima de certo nível de pressão, equações lineares de onda (incluindo Doppler simples) falham. Shocks têm atraso de energia, absorção, e comportamento altamente não-linear.
 :::
 
-<!-- SIMULAÇÃO SUGERIDA: Mostrar objeto (ponto) movendo-se em plano 2D, emitindo ondas sonoras (círculos). Controle deslizador: número de Mach M (0,5–3, em tempo real). Para M < 1: ondas precedem o objeto (subsônico usual). Para M = 1: onda "congela" à frente. Para M > 1: cone de Mach se forma, com ângulo α = arcsin(1/M). Mostrar também: "histórico" de ondas (10–20 quadros anteriores) como anéis concêntricos que formam o cone. Lib p5.js (animação contínua, renderização de círculos com degradação de opacidade). Exibir M, α (em graus) em tempo real no canto. -->
+## Veja o cone de Mach se formar
+
+O mesmo experimento do tópico 2.8, agora atravessando $M = 1$. Em regime subsônico as
+ondas precedem o objeto; em $M = 1$ elas se acumulam na frente dele; em $M > 1$ o objeto
+ultrapassa as próprias ondas e a envoltória dos círculos vira um **cone** de meio-ângulo
+$\alpha = \arcsin(1/M)$ — desenhado em vermelho sobre a animação. Deslize o número de
+Mach e observe a transição.
+
+```{python}
+#| fig-cap: "Frentes de onda de um objeto a M = 2: cada círculo foi emitido de um ponto da trajetória; a envoltória comum é o cone de Mach, de meio-ângulo α = arcsen(1/2) = 30°. Toda a energia ondulatória se concentra nessa superfície — a onda de choque. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+M, c, Te, N = 2.0, 1.0, 0.5, 9
+t_agora = N*Te
+x_obj = M*c*t_agora
+
+fig, ax = plt.subplots(figsize=(9, 4.4))
+for i in range(N):
+    t_e = i*Te
+    ax.add_patch(plt.Circle((M*c*t_e, 0), c*(t_agora - t_e), fill=False,
+                            color='#1F47C8', alpha=0.25 + 0.7*i/N, lw=1.5))
+alpha = np.arcsin(1/M)
+L = 11.0
+ax.plot([x_obj, x_obj - L*np.cos(alpha)], [0,  L*np.sin(alpha)],
+        color='#C81F1F', lw=2.4)
+ax.plot([x_obj, x_obj - L*np.cos(alpha)], [0, -L*np.sin(alpha)],
+        color='#C81F1F', lw=2.4)
+ax.plot(x_obj, 0, 'o', ms=10, color='#C85C2E')
+ax.annotate(f'α = {np.degrees(alpha):.0f}°', xy=(x_obj - 2.6, 0.6),
+            fontsize=11, color='#C81F1F')
+ax.set_xlim(-1.5, 11); ax.set_ylim(-5.2, 5.2)
+ax.set_aspect('equal'); ax.axis('off')
+ax.set_title('M = 2: as frentes se acumulam no cone de Mach', fontsize=10)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo — a formação da
+     envoltória cônica é a própria física do RA). p5 de libs/ (offline, Q6). Mesmos
+     parâmetros da versão matplotlib: M ajustável de 0,5 a 3 cruzando M = 1. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .mc-wrap{max-width:1000px;margin:1rem auto;}
+  .mc-wrap .mc-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .mc-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .mc-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .mc-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .mc-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .mc-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .mc-wrap #mcSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .mc-wrap #mcEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .mc-wrap #mcEq b{color:#c81f1f;}
+</style>
+<div class="mc-wrap">
+  <div class="mc-row">
+    <button id="mcPlay">⏸ Pausar</button>
+    <div class="sld"><label>Número de Mach M = <span class="val" id="mcMv">2.0</span></label>
+      <input type="range" id="mcM" min="0.5" max="3" value="2.0" step="0.1"></div>
+    <div class="sld"><label>Velocidade anim. = <span class="val" id="mcSv">1</span>×</label>
+      <input type="range" id="mcS" min="0.25" max="3" value="1" step="0.25"></div>
+  </div>
+  <div id="mcSketch"></div>
+  <div id="mcEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let t=0, playing=true, fontes=[], tEmit=0;
+  const cw=()=>{ const w=(el('mcSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),380).parent('mcSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),380); fontes=[]; t=0; tEmit=0; };
+
+    p.draw=()=>{
+      const W=p.width;
+      const M=+el('mcM').value, spd=+el('mcS').value;
+      el('mcMv').textContent=M.toFixed(1); el('mcSv').textContent=spd;
+      const c=68, Te=0.5, cy=190, x0=50;
+      if(playing) t+=(p.deltaTime/1000)*spd;
+      const xf=x0+M*c*t;
+      if(xf>W-40){ t=0; tEmit=0; fontes=[]; }
+      if(t>=tEmit){ fontes.push({x:x0+M*c*t,t0:t}); tEmit+=Te; }
+      fontes=fontes.filter(fr=>c*(t-fr.t0)<W*1.3);
+
+      p.background('#faf8f4');
+      p.noFill();
+      for(const fr of fontes){ const R=c*(t-fr.t0);
+        p.stroke(31,71,200,Math.max(28,190-R*0.5)); p.strokeWeight(1.7);
+        p.circle(fr.x,cy,2*R); }
+      // cone de Mach
+      if(M>1){
+        const a=Math.asin(1/M), L=W;
+        p.stroke('#c81f1f'); p.strokeWeight(2.6);
+        p.line(xf,cy,xf-L*Math.cos(a),cy-L*Math.sin(a));
+        p.line(xf,cy,xf-L*Math.cos(a),cy+L*Math.sin(a));
+        p.noStroke(); p.fill('#c81f1f'); p.textSize(12);
+        p.textAlign(p.LEFT,p.BOTTOM);
+        p.text('α = '+(a*180/Math.PI).toFixed(0)+'°',Math.max(xf-110,10),cy-12);
+      }
+      p.noStroke(); p.fill('#c85c2e'); p.circle(xf,cy,13);
+      const regime=M<0.99?['SUBSÔNICO — as ondas precedem o objeto','#1f47c8']:
+        (M<1.01?['SÔNICO — as ondas congelam à frente (M = 1)','#66308c']:
+                ['SUPERSÔNICO — o objeto ultrapassa as próprias ondas','#c81f1f']);
+      p.fill(regime[1]); p.textSize(12.5); p.textAlign(p.CENTER,p.TOP);
+      p.text(regime[0],W/2,344);
+
+      el('mcEq').innerHTML='M = v<sub>obj</sub>/v<sub>som</sub> = '+M.toFixed(1)+
+        (M>1?' &nbsp;|&nbsp; <b>α = arcsen(1/M) = '+(Math.asin(1/M)*180/Math.PI).toFixed(1)+'°</b>':
+             ' &nbsp;|&nbsp; sem cone (M ≤ 1)')+
+        ' &nbsp;|&nbsp; referência: som no ar ≈ 340 m/s, na água ≈ 1500 m/s';
+    };
+  });
+  el('mcPlay').onclick=()=>{ playing=!playing;
+    el('mcPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+  el('mcM').addEventListener('input',()=>{ t=0; tEmit=0; fontes=[]; });
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Ponha $M = 0{,}9$ e depois $1{,}1$: qualitativamente, o que muda na região *à
+   frente* do objeto? Por que exatamente em $M = 1$ a amplitude cresce tanto aí?
+2. Com $M = 2$, pause e verifique com uma régua na tela que a reta vermelha é tangente
+   a todos os círculos. Por que a envoltória é reta (cone), e não curva?
+3. Aumente $M$ de 1,5 para 3: o cone abre ou fecha? Um observador fora do cone ouve o
+   objeto? E dentro? Use isso para explicar por que o estrondo sônico chega *depois*
+   de o objeto passar.
+:::
 
 **Conexão com o próximo tópico:** Completamos o estudo de **ondas em meios elásticos e ondas sonoras** (UE 2). O próximo grande tópico, UE 3, aborda **Mecânica dos Fluidos** — que, embora estude escoamentos e forças em fluidos, está intimamente ligado à ondulatória acústica via conceitos de pressão, densidade e propagação de perturbações.
