@@ -106,59 +106,59 @@ $\vec{a}_c$ do MCU.
 
 ## Veja o círculo virar senoide
 
-A simulação abaixo mostra o **fasor** — o vetor que gira em MCU (esquerda) — e a sua
-projeção no eixo vertical traçando o MHS no tempo (direita), com o período de balanço
-típico de um navio. A linha horizontal tracejada liga a **ponta do fasor** ao valor
-instantâneo da onda: a altura do fasor *é* a posição. Ligue **Velocidade** e
-**Aceleração** para ver que $v$ adianta a posição em $90°$ e $a$ fica em oposição
-($180°$); ligue **Referência φ=0** para enxergar a defasagem como o ângulo entre dois
-fasores.
+A simulação abaixo mostra o **fasor** — o vetor que gira em MCU — e a sua projeção
+sobre o eixo **horizontal**: o ponto roxo que desliza no trilho, logo abaixo do
+círculo, é o oscilador em MHS. À direita, o gráfico $x(t)$ correspondente. Ligue
+**Velocidade** e **Aceleração** para ver que $v$ adianta a posição em $90°$ e $a$ fica
+em oposição ($180°$); ligue **Referência φ=0** para enxergar a defasagem como o ângulo
+entre dois fasores. O botão **t = 0** zera o tempo e pausa, para ajustar os parâmetros
+na condição inicial.
 
 ```{python}
-#| fig-cap: "Fasor girante (círculo, à esq.) e a projeção vertical gerando o MHS x(t) (à dir.). A tracejada leva a altura do fasor até a onda. Parâmetros de roll típico: amplitude 10°, período T = 12 s."
+#| fig-cap: "Fasor girante (à esq.) e a projeção horizontal — o ponto roxo no diâmetro — gerando o MHS x(t) (à dir.). Parâmetros: A = 10, ω = 0,52 rad/s (T ≈ 12 s), φ = 0 — os mesmos da versão interativa."
 #| echo: false
 # Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
 import numpy as np
 import matplotlib.pyplot as plt
 
-thetam, T, phi = 10.0, 12.0, 0.0   # amplitude (°), período (s), fase — faixa SP3
-w  = 2*np.pi/T
+A, w, phi = 10.0, 0.52, 0.0        # amplitude, frequência angular (rad/s), fase
+T  = 2*np.pi/w
 t  = np.linspace(0, 2*T, 600)
 t0 = 0.30*T                        # instante destacado
-a0 = w*t0 + phi                    # ângulo do fasor (0 = topo, CCW)
+a0 = w*t0 + phi                    # ângulo do fasor (0 = eixo +x, CCW)
 
 fig, (axc, axg) = plt.subplots(1, 2, figsize=(9, 3.8),
                                gridspec_kw={'width_ratios': [1, 1.9]})
 
-# ── esquerda: círculo + fasor, projeção VERTICAL = x(t) ──
+# ── esquerda: círculo + fasor, projeção HORIZONTAL = x(t) ──
 ang = np.linspace(0, 2*np.pi, 200)
-axc.plot(np.sin(ang), np.cos(ang), color='0.7', lw=1, ls='--')     # raio = θm
-tx, ty = -np.sin(a0), np.cos(a0)
+axc.plot(np.cos(ang), np.sin(ang), color='0.7', lw=1, ls='--')     # raio = A
+tx, ty = np.cos(a0), np.sin(a0)
 axc.annotate('', xy=(tx, ty), xytext=(0, 0),
              arrowprops=dict(arrowstyle='-|>', color='#7A2214', lw=2.5))  # fasor
-axc.plot([tx, 0], [ty, ty], ':', color='0.5')                     # projeção horizontal
-axc.plot([0, 0], [-1.15, 1.15], color='0.6', lw=0.8)              # eixo de oscilação
-axc.plot(0, ty, 'o', ms=9, color='#66308C')                       # oscilador (MHS)
-axc.plot([0, 0], [1, -1], 'o', ms=4, color='#4D4DFF')
-axc.text(0.1,  1.02, '+θm', va='center', fontsize=9, color='#5A5AB0')
-axc.text(0.1, -1.02, '−θm', va='center', fontsize=9, color='#5A5AB0')
+axc.plot([tx, tx], [ty, 0], ':', color='0.5')                     # projeção vertical
+axc.plot([-1.15, 1.15], [0, 0], color='0.6', lw=0.8)              # eixo de oscilação
+axc.plot(tx, 0, 'o', ms=9, color='#66308C')                       # oscilador (MHS)
+axc.plot([1, -1], [0, 0], 'o', ms=4, color='#4D4DFF')
+axc.text( 1.02, -0.14, '+A', ha='center', va='top', fontsize=9, color='#5A5AB0')
+axc.text(-1.02, -0.14, '−A', ha='center', va='top', fontsize=9, color='#5A5AB0')
 axc.set_aspect('equal'); axc.axis('off'); axc.set_title('MCU + fasor')
 
-# ── direita: x(t) com a "tie-line" no valor atual ──
-axg.plot(t, thetam*np.cos(w*t+phi), color='#1F47C8', lw=2)
-axg.plot(t0, thetam*np.cos(a0), 'o', ms=8, color='#1F47C8')
-axg.axhline(thetam*np.cos(a0), color='#C85C2E', ls=':', lw=1.2)   # tie-line
+# ── direita: x(t) com o instante destacado ──
+axg.plot(t, A*np.cos(w*t+phi), color='#1F47C8', lw=2)
+axg.plot(t0, A*np.cos(a0), 'o', ms=8, color='#1F47C8')
+axg.axhline(A*np.cos(a0), color='#C85C2E', ls=':', lw=1.2)
 axg.axhline(0, lw=0.5, color='0.7')
-axg.set_title(r'$x(t) = \theta_m\cos(\omega t + \varphi)$')
-axg.set_xlabel('t (s)'); axg.set_ylabel('ângulo de banda (°)')
+axg.set_title(r'$x(t) = A\cos(\omega t + \varphi)$')
+axg.set_xlabel('t (s)'); axg.set_ylabel('x(t)')
 plt.tight_layout(); plt.show()
 ```
 
 ```{=html}
 <!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo). p5 de libs/ (offline, Q6).
-     Responsivo: empilha círculo/gráfico em telas estreitas (mobile). Mesmos parâmetros da
-     versão matplotlib (θm=10°, T=12 s, φ=0). Reproduz o applet GeoGebra do professor:
-     fasor girante, projeção vertical, curvas x/v/a e referência de fase φ=0 (fantasma cinza). -->
+     Oscilador horizontal: o fasor gira no círculo e a projeção sobre o diâmetro
+     horizontal (trilho) é o MHS. Gráfico x(t) à direita, mesmos parâmetros da versão
+     matplotlib (A = 10, ω = 0,52 rad/s, φ = 0). Responsivo: empilha em telas estreitas. -->
 <script src="../../libs/p5.min.js"></script>
 <style>
   .mf-wrap{max-width:1000px;margin:1rem auto;}
@@ -170,26 +170,26 @@ plt.tight_layout(); plt.show()
   .mf-wrap .chk{display:flex;align-items:center;gap:5px;font-size:13px;white-space:nowrap;}
   .mf-wrap .chk input{accent-color:#c85c2e;width:15px;height:15px;}
   .mf-wrap .sw{width:11px;height:11px;border-radius:2px;display:inline-block;}
-  .mf-wrap #mfPlay{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .mf-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
   .mf-wrap #mfSketch canvas{display:block;border-radius:8px;max-width:100%;}
   .mf-wrap #mfEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .mf-wrap #mfEq b{color:#1f47c8;}
 </style>
 <div class="mf-wrap">
-<div class="mf-row">
+  <div class="mf-row">
     <button id="mfPlay">⏸ Pausar</button>
-    <div class="sld"><label>Amplitude θ<sub>m</sub> = <span class="val" id="mfAv">10</span>°</label>
+    <button id="mfZero">↺ t = 0</button>
+    <div class="sld"><label>Amplitude A = <span class="val" id="mfAv">10</span></label>
       <input type="range" id="mfA" min="4" max="16" value="10" step="1"></div>
-    <div class="sld"><label>Período T = <span class="val" id="mfTv">12</span> s</label>
-      <input type="range" id="mfT" min="8" max="25" value="12" step="0.5"></div>
+    <div class="sld"><label>ω = <span class="val" id="mfWv">0.52</span> rad/s</label>
+      <input type="range" id="mfW" min="0.2" max="2" value="0.52" step="0.02"></div>
     <div class="sld"><label>Fase φ = <span class="val" id="mfFv">0</span></label>
       <input type="range" id="mfF" min="-180" max="180" value="0" step="5"></div>
     <div class="sld"><label>Velocidade anim. = <span class="val" id="mfSv">1</span>×</label>
       <input type="range" id="mfS" min="0.25" max="3" value="1" step="0.25"></div>
   </div>
   <div class="mf-row">
-    <span class="chk"><input type="checkbox" id="mfFas" checked><span class="sw" style="background:#7a2214"></span>Fasor</span>
-    <span class="chk"><input type="checkbox" id="mfCir" checked>Círculo (MCU)</span>
+    <span class="chk"><input type="checkbox" id="mfFas" checked><span class="sw" style="background:#7a2214"></span>Fasor + círculo (MCU)</span>
     <span class="chk"><input type="checkbox" id="mfPos" checked><span class="sw" style="background:#1f47c8"></span>Posição x(t)</span>
     <span class="chk"><input type="checkbox" id="mfVel"><span class="sw" style="background:#c81f1f"></span>Velocidade v(t)</span>
     <span class="chk"><input type="checkbox" id="mfAce"><span class="sw" style="background:#1f8a3a"></span>Aceleração a(t)</span>
@@ -207,18 +207,19 @@ plt.tight_layout(); plt.show()
     return m[a]?s+m[a]:s+a.toFixed(2)+"π"; };
   const GRAY='#9a938a';
 
-  // largura disponível → resolução do canvas (1:1, sem distorção)
   const cw=()=>{ const w=(el('mfSketch').clientWidth)||960; return Math.max(320,Math.min(1000,w)); };
-  // layout depende só da largura (retorna também a altura necessária)
+  // layout: círculo + trilho (esq.) e gráfico (dir.); empilha em tela estreita
   function lay(W){
     const narrow = W<700;
     if(!narrow){
-      const H=440, yc=H/2, Rmax=Math.min(W*0.15, H*0.40);
-      return {narrow,H,Rmax,C:{x:W*0.21,y:yc},G:{x0:W*0.42,x1:W-14,yc,half:Rmax*1.05}};
+      const Rmax=Math.min(W*0.15,116), cy=40+Rmax, railY=cy+Rmax+34;
+      return {narrow,Rmax,C:{x:W*0.21,y:cy},railY,
+              G:{x0:W*0.44,x1:W-14,yc:210,half:Rmax*1.05},H:Math.max(railY+52,210+Rmax*1.05+46)};
     }else{
-      const Rmax=Math.min(W*0.34,120), circY=28+Rmax+14;
-      const gyc=circY+Rmax+48+Rmax*1.05, H=gyc+Rmax*1.05+42;
-      return {narrow,H,Rmax,C:{x:W/2,y:circY},G:{x0:30,x1:W-14,yc:gyc,half:Rmax*1.05}};
+      const Rmax=Math.min(W*0.30,105), cy=36+Rmax, railY=cy+Rmax+32;
+      const gyc=railY+52+Rmax*1.05, H=gyc+Rmax*1.05+42;
+      return {narrow,Rmax,C:{x:W/2,y:cy},railY,
+              G:{x0:30,x1:W-14,yc:gyc,half:Rmax*1.05},H};
     }
   }
 
@@ -235,23 +236,26 @@ plt.tight_layout(); plt.show()
 
     p.draw=()=>{
       const W=p.width, L=lay(W), C=L.C, G=L.G;
-      const A=+el('mfA').value,T=+el('mfT').value,phi=grau(+el('mfF').value),
-            spd=+el('mfS').value,w=2*Math.PI/T,vs=L.Rmax/16,R=A*vs;
-      const sFas=el('mfFas').checked,sCir=el('mfCir').checked,sPos=el('mfPos').checked,
-            sVel=el('mfVel').checked,sAce=el('mfAce').checked,sRef=el('mfRef').checked;
-      el('mfAv').textContent=A; el('mfTv').textContent=T;
+      const A=+el('mfA').value, w=+el('mfW').value, phi=grau(+el('mfF').value),
+            spd=+el('mfS').value, vs=L.Rmax/16, R=A*vs, T=2*Math.PI/w;
+      const sFas=el('mfFas').checked, sPos=el('mfPos').checked,
+            sVel=el('mfVel').checked, sAce=el('mfAce').checked, sRef=el('mfRef').checked;
+      el('mfAv').textContent=A; el('mfWv').textContent=w.toFixed(2);
       el('mfFv').textContent=faseTxt(+el('mfF').value); el('mfSv').textContent=spd;
       if(playing) t+=(p.deltaTime/1000)*spd;
       const a1=w*t+phi, aRef=w*t;
-      const tipX=C.x-R*Math.sin(a1), tipY=C.y-R*Math.cos(a1);
-      const rTipX=C.x-R*Math.sin(aRef), rTipY=C.y-R*Math.cos(aRef);
+      const tipX=C.x+R*Math.cos(a1),  tipY=C.y-R*Math.sin(a1);
+      const rTipX=C.x+R*Math.cos(aRef), rTipY=C.y-R*Math.sin(aRef);
+      const xOf=tt=>A*Math.cos(w*tt+phi), vOf=tt=>-A*w*Math.sin(w*tt+phi),
+            aOf=tt=>-A*w*w*Math.cos(w*tt+phi), xRef=tt=>A*Math.cos(w*tt);
 
       p.background('#faf8f4');
       p.noStroke(); p.fill('#7a7367'); p.textSize(12); p.textAlign(p.CENTER,p.TOP);
-      if(L.narrow){ p.text('MCU + fasor',C.x,8); p.text('MHS no tempo',(G.x0+G.x1)/2,G.yc-G.half-20); }
-      else{ p.text('MCU + fasor',C.x,6); p.text('MHS no tempo',(G.x0+G.x1)/2,6); }
+      p.text('MCU + fasor',C.x,6);
+      if(L.narrow) p.text('MHS no tempo',(G.x0+G.x1)/2,G.yc-G.half-20);
+      else p.text('MHS no tempo',(G.x0+G.x1)/2,6);
 
-      // ─────────── GRÁFICO ───────────
+      // ─────────── GRÁFICO x(t) ───────────
       const win=2.4*T, pps=(G.x1-G.x0)/win;
       p.stroke('#e7e0d4'); p.strokeWeight(1);
       for(let k=0;k*(T/4)<=win;k++){const gx=G.x1-k*(T/4)*pps; if(gx>=G.x0) p.line(gx,G.yc-G.half,gx,G.yc+G.half);}
@@ -260,8 +264,6 @@ plt.tight_layout(); plt.show()
       p.noStroke(); p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
       for(let k=0;k*(T/2)<=win;k++){const tt=t-k*(T/2),gx=G.x1-k*(T/2)*pps; if(gx>=G.x0-1&&tt>=0) p.text(tt.toFixed(0)+'s',gx,G.yc+G.half+4);}
 
-      const xOf=tt=>A*Math.cos(w*tt+phi), vOf=tt=>-A*w*Math.sin(w*tt+phi),
-            aOf=tt=>-A*w*w*Math.cos(w*tt+phi), xRef=tt=>A*Math.cos(w*tt);
       const curve=(fn,peak,visual,col,wt)=>{ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(wt); p.beginShape();
         for(let gx=G.x0;gx<=G.x1;gx++){const tt=t-(G.x1-gx)/pps; if(tt<0) continue; p.vertex(gx,G.yc-fn(tt)/peak*visual);}
         p.endShape(); p.pop(); };
@@ -276,62 +278,65 @@ plt.tight_layout(); plt.show()
       if(sVel){p.fill('#c81f1f'); p.text('v(t): velocidade  (esc. rel.)',G.x0+8,ly); ly+=16;}
       if(sAce){p.fill('#1f8a3a'); p.text('a(t): aceleração  (esc. rel.)',G.x0+8,ly); ly+=16;}
       if(sRef){p.fill(GRAY); p.text('x₀(t): referência φ=0',G.x0+8,ly); ly+=16;}
-      // cabeças de onda + tie-lines (só no modo largo, onde há alinhamento horizontal)
-      const penY=G.yc-xOf(t)*vs, rPenY=G.yc-xRef(t)*vs;
-      if(!L.narrow){
-        if(sRef) dash(rTipX,rTipY,G.x1,rPenY,GRAY,1,[3,4]);
-        dash(tipX,tipY,G.x1,penY,'#c85c2e',1.2,[4,4]);
-      }
-      if(sRef){ p.noStroke(); p.fill(GRAY); p.circle(G.x1,rPenY,6); }
-      if(sPos){ p.noStroke(); p.fill('#1f47c8'); p.circle(G.x1,penY,7); }
+      // cabeças de onda
+      if(sRef){ p.noStroke(); p.fill(GRAY); p.circle(G.x1,G.yc-xRef(t)*vs,6); }
+      if(sPos){ p.noStroke(); p.fill('#1f47c8'); p.circle(G.x1,G.yc-xOf(t)*vs,7); }
 
-      // ─────────── CÍRCULO + FASOR ───────────
-      p.stroke('#bdb4a4'); p.strokeWeight(1); p.line(C.x,C.y-R-24,C.x,C.y+R+24);
-      if(sCir){
+      // ─────────── CÍRCULO + FASOR + TRILHO ───────────
+      // trilho horizontal (eixo de oscilação) — sempre visível
+      p.stroke('#bdb4a4'); p.strokeWeight(1);
+      p.line(C.x-L.Rmax-24,L.railY,C.x+L.Rmax+24,L.railY);
+      p.noStroke(); p.fill('#8a8ad6'); p.circle(C.x-R,L.railY,6); p.circle(C.x+R,L.railY,6);
+      p.fill('#5a5ab0'); p.textSize(11); p.textAlign(p.CENTER,p.TOP);
+      p.text('−A',C.x-R,L.railY+9); p.text('+A',C.x+R,L.railY+9);
+
+      if(sFas){
+        // círculo do MCU
         p.push(); p.noFill(); p.stroke('#9a9184'); p.strokeWeight(1.5); p.drawingContext.setLineDash([5,5]);
         p.circle(C.x,C.y,2*R); p.drawingContext.setLineDash([]); p.pop();
-        p.noStroke(); p.fill('#8a8ad6'); p.circle(C.x,C.y-R,6); p.circle(C.x,C.y+R,6);
-        p.fill('#5a5ab0'); p.textSize(11); p.textAlign(p.LEFT,p.CENTER);
-        p.text('+θm',C.x+9,C.y-R); p.text('−θm',C.x+9,C.y+R);
-        const aMod=((a1%(2*Math.PI))+2*Math.PI)%(2*Math.PI), ar=Math.min(34,R*0.42);
+        // diâmetro horizontal (eixo de projeção)
+        p.stroke('#d8cfc0'); p.strokeWeight(1); p.line(C.x-R,C.y,C.x+R,C.y);
+        // arco do ângulo de fase
+        const aMod=((a1%(2*Math.PI))+2*Math.PI)%(2*Math.PI), ar=Math.min(30,R*0.4);
         p.push(); p.noFill(); p.stroke('#1f8a3a'); p.strokeWeight(1.8); p.beginShape();
-        for(let b=0;b<=aMod;b+=0.04) p.vertex(C.x-ar*Math.sin(b),C.y-ar*Math.cos(b));
+        for(let b=0;b<=aMod;b+=0.04) p.vertex(C.x+ar*Math.cos(b),C.y-ar*Math.sin(b));
         p.endShape(); p.pop();
         p.noStroke(); p.fill('#1f8a3a'); p.textSize(12); p.textAlign(p.CENTER,p.CENTER);
-        p.text('θ',C.x-(ar+14)*Math.sin(aMod/2),C.y-(ar+14)*Math.cos(aMod/2));
+        p.text('θ',C.x+(ar+13)*Math.cos(aMod/2),C.y-(ar+13)*Math.sin(aMod/2));
+        // fasor + projeção tracejada sobre o trilho (só com o fasor ligado)
+        arrow(C.x,C.y,tipX,tipY,'#7a2214',3);
+        dash(tipX,tipY,tipX,L.railY,'#9a9184',1,[3,4]);
       }
       // referência φ=0 (fantasma cinza completo)
       if(sRef){
-        dash(rTipX,rTipY,C.x,rTipY,GRAY,1,[3,4]);
         arrow(C.x,C.y,rTipX,rTipY,GRAY,2);
-        p.noStroke(); p.fill(GRAY); p.circle(C.x,rTipY,8);
+        dash(rTipX,rTipY,rTipX,L.railY,GRAY,1,[3,4]);
+        p.noStroke(); p.fill(GRAY); p.circle(rTipX,L.railY,8);
       }
-      // fasor com fase (colorido)
-      dash(tipX,tipY,C.x,tipY,'#9a9184',1,[3,4]);
-      if(sFas) arrow(C.x,C.y,tipX,tipY,'#7a2214',3);
-      p.noStroke(); p.fill('#66308c'); p.circle(C.x,tipY,10);
-
-      // mini-legenda (só no modo largo, canto inferior esquerdo)
+      // oscilador (projeção no trilho) — sempre visível
+      p.noStroke(); p.fill('#66308c'); p.circle(C.x+R*Math.cos(a1),L.railY,11);
       if(!L.narrow){
         p.textSize(11.5); p.textAlign(p.LEFT,p.CENTER);
-        p.fill('#7a2214'); p.text('→ fasor (vetor girante, MCU)',16,L.H-40);
-        p.fill('#66308c'); p.text('● oscilador = projeção no eixo (MHS)',16,L.H-22);
+        p.fill('#7a2214'); p.text('→ fasor (vetor girante, MCU)',16,L.H-34);
+        p.fill('#66308c'); p.text('● oscilador = projeção no trilho (MHS)',16,L.H-16);
       }
 
       const fnum=(+el('mfF').value)==0?'':(' + '+faseTxt(+el('mfF').value));
-      el('mfEq').innerHTML='x(t) = θ<sub>m</sub> cos(ωt + φ) &nbsp;→&nbsp; '+
-        '<b>x(t) = '+A+'° · cos( '+w.toFixed(3)+'·t'+fnum+' )</b>'+
-        ' &nbsp;|&nbsp; ω = 2π/T = '+w.toFixed(3)+' rad/s, f = '+(1/T).toFixed(3)+' Hz';
+      el('mfEq').innerHTML='x(t) = A cos(ωt + φ) &nbsp;→&nbsp; '+
+        '<b>x(t) = '+A+' · cos( '+w.toFixed(2)+'·t'+fnum+' )</b>'+
+        ' &nbsp;|&nbsp; f = ω/2π = '+(w/(2*Math.PI)).toFixed(3)+' Hz &nbsp;|&nbsp; T = 2π/ω = '+T.toFixed(1)+' s'+
+        ' &nbsp;|&nbsp; t = '+t.toFixed(1)+' s';
     };
   });
   el('mfPlay').onclick=()=>{ playing=!playing; el('mfPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+  el('mfZero').onclick=()=>{ t=0; playing=false; el('mfPlay').textContent='▶ Reproduzir'; };
 })();
 </script>
 ```
 
 ::: {.pergunta}
-1. Aumente o período de 12 s para 24 s. O que acontece com a *amplitude* da senoide?
-   E com o "espaçamento" dela no tempo? Confirme com $x(t) = \theta_m\cos(2\pi t/T)$:
+1. Reduza $\omega$ de 0,52 para 0,26 rad/s. O que acontece com a *amplitude* da
+   senoide? E com o "espaçamento" dela no tempo? Confirme com $x(t) = A\cos(\omega t)$:
    qual dos dois parâmetros o slider está mudando?
 2. Mova a fase $\varphi$ e ligue **Referência φ=0**: o ângulo entre o fasor e a
    referência é sempre igual a $\varphi$? O que ele representa fisicamente?
