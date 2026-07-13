@@ -24,21 +24,382 @@ digital" do sinal quando duas frequências próximas interagem.
 
 ## Superposição linear e interferência {{< ra OE1.7 B3 >}}
 
-O princípio da superposição diz que se $x_1(t)$ e $x_2(t)$ são duas soluções da equação de
-movimento, então $x(t) = x_1(t) + x_2(t)$ também é solução. Para dois MHS de mesma frequência,
-a soma é ainda um MHS de mesma frequência, mas com amplitude e fase alteradas:
+O princípio da superposição diz que, se $x_1(t)$ e $x_2(t)$ são duas soluções da equação
+de movimento, então $x(t) = x_1(t) + x_2(t)$ também é solução. No caso **geral**, cada
+oscilador tem sua própria amplitude, frequência e fase:
 
-$$x_1(t) = A_1\cos(\omega t + \varphi_1), \quad x_2(t) = A_2\cos(\omega t + \varphi_2)$$
+$$x_1(t) = A_1\cos(\omega_1 t + \varphi_1), \qquad x_2(t) = A_2\cos(\omega_2 t + \varphi_2)$$
+
+$$x(t) = x_1(t) + x_2(t)$$
+
+Com frequências diferentes, a soma **não é** um MHS: é um movimento composto — periódico
+apenas quando $\omega_1/\omega_2$ é racional, quase-periódico caso contrário. A simulação
+a seguir monta essa soma elemento a elemento: dois osciladores independentes e o ponto
+roxo que carrega a soma dos dois.
+
+## Veja a superposição geral se formar
+
+À esquerda, dois osciladores massa–mola independentes: cada um com sua amplitude,
+frequência e fase. O ponto roxo carrega a soma $x_1 + x_2$. À direita, o gráfico da soma
+é traçado como um osciloscópio — a pena parte da **origem** ($t = 0$, à esquerda) e
+avança para a direita. Ajuste os seis parâmetros e veja quando a soma fecha uma figura
+periódica e quando ela nunca se repete.
+
+```{python}
+#| fig-cap: "Superposição geral de dois MHS independentes: A₁ = 1,0, A₂ = 0,7; ω₁ = 2,0, ω₂ = 3,0 rad/s; φ₁ = 0, φ₂ = π/2. Como ω₁/ω₂ = 2/3 é racional, a soma é periódica. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+A1, A2 = 1.0, 0.7
+w1, w2 = 2.0, 3.0
+p1, p2 = 0.0, np.pi/2
+t = np.linspace(0, 12, 3000)
+x1 = A1*np.cos(w1*t + p1)
+x2 = A2*np.cos(w2*t + p2)
+
+fig, ax = plt.subplots(figsize=(9, 3.8))
+ax.plot(t, x1, color='#E5B8B8', lw=1.1, label='$x_1$')
+ax.plot(t, x2, color='#B8C2E5', lw=1.1, label='$x_2$')
+ax.plot(t, x1 + x2, color='#66308C', lw=2.0, label='$x_1+x_2$')
+ax.axhline(0, lw=0.5, color='0.7')
+ax.set_xlabel('t (s)'); ax.set_ylabel('x'); ax.legend(fontsize=8, loc='upper right')
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo — o RA pede aplicar o
+     princípio da superposição; o fenômeno é a soma de dois osciladores independentes).
+     p5 de libs/ (offline, Q6). Mesmos parâmetros da versão matplotlib. Gráfico em
+     varredura, iniciando na origem. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .sg-wrap{max-width:1000px;margin:1rem auto;}
+  .sg-wrap .sg-row{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;margin-bottom:8px;}
+  .sg-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:140px;flex:1 1 140px;}
+  .sg-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .sg-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .sg-wrap input[type=range]{width:100%;max-width:210px;accent-color:#c85c2e;}
+  .sg-wrap .chk{display:flex;align-items:center;gap:5px;font-size:13px;white-space:nowrap;}
+  .sg-wrap .chk input{accent-color:#c85c2e;width:15px;height:15px;}
+  .sg-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .sg-wrap #sgSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .sg-wrap #sgEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .sg-wrap #sgEq b{color:#66308c;}
+</style>
+<div class="sg-wrap">
+  <div class="sg-row">
+    <button id="sgPlay">⏸ Pausar</button>
+    <button id="sgZero">↺ t = 0</button>
+    <div class="sld"><label>A<sub>1</sub> = <span class="val" id="sgA1v">1.0</span></label>
+      <input type="range" id="sgA1" min="0.3" max="1.3" value="1.0" step="0.1"></div>
+    <div class="sld"><label>A<sub>2</sub> = <span class="val" id="sgA2v">0.7</span></label>
+      <input type="range" id="sgA2" min="0.3" max="1.3" value="0.7" step="0.1"></div>
+    <div class="sld"><label>ω<sub>1</sub> = <span class="val" id="sgW1v">2.0</span> rad/s</label>
+      <input type="range" id="sgW1" min="0.5" max="4" value="2.0" step="0.25"></div>
+    <div class="sld"><label>ω<sub>2</sub> = <span class="val" id="sgW2v">3.0</span> rad/s</label>
+      <input type="range" id="sgW2" min="0.5" max="4" value="3.0" step="0.25"></div>
+    <div class="sld"><label>φ<sub>1</sub> = <span class="val" id="sgP1v">0</span></label>
+      <input type="range" id="sgP1" min="-180" max="180" value="0" step="15"></div>
+    <div class="sld"><label>φ<sub>2</sub> = <span class="val" id="sgP2v">π/2</span></label>
+      <input type="range" id="sgP2" min="-180" max="180" value="90" step="15"></div>
+    <div class="sld"><label>Velocidade anim. = <span class="val" id="sgSv">1</span>×</label>
+      <input type="range" id="sgS" min="0.25" max="3" value="1" step="0.25"></div>
+  </div>
+  <div class="sg-row">
+    <span class="chk"><input type="checkbox" id="sgComp" checked>Mostrar x₁ e x₂ no gráfico</span>
+  </div>
+  <div id="sgSketch"></div>
+  <div id="sgEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let t=0, playing=true;
+  const faseTxt=deg=>{ if(deg==0) return "0";
+    const f=deg/180,s=f<0?"−":"",a=Math.abs(f),m={0.25:"π/4",0.5:"π/2",0.75:"3π/4",1:"π"};
+    return m[a]?s+m[a]:s+a.toFixed(2)+"π"; };
+  const cw=()=>{ const w=(el('sgSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+
+  new p5((p)=>{
+    const mola=(x,y0,y1,n,w)=>{ p.push(); p.noFill(); p.stroke('#8a8073'); p.strokeWeight(2);
+      p.beginShape(); p.vertex(x,y0);
+      const L=y1-y0, seg=L/(2*n);
+      for(let i=0;i<2*n;i++) p.vertex(x+((i%2)?-w:w), y0+seg*(i+0.5));
+      p.vertex(x,y1); p.endShape(); p.pop(); };
+
+    p.setup=()=>{ p.createCanvas(cw(),430).parent('sgSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),430); };
+
+    p.draw=()=>{
+      const W=p.width, narrow=W<680;
+      const A1=+el('sgA1').value, A2=+el('sgA2').value,
+            w1=+el('sgW1').value, w2=+el('sgW2').value,
+            p1=(+el('sgP1').value)*Math.PI/180, p2=(+el('sgP2').value)*Math.PI/180,
+            spd=+el('sgS').value;
+      el('sgA1v').textContent=A1.toFixed(1); el('sgA2v').textContent=A2.toFixed(1);
+      el('sgW1v').textContent=w1.toFixed(2); el('sgW2v').textContent=w2.toFixed(2);
+      el('sgP1v').textContent=faseTxt(+el('sgP1').value);
+      el('sgP2v').textContent=faseTxt(+el('sgP2').value); el('sgSv').textContent=spd;
+      if(playing) t+=(p.deltaTime/1000)*spd;
+      const x1=A1*Math.cos(w1*t+p1), x2=A2*Math.cos(w2*t+p2), xs=x1+x2;
+      const S=38, eq=180;
+
+      p.background('#faf8f4');
+      // ── esquerda: dois osciladores + ponto da soma ──
+      const cxs=narrow?[42,110,188]:[64,158,268], topo=40;
+      p.stroke('#bdb4a4'); p.strokeWeight(3); p.line(cxs[0]-30,topo,cxs[1]+30,topo);
+      mola(cxs[0],topo,eq+x1*S-14,8,9); mola(cxs[1],topo,eq+x2*S-14,8,9);
+      p.noStroke();
+      p.fill('#c81f1f'); p.rect(cxs[0]-14,eq+x1*S-14,28,28,5);
+      p.fill('#1f47c8'); p.rect(cxs[1]-14,eq+x2*S-14,28,28,5);
+      p.stroke('#d8cfc0'); p.strokeWeight(1); p.line(cxs[2],eq-2.6*S-8,cxs[2],eq+2.6*S+8);
+      p.stroke('#bdb4a4'); p.line(cxs[2]-7,eq,cxs[2]+7,eq);
+      p.noStroke(); p.fill('#66308c'); p.circle(cxs[2],eq+xs*S,16);
+      p.textSize(12); p.textAlign(p.CENTER,p.TOP);
+      p.fill('#c81f1f'); p.text('x₁',cxs[0],eq+2.6*S+14);
+      p.fill('#1f47c8'); p.text('x₂',cxs[1],eq+2.6*S+14);
+      p.fill('#66308c'); p.text('x₁+x₂',cxs[2],eq+2.6*S+14);
+
+      // ── direita: gráfico em varredura (inicia na origem) ──
+      const gx0=cxs[2]+55, gx1=W-14, gyc=200, half=140, win=12, pps=(gx1-gx0)/win;
+      const sc=half*0.9/2.6;
+      p.stroke('#e7e0d4'); p.strokeWeight(1);
+      for(let k=0;k<=win;k+=2){ const gx=gx0+k*pps; p.line(gx,gyc-half,gx,gyc+half); }
+      p.stroke('#bdb4a4'); p.line(gx0,gyc,gx1,gyc);
+      p.stroke('#d8cfc0'); p.line(gx0,gyc-half,gx0,gyc+half);
+      p.noStroke(); p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      for(let k=0;k<=win;k+=2) p.text(k+'s',gx0+k*pps,gyc+half+4);
+      const base=t-(t%win), head=t%win;
+      const scope=(fn,col,wt)=>{ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(wt);
+        p.beginShape();
+        for(let g=gx0;g<=gx0+head*pps;g++){ const tau=(g-gx0)/pps; p.vertex(g,gyc-fn(base+tau)*sc); }
+        p.endShape();
+        if(base-win>=-1e-9){ p.beginShape();
+          for(let g=gx0+head*pps;g<=gx1;g++){ const tau=(g-gx0)/pps; p.vertex(g,gyc-fn(base-win+tau)*sc); }
+          p.endShape(); }
+        p.pop(); };
+      const fx1=tt=>A1*Math.cos(w1*tt+p1), fx2=tt=>A2*Math.cos(w2*tt+p2);
+      if(el('sgComp').checked){ scope(fx1,'#e5b8b8',1.2); scope(fx2,'#b8c2e5',1.2); }
+      scope(tt=>fx1(tt)+fx2(tt),'#66308c',2.2);
+      const gh=gx0+head*pps;
+      p.stroke('#c9c2b6'); p.strokeWeight(1); p.line(gh,gyc-half,gh,gyc+half);
+      p.noStroke(); p.fill('#66308c'); p.circle(gh,gyc-xs*sc,8);
+
+      const g=(a,b)=>b<1e-6?a:g(b,a-Math.floor(a/b)*b);
+      const rat=g(w1,w2)>1e-3?(Math.round(w1/g(w1,w2))+':'+Math.round(w2/g(w1,w2))):'—';
+      el('sgEq').innerHTML='x₁ = '+A1.toFixed(1)+'cos('+w1.toFixed(2)+'t'+((+el('sgP1').value)?'+'+faseTxt(+el('sgP1').value):'')+')'+
+        ' &nbsp; x₂ = '+A2.toFixed(1)+'cos('+w2.toFixed(2)+'t'+((+el('sgP2').value)?'+'+faseTxt(+el('sgP2').value):'')+')'+
+        ' &nbsp;|&nbsp; <b>ω₁:ω₂ = '+rat+'</b> → '+(Math.abs(w1-w2)<1e-6?'MHS único':'soma '+(rat!=='—'?'periódica':'quase-periódica'));
+    };
+  });
+  el('sgPlay').onclick=()=>{ playing=!playing; el('sgPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+  el('sgZero').onclick=()=>{ t=0; playing=false; el('sgPlay').textContent='▶ Reproduzir'; };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Com $\omega_1 = \omega_2$ (iguais), a soma roxa é uma senoide limpa — um MHS. Agora
+   ponha $\omega_2 = 3$ e $\omega_1 = 2$: a soma ainda se repete? E com $\omega_2 = 2{,}75$?
+2. Fixe $\omega_1 = \omega_2$ e varie só $\varphi_2$. A *forma* da soma muda ou só a sua
+   amplitude e o instante em que ela passa pelos máximos?
+3. Zerando o tempo, ajuste os parâmetros e depois reproduza: para que razão
+   $\omega_1/\omega_2$ a soma tem período visível dentro da janela de 12 s? Relacione com
+   a superposição de duas fontes de vibração de bordo com rotações diferentes.
+:::
+
+### Caso particular: mesma frequência, mesma direção
+
+Quando os dois osciladores têm a **mesma frequência** $\omega_1 = \omega_2 = \omega$ e
+oscilam na **mesma direção**, a soma volta a ser um MHS de mesma frequência, apenas com
+amplitude e fase novas:
 
 $$x(t) = x_1(t) + x_2(t) = A_{\text{res}}\cos(\omega t + \varphi_{\text{res}})$$
 
-onde:
+A **amplitude** resultante sai da soma dos dois fasores (lei dos cossenos):
 
 $$A_{\text{res}} = \sqrt{A_1^2 + A_2^2 + 2A_1 A_2\cos(\varphi_1 - \varphi_2)}$$
 
-O termo $\cos(\varphi_1 - \varphi_2)$ captura o "atraso relativo" entre os osciladores.
-Se em fase ($\Delta\varphi = 0$), amplitudes somam-se (interferência construtiva);
-se em oposição ($\Delta\varphi = \pi$), subtraem-se (interferência destrutiva).
+e a **fase** resultante, da soma das projeções dos fasores nos eixos:
+
+$$\tan\varphi_{\text{res}} = \frac{A_1\sin\varphi_1 + A_2\sin\varphi_2}{A_1\cos\varphi_1 + A_2\cos\varphi_2}$$
+
+O termo $\cos(\varphi_1 - \varphi_2)$ captura o "atraso relativo" entre os osciladores:
+em fase ($\Delta\varphi = 0$), as amplitudes somam-se (interferência construtiva,
+$A_{\text{res}} = A_1 + A_2$); em oposição ($\Delta\varphi = \pi$), subtraem-se
+(interferência destrutiva, $A_{\text{res}} = |A_1 - A_2|$).
+
+## Veja a soma virar um MHS único
+
+Agora os dois osciladores compartilham a **mesma frequência** $\omega$ (um só controle).
+A soma roxa é uma senoide limpa — o mesmo MHS $A_{\text{res}}\cos(\omega t + \varphi_{\text{res}})$
+da fórmula acima. O painel mostra $A_{\text{res}}$ e $\varphi_{\text{res}}$ calculados ao
+vivo; varie as fases e veja a construtiva ($A_1+A_2$) e a destrutiva ($|A_1-A_2|$).
+
+```{python}
+#| fig-cap: "Soma de dois MHS de mesma frequência (ω = 2,0 rad/s): A₁ = 1,0, A₂ = 0,7; φ₁ = 0, φ₂ = π/2. A resultante (roxa) é o MHS A_res cos(ωt + φ_res) com A_res ≈ 1,22 e φ_res ≈ 35°. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+A1, A2, w = 1.0, 0.7, 2.0
+p1, p2 = 0.0, np.pi/2
+Ares = np.sqrt(A1**2 + A2**2 + 2*A1*A2*np.cos(p1 - p2))
+pres = np.arctan2(A1*np.sin(p1) + A2*np.sin(p2), A1*np.cos(p1) + A2*np.cos(p2))
+t = np.linspace(0, 12, 3000)
+
+fig, ax = plt.subplots(figsize=(9, 3.8))
+ax.plot(t, A1*np.cos(w*t + p1), color='#E5B8B8', lw=1.1, label='$x_1$')
+ax.plot(t, A2*np.cos(w*t + p2), color='#B8C2E5', lw=1.1, label='$x_2$')
+ax.plot(t, Ares*np.cos(w*t + pres), color='#66308C', lw=2.0,
+        label=f'$x_1+x_2$ = {Ares:.2f} cos(ωt + {np.degrees(pres):.0f}°)')
+ax.axhline(0, lw=0.5, color='0.7')
+ax.set_xlabel('t (s)'); ax.set_ylabel('x'); ax.legend(fontsize=8, loc='upper right')
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo). Caso particular ω₁=ω₂:
+     a soma é um MHS único; mostra A_res e φ_res ao vivo. p5 de libs/ (offline, Q6).
+     Mesmos parâmetros da versão matplotlib. Gráfico em varredura, iniciando na origem. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .sp2-wrap{max-width:1000px;margin:1rem auto;}
+  .sp2-wrap .sp2-row{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;margin-bottom:8px;}
+  .sp2-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:140px;flex:1 1 140px;}
+  .sp2-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .sp2-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .sp2-wrap input[type=range]{width:100%;max-width:210px;accent-color:#c85c2e;}
+  .sp2-wrap .chk{display:flex;align-items:center;gap:5px;font-size:13px;white-space:nowrap;}
+  .sp2-wrap .chk input{accent-color:#c85c2e;width:15px;height:15px;}
+  .sp2-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .sp2-wrap #sp2Sketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .sp2-wrap #sp2Eq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .sp2-wrap #sp2Eq b{color:#66308c;}
+</style>
+<div class="sp2-wrap">
+  <div class="sp2-row">
+    <button id="sp2Play">⏸ Pausar</button>
+    <button id="sp2Zero">↺ t = 0</button>
+    <div class="sld"><label>A<sub>1</sub> = <span class="val" id="sp2A1v">1.0</span></label>
+      <input type="range" id="sp2A1" min="0.3" max="1.3" value="1.0" step="0.1"></div>
+    <div class="sld"><label>A<sub>2</sub> = <span class="val" id="sp2A2v">0.7</span></label>
+      <input type="range" id="sp2A2" min="0.3" max="1.3" value="0.7" step="0.1"></div>
+    <div class="sld"><label>φ<sub>1</sub> = <span class="val" id="sp2P1v">0</span></label>
+      <input type="range" id="sp2P1" min="-180" max="180" value="0" step="15"></div>
+    <div class="sld"><label>φ<sub>2</sub> = <span class="val" id="sp2P2v">π/2</span></label>
+      <input type="range" id="sp2P2" min="-180" max="180" value="90" step="15"></div>
+    <div class="sld"><label>ω (comum) = <span class="val" id="sp2Wv">2.0</span> rad/s</label>
+      <input type="range" id="sp2W" min="0.5" max="4" value="2.0" step="0.25"></div>
+    <div class="sld"><label>Velocidade anim. = <span class="val" id="sp2Sv">1</span>×</label>
+      <input type="range" id="sp2S" min="0.25" max="3" value="1" step="0.25"></div>
+  </div>
+  <div class="sp2-row">
+    <span class="chk"><input type="checkbox" id="sp2Comp" checked>Mostrar x₁ e x₂ no gráfico</span>
+  </div>
+  <div id="sp2Sketch"></div>
+  <div id="sp2Eq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let t=0, playing=true;
+  const faseTxt=deg=>{ if(deg==0) return "0";
+    const f=deg/180,s=f<0?"−":"",a=Math.abs(f),m={0.25:"π/4",0.5:"π/2",0.75:"3π/4",1:"π"};
+    return m[a]?s+m[a]:s+a.toFixed(2)+"π"; };
+  const cw=()=>{ const w=(el('sp2Sketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+
+  new p5((p)=>{
+    const mola=(x,y0,y1,n,w)=>{ p.push(); p.noFill(); p.stroke('#8a8073'); p.strokeWeight(2);
+      p.beginShape(); p.vertex(x,y0);
+      const L=y1-y0, seg=L/(2*n);
+      for(let i=0;i<2*n;i++) p.vertex(x+((i%2)?-w:w), y0+seg*(i+0.5));
+      p.vertex(x,y1); p.endShape(); p.pop(); };
+
+    p.setup=()=>{ p.createCanvas(cw(),430).parent('sp2Sketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),430); };
+
+    p.draw=()=>{
+      const W=p.width, narrow=W<680;
+      const A1=+el('sp2A1').value, A2=+el('sp2A2').value, w=+el('sp2W').value,
+            p1=(+el('sp2P1').value)*Math.PI/180, p2=(+el('sp2P2').value)*Math.PI/180,
+            spd=+el('sp2S').value;
+      el('sp2A1v').textContent=A1.toFixed(1); el('sp2A2v').textContent=A2.toFixed(1);
+      el('sp2Wv').textContent=w.toFixed(2);
+      el('sp2P1v').textContent=faseTxt(+el('sp2P1').value);
+      el('sp2P2v').textContent=faseTxt(+el('sp2P2').value); el('sp2Sv').textContent=spd;
+      if(playing) t+=(p.deltaTime/1000)*spd;
+      const Ares=Math.sqrt(A1*A1+A2*A2+2*A1*A2*Math.cos(p1-p2));
+      const pres=Math.atan2(A1*Math.sin(p1)+A2*Math.sin(p2), A1*Math.cos(p1)+A2*Math.cos(p2));
+      const x1=A1*Math.cos(w*t+p1), x2=A2*Math.cos(w*t+p2), xs=x1+x2;
+      const S=38, eq=180;
+
+      p.background('#faf8f4');
+      const cxs=narrow?[42,110,188]:[64,158,268], topo=40;
+      p.stroke('#bdb4a4'); p.strokeWeight(3); p.line(cxs[0]-30,topo,cxs[1]+30,topo);
+      mola(cxs[0],topo,eq+x1*S-14,8,9); mola(cxs[1],topo,eq+x2*S-14,8,9);
+      p.noStroke();
+      p.fill('#c81f1f'); p.rect(cxs[0]-14,eq+x1*S-14,28,28,5);
+      p.fill('#1f47c8'); p.rect(cxs[1]-14,eq+x2*S-14,28,28,5);
+      p.stroke('#d8cfc0'); p.strokeWeight(1); p.line(cxs[2],eq-2.6*S-8,cxs[2],eq+2.6*S+8);
+      p.stroke('#bdb4a4'); p.line(cxs[2]-7,eq,cxs[2]+7,eq);
+      p.noStroke(); p.fill('#66308c'); p.circle(cxs[2],eq+xs*S,16);
+      p.textSize(12); p.textAlign(p.CENTER,p.TOP);
+      p.fill('#c81f1f'); p.text('x₁',cxs[0],eq+2.6*S+14);
+      p.fill('#1f47c8'); p.text('x₂',cxs[1],eq+2.6*S+14);
+      p.fill('#66308c'); p.text('x₁+x₂',cxs[2],eq+2.6*S+14);
+
+      const gx0=cxs[2]+55, gx1=W-14, gyc=200, half=140, win=12, pps=(gx1-gx0)/win;
+      const sc=half*0.9/2.6;
+      p.stroke('#e7e0d4'); p.strokeWeight(1);
+      for(let k=0;k<=win;k+=2){ const gx=gx0+k*pps; p.line(gx,gyc-half,gx,gyc+half); }
+      p.stroke('#bdb4a4'); p.line(gx0,gyc,gx1,gyc);
+      p.stroke('#d8cfc0'); p.line(gx0,gyc-half,gx0,gyc+half);
+      p.noStroke(); p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      for(let k=0;k<=win;k+=2) p.text(k+'s',gx0+k*pps,gyc+half+4);
+      const base=t-(t%win), head=t%win;
+      const scope=(fn,col,wt)=>{ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(wt);
+        p.beginShape();
+        for(let g=gx0;g<=gx0+head*pps;g++){ const tau=(g-gx0)/pps; p.vertex(g,gyc-fn(base+tau)*sc); }
+        p.endShape();
+        if(base-win>=-1e-9){ p.beginShape();
+          for(let g=gx0+head*pps;g<=gx1;g++){ const tau=(g-gx0)/pps; p.vertex(g,gyc-fn(base-win+tau)*sc); }
+          p.endShape(); }
+        p.pop(); };
+      const fx1=tt=>A1*Math.cos(w*tt+p1), fx2=tt=>A2*Math.cos(w*tt+p2);
+      if(el('sp2Comp').checked){ scope(fx1,'#e5b8b8',1.2); scope(fx2,'#b8c2e5',1.2); }
+      scope(tt=>fx1(tt)+fx2(tt),'#66308c',2.2);
+      const gh=gx0+head*pps;
+      p.stroke('#c9c2b6'); p.strokeWeight(1); p.line(gh,gyc-half,gh,gyc+half);
+      p.noStroke(); p.fill('#66308c'); p.circle(gh,gyc-xs*sc,8);
+
+      const dphi=(+el('sp2P2').value)-(+el('sp2P1').value);
+      const tipo=Math.abs(((dphi%360)+360)%360)<1?'construtiva':
+        (Math.abs(((dphi%360)+360)%360-180)<1?'destrutiva':'parcial');
+      el('sp2Eq').innerHTML='<b>A<sub>res</sub> = '+Ares.toFixed(2)+
+        '</b> &nbsp; <b>φ<sub>res</sub> = '+(pres*180/Math.PI).toFixed(0)+'°</b>'+
+        ' &nbsp;→&nbsp; x(t) = '+Ares.toFixed(2)+' cos('+w.toFixed(2)+'t + '+(pres*180/Math.PI).toFixed(0)+'°)'+
+        ' &nbsp;|&nbsp; A₁+A₂ = '+(A1+A2).toFixed(2)+', |A₁−A₂| = '+Math.abs(A1-A2).toFixed(2)+
+        ' &nbsp;|&nbsp; interferência '+tipo;
+    };
+  });
+  el('sp2Play').onclick=()=>{ playing=!playing; el('sp2Play').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+  el('sp2Zero').onclick=()=>{ t=0; playing=false; el('sp2Play').textContent='▶ Reproduzir'; };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Deixe $A_1 = A_2$ e leve $\varphi_2$ a $180°$ (oposição): a soma roxa some? Confira
+   $A_{\text{res}} = |A_1 - A_2| = 0$ no painel.
+2. Com $\varphi_1 = 0$ e $\varphi_2 = 90°$, confira $A_{\text{res}}$ e $\varphi_{\text{res}}$
+   contra a fórmula $\tan\varphi_{\text{res}} = A_2/A_1$ (aqui $\approx 35°$).
+3. Por que, ao contrário da simulação geral, aqui a soma é *sempre* uma senoide limpa,
+   qualquer que seja a fase? O que a mesma frequência garante?
+:::
 
 ## Batimentos — encontro de frequências próximas {{< ra OE1.8 B2 >}}
 
@@ -108,7 +469,8 @@ plt.tight_layout(); plt.show()
 <!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo — o RA pede explicar o
      fenômeno, e o fenômeno é o entra-e-sai de fase dos dois osciladores). p5 de libs/
      (offline, Q6). Mesmos parâmetros da versão matplotlib: f1 = 1,0 Hz, f2 = 1,1 Hz
-     (ajustáveis 0,5–1,5 Hz), amplitudes iguais. -->
+     (ajustáveis 0,5–1,5 Hz), amplitudes iguais. No boneco mecânico, o ponto resultante
+     é desenhado na mesma amplitude visual das fontes; o gráfico mostra a soma real. -->
 <script src="../../libs/p5.min.js"></script>
 <style>
   .sb-wrap{max-width:1000px;margin:1rem auto;}
@@ -155,59 +517,62 @@ plt.tight_layout(); plt.show()
       for(let i=0;i<2*n;i++) p.vertex(x+((i%2)?-w:w), y0+seg*(i+0.5));
       p.vertex(x,y1); p.endShape(); p.pop(); };
 
-    p.setup=()=>{ p.createCanvas(cw(),400).parent('sbSketch'); };
-    p.windowResized=()=>{ p.resizeCanvas(cw(),400); };
+    p.setup=()=>{ p.createCanvas(cw(),410).parent('sbSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),410); };
 
     p.draw=()=>{
       const W=p.width, narrow=W<640;
-      const f1=+el('sbF1').value, f2=+el('sbF2').value, spd=+el('sbS').value,
-            df=f2-f1, A=44;
+      const f1=+el('sbF1').value, f2=+el('sbF2').value, spd=+el('sbS').value, df=f2-f1;
       el('sbF1v').textContent=f1.toFixed(2); el('sbF2v').textContent=f2.toFixed(2);
       el('sbSv').textContent=spd;
       if(playing) t+=(p.deltaTime/1000)*spd;
-      const x1=A*Math.cos(2*Math.PI*f1*t), x2=A*Math.cos(2*Math.PI*f2*t);
+      const c1=Math.cos(2*Math.PI*f1*t), c2=Math.cos(2*Math.PI*f2*t), cs=c1+c2;
+      const S=44, eq=160;                 // fontes: S px/unidade
 
       p.background('#faf8f4');
-      // ── esquerda: dois osciladores + ponto da superposição ──
-      const cxs=narrow?[40,105,180]:[60,150,255], topo=34, eq=150;
-      p.stroke('#bdb4a4'); p.strokeWeight(3);
-      p.line(cxs[0]-28,topo,cxs[1]+28,topo);
-      mola(cxs[0],topo,eq+x1-14,8,9); mola(cxs[1],topo,eq+x2-14,8,9);
+      // ── esquerda: dois osciladores + ponto da soma (mesma amplitude visual das fontes) ──
+      const cxs=narrow?[42,110,188]:[64,158,268], topo=34;
+      p.stroke('#bdb4a4'); p.strokeWeight(3); p.line(cxs[0]-30,topo,cxs[1]+30,topo);
+      mola(cxs[0],topo,eq+c1*S-14,8,9); mola(cxs[1],topo,eq+c2*S-14,8,9);
       p.noStroke();
-      p.fill('#c81f1f'); p.rect(cxs[0]-14,eq+x1-14,28,28,5);
-      p.fill('#1f47c8'); p.rect(cxs[1]-14,eq+x2-14,28,28,5);
-      // trilho da superposição (curso ±2A)
-      p.stroke('#d8cfc0'); p.strokeWeight(1); p.line(cxs[2],eq-2*A-8,cxs[2],eq+2*A+8);
+      p.fill('#c81f1f'); p.rect(cxs[0]-14,eq+c1*S-14,28,28,5);
+      p.fill('#1f47c8'); p.rect(cxs[1]-14,eq+c2*S-14,28,28,5);
+      p.stroke('#d8cfc0'); p.strokeWeight(1); p.line(cxs[2],eq-S-8,cxs[2],eq+S+8);
       p.stroke('#bdb4a4'); p.line(cxs[2]-7,eq,cxs[2]+7,eq);
-      p.noStroke(); p.fill('#66308c'); p.circle(cxs[2],eq+x1+x2,17);
-      p.textSize(12); p.textAlign(p.CENTER,p.TOP); p.fill('#c81f1f');
-      p.text('x₁',cxs[0],eq+2*A+16);
-      p.fill('#1f47c8'); p.text('x₂',cxs[1],eq+2*A+16);
-      p.fill('#66308c'); p.text('x₁+x₂',cxs[2],eq+2*A+16);
+      p.noStroke(); p.fill('#66308c'); p.circle(cxs[2],eq+cs*(S/2),16);   // resultante em escala das fontes
+      p.textSize(12); p.textAlign(p.CENTER,p.TOP);
+      p.fill('#c81f1f'); p.text('x₁',cxs[0],eq+S+16);
+      p.fill('#1f47c8'); p.text('x₂',cxs[1],eq+S+16);
+      p.fill('#66308c'); p.text('x₁+x₂',cxs[2],eq+S+16);
 
-      // ── direita: gráfico da superposição com envoltória ──
-      const gx0=cxs[2]+55, gx1=W-14, gyc=195, half=118, win=24, pps=(gx1-gx0)/win;
-      p.stroke('#e7e0d4');
-      for(let k=0;k*4<=win;k++){ const gx=gx1-k*4*pps; if(gx>=gx0) p.line(gx,gyc-half,gx,gyc+half); }
+      // ── direita: gráfico da soma em varredura (inicia na origem) ──
+      const gx0=cxs[2]+55, gx1=W-14, gyc=175, half=128, win=16, pps=(gx1-gx0)/win;
+      const sc=half*0.92/2;               // soma real: 2 unidades → ~topo
+      p.stroke('#e7e0d4'); p.strokeWeight(1);
+      for(let k=0;k<=win;k+=4){ const gx=gx0+k*pps; p.line(gx,gyc-half,gx,gyc+half); }
       p.stroke('#bdb4a4'); p.line(gx0,gyc,gx1,gyc);
       p.stroke('#d8cfc0'); p.line(gx0,gyc-half,gx0,gyc+half);
       p.noStroke(); p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
-      for(let k=0;k*4<=win;k++){ const tt=t-k*4, gx=gx1-k*4*pps;
-        if(gx>=gx0-1&&tt>=0) p.text(tt.toFixed(0)+'s',gx,gyc+half+4); }
-      const esc=half/(2.2*A)*A/1;   // 2A ocupa ~90% da meia-altura
-      const fx1=tt=>A*Math.cos(2*Math.PI*f1*tt), fx2=tt=>A*Math.cos(2*Math.PI*f2*tt);
-      const curva=(fn,col,wt,dash)=>{ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(wt);
+      for(let k=0;k<=win;k+=4) p.text(k+'s',gx0+k*pps,gyc+half+4);
+      const base=t-(t%win), head=t%win;
+      const scope=(fn,col,wt,dash)=>{ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(wt);
         if(dash) p.drawingContext.setLineDash([6,5]);
         p.beginShape();
-        for(let gx=gx0;gx<=gx1;gx++){ const tt=t-(gx1-gx)/pps; if(tt<0) continue;
-          p.vertex(gx,gyc-fn(tt)/A*esc); }
-        p.endShape(); p.drawingContext.setLineDash([]); p.pop(); };
-      if(el('sbComp').checked){ curva(fx1,'#e5b8b8',1.2,false); curva(fx2,'#b8c2e5',1.2,false); }
+        for(let g=gx0;g<=gx0+head*pps;g++){ const tau=(g-gx0)/pps; p.vertex(g,gyc-fn(base+tau)*sc); }
+        p.endShape();
+        if(base-win>=-1e-9){ p.beginShape();
+          for(let g=gx0+head*pps;g<=gx1;g++){ const tau=(g-gx0)/pps; p.vertex(g,gyc-fn(base-win+tau)*sc); }
+          p.endShape(); }
+        p.drawingContext.setLineDash([]); p.pop(); };
+      const fx1=tt=>Math.cos(2*Math.PI*f1*tt), fx2=tt=>Math.cos(2*Math.PI*f2*tt);
+      if(el('sbComp').checked){ scope(fx1,'#e5b8b8',1.2,false); scope(fx2,'#b8c2e5',1.2,false); }
       if(el('sbEnv').checked && Math.abs(df)>1e-6){
-        curva(tt=>2*A*Math.cos(Math.PI*df*tt),'#c85c2e',1.6,true);
-        curva(tt=>-2*A*Math.cos(Math.PI*df*tt),'#c85c2e',1.6,true); }
-      curva(tt=>fx1(tt)+fx2(tt),'#66308c',2.2,false);
-      p.noStroke(); p.fill('#66308c'); p.circle(gx1,gyc-(x1+x2)/A*esc,8);
+        scope(tt=>2*Math.cos(Math.PI*df*tt),'#c85c2e',1.6,true);
+        scope(tt=>-2*Math.cos(Math.PI*df*tt),'#c85c2e',1.6,true); }
+      scope(tt=>fx1(tt)+fx2(tt),'#66308c',2.2,false);
+      const gh=gx0+head*pps;
+      p.stroke('#c9c2b6'); p.strokeWeight(1); p.line(gh,gyc-half,gh,gyc+half);
+      p.noStroke(); p.fill('#66308c'); p.circle(gh,gyc-cs*sc,8);
 
       const fbat=Math.abs(df);
       el('sbEq').innerHTML='x₁+x₂ = 2A cos(π Δf t)·cos(2π f<sub>méd</sub> t) &nbsp;|&nbsp; '+
