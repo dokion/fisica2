@@ -216,16 +216,23 @@ plt.tight_layout(); plt.show()
       p.fill('#8a8073'); p.textAlign(p.CENTER,p.TOP);
       for(let m=0;m<=4;m++) p.text(m+' m',gx0+m*ppm,yc1+A+12);
 
-      // ── painel 2: p(t) em x0 (o traço rola para a esquerda) ──
+      // ── painel 2: p(t) em x0 (varredura da origem, da esquerda p/ direita) ──
       const yc2=320, win=4, pps=(gx1-gx0)/win;
       p.stroke('#bdb4a4'); p.line(gx0,yc2,gx1,yc2);
-      p.push(); p.noFill(); p.stroke('#c85c2e'); p.strokeWeight(2); p.beginShape();
-      for(let gx=gx0;gx<=gx1;gx++){ const tt=t-(gx1-gx)/pps; if(tt<0) continue;
-        p.vertex(gx,yc2-A*Math.cos(k*x0-w*tt)); }
-      p.endShape(); p.pop();
-      p.noStroke(); p.fill('#c85c2e'); p.circle(gx1,yc2-A*Math.cos(k*x0-w*t),9);
+      const base2=t-(t%win), head2=t%win, pfn=tt=>A*Math.cos(k*x0-w*tt);
+      p.push(); p.noFill(); p.stroke('#c85c2e'); p.strokeWeight(2);
+      p.beginShape();
+      for(let gx=gx0;gx<=gx0+head2*pps;gx++){ const tau=(gx-gx0)/pps; p.vertex(gx,yc2-pfn(base2+tau)); }
+      p.endShape();
+      if(base2-win>=-1e-9){ p.beginShape();
+        for(let gx=gx0+head2*pps;gx<=gx1;gx++){ const tau=(gx-gx0)/pps; p.vertex(gx,yc2-pfn(base2-win+tau)); }
+        p.endShape(); }
+      p.pop();
+      const gh2=gx0+head2*pps;
+      p.stroke('#c9c2b6'); p.strokeWeight(1); p.line(gh2,yc2-A-6,gh2,yc2+A+6);
+      p.noStroke(); p.fill('#c85c2e'); p.circle(gh2,yc2-pfn(t),9);
       p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
-      for(let s=0;s<=win;s++){ const tt=t-s; if(tt>=0) p.text(tt.toFixed(1)+'s',gx1-s*pps,yc2+A+12); }
+      for(let s=0;s<=win;s++) p.text(s.toFixed(0)+'s',gx0+s*pps,yc2+A+12);
 
       el('pwEq').innerHTML='p(x,t) = p₀cos(kx − ωt) &nbsp;|&nbsp; '+
         '<b>λ = v/f = '+lam.toFixed(2)+' m</b> (foto) &nbsp;|&nbsp; '+

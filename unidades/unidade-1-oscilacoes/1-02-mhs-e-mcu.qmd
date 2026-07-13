@@ -255,18 +255,24 @@ plt.tight_layout(); plt.show()
       if(L.narrow) p.text('MHS no tempo',(G.x0+G.x1)/2,G.yc-G.half-20);
       else p.text('MHS no tempo',(G.x0+G.x1)/2,6);
 
-      // ─────────── GRÁFICO x(t) ───────────
+      // ─────────── GRÁFICO x(t) — varredura da origem (esquerda → direita) ───────────
       const win=2.4*T, pps=(G.x1-G.x0)/win;
       p.stroke('#e7e0d4'); p.strokeWeight(1);
-      for(let k=0;k*(T/4)<=win;k++){const gx=G.x1-k*(T/4)*pps; if(gx>=G.x0) p.line(gx,G.yc-G.half,gx,G.yc+G.half);}
+      for(let k=0;k*(T/4)<=win;k++){const gx=G.x0+k*(T/4)*pps; if(gx<=G.x1) p.line(gx,G.yc-G.half,gx,G.yc+G.half);}
       p.stroke('#bdb4a4'); p.line(G.x0,G.yc,G.x1,G.yc);
       p.stroke('#d8cfc0'); p.line(G.x0,G.yc-G.half,G.x0,G.yc+G.half);
       p.noStroke(); p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
-      for(let k=0;k*(T/2)<=win;k++){const tt=t-k*(T/2),gx=G.x1-k*(T/2)*pps; if(gx>=G.x0-1&&tt>=0) p.text(tt.toFixed(0)+'s',gx,G.yc+G.half+4);}
+      for(let k=0;k*(T/2)<=win;k++){const gx=G.x0+k*(T/2)*pps; if(gx<=G.x1+1) p.text((k*(T/2)).toFixed(0)+'s',gx,G.yc+G.half+4);}
 
-      const curve=(fn,peak,visual,col,wt)=>{ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(wt); p.beginShape();
-        for(let gx=G.x0;gx<=G.x1;gx++){const tt=t-(G.x1-gx)/pps; if(tt<0) continue; p.vertex(gx,G.yc-fn(tt)/peak*visual);}
-        p.endShape(); p.pop(); };
+      const base=t-(t%win), head=t%win;
+      const curve=(fn,peak,visual,col,wt)=>{ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(wt);
+        p.beginShape();
+        for(let gx=G.x0;gx<=G.x0+head*pps;gx++){const tau=(gx-G.x0)/pps; p.vertex(gx,G.yc-fn(base+tau)/peak*visual);}
+        p.endShape();
+        if(base-win>=-1e-9){ p.beginShape();
+          for(let gx=G.x0+head*pps;gx<=G.x1;gx++){const tau=(gx-G.x0)/pps; p.vertex(gx,G.yc-fn(base-win+tau)/peak*visual);}
+          p.endShape(); }
+        p.pop(); };
       const vis=A*vs*0.98;
       if(sRef) curve(xRef, A, A*vs, GRAY, 2.0);          // onda de referência φ=0 (cinza)
       if(sAce) curve(aOf, A*w*w, vis, '#1f8a3a', 2.0);
@@ -278,9 +284,11 @@ plt.tight_layout(); plt.show()
       if(sVel){p.fill('#c81f1f'); p.text('v(t): velocidade  (esc. rel.)',G.x0+8,ly); ly+=16;}
       if(sAce){p.fill('#1f8a3a'); p.text('a(t): aceleração  (esc. rel.)',G.x0+8,ly); ly+=16;}
       if(sRef){p.fill(GRAY); p.text('x₀(t): referência φ=0',G.x0+8,ly); ly+=16;}
-      // cabeças de onda
-      if(sRef){ p.noStroke(); p.fill(GRAY); p.circle(G.x1,G.yc-xRef(t)*vs,6); }
-      if(sPos){ p.noStroke(); p.fill('#1f47c8'); p.circle(G.x1,G.yc-xOf(t)*vs,7); }
+      // cabeça de onda (na posição da pena)
+      const gh=G.x0+head*pps;
+      p.stroke('#c9c2b6'); p.strokeWeight(1); p.line(gh,G.yc-G.half,gh,G.yc+G.half);
+      if(sRef){ p.noStroke(); p.fill(GRAY); p.circle(gh,G.yc-xRef(t)*vs,6); }
+      if(sPos){ p.noStroke(); p.fill('#1f47c8'); p.circle(gh,G.yc-xOf(t)*vs,7); }
 
       // ─────────── CÍRCULO + FASOR + TRILHO ───────────
       // trilho horizontal (eixo de oscilação) — sempre visível
