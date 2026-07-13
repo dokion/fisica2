@@ -469,8 +469,8 @@ plt.tight_layout(); plt.show()
 <!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo — o RA pede explicar o
      fenômeno, e o fenômeno é o entra-e-sai de fase dos dois osciladores). p5 de libs/
      (offline, Q6). Mesmos parâmetros da versão matplotlib: f1 = 1,0 Hz, f2 = 1,1 Hz
-     (ajustáveis 0,5–1,5 Hz), amplitudes iguais. No boneco mecânico, o ponto resultante
-     é desenhado na mesma amplitude visual das fontes; o gráfico mostra a soma real. -->
+     (ajustáveis 0,5–1,5 Hz), amplitudes iguais. Ponto resultante em escala real: em
+     fase alcança 2× a amplitude de uma fonte (marcas ±A no trilho). -->
 <script src="../../libs/p5.min.js"></script>
 <style>
   .sb-wrap{max-width:1000px;margin:1rem auto;}
@@ -537,13 +537,14 @@ plt.tight_layout(); plt.show()
       p.noStroke();
       p.fill('#c81f1f'); p.rect(cxs[0]-14,eq+c1*S-14,28,28,5);
       p.fill('#1f47c8'); p.rect(cxs[1]-14,eq+c2*S-14,28,28,5);
-      p.stroke('#d8cfc0'); p.strokeWeight(1); p.line(cxs[2],eq-S-8,cxs[2],eq+S+8);
+      p.stroke('#d8cfc0'); p.strokeWeight(1); p.line(cxs[2],eq-2*S-8,cxs[2],eq+2*S+8);
       p.stroke('#bdb4a4'); p.line(cxs[2]-7,eq,cxs[2]+7,eq);
-      p.noStroke(); p.fill('#66308c'); p.circle(cxs[2],eq+cs*(S/2),16);   // resultante em escala das fontes
+      p.stroke('#e7dfce'); p.line(cxs[2]-6,eq-S,cxs[2]+6,eq-S); p.line(cxs[2]-6,eq+S,cxs[2]+6,eq+S);  // nível ±A (uma fonte)
+      p.noStroke(); p.fill('#66308c'); p.circle(cxs[2],eq+cs*S,16);   // resultante em escala real (2× em fase)
       p.textSize(12); p.textAlign(p.CENTER,p.TOP);
       p.fill('#c81f1f'); p.text('x₁',cxs[0],eq+S+16);
       p.fill('#1f47c8'); p.text('x₂',cxs[1],eq+S+16);
-      p.fill('#66308c'); p.text('x₁+x₂',cxs[2],eq+S+16);
+      p.fill('#66308c'); p.text('x₁+x₂',cxs[2],eq+2*S+16);
 
       // ── direita: gráfico da soma em varredura (inicia na origem) ──
       const gx0=cxs[2]+55, gx1=W-14, gyc=175, half=128, win=16, pps=(gx1-gx0)/win;
@@ -687,6 +688,8 @@ plt.tight_layout(); plt.show()
   .lj-wrap .sld .val{color:#c85c2e;font-weight:700;}
   .lj-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
   .lj-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .lj-wrap .chk{display:flex;align-items:center;gap:5px;font-size:13px;white-space:nowrap;}
+  .lj-wrap .chk input{accent-color:#c85c2e;width:15px;height:15px;}
   .lj-wrap #ljSketch canvas{display:block;border-radius:8px;max-width:100%;margin:0 auto;}
   .lj-wrap #ljEq{font-size:14px;margin:8px 2px 0;line-height:1.5;text-align:center;}
   .lj-wrap #ljEq b{color:#1f47c8;}
@@ -703,6 +706,9 @@ plt.tight_layout(); plt.show()
       <input type="range" id="ljF" min="0" max="360" value="90" step="15"></div>
     <div class="sld"><label>Velocidade anim. = <span class="val" id="ljSv">1</span>×</label>
       <input type="range" id="ljS" min="0.25" max="3" value="1" step="0.25"></div>
+  </div>
+  <div class="lj-row">
+    <span class="chk"><input type="checkbox" id="ljVec" checked><span class="sw" style="color:#66308c;font-weight:700">→</span> Vetor posição</span>
   </div>
   <div id="ljSketch"></div>
   <div id="ljEq"></div>
@@ -722,6 +728,9 @@ plt.tight_layout(); plt.show()
 
   new p5((p)=>{
     let pts=[], chave='';
+    const arrow=(x0,y0,x1,y1,col,wt)=>{ p.push(); p.stroke(col); p.strokeWeight(wt); p.fill(col);
+      p.line(x0,y0,x1,y1); const a=Math.atan2(y1-y0,x1-x0),s=10;
+      p.translate(x1,y1); p.rotate(a); p.noStroke(); p.triangle(0,0,-s,-s*0.5,-s,s*0.5); p.pop(); };
     p.setup=()=>{ const W=cw(); p.createCanvas(W,W).parent('ljSketch'); };
     p.windowResized=()=>{ const W=cw(); p.resizeCanvas(W,W); chave=''; };
 
@@ -765,7 +774,9 @@ plt.tight_layout(); plt.show()
       p.drawingContext.setLineDash([3,4]); p.line(px,py,px,cy); p.line(px,py,cx,py);
       p.drawingContext.setLineDash([]); p.pop();
       p.noStroke(); p.fill('#c85c2e'); p.circle(px,cy,7); p.circle(cx,py,7);
-      p.fill('#66308c'); p.circle(px,py,11);
+      // vetor posição: do centro até o ponto (opcional)
+      if(el('ljVec').checked) arrow(cx,cy,px,py,'#66308c',2.4);
+      p.noStroke(); p.fill('#66308c'); p.circle(px,py,11);
 
       el('ljEq').innerHTML='x(t) = A cos('+wx+'t'+((+el('ljF').value)?' + '+faseTxt(+el('ljF').value):'')+
         ')  |  y(t) = A cos('+wy+'t)  →  <b>ω<sub>x</sub> : ω<sub>y</sub> = '+razao(wx,wy)+'</b>';
