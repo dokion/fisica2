@@ -754,7 +754,10 @@ plt.tight_layout(); plt.show()
       p.push(); p.noFill(); p.stroke('#d8cfc0'); p.strokeWeight(1);
       p.drawingContext.setLineDash([5,5]); p.rect(cx-R,cy-R,2*R,2*R);
       p.drawingContext.setLineDash([]); p.pop();
-      p.stroke('#e7e0d4'); p.line(cx-R-14,cy,cx+R+14,cy); p.line(cx,cy-R-14,cx,cy+R+14);
+      p.stroke('#cdc4b4'); p.line(cx-R-14,cy,cx+R+14,cy); p.line(cx,cy-R-14,cx,cy+R+14);
+      p.noStroke(); p.textSize(13); p.fill('#7a7367');
+      p.textAlign(p.LEFT,p.CENTER); p.text('x',cx+R+16,cy);
+      p.textAlign(p.CENTER,p.BOTTOM); p.text('y',cx,cy-R-16);
 
       // trajetória completa (guia)
       p.push(); p.noFill(); p.stroke('#bdb4a4'); p.strokeWeight(1.2); p.beginShape();
@@ -769,14 +772,21 @@ plt.tight_layout(); plt.show()
                cx+R*Math.cos(wx*t1+phi), cy-R*Math.cos(wy*t1)); }
       p.pop();
       const px=cx+R*Math.cos(wx*t+phi), py=cy-R*Math.cos(wy*t);
-      // projeções instantâneas nos dois eixos
+      const showVec=el('ljVec').checked;
+      // retângulo de decomposição (tracejado do ponto até os eixos)
       p.push(); p.stroke('#9a9184'); p.strokeWeight(1);
       p.drawingContext.setLineDash([3,4]); p.line(px,py,px,cy); p.line(px,py,cx,py);
       p.drawingContext.setLineDash([]); p.pop();
-      p.noStroke(); p.fill('#c85c2e'); p.circle(px,cy,7); p.circle(cx,py,7);
-      // vetor posição: do centro até o ponto (opcional)
-      if(el('ljVec').checked) arrow(cx,cy,px,py,'#66308c',2.4);
-      p.noStroke(); p.fill('#66308c'); p.circle(px,py,11);
+      if(showVec){
+        // componentes: x sobre o eixo horizontal (vermelha), y sobre o vertical (azul)
+        arrow(cx,cy,px,cy,'#c81f1f',2.2);
+        arrow(cx,cy,cx,py,'#1f47c8',2.2);
+        // vetor posição = resultante das duas componentes (roxo)
+        arrow(cx,cy,px,py,'#66308c',2.8);
+      }
+      p.noStroke(); p.fill('#c81f1f'); p.circle(px,cy,7);
+      p.fill('#1f47c8'); p.circle(cx,py,7);
+      p.fill('#66308c'); p.circle(px,py,11);
 
       el('ljEq').innerHTML='x(t) = A cos('+wx+'t'+((+el('ljF').value)?' + '+faseTxt(+el('ljF').value):'')+
         ')  |  y(t) = A cos('+wy+'t)  →  <b>ω<sub>x</sub> : ω<sub>y</sub> = '+razao(wx,wy)+'</b>';
