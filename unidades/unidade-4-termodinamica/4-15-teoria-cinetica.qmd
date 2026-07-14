@@ -59,9 +59,134 @@ A velocidade quadrática média correspondente:
 
 $$v_{\text{rms}} = \sqrt{\langle v^2\rangle} = \sqrt{\frac{3k_B T}{m}}$$
 
-<!-- SIMULAÇÃO SUGERIDA: gás de partículas em caixa com temperatura ajustável, mostrando
-     colisões com a parede e a distribuição de velocidades se alargando com T — p5.js
-     (movimento contínuo de muitos corpos, tabela Q4). Contador de pressão nas paredes. -->
+## Veja a temperatura ser velocidade molecular
+
+Temperatura *é* energia cinética de translação: $\langle E_c\rangle = \tfrac{3}{2}k_B T$.
+Aumente $T$ e as moléculas aceleram, batem mais forte e mais vezes nas paredes (a pressão
+sobe) e a distribuição de velocidades se alarga. O ar de admissão a 320 K tem
+$v_{\text{rms}} \approx 525$ m/s — quase o dobro da velocidade do som.
+
+```{python}
+#| fig-cap: "Distribuição de velocidades de Maxwell–Boltzmann do ar (M = 29 g/mol) em três temperaturas. Ao aquecer, a curva se alarga e a velocidade quadrática média cresce: v_rms = √(3RT/M). A 320 K, v_rms ≈ 525 m/s (marcada). Mesmo modelo da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesma física da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+R, M = 8.314, 0.029
+v = np.linspace(0, 1400, 400)
+fig, ax = plt.subplots(figsize=(9, 3.2))
+for T, col in [(200, '#1f7ac8'), (320, '#66308c'), (600, '#c81f1f')]:
+    f = 4*np.pi*(M/(2*np.pi*R*T))**1.5 * v**2 * np.exp(-M*v**2/(2*R*T))
+    vrms = np.sqrt(3*R*T/M)
+    ax.plot(v, f, color=col, lw=2, label=f'{T} K  (v_rms = {vrms:.0f} m/s)')
+    ax.axvline(vrms, color=col, ls='--', lw=1)
+ax.set_xlabel('velocidade molecular (m/s)'); ax.set_ylabel('densidade de probabilidade')
+ax.legend(fontsize=9); ax.grid(alpha=0.25); ax.set_yticks([])
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: gás de muitas partículas em movimento).
+     p5 de libs/ (offline, Q6). Mesma física da matplotlib (v_rms = √(3RT/M)). -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .tc-wrap{max-width:1000px;margin:1rem auto;}
+  .tc-wrap .tc-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .tc-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:200px;flex:1 1 200px;}
+  .tc-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .tc-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .tc-wrap input[type=range]{width:100%;max-width:260px;accent-color:#c85c2e;}
+  .tc-wrap #tcSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .tc-wrap #tcEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .tc-wrap #tcEq b{color:#1f47c8;}
+</style>
+<div class="tc-wrap">
+  <div class="tc-row">
+    <div class="sld"><label>Temperatura T = <span class="val" id="tcTv">320</span> K</label>
+      <input type="range" id="tcT" min="100" max="1000" value="320" step="20"></div>
+  </div>
+  <div id="tcSketch"></div>
+  <div id="tcEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  const cw=()=>{ const w=(el('tcSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  const R=8.314, M=0.029, kB=1.381e-23, Tref=320;
+  const N=70;
+  let parts=[], pressBuf=0, pressShow=0, boxW=300, boxH=260, bx=20, by=30;
+  function seed(){
+    parts=[]; for(let i=0;i<N;i++) parts.push({x:bx+Math.random()*boxW, y:by+Math.random()*boxH,
+      a:Math.random()*Math.PI*2}); }
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),320).parent('tcSketch'); boxW=Math.min(320,p.width*0.46); seed(); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),320); boxW=Math.min(320,p.width*0.46); seed(); };
+    p.draw=()=>{
+      const W=p.width, T=+el('tcT').value; el('tcTv').textContent=T;
+      // velocidade visual ~ sqrt(T); referência a 320 K
+      const spd=1.9*Math.sqrt(T/Tref);
+      p.background('#faf8f4');
+      // caixa
+      p.noStroke(); p.fill('#eef1f5'); p.rect(bx,by,boxW,boxH,4);
+      p.noFill(); p.stroke('#4a4038'); p.strokeWeight(2); p.rect(bx,by,boxW,boxH,4);
+      // partículas (cor por rapidez relativa)
+      let hitMom=0;
+      for(const q of parts){
+        q.x+=Math.cos(q.a)*spd; q.y+=Math.sin(q.a)*spd;
+        if(q.x<bx+3){q.x=bx+3; q.a=Math.PI-q.a; hitMom+=spd;}
+        if(q.x>bx+boxW-3){q.x=bx+boxW-3; q.a=Math.PI-q.a; hitMom+=spd;}
+        if(q.y<by+3){q.y=by+3; q.a=-q.a; hitMom+=spd;}
+        if(q.y>by+boxH-3){q.y=by+boxH-3; q.a=-q.a; hitMom+=spd;}
+        p.noStroke(); p.fill(p.lerpColor(p.color('#1f7ac8'),p.color('#c81f1f'),(T-100)/900));
+        p.circle(q.x,q.y,6);
+      }
+      pressBuf=0.9*pressBuf+0.1*hitMom;
+      // manômetro (pressão relativa ~ T)
+      const gx=bx+boxW+40, gw=W-gx-30;
+      const pRel=T/Tref;  // P ∝ T a V, N fixos
+      p.noStroke(); p.fill('#7a7367'); p.textSize(11); p.textAlign(p.LEFT,p.TOP);
+      p.text('pressão nas paredes (∝ T)',gx,by);
+      const pbw=Math.min(220,gw), pbh=22;
+      p.fill('#e6ddcf'); p.rect(gx,by+20,pbw,pbh,6);
+      p.fill('#c85c2e'); p.rect(gx,by+20,pbw*Math.min(1,pRel/3.2),pbh,6);
+      // histograma de velocidades (Maxwell-Boltzmann teórico, alarga com T)
+      const hy0=by+80, hh=120, hx0=gx, hw=Math.min(240,gw);
+      p.stroke('#d8cfc0'); p.line(hx0,hy0+hh,hx0+hw,hy0+hh);
+      p.fill('#7a7367'); p.noStroke(); p.textAlign(p.LEFT,p.TOP);
+      p.text('distribuição de velocidades',hx0,hy0-18);
+      const vmax=1400, peak=0.0016;
+      p.push(); p.noFill(); p.stroke('#66308c'); p.strokeWeight(2); p.beginShape();
+      for(let vv=0;vv<=vmax;vv+=20){
+        const f=4*Math.PI*Math.pow(M/(2*Math.PI*R*T),1.5)*vv*vv*Math.exp(-M*vv*vv/(2*R*T));
+        p.vertex(hx0+vv/vmax*hw, hy0+hh-Math.min(hh, f/peak*hh));
+      } p.endShape(); p.pop();
+      const vrms=Math.sqrt(3*R*T/M);
+      p.stroke('#c81f1f'); p.strokeWeight(1.4); p.drawingContext.setLineDash([4,4]);
+      p.line(hx0+vrms/vmax*hw,hy0,hx0+vrms/vmax*hw,hy0+hh); p.drawingContext.setLineDash([]);
+      p.noStroke(); p.fill('#c81f1f'); p.textSize(10); p.textAlign(p.LEFT,p.BOTTOM);
+      p.text('v_rms',hx0+vrms/vmax*hw+3,hy0+12);
+      const Ec=1.5*kB*T, Emol=1.5*R*T;
+      el('tcEq').innerHTML=
+        '⟨E<sub>c</sub>⟩ = 3/2 k<sub>B</sub>T = <b>'+Ec.toExponential(1)+'</b> J/molécula &nbsp;|&nbsp; '+
+        '3/2 RT = <b>'+Emol.toFixed(0)+'</b> J/mol &nbsp;|&nbsp; '+
+        'v<sub>rms</sub> = √(3RT/M) = <b>'+vrms.toFixed(0)+'</b> m/s';
+    };
+  });
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Aqueça o gás: as partículas aceleram, a barra de pressão sobe e o pico da distribuição
+   desliza para a direita. Que grandeza microscópica a temperatura mede, exatamente?
+2. A distribuição *se alarga* ao aquecer — não só desloca. Por que há sempre moléculas
+   muito lentas e muito rápidas, mesmo a $T$ fixa?
+3. $v_{\text{rms}} = \sqrt{3RT/M}$ depende de $M$. Se trocássemos o ar por hidrogênio (M
+   menor) à mesma temperatura, as moléculas seriam mais rápidas ou mais lentas? E a
+   energia média?
+:::
+
 
 ::: {.sp}
 O ar admitido num motor diesel de bordo entra a $T = 320\ \text{K}$. Modele-o como gás

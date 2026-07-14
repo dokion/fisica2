@@ -65,9 +65,123 @@ temperatura (efeito quântico). Para uma molécula diatômica:
 Por isso $\gamma$ do gás de trabalho **cai** nas altas temperaturas da combustão — um
 refinamento que os cálculos de ciclo real precisam considerar.
 
-<!-- SIMULAÇÃO SUGERIDA: Cv(T) em degraus (3/2 R → 5/2 R → 7/2 R) mostrando a ativação
-     de rotação e vibração — Plotly (gráfico explorável, tabela Q4). Marcar a faixa de
-     temperatura do ar num motor. -->
+## Veja os graus de liberdade "acordarem"
+
+$C_V$ de um gás diatômico não é constante: os graus de liberdade se ativam por faixas de
+temperatura. A frio só há translação ($C_V = \tfrac{3}{2}R$, $\gamma = 1{,}67$); à
+temperatura do motor entra a rotação ($\tfrac{5}{2}R$, $\gamma = 1{,}40$); só acima de
+~1000 K a vibração desperta ($\tfrac{7}{2}R$, $\gamma \approx 1{,}29$). Arraste a
+temperatura e veja $\gamma$ cair — e com ele a temperatura de fim de compressão.
+
+```{python}
+#| fig-cap: "Capacidade térmica molar C_V/R de um gás diatômico (ar) em degraus: translação (3/2), + rotação (5/2), + vibração (7/2). Os modos ativam por faixa de T (efeito quântico). A faixa de operação do ar num motor (admissão ~300 K até combustão >1000 K) atravessa o degrau da vibração — daí γ cair de 1,40 para ~1,30. Mesma física da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesma física da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+T = np.logspace(1.3, 4, 500)  # ~20 K a 10000 K
+def cv_over_R(T):
+    # transição suave entre platôs (efeito quântico esquemático)
+    rot = 1/(1+np.exp(-(np.log(T)-np.log(80))/0.25))   # ativa ~80 K
+    vib = 1/(1+np.exp(-(np.log(T)-np.log(1500))/0.30)) # ativa ~1500 K
+    return 1.5 + rot*1.0 + vib*1.0
+cv = cv_over_R(T)
+fig, ax = plt.subplots(figsize=(9, 3.2))
+ax.plot(T, cv, color='#1f47c8', lw=2.4)
+ax.axvspan(300, 1200, color='#c85c2e', alpha=0.12, label='faixa do ar no motor')
+for y, lbl in [(1.5,'3/2 — translação'),(2.5,'5/2 — + rotação'),(3.5,'7/2 — + vibração')]:
+    ax.axhline(y, ls='--', color='#999', lw=0.8)
+    ax.text(25, y+0.06, lbl, fontsize=8.5, color='#555')
+ax.set_xscale('log'); ax.set_xlabel('temperatura T (K)'); ax.set_ylabel('C_V / R')
+ax.set_ylim(1.2, 3.9); ax.legend(fontsize=9, loc='lower right'); ax.grid(alpha=0.2)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: curva C_V(T) em degraus + marcador móvel).
+     p5 de libs/ (offline, Q6). Mesma física da matplotlib. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .cv-wrap{max-width:1000px;margin:1rem auto;}
+  .cv-wrap .cv-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .cv-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:220px;flex:1 1 220px;}
+  .cv-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .cv-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .cv-wrap input[type=range]{width:100%;max-width:300px;accent-color:#c85c2e;}
+  .cv-wrap #cvSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .cv-wrap #cvEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .cv-wrap #cvEq b{color:#1f47c8;}
+</style>
+<div class="cv-wrap">
+  <div class="cv-row">
+    <div class="sld"><label>Temperatura T = <span class="val" id="cvTv">300</span> K</label>
+      <input type="range" id="cvT" min="20" max="4000" value="300" step="20"></div>
+  </div>
+  <div id="cvSketch"></div>
+  <div id="cvEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  const cw=()=>{ const w=(el('cvSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  const R=8.314;
+  const cvR=T=>{ const rot=1/(1+Math.exp(-(Math.log(T)-Math.log(80))/0.25));
+                 const vib=1/(1+Math.exp(-(Math.log(T)-Math.log(1500))/0.30));
+                 return 1.5+rot+vib; };
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),320).parent('cvSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),320); };
+    p.draw=()=>{
+      const W=p.width, T=+el('cvT').value; el('cvTv').textContent=T;
+      const Tmin=20, Tmax=10000;
+      const lx=v=>Math.log(v), lmin=lx(Tmin), lmax=lx(Tmax);
+      p.background('#faf8f4');
+      const gx0=50, gx1=W-25, gy0=25, gy1=270;
+      const X=Tv=>gx0+(lx(Tv)-lmin)/(lmax-lmin)*(gx1-gx0);
+      const Y=c=>gy1-(c-1.2)/(3.9-1.2)*(gy1-gy0);
+      // faixa do motor
+      p.noStroke(); p.fill(200,92,46,28); p.rect(X(300),gy0,X(1200)-X(300),gy1-gy0);
+      p.fill('#b5703a'); p.textSize(9.5); p.textAlign(p.CENTER,p.TOP); p.text('ar no motor',(X(300)+X(1200))/2,gy0+2);
+      // eixos + platôs
+      p.stroke('#d8cfc0'); p.line(gx0,gy1,gx1,gy1); p.line(gx0,gy0,gx0,gy1);
+      p.textSize(10);
+      for(const [c,lbl] of [[1.5,'3/2'],[2.5,'5/2'],[3.5,'7/2']]){
+        p.stroke('#e2dccf'); p.line(gx0,Y(c),gx1,Y(c));
+        p.noStroke(); p.fill('#8a8073'); p.textAlign(p.RIGHT,p.CENTER); p.text(lbl,gx0-4,Y(c)); p.stroke('#e2dccf');
+      }
+      p.noStroke(); p.fill('#8a8073'); p.textAlign(p.CENTER,p.TOP);
+      for(const Tt of [100,1000,10000]) p.text(Tt+'K',X(Tt),gy1+4);
+      p.textAlign(p.LEFT,p.TOP); p.fill('#7a7367'); p.text('C_V / R  (escala log em T)',gx0+4,gy0);
+      // curva
+      p.push(); p.noFill(); p.stroke('#1f47c8'); p.strokeWeight(2.6); p.beginShape();
+      for(let l=lmin;l<=lmax;l+=0.03){ const Tt=Math.exp(l); p.vertex(X(Tt),Y(cvR(Tt))); } p.endShape(); p.pop();
+      // marcador na T atual
+      const c=cvR(T), f=2*c, gamma=1+2/f;
+      p.stroke('#66308c'); p.strokeWeight(1); p.drawingContext.setLineDash([3,3]);
+      p.line(X(T),gy0,X(T),gy1); p.drawingContext.setLineDash([]);
+      p.noStroke(); p.fill('#66308c'); p.circle(X(T),Y(c),10);
+      el('cvEq').innerHTML=
+        'a '+T+' K: &nbsp; C<sub>V</sub> = <b>'+c.toFixed(2)+'</b> R = '+(c*R).toFixed(1)+' J/(mol·K)'+
+        ' &nbsp;|&nbsp; graus ativos f ≈ <b>'+f.toFixed(1)+'</b>'+
+        ' &nbsp;|&nbsp; γ = 1 + 2/f = <b>'+gamma.toFixed(2)+'</b>';
+    };
+  });
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Leve a temperatura de 300 K (admissão) até ~2000 K (combustão): $C_V$ sobe de degrau e
+   $\gamma$ cai de 1,40 para ~1,30. Por que a compressão adiabática esquenta *menos* quando
+   $\gamma$ é menor (tópico 4.11)?
+2. Abaixo de ~80 K a curva desce para $\tfrac{3}{2}R$ ($\gamma = 1{,}67$): a rotação
+   "congela". O que significa um grau de liberdade estar congelado — e por que isso é um
+   efeito quântico, não clássico?
+3. A equipartição clássica prevê $\tfrac{1}{2}R$ por grau de liberdade *sempre*. Por que a
+   curva real tem degraus em vez de um valor fixo? O que a física clássica não captura aqui?
+:::
+
 
 ::: {.sp}
 O ar ($\gamma \approx 1{,}4$ à admissão) é comprimido no cilindro de um motor diesel.

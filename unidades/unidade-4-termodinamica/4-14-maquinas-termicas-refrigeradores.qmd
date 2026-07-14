@@ -64,9 +64,136 @@ Cada fonte de irreversibilidade gera entropia (tópico 4.13) e "come" trabalho �
 O rendimento efetivo do motor é o produto de rendimentos parciais (térmico × mecânico),
 sempre abaixo do limite de Carnot.
 
-<!-- SIMULAÇÃO SUGERIDA: diagrama P–V com sobreposição do ciclo ideal e do ciclo real
-     (área hachurada = trabalho), com slider de irreversibilidade — Plotly (gráfico
-     explorável, tabela Q4). Ligar a área perdida ao rendimento. -->
+## Veja a área perdida virar rendimento perdido
+
+O trabalho por ciclo é a **área** fechada no diagrama indicador (P–V). O ciclo ideal tem
+cantos vivos e área máxima; o ciclo real arredonda os cantos (combustão não-instantânea,
+troca de calor, atrito) e encerra área menor. Ajuste as temperaturas e a irreversibilidade
+e veja a área — e o rendimento — encolherem abaixo do teto de Carnot.
+
+```{python}
+#| fig-cap: "Diagrama indicador P–V esquemático: ciclo ideal (cantos vivos, área cheia) e ciclo real (cantos arredondados, área hachurada menor). Com T_q = 1100 K, T_f = 550 K e irreversibilidade de 10%, η_C = 50% e η_real = 45% (90% do teto). Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+# laço idealizado (retângulo-ish em P-V), normalizado
+Vx = np.array([1.0, 3.0, 3.0, 1.0, 1.0])
+Py = np.array([3.0, 3.0, 1.0, 1.0, 3.0])
+Tq, Tf, irr = 1100.0, 550.0, 0.10
+etaC = 1 - Tf/Tq
+etaR = etaC*(1-irr)
+areaFrac = etaR/etaC          # área real / área ideal
+# laço real: encolhido em torno do centro + cantos suavizados
+cx, cy = Vx.mean(), Py.mean()
+s = np.sqrt(areaFrac)
+Vr = cx + (Vx-cx)*s
+Pr = cy + (Py-cy)*s
+fig, ax = plt.subplots(figsize=(8, 3.4))
+ax.fill(Vx, Py, color='#1f47c8', alpha=0.10)
+ax.plot(Vx, Py, color='#1f47c8', lw=2, label=f'ideal — W máx (η_C = {etaC*100:.0f}%)')
+ax.fill(Vr, Pr, hatch='///', edgecolor='#66308c', facecolor='none', lw=1.6,
+        label=f'real — W menor (η = {etaR*100:.0f}%)')
+ax.set_xlabel('volume V (rel.)'); ax.set_ylabel('pressão P (rel.)')
+ax.legend(fontsize=9, loc='upper right'); ax.grid(alpha=0.2)
+ax.set_xlim(0.4, 3.6); ax.set_ylim(0.4, 3.6)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: diagrama indicador P-V com áreas).
+     p5 de libs/ (offline, Q6). Mesmos parâmetros da matplotlib. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .mt-wrap{max-width:1000px;margin:1rem auto;}
+  .mt-wrap .mt-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .mt-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:160px;flex:1 1 160px;}
+  .mt-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .mt-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .mt-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .mt-wrap #mtSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .mt-wrap #mtEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .mt-wrap #mtEq b{color:#1f47c8;}
+</style>
+<div class="mt-wrap">
+  <div class="mt-row">
+    <div class="sld"><label>T combustão T<sub>q</sub> = <span class="val" id="mtQv">1100</span> K</label>
+      <input type="range" id="mtQ" min="900" max="1400" value="1100" step="50"></div>
+    <div class="sld"><label>T rejeição T<sub>f</sub> = <span class="val" id="mtFv">550</span> K</label>
+      <input type="range" id="mtF" min="400" max="700" value="550" step="10"></div>
+    <div class="sld"><label>Irreversibilidade = <span class="val" id="mtIv">10</span> %</label>
+      <input type="range" id="mtI" min="0" max="30" value="10" step="1"></div>
+  </div>
+  <div id="mtSketch"></div>
+  <div id="mtEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  const cw=()=>{ const w=(el('mtSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  new p5((p)=>{
+    // laço ideal normalizado no espaço [0,1]x[0,1]
+    const Vx=[0.15,0.85,0.85,0.15], Py=[0.85,0.85,0.15,0.15];
+    p.setup=()=>{ p.createCanvas(cw(),340).parent('mtSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),340); };
+    p.draw=()=>{
+      const W=p.width, Tq=+el('mtQ').value, Tf=+el('mtF').value, irr=(+el('mtI').value)/100;
+      el('mtQv').textContent=Tq; el('mtFv').textContent=Tf; el('mtIv').textContent=(irr*100).toFixed(0);
+      const etaC=1-Tf/Tq, etaR=etaC*(1-irr), areaFrac=etaR/etaC, s=Math.sqrt(areaFrac);
+      p.background('#faf8f4');
+      const gx0=55, gy0=25, gw=Math.min(360,W*0.5)-gx0+55, gx1=gx0+Math.min(360,W*0.5), gy1=310;
+      const PX=v=>gx0+v*(gx1-gx0), PY=v=>gy1-v*(gy1-gy0);
+      // eixos
+      p.stroke('#d8cfc0'); p.line(gx0,gy1,gx1,gy1); p.line(gx0,gy0,gx0,gy1);
+      p.noStroke(); p.fill('#7a7367'); p.textSize(10); p.textAlign(p.LEFT,p.TOP);
+      p.text('P',gx0-4,gy0-2); p.text('V',gx1-8,gy1+4); p.text('diagrama indicador',gx0+6,gy0);
+      // laço ideal
+      p.push(); p.fill(31,71,200,25); p.stroke('#1f47c8'); p.strokeWeight(2);
+      p.beginShape(); for(const i of [0,1,2,3]) p.vertex(PX(Vx[i]),PY(Py[i])); p.endShape(p.CLOSE); p.pop();
+      // laço real: mesma forma encolhida (área menor) com cantos arredondados,
+      // sempre inscrito no laço ideal — área = areaFrac da ideal
+      const half=0.35*s;
+      const xL=PX(0.5-half), xR=PX(0.5+half), yT=PY(0.5+half), yB=PY(0.5-half);
+      const rw=xR-xL, rh=yB-yT, rad=Math.min(rw,rh)*0.28;
+      p.push(); p.stroke('#66308c'); p.strokeWeight(2.2); p.noFill();
+      p.rect(xL,yT,rw,rh,rad);
+      // hachura do laço real (trabalho útil real)
+      p.strokeWeight(1); p.stroke(102,48,140,80);
+      for(let yy=yT+6; yy<yB-4; yy+=7) p.line(xL+5,yy,xR-5,yy);
+      p.pop();
+      // painel de rendimento (direita) — barras
+      const px=gx1+50, pw=W-px-25, y0=60, H=160, base=y0+H;
+      p.stroke('#d8cfc0'); p.line(px,base,px+Math.min(200,pw),base);
+      const barH=v=>v*H; // v em [0,1]
+      p.noStroke();
+      p.fill('#1f47c8'); p.rect(px+10, base-barH(etaC), 46, barH(etaC));
+      p.fill('#66308c'); p.rect(px+80, base-barH(etaR), 46, barH(etaR));
+      p.fill('#4a4038'); p.textSize(10); p.textAlign(p.CENTER,p.BOTTOM);
+      p.text((etaC*100).toFixed(0)+'%',px+33,base-barH(etaC)-2);
+      p.text((etaR*100).toFixed(0)+'%',px+103,base-barH(etaR)-2);
+      p.textAlign(p.CENTER,p.TOP);
+      p.text('teto Carnot',px+33,base+4); p.text('real',px+103,base+4);
+      p.fill('#7a7367'); p.textAlign(p.LEFT,p.TOP); p.text('rendimento',px+10,y0-22);
+      el('mtEq').innerHTML=
+        'η<sub>Carnot</sub> = 1 − T<sub>f</sub>/T<sub>q</sub> = <b>'+(etaC*100).toFixed(0)+'%</b> &nbsp;|&nbsp; '+
+        'η<sub>real</sub> = η<sub>C</sub>·(1 − irr) = <b>'+(etaR*100).toFixed(0)+'%</b> &nbsp;|&nbsp; '+
+        'fração do teto: '+(areaFrac*100).toFixed(0)+'% &nbsp;|&nbsp; área real = '+(areaFrac*100).toFixed(0)+'% da ideal';
+    };
+  });
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Zere a irreversibilidade: o laço real cobre o ideal e $\eta = \eta_C$. Isso é
+   fisicamente alcançável? O que a 2ª lei diz sobre um ciclo sem nenhuma perda?
+2. Suba $T_f$ (rejeição mais quente): o teto de Carnot cai mesmo *sem* mexer na
+   irreversibilidade. Por quê? Qual mudança de projeto ataca esse termo num navio?
+3. A "área perdida" (diferença entre os dois laços) é trabalho que não saiu no eixo. Para
+   onde foi essa energia — sumiu, ou apenas mudou de forma?
+:::
+
 
 ::: {.sp}
 Um motor diesel marítimo opera com temperatura de combustão $T_q = 1100\ \text{K}$ e

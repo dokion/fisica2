@@ -134,7 +134,138 @@ irreversivelmente.
   cresce.
 :::
 
-<!-- SIMULAÇÃO SUGERIDA: trocador de calor visual com duas correntes (cores quentes/frias), slider de T fria inicial (20–50 °C), mostrando em tempo real ΔS de cada corrente e ΔS_universo como indicador (barra de progresso da "irreversibilidade"); lib Plotly com diagrama T-S mostrando ciclos reversível vs. real -->
+## Veja a entropia sendo gerada
+
+Um trocador aquece água fria com vapor que condensa a 100 °C. A água ganha entropia, o
+vapor perde — mas o total **nunca** decresce: a diferença é a entropia *gerada* pela troca
+de calor através de um $\Delta T$ finito. Ajuste a temperatura de entrada da água e veja a
+"irreversibilidade" crescer quando o $\Delta T$ do trocador aumenta.
+
+```{python}
+#| fig-cap: "Entropia gerada por hora de operação em função da temperatura de entrada da água (saída fixa em 70 °C; vapor condensando a 100 °C; 100 kg/h). Quanto mais fria a água entra, maior o ΔT e maior a geração. Para entrada a 30 °C, ΔS_total ≈ +7,0 kJ/K. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+m, c = 100.0, 4.18        # kg/h, kJ/(kg·K)
+T2 = 70 + 273.15          # saída da água (K)
+Tcond = 100 + 273.15      # vapor condensando (K)
+T1c = np.linspace(20, 50, 200)
+T1 = T1c + 273.15
+Q = m*c*(T2 - T1)
+dS_agua = m*c*np.log(T2/T1)
+dS_vapor = -Q/Tcond
+dS_total = dS_agua + dS_vapor
+fig, ax = plt.subplots(figsize=(9, 3.2))
+ax.plot(T1c, dS_total, color='#66308C', lw=2.2, label='ΔS gerada (total)')
+ax.axhline(0, ls='-', color='#999', lw=0.8)
+i30 = np.argmin(np.abs(T1c-30))
+ax.plot(30, dS_total[i30], 'o', color='#1F47C8', ms=9)
+ax.annotate('entrada 30 °C\nΔS ≈ +7,0 kJ/K', (30, dS_total[i30]),
+            textcoords='offset points', xytext=(12, -4), fontsize=9)
+ax.set_xlabel('temperatura de entrada da água (°C)')
+ax.set_ylabel('ΔS gerada (kJ/K por hora)')
+ax.legend(fontsize=9); ax.grid(alpha=0.25)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: barras de ΔS + esquema do trocador).
+     p5 de libs/ (offline, Q6). Mesmos parâmetros da matplotlib. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .es-wrap{max-width:1000px;margin:1rem auto;}
+  .es-wrap .es-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .es-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:200px;flex:1 1 200px;}
+  .es-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .es-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .es-wrap input[type=range]{width:100%;max-width:260px;accent-color:#c85c2e;}
+  .es-wrap #esSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .es-wrap #esEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .es-wrap #esEq b{color:#1f47c8;}
+</style>
+<div class="es-wrap">
+  <div class="es-row">
+    <div class="sld"><label>Temperatura de entrada da água = <span class="val" id="esTv">30</span> °C</label>
+      <input type="range" id="esT" min="20" max="50" value="30" step="1"></div>
+  </div>
+  <div id="esSketch"></div>
+  <div id="esEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  const cw=()=>{ const w=(el('esSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),300).parent('esSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),300); };
+    p.draw=()=>{
+      const W=p.width;
+      const m=100, c=4.18, T1c=+el('esT').value;
+      el('esTv').textContent=T1c;
+      const T1=T1c+273.15, T2=70+273.15, Tcond=100+273.15;
+      const Q=m*c*(T2-T1);
+      const dSa=m*c*Math.log(T2/T1);      // kJ/K, água (>0)
+      const dSv=-Q/Tcond;                 // kJ/K, vapor (<0)
+      const dSt=dSa+dSv;                  // gerada (>0)
+      p.background('#faf8f4');
+      // --- esquema do trocador (esquerda) ---
+      const bx=20, by=40, bw=Math.min(300,W*0.42), bh=220;
+      p.noStroke(); p.fill('#ece6da'); p.rect(bx,by,bw,bh,8);
+      // corrente de vapor (topo, quente)
+      p.fill('#c81f1f'); p.rect(bx,by+16,bw,26,4);
+      p.fill('#fff'); p.textSize(11); p.textAlign(p.LEFT,p.CENTER);
+      p.text('vapor  100 °C → condensa',bx+8,by+29);
+      // corrente de água (base, aquece: gradiente frio→morno pela T1)
+      const cold=p.lerpColor(p.color('#1f7ac8'),p.color('#c85c2e'),(T1c-20)/30);
+      p.fill(cold); p.rect(bx,by+bh-42,bw,26,4);
+      p.fill('#fff'); p.text('água  '+T1c+' °C → 70 °C',bx+8,by+bh-29);
+      // setas de calor descendo do vapor pra água
+      p.stroke('#e08a3a'); p.strokeWeight(2);
+      for(let i=1;i<=5;i++){ const xx=bx+bw*i/6; p.line(xx,by+46,xx,by+bh-46);
+        p.noStroke(); p.fill('#e08a3a'); p.triangle(xx-4,by+bh-52,xx+4,by+bh-52,xx,by+bh-44); p.stroke('#e08a3a'); }
+      p.noStroke(); p.fill('#7a7367'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      p.text('Q escoa do vapor para a água',bx+bw/2,by+bh+6);
+      // --- barras de entropia (direita) ---
+      const gx=bx+bw+50, gw=W-gx-30, y0=60, mid=y0+90, scale=1.6; // px por kJ/K
+      p.stroke('#d8cfc0'); p.line(gx,mid,gx+gw,mid);
+      const bar=(x,v,col,lbl)=>{ const h=v*scale; p.noStroke(); p.fill(col);
+        if(h>=0) p.rect(x,mid-h,42,h); else p.rect(x,mid,42,-h);
+        p.fill('#4a4038'); p.textSize(10); p.textAlign(p.CENTER,p.TOP); p.text(lbl,x+21,mid+ (h>=0?4:(-h+4)) );
+        p.textAlign(p.CENTER,h>=0?p.BOTTOM:p.TOP);
+        p.text((v>=0?'+':'')+v.toFixed(1),x+21, h>=0?mid-h-2:mid-h+2); };
+      const bx0=gx+20;
+      bar(bx0,     dSa,'#1f7ac8','água');
+      bar(bx0+70,  dSv,'#c81f1f','vapor');
+      bar(bx0+140, dSt,'#66308c','total');
+      p.fill('#7a7367'); p.textSize(10); p.textAlign(p.LEFT,p.TOP);
+      p.text('ΔS (kJ/K por hora)',gx,y0-24);
+      // barra de irreversibilidade
+      const iby=mid+70, ibw=Math.min(240,gw-20), frac=Math.min(1,dSt/12);
+      p.fill('#e6ddcf'); p.rect(gx,iby,ibw,16,6);
+      p.fill('#66308c'); p.rect(gx,iby,ibw*frac,16,6);
+      p.fill('#4a4038'); p.textAlign(p.LEFT,p.TOP); p.text('irreversibilidade →',gx,iby+20);
+      el('esEq').innerHTML=
+        'ΔS<sub>água</sub> = m c ln(T₂/T₁) = <b>+'+dSa.toFixed(1)+'</b> kJ/K &nbsp;|&nbsp; '+
+        'ΔS<sub>vapor</sub> = −Q/T<sub>cond</sub> = <b>'+dSv.toFixed(1)+'</b> kJ/K &nbsp;|&nbsp; '+
+        'ΔS<sub>total</sub> = <b>+'+dSt.toFixed(1)+'</b> kJ/K &nbsp;(≥ 0 ✓)';
+    };
+  });
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Deixe a água entrar mais fria (20 °C): o $\Delta T$ do trocador cresce e a entropia
+   gerada (barra roxa) sobe. Por que um trocador com $\Delta T$ pequeno gera menos
+   entropia — e o que isso custa em área de troca?
+2. A barra do vapor é negativa (ele *perde* entropia). Isso viola a 2ª lei? Onde está a
+   compensação?
+3. O calor se conserva (mesmos kJ entram e saem). Então o que exatamente se "perdeu"
+   quando a entropia total sobe $+7$ kJ/K?
+:::
+
 
 ## Onde o fenômeno vive
 
