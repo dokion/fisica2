@@ -120,6 +120,24 @@ líquida com c = 4,18 kJ/(kg·K), vapor como gás ideal com R_esp = 462 J/(kg·K
 
 <!-- SIMULAÇÃO SUGERIDA: diagrama de fluxo de fluido em trocador de calor, mostrando duas correntes (entrada fria, saída quente), com sliders para T entrada (40–60 °C) e vazão molar (0,01–0,1 mol/s), exibindo em tempo real H entrada, H saída, e transferência de calor Q = ṅ·ΔH; lib Plotly com dois paineís (temperatura vs. posição no trocador, e balanço de entalpia) -->
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Tabelas de vapor** — caldeira, turbina e condensador são dimensionados por
+  diferenças de entalpia lidas em tabela: h é a moeda corrente da engenharia térmica
+  de fluxo.
+- **Válvula redutora (estrangulamento)** — processo de Joule–Thomson: entalpia
+  constante, pressão caindo; em gases reais a temperatura cai — é o coração da
+  refrigeração.
+- **Expansão livre de Joule** — o clássico conceitual: gás expandindo para vácuo não
+  faz trabalho nem troca calor; para gás ideal, T não muda — U depende só de T.
+
+<!-- EXEMPLO A SIMULAR: estrangulamento numa válvula (p5.js/esquema): gás cruzando a
+     restrição com h constante; sliders de pressão a montante; ΔT resultante para
+     gás real × ideal. -->
+
 **Conexão com o próximo tópico:** sabendo U e H, você quer cálculos específicos dos
 aquecimentos/resfriamentos num gás. Resposta: capacidades térmicas molares — C_V e C_P —
 na base de graus de liberdade molecular.

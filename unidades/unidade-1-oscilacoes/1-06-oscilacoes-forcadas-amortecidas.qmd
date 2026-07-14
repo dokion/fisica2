@@ -291,5 +291,23 @@ Mesmo com amortecimento, a ressonância deixa cicatrizes:
   qualidade valem só quando $Q \gtrsim 5$.
 :::
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Coxins de máquinas (montagem antivibratória)** — o isolamento funciona do lado
+  $\omega \gg \omega_0$ da curva de resposta: escolhe-se coxim macio para que a
+  frequência natural da montagem fique bem abaixo da excitação do motor.
+- **Velocidades críticas do eixo propulsor** — banda estreita (Q alto) marcada em
+  placa no passadiço da praça; atravessa-se rápido, nunca se opera dentro.
+- **Acelerômetro e sismógrafo** — instrumentos que vivem deliberadamente num lado
+  escolhido da curva $A(\omega)$: o projeto fixa $\omega_0$ conforme o que se quer
+  medir.
+
+<!-- EXEMPLO A SIMULAR: transmissibilidade de coxim T(ω/ω₀) para vários γ (p5.js ou
+     gráfico interativo): mostrar que isolar exige ω/ω₀ > √2 e que mais amortecimento
+     piora o isolamento em alta frequência. -->
+
 **Conexão com o próximo tópico:** toda essa energia que entra no sistema (via excitação) sai
 dele (via amortecimento). O balanço energético é o assunto de 1.7.

@@ -86,4 +86,22 @@ Um navio-graneleiro de boca $B = 32$ m, comprimento $L = 190$ m, com área de fl
 
 <!-- SIMULAÇÃO SUGERIDA: Gráfico (Plotly) interativo de deslocamento vs. calado; barra de carregamento que move o navio na seção transversal (p5.js). Ou: navio em perfil mostrando centros de gravidade G, centro de flutuação B, e linha de flutuação mudando com carga. -->
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Calado e marcas de Plimsoll** — Arquimedes operacional: cada tonelada embarcada
+  afunda o casco o volume correspondente; a marca de borda-livre é a lei do empuxo
+  gravada no costado (SP1).
+- **Hidráulica de leme e guindaste** — Pascal em serviço: pressão aplicada num
+  cilindro pequeno move cargas enormes no atuador grande.
+- **Docagem** — conforme a doca esvazia, o empuxo é transferido gradualmente ao
+  picadeiro; o instante crítico de estabilidade é quando a quilha toca e o navio
+  ainda "meio flutua".
+
+<!-- EXEMPLO A SIMULAR: navio carregando/descarregando (p5.js): slider de deslocamento
+     (5–80 mil t, faixa SP1) e densidade da água (1000/1025); calado resultante e
+     marca de Plimsoll. -->
+
 **Conexão com o próximo tópico:** dominado o equilíbrio em repouso, agora veremos o que acontece quando o fluido **se move** — equações de continuidade e Bernoulli abrem a porta para entender bombas, propulsão e resistência do navio ao avanço.

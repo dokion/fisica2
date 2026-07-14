@@ -93,5 +93,23 @@ medido no banco é $\eta_{\text{real}} = 45\%$.
   temperaturas $T_f$ e $T_q$, não pela engenharia do motor — Carnot é intransponível.
 :::
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Diesel marítimo lento** — a máquina térmica de maior rendimento em operação
+  comercial (≈50%): dois tempos, curso longo, queima lenta — cada detalhe existe
+  para colher mais área no diagrama p-V.
+- **Instalação frigorífica** — gambuza e porões refrigerados: o mesmo diagrama
+  percorrido ao contrário, com COP > 1 (move-se mais calor do que se gasta de
+  trabalho — sem violar nada).
+- **Recuperação de calor (WHR)** — turbina a vapor alimentada pelos gases de descarga:
+  uma segunda máquina térmica pendurada no rejeito da primeira.
+
+<!-- EXEMPLO A SIMULAR: COP de refrigeração (gráfico interativo): sliders de
+     temperatura da câmara (−25 a +5 °C) e da água do mar; COP de Carnot × COP real
+     e potência do compressor para uma carga térmica dada. -->
+
 **Conexão com o próximo tópico:** vista a máquina do lado macroscópico, voltamos ao
 microscópico — pressão e temperatura como movimento das moléculas (4.15).

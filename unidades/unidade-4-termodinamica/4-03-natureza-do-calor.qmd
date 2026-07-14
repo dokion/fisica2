@@ -109,6 +109,24 @@ esperada é 500 kW.
 
 <!-- SIMULAÇÃO SUGERIDA: trocador de calor visual com dois fluidos (cores quentes/frias), sliders de temperatura de entrada e vazão, mostrando as três formas de transferência ativas (condução através da parede destacada, convecção dos fluidos em movimento, radiação das superfícies externas); lib p5.js para animação de movimento de fluido + Plotly para gráfico T de saída vs. vazão -->
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Trocadores de calor do motor** — calor como energia em trânsito, nunca "substância
+  armazenada": o mesmo joule atravessa camisa → água doce → água salgada → mar, e o
+  que cada fluido "tem" é energia interna, não calor.
+- **Broca de Rumford** — o clássico histórico: mandrilar canhões esquentava sem
+  limite, incompatível com um "fluido calórico" finito — calor é transferência,
+  gerável por trabalho.
+- **Aquecimento por atrito em cabos e mancais** — trabalho mecânico virando energia
+  interna diante dos olhos (e do termômetro).
+
+<!-- EXEMPLO A SIMULAR: trocador de calor contracorrente (gráfico interativo):
+     perfis de temperatura dos dois fluidos ao longo do trocador com sliders de
+     vazão. -->
+
 **Conexão com o próximo tópico:** se calor é energia em trânsito, quanto de energia passa?
 Resposta: quantidade de calor (Q) em joules, que relaciona massa, temperatura e uma
 propriedade do material chamada calor específico.

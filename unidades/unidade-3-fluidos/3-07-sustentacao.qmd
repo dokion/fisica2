@@ -116,4 +116,20 @@ Uma pá de hélice de navio graneleiro tem área aproximada $A = 12$ m² e opera
 
 <!-- SIMULAÇÃO SUGERIDA: Gráfico (Plotly) de C_L vs. ângulo de ataque, mostrando zona linear, máximo, e stall; ou campo vetorial de pressão ao redor de perfil NACA (p5.js ou SVG animado), com slider de ângulo de ataque mudando distribuição de pressões em tempo real. -->
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Leme** — uma asa vertical: força ∝ v²; por isso o navio "perde o leme" a baixa
+  velocidade e por isso dá-se máquina adiante ao girar — o jato do hélice restaura o
+  v² sobre o leme.
+- **Hélice** — cada pá é uma asa em rotação; o empuxo é a soma das sustentações das
+  seções da pá.
+- **Estabilizadores de aleta** — asas retráteis no bojo que geram momento contra o
+  roll, comandadas em fase pela central de estabilização.
+
+<!-- EXEMPLO A SIMULAR: força de leme × ângulo de ataque (p5.js): curva com estol e
+     slider de velocidade mostrando a dependência em v². -->
+
 **Conexão com o próximo tópico:** calculamos sustentação usando coeficientes empíricos $C_L$. Mas existe uma **teoria** que fundamenta essa sustentação sem usar dados experimentais — o **Teorema de Kutta-Joukowski** — que liga sustentação à **circulação** ao redor da pá. Tópico 3.8, o último desta unidade.

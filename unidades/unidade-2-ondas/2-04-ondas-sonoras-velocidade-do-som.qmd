@@ -275,4 +275,21 @@ plt.tight_layout(); plt.show()
    como a superfície — indica **mais** profundidade do que existe.
 :::
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Canal SOFAR** — o mínimo de $v(z)$ a ~1000 m aprisiona o som por refração
+  contínua: baleias se comunicam e hidrofones detectam eventos a milhares de
+  quilômetros dentro desse guia de ondas natural.
+- **Correção de sondagem por perfil de velocidade** — levantamentos hidrográficos
+  lançam XBT/CTD justamente para substituir o "1500 m/s" por $v(z)$ medido.
+- **Trovão** — o clássico: contar segundos entre relâmpago e trovão e dividir por 3
+  dá a distância em km, porque $v_{ar} \approx 340$ m/s $\ll c$.
+
+<!-- EXEMPLO A SIMULAR: raio acústico curvando no canal SOFAR (p5.js): perfil v(z)
+     realista e traçado de raios por lei de Snell contínua; slider do ângulo de
+     lançamento. -->
+
 **Conexão com o próximo tópico:** agora que sabemos como e por que o som se propaga, aprendemos a **caracterizar uma onda sonora** de forma completa — sua equação diferencial, como escrever a solução em termos de amplitude e fase, e como relacionar frequência, comprimento de onda e velocidade.

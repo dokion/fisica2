@@ -392,5 +392,24 @@ correção vem no tópico 1.4.
   ângulo de banda não muda o período do navio (em pequenos ângulos).
 :::
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Pistão e virabrequim** — o mecanismo biela–manivela converte o MCU do eixo em
+  movimento alternativo do pistão; para biela longa em relação à manivela
+  ($r/L \ll 1$), o pistão executa quase-MHS. É a projeção do círculo materializada
+  em aço, girando na praça de máquinas.
+- **Tensão elétrica de bordo (440 V / 60 Hz)** — a senoide do gerador é a projeção da
+  espira girante no campo: todo diagrama fasorial de eletricidade é o MCU deste
+  tópico.
+- **Passagem das pás do hélice** — um ponto fixo do casco "vê" cada pá passar em MCU;
+  a excitação resultante na chapa é senoidal com frequência pás × rotação.
+
+<!-- EXEMPLO A SIMULAR: biela–manivela (p5.js, tabela Q4: movimento): círculo do
+     virabrequim + pistão; slider r/L de 0,05 a 0,5 comparando o movimento real do
+     pistão com o MHS puro (desvio de 2ª ordem visível). -->
+
 **Conexão com o próximo tópico:** sabendo somar ângulos no círculo, sabemos somar
 oscilações — superposição, batimentos e figuras de Lissajous são o tópico 1.3.

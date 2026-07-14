@@ -278,6 +278,24 @@ de encontro de ondas, não de rotação de máquinas — em serviço, a ressonâ
   $\gamma$ (Seção 6).
 :::
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Roll ressonante em mar de través** — quando o período de *encontro* das ondas
+  (que depende de rumo e velocidade) coincide com o período natural de balanço, a
+  amplitude cresce ciclo a ciclo; a defesa é mudar rumo ou velocidade, deslocando o
+  período de encontro.
+- **Rotação crítica de máquinas** — estruturas leves (grades, corrimãos, painéis)
+  vibram visivelmente quando alguma ordem do motor cruza a frequência natural delas.
+- **Balanço de parque** — o clássico: empurrões pequenos, na frequência certa, em
+  fase com a velocidade.
+
+<!-- EXEMPLO A SIMULAR: navio em mar de través (p5.js, tabela Q4: movimento):
+     sliders de período de onda e período natural (faixa SP3, 8–25 s); amplitude de
+     resposta crescendo quando os períodos coincidem. -->
+
 **Conexão com o próximo tópico:** ressonância em sistemas reais (com amortecimento) é moderada
 mas ainda perigosa. Como reduzi-la? Aumentando o amortecimento ou desviando a frequência natural
 — tópico 1.6 mostra como excitação e amortecimento se combinam.

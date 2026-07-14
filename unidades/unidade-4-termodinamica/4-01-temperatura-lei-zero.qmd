@@ -102,6 +102,25 @@ diferença de temperatura suficiente para que a troca de calor funcione.
 
 <!-- SIMULAÇÃO SUGERIDA: termômetro virtual calibrado em duas escalas (Celsius e Kelvin), slider de temperatura (−50 °C a +100 °C), mostrando em tempo real a conversão e indicador visual de "em equilíbrio com..." para demonstrar Lei Zero; lib Plotly (gráfico de temperatura real vs. tempo) -->
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Termopar e PT100 na praça de máquinas** — todo sensor de temperatura funciona por
+  lei zero: ele entra em equilíbrio térmico com o meio e mede a *própria*
+  temperatura, que então é a do meio.
+- **Calibração em banho** — padrão e instrumento mergulhados no mesmo banho: se ambos
+  equilibram com o banho, equilibram entre si — a lei zero é o fundamento lógico da
+  calibração.
+- **Metal "mais frio" que madeira** — clássico: no mesmo porão, corrimão de aço e
+  caixa de madeira estão à mesma T; a mão sente fluxos de calor diferentes, não
+  temperaturas diferentes.
+
+<!-- EXEMPLO A SIMULAR: dois corpos + termômetro trocando calor até o equilíbrio
+     (p5.js): barras de temperatura convergindo, com capacidades térmicas
+     ajustáveis. -->
+
 **Conexão com o próximo tópico:** sabendo medir temperatura, perguntamos: o que acontece
 com tamanhos e volumes quando um corpo é aquecido? Resposta: dilatação térmica (tópico
 4.2).

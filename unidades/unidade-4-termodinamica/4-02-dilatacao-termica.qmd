@@ -109,6 +109,23 @@ saber se há risco de travamento devido à dilatação térmica.
 
 <!-- SIMULAÇÃO SUGERIDA: barra de aço visual com slider de temperatura (20–300 °C), mostrando expansão em cores graduais (dilatação linear marcada) e indicador de tensão (mudança de cor conforme σ se aproxima do limite de escoamento); lib Plotly com diagrama ΔL vs. T -->
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Juntas de expansão em linhas de vapor** — dezenas de metros de tubulação a
+  centenas de °C: sem as juntas e liras, a dilatação restrita geraria tensões acima
+  do escoamento.
+- **Convés sob sol tropical** — chapas e trilhos de escotilha dilatam durante o dia;
+  folgas e furos oblongos nos suportes existem por isso.
+- **Termostato bimetálico** — duas lâminas com α diferentes soldadas: a curvatura com
+  a temperatura vira chave liga-desliga.
+
+<!-- EXEMPLO A SIMULAR: tubulação com e sem junta de expansão sob ΔT (p5.js):
+     slider de temperatura; deslocamento livre × tensão crescente no tubo
+     engastado. -->
+
 **Conexão com o próximo tópico:** a dilatação é efeito da vibração térmica das moléculas.
 Essa vibração é energia — trazendo o conceito de **calor** como forma de transferência dessa
 energia.

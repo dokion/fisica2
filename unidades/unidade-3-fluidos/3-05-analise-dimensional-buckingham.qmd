@@ -118,4 +118,21 @@ Um navio-graneleiro de comprimento $L = 200$ m, velocidade de serviço $v = 14$ 
 
 <!-- SIMULAÇÃO SUGERIDA: Gráfico interativo (Plotly) de Resistência vs. Velocidade, mostrando contribuições de onda e fricção para escala real e modelo (com slider de escala); ou visualizador de escala: sliders de L, v, mostrando Fr, Re, Cb em tempo real. -->
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Tanque de provas** — o teorema Π em operação: iguala-se Froude (ondas) porque é
+  impossível igualar Froude e Reynolds ao mesmo tempo; o atrito entra por correlação.
+  Toda previsão de potência de casco novo nasce dessa escolha.
+- **Diagrama de Moody** — $f = f(\mathrm{Re}, \varepsilon/D)$: séculos de dados de
+  tubulação colapsados em dois grupos adimensionais.
+- **Estimativa de ordem de grandeza** — sem tabela à mão, a análise dimensional
+  entrega a forma da resposta (arrasto ∝ ρv²A) a menos de um coeficiente.
+
+<!-- EXEMPLO A SIMULAR: escala de Froude (calculadora interativa): slider de razão
+     de escala do modelo; velocidades, tempos e potências correspondentes do navio
+     real. -->
+
 **Conexão com o próximo tópico:** usando análise dimensional e semelhança, agora podemos falar de **arrasto** em detalhe — seus componentes (pressão, atrito, total) — e como a geometria do casco e escoamento afetam a resistência. Tópico 3.6.

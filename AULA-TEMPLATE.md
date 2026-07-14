@@ -91,6 +91,32 @@ que faltou reconstrói o raciocínio do quadro lendo a nota? Então está comple
   `<!-- SIMULAÇÃO SUGERIDA: [descrição, lib pela tabela Q4, parâmetros SP] -->` em vez
   de gerar código quebrado.
 
+### Seção "Onde o fenômeno vive" (incremental — fecha o tópico)
+
+Todo tópico termina (antes da "Conexão com o próximo tópico") com uma seção
+`## Onde o fenômeno vive`, que ancora a matemática em sistemas onde o fenômeno é
+**fisicamente real** — não uma analogia: campo linear medido num ponto, resposta linear
+de uma estrutura, instrumento que materializa a equação. Regras:
+
+1. **Formato de nascimento:** lista de 2–5 exemplos em bullets `**Nome** — 1–2 frases`
+   (o que é, por que é o fenômeno, condição de validade se houver). Contexto naval
+   primeiro; um exemplo não naval é bem-vindo quando for o clássico do fenômeno.
+2. **Crescimento incremental:** a seção é o ponto de acréscimo para sessões futuras
+   (outros modelos/agentes). Um exemplo é promovido a simulação quando o professor
+   pedir — aí valem as regras de simulação acima (tabela Q4 + paridade matplotlib +
+   `::: {.pergunta}`), e a exceção fica registrada: esta seção pode acumular mais de
+   uma simulação por tópico, pois cada uma serve a um exemplo distinto.
+3. **Candidato a simulação:** marcar com `<!-- EXEMPLO A SIMULAR: [descrição, lib pela
+   tabela Q4, parâmetros/faixas SP] -->` logo após a lista — nunca gerar código sem
+   especificação.
+4. **Honestidade física obrigatória:** declarar o limite de validade quando a
+   identificação depender dele (linearidade, pequenas amplitudes, corpo que segue o
+   campo vs. corpo com dinâmica própria). Sem dado confiável, `[VERIFICAR]`.
+5. **Exemplar de referência:** a seção "Onde a superposição vive" do tópico
+   `unidades/unidade-1-oscilacoes/1-03-superposicao-batimentos-lissajous.qmd`
+   (versão madura, com simulações); as seções dos demais tópicos mostram a versão
+   recém-nascida (só texto + candidatos).
+
 ---
 
 ## 5. PLACEHOLDERS — O CONTRATO `<< >>`
@@ -143,5 +169,6 @@ OE n.m [Bk] {texto do objetivo}
 - [ ] Cada seção responde a um objetivo do cabeçalho?
 - [ ] Parágrafos ≤ 5 linhas; deduções completas em display math?
 - [ ] Simulação (se houver): lib pela tabela Q4 + matplotlib de paridade + pergunta orientadora?
+- [ ] Seção "Onde o fenômeno vive" presente ao final, com exemplos honestos (validade declarada)?
 - [ ] Números navais dentro das faixas SP do Mestre §6?
 - [ ] YAML válido, `title` e `categories` intactos?

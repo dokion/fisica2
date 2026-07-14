@@ -280,4 +280,21 @@ plt.tight_layout(); plt.show()
    frequência para levar $\Delta\varphi$ a $0°$, qual seria o ganho de amplitude?
 :::
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Arranjo de transdutores (beamforming)** — o sonar moderno soma os sinais de vários
+  elementos com fases controladas: interferência construtiva na direção desejada,
+  destrutiva nas demais. O feixe é literalmente um diagrama de fasores.
+- **Multipercurso de rádio/AIS** — sinal direto + reflexão no mar chegam com fases
+  diferentes; o desvanecimento periódico ao se afastar do transmissor é o mapa de
+  interferência sendo atravessado.
+- **Zona de silêncio entre duas sirenes** — dois emissores coerentes no mesmo píer
+  produzem faixas onde as pressões se cancelam.
+
+<!-- EXEMPLO A SIMULAR: dois emissores pontuais num plano (p5.js): mapa de franjas
+     de interferência com slider de separação entre fontes e de fase relativa. -->
+
 **Conexão com o próximo tópico:** quando ondas viajam num meio com contornos (superfícies sólidas, fundos, mudanças de propriedade), elas não apenas interferem — **refletem**. A reflexão é a origem dos ecos de sonar e ecobatímetro, e a chave para entender modos normais de vibração.

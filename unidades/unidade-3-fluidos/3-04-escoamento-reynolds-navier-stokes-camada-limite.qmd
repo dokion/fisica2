@@ -112,4 +112,21 @@ Um navio-tanque de comprimento $L = 240$ m viaja a $v = 12$ nós (6.17 m/s) em �
 
 <!-- SIMULAÇÃO SUGERIDA: Perfil de velocidade na camada limite (Plotly, mostrando log-law para turbulent, linear para laminar), com slider de Re para ver transição; ou animação de partículas em campo vetorial (p5.js, camada limite formando-se ao longo de placa plana). -->
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Camada limite do casco** — milímetros na proa, metros na popa; a incrustação
+  engrossa-a e o consumo sobe — a docagem para pintura é manutenção de camada
+  limite.
+- **Fumaça de chaminé** — o clássico visível: filete laminar que ondula e explode em
+  turbulência ao subir — transição de Reynolds a olho nu.
+- **Modelo × navio real** — o tanque de provas não consegue igualar o Re do real;
+  ensaia-se com semelhança de Froude e corrige-se o atrito por linhas de correlação.
+
+<!-- EXEMPLO A SIMULAR: crescimento da camada limite ao longo do casco (p5.js ou
+     gráfico): espessura δ(x) laminar × turbulenta com slider de velocidade e ponto
+     de transição. -->
+
 **Conexão com o próximo tópico:** conhecendo Reynolds e camada limite, agora reduzimos problemas complexos de fluidos usando **análise dimensional** — o Teorema π de Buckingham — que permite prever o comportamento de um navio real a partir de testes em modelo reduzido. Tópico 3.5.

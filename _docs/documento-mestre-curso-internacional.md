@@ -274,8 +274,19 @@ Template por aula (2–5 páginas, Markdown → PDF):
 ## 2. Desenvolvimento (as deduções do quadro, na MESMA ordem da aula)
 ## 3. Exemplo resolvido naval (1 SP da Seção 6, resolvido no padrão a-b-c-d)
 ## 4. Erros clássicos (2–3 — os mesmos que geram distratores de ME)
-## 5. Conexão com a próxima aula (1 frase)
+## 5. Onde o fenômeno vive (seção incremental — ver regra abaixo)
+## 6. Conexão com a próxima aula (1 frase)
 ```
+
+**"Onde o fenômeno vive" (seção incremental):** fecha o tópico com 2–5 exemplos onde o
+fenômeno é *fisicamente real* — não uma analogia nem uma soma abstrata: campo linear num
+ponto, resposta linear de estrutura, instrumento que materializa a matemática. Contexto
+naval primeiro; declarar a condição de validade quando houver (regime linear, pequenas
+amplitudes). A seção nasce textual (lista de exemplos) e cresce com o tempo: cada exemplo
+pode ganhar simulação própria em sessões futuras, marcada antes por comentário
+`<!-- EXEMPLO A SIMULAR: ... -->` (mesma disciplina do Apêndice Q: lib pela tabela Q4,
+paridade matplotlib, pergunta orientadora). Exemplar de referência: a seção "Onde a
+superposição vive" do tópico 1.3.
 
 **Produção sem custo de tempo:** fotografe o quadro ao fim da aula → modelo barato transcreve para o template → você revisa 10 min. Em 1 semestre a apostila da disciplina está pronta. Simulações usadas: baixar versão offline (PhET permite) e listar na nota de aula.
 

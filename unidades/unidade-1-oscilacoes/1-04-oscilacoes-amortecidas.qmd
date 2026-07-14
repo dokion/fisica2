@@ -286,6 +286,24 @@ esse nível de amortecimento passivo.
   da oscilação aumenta (frequência diminui) em relação ao ideal.
 :::
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Retorno do casco após pancada de onda** — sub-amortecido por natureza; bolinas e
+  apêndices existem para aumentar $\gamma$ sem tocar em $\omega_0$.
+- **Agulha de manômetro e de galvanômetro** — projetada próxima do amortecimento
+  crítico: leitura rápida sem oscilar em volta do valor.
+- **Porta estanque com mola e amortecedor** — fecho suave sem bater: o par
+  mola–amortecedor é dimensionado perto do crítico.
+- **Suspensão veicular** — o clássico do regime crítico: amortecedor gasto = carro
+  sub-amortecido quicando.
+
+<!-- EXEMPLO A SIMULAR: duas agulhas de manômetro lado a lado respondendo ao mesmo
+     degrau de pressão, uma sub-amortecida e uma crítica (p5.js, tabela Q4:
+     movimento); slider de γ/ω₀ da primeira. -->
+
 **Conexão com o próximo tópico:** amortecimento sem excitação externa leva ao repouso.
 Se uma força externa periódica for aplicada simultaneamente, o sistema atinge um regime
 permanente — tópico 1.5 e 1.6.

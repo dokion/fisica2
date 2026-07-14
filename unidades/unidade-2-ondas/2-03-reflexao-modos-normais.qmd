@@ -254,4 +254,20 @@ plt.tight_layout(); plt.show()
    modos (compare as ordens de grandeza)?
 :::
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Sloshing em tanque parcialmente cheio** — a superfície livre tem modos normais;
+  se o balanço do navio excita o modo fundamental, a carga líquida amplifica o roll
+  (por isso as regras de superfície livre em estabilidade).
+- **Tubulão de descarga do motor** — a coluna de gases tem modos acústicos; o
+  silencioso é um projeto deliberado de anti-modo.
+- **Corda de instrumento** — o clássico: comprimento fixo, harmônicos $f_n = n v/2L$;
+  afinar é mudar $v$ pela tração.
+
+<!-- EXEMPLO A SIMULAR: sloshing em tanque retangular (p5.js, tabela Q4: movimento):
+     modos n = 1 e 2 da superfície livre com slider de nível de enchimento. -->
+
 **Conexão com o próximo tópico:** sabemos agora como ondas se comportam em geometrias simples. Mas o que *é* uma onda sonora? Qual é a física microscópica que a produz, e como sua velocidade depende do meio? Essas respostas vêm no tópico 2.4.

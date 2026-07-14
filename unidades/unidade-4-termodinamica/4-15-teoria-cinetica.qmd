@@ -87,5 +87,23 @@ ideal de moléculas de massa molar $M \approx 29\ \text{g/mol}$.
   energia média, logo maior $m$ implica menor $v_{\text{rms}}$ — mas mesma $\langle E_c\rangle$.
 :::
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Pressão na garrafa de ar** — 30 bar são colisões moleculares contadas por segundo
+  por centímetro quadrado; aquecer o compartimento acelera as moléculas e o
+  manômetro sobe sem entrar uma molécula a mais.
+- **Evaporação seletiva** — só as moléculas rápidas escapam da superfície: o líquido
+  que fica esfria — o suor do tripulante e o resfriamento evaporativo funcionam pela
+  cauda da distribuição de Maxwell.
+- **Vazamento farejado a distância** — o cheiro do combustível atravessa a praça por
+  difusão: caminho aleatório molecular, lento comparado à convecção, mas inexorável.
+
+<!-- EXEMPLO A SIMULAR: gás de esferas rígidas (p5.js): partículas colidindo com
+     histograma de velocidades convergindo para Maxwell-Boltzmann; slider de
+     temperatura. -->
+
 **Conexão com o próximo tópico:** a energia $\tfrac{3}{2}k_BT$ vale só para translação —
 generalizá-la aos demais graus de liberdade leva aos calores específicos (4.16).

@@ -79,6 +79,25 @@ independentes:
   (ex.: $f = 25\ \text{Hz}$) — são a mesma física.
 :::
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Balanço livre do navio** — perturbado em águas calmas, o casco oscila em torno da
+  vertical com período próprio de 8–25 s: o braço de endireitamento faz o papel da
+  força restauradora. Validade: pequenos ângulos de banda.
+- **Tanque estabilizador em U** — a coluna d'água entre os dois braços do tanque é um
+  oscilador harmônico de período $2\pi\sqrt{L/2g}$; o navio usa um oscilador para
+  combater outro.
+- **Vibração do motor em regime constante** — periódica com o período de rotação; a
+  assinatura espectral estável é a base da manutenção preditiva.
+- **Clinômetro de pêndulo** — o instrumento que mede a banda é, ele próprio, um
+  oscilador harmônico (e por isso precisa de amortecimento, tópico 1.4).
+
+<!-- EXEMPLO A SIMULAR: coluna d'água em tubo em U (p5.js, tabela Q4: movimento);
+     slider de comprimento da coluna L; readout T = 2π√(L/2g). -->
+
 **Conexão com o próximo tópico:** 
 
 No caso unidimensional mais simples — uma única coordenada $x(t)$ oscilando harmonicamente — o movimento

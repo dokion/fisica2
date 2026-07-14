@@ -125,5 +125,20 @@ Instrumentação mostra que apenas 45% dessa energia é convertida em trabalho m
 
 <!-- SIMULAÇÃO SUGERIDA: dois painéis lado a lado — (esquerda) barra de água com slider T (0–120 °C), mostrando Q em função de T com mudança de declive no ponto de vaporização; (direita) diagrama de fase (P–T) mostrando as três regiões e os calores latentes visualmente; lib Plotly -->
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Aquecedor de água sanitária** — dimensionamento direto por $Q = mc\Delta T$:
+  potência da resistência × tempo = massa × 4186 × ΔT.
+- **Vazão de água de resfriamento do motor** — o calor rejeitado pela camisa fixa a
+  vazão mínima: $\dot{Q} = \dot{m}c\Delta T$ com ΔT limitado pelo projeto.
+- **Clima costeiro** — o clássico planetário: o calor específico enorme da água faz o
+  mar amortecer a temperatura do litoral (e criar as brisas térmicas).
+
+<!-- EXEMPLO A SIMULAR: aquecimento de tanque (gráfico interativo): sliders de
+     potência, massa e ΔT desejado; curva T(t) e tempo de aquecimento. -->
+
 **Conexão com o próximo tópico:** calor flui entre dois lugares. Como ele passa através de um
 sólido (parede de cilindro, parede de trocador)? Resposta: condução térmica, regida pela Lei de Fourier.

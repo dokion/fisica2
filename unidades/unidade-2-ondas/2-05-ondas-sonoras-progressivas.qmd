@@ -257,4 +257,22 @@ plt.tight_layout(); plt.show()
    $d = v\,t/2$.
 :::
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **O ping do ecobatímetro** — um pulso progressivo real: desce, reflete, volta; o
+  registro $p(t)$ no transdutor é exatamente o "segundo retrato" desta seção, e
+  $d = v\,t/2$ é a leitura dele.
+- **Hidrofone de vigilância** — detona-se ou passa-se um navio a quilômetros; o que
+  chega é a onda progressiva com o atraso $d/v$, base de toda localização acústica
+  passiva.
+- **A "ola" do estádio** — o clássico visual: a forma percorre a arquibancada,
+  nenhuma pessoa sai do lugar.
+
+<!-- EXEMPLO A SIMULAR: ida e volta completa do ping (p5.js): pulso descendo e
+     subindo na coluna d'água com o traço do transdutor ao lado e cronômetro
+     marcando t e d = vt/2. -->
+
 **Conexão com o próximo tópico:** definida a forma e a propagação de uma onda sonora, falta quantificar sua "força" — *quanto* de energia ela carrega, e como essa energia varia com a amplitude e a frequência. Isso é **intensidade e nível sonoro**, tema do tópico 2.6.

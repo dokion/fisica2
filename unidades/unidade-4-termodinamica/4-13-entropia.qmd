@@ -121,6 +121,24 @@ Segunda Lei é satisfeita.
 
 <!-- SIMULAÇÃO SUGERIDA: trocador de calor visual com duas correntes (cores quentes/frias), slider de T fria inicial (20–50 °C), mostrando em tempo real ΔS de cada corrente e ΔS_universo como indicador (barra de progresso da "irreversibilidade"); lib Plotly com diagrama T-S mostrando ciclos reversível vs. real -->
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Válvula redutora de vapor** — a entalpia se conserva, mas a entropia cresce:
+  vapor estrangulado carrega a mesma energia com menos capacidade de virar trabalho
+  — por isso turbina e válvula redutora não são equivalentes.
+- **Mistura em tanques** — lastro doce contaminado com salgada, ou óleo quente com
+  frio: misturar é fácil, desmisturar custa trabalho (o dessalinizador paga essa
+  conta todos os dias).
+- **Tinta no porão** — o clássico visual: uma gota se espalha sozinha; ninguém jamais
+  viu o filme passar ao contrário.
+
+<!-- EXEMPLO A SIMULAR: mistura estatística (p5.js): dois gases de cores diferentes
+     separados por comporta; ao abrir, contagem de micro-configurações e S = k ln W
+     crescendo. -->
+
 **Conexão com o próximo tópico:** Entropia permite medir irreversibilidades em máquinas
 térmicas reais — e, inversamente, máquinas que operam entre dois depósitos (motores,
 refrigeradores) têm estruturas bem definidas. São o tópico 4.14.

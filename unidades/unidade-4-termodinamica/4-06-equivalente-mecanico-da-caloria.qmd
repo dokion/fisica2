@@ -112,6 +112,22 @@ Simultaneamente, produz 300 kg de vapor. Valor calorífico do combustível: 42 M
 
 <!-- SIMULAÇÃO SUGERIDA: recipiente virtual com pás (como no experimento de Joule), slider de "peso caindo" (trabalho em J), mostrando em tempo real o aumento de temperatura da água correspondente (ΔT em K) pela relação W = m·c·ΔT, com equivalência em calorias exibida lado a lado; lib p5.js para animação das pás, Plotly para gráfico T vs. tempo -->
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Mancal desalinhado esquentando** — o torque de atrito vezes a rotação é potência
+  mecânica virando energia interna a 1 J = 1 J; o termômetro do mancal é o Joule da
+  praça de máquinas.
+- **Freio do guindaste** — descer carga com o freio converte energia potencial em
+  calor no tambor — quantificável em kJ por descida.
+- **Experimento de Joule** — o clássico: pás agitando água, peso caindo; a
+  equivalência 4,186 J/cal medida com balde e termômetro.
+
+<!-- EXEMPLO A SIMULAR: mancal com atrito (p5.js): sliders de torque de atrito e
+     RPM; potência dissipada e taxa de subida da temperatura da carcaça. -->
+
 **Conexão com o próximo tópico:** a equivalência calor-trabalho é tão profunda que motiva a
 Primeira Lei da Termodinâmica — a conservação de energia em forma diferencial para processos
 termodinâmicos.

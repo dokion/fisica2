@@ -319,6 +319,24 @@ plt.tight_layout(); plt.show()
    lenta". A transferência é um batimento — entre quais duas frequências?
 :::
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Absorvedor dinâmico sintonizado** — um oscilador auxiliar (tanque anti-roll
+  passivo, massa sintonizada em mastros e chaminés) é acoplado de propósito ao modo
+  indesejado para "roubar" a energia dele — a transferência de energia deste tópico,
+  usada como projeto.
+- **Navio + carga suspensa** — casco em roll e carga pendurada no guindaste formam
+  dois pêndulos acoplados; içamentos pesados exigem prever os dois modos.
+- **Relógios de Huygens** — o clássico histórico: dois pêndulos na mesma viga
+  sincronizam por acoplamento fraco através da estrutura.
+
+<!-- EXEMPLO A SIMULAR: absorvedor dinâmico (p5.js, tabela Q4: movimento): casco em
+     roll + tanque sintonizado; slider de sintonia mostrando a redução do modo
+     principal quando ω_tanque ≈ ω_roll. -->
+
 **Conexão com o próximo tópico:** o capítulo de oscilações fecha aqui. Próximo capítulo (UE 2)
 estuda **ondas em meios elásticos** — que são, essencialmente, osciladores continuamente acoplados
 no espaço.

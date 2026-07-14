@@ -113,6 +113,23 @@ prática"?
 
 <!-- SIMULAÇÃO SUGERIDA: gráfico interativo de η vs. T₁ (slider, 800–2500 K) com T₂ fixo em 300 K, mostrando duas curvas — Carnot (superior) e ciclo real (inferior), zona entre elas destacada como "perdas práticas"; lib Plotly -->
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Todo trocador precisa de ΔT** — calor só atravessa espontaneamente do quente para
+  o frio: a praça de máquinas inteira é desenhada em cascata de temperaturas, e
+  "aproximar" as temperaturas custa área de troca.
+- **Frigorífica da gambuza** — mover calor do frio para o quente exige compressor
+  ligado: a segunda lei cobrando o trabalho.
+- **Rendimento máximo do diesel** — nenhum motor entre a temperatura de combustão e a
+  do mar supera Carnot; os ~50% do diesel lento estão notavelmente perto do teto.
+
+<!-- EXEMPLO A SIMULAR: η de Carnot (gráfico interativo): sliders de T_quente
+     (600–2000 K) e T_fria (280–320 K); comparação com rendimentos reais de motores
+     (faixa SP10: 35–50%). -->
+
 **Conexão com o próximo tópico:** a medida quantitativa da irreversibilidade é a
 **entropia**. Cada processo real aumenta entropia do universo — e a Segunda Lei é,
 fundamentalmente, sobre entropia nunca decrescer.

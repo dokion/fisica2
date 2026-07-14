@@ -96,3 +96,22 @@ e $\gamma$ efetivo cai para $\approx 1{,}30$.
 
 **Conexão com a próxima unidade:** encerrada a termodinâmica, o curso completa o
 percurso oscilações → ondas → fluidos → calor previsto no sumário oficial do FIS-2.
+
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **O ar dos compressores** — cv = 5R/2 e γ = 1,4 usados em todo cálculo de compressor
+  vêm da equipartição: 3 graus de translação + 2 de rotação do N₂ e O₂, com a
+  vibração ainda "congelada" nas temperaturas de trabalho.
+- **Gases de exaustão** — o vapor d'água e o CO₂ da combustão ativam mais graus de
+  liberdade (γ menor): a mistura quente se comporta diferente do ar frio nos
+  cálculos de turbina.
+- **Dulong–Petit no bloco do motor** — sólidos metálicos com ~3R por mol: a
+  estimativa de capacidade térmica de blocos e eixos sai da equipartição antes de
+  qualquer tabela.
+
+<!-- EXEMPLO A SIMULAR: graus de liberdade e γ (interativo): seletor de gás
+     (monoatômico/diatômico/poliatômico) animando translação/rotação/vibração e
+     atualizando cv, cp e γ. -->

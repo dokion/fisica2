@@ -77,4 +77,21 @@ Um navio-tanque com deslocamento de 50 mil toneladas flutua em água salgada de 
 
 <!-- SIMULAÇÃO SUGERIDA: Gráfico interativo (Plotly) mostrando calado vs. densidade (1000–1030 kg/m³) para deslocamento fixo; barco em perfil com TPC indicado. Ou: animação de bolha em líquido viscoso vs. não viscoso (p5.js, esfera caindo em dois meios). -->
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Aquecimento do bunker** — HFO a frio é viscoso demais para bombear; os tanques têm
+  serpentinas porque a viscosidade cai fortemente com a temperatura, e a purificadora
+  exige faixa estreita de viscosidade na entrada.
+- **Densímetro de bordo** — o teste de densidade da água de lastro, do eletrólito de
+  bateria e do combustível é leitura direta de massa específica por flutuação.
+- **Água doce × salgada** — os 2,5% de diferença de densidade mudam o calado (marcas
+  de borda-livre distintas) e a velocidade do som (tópico 2.4): a mesma propriedade
+  aparecendo em dois instrumentos.
+
+<!-- EXEMPLO A SIMULAR: viscosidade do HFO × temperatura (gráfico interativo):
+     curva μ(T) típica com slider de T e faixa-alvo da purificadora destacada. -->
+
 **Conexão com o próximo tópico:** definidas as quatro propriedades, agora veremos como a pressão em repouso varia com a profundidade (Lei de Pascal) — e como essa variação de pressão é o fundamento da flutuabilidade (Princípio de Arquimedes).

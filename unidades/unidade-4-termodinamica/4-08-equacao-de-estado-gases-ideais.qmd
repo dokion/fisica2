@@ -124,6 +124,23 @@ temperatura após a combustão (ponto 3)?
 
 <!-- SIMULAÇÃO SUGERIDA: gráfico P-V interativo mostrando um cilindro de motor, com sliders para T (variando cor do gás visualmente: azul frio, vermelho quente), mostrando em tempo real as curvas PV = constante (isotérmicas) e PV^γ = constante (adiabáticas) no plano P-V; lib Plotly com múltiplas curvas de gás -->
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Garrafas de ar de partida** — 30 bar nominais variam com a temperatura do
+  compartimento: pV = nRT explica a leitura maior à tarde sem que ninguém tenha
+  comprimido nada.
+- **Respiro de tanques** — o "respirar" diário dos tanques (admitir e expulsar ar com
+  o ciclo térmico) é a equação de estado movendo volume a pressão constante.
+- **Balão meteorológico** — o clássico: sobe, a pressão externa cai, o volume cresce
+  até estourar — a isoterma percorrida ao contrário.
+
+<!-- EXEMPLO A SIMULAR: garrafa de ar de partida (gráfico interativo): slider de
+     temperatura do compartimento (10–50 °C); pressão indicada e massa de ar
+     disponível para partidas. -->
+
 **Conexão com o próximo tópico:** sabendo P, V, T em cada ponto do ciclo, você quer saber
 **quanto de energia** está armazenada no gás. Resposta: energia interna, que depende de
 temperatura — e da entalpia, no caso de sistemas abertos como trocadores.

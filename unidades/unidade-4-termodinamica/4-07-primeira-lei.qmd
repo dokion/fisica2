@@ -126,6 +126,23 @@ eficiência.
 
 <!-- SIMULAÇÃO SUGERIDA: diagrama de fluxo de energia (Sankey diagram) mostrando 100 unidades de combustível dividindo-se em trabalho (45), água quente (30), exaustão (20), radiação (5); sliders para ajustar eficiência η do motor e ver como as proporções mudam (W sobe, mas Q₂ também); lib Plotly para diagrama de Sankey -->
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Balanço térmico do motor diesel** — 100% de combustível ≈ 50% trabalho + 25%
+  gases de descarga + 20% água de resfriamento + 5% radiação: a primeira lei é a
+  planilha de prestação de contas da praça de máquinas (e a base dos sistemas de
+  recuperação de calor).
+- **Compressor de ar de partida** — o trabalho do compressor vai para energia interna
+  do ar (que esquenta) e calor no resfriador: nada some.
+- **Metabolismo** — o clássico: alimento = trabalho + calor; a primeira lei vale para
+  o tripulante tanto quanto para o motor.
+
+<!-- EXEMPLO A SIMULAR: compressor de partida (p5.js): pistão comprimindo com
+     indicadores de W, ΔU e Q trocado com o resfriador. -->
+
 **Conexão com o próximo tópico:** a Primeira Lei aplicada a gases ideais — onde energia
 interna depende apenas de temperatura — abre o caminho para análise de ciclos reais
 (Otto, Diesel) usando diagramas P-V.

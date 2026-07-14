@@ -105,4 +105,20 @@ Uma bomba de porão de navio graneleiro move água de lastro entre tanques a uma
 
 <!-- SIMULAÇÃO SUGERIDA: Gráfico de Bernoulli (Plotly) mostrando P, v², gh ao longo de um tubo convergente/divergente; ou animação de partículas em escoamento laminar/turbulento (p5.js, com toggle de viscosidade). -->
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Squat em águas rasas** — o fluxo acelera sob a quilha (continuidade), a pressão
+  cai (Bernoulli) e o navio afunda dinamicamente; a redução de velocidade em canal
+  é a defesa. Validade: escoamento quase-ideal, efeito real medido em provas.
+- **Interação em ultrapassagem e efeito de banco** — dois cascos próximos (ou casco e
+  margem) aceleram o fluxo entre si: sucção lateral que o prático compensa no leme.
+- **Edutores de porão** — ejetores sem partes móveis: água em alta velocidade cria
+  baixa pressão que aspira o porão; Bernoulli como bomba.
+
+<!-- EXEMPLO A SIMULAR: squat (p5.js): perfil do canal com slider de velocidade e de
+     UKC; linhas de corrente acelerando sob a quilha e afundamento dinâmico. -->
+
 **Conexão com o próximo tópico:** as equações de continuidade e Bernoulli valem para fluidos ideais. Mas no navio, a viscosidade importa — regime laminar vs. turbulento é a questão central, e o número de Reynolds classifica tudo. Tópico 3.4.

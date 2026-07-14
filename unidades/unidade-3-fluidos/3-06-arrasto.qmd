@@ -116,4 +116,20 @@ Um navio-tanque de área molhada $A_{\text{molhada}} = 8000$ m² e comprimento $
 
 <!-- SIMULAÇÃO SUGERIDA: Gráfico (Plotly) de Resistência vs. Velocidade (ou vs. Número de Froude), mostrando contribuições de atrito e onda; slider de rugosidade/incrustação mostrando impacto em C_F. Ou: perfil de pressão ao redor de casco (p5.js, com animação de escoamento laminar vs. turbulento). -->
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Slow steaming** — potência de arrasto cresce ~v³: reduzir 20% da velocidade corta
+  quase metade do consumo — a conta que redesenhou a operação da marinha mercante.
+- **Âncora flutuante (drogue)** — arrasto usado a favor: segura a proa ao mar em
+  temporal.
+- **Incrustação** — casco sujo eleva o coeficiente de arrasto friccional em dezenas
+  de por cento; a curva consumo × tempo desde a docagem é o arrasto virando dinheiro.
+
+<!-- EXEMPLO A SIMULAR: potência × velocidade (gráfico interativo, faixa SP4:
+     10–25 nós, 5–80 MW): slider de velocidade e de fator de incrustação; custo de
+     combustível por milha. -->
+
 **Conexão com o próximo tópico:** o arrasto que acabamos de estudar é uma face da resistência. A outra face é a **sustentação** — a força perpendicular ao escoamento que move a água de modo produtivo, impulsionando o navio pela hélice e governando-o pelo leme. Tópico 3.7.

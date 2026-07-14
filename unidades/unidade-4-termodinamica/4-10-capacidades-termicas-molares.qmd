@@ -123,6 +123,24 @@ de 1 bar a 10 bar. Calcular Q e W em cada processo.
 
 <!-- SIMULAÇÃO SUGERIDA: dois paineís lado a lado — (esquerda) duas moléculas de N₂ com setas indicando graus de liberdade (3 translação em cores RGB, 2 rotação em cor diferente), slider de temperatura mostrando movimento mais rápido; (direita) diagrama das capacidades C_V e C_P em função de f, com dropdown para escolher tipo de gás (monoatômico, diatômico, poliatômico) e ver γ mudar; lib p5.js para molecular visualization, Plotly para gráficos -->
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Compressão multi-estágio com intercooler** — o trabalho de compressão depende de
+  γ = cp/cv; resfriar entre estágios aproxima o processo da isoterma e economiza
+  exatamente o que a razão de capacidades prevê.
+- **Aquecer tanque fechado × aberto** — a mesma elevação de temperatura custa mais
+  calor a pressão constante (cp) que a volume constante (cv): a diferença é o
+  trabalho de empurrar a atmosfera.
+- **Gases de exaustão** — a mistura com vapor d'água (γ menor que o do ar) muda o
+  cálculo de temperatura na turbina de recuperação.
+
+<!-- EXEMPLO A SIMULAR: dois recipientes idênticos, um selado e um com pistão livre
+     (p5.js): mesma potência de aquecimento; termômetros divergindo na razão
+     cv/cp. -->
+
 **Conexão com o próximo tópico:** sabendo C_V e γ, você consegue analisar processos
 adiabáticos de um gás ideal — o caso crítico da compressão no motor diesel antes da
 injeção de combustível.

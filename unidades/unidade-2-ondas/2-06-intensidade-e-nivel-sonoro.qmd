@@ -269,4 +269,22 @@ plt.tight_layout(); plt.show()
    quantas vezes mais área? Ligue isso à queda de 6 dB por duplicação de distância.
 :::
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Proteção auditiva na praça de máquinas** — níveis típicos de 100–110 dB(A);
+  como a intensidade dobra a cada 3 dB, o tempo seguro de exposição cai à metade a
+  cada 3 dB acima do limite — a aritmética logarítmica é norma de segurança.
+- **Assinatura acústica do navio** — o ruído irradiado (dB re 1 µPa) é medido em
+  raias de espectro e regulado; navios de pesquisa e militares investem em
+  silenciamento para reduzi-lo.
+- **Alcance de detecção do sonar** — a equação do sonar é um balanço de níveis em
+  dB: fonte − perdas de propagação − ruído de fundo > limiar.
+
+<!-- EXEMPLO A SIMULAR: dose diária de ruído (gráfico interativo): sliders de nível
+     (85–115 dB) e tempo de exposição; readout da dose e do tempo máximo permitido
+     (regra dos 3 dB). -->
+
 **Conexão com o próximo tópico:** definida a intensidade de uma onda sonora, estudamos agora o que acontece quando **duas frequências** estão presentes simultaneamente — ocorre o fenômeno de **batimento**, onde a onda resultante oscila em amplitude lentamente no tempo.

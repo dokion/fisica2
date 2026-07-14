@@ -227,4 +227,23 @@ plt.tight_layout(); plt.show()
    qual das duas corresponde a pressão acima da atmosférica no som?
 :::
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Cabo de amarração "cantando"** — vento ou corrente excitam ondas transversais no
+  cabo tenso; a frequência depende da tração e da densidade linear (é o monitor
+  audível da tração).
+- **Pulso EM do radar** — campos elétrico e magnético perpendiculares à propagação:
+  onda transversal por excelência, a 3 GHz ou mais.
+- **Ondas do mar** — na superfície real as partículas descrevem órbitas (mistura de
+  transversal e longitudinal que decai com a profundidade); a idealização "onda
+  transversal" vale para a *forma* da superfície, não para a trajetória das
+  partículas.
+
+<!-- EXEMPLO A SIMULAR: órbitas de partículas numa onda do mar (p5.js, tabela Q4:
+     movimento): círculos que encolhem com a profundidade, comparados lado a lado
+     com a corda ideal puramente transversal. -->
+
 **Conexão com o próximo tópico:** definida a existência de dois tipos de onda, aprendemos agora que **duas ondas da mesma natureza podem somar-se** — é o princípio da superposição, que gera interferência construtiva, destrutiva e fasores.

@@ -256,4 +256,23 @@ plt.tight_layout(); plt.show()
    de o objeto passar.
 :::
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Estrondo sônico** — aeronave supersônica: o cone de Mach varre a superfície e
+  chega como duplo estalo depois de o avião passar — a geometria deste tópico,
+  audível.
+- **Onda de proa e leque de Kelvin** — navio "ultrapassa" as ondas que gera; o padrão
+  em V (meio-ângulo de 19,47° em águas profundas) é o análogo hidrodinâmico do cone.
+  Validade: analogia geométrica — a física dispersiva das ondas de superfície é
+  diferente da acústica.
+- **Colapso de bolhas de cavitação** — no hélice, cada bolha que colapsa emite um
+  micro-choque; o conjunto erode a pá e assobia no espectro do sonar.
+
+<!-- EXEMPLO A SIMULAR: comparação lado a lado cone de Mach × leque de Kelvin
+     (p5.js): mesma fonte móvel, uma emitindo ondas não dispersivas (cone abre com
+     M) e outra com o leque fixo de 19,47°. -->
+
 **Conexão com o próximo tópico:** Completamos o estudo de **ondas em meios elásticos e ondas sonoras** (UE 2). O próximo grande tópico, UE 3, aborda **Mecânica dos Fluidos** — que, embora estude escoamentos e forças em fluidos, está intimamente ligado à ondulatória acústica via conceitos de pressão, densidade e propagação de perturbações.

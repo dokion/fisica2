@@ -292,5 +292,22 @@ a trincas prematuras.
   constante. Com amortecimento, $A(t) = A_0 e^{-\gamma t}$, então $E(t) = E_0 e^{-2\gamma t}$.
 :::
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Fadiga estrutural** — a energia dissipada ciclo a ciclo no material vira dano
+  acumulado; as curvas S-N traduzem "quantos ciclos de qual tensão" a estrutura
+  suporta.
+- **Peação de carga suspensa** — o operador de guindaste amortece o pêndulo da carga
+  retirando energia no instante certo do ciclo (freando quando a carga se afasta).
+- **Tanque estabilizador ativo** — bombas transferem água em fase calculada para
+  extrair energia do modo de roll: um amortecedor cuja "viscosidade" é controlada.
+
+<!-- EXEMPLO A SIMULAR: carga pendurada em guindaste (p5.js, tabela Q4: movimento):
+     o aluno clica para frear no instante que escolher e vê a energia do pêndulo
+     cair conforme o acerto de fase. -->
+
 **Conexão com o próximo tópico:** osciladores podem estar acoplados — a energia não flui só
 entre cinética e potencial, mas também entre osciladores vizinhos. Tópico 1.8.

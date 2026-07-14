@@ -132,6 +132,23 @@ compressão. Calcular:
 
 <!-- SIMULAÇÃO SUGERIDA: diagrama P-V interativo mostrando um cilindro com êmbolo (visual), slider de razão de compressão r (8–25), exibindo as curvas adiabática (PV^γ = const) e isotérmica (PV = const) no plano P-V; cores das regiões indicando temperatura (gradient azul-vermelho); lib p5.js para cilindro visual, Plotly para diagrama P-V com marcação de pontos 1, 2, 3 -->
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Compressão no cilindro diesel** — rápida demais para trocar calor: T sobe pela
+  adiabática até a autoignição do combustível — o motor diesel dispensa vela porque
+  este tópico funciona.
+- **Descarga rápida de garrafa de ar** — a garrafa gela e chega a suar/gear no
+  gargalo: expansão quase-adiabática do gás que fica.
+- **Nuvens orográficas e a garrafa que "fumega"** — o clássico: ar subindo (ou
+  descomprimindo) esfria adiabaticamente até condensar o vapor.
+
+<!-- EXEMPLO A SIMULAR: descarga de garrafa de ar (gráfico interativo): pressão e
+     temperatura internas caindo pela politrópica durante a descarga; slider de
+     rapidez da descarga interpolando isoterma ↔ adiabática. -->
+
 **Conexão com o próximo tópico:** a compressão adiabática no motor diesel é a "perna que
 sobe" do ciclo. A combustão e expansão seguem — e revelam um limite fundamental de como
 eficiência de motor melhora. Esse limite é a Segunda Lei da Termodinâmica.

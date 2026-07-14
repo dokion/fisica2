@@ -100,4 +100,21 @@ Uma pá de hélice de navio experimenta uma velocidade média de fluxo $v = 7$ m
 
 <!-- SIMULAÇÃO SUGERIDA: Campo vetorial (p5.js ou SVG) mostrando escoamento ao redor de perfil, com cores indicando circulação local e magnitude de velocidade; slider de ângulo de ataque mudando circulação; ou visualizador de vórtice: mostrar linhas de corrente formando vórtice e magnitude de pressão (Plotly contour). -->
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Rotor de Flettner** — cilindros girantes verticais que propulsionam navios reais
+  por efeito Magnus: circulação imposta pela rotação + vento = força de
+  Kutta–Joukowski ($L' = \rho v \Gamma$) apontando para a proa.
+- **Bola com efeito** — o clássico do Magnus: a rotação arrasta o ar, cria circulação
+  e a trajetória curva.
+- **Circulação na pá do hélice** — a sustentação de cada seção da pá é ρvΓ; a esteira
+  helicoidal que fica atrás do navio é a contrapartida dos vórtices ligados às pás.
+
+<!-- EXEMPLO A SIMULAR: cilindro girante em corrente uniforme (p5.js): slider de
+     rotação; linhas de corrente assimétricas, pontos de estagnação migrando e vetor
+     de força ρvΓ. -->
+
 **Conexão com o próximo tópico:** com o Teorema de Kutta-Joukowski, completamos a Mecânica dos Fluidos (UE 3). Os tópicos 3.1–3.8 fornecem toda a teoria necessária para entender flutuabilidade, estabilidade, propulsão e controle do navio. O próximo passo — a Unidade 4 — é **Termodinâmica**: compreender como a máquina propulsiva (motor diesel, turbina) converte combustível em trabalho mecânico que, acoplado ao hélice, move a embarcação. FIM DA UNIDADE 3.

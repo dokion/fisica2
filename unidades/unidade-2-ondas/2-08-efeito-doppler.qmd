@@ -277,4 +277,20 @@ plt.tight_layout(); plt.show()
    fator 2 aparece na fórmula?
 :::
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Log Doppler e ADCP** — já detalhados neste tópico: velocidade sobre o fundo e
+  perfil de correntes extraídos do desvio de frequência do eco.
+- **Radar de navegação com processamento Doppler** — separa alvos móveis do clutter
+  do mar pelo desvio de frequência do eco EM; mesmo princípio, outra onda.
+- **Sirene de embarcação passando** — o clássico audível: aguda na aproximação,
+  grave no afastamento; a mudança abrupta no través marca o instante de distância
+  mínima.
+
+<!-- EXEMPLO A SIMULAR: sirene passando (p5.js + WebAudio): fonte cruzando a tela
+     com f'(t) calculado e áudio com a frequência percebida variando. -->
+
 **Conexão com o próximo tópico:** estudamos até agora ondas com velocidades pequenas comparadas à velocidade do som ($v_{\text{obj}} \ll v_{\text{som}}$), onde o desvio Doppler é linear. Mas o que acontece quando objetos se movem a velocidades comparáveis ou superiores à velocidade do som? Surgem **ondas de choque** e fenômenos exóticos de propagação — tema do tópico final 2.9.

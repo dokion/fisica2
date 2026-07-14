@@ -116,6 +116,24 @@ Um trocador de calor de bordo tem tubos de latão (κ = 120 W/(m·K)) com diâme
 
 <!-- SIMULAÇÃO SUGERIDA: corte transversal de parede de trocador com cores de temperatura gradient (quente-vermelho, frio-azul), slider de espessura d e material κ, mostrando em tempo real o fluxo Q pela Lei de Fourier e como incrustação afeta o resultado; lib Plotly com mapa de calor (heatmap de T através da parede) -->
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Isolamento de linhas de vapor** — lã mineral de baixa condutividade: a espessura
+  do isolamento é a lei de Fourier resolvida para perda (e temperatura de toque)
+  aceitável.
+- **Incrustação em trocadores** — camada milimétrica de depósito é uma resistência
+  térmica em série que derruba o desempenho: o fator de incrustação do projeto é a
+  condução em serviço.
+- **Piso de aço × estrado de madeira** — mesma temperatura, sensações opostas: o pé
+  sente o fluxo (condutividade), o clássico da lei zero revisitado por Fourier.
+
+<!-- EXEMPLO A SIMULAR: parede composta (gráfico interativo): camadas
+     aço/incrustação/isolamento com sliders de espessura; perfil de temperatura e
+     fluxo resultante. -->
+
 **Conexão com o próximo tópico:** condução é uma forma de transferência de calor, mas há
 outra fundamental: o reconhecimento histórico de que calor e trabalho são equivalentes —
 a descoberta do equivalente mecânico da caloria.

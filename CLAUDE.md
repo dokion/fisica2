@@ -89,6 +89,10 @@ instruções já prontas dos documentos; siga-os literalmente.
 - **Padrão de escrita de nota de aula:** `AULA-TEMPLATE.md` (raiz). Todo agente que escrever
   ou completar nota de aula segue o "ritmo" da Seção 3 dele e o contrato de placeholders
   `<< >>` da Seção 5. Texto do professor fora de placeholder é INTOCÁVEL.
+- **Seção "Onde o fenômeno vive":** todo tópico fecha com ela (AULA-TEMPLATE §4; Mestre §10).
+  Nasce como lista de exemplos físicos honestos + comentários `EXEMPLO A SIMULAR`; cresce
+  incrementalmente — exemplos são promovidos a simulação (regras Q4/paridade/pergunta)
+  quando o professor pedir. Exemplar maduro: tópico 1.3.
 - Listas: `lista-NN.qmd` (Q2). `_site/` é gerado — nunca editar nem comitar.
 - Códigos `UEn` e `OEn.m-Bk` no `categories` do YAML de cada tópico.
 - **Paridade HTML/PDF obrigatória:** toda visualização interativa tem equivalente estático matplotlib no `{python}`, mesmos parâmetros (Q4).

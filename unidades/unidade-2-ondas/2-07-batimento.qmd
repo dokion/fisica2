@@ -268,4 +268,22 @@ plt.tight_layout(); plt.show()
    distintas? Estime a partir de que $\Delta f$ o ouvido passaria a separar os dois tons.
 :::
 
+## Onde o fenômeno vive
+
+<!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
+     em sessões futuras, a pedido do professor. -->
+
+- **Sincronização de geradores** — antes de fechar o disjuntor em paralelo, as duas
+  tensões batem na diferença de frequência; lâmpadas de sincronização (ou o
+  sincronoscópio) piscam em $f_{\text{bat}}$, e fecha-se no escuro das lâmpadas.
+- **Hélices gêmeas fora de sincronismo** — em navios de dois eixos, RPMs ligeiramente
+  diferentes produzem um "uó-uó" acústico periódico na acomodação: batimento entre
+  as ordens de pá.
+- **Afinação de instrumentos** — o clássico: o músico ajusta a corda até o batimento
+  com a referência desaparecer ($\Delta f \to 0$).
+
+<!-- EXEMPLO A SIMULAR: lâmpadas de sincronização de gerador (p5.js): duas senoides
+     de 60 Hz e 60±Δf Hz, lâmpadas piscando em f_bat e botão "fechar disjuntor" que
+     só aceita perto do zero de diferença. -->
+
 **Conexão com o próximo tópico:** batimentos são um efeito de interferência entre duas frequências *próximas*. Agora consideramos o caso oposto: **o que acontece quando o *observador* se move** em relação à fonte? A frequência percebida muda — este é o **efeito Doppler**, crucial para o log Doppler de velocidade de um navio.
