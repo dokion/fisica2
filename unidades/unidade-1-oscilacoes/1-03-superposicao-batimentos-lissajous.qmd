@@ -231,6 +231,255 @@ em fase ($\Delta\varphi = 0$), as amplitudes somam-se (interferência construtiv
 $A_{\text{res}} = A_1 + A_2$); em oposição ($\Delta\varphi = \pi$), subtraem-se
 (interferência destrutiva, $A_{\text{res}} = |A_1 - A_2|$).
 
+## Veja de onde vêm $A_{\text{res}}$ e $\varphi_{\text{res}}$
+
+As duas fórmulas acima não caem do céu: elas são a **geometria de somar dois vetores girantes
+(fasores)**. Cada MHS $A_i\cos(\omega t+\varphi_i)$ é o fasor $A_i$ na fase $\varphi_i$; como
+os dois giram juntos (mesma $\omega$), a soma é o vetor resultante $A_{\text{res}}$ — e ele
+gira na mesma velocidade, o que é a razão de a soma ser de novo um MHS. Arraste as pontas de
+$A_1$ e $A_2$ (ou use os sliders) e acompanhe o triângulo da soma: é nele que a **lei dos
+cossenos** produz a amplitude, e a **lei dos senos** produz a fase extra $\beta$.
+
+O passo que costuma escapar é o **sinal**. No triângulo cabeça-com-cauda, o ângulo interno
+onde $A_1$ encontra $A_2$ é o *suplemento* de $\Delta\varphi$, isto é $180°-\Delta\varphi$.
+A lei dos cossenos traz $-2A_1A_2\cos(180°-\Delta\varphi)$; como $\cos(180°-\Delta\varphi)=-\cos\Delta\varphi$,
+o menos vira **mais**, e é por isso que a amplitude *soma* em vez de subtrair.
+
+```{python}
+#| fig-cap: "Diagrama de fasores da soma de dois MHS de mesma frequência: A₁ = 1,0 em φ₁ = 0° e A₂ = 0,7 em φ₂ = 90°. A resultante A (roxa) é a diagonal do paralelogramo; o triângulo cabeça-com-cauda (A₂ transladado à ponta de A₁) tem ângulo interno 180°−Δφ. Lei dos cossenos → A_res ≈ 1,22; lei dos senos → β ≈ 35°, logo φ_res = φ₁ + β ≈ 35°. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesma geometria da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+A1, A2 = 1.0, 0.7
+p1, p2 = 0.0, np.pi/2
+P1 = np.array([A1*np.cos(p1), A1*np.sin(p1)])
+P2 = np.array([A2*np.cos(p2), A2*np.sin(p2)])
+PR = P1 + P2
+A = np.hypot(*PR)
+dphi = np.degrees(p2 - p1)
+beta = np.degrees(np.arctan2(PR[1], PR[0]) - np.arctan2(P1[1], P1[0]))
+
+fig, ax = plt.subplots(figsize=(5.4, 5.0))
+ar = dict(arrowstyle='-|>', lw=2.4, mutation_scale=16)
+ax.annotate('', xy=P1, xytext=(0, 0), arrowprops={**ar, 'color': '#c81f1f'})   # A1
+ax.annotate('', xy=P2, xytext=(0, 0), arrowprops={**ar, 'color': '#1f47c8'})   # A2
+ax.annotate('', xy=PR, xytext=(0, 0), arrowprops={**ar, 'color': '#66308c'})   # resultante
+# triângulo: A2 transladado à ponta de A1
+ax.annotate('', xy=PR, xytext=P1, arrowprops=dict(arrowstyle='-|>', lw=2.0,
+            mutation_scale=13, color='#1f47c8', linestyle='--', alpha=0.8))
+# lado do paralelogramo (tênue)
+ax.plot([P2[0], PR[0]], [P2[1], PR[1]], color='#c81f1f', lw=1.2, ls='--', alpha=0.45)
+# arco Δφ na origem
+th = np.linspace(p1, p2, 40)
+ax.plot(0.28*np.cos(th), 0.28*np.sin(th), color='#8a94a6', lw=1.4)
+ax.text(0.36*np.cos((p1+p2)/2), 0.36*np.sin((p1+p2)/2), 'Δφ', color='#556', fontsize=11, ha='center')
+# rótulos
+ax.text(*(P1+[0.03, -0.09]), 'A₁', color='#c81f1f', fontsize=13, fontweight='bold')
+ax.text(*(P2+[-0.14, 0.02]), 'A₂', color='#1f47c8', fontsize=13, fontweight='bold')
+ax.text(*(PR+[0.04, 0.03]), 'A', color='#66308c', fontsize=13, fontweight='bold')
+ax.text(*(0.5*(P1+PR)+[0.05, 0.0]), '180°−Δφ', color='#b8860b', fontsize=9)
+ax.axhline(0, color='0.8', lw=0.8); ax.axvline(0, color='0.8', lw=0.8)
+ax.set_xlim(-0.3, 1.35); ax.set_ylim(-0.3, 1.15)
+ax.set_aspect('equal'); ax.set_xticks([]); ax.set_yticks([])
+ax.set_title(f'A_res = {A:.2f}   ·   β = {beta:.0f}°   ·   φ_res = {beta:.0f}°', fontsize=10)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: construção geométrica dos fasores). Caso ω₁=ω₂:
+     dedução de A_res (lei dos cossenos) e φ_res (lei dos senos, β). Cores da página
+     (A₁ vermelho, A₂ azul, resultante roxo). p5 de libs/ (offline, Q6). Mesmos
+     parâmetros da versão matplotlib. Arraste as pontas de A₁/A₂ ou use os sliders. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .fs-wrap{max-width:1000px;margin:1rem auto;}
+  .fs-wrap .fs-row{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;margin-bottom:8px;}
+  .fs-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .fs-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .fs-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .fs-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .fs-wrap .chk{display:flex;align-items:center;gap:5px;font-size:13px;white-space:nowrap;}
+  .fs-wrap .chk input{accent-color:#c85c2e;width:15px;height:15px;}
+  .fs-wrap #fsSketch canvas{display:block;border-radius:8px;max-width:100%;touch-action:none;}
+  .fs-wrap .fs-eq{font-family:ui-monospace,"Courier New",monospace;font-size:13px;
+    background:#f6f4ef;border-left:3px solid #66308c;padding:8px 12px;margin:8px 0;
+    border-radius:0 6px 6px 0;overflow-x:auto;line-height:1.6;}
+  .fs-wrap .fs-eq b{color:#66308c;}
+  .fs-wrap .fs-eq .minus{color:#b8860b;font-weight:700;}
+  .fs-wrap .fs-eq .plus{color:#66308c;font-weight:700;}
+  .fs-wrap .fs-cap{font-size:12px;color:#6b6357;margin-bottom:3px;}
+</style>
+<div class="fs-wrap">
+  <div class="fs-row">
+    <div class="sld"><label>A<sub>1</sub> = <span class="val" id="fsA1v">1.0</span></label>
+      <input type="range" id="fsA1" min="0.3" max="1.3" value="1.0" step="0.1"></div>
+    <div class="sld"><label>A<sub>2</sub> = <span class="val" id="fsA2v">0.7</span></label>
+      <input type="range" id="fsA2" min="0.3" max="1.3" value="0.7" step="0.1"></div>
+    <div class="sld"><label>φ<sub>1</sub> = <span class="val" id="fsP1v">0°</span></label>
+      <input type="range" id="fsP1" min="-180" max="180" value="0" step="15"></div>
+    <div class="sld"><label>φ<sub>2</sub> = <span class="val" id="fsP2v">90°</span></label>
+      <input type="range" id="fsP2" min="-180" max="180" value="90" step="15"></div>
+  </div>
+  <div class="fs-row">
+    <span class="chk"><input type="checkbox" id="fsTri" checked>Mostrar triângulo da soma (cabeça-com-cauda)</span>
+  </div>
+  <div id="fsSketch"></div>
+  <div id="fsEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  const cw=()=>{ const w=(el('fsSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  const rad=d=>d*Math.PI/180;
+  new p5((p)=>{
+    let OX, OY, SC, H1={x:0,y:0}, H2={x:0,y:0}, drag=null;
+    const geom=()=>{ OX=p.width/2; OY=p.height*0.52;
+      SC=Math.min(74,(Math.min(p.width/2,OY)-34)/2.6); };
+    const toS=(x,y)=>({x:OX+x*SC, y:OY-y*SC});
+    p.setup=()=>{ p.createCanvas(cw(),440).parent('fsSketch'); geom(); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),440); geom(); };
+
+    function arc(r,a0,a1,col,wt){ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(wt);
+      p.beginShape(); const n=48; for(let i=0;i<=n;i++){ const a=a0+(a1-a0)*i/n;
+        const s=toS(r*Math.cos(a),r*Math.sin(a)); p.vertex(s.x,s.y); } p.endShape(); p.pop(); }
+
+    p.draw=()=>{
+      geom();
+      const A1=+el('fsA1').value, A2=+el('fsA2').value,
+            f1=+el('fsP1').value, f2=+el('fsP2').value,
+            p1=rad(f1), p2=rad(f2), showTri=el('fsTri').checked;
+      el('fsA1v').textContent=A1.toFixed(1); el('fsA2v').textContent=A2.toFixed(1);
+      el('fsP1v').textContent=f1+'°'; el('fsP2v').textContent=f2+'°';
+
+      const P1={x:A1*Math.cos(p1), y:A1*Math.sin(p1)};
+      const P2={x:A2*Math.cos(p2), y:A2*Math.sin(p2)};
+      const PR={x:P1.x+P2.x, y:P1.y+P2.y};
+      const A=Math.hypot(PR.x,PR.y);
+      const ang1=Math.atan2(P1.y,P1.x), angR=Math.atan2(PR.y,PR.x), ang2=Math.atan2(P2.y,P2.x);
+      let beta=(angR-ang1)*180/Math.PI; while(beta>180)beta-=360; while(beta<=-180)beta+=360;
+      let dphi=f2-f1;
+      const O=toS(0,0), sP1=toS(P1.x,P1.y), sP2=toS(P2.x,P2.y), sPR=toS(PR.x,PR.y);
+      H1=sP1; H2=sP2;
+
+      p.background('#faf8f4');
+      // grade + eixos
+      p.stroke('#e7e0d4'); p.strokeWeight(1);
+      for(let gx=OX%36; gx<p.width; gx+=36) p.line(gx,0,gx,p.height);
+      for(let gy=OY%36; gy<p.height; gy+=36) p.line(0,gy,p.width,gy);
+      p.stroke('#c9d1de'); p.strokeWeight(1.4);
+      p.line(0,OY,p.width,OY); p.line(OX,0,OX,p.height);
+
+      const arrow=(a,b,col,wt,dash)=>{ p.push(); p.stroke(col); p.strokeWeight(wt);
+        if(dash) p.drawingContext.setLineDash([5,5]);
+        p.line(a.x,a.y,b.x,b.y); p.drawingContext.setLineDash([]);
+        const ang=Math.atan2(b.y-a.y,b.x-a.x), hl=10;
+        p.fill(col); p.noStroke();
+        p.triangle(b.x,b.y, b.x-hl*Math.cos(ang-0.4),b.y-hl*Math.sin(ang-0.4),
+                            b.x-hl*Math.cos(ang+0.4),b.y-hl*Math.sin(ang+0.4)); p.pop(); };
+
+      // lados tênues do paralelogramo
+      p.push(); p.strokeWeight(1.2); p.drawingContext.setLineDash([4,4]);
+      p.stroke(200,31,31,110); p.line(sP2.x,sP2.y,sPR.x,sPR.y);
+      if(!showTri){ p.stroke(31,71,200,110); p.line(sP1.x,sP1.y,sPR.x,sPR.y); }
+      p.drawingContext.setLineDash([]); p.pop();
+
+      // triângulo da soma: A2 transladado à ponta de A1
+      if(showTri){
+        arrow(sP1,sPR,'#1f47c8',2.2,true);
+        // ângulo interno 180°−Δφ na ponta de A1
+        const dirA=Math.atan2(-P1.y,-P1.x), dirB=Math.atan2(P2.y,P2.x);
+        p.push(); p.noFill(); p.stroke('#b8860b'); p.strokeWeight(1.8);
+        p.beginShape(); const n=40, r=0.30;
+        let dd=dirB-dirA; while(dd>Math.PI)dd-=2*Math.PI; while(dd<-Math.PI)dd+=2*Math.PI;
+        for(let i=0;i<=n;i++){ const a=dirA+dd*i/n;
+          p.vertex(sP1.x+r*SC*Math.cos(a), sP1.y-r*SC*Math.sin(a)); } p.endShape(); p.pop();
+        const midI=dirA+dd/2;
+        p.noStroke(); p.fill('#b8860b'); p.textSize(10); p.textAlign(p.CENTER,p.CENTER);
+        p.text('180°−Δφ', sP1.x+0.52*SC*Math.cos(midI), sP1.y-0.52*SC*Math.sin(midI));
+      }
+
+      // vetores principais
+      arrow(O,sP1,'#c81f1f',2.8,false);
+      arrow(O,sP2,'#1f47c8',2.8,false);
+      arrow(O,sPR,'#66308c',3.2,false);
+
+      // arco Δφ (origem, entre A1 e A2)
+      arc(0.24, ang1, ang2, '#8a94a6', 1.6);
+      const md=(ang1+ang2)/2, dl=toS(0.32*Math.cos(md),0.32*Math.sin(md));
+      p.noStroke(); p.fill('#667'); p.textSize(12); p.textAlign(p.CENTER,p.CENTER); p.text('Δφ',dl.x,dl.y);
+      // arco β (origem, entre A1 e resultante)
+      arc(0.44, ang1, angR, '#66308c', 1.6);
+      const mb=(ang1+angR)/2, bl=toS(0.54*Math.cos(mb),0.54*Math.sin(mb));
+      p.fill('#66308c'); p.text('β',bl.x,bl.y);
+
+      // rótulos + pontas arrastáveis
+      p.textSize(13); p.textAlign(p.LEFT,p.CENTER);
+      p.fill('#c81f1f'); p.text('A₁',sP1.x+9,sP1.y-8);
+      p.fill('#1f47c8'); p.text('A₂',sP2.x+9,sP2.y-8);
+      p.fill('#66308c'); p.text('A',sPR.x+10,sPR.y+2);
+      p.noStroke();
+      p.fill(200,31,31,drag==='A1'?255:150); p.circle(sP1.x,sP1.y,drag==='A1'?15:12);
+      p.fill(31,71,200,drag==='A2'?255:150); p.circle(sP2.x,sP2.y,drag==='A2'?15:12);
+      p.fill('#8a8073'); p.textSize(10); p.textAlign(p.LEFT,p.TOP);
+      p.text('arraste as pontas ●',8,p.height-16);
+
+      // painel de equações
+      const cosD=Math.cos(rad(dphi)), cosSup=Math.cos(rad(180-dphi));
+      const sq=A1*A1+A2*A2, cross=2*A1*A2, A2v=sq+cross*cosD;
+      const degen=A<1e-6;
+      const senB=degen?0:(A2/A)*Math.sin(rad(dphi));
+      const betaTxt=degen?'indefinida (A=0)':beta.toFixed(0)+'°';
+      const senBtxt=degen?'—':senB.toFixed(3);
+      const xTxt=degen?'0 (resultante nula)':
+        A.toFixed(2)+' cos(ωt + '+f1.toFixed(0)+'° + <b>'+beta.toFixed(0)+'°</b>)';
+      el('fsEq').innerHTML=
+        '<div class="fs-eq"><div class="fs-cap">Lei dos cossenos no triângulo — ângulo interno = 180°−Δφ &nbsp;(Δφ = '+dphi.toFixed(0)+'°)</div>'+
+          'A² = A₁²+A₂² <span class="minus">−</span> 2A₁A₂·cos(180°−Δφ) = '+sq.toFixed(2)+
+          ' <span class="minus">−</span> ('+(cross*cosSup).toFixed(2)+') = <b>'+(sq-cross*cosSup).toFixed(2)+'</b></div>'+
+        '<div class="fs-eq"><div class="fs-cap">Como cos(180°−Δφ) = −cos(Δφ), o menos vira <span class="plus">mais</span></div>'+
+          'A² = A₁²+A₂² <span class="plus">+</span> 2A₁A₂·cos(Δφ) = '+sq.toFixed(2)+
+          ' <span class="plus">+</span> '+(cross*cosD).toFixed(2)+' = <b>'+A2v.toFixed(2)+'</b> → A<sub>res</sub> = <b>'+A.toFixed(2)+'</b></div>'+
+        '<div class="fs-eq"><div class="fs-cap">Lei dos senos → fase extra β</div>'+
+          'sen β = (A₂/A)·sen(Δφ) = '+senBtxt+' → β = <b>'+betaTxt+'</b> &nbsp;→&nbsp; '+
+          'x(t) = <b>'+xTxt+'</b></div>';
+    };
+
+    // arraste das pontas
+    const near=(hx,hy)=>{ const d1=p.dist(p.mouseX,p.mouseY,H1.x,H1.y),
+      d2=p.dist(p.mouseX,p.mouseY,H2.x,H2.y);
+      if(d1<16&&d1<=d2) return 'A1'; if(d2<16) return 'A2'; return null; };
+    p.mousePressed=()=>{ if(p.mouseX<0||p.mouseX>p.width||p.mouseY<0||p.mouseY>p.height) return;
+      drag=near(); };
+    p.mouseDragged=()=>{ if(!drag) return;
+      let amp=Math.hypot((p.mouseX-OX)/SC,(OY-p.mouseY)/SC);
+      amp=Math.max(0.3,Math.min(1.3,Math.round(amp*10)/10));
+      let ang=Math.atan2(OY-p.mouseY,p.mouseX-OX)*180/Math.PI;
+      ang=Math.round(ang/15)*15; if(ang>180)ang-=360; if(ang<-180)ang+=360;
+      if(drag==='A1'){ el('fsA1').value=amp; el('fsP1').value=ang; }
+      else{ el('fsA2').value=amp; el('fsP2').value=ang; }
+      return false; };
+    p.mouseReleased=()=>{ drag=null; };
+    p.touchStarted=()=>{ if(p.mouseX<0||p.mouseX>p.width||p.mouseY<0||p.mouseY>p.height) return;
+      drag=near(); if(drag) return false; };
+    p.touchMoved=()=>{ if(!drag) return; return p.mouseDragged(); };
+    p.touchEnded=()=>{ drag=null; };
+  });
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Ponha $\varphi_1=0$, $\varphi_2=90°$: confira no painel que $A_{\text{res}}\approx 1{,}22$ e
+   $\beta\approx 35°$ — os mesmos números da fórmula $\tan\varphi_{\text{res}}=A_2/A_1$.
+2. Leve $\varphi_2$ a $180°$ (oposição) com $A_1=A_2$: o triângulo degenera numa linha e
+   $A_{\text{res}}\to 0$. No painel, veja $\cos(180°-\Delta\varphi)$ tornar o produto máximo —
+   por que a forma clássica "subtrai o máximo" exatamente quando os fasores se cancelam?
+3. Arraste as pontas mantendo $\Delta\varphi$ fixo (gire os dois juntos): $A_{\text{res}}$ não
+   muda. Por que a amplitude depende só da *diferença* de fase, e não das fases absolutas?
+:::
+
 ## Veja a soma virar um MHS único
 
 Agora os dois osciladores compartilham a **mesma frequência** $\omega$ (um só controle).
