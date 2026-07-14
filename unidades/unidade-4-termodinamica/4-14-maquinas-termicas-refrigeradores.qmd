@@ -73,13 +73,25 @@ Um motor diesel marítimo opera com temperatura de combustão $T_q = 1100\ \text
 rejeita calor aos gases de exaustão a $T_f = 550\ \text{K}$. O rendimento efetivo
 medido no banco é $\eta_{\text{real}} = 45\%$.
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** Rendimento máximo entre as duas temperaturas: Carnot
+$\eta_C = 1 - T_f/T_q$. Compara-se o real medido ($45\%$) com esse teto para julgar a
+qualidade do motor.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.**
+$$\eta_C = 1 - \frac{T_f}{T_q} = 1 - \frac{550}{1100} = 0{,}50 = 50\%$$
 
-**(c) Resultado.** << >>
+Fração do teto de Carnot alcançada:
+$$\frac{\eta_{\text{real}}}{\eta_C} = \frac{45}{50} = 0{,}90 = 90\%$$
 
-**(d) Análise crítica.** << >>
+**(c) Resultado.** O teto de Carnot para essas temperaturas é $50\%$; o motor real
+entrega $45\%$ — ou seja, **90% do máximo teoricamente possível**.
+
+**(d) Análise crítica.** Atingir 90% do limite de Carnot é excepcional — coloca o diesel
+lento marítimo entre as máquinas térmicas mais eficientes já construídas. Note que o teto
+aqui (50%) é menor que o do tópico 4.12 (76,7%) porque a temperatura de rejeição adotada
+é mais alta (550 K nos gases, contra 350 K): rejeitar calor mais quente encolhe o teto de
+Carnot. É por isso que sistemas de recuperação (WHR) aproveitam justamente esses gases de
+descarga ainda quentes — há trabalho a extrair entre 550 K e a temperatura do mar.
 :::
 
 ::: {.callout-warning}

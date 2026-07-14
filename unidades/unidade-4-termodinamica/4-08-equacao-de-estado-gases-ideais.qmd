@@ -101,13 +101,24 @@ compressão antes da injeção de combustível (ponto 2): P = 80 bar, T = 900 K.
 combustão a volume constante (queimador súbito), pressão sobe para P = 150 bar. Qual a
 temperatura após a combustão (ponto 3)?
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** Combustão a **volume constante** (o pistão praticamente não se move no
+instante da queima). Para gás ideal a $V$ e $n$ constantes, $P/T$ é constante (lei de
+Gay-Lussac): $T_3 = T_2\,(P_3/P_2)$.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.**
+$$\frac{P_2}{T_2} = \frac{P_3}{T_3}
+\quad\Rightarrow\quad
+T_3 = T_2\,\frac{P_3}{P_2} = 900 \times \frac{150}{80} \approx 1688\ \text{K}$$
 
-**(c) Resultado.** << >>
+**(c) Resultado.** Após a combustão a volume constante, a temperatura no ponto 3 é
+$\approx 1688\ \text{K}$ (a pressão quase dobrou, a temperatura acompanhou).
 
-**(d) Análise crítica.** << >>
+**(d) Análise crítica.** A hipótese de volume constante é boa só no instante da queima;
+num diesel real a combustão ocorre em parte a pressão constante enquanto o pistão desce
+(ciclo Diesel misto). O modelo de gás ideal também ignora a mudança de composição (o
+combustível vira produtos de combustão, com outra massa molar e outro $\gamma$). Ainda
+assim, $T_3 \approx 1688\ \text{K}$ dá a ordem correta das temperaturas de pico que
+exigem materiais e refrigeração especiais.
 :::
 
 ::: {.callout-warning}

@@ -67,13 +67,26 @@ $$v_{\text{rms}} = \sqrt{\langle v^2\rangle} = \sqrt{\frac{3k_B T}{m}}$$
 O ar admitido num motor diesel de bordo entra a $T = 320\ \text{K}$. Modele-o como gás
 ideal de moléculas de massa molar $M \approx 29\ \text{g/mol}$.
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** Teoria cinética do gás ideal: a energia cinética translacional média
+por molécula é $\bar{E} = \tfrac{3}{2}k_B T$, e a velocidade quadrática média é
+$v_{\text{rms}} = \sqrt{3RT/M}$. Incógnitas: $\bar{E}$, energia por mol e $v_{\text{rms}}$
+do ar admitido a 320 K.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.**
+$$\bar{E} = \tfrac{3}{2}k_B T = 1{,}5 \times 1{,}381{\times}10^{-23} \times 320 \approx 6{,}6{\times}10^{-21}\ \text{J}$$
+$$E_{\text{mol}} = \tfrac{3}{2}RT = 1{,}5 \times 8{,}314 \times 320 \approx 3990\ \text{J/mol}$$
+$$v_{\text{rms}} = \sqrt{\frac{3RT}{M}} = \sqrt{\frac{3 \times 8{,}314 \times 320}{0{,}029}} \approx 525\ \text{m/s}$$
 
-**(c) Resultado.** << >>
+**(c) Resultado.** Cada molécula de ar a 320 K tem $\approx 6{,}6{\times}10^{-21}\ \text{J}$
+de energia translacional média e velocidade típica $v_{\text{rms}} \approx 525\ \text{m/s}$
+(quase o dobro da velocidade do som no ar).
 
-**(d) Análise crítica.** << >>
+**(d) Análise crítica.** Temperatura é energia cinética molecular: aquecer o ar de
+admissão o deixa mais "agitado", com moléculas mais rápidas — e é por isso que a pressão
+sobe (mais colisões por segundo na parede, tópico da equação de estado). A $v_{\text{rms}}$
+da ordem da velocidade do som não é coincidência: o som se propaga pelo próprio movimento
+molecular. Note que $v_{\text{rms}}$ depende de $M$: moléculas leves (H₂, He) são muito
+mais rápidas à mesma temperatura.
 :::
 
 ::: {.callout-warning}

@@ -90,13 +90,29 @@ rejeita calor Q₂ a T₂ = 350 K. Motor real tem eficiência η_real = 45%. Qua
 eficiência de Carnot? Qual é a fração de "ineficiência teórica" vs. "irreversibilidade
 prática"?
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** O rendimento máximo entre duas temperaturas é o de Carnot,
+$\eta_C = 1 - T_2/T_1$ (temperaturas em kelvin). O rendimento real fica abaixo por
+irreversibilidades; a diferença separa o "teto teórico" (o que nem Carnot entrega) do
+"desperdício prático" (o que se perde por atrito, turbulência, troca com $\Delta T$ finito).
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.**
+$$\eta_C = 1 - \frac{T_2}{T_1} = 1 - \frac{350}{1500} = 0{,}767 = 76{,}7\%$$
 
-**(c) Resultado.** << >>
+Ineficiência inevitável (2ª lei, mesmo reversível): $1 - \eta_C = 23{,}3\%$.
+Lacuna por irreversibilidade prática: $\eta_C - \eta_{\text{real}} = 76{,}7 - 45 = 31{,}7$
+pontos percentuais. Fração do teto de Carnot efetivamente alcançada:
+$\eta_{\text{real}}/\eta_C = 45/76{,}7 \approx 59\%$.
 
-**(d) Análise crítica.** << >>
+**(c) Resultado.** O teto de Carnot é $76{,}7\%$. Dos 100% da energia: $\approx 23\%$ são
+perdidos por imposição da 2ª lei (irrecuperáveis mesmo idealmente), e $\approx 32$ pontos
+adicionais por irreversibilidades reais. O motor atinge 59% do que Carnot permitiria.
+
+**(d) Análise crítica.** A 2ª lei impõe que **calor não se converte integralmente em
+trabalho**: mesmo perfeito, esse motor perderia 23% para a fonte fria. Os 45% reais são
+notavelmente bons (diesel lento marítimo está entre as máquinas térmicas mais eficientes
+em serviço), mas ainda há 32 pontos a disputar contra atrito, combustão incompleta e
+troca de calor com diferença finita de temperatura. Elevar $T_1$ (combustão mais quente)
+ou baixar $T_2$ (melhor rejeição ao mar) sobe o teto.
 :::
 
 ::: {.callout-warning}

@@ -92,13 +92,23 @@ Um trocador de calor de bordo tem tubos de latão (κ = 120 W/(m·K)) com diâme
 20 mm e espessura 1 mm. Comprimento do tubo = 2 m. Dentro passa óleo a 90 °C; fora passa
 água a 30 °C. A área interna é ~0,12 m².
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** Condução pela parede do tubo (lei de Fourier). Parede fina
+($d = 1\ \text{mm} \ll D$), então trata-se como placa plana:
+$\dot{Q} = \kappa A\,\Delta T/d$, com $\Delta T = 90 - 30 = 60\ \text{K}$.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.**
+$$\dot{Q} = \frac{\kappa A\,\Delta T}{d} = \frac{120 \times 0{,}12 \times 60}{0{,}001}
+\approx 8{,}6{\times}10^5\ \text{W} = 864\ \text{kW}$$
 
-**(c) Resultado.** << >>
+**(c) Resultado.** A parede de latão *sozinha* conduziria até $\approx 864\ \text{kW}$ —
+um valor enorme, que mostra que a parede metálica quase não oferece resistência térmica.
 
-**(d) Análise crítica.** << >>
+**(d) Análise crítica.** O resultado é irrealisticamente alto porque considera *apenas*
+a resistência da parede. Na prática, o calor real é limitado pelas **películas de
+convecção** dos dois fluidos (óleo e água), que são as maiores resistências em série; a
+parede fina de latão é a menor delas. É por isso que trocadores usam parede fina e metal
+condutor — a parede não é o gargalo. A **incrustação** (depósito milimétrico de baixa
+condutividade) sim adiciona resistência apreciável em série e derruba o desempenho.
 :::
 
 ::: {.callout-warning}

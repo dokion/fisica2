@@ -74,13 +74,31 @@ O ar ($\gamma \approx 1{,}4$ à admissão) é comprimido no cilindro de um motor
 Durante a combustão, a temperatura sobe o suficiente para ativar modos vibracionais,
 e $\gamma$ efetivo cai para $\approx 1{,}30$.
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** Equipartição: cada grau de liberdade ativo contribui $\tfrac{1}{2}R$
+por mol para $C_v$, e $\gamma = 1 + 2/f$, onde $f$ é o número de graus de liberdade
+ativos. A queda de $\gamma$ de 1,4 para 1,30 mede a ativação de novos modos. Efeito
+prático: comparar a temperatura de fim de compressão adiabática ($T_2 = T_1 r^{\gamma-1}$,
+$r = 18$) nos dois valores de $\gamma$.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.** De $\gamma = 1 + 2/f$:
+$$\gamma = 1{,}40 \Rightarrow f = 5\ (\text{3 transl.} + \text{2 rot.}),\quad C_v = \tfrac{5}{2}R = 20{,}8\ \text{J/(mol·K)}$$
+$$\gamma = 1{,}30 \Rightarrow f \approx 6{,}7\ (\text{modos vibracionais ativados}),\quad C_v \approx 27{,}7\ \text{J/(mol·K)}$$
 
-**(c) Resultado.** << >>
+Temperatura de fim de compressão ($T_1 = 298\ \text{K}$, $r = 18$):
+$$T_2(\gamma{=}1{,}40) = 298 \times 18^{0{,}40} \approx 947\ \text{K}$$
+$$T_2(\gamma{=}1{,}30) = 298 \times 18^{0{,}30} \approx 709\ \text{K}$$
 
-**(d) Análise crítica.** << >>
+**(c) Resultado.** Ao ativar os modos vibracionais, $C_v$ sobe (de 20,8 para 27,7 J/(mol·K))
+e $\gamma$ cai (1,40 → 1,30); com isso a compressão adiabática esquenta **menos** — 709 K
+contra 947 K para a mesma razão de compressão.
+
+**(d) Análise crítica.** Um $\gamma$ menor significa que mais da energia vai para os graus
+internos (vibração) em vez de subir a temperatura de translação — o gás "absorve" o
+aquecimento de forma menos eficiente para a pressão. Usar $\gamma = 1{,}4$ no ciclo de
+alta temperatura (após a combustão) superestima as temperaturas e pressões de pico; por
+isso cálculos precisos de motor usam $\gamma$ dependente da temperatura. A vibração só se
+ativa acima de ~1000 K (efeito quântico: os modos ficam "congelados" a frio), o que
+justifica $\gamma \approx 1{,}4$ na admissão e $\approx 1{,}30$ na combustão.
 :::
 
 ::: {.callout-warning}

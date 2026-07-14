@@ -86,13 +86,24 @@ Um cilindro de motor diesel (aço com paredes de 30 mm) opera entre 20 °C (para
 280 °C (carga máxima). O cilindro tem diâmetro interno de 200 mm. O operador quer
 saber se há risco de travamento devido à dilatação térmica.
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** Dilatação linear: toda dimensão cresce por $\Delta \ell = \alpha\,\ell\,\Delta T$.
+O diâmetro interno do cilindro é uma dimensão como outra qualquer; com $\alpha_{\text{aço}} \approx 12{\times}10^{-6}\ \text{K}^{-1}$
+e $\Delta T = 280 - 20 = 260\ \text{K}$.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.**
+$$\Delta D = \alpha\,D\,\Delta T = 12{\times}10^{-6} \times 200 \times 260 \approx 0{,}62\ \text{mm}$$
 
-**(c) Resultado.** << >>
+O raio cresce metade disso, $\approx 0{,}31\ \text{mm}$.
 
-**(d) Análise crítica.** << >>
+**(c) Resultado.** O diâmetro do cilindro aumenta $\approx 0{,}62\ \text{mm}$ (folga
+radial $+0{,}31\ \text{mm}$) ao passar de 20 °C para 280 °C.
+
+**(d) Análise crítica.** O ponto-chave é que **o pistão também dilata** — e, sendo
+também de metal, na mesma ordem de grandeza. O risco de travamento não vem da dilatação
+absoluta do cilindro, mas da *diferença* de dilatação entre pistão e camisa (materiais e
+temperaturas distintas): por isso a folga a frio (clearance) é dimensionada justamente
+para acomodar essa diferença a quente. Um pistão de alumínio ($\alpha$ ~2× o do aço)
+exige folga a frio maior.
 :::
 
 ::: {.callout-warning}

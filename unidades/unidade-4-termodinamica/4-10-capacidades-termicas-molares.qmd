@@ -100,13 +100,28 @@ Um cilindro de motor diesel contém 0,050 mol de ar a 20 °C e 1 bar. Processo 1
 isobárico (pistão livre) até 100 °C. Processo 2: compressão isocórica (cilindro fechado)
 de 1 bar a 10 bar. Calcular Q e W em cada processo.
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** Ar diatômico: $C_v = \tfrac{5}{2}R = 20{,}8$, $C_p = \tfrac{7}{2}R = 29{,}1\ \text{J/(mol·K)}$.
+Processo 1 isobárico: $Q = nC_p\Delta T$, $W = nR\,\Delta T$. Processo 2 isocórico:
+$W = 0$, $Q = \Delta U = nC_v\Delta T$; a $V$ constante, $T \propto P$.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.** Processo 1 (20 → 100 °C, $\Delta T = 80\ \text{K}$):
+$$Q_1 = nC_p\Delta T = 0{,}05 \times 29{,}1 \times 80 \approx 116\ \text{J},
+\qquad W_1 = nR\Delta T = 0{,}05 \times 8{,}314 \times 80 \approx 33\ \text{J}$$
 
-**(c) Resultado.** << >>
+Processo 2 (isocórico, 1 → 10 bar a partir de 373 K): $T_3 = 373 \times 10 = 3730\ \text{K}$,
+$\Delta T_2 = 3357\ \text{K}$.
+$$W_2 = 0, \qquad Q_2 = nC_v\Delta T_2 = 0{,}05 \times 20{,}8 \times 3357 \approx 3490\ \text{J}$$
 
-**(d) Análise crítica.** << >>
+**(c) Resultado.** Processo 1: $Q = 116\ \text{J}$, $W = 33\ \text{J}$ (o resto,
+$\approx 83\ \text{J}$, vira energia interna). Processo 2: $W = 0$, todo o calor
+($\approx 3490\ \text{J}$) vira energia interna.
+
+**(d) Análise crítica.** No isobárico, parte do calor ($nR\Delta T$) escoa como trabalho
+de empurrar a atmosfera — por isso $C_p > C_v$. No isocórico, nada escapa como trabalho:
+todo calor eleva $T$. A temperatura de 3730 K é irrealista — vem de exigir $P{\times}10$ a
+volume rigorosamente constante; num motor real a compressão não é isocórica pura, e o gás
+não suportaria essa temperatura sem dissociar. O exercício é esquemático para separar
+$C_p$ de $C_v$.
 :::
 
 ::: {.callout-warning}

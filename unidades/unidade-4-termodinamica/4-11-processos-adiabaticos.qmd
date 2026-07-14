@@ -109,13 +109,28 @@ compressão. Calcular:
 (a) P e T no fim da compressão (ponto 2), supondo adiabático.
 (b) Se a combustão aquece o gás em 1000 K a volume constante, qual é a P_3 resultante?
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** Compressão rápida ≈ adiabática: $TV^{\gamma-1} = $ const e
+$PV^{\gamma} = $ const, com $\gamma = 1{,}4$ (ar). Em razão de compressão $r$:
+$T_2 = T_1\,r^{\gamma-1}$, $P_2 = P_1\,r^{\gamma}$. A combustão a volume constante eleva
+$T$ e, por $P/T$ const, eleva $P$.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.** Com $r = 18$, $T_1 = 298\ \text{K}$, $P_1 = 1\ \text{bar}$:
+$$T_2 = 298 \times 18^{0{,}4} \approx 298 \times 3{,}18 \approx 947\ \text{K}$$
+$$P_2 = 1 \times 18^{1{,}4} \approx 57\ \text{bar}$$
 
-**(c) Resultado.** << >>
+Combustão a volume constante ($+1000\ \text{K}$): $T_3 = 947 + 1000 = 1947\ \text{K}$,
+$$P_3 = P_2\,\frac{T_3}{T_2} = 57 \times \frac{1947}{947} \approx 118\ \text{bar}$$
 
-**(d) Análise crítica.** << >>
+**(c) Resultado.** Fim da compressão: $T_2 \approx 947\ \text{K}$ ($674\ °\text{C}$),
+$P_2 \approx 57\ \text{bar}$. Após a combustão: $T_3 \approx 1947\ \text{K}$,
+$P_3 \approx 118\ \text{bar}$.
+
+**(d) Análise crítica.** Os $\approx 674\ °\text{C}$ ao fim da compressão são a chave do
+motor diesel: superam a temperatura de autoignição do combustível, e por isso o diesel
+**dispensa vela** — a compressão adiabática faz o trabalho da centelha. A hipótese
+adiabática é boa porque a compressão é rápida frente à troca de calor com as paredes; um
+$r$ menor daria $T_2$ menor e falha de partida a frio (daí as velas aquecedoras de
+pré-partida).
 :::
 
 ::: {.callout-warning}

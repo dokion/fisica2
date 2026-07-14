@@ -85,13 +85,25 @@ Um trocador de calor de bordo recebe óleo de motor a 95 °C na entrada e água 
 a 35 °C. O trocador está isolado (caixa com espuma poliuretana). A potência térmica
 esperada é 500 kW.
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** Calor é energia *em trânsito* pela diferença de temperatura, não uma
+substância armazenada. Os 500 kW são a taxa com que essa energia atravessa o trocador do
+óleo (95 °C) para a água (35 °C); o isolamento reduz a fração que escapa para o ambiente.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.** Força motriz: $\Delta T = 95 - 35 = 60\ \text{K}$. No trocador
+ideal isolado, toda a potência retirada do óleo entra na água:
+$$\dot{Q}_{\text{óleo}} = \dot{Q}_{\text{água}} = 500\ \text{kW}$$
+O que "atravessa" é energia; o óleo não perde "calor armazenado", perde **energia
+interna**, e a água ganha energia interna — calor é o nome do trânsito.
 
-**(c) Resultado.** << >>
+**(c) Resultado.** 500 kW fluem do óleo para a água enquanto houver os 60 K de
+diferença; o isolamento garante que quase toda essa potência chegue à água, e não ao ar
+da praça de máquinas.
 
-**(d) Análise crítica.** << >>
+**(d) Análise crítica.** Tratar calor como fluido armazenado ("calórico") leva a erros:
+o óleo não "contém 500 kW de calor" — contém energia interna, e calor é a taxa de
+transferência. O mesmo joule pode passar por condução (parede), convecção (fluidos) e
+radiação (superfícies) — as três formas coexistem no trocador. Sem o $\Delta T$, não há
+calor, por mais "quente" que o óleo esteja em termos absolutos.
 :::
 
 ::: {.callout-warning}

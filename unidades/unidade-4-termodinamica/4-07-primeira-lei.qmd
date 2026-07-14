@@ -102,13 +102,32 @@ MJ/kg). Instrumentação mede: potência no eixo = 2500 kW. Água de refrigeraç
 2600 kg/h a temperatura de aumento de 8 K (c = 4,18 kJ/(kg·K)). Estimar Q₁, W, Q₂ e
 eficiência.
 
-**(a) Modelagem.** << >>
+<!-- [VERIFICAR: os dados não fecham a 1ª lei. 200 kg/h × 40 MJ/kg = 2222 kW de
+     combustível, MENOR que os 2500 kW de eixo citados — impossível. E a água de
+     refrigeração (2600 kg/h × 4,18 × 8 K ≈ 24 kW) é pequena demais para o porte.
+     Resolvi com o combustível como governante e η típico de 45%, sinalizando.] -->
 
-**(b) Desenvolvimento.** << >>
+**(a) Modelagem.** Primeira lei em taxa: $\dot{Q}_1 = \dot{W} + \dot{Q}_2$. A potência de
+combustível é $\dot{Q}_1 = \dot{m}\,\text{PCI}$; o trabalho de eixo é $\dot{W}$; o calor
+rejeitado (gases + água) fecha o balanço; a eficiência é $\eta = \dot{W}/\dot{Q}_1$.
 
-**(c) Resultado.** << >>
+**(b) Desenvolvimento.**
+$$\dot{Q}_1 = 200\ \tfrac{\text{kg}}{\text{h}} \times 40\ \tfrac{\text{MJ}}{\text{kg}}
+= 8000\ \tfrac{\text{MJ}}{\text{h}} = \frac{8000}{3{,}6} \approx 2222\ \text{kW}$$
 
-**(d) Análise crítica.** << >>
+Com $\eta \approx 45\%$ (típico de diesel lento):
+$$\dot{W} = 0{,}45 \times 2222 \approx 1000\ \text{kW},
+\qquad
+\dot{Q}_2 = \dot{Q}_1 - \dot{W} \approx 1222\ \text{kW}$$
+
+**(c) Resultado.** Com o combustível como dado firme: $\dot{Q}_1 \approx 2222\ \text{kW}$,
+$\dot{W} \approx 1000\ \text{kW}$, $\dot{Q}_2 \approx 1222\ \text{kW}$, $\eta \approx 45\%$.
+
+**(d) Análise crítica.** Os 2500 kW de eixo do enunciado *excederiam* a potência de
+combustível (2222 kW) — violação direta da primeira lei, sinal de erro de dado. Da mesma
+forma, a água de refrigeração indicada carregaria só ~24 kW, ordem de grandeza incompatível
+com $\dot{Q}_2$. A lição permanece: a energia do combustível se reparte em trabalho e
+calor rejeitado, e a soma é conservada — nenhum termo pode exceder $\dot{Q}_1$.
 :::
 
 ::: {.callout-warning}

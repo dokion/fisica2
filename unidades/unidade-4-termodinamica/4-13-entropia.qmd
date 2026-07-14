@@ -98,13 +98,28 @@ Um trocador de calor de bordo recebe 100 kg/h de água a 30 °C, aquecendo-a a 7
 vapor que condensa de 100 °C. Calcular ΔS do sistema água, ΔS do vapor, e verificar se
 Segunda Lei é satisfeita.
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** A água aquece continuamente: $\Delta S = m c \ln(T_2/T_1)$. O vapor
+cede o mesmo calor $Q = m c \Delta T$ à temperatura constante de condensação (373 K):
+$\Delta S_{\text{vapor}} = -Q/T_{\text{cond}}$. A 2ª lei exige $\Delta S_{\text{total}} \ge 0$.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.** (por hora de operação, $m = 100\ \text{kg}$; $T_1 = 303\ \text{K}$,
+$T_2 = 343\ \text{K}$)
+$$\Delta S_{\text{água}} = m c \ln\frac{T_2}{T_1} = 100 \times 4{,}18 \times \ln\frac{343}{303} \approx +51{,}8\ \text{kJ/K}$$
+$$Q = m c \Delta T = 100 \times 4{,}18 \times 40 \approx 16\,720\ \text{kJ}
+\quad\Rightarrow\quad
+\Delta S_{\text{vapor}} = -\frac{16\,720}{373} \approx -44{,}8\ \text{kJ/K}$$
+$$\Delta S_{\text{total}} = 51{,}8 - 44{,}8 \approx +7{,}0\ \text{kJ/K} > 0$$
 
-**(c) Resultado.** << >>
+**(c) Resultado.** A água ganha $+51{,}8\ \text{kJ/K}$, o vapor perde $-44{,}8\ \text{kJ/K}$;
+o total é $+7{,}0\ \text{kJ/K}$ por hora — positivo, a 2ª lei é satisfeita.
 
-**(d) Análise crítica.** << >>
+**(d) Análise crítica.** A entropia da água cresce *mais* do que a do vapor diminui: a
+diferença de $+7\ \text{kJ/K}$ é a **entropia gerada** pela troca de calor através de uma
+diferença finita de temperatura (o vapor a 100 °C aquecendo água a 30–70 °C). Quanto
+maior o $\Delta T$ do trocador, maior a geração — daí trocadores eficientes usarem
+$\Delta T$ pequeno (mais área). O calor se conservou (mesmos 16 720 kJ), mas a
+*qualidade* dele degradou-se: parte da capacidade de gerar trabalho foi perdida
+irreversivelmente.
 :::
 
 ::: {.callout-warning}

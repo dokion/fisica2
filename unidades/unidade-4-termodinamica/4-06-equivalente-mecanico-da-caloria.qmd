@@ -87,13 +87,28 @@ calor na água de refrigeração, radiação do cilindro, etc. — mas conserva-
 Uma caldeira de bordo aquece 2 toneladas de água de 20 °C a 100 °C (pressão 1 atm).
 Simultaneamente, produz 300 kg de vapor. Valor calorífico do combustível: 42 MJ/kg.
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** O calor total é a soma do aquecimento sensível da água líquida
+($Q = m c \Delta T$) com o calor latente de vaporização dos 300 kg que viram vapor
+($Q = m L_v$, $L_v \approx 2257\ \text{kJ/kg}$ a 1 atm). O combustível necessário sai de
+$m_{\text{comb}} = Q_{\text{total}}/\text{PCI}$.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.**
+$$Q_{\text{sensível}} = m c \Delta T = 2000 \times 4186 \times 80 \approx 670\ \text{MJ}$$
+$$Q_{\text{latente}} = m L_v = 300 \times 2257{\times}10^3 \approx 677\ \text{MJ}$$
+$$Q_{\text{total}} \approx 1347\ \text{MJ}$$
+$$m_{\text{comb}} = \frac{Q_{\text{total}}}{\text{PCI}} = \frac{1347}{42} \approx 32\ \text{kg (ideal)}$$
 
-**(c) Resultado.** << >>
+**(c) Resultado.** A caldeira consome $\approx 1347\ \text{MJ}$ (metade para aquecer,
+metade para vaporizar), o que exige $\approx 32\ \text{kg}$ de combustível num queimador
+ideal (100%).
 
-**(d) Análise crítica.** << >>
+<!-- [VERIFICAR: L_v = 2257 kJ/kg a 1 atm foi adotado (o enunciado não o fornece).] -->
+
+**(d) Análise crítica.** Chama a atenção que **vaporizar apenas 300 kg custa quase tanto
+quanto aquecer 2000 kg em 80 K** — o calor latente é enorme. Toda essa energia é medida
+em joules, sem "unidade de calor" própria: é o equivalente mecânico de Joule em serviço.
+No mundo real, o rendimento da caldeira (~85–90%) eleva o consumo para $\approx 36$–38 kg;
+e a vaporização a pressão maior que 1 atm muda ligeiramente $L_v$.
 :::
 
 ::: {.callout-warning}

@@ -102,13 +102,31 @@ Um motor diesel consome 50 kg/h de combustível HFO (valor calorífico 40 MJ/kg)
 Instrumentação mostra que apenas 45% dessa energia é convertida em trabalho mecânico
 (eficiência térmica). A potência de saída é 1000 kW. Quanto calor é rejeitado?
 
-**(a) Modelagem.** << >>
+<!-- [VERIFICAR: os dados não fecham. 50 kg/h × 40 MJ/kg = 2000 MJ/h = 556 kW de
+     energia de combustível; a 45% isso dá 250 kW de trabalho, não os 1000 kW
+     citados como "potência de saída". Resolvi com a taxa de combustível como
+     governante e sinalizo a incoerência.] -->
 
-**(b) Desenvolvimento.** << >>
+**(a) Modelagem.** A potência de combustível é $\dot{Q}_1 = \dot{m}\,\text{PCI}$; o
+trabalho é $\dot{W} = \eta\,\dot{Q}_1$; o calor rejeitado fecha a primeira lei
+$\dot{Q}_2 = \dot{Q}_1 - \dot{W}$.
 
-**(c) Resultado.** << >>
+**(b) Desenvolvimento.**
+$$\dot{Q}_1 = 50\ \tfrac{\text{kg}}{\text{h}} \times 40\ \tfrac{\text{MJ}}{\text{kg}}
+= 2000\ \tfrac{\text{MJ}}{\text{h}} = \frac{2000}{3{,}6} \approx 556\ \text{kW}$$
 
-**(d) Análise crítica.** << >>
+$$\dot{W} = \eta\,\dot{Q}_1 = 0{,}45 \times 556 \approx 250\ \text{kW}$$
+
+$$\dot{Q}_2 = \dot{Q}_1 - \dot{W} \approx 556 - 250 = 306\ \text{kW}$$
+
+**(c) Resultado.** Com a taxa de combustível dada, o motor entrega $\approx 250\ \text{kW}$
+e **rejeita $\approx 306\ \text{kW}$** (gases de descarga + água de refrigeração).
+
+**(d) Análise crítica.** A "potência de saída" de 1000 kW do enunciado é incompatível
+com 50 kg/h e 45% — para 1000 kW a 45% seriam necessários $\approx 200\ \text{kg/h}$ de
+combustível. Adotei a taxa de combustível como dado firme. Independentemente do número,
+a lição vale: mais da metade da energia do combustível sai como calor rejeitado — é o
+que alimenta os sistemas de recuperação de calor (WHR).
 :::
 
 ::: {.callout-warning}

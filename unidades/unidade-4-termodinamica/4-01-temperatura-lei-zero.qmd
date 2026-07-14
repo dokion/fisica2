@@ -78,13 +78,21 @@ Um trocador de calor de bordo recebe água quente a 75 °C na entrada. Simultane
 o sistema de refrigeração do motor mede 45 °C. O operador precisa verificar se há
 diferença de temperatura suficiente para que a troca de calor funcione.
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** A troca de calor só é espontânea do corpo mais quente para o mais
+frio; a "força motriz" é a diferença de temperatura $\Delta T = T_q - T_f$. Cada sensor,
+pela lei zero, entrou em equilíbrio com o fluido e indica a temperatura dele.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.**
+$$\Delta T = T_q - T_f = 75 - 45 = 30\ \text{K}$$
 
-**(c) Resultado.** << >>
+**(c) Resultado.** Há $\Delta T = 30\ \text{K}$ favorável — o calor flui espontaneamente
+da água a 75 °C para o refrigerante a 45 °C; a troca funciona.
 
-**(d) Análise crítica.** << >>
+**(d) Análise crítica.** Um $\Delta T$ positivo é condição *necessária*, não suficiente:
+a potência trocada depende também da área e dos coeficientes de película (tópico 4.5).
+Se as duas temperaturas se aproximassem ($\Delta T \to 0$), a troca cessaria — por isso
+o projeto de trocadores guarda uma diferença mínima ("pinch"). A leitura só é confiável
+se cada sensor de fato equilibrou com o fluido (lei zero).
 :::
 
 ::: {.callout-warning}

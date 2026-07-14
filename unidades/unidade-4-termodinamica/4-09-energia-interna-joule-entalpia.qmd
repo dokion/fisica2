@@ -96,13 +96,23 @@ Uma caldeira de bordo recebe água líquida a 50 °C e 1 bar, transformando-a em
 saturado a 200 °C (pressão de vapor ~16 bar). Utilizando aproximações: considerar água
 líquida com c = 4,18 kJ/(kg·K), vapor como gás ideal com R_esp = 462 J/(kg·K).
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** A entalpia específica adicionada por kg tem duas parcelas: aquecer a
+água líquida ($c\,\Delta T$) e vaporizá-la (calor latente $L_v$ à pressão de vapor).
+Estimativa por parcelas, com $L_v \approx 1935\ \text{kJ/kg}$ a ~16 bar.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.**
+$$\Delta h_{\text{líq}} = c\,\Delta T = 4{,}18 \times (200 - 50) \approx 627\ \text{kJ/kg}$$
+$$\Delta h \approx \Delta h_{\text{líq}} + L_v \approx 627 + 1935 \approx 2560\ \text{kJ/kg}$$
 
-**(c) Resultado.** << >>
+**(c) Resultado.** A caldeira precisa fornecer $\approx 2560\ \text{kJ}$ por quilograma
+de vapor — cerca de três quartos disso só para a vaporização.
 
-**(d) Análise crítica.** << >>
+**(d) Análise crítica.** O domínio do calor latente é a razão de a entalpia ser a
+grandeza natural aqui: em processos de fluxo (caldeira, turbina, condensador) o que
+importa são **diferenças de entalpia** $\Delta h$, lidas em tabelas de vapor. A
+aproximação de $c$ constante e $L_v$ fixo dá a ordem certa; o valor de tabela
+($h_g \approx 2792\ \text{kJ/kg}$ a 16 bar, contra $h \approx 209\ \text{kJ/kg}$ a 50 °C,
+$\Delta h \approx 2583\ \text{kJ/kg}$) confirma a estimativa a menos de ~1%.
 :::
 
 ::: {.callout-warning}
