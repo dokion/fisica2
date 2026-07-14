@@ -81,13 +81,34 @@ Uma pá de hélice de navio experimenta uma velocidade média de fluxo $v = 7$ m
 (c) A potência necessária se a velocidade do navio é 12 nós.
 (d) Qual será a variação de pressão na pá se ela gera um vórtice marginal de circulação $\Gamma_{\text{ponta}} = 4$ m²/s?
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** Kutta–Joukowski: sustentação por pá $L = \rho v\,\Gamma$ (na
+convenção deste tópico); empuxo total = soma das 4 pás; potência propulsiva
+$P = T\,v_{\text{navio}}$. A queda de pressão de um vórtice de circulação $\Gamma$ é
+estimada pela velocidade tangencial $v_\theta = \Gamma/(2\pi r)$ e por
+$\Delta p \approx \tfrac{1}{2}\rho v_\theta^2$.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.**
+$$L = \rho v\,\Gamma = 1025 \times 7 \times 8 \approx 5{,}74{\times}10^4\ \text{N} = 57{,}4\ \text{kN}$$
+$$T = 4L \approx 2{,}30{\times}10^5\ \text{N} = 230\ \text{kN}$$
+$$P = T\,v_{\text{navio}} = 229\,600 \times (12 \times 0{,}5144) \approx 1{,}42\ \text{MW}$$
 
-**(c) Resultado.** << >>
+Vórtice marginal ($\Gamma_{\text{ponta}} = 4\ \text{m}^2/\text{s}$, raio de núcleo
+assumido $r \approx 0{,}1\ \text{m}$):
+$$v_\theta = \frac{4}{2\pi(0{,}1)} \approx 6{,}4\ \text{m/s}
+\quad\Rightarrow\quad
+\Delta p \approx \tfrac{1}{2}(1025)(6{,}4)^2 \approx 2{,}1{\times}10^4\ \text{Pa} \approx 0{,}2\ \text{bar}$$
 
-**(d) Análise crítica.** << >>
+**(c) Resultado.** Cada pá gera $\approx 57\ \text{kN}$; o hélice de 4 pás produz
+$\approx 230\ \text{kN}$ de empuxo, movendo o navio a 12 nós com $\approx 1{,}4\ \text{MW}$.
+O vórtice de ponta baixa a pressão local em ~0,2 bar.
+
+**(d) Análise crítica.** Nota de rigor: $L = \rho v\,\Gamma$ é, dimensionalmente, força
+por *unidade de envergadura* — a pá inteira precisaria de $L = \rho v\,\Gamma\,b$; o
+enunciado adota a forma simplificada do texto, então os 57 kN valem dentro dessa
+convenção [VERIFICAR com o modelo de pá real]. A queda de 0,2 bar depende do raio de
+núcleo assumido (0,1 m); em um vórtice mais concentrado a depressão é maior e pode
+levar a pressão local abaixo da de vapor — é a origem da cavitação de ponta e do
+"singing" do hélice. Empuxo sem circulação seria zero: $\Gamma$ é a grandeza de projeto.
 :::
 
 ::: {.callout-warning}

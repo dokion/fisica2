@@ -58,13 +58,33 @@ Unidade SI: N/m. Causa fenômenos como a forma esférica das gotas, a ascensão 
 ::: {.sp}
 Um navio-tanque com deslocamento de 50 mil toneladas flutua em água salgada de densidade 1025 kg/m³. Ao sair de um porto fluvial (água doce, ρ = 1000 kg/m³) e entrar em mar aberto, observa-se que o calado aumenta em cerca de 20 cm. A transição ocorre em águas salobras (ρ intermediária) ao longo de 30 km.
 
-**(a) Modelagem.** << >>
+<!-- [VERIFICAR: o enunciado diz que ao passar de água doce para salgada o calado
+     "aumenta" — é o contrário. Água salgada é mais densa, o navio afunda menos: o
+     calado DIMINUI. Resolvi na direção fisicamente correta, mantendo os 20 cm de
+     magnitude.] -->
 
-**(b) Desenvolvimento.** << >>
+**(a) Modelagem.** O deslocamento (massa) é o mesmo nos dois portos; o que muda é o
+volume imerso necessário para gerar o empuxo, $V = M/\rho$. A variação de calado é a
+variação de volume dividida pela área de flutuação: $\Delta T = \Delta V / A_f$.
 
-**(c) Resultado.** << >>
+**(b) Desenvolvimento.**
+$$\Delta V = M\left(\frac{1}{\rho_{\text{doce}}} - \frac{1}{\rho_{\text{salg}}}\right)
+= 50{\times}10^6\left(\frac{1}{1000} - \frac{1}{1025}\right) \approx 1220\ \text{m}^3$$
 
-**(d) Análise crítica.** << >>
+Para $\Delta T = 20\ \text{cm}$, a área de flutuação implícita é
+$A_f = \Delta V/\Delta T = 1220/0{,}20 \approx 6100\ \text{m}^2$ — coerente com um
+navio-tanque de 50 mil t.
+
+**(c) Resultado.** Ao sair da água doce para a salgada, o navio **sobe** cerca de
+$20\ \text{cm}$ (calado menor no mar). O sentido inverso — entrando em água doce — é
+o que exige atenção: o navio afunda, e é por isso que existe a marca de água doce
+(FWA) na escala de Plimsoll.
+
+**(d) Análise crítica.** A variação é pequena (2,5% de densidade → ~2% de volume), mas
+decisiva em barra de porto com pouca folga sob a quilha: um navio carregado no limite
+em água doce ganha margem ao chegar ao mar, e a perde ao subir o rio. O cálculo supõe
+$A_f$ constante nesse intervalo de 20 cm, o que é razoável para variações pequenas de
+calado.
 :::
 
 ::: {.callout-warning}

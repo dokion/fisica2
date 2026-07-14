@@ -99,13 +99,33 @@ Um navio-graneleiro de comprimento $L = 200$ m, velocidade de serviço $v = 14$ 
 (b) Os números de Reynolds real e modelo, e verifique a diferença.
 (c) O coeficiente de bloco do navio sendo $\Delta = 45000$ t, $L = 200$ m, $B = 32$ m, calado $T = 10$ m.
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** Semelhança de Froude: $\text{Fr}$ igual no modelo e no real fixa a
+razão de velocidades $v_m/v_r = \sqrt{L_m/L_r} = \sqrt{1/n}$. Reynolds
+($\text{Re} = vL/\nu$) não pode ser igualado ao mesmo tempo. O coeficiente de bloco é
+$C_b = \nabla/(L\,B\,T)$ com $\nabla$ o volume deslocado.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.**
+$$v_m = v_r\sqrt{1/n} = 7{,}2 \times \sqrt{1/50} = 7{,}2 \times 0{,}141 \approx 1{,}02\ \text{m/s}$$
 
-**(c) Resultado.** << >>
+$$\text{Re}_r = \frac{7{,}2 \times 200}{10^{-6}} = 1{,}44{\times}10^9,
+\qquad
+\text{Re}_m = \frac{1{,}02 \times 4}{10^{-6}} = 4{,}1{\times}10^6$$
 
-**(d) Análise crítica.** << >>
+$$\frac{\text{Re}_r}{\text{Re}_m} = n^{3/2} = 50^{1{,}5} \approx 354$$
+
+$$\nabla = \frac{45{\times}10^6}{1025} \approx 43\,900\ \text{m}^3
+\quad\Rightarrow\quad
+C_b = \frac{43\,900}{200 \times 32 \times 10} \approx 0{,}69$$
+
+**(c) Resultado.** (a) $v_m \approx 1{,}0\ \text{m/s}$; (b) $\text{Re}_r \approx 1{,}4{\times}10^9$
+contra $\text{Re}_m \approx 4{,}1{\times}10^6$ — o modelo tem Reynolds 354 vezes menor;
+(c) $C_b \approx 0{,}69$, típico de graneleiro.
+
+**(d) Análise crítica.** A impossibilidade de igualar Re é o cerne do ensaio de modelo:
+mantém-se Fr (acerta a onda) e corrige-se o atrito por fórmula de placa plana (ITTC).
+O $C_b \approx 0{,}69$ confirma a forma cheia do graneleiro (contra ~0,6 de um
+navio-tanque fino). Como o modelo tem Re menor, a fração laminar da camada limite é
+maior nele que no navio — mais um motivo para a correção de fricção.
 :::
 
 ::: {.callout-warning}

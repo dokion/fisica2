@@ -86,13 +86,26 @@ $$P_{\text{dinâmica}} = \frac{1}{2}\rho v^2 \quad \Rightarrow \quad v = \sqrt{\
 ::: {.sp}
 Uma bomba de porão de navio graneleiro move água de lastro entre tanques a uma vazão $Q = 500$ m³/h ≈ 0.139 m³/s. A tubulação de sucção tem diâmetro $D_s = 250$ mm (seção 1); a tubulação de descarga tem diâmetro $D_d = 200$ mm (seção 2). A bomba eleva a água 15 m verticamente. Calcule as velocidades em cada seção e a diferença de pressão necessária (sem considerar perdas por atrito).
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** Escoamento incompressível e permanente: a continuidade dá as
+velocidades ($v = Q/A$), e Bernoulli entre a sucção (1) e a descarga (2) dá a pressão
+que a bomba precisa acrescentar, $\Delta P = \rho g\,\Delta h + \tfrac{1}{2}\rho(v_2^2 - v_1^2)$
+(sem atrito). Água de lastro salgada, $\rho = 1025\ \text{kg/m}^3$.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.**
+$$A_s = \pi(0{,}125)^2 = 0{,}0491\ \text{m}^2 \Rightarrow v_s = \frac{0{,}139}{0{,}0491} = 2{,}83\ \text{m/s}$$
+$$A_d = \pi(0{,}100)^2 = 0{,}0314\ \text{m}^2 \Rightarrow v_d = \frac{0{,}139}{0{,}0314} = 4{,}42\ \text{m/s}$$
 
-**(c) Resultado.** << >>
+$$\Delta P_{\text{altura}} = \rho g\,\Delta h = 1025 \times 9{,}81 \times 15 \approx 1{,}51{\times}10^5\ \text{Pa}$$
+$$\Delta P_{\text{cinético}} = \tfrac{1}{2}\rho(v_d^2 - v_s^2) = \tfrac{1}{2}(1025)(19{,}5 - 8{,}0) \approx 5{,}9{\times}10^3\ \text{Pa}$$
 
-**(d) Análise crítica.** << >>
+**(c) Resultado.** $v_s \approx 2{,}8\ \text{m/s}$, $v_d \approx 4{,}4\ \text{m/s}$;
+a bomba deve fornecer $\Delta P \approx 1{,}57{\times}10^5\ \text{Pa} \approx 1{,}6\ \text{bar}$.
+
+**(d) Análise crítica.** A elevação de 15 m responde por 96% da pressão; o termo
+cinético é quase desprezível aqui. Na prática, as perdas por atrito na tubulação e nas
+válvulas de não-retorno somam ainda uma parcela apreciável (Bernoulli ideal subestima),
+e a bomba deve ser especificada com margem. A velocidade de sucção de ~2,8 m/s está na
+faixa recomendada (evita cavitação na entrada).
 :::
 
 ::: {.callout-warning}

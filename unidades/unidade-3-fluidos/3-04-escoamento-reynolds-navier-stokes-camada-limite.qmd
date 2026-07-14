@@ -93,13 +93,29 @@ Outra consideração prática: a **rugosidade relativa** $k/L$ (tamanho da rugos
 ::: {.sp}
 Um navio-tanque de comprimento $L = 240$ m viaja a $v = 12$ nós (6.17 m/s) em água de temperatura $T = 20°C$ (viscosidade cinemática $\nu = 1.0 \times 10^{-6}$ m²/s). Calcule o número de Reynolds e classifique o escoamento. Se a rugosidade média do casco é $k = 150$ μm, em que ponto do casco a camada limite transiciona para turbulenta? Qual será a espessura da camada limite no final do navio?
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** $\text{Re} = vL/\nu$ com o comprimento do casco. A transição
+laminar→turbulenta ocorre num $\text{Re}_{x,\text{crit}} \approx 5{\times}10^5$ (casco
+liso), que fixa a posição $x_{\text{crit}} = \text{Re}_{x,\text{crit}}\,\nu/v$. A
+espessura turbulenta segue $\delta \approx 0{,}37\,x/\text{Re}_x^{0{,}2}$.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.**
+$$\text{Re} = \frac{6{,}17 \times 240}{1{,}0{\times}10^{-6}} \approx 1{,}5{\times}10^9
+\quad(\text{muito turbulento})$$
 
-**(c) Resultado.** << >>
+$$x_{\text{crit}} = \frac{5{\times}10^5 \times 1{,}0{\times}10^{-6}}{6{,}17} \approx 0{,}081\ \text{m} = 8\ \text{cm da proa}$$
 
-**(d) Análise crítica.** << >>
+$$\delta_{\text{popa}} \approx \frac{0{,}37 \times 240}{(1{,}5{\times}10^9)^{0{,}2}} = \frac{88{,}8}{68} \approx 1{,}3\ \text{m}$$
+
+**(c) Resultado.** $\text{Re} \approx 1{,}5{\times}10^9$; a camada limite vira turbulenta
+a apenas ~8 cm da proa (e, com a rugosidade $k = 150\ \mu\text{m}$, praticamente na
+própria proa); no final do navio ela tem ~1,3 m de espessura.
+
+**(d) Análise crítica.** Quase todo o casco escoa em regime turbulento — daí o arrasto
+de atrito dominar a resistência. A rugosidade de 150 μm antecipa a transição para
+essencialmente x = 0, de modo que a hipótese de casco liso é otimista: um casco real,
+incrustado, tem arrasto de atrito ainda maior (tópico 3.6). A fórmula de $\delta$ é para
+placa plana; a curvatura do casco introduz correções, mas a ordem de grandeza (metros
+na popa) está certa.
 :::
 
 ::: {.callout-warning}

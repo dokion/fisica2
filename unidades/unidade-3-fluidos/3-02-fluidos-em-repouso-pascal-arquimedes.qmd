@@ -67,13 +67,32 @@ A **reserva de flutuabilidade** é o volume de compartimentos estanques acima da
 ::: {.sp}
 Um navio-graneleiro de boca $B = 32$ m, comprimento $L = 190$ m, com área de flutuação ≈ 5800 m² no calado de projeto ($T = 10$ m), é carregado no porto de Rio Grande (água doce, $\rho = 1000$ kg/m³) até deslocamento $\Delta = 50000$ t. Qual será seu calado? Se depois sai para o mar aberto (água salgada, $\rho = 1025$ kg/m³), qual será o novo calado, mantendo o mesmo deslocamento?
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** No equilíbrio, o peso iguala o empuxo: $\Delta = \rho\,V_{\text{imerso}}$.
+O volume imerso é o mesmo em cada água (mesma massa), então o calado muda porque $\rho$
+muda. A variação fina de calado é $\Delta T = \Delta V / A_f$.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.** Volume imerso em cada água:
+$$V_{\text{doce}} = \frac{50{\times}10^6}{1000} = 50\,000\ \text{m}^3,
+\qquad
+V_{\text{salg}} = \frac{50{\times}10^6}{1025} \approx 48\,780\ \text{m}^3$$
 
-**(c) Resultado.** << >>
+$$\Delta V = 1220\ \text{m}^3
+\quad\Rightarrow\quad
+\Delta T = \frac{\Delta V}{A_f} = \frac{1220}{5800} \approx 0{,}21\ \text{m}$$
 
-**(d) Análise crítica.** << >>
+Em água doce, com $V = 50\,000\ \text{m}^3$ e $L\,B \approx 6080\ \text{m}^2$, o calado
+médio é $T \approx V/(L\,B\,C_b)$ com $C_b \approx 0{,}82$, dando $T \approx 10\ \text{m}$
+(o calado de projeto).
+
+**(c) Resultado.** No porto fluvial o calado é $\approx 10{,}0\ \text{m}$; ao entrar no
+mar salgado, o calado **diminui** cerca de $21\ \text{cm}$ para $\approx 9{,}8\ \text{m}$,
+mantido o mesmo deslocamento.
+
+**(d) Análise crítica.** A subida de ~21 cm no mar é margem ganha; o risco está no
+sentido inverso (mar → rio), quando o navio afunda e pode perder a folga sob a quilha.
+O calado absoluto depende de $C_b$ (curva hidrostática real); a *variação* de 21 cm,
+porém, sai só de $\Delta V/A_f$ e é confiável. Deslocamento é massa de água (t), não
+tonelagem bruta (volume registrado).
 :::
 
 ::: {.callout-warning}

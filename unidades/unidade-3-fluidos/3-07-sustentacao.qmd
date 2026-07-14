@@ -97,13 +97,30 @@ Uma pá de hélice de navio graneleiro tem área aproximada $A = 12$ m² e opera
 (c) Como a sustentação muda se a velocidade aumenta de 8 para 10 m/s.
 (d) Se o ângulo de ataque aumentar em 5° (aumentando $C_L$ para 1.0 e $C_D$ para 0.06), qual é o novo ponto de operação?
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** Sustentação e arrasto da pá: $L = \tfrac{1}{2}\rho v^2 A\,C_L$,
+$D = \tfrac{1}{2}\rho v^2 A\,C_D$. A sustentação é perpendicular ao escoamento e não
+realiza trabalho; o custo em potência vem do arrasto, $P = D\,v$. Como $L \propto v^2$,
+a razão de sustentações entre duas velocidades é $(v_2/v_1)^2$.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.** Pressão dinâmica $q = \tfrac{1}{2}\rho v^2 = \tfrac{1}{2}(1025)(64) = 32\,800\ \text{Pa}$.
+$$L = q\,A\,C_L = 32\,800 \times 12 \times 0{,}8 \approx 3{,}15{\times}10^5\ \text{N} = 315\ \text{kN}$$
+$$D = q\,A\,C_D = 32\,800 \times 12 \times 0{,}04 \approx 1{,}57{\times}10^4\ \text{N} = 15{,}7\ \text{kN}$$
+$$P_{\text{arrasto}} = D\,v = 15\,744 \times 8 \approx 126\ \text{kW}$$
 
-**(c) Resultado.** << >>
+Aumentando $v$ para 10 m/s: $L' = 315 \times (10/8)^2 \approx 492\ \text{kN}$.
+Com $\alpha + 5°$ ($C_L = 1{,}0$, $C_D = 0{,}06$, $v = 8$): $L = 394\ \text{kN}$, $D = 23{,}6\ \text{kN}$.
 
-**(d) Análise crítica.** << >>
+**(c) Resultado.** A 8 m/s: $L \approx 315\ \text{kN}$, $D \approx 15{,}7\ \text{kN}$,
+custo $\approx 126\ \text{kW}$. A 10 m/s a sustentação salta para $\approx 492\ \text{kN}$
+(fator 1,56). Aumentando o ângulo de ataque: mais sustentação (394 kN), mas a
+eficiência $L/D$ cai de 20 para 17.
+
+**(d) Análise crítica.** A dependência $L \propto v^2$ é a mesma do leme (por isso se dá
+máquina adiante ao manobrar a baixa velocidade). Aumentar o ângulo de ataque rende mais
+empuxo, mas com queda de $L/D$ — e, perto do estol ou em alta velocidade, o lado de
+sucção pode cair abaixo da pressão de vapor e cavitar, destruindo a sustentação: por
+isso o projeto do hélice guarda margem. Note que $P = D\,v$ é só o custo do arrasto da
+pá; a potência propulsiva útil vem do empuxo, tratado por Kutta–Joukowski (tópico 3.8).
 :::
 
 ::: {.callout-warning}

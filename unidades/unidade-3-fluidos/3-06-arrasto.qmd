@@ -97,13 +97,31 @@ Um navio-tanque de área molhada $A_{\text{molhada}} = 8000$ m² e comprimento $
 (c) A resistência de atrito e potência correspondente.
 (d) Como a resistência muda se o casco ficar incrustado (adicionar ~0.0005 a $C_F$)?
 
-**(a) Modelagem.** << >>
+**(a) Modelagem.** $\text{Re} = vL/\nu$; coeficiente de atrito de Kármán–Schoenherr
+$C_F = 0{,}075/(\log_{10}\text{Re} - 2)^2$; resistência de atrito
+$R = \tfrac{1}{2}\rho v^2 A_{\text{molhada}}\,C_F$ e potência $P = R\,v$.
 
-**(b) Desenvolvimento.** << >>
+**(b) Desenvolvimento.**
+$$\text{Re} = \frac{6{,}17 \times 240}{1{,}14{\times}10^{-6}} \approx 1{,}30{\times}10^9
+\quad\Rightarrow\quad
+C_F = \frac{0{,}075}{(9{,}11 - 2)^2} = \frac{0{,}075}{50{,}6} \approx 1{,}48{\times}10^{-3}$$
 
-**(c) Resultado.** << >>
+$$R = \tfrac{1}{2}(1025)(6{,}17)^2(8000)(1{,}48{\times}10^{-3}) \approx 2{,}3{\times}10^5\ \text{N} = 232\ \text{kN}$$
 
-**(d) Análise crítica.** << >>
+$$P = R\,v = 232\,000 \times 6{,}17 \approx 1{,}43\ \text{MW}$$
+
+Com incrustação ($C_F + 0{,}0005 = 1{,}98{\times}10^{-3}$): $R \approx 310\ \text{kN}$,
+$P \approx 1{,}91\ \text{MW}$.
+
+**(c) Resultado.** Casco limpo: $R_{\text{atrito}} \approx 232\ \text{kN}$,
+$P \approx 1{,}4\ \text{MW}$. Casco incrustado: $R \approx 310\ \text{kN}$,
+$P \approx 1{,}9\ \text{MW}$ — aumento de **34%**.
+
+**(d) Análise crítica.** Só a margem de incrustação já custa ~0,5 MW a mais nesta
+velocidade — dinheiro em combustível a cada milha, e a razão de a docagem para pintura
+se pagar. Este é apenas o arrasto de *atrito*; a resistência total inclui ainda o
+arrasto de onda (15–25%), que cresce fortemente com o número de Froude. A potência
+propulsiva instalada é maior que $P$, pois há as eficiências de hélice e de transmissão.
 :::
 
 ::: {.callout-warning}
