@@ -820,5 +820,829 @@ plt.tight_layout(); plt.show()
   em $y$ se $\omega_x / \omega_y = n/m$. Não contar as vezes que a curva toca os eixos.
 :::
 
+## Onde a superposição vive: exemplos físicos {{< ra OE1.7 B3 >}}
+
+O ponto roxo das simulações anteriores é uma soma matemática, não um corpo: não existe
+objeto mecânico natural cujo deslocamento seja a soma de dois massa–mola independentes.
+A superposição torna-se fisicamente real — um ponto que genuinamente vale $x_1 + x_2$ —
+em sistemas onde ela é um *teorema*, não uma conta: o valor de um **campo** num ponto
+(elevação da superfície do mar, pressão acústica) e a **resposta linear** de uma
+estrutura a duas excitações simultâneas. Os cinco exemplos a seguir percorrem esses
+casos. Ressalva de validade: a igualdade "ponto $= x_1 + x_2$" só é exata no regime
+linear — pequenas amplitudes, boia leve que segue a superfície (não o navio inteiro,
+que tem dinâmica própria), estrutura respondendo linearmente.
+
+### Boia num mar de dois trens de onda
+
+Em pequena amplitude, as ondas de gravidade são lineares: a elevação da superfície num
+ponto é a soma das elevações dos trens de onda que por ali passam. Uma boia leve segue
+a superfície — a altura dela *é* $\eta_1 + \eta_2$, fisicamente. Quando dois swells de
+períodos próximos coexistem, a soma forma **grupos de ondas**: é o "conjunto de ondas
+grandes seguido de calmaria" que qualquer marinheiro reconhece, e é exatamente a
+envoltória do batimento.
+
+```{python}
+#| fig-cap: "Boia num mar com dois swells de T₁ = 8 s e T₂ = 10 s, amplitudes de 1 m (dispersão de águas profundas, k = ω²/g). Acima: a superfície num instante. Abaixo: a altura da boia ao longo do tempo, com a envoltória do grupo — período de grupo 1/|1/T₁ − 1/T₂| = 40 s. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+g, a = 9.81, 1.0
+T1, T2 = 8.0, 10.0
+w1, w2 = 2*np.pi/T1, 2*np.pi/T2
+k1, k2 = w1**2/g, w2**2/g
+xb = 300.0
+
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(9, 5.2),
+                               gridspec_kw={'height_ratios': [1, 1.3]})
+x = np.linspace(0, 400, 1200)
+eta = a*np.sin(k1*x) + a*np.sin(k2*x)
+ax1.plot(x, eta, color='#1F47C8', lw=1.6)
+ax1.fill_between(x, eta, -3, color='#8CAFCD', alpha=0.35)
+ax1.plot(xb, a*np.sin(k1*xb) + a*np.sin(k2*xb), 'o', ms=10, color='#C85C2E')
+ax1.set_ylim(-3, 3); ax1.set_xlabel('x (m)'); ax1.set_ylabel('η (m)')
+
+t = np.linspace(0, 120, 4000)
+hb = a*np.sin(k1*xb - w1*t) + a*np.sin(k2*xb - w2*t)
+dw, dk = w1 - w2, k1 - k2
+env = 2*a*np.cos((dk*xb - dw*t)/2)
+ax2.plot(t, hb, color='#C85C2E', lw=1.2)
+ax2.plot(t,  np.abs(env), '--', color='#66308C', lw=1.4)
+ax2.plot(t, -np.abs(env), '--', color='#66308C', lw=1.4)
+ax2.set_xlabel('t (s)'); ax2.set_ylabel('altura da boia (m)')
+ax2.set_title('grupos: T = 1/|1/T₁ − 1/T₂| = 40 s', fontsize=10)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo — a boia segue a
+     superfície; os grupos de ondas são o fenômeno a observar). p5 de libs/ (offline,
+     Q6). Mesmos parâmetros da versão matplotlib: T1 = 8 s, T2 = 10 s (ajustáveis
+     6–14 s), a = 1 m cada, dispersão de águas profundas k = ω²/g. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .bo-wrap{max-width:1000px;margin:1rem auto;}
+  .bo-wrap .bo-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .bo-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .bo-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .bo-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .bo-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .bo-wrap .chk{display:flex;align-items:center;gap:5px;font-size:13px;white-space:nowrap;}
+  .bo-wrap .chk input{accent-color:#c85c2e;width:15px;height:15px;}
+  .bo-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .bo-wrap #boSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .bo-wrap #boEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .bo-wrap #boEq b{color:#1f47c8;}
+</style>
+<div class="bo-wrap">
+  <div class="bo-row">
+    <button id="boPlay">⏸ Pausar</button>
+    <button id="boZero">↺ t = 0</button>
+    <div class="sld"><label>T<sub>1</sub> = <span class="val" id="boT1v">8</span> s</label>
+      <input type="range" id="boT1" min="6" max="14" value="8" step="0.5"></div>
+    <div class="sld"><label>T<sub>2</sub> = <span class="val" id="boT2v">10</span> s</label>
+      <input type="range" id="boT2" min="6" max="14" value="10" step="0.5"></div>
+    <div class="sld"><label>Velocidade anim. = <span class="val" id="boSv">1</span>×</label>
+      <input type="range" id="boS" min="0.25" max="3" value="1" step="0.25"></div>
+  </div>
+  <div class="bo-row">
+    <span class="chk"><input type="checkbox" id="boComp">Mostrar os dois trens separados</span>
+  </div>
+  <div id="boSketch"></div>
+  <div id="boEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let t=0, playing=true;
+  const cw=()=>{ const w=(el('boSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),440).parent('boSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),440); };
+
+    p.draw=()=>{
+      const W=p.width;
+      const T1=+el('boT1').value, T2=+el('boT2').value, spd=+el('boS').value;
+      el('boT1v').textContent=T1.toFixed(1); el('boT2v').textContent=T2.toFixed(1);
+      el('boSv').textContent=spd;
+      if(playing) t+=(p.deltaTime/1000)*spd;
+      const g=9.81, a=1.0;
+      const w1=2*Math.PI/T1, w2=2*Math.PI/T2, k1=w1*w1/g, k2=w2*w2/g;
+      const sx0=40, sx1=W-14, MAR=400, ppm=(sx1-sx0)/MAR;   // 400 m de mar
+      const ym=125, esc=24;                                  // 24 px por metro
+      const eta1=(xm,tt)=>a*Math.sin(k1*xm-w1*tt), eta2=(xm,tt)=>a*Math.sin(k2*xm-w2*tt);
+      const xb=300;
+      const hb=eta1(xb,t)+eta2(xb,t);
+
+      p.background('#faf8f4');
+      p.noStroke(); p.fill('#7a7367'); p.textSize(12); p.textAlign(p.LEFT,p.TOP);
+      p.text('MAR — superfície = η₁ + η₂ (dois swells)',sx0,8);
+      p.text('ALTURA DA BOIA — grupos de ondas',sx0,240);
+
+      // superfície (preenchida) e componentes
+      p.push(); p.noStroke(); p.fill(140,175,205,90); p.beginShape();
+      for(let gx=sx0;gx<=sx1;gx+=2){ const xm=(gx-sx0)/ppm;
+        p.vertex(gx,ym-(eta1(xm,t)+eta2(xm,t))*esc); }
+      p.vertex(sx1,ym+3*esc); p.vertex(sx0,ym+3*esc); p.endShape(p.CLOSE); p.pop();
+      p.push(); p.noFill(); p.stroke('#1f47c8'); p.strokeWeight(2); p.beginShape();
+      for(let gx=sx0;gx<=sx1;gx++){ const xm=(gx-sx0)/ppm;
+        p.vertex(gx,ym-(eta1(xm,t)+eta2(xm,t))*esc); }
+      p.endShape(); p.pop();
+      if(el('boComp').checked){
+        const comp=(fn,col)=>{ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(1);
+          p.beginShape();
+          for(let gx=sx0;gx<=sx1;gx++){ const xm=(gx-sx0)/ppm; p.vertex(gx,ym-fn(xm,t)*esc); }
+          p.endShape(); p.pop(); };
+        comp(eta1,'#e5b8b8'); comp(eta2,'#b8c2e5');
+      }
+      // boia (com mastro) em x fixo
+      const bx=sx0+xb*ppm, by=ym-hb*esc;
+      p.stroke('#c85c2e'); p.strokeWeight(2.5); p.line(bx,by,bx,by-22);
+      p.noStroke(); p.fill('#c85c2e'); p.circle(bx,by,16);
+      p.fill('#7a7367'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      p.text('boia',bx,ym+3*esc+4);
+
+      // ── gráfico-tira: altura da boia vs t (varredura da origem) ──
+      const gx0=52, gx1=W-14, gyc=345, half=82, win=60, pps=(gx1-gx0)/win;
+      const sc=half*0.9/2;
+      p.stroke('#e7e0d4');
+      for(let k=0;k<=win;k+=10){ const gx=gx0+k*pps; p.line(gx,gyc-half,gx,gyc+half); }
+      p.stroke('#bdb4a4'); p.line(gx0,gyc,gx1,gyc);
+      p.stroke('#d8cfc0'); p.line(gx0,gyc-half,gx0,gyc+half);
+      p.noStroke(); p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      for(let k=0;k<=win;k+=10) p.text(k+'s',gx0+k*pps,gyc+half+4);
+      const base=t-(t%win), head=t%win;
+      const dw=w1-w2, dk=k1-k2;
+      const fb=tt=>eta1(xb,tt)+eta2(xb,tt);
+      const env=tt=>2*a*Math.cos((dk*xb-dw*tt)/2);
+      const scope=(fn,col,wt,dash)=>{ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(wt);
+        if(dash) p.drawingContext.setLineDash([6,5]);
+        p.beginShape();
+        for(let gx=gx0;gx<=gx0+head*pps;gx++){ const tau=(gx-gx0)/pps; p.vertex(gx,gyc-fn(base+tau)*sc); }
+        p.endShape();
+        if(base-win>=-1e-9){ p.beginShape();
+          for(let gx=gx0+head*pps;gx<=gx1;gx++){ const tau=(gx-gx0)/pps; p.vertex(gx,gyc-fn(base-win+tau)*sc); }
+          p.endShape(); }
+        p.drawingContext.setLineDash([]); p.pop(); };
+      if(Math.abs(T1-T2)>1e-6){ scope(env,'#66308c',1.4,true); scope(tt=>-env(tt),'#66308c',1.4,true); }
+      scope(fb,'#c85c2e',2,false);
+      const gh=gx0+head*pps;
+      p.stroke('#c9c2b6'); p.strokeWeight(1); p.line(gh,gyc-half,gh,gyc+half);
+      p.noStroke(); p.fill('#c85c2e'); p.circle(gh,gyc-hb*sc,8);
+
+      const Tg=Math.abs(1/T1-1/T2)>1e-9?1/Math.abs(1/T1-1/T2):Infinity;
+      el('boEq').innerHTML='altura da boia = η₁ + η₂ (soma física, campo linear) &nbsp;|&nbsp; '+
+        '<b>T<sub>grupo</sub> = 1/|1/T₁ − 1/T₂| = '+(isFinite(Tg)?Tg.toFixed(0)+' s':'—')+'</b>'+
+        ' &nbsp;|&nbsp; λ₁ = '+(g*T1*T1/(2*Math.PI)).toFixed(0)+' m, λ₂ = '+(g*T2*T2/(2*Math.PI)).toFixed(0)+' m';
+    };
+  });
+  el('boPlay').onclick=()=>{ playing=!playing; el('boPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+  el('boZero').onclick=()=>{ t=0; playing=false; el('boPlay').textContent='▶ Reproduzir'; };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Com $T_1 = 8$ s e $T_2 = 10$ s, cronometre na tira o intervalo entre dois grupos e
+   compare com $1/|1/T_1 - 1/T_2| = 40$ s. De onde vem o dito "a cada sétima onda"?
+2. Iguale os períodos: os grupos desaparecem e o mar vira um trem regular. Por quê?
+3. Por que a altura da *boia* pode ser tratada como $\eta_1 + \eta_2$, mas a resposta
+   de um *navio* aos mesmos dois swells não é a soma direta das elevações?
+:::
+
+### Maré: sizígia e quadratura são batimento
+
+A altura da maré num porto é a soma de constituintes harmônicas; as duas maiores são a
+lunar principal M2 ($T = 12{,}42$ h) e a solar principal S2 ($T = 12{,}00$ h). A
+alternância entre maré de sizígia (grande) e de quadratura (pequena) a cada
+$\approx 14{,}8$ dias *é* o batimento entre elas:
+$T_{\text{bat}} = 1/|1/12{,}00 - 1/12{,}42| \approx 355\ \text{h} \approx 14{,}8$ dias.
+É o mesmo fenômeno das tábuas de marés usadas no cálculo de folga sob a quilha — em
+escala de dias, não de segundos.
+
+```{python}
+#| fig-cap: "Trinta dias de maré h(t) = A_M2 cos(2πt/12,42) + A_S2 cos(2πt/12,00), com A_M2 = 1,0 m e A_S2 = 0,46 m (razão real S2/M2). A envoltória tracejada alterna sizígia (A_M2+A_S2) e quadratura (A_M2−A_S2) a cada meio período de batimento — 7,4 dias. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+A1, A2 = 1.0, 0.46
+T1, T2 = 12.42, 12.00
+t = np.linspace(0, 720, 20000)          # horas
+h = A1*np.cos(2*np.pi*t/T1) + A2*np.cos(2*np.pi*t/T2)
+dw = 2*np.pi*(1/T2 - 1/T1)
+env = np.sqrt(A1**2 + A2**2 + 2*A1*A2*np.cos(dw*t))
+
+fig, ax = plt.subplots(figsize=(9, 4))
+ax.plot(t/24, h, color='#1F47C8', lw=0.6)
+ax.plot(t/24,  env, '--', color='#C85C2E', lw=1.6)
+ax.plot(t/24, -env, '--', color='#C85C2E', lw=1.6)
+Tbat = 1/abs(1/T2 - 1/T1)/24
+ax.annotate('sizígia', xy=(0.3, A1+A2+0.08), fontsize=9, color='#C85C2E')
+ax.annotate('quadratura', xy=(Tbat/2-1.6, A1-A2+0.12), fontsize=9, color='#C85C2E')
+ax.set_xlabel('dias'); ax.set_ylabel('h(t) (m)')
+ax.set_title(f'T_bat = 1/|1/12,00 − 1/12,42| ≈ {Tbat:.1f} dias', fontsize=10)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo — o cursor varre os 30
+     dias e o marégrafo sobe/desce; o fenômeno é a alternância sizígia/quadratura).
+     p5 de libs/ (offline, Q6). Mesmos parâmetros da versão matplotlib: M2 com
+     T = 12,42 h, S2 com T = 12,00 h; amplitudes ajustáveis. Tempo comprimido
+     (relógio mostra o dia corrente). -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .mr-wrap{max-width:1000px;margin:1rem auto;}
+  .mr-wrap .mr-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .mr-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .mr-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .mr-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .mr-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .mr-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .mr-wrap #mrSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .mr-wrap #mrEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .mr-wrap #mrEq b{color:#1f47c8;}
+</style>
+<div class="mr-wrap">
+  <div class="mr-row">
+    <button id="mrPlay">⏸ Pausar</button>
+    <button id="mrZero">↺ t = 0</button>
+    <div class="sld"><label>A<sub>M2</sub> = <span class="val" id="mrA1v">1.0</span> m</label>
+      <input type="range" id="mrA1" min="0.5" max="2" value="1.0" step="0.1"></div>
+    <div class="sld"><label>A<sub>S2</sub> = <span class="val" id="mrA2v">0.46</span> m</label>
+      <input type="range" id="mrA2" min="0.2" max="1" value="0.46" step="0.02"></div>
+    <div class="sld"><label>Velocidade anim. = <span class="val" id="mrSv">1</span>×</label>
+      <input type="range" id="mrS" min="0.25" max="3" value="1" step="0.25"></div>
+  </div>
+  <div id="mrSketch"></div>
+  <div id="mrEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let td=0, playing=true;                   // td = dias decorridos
+  const cw=()=>{ const w=(el('mrSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),400).parent('mrSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),400); };
+
+    p.draw=()=>{
+      const W=p.width;
+      const A1=+el('mrA1').value, A2=+el('mrA2').value, spd=+el('mrS').value;
+      el('mrA1v').textContent=A1.toFixed(2); el('mrA2v').textContent=A2.toFixed(2);
+      el('mrSv').textContent=spd;
+      if(playing) td+=(p.deltaTime/1000)*spd*1.2;    // 1,2 dias por segundo de animação
+      if(td>30) td=0;
+      const T1=12.42, T2=12.00;
+      const h=tt=>A1*Math.cos(2*Math.PI*tt*24/T1)+A2*Math.cos(2*Math.PI*tt*24/T2); // tt em dias
+      const dwh=2*Math.PI*(1/T2-1/T1);
+      const env=tt=>Math.sqrt(A1*A1+A2*A2+2*A1*A2*Math.cos(dwh*tt*24));
+      const Tbat=(1/Math.abs(1/T2-1/T1))/24;   // ≈ 14,8 dias
+      const hNow=h(td);
+
+      p.background('#faf8f4');
+      // ── esquerda: marégrafo (tubo com nível) ──
+      const tx=52, ty0=50, ty1=340, tw=34;
+      const Y=hh=>((ty0+ty1)/2)-hh*( (ty1-ty0)/2 )/3.2;   // ±3,2 m de escala
+      p.stroke('#8a8073'); p.strokeWeight(2); p.noFill();
+      p.line(tx-tw/2,ty0,tx-tw/2,ty1); p.line(tx+tw/2,ty0,tx+tw/2,ty1);
+      p.line(tx-tw/2,ty1,tx+tw/2,ty1);
+      p.noStroke(); p.fill(140,175,205,150);
+      p.rect(tx-tw/2+2,Y(hNow),tw-4,ty1-Y(hNow));
+      p.stroke('#c9c2b6'); p.strokeWeight(1);
+      p.drawingContext.setLineDash([3,4]); p.line(tx-tw/2-8,Y(0),tx+tw/2+8,Y(0));
+      p.drawingContext.setLineDash([]);
+      p.noStroke(); p.fill('#7a7367'); p.textSize(10.5); p.textAlign(p.CENTER,p.TOP);
+      p.text('marégrafo',tx,ty1+8);
+      p.textAlign(p.LEFT,p.CENTER); p.text('0',tx+tw/2+12,Y(0));
+
+      // ── direita: 30 dias de h(t) + envoltória + cursor ──
+      const gx0=130, gx1=W-14, gyc=195, half=145, DIAS=30, ppd=(gx1-gx0)/DIAS;
+      const sc=half*0.9/3.2;
+      p.stroke('#e7e0d4');
+      for(let d=0;d<=DIAS;d+=5) p.line(gx0+d*ppd,gyc-half,gx0+d*ppd,gyc+half);
+      p.stroke('#bdb4a4'); p.line(gx0,gyc,gx1,gyc);
+      p.noStroke(); p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      for(let d=0;d<=DIAS;d+=5) p.text(d+' d',gx0+d*ppd,gyc+half+4);
+      const curva=(fn,col,wt,dash)=>{ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(wt);
+        if(dash) p.drawingContext.setLineDash([6,5]);
+        p.beginShape();
+        for(let gx=gx0;gx<=gx1;gx++){ const tt=(gx-gx0)/ppd; p.vertex(gx,gyc-fn(tt)*sc); }
+        p.endShape(); p.drawingContext.setLineDash([]); p.pop(); };
+      curva(h,'#1f47c8',0.8,false);
+      curva(env,'#c85c2e',1.6,true); curva(tt=>-env(tt),'#c85c2e',1.6,true);
+      // rótulos sizígia/quadratura (1ª ocorrência)
+      p.noStroke(); p.fill('#c85c2e'); p.textSize(10.5); p.textAlign(p.CENTER,p.BOTTOM);
+      p.text('sizígia',gx0+0.5*ppd+18,gyc-(A1+A2)*sc-4);
+      p.text('quadratura',gx0+(Tbat/2)*ppd,gyc-(A1-A2)*sc-8);
+      // cursor
+      const cxg=gx0+td*ppd;
+      p.stroke('#66308c'); p.strokeWeight(1.5); p.line(cxg,gyc-half,cxg,gyc+half);
+      p.noStroke(); p.fill('#66308c'); p.circle(cxg,gyc-hNow*sc,8);
+      p.textSize(11); p.textAlign(p.LEFT,p.TOP); p.fill('#66308c');
+      p.text('dia '+td.toFixed(1),Math.min(cxg+6,W-70),22);
+
+      el('mrEq').innerHTML='h(t) = A<sub>M2</sub>cos(2πt/12,42h) + A<sub>S2</sub>cos(2πt/12,00h) &nbsp;|&nbsp; '+
+        'sizígia: '+(A1+A2).toFixed(2)+' m &nbsp;|&nbsp; quadratura: '+(A1-A2).toFixed(2)+' m'+
+        ' &nbsp;|&nbsp; <b>T<sub>bat</sub> ≈ '+Tbat.toFixed(1)+' dias</b>';
+    };
+  });
+  el('mrPlay').onclick=()=>{ playing=!playing; el('mrPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+  el('mrZero').onclick=()=>{ td=0; playing=false; el('mrPlay').textContent='▶ Reproduzir'; };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Verifique na tela que entre uma sizígia e a quadratura seguinte passam ≈ 7,4 dias.
+   Por que esse valor é *metade* do período de batimento?
+2. As frequências de M2 e S2 diferem em só 3,5% — e ainda assim o efeito domina o
+   planejamento de portos. O que isso diz sobre batimentos entre frequências próximas?
+3. Com $A_{S2} \to 0$, some a alternância sizígia/quadratura. Que situação física
+   corresponderia a isso?
+:::
+
+### Membrana com dois tons
+
+A pressão acústica num ponto é a soma das pressões que cada fonte produz ali — o ar em
+regime linear não distingue as fontes. Uma membrana leve (o tímpano, o diafragma de um
+hidrofone) é empurrada pela pressão *total*: o deslocamento dela é, fisicamente, a soma
+das duas contribuições. É este o elo com o batimento sonoro do tópico 2.7 — o que o
+ouvido percebe pulsando é a própria membrana somando os dois tons.
+
+```{python}
+#| fig-cap: "Deslocamento do centro de uma membrana sob dois tons de f₁ = 220 Hz e f₂ = 224 Hz e mesma amplitude: a soma pulsa com f_bat = 4 Hz (envoltória tracejada). Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+f1, f2 = 220.0, 224.0
+df = f2 - f1
+t = np.linspace(0, 0.6, 8000)
+s = np.cos(2*np.pi*f1*t) + np.cos(2*np.pi*f2*t)
+
+fig, ax = plt.subplots(figsize=(9, 3.6))
+ax.plot(t, s, color='#66308C', lw=0.7)
+ax.plot(t,  2*np.cos(np.pi*df*t), '--', color='#C85C2E', lw=1.6)
+ax.plot(t, -2*np.cos(np.pi*df*t), '--', color='#C85C2E', lw=1.6)
+ax.set_xlabel('t (s)'); ax.set_ylabel('deslocamento do centro (u.a.)')
+ax.set_title(f'f_bat = |f₂ − f₁| = {df:.0f} Hz', fontsize=10)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo — a membrana é o "ponto
+     roxo" físico do batimento sonoro). p5 de libs/ (offline, Q6). Áudio via WebAudio
+     nativo (sem lib), padrão do tópico 2-07: f1 = 220 Hz fixa, f2 = 210–230 Hz.
+     A animação visual roda em câmera lenta 100× (frequências visuais = reais/100);
+     o áudio e os readouts usam os valores reais. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .mb-wrap{max-width:1000px;margin:1rem auto;}
+  .mb-wrap .mb-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .mb-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .mb-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .mb-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .mb-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .mb-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .mb-wrap #mbSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .mb-wrap #mbEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .mb-wrap #mbEq b{color:#66308c;}
+</style>
+<div class="mb-wrap">
+  <div class="mb-row">
+    <button id="mbPlay">⏸ Pausar</button>
+    <button id="mbZero">↺ t = 0</button>
+    <button id="mbSom">🔊 Ouvir</button>
+    <div class="sld"><label>f<sub>2</sub> = <span class="val" id="mbF2v">224</span> Hz &nbsp;(f<sub>1</sub> = 220 Hz fixa)</label>
+      <input type="range" id="mbF2" min="210" max="230" value="224" step="0.5"></div>
+    <div class="sld"><label>Velocidade anim. = <span class="val" id="mbSv">1</span>× &nbsp;(câmera lenta 100×)</label>
+      <input type="range" id="mbS" min="0.25" max="3" value="1" step="0.25"></div>
+  </div>
+  <div id="mbSketch"></div>
+  <div id="mbEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  const F1=220;
+  let t=0, playing=true, tocando=false, ac=null, o1=null, o2=null, ga=null;
+  const cw=()=>{ const w=(el('mbSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),360).parent('mbSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),360); };
+
+    p.draw=()=>{
+      const W=p.width;
+      const f2=+el('mbF2').value, spd=+el('mbS').value;
+      el('mbF2v').textContent=f2.toFixed(1); el('mbSv').textContent=spd;
+      if(playing) t+=(p.deltaTime/1000)*spd;
+      if(o2) o2.frequency.value=f2;
+      const f1v=F1/100, f2v=f2/100, dfv=f2v-f1v;      // câmera lenta 100×
+      const s=Math.cos(2*Math.PI*f1v*t)+Math.cos(2*Math.PI*f2v*t);
+
+      p.background('#faf8f4');
+      // ── fontes (alto-falantes) + frentes ──
+      const fx=64, fy=[120,240];
+      for(let i=0;i<2;i++){
+        p.noStroke(); p.fill('#8a8073'); p.rect(fx-26,fy[i]-18,20,36,3);
+        p.fill(i?'#1f47c8':'#c81f1f'); p.triangle(fx-6,fy[i]-16,fx-6,fy[i]+16,fx+12,fy[i]);
+        p.fill('#7a7367'); p.textSize(11); p.textAlign(p.RIGHT,p.CENTER);
+        p.text(i?('f₂ = '+f2.toFixed(0)+' Hz'):'f₁ = 220 Hz',fx-32,fy[i]);
+        p.noFill();
+        for(let r=0;r<3;r++){ const fase=((t*0.6)+r/3)%1, R=14+fase*70;
+          p.stroke(i?31:200,i?71:31,i?200:31,150*(1-fase)); p.strokeWeight(1.5);
+          p.arc(fx+12,fy[i],2*R,2*R,-0.7,0.7); }
+      }
+      // ── membrana (presa em cima e embaixo, centro empurrado por p₁+p₂) ──
+      const xm=300, ytop=64, ybot=296, ymid=(ytop+ybot)/2, defl=s*26;
+      p.stroke('#8a8073'); p.strokeWeight(3);
+      p.line(xm-10,ytop,xm+10,ytop); p.line(xm-10,ybot,xm+10,ybot);
+      p.push(); p.noFill(); p.stroke('#66308c'); p.strokeWeight(2.6);
+      p.beginShape();
+      p.curveVertex(xm,ytop); p.curveVertex(xm,ytop);
+      p.curveVertex(xm+defl,ymid);
+      p.curveVertex(xm,ybot); p.curveVertex(xm,ybot);
+      p.endShape(); p.pop();
+      p.stroke('#c9c2b6'); p.strokeWeight(1);
+      p.drawingContext.setLineDash([3,4]); p.line(xm,ytop,xm,ybot);
+      p.drawingContext.setLineDash([]);
+      p.noStroke(); p.fill('#66308c'); p.circle(xm+defl,ymid,11);
+      p.fill('#7a7367'); p.textSize(10.5); p.textAlign(p.CENTER,p.TOP);
+      p.text('membrana',xm,ybot+8);
+
+      // ── gráfico-tira: deslocamento do centro (varredura da origem) ──
+      const gx0=380, gx1=W-14, gyc=180, half=120, win=30, pps=(gx1-gx0)/win;
+      const sc=half*0.9/2;
+      p.stroke('#bdb4a4'); p.line(gx0,gyc,gx1,gyc);
+      p.stroke('#d8cfc0'); p.line(gx0,gyc-half,gx0,gyc+half);
+      const base=t-(t%win), head=t%win;
+      const fn=tt=>Math.cos(2*Math.PI*f1v*tt)+Math.cos(2*Math.PI*f2v*tt);
+      const env=tt=>2*Math.cos(Math.PI*dfv*tt);
+      const scope=(g,col,wt,dash)=>{ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(wt);
+        if(dash) p.drawingContext.setLineDash([6,5]);
+        p.beginShape();
+        for(let gx=gx0;gx<=gx0+head*pps;gx++){ const tau=(gx-gx0)/pps; p.vertex(gx,gyc-g(base+tau)*sc); }
+        p.endShape();
+        if(base-win>=-1e-9){ p.beginShape();
+          for(let gx=gx0+head*pps;gx<=gx1;gx++){ const tau=(gx-gx0)/pps; p.vertex(gx,gyc-g(base-win+tau)*sc); }
+          p.endShape(); }
+        p.drawingContext.setLineDash([]); p.pop(); };
+      if(Math.abs(dfv)>1e-6){ scope(env,'#c85c2e',1.4,true); scope(tt=>-env(tt),'#c85c2e',1.4,true); }
+      scope(fn,'#66308c',2,false);
+      const gh=gx0+head*pps;
+      p.stroke('#c9c2b6'); p.strokeWeight(1); p.line(gh,gyc-half,gh,gyc+half);
+      p.noStroke(); p.fill('#66308c'); p.circle(gh,gyc-s*sc,8);
+
+      const fbat=Math.abs(f2-F1);
+      el('mbEq').innerHTML='deslocamento ∝ p₁ + p₂ (pressão total) &nbsp;|&nbsp; '+
+        '<b>f<sub>bat</sub> = |f₂ − f₁| = '+fbat.toFixed(1)+' Hz</b> &nbsp;|&nbsp; '+
+        'T<sub>bat</sub> = '+(fbat>1e-6?(1/fbat).toFixed(2)+' s':'—');
+    };
+  });
+  el('mbPlay').onclick=()=>{ playing=!playing; el('mbPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+  el('mbZero').onclick=()=>{ t=0; playing=false; el('mbPlay').textContent='▶ Reproduzir'; };
+  el('mbSom').onclick=()=>{
+    if(!tocando){
+      try{
+        ac=ac||new (window.AudioContext||window.webkitAudioContext)();
+        ga=ac.createGain(); ga.gain.value=0.12; ga.connect(ac.destination);
+        o1=ac.createOscillator(); o1.frequency.value=220;
+        o2=ac.createOscillator(); o2.frequency.value=+el('mbF2').value;
+        o1.connect(ga); o2.connect(ga); o1.start(); o2.start();
+        tocando=true; el('mbSom').textContent='🔇 Silenciar';
+      }catch(e){ el('mbSom').textContent='áudio indisponível'; }
+    }else{
+      o1.stop(); o2.stop(); o1=o2=null;
+      tocando=false; el('mbSom').textContent='🔊 Ouvir';
+    }
+  };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Ligue o áudio com $f_2 = 224$ Hz e conte as pulsações por segundo. Compare com
+   $|f_2 - f_1| = 4$ Hz e com o vaivém da membrana na tela.
+2. O ar transmite as duas ondas sem que uma "atrapalhe" a outra — mas a membrana pulsa.
+   Onde, então, acontece a superposição: no meio ou no detector?
+3. Um hidrofone de sonar recebe eco e reverberação em frequências próximas. O que o
+   diafragma dele registra, segundo este modelo?
+:::
+
+### Ponto no convés entre duas máquinas
+
+Este é o caso literal do objetivo naval deste tópico: um ponto da chapa do convés
+recebe, ao mesmo tempo, a vibração transmitida pelo motor principal ($f_1$) e pelo
+gerador ($f_2$). Em regime linear, a resposta da estrutura às duas excitações é a soma
+das respostas a cada uma — o ponto marcado vibra com $x_1 + x_2$ e "bate" com
+$f_{\text{bat}} = |f_1 - f_2|$. É exatamente o cenário do exemplo resolvido dos dois
+geradores de 50 Hz, na caixa SP acima.
+
+```{python}
+#| fig-cap: "Vibração de um ponto do convés excitado pelo motor (f₁ = 20,0 Hz) e pelo gerador (f₂ = 19,5 Hz), amplitudes iguais: batimento com f_bat = 0,5 Hz — um máximo a cada 2 s, os números do texto. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+f1, f2 = 20.0, 19.5
+df = f2 - f1
+t = np.linspace(0, 4, 8000)
+x = np.cos(2*np.pi*f1*t) + np.cos(2*np.pi*f2*t)
+
+fig, ax = plt.subplots(figsize=(9, 3.6))
+ax.plot(t, x, color='#66308C', lw=0.7)
+ax.plot(t,  2*np.cos(np.pi*df*t), '--', color='#C85C2E', lw=1.6)
+ax.plot(t, -2*np.cos(np.pi*df*t), '--', color='#C85C2E', lw=1.6)
+ax.set_xlabel('t (s)'); ax.set_ylabel('deslocamento do ponto (u.a.)')
+ax.set_title('f_bat = |f₁ − f₂| = 0,5 Hz → máximo a cada 2 s', fontsize=10)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo — resposta linear da
+     chapa a duas excitações; o RA naval é literalmente este cenário). p5 de libs/
+     (offline, Q6). Rótulos com frequências reais de máquinas (10–30 Hz); a animação
+     roda em câmera lenta 10× (frequências visuais = reais/10). Mesmos parâmetros da
+     versão matplotlib: f1 = 20,0 Hz, f2 = 19,5 Hz. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .cv-wrap{max-width:1000px;margin:1rem auto;}
+  .cv-wrap .cv-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .cv-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .cv-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .cv-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .cv-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .cv-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .cv-wrap #cvSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .cv-wrap #cvEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .cv-wrap #cvEq b{color:#66308c;}
+</style>
+<div class="cv-wrap">
+  <div class="cv-row">
+    <button id="cvPlay">⏸ Pausar</button>
+    <button id="cvZero">↺ t = 0</button>
+    <div class="sld"><label>Motor f<sub>1</sub> = <span class="val" id="cvF1v">20.0</span> Hz</label>
+      <input type="range" id="cvF1" min="10" max="30" value="20" step="0.5"></div>
+    <div class="sld"><label>Gerador f<sub>2</sub> = <span class="val" id="cvF2v">19.5</span> Hz</label>
+      <input type="range" id="cvF2" min="10" max="30" value="19.5" step="0.5"></div>
+    <div class="sld"><label>Velocidade anim. = <span class="val" id="cvSv">1</span>× &nbsp;(câmera lenta 10×)</label>
+      <input type="range" id="cvS" min="0.25" max="3" value="1" step="0.25"></div>
+  </div>
+  <div id="cvSketch"></div>
+  <div id="cvEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let t=0, playing=true;
+  const cw=()=>{ const w=(el('cvSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),430).parent('cvSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),430); };
+
+    p.draw=()=>{
+      const W=p.width;
+      const f1=+el('cvF1').value, f2=+el('cvF2').value, spd=+el('cvS').value;
+      el('cvF1v').textContent=f1.toFixed(1); el('cvF2v').textContent=f2.toFixed(1);
+      el('cvSv').textContent=spd;
+      if(playing) t+=(p.deltaTime/1000)*spd;
+      const f1v=f1/10, f2v=f2/10, dfv=f2v-f1v;        // câmera lenta 10×
+      const c1=Math.cos(2*Math.PI*f1v*t), c2=Math.cos(2*Math.PI*f2v*t);
+      const AMP=15;
+
+      p.background('#faf8f4');
+      p.noStroke(); p.fill('#7a7367'); p.textSize(12); p.textAlign(p.LEFT,p.TOP);
+      p.text('CONVÉS — resposta = resposta ao motor + resposta ao gerador',40,8);
+      p.text('DESLOCAMENTO DO PONTO MARCADO',40,240);
+
+      // ── chapa do convés (curva suave pelas âncoras) + máquinas + ponto ──
+      const dx0=40, dx1=W-40, ydeck=170;
+      const mx1=dx0+(dx1-dx0)*0.25, mx2=dx0+(dx1-dx0)*0.75, xp=(mx1+mx2)/2;
+      p.push(); p.noFill(); p.stroke('#8a8073'); p.strokeWeight(4);
+      p.beginShape();
+      p.curveVertex(dx0,ydeck); p.curveVertex(dx0,ydeck);
+      p.curveVertex(mx1,ydeck+c1*AMP);
+      p.curveVertex(xp,ydeck+(c1+c2)*AMP);
+      p.curveVertex(mx2,ydeck+c2*AMP);
+      p.curveVertex(dx1,ydeck); p.curveVertex(dx1,ydeck);
+      p.endShape(); p.pop();
+      // apoios nas extremidades
+      p.stroke('#bdb4a4'); p.strokeWeight(2);
+      p.line(dx0,ydeck,dx0,ydeck+34); p.line(dx1,ydeck,dx1,ydeck+34);
+      // máquinas
+      const maquina=(mx,c,col,rot)=>{ const y=ydeck+c*AMP;
+        p.noStroke(); p.fill(col); p.rect(mx-34,y-52,68,48,5);
+        p.fill('#faf8f4'); p.textSize(10.5); p.textAlign(p.CENTER,p.CENTER);
+        p.text(rot,mx,y-28);
+        p.stroke('#55524c'); p.strokeWeight(2);
+        p.line(mx-22,y-4,mx-22,y); p.line(mx+22,y-4,mx+22,y); p.noStroke(); };
+      maquina(mx1,c1,'#c81f1f','MOTOR f₁');
+      maquina(mx2,c2,'#1f47c8','GERADOR f₂');
+      // ponto marcado (soma)
+      p.stroke('#c9c2b6'); p.strokeWeight(1);
+      p.drawingContext.setLineDash([3,4]); p.line(xp,ydeck-56,xp,ydeck+56);
+      p.drawingContext.setLineDash([]);
+      p.noStroke(); p.fill('#66308c'); p.circle(xp,ydeck+(c1+c2)*AMP,14);
+      p.fill('#66308c'); p.textSize(10.5); p.textAlign(p.CENTER,p.TOP);
+      p.text('x₁+x₂',xp,ydeck+58);
+
+      // ── gráfico-tira do ponto (varredura da origem) ──
+      const gx0=52, gx1=W-14, gyc=340, half=72, win=40, pps=(gx1-gx0)/win;
+      const sc=half*0.9/2;
+      p.stroke('#bdb4a4'); p.line(gx0,gyc,gx1,gyc);
+      p.stroke('#d8cfc0'); p.line(gx0,gyc-half,gx0,gyc+half);
+      p.noStroke(); p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      for(let k=0;k<=win;k+=10) p.text(k+'s',gx0+k*pps,gyc+half+4);
+      const base=t-(t%win), head=t%win;
+      const fn=tt=>Math.cos(2*Math.PI*f1v*tt)+Math.cos(2*Math.PI*f2v*tt);
+      const env=tt=>2*Math.cos(Math.PI*dfv*tt);
+      const scope=(g,col,wt,dash)=>{ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(wt);
+        if(dash) p.drawingContext.setLineDash([6,5]);
+        p.beginShape();
+        for(let gx=gx0;gx<=gx0+head*pps;gx++){ const tau=(gx-gx0)/pps; p.vertex(gx,gyc-g(base+tau)*sc); }
+        p.endShape();
+        if(base-win>=-1e-9){ p.beginShape();
+          for(let gx=gx0+head*pps;gx<=gx1;gx++){ const tau=(gx-gx0)/pps; p.vertex(gx,gyc-g(base-win+tau)*sc); }
+          p.endShape(); }
+        p.drawingContext.setLineDash([]); p.pop(); };
+      if(Math.abs(dfv)>1e-6){ scope(env,'#c85c2e',1.4,true); scope(tt=>-env(tt),'#c85c2e',1.4,true); }
+      scope(fn,'#66308c',2,false);
+      const gh=gx0+head*pps;
+      p.stroke('#c9c2b6'); p.strokeWeight(1); p.line(gh,gyc-half,gh,gyc+half);
+      p.noStroke(); p.fill('#66308c'); p.circle(gh,gyc-(c1+c2)*sc,8);
+
+      const fbat=Math.abs(f1-f2);
+      el('cvEq').innerHTML='resposta do ponto = x₁ + x₂ (regime linear) &nbsp;|&nbsp; '+
+        '<b>f<sub>bat</sub> = |f₁ − f₂| = '+fbat.toFixed(1)+' Hz</b> &nbsp;|&nbsp; '+
+        'T<sub>bat</sub> = '+(fbat>1e-6?(1/fbat).toFixed(1)+' s':'—')+' (valores reais)';
+    };
+  });
+  el('cvPlay').onclick=()=>{ playing=!playing; el('cvPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+  el('cvZero').onclick=()=>{ t=0; playing=false; el('cvPlay').textContent='▶ Reproduzir'; };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Com $f_1 = 20{,}0$ e $f_2 = 19{,}5$ Hz, o painel indica um máximo de vibração a cada
+   2 s — os números do texto. O que um técnico com a mão na chapa sentiria?
+2. A validade do modelo exige resposta *linear* da estrutura. Cite uma situação de
+   bordo em que essa hipótese falharia.
+3. Sintonize $f_2 = f_1$: o batimento some, mas a vibração não. Do ponto de vista de
+   manutenção, qual das duas situações é mais fácil de diagnosticar de ouvido?
+:::
+
+### Harmonógrafo — a máquina deste capítulo
+
+Instrumento do século XIX: dois pêndulos movem uma pena sobre o papel, e a posição da
+pena é a combinação *física* dos dois movimentos. Pêndulos na mesma direção somam-se
+como na primeira simulação deste tópico; pêndulos perpendiculares desenham figuras de
+Lissajous. Com o amortecimento real dos pêndulos,
+$x(t) = A\,e^{-\gamma t}\cos(\omega_x t + \varphi)$ e
+$y(t) = A\,e^{-\gamma t}\cos(\omega_y t)$, a figura espirala para dentro — são os
+desenhos clássicos do aparelho. A pena é o "ponto roxo" que se pode segurar.
+
+```{python}
+#| fig-cap: "Harmonogramas: figuras de Lissajous com amortecimento (γ = 0,02 s⁻¹, t até 150 s) para quatro combinações de razão de frequências e fase. O decaimento das amplitudes espirala a curva para dentro. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+g = 0.02
+casos = [(3, 2, np.pi/2, '3:2, φ = π/2'), (3, 4, 0.0, '3:4, φ = 0'),
+         (5, 4, np.pi/2, '5:4, φ = π/2'), (2, 3, np.pi/4, '2:3, φ = π/4')]
+t = np.linspace(0, 150, 30000)
+
+fig, axs = plt.subplots(2, 2, figsize=(8, 8))
+for ax, (wx, wy, phi, rot) in zip(axs.flat, casos):
+    e = np.exp(-g*t)
+    ax.plot(e*np.cos(wx*t + phi), e*np.cos(wy*t), color='#1F47C8', lw=0.5)
+    ax.set_title(rot, fontsize=10)
+    ax.set_aspect('equal'); ax.set_xticks([]); ax.set_yticks([])
+    for s in ax.spines.values(): s.set_color('0.85')
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo — a pena desenha em tempo
+     real e o traço fica no papel, como no instrumento). p5 de libs/ (offline, Q6).
+     Traço persistente em buffer; mesmos parâmetros da versão matplotlib: ωx, ωy de
+     0,5 a 4 rad/s, φ de 0 a 2π, γ de 0 a 0,1 s⁻¹. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .hg-wrap{max-width:760px;margin:1rem auto;}
+  .hg-wrap .hg-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .hg-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:140px;flex:1 1 140px;}
+  .hg-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .hg-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .hg-wrap input[type=range]{width:100%;max-width:210px;accent-color:#c85c2e;}
+  .hg-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .hg-wrap #hgSketch canvas{display:block;border-radius:8px;max-width:100%;margin:0 auto;}
+  .hg-wrap #hgEq{font-size:14px;margin:8px 2px 0;line-height:1.5;text-align:center;}
+  .hg-wrap #hgEq b{color:#1f47c8;}
+</style>
+<div class="hg-wrap">
+  <div class="hg-row">
+    <button id="hgPlay">⏸ Pausar</button>
+    <button id="hgClr">🧹 Limpar papel</button>
+    <div class="sld"><label>ω<sub>x</sub> = <span class="val" id="hgWxv">3.0</span> rad/s</label>
+      <input type="range" id="hgWx" min="0.5" max="4" value="3.0" step="0.25"></div>
+    <div class="sld"><label>ω<sub>y</sub> = <span class="val" id="hgWyv">2.0</span> rad/s</label>
+      <input type="range" id="hgWy" min="0.5" max="4" value="2.0" step="0.25"></div>
+    <div class="sld"><label>Fase φ = <span class="val" id="hgFv">π/2</span></label>
+      <input type="range" id="hgF" min="0" max="360" value="90" step="15"></div>
+    <div class="sld"><label>Amortecimento γ = <span class="val" id="hgGv">0.02</span> s⁻¹</label>
+      <input type="range" id="hgG" min="0" max="0.1" value="0.02" step="0.005"></div>
+    <div class="sld"><label>Velocidade anim. = <span class="val" id="hgSv">2</span>×</label>
+      <input type="range" id="hgS" min="0.25" max="8" value="2" step="0.25"></div>
+  </div>
+  <div id="hgSketch"></div>
+  <div id="hgEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let t=0, playing=true, limpar=true;
+  const faseTxt=deg=>{ if(deg==0) return "0";
+    const f=deg/180,m={0.25:"π/4",0.5:"π/2",0.75:"3π/4",1:"π",1.25:"5π/4",1.5:"3π/2",1.75:"7π/4",2:"2π"};
+    return m[f]?m[f]:f.toFixed(2)+"π"; };
+  const cw=()=>{ const w=(el('hgSketch').clientWidth)||560; return Math.max(300,Math.min(560,w)); };
+
+  new p5((p)=>{
+    let pg=null;
+    const pos=(tt,wx,wy,phi,g,cx,cy,R)=>{ const e=Math.exp(-g*tt);
+      return [cx+R*e*Math.cos(wx*tt+phi), cy-R*e*Math.cos(wy*tt)]; };
+
+    p.setup=()=>{ const W=cw(); p.createCanvas(W,W).parent('hgSketch');
+      pg=p.createGraphics(W,W); limpar=true; };
+    p.windowResized=()=>{ const W=cw(); p.resizeCanvas(W,W);
+      pg=p.createGraphics(W,W); t=0; limpar=true; };
+
+    p.draw=()=>{
+      const W=p.width, cx=W/2, cy=W/2, R=0.42*W;
+      const wx=+el('hgWx').value, wy=+el('hgWy').value,
+            phi=(+el('hgF').value)*Math.PI/180, g=+el('hgG').value,
+            spd=+el('hgS').value;
+      el('hgWxv').textContent=wx.toFixed(2); el('hgWyv').textContent=wy.toFixed(2);
+      el('hgFv').textContent=faseTxt(+el('hgF').value);
+      el('hgGv').textContent=g.toFixed(3); el('hgSv').textContent=spd;
+
+      if(limpar){ pg.clear(); pg.background(255,253,248);
+        pg.noFill(); pg.stroke(216,207,192); pg.strokeWeight(1);
+        pg.rect(3,3,W-6,W-6,8); limpar=false; }
+
+      // a pena tinta o papel (buffer persistente), em subpassos
+      if(playing){
+        const dt=(p.deltaTime/1000)*spd, N=Math.max(1,Math.ceil(dt/0.02));
+        pg.noFill(); pg.stroke(31,71,200,190); pg.strokeWeight(1.1);
+        let [px0,py0]=pos(t,wx,wy,phi,g,cx,cy,R);
+        for(let i=1;i<=N;i++){ const tt=t+dt*i/N;
+          const [px1,py1]=pos(tt,wx,wy,phi,g,cx,cy,R);
+          pg.line(px0,py0,px1,py1); px0=px1; py0=py1; }
+        t+=dt;
+      }
+      p.image(pg,0,0);
+      // pena
+      const [px,py]=pos(t,wx,wy,phi,g,cx,cy,R);
+      p.noStroke(); p.fill('#66308c'); p.circle(px,py,10);
+      p.fill('#7a7367'); p.textSize(10.5); p.textAlign(p.RIGHT,p.BOTTOM);
+      p.text('t = '+t.toFixed(0)+' s',W-12,W-10);
+
+      el('hgEq').innerHTML='x(t) = A e<sup>−γt</sup> cos('+wx.toFixed(2)+'t'+
+        ((+el('hgF').value)?' + '+faseTxt(+el('hgF').value):'')+
+        ')  |  y(t) = A e<sup>−γt</sup> cos('+wy.toFixed(2)+'t)'+
+        '  →  <b>γ = '+g.toFixed(3)+' s⁻¹</b>'+(g<1e-9?' (sem decaimento: Lissajous pura)':'');
+    };
+  });
+  el('hgPlay').onclick=()=>{ playing=!playing; el('hgPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+  el('hgClr').onclick=()=>{ t=0; limpar=true; };
+  for(const id of ['hgWx','hgWy','hgF','hgG'])
+    el(id).addEventListener('input',()=>{ t=0; limpar=true; });
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Com $\gamma = 0$, a pena repassa a mesma figura de Lissajous para sempre. Ligue
+   $\gamma = 0{,}02$: por que a espiral resultante nunca se cruza exatamente sobre o
+   traço anterior?
+2. O harmonógrafo com pêndulos na mesma direção traçaria qual das simulações
+   anteriores deste tópico?
+3. A razão $\omega_x{:}\omega_y$ continua legível na figura mesmo com decaimento
+   (conte as tangências). Por que o amortecimento não altera as frequências no modelo
+   sub-amortecido com $\gamma \ll \omega$ (tópico 1.4)?
+:::
+
 **Conexão com o próximo tópico:** superposição sem amortecimento é uma idealização.
 Qualquer oscilador real perde energia ao vizinho — é o tópico 1.4.
