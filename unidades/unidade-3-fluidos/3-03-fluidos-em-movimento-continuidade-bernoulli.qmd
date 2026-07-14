@@ -116,7 +116,128 @@ faixa recomendada (evita cavitação na entrada).
 - **Nível de referência errado:** altura $h$ em Bernoulli deve sempre referir-se ao mesmo nível. Errar a referência erra toda a conta.
 :::
 
-<!-- SIMULAÇÃO SUGERIDA: Gráfico de Bernoulli (Plotly) mostrando P, v², gh ao longo de um tubo convergente/divergente; ou animação de partículas em escoamento laminar/turbulento (p5.js, com toggle de viscosidade). -->
+## Veja continuidade e Bernoulli juntos
+
+No tubo que estreita, a continuidade $A v = Q$ obriga a água a **acelerar** na garganta;
+por Bernoulli, onde a velocidade sobe a **pressão cai**. As partículas se adensam e
+correm mais rápido no estrangulamento, e a barra de pressão despenca ali — é o princípio
+do Venturi e da sucção de edutores.
+
+```{python}
+#| fig-cap: "Velocidade e pressão ao longo de um tubo Venturi (Q = 0,10 m³/s, água). Onde a área cai à metade, a velocidade dobra e a pressão dinâmica ½ρv² quadruplica, derrubando a pressão estática. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+Q, rho = 0.10, 1000.0
+x = np.linspace(0, 1, 400)
+# raio: 1.0 nas pontas, 0.5 na garganta (área cai a 1/4 → v ×4)... usar A com garganta 0.6
+Araw = 1 - 0.6*np.exp(-((x-0.5)/0.12)**2)
+v = Q/(0.05*Araw)          # área de referência 0.05 m² nas pontas
+P = 1e5 - 0.5*rho*v**2     # Bernoulli (h const), P0 = 1 bar
+
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(9, 4.4), sharex=True)
+ax1.plot(x, v, color='#1F47C8', lw=2); ax1.set_ylabel('v (m/s)')
+ax2.plot(x, P/1e3, color='#C81F1F', lw=2); ax2.set_ylabel('P (kPa)'); ax2.set_xlabel('posição no tubo')
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo — partículas acelerando na
+     garganta). p5 de libs/ (offline, Q6). Mesmos parâmetros da matplotlib: Q ajustável,
+     garganta com área reduzida; Bernoulli a h constante, P0 = 1 bar. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .ve-wrap{max-width:1000px;margin:1rem auto;}
+  .ve-wrap .ve-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .ve-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .ve-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .ve-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .ve-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .ve-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .ve-wrap #veSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .ve-wrap #veEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .ve-wrap #veEq b{color:#1f47c8;}
+</style>
+<div class="ve-wrap">
+  <div class="ve-row">
+    <button id="vePlay">⏸ Pausar</button>
+    <div class="sld"><label>Vazão Q = <span class="val" id="veQv">0.10</span> m³/s</label>
+      <input type="range" id="veQ" min="0.04" max="0.16" value="0.10" step="0.01"></div>
+    <div class="sld"><label>Velocidade anim. = <span class="val" id="veSv">1</span>×</label>
+      <input type="range" id="veS" min="0.25" max="3" value="1" step="0.25"></div>
+  </div>
+  <div id="veSketch"></div>
+  <div id="veEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let parts=[], playing=true;
+  const cw=()=>{ const w=(el('veSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  const rho=1000, A0=0.05;
+  const Aref=u=>1-0.6*Math.exp(-Math.pow((u-0.5)/0.12,2));   // fator de área (0..1)
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),400).parent('veSketch');
+      for(let i=0;i<70;i++) parts.push({u:Math.random(),o:(Math.random()-0.5)}); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),400); };
+    p.draw=()=>{
+      const W=p.width, x0=30, x1=W-30, midY=120, Rmax=52;
+      const Q=+el('veQ').value, spd=+el('veS').value;
+      el('veQv').textContent=Q.toFixed(2); el('veSv').textContent=spd;
+      const vloc=u=>Q/(A0*Aref(u));
+      const shape=u=>Rmax*Aref(u);
+      p.background('#faf8f4');
+      // paredes do tubo
+      p.push(); p.noFill(); p.stroke('#8a8073'); p.strokeWeight(3);
+      p.beginShape(); for(let g=x0;g<=x1;g+=3){ const u=(g-x0)/(x1-x0); p.vertex(g,midY-shape(u)); } p.endShape();
+      p.beginShape(); for(let g=x0;g<=x1;g+=3){ const u=(g-x0)/(x1-x0); p.vertex(g,midY+shape(u)); } p.endShape();
+      p.pop();
+      p.noStroke(); p.fill(150,185,215,70);
+      p.beginShape(); for(let g=x0;g<=x1;g+=3){ const u=(g-x0)/(x1-x0); p.vertex(g,midY-shape(u)); }
+      for(let g=x1;g>=x0;g-=3){ const u=(g-x0)/(x1-x0); p.vertex(g,midY+shape(u)); } p.endShape(p.CLOSE);
+      // partículas (velocidade local ∝ vloc)
+      const vmax=vloc(0.5);
+      p.fill('#1f47c8');
+      for(const pt of parts){
+        if(playing) pt.u+=(p.deltaTime/1000)*spd*vloc(pt.u)/vmax*0.18;
+        if(pt.u>1){ pt.u-=1; pt.o=(Math.random()-0.5); }
+        const g=x0+pt.u*(x1-x0), yy=midY+pt.o*2*shape(pt.u)*0.8;
+        p.circle(g,yy,4);
+      }
+      // ── gráfico de pressão P(x) ──
+      const gy0=230, gy1=360, P0=1e5;
+      const Pof=u=>P0-0.5*rho*vloc(u)*vloc(u);
+      const Pmin=P0-0.5*rho*vmax*vmax, Y=P=>gy0+(P0-P)/(P0-Pmin+1)*(gy1-gy0);
+      p.stroke('#bdb4a4'); p.line(x0,gy0,x1,gy0);
+      p.noStroke(); p.fill('#8a8073'); p.textSize(10); p.textAlign(p.LEFT,p.CENTER);
+      p.text('P (kPa)',x0,gy0-8);
+      p.push(); p.noFill(); p.stroke('#c81f1f'); p.strokeWeight(2.2); p.beginShape();
+      for(let g=x0;g<=x1;g++){ const u=(g-x0)/(x1-x0); p.vertex(g,Y(Pof(u))); } p.endShape(); p.pop();
+      p.noStroke(); p.fill('#c81f1f'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      p.text((Pof(0.5)/1e3).toFixed(0),x0+(x1-x0)*0.5,Y(Pmin)+4);
+      p.fill('#8a8073'); p.textAlign(p.CENTER,p.BOTTOM);
+      p.text((P0/1e3).toFixed(0),x0+20,Y(P0)-3);
+
+      const v1=vloc(0.0), v2=vloc(0.5);
+      el('veEq').innerHTML='A·v = Q (continuidade) &nbsp;|&nbsp; '+
+        'v: entrada '+v1.toFixed(1)+' → garganta <b>'+v2.toFixed(1)+' m/s</b> &nbsp;|&nbsp; '+
+        'P na garganta = <b>'+(Pof(0.5)/1e3).toFixed(1)+' kPa</b> (queda '+((P0-Pof(0.5))/1e3).toFixed(1)+' kPa)';
+    };
+  });
+  el('vePlay').onclick=()=>{ playing=!playing; el('vePlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Onde a área é menor, a velocidade é maior ou menor? E a pressão? Relacione com
+   $Av = Q$ e com $P + \tfrac{1}{2}\rho v^2 = $ const.
+2. Dobre a vazão $Q$. A queda de pressão na garganta dobra ou quadruplica? Por quê?
+3. Se a pressão na garganta cair abaixo da pressão de vapor da água, o que acontece?
+   Ligue com a cavitação de hélice (tópico 3.7).
+:::
 
 ## Onde o fenômeno vive
 

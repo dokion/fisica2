@@ -126,7 +126,133 @@ na popa) está certa.
 - **Viscosidade de fluido incompressível:** água tem $\nu \approx 1.0 \times 10^{-6}$ m²/s a 20°C; óleo ISO 46 tem $\nu \approx 46 \times 10^{-6}$ m²/s — diferença de 46 vezes muda a classificação de escoamento.
 :::
 
-<!-- SIMULAÇÃO SUGERIDA: Perfil de velocidade na camada limite (Plotly, mostrando log-law para turbulent, linear para laminar), com slider de Re para ver transição; ou animação de partículas em campo vetorial (p5.js, camada limite formando-se ao longo de placa plana). -->
+## Veja a camada limite crescer
+
+Junto ao casco a água "gruda" (velocidade nula na parede) e retoma a velocidade livre a
+uma distância $\delta$ — a camada limite, que **engrossa** ao longo do casco. Perto da
+proa ela é fina e laminar; passado o ponto crítico ($\text{Re}_x \approx 5{\times}10^5$),
+vira turbulenta e cresce mais rápido. Ajuste a velocidade e veja o ponto de transição
+migrar.
+
+```{python}
+#| fig-cap: "Espessura da camada limite ao longo de um casco de 240 m a 6,17 m/s (ν = 1,0×10⁻⁶). Laminar (δ = 5x/√Re_x) até a transição em Re_x ≈ 5×10⁵ (x ≈ 8 cm), depois turbulenta (δ = 0,37x/Re_x^0,2), chegando a ~1,3 m na popa. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+v, nu, Lh = 6.17, 1.0e-6, 240.0
+x = np.linspace(0.01, Lh, 500)
+Rex = v*x/nu
+xcrit = 5e5*nu/v
+lam = 5*x/np.sqrt(Rex)
+turb = 0.37*x/Rex**0.2
+delta = np.where(x < xcrit, lam, turb)
+
+fig, ax = plt.subplots(figsize=(9, 3.4))
+ax.plot(x, delta, color='#1F47C8', lw=2)
+ax.axvline(xcrit, ls='--', color='#C81F1F', lw=1.2)
+ax.annotate('transição', xy=(xcrit, delta.max()*0.6), xytext=(xcrit+15, delta.max()*0.6),
+            fontsize=9, color='#C81F1F')
+ax.set_xlabel('posição no casco x (m)'); ax.set_ylabel('espessura δ (m)')
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO — o escoamento ao longo do casco e o
+     crescimento de δ). p5 de libs/ (offline, Q6). Mesmos parâmetros da matplotlib:
+     L = 240 m, ν = 1,0e-6, v ajustável; transição em Re_x ≈ 5e5. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .cl-wrap{max-width:1000px;margin:1rem auto;}
+  .cl-wrap .cl-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .cl-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .cl-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .cl-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .cl-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .cl-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .cl-wrap #clSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .cl-wrap #clEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .cl-wrap #clEq b{color:#1f47c8;}
+</style>
+<div class="cl-wrap">
+  <div class="cl-row">
+    <button id="clPlay">⏸ Pausar</button>
+    <div class="sld"><label>Velocidade do navio = <span class="val" id="clVv">12</span> nós</label>
+      <input type="range" id="clV" min="6" max="25" value="12" step="1"></div>
+    <div class="sld"><label>Rugosidade do casco = <span class="val" id="clKv">liso</span></label>
+      <input type="range" id="clK" min="0" max="1" value="0" step="1"></div>
+  </div>
+  <div id="clSketch"></div>
+  <div id="clEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let t=0, playing=true;
+  const cw=()=>{ const w=(el('clSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  const nu=1.0e-6, Lh=240;
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),360).parent('clSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),360); };
+    p.draw=()=>{
+      const W=p.width;
+      const v=(+el('clV').value)*0.5144, rug=+el('clK').value;
+      el('clVv').textContent=el('clV').value; el('clKv').textContent=rug?'incrustado':'liso';
+      if(playing) t+=p.deltaTime/1000;
+      const Recrit=rug?3e4:5e5;
+      const xcrit=Recrit*nu/v;
+      const x0=30, x1=W-20, ywall=90, ppm=(x1-x0)/Lh;
+      const delta=x=>{ const Rex=v*x/nu; if(x<xcrit) return 5*x/Math.sqrt(Rex); return 0.37*x/Math.pow(Rex,0.2); };
+      const dmax=delta(Lh), dscale=90/Math.max(dmax,0.5);
+
+      p.background('#dfe8ef');
+      // casco (parede em cima) + água embaixo
+      p.noStroke(); p.fill('#6b6459'); p.rect(0,0,W,ywall);
+      p.fill('#7a7367'); p.textSize(12); p.textAlign(p.LEFT,p.BOTTOM); p.text('CASCO (parede)',x0,ywall-6);
+      // borda da camada limite
+      p.push(); p.noFill(); p.stroke('#1f47c8'); p.strokeWeight(2); p.beginShape();
+      for(let g=x0;g<=x1;g+=2){ const x=(g-x0)/ppm; p.vertex(g,ywall+delta(x)*dscale); } p.endShape(); p.pop();
+      p.noStroke(); p.fill(31,71,200,40); p.beginShape();
+      p.vertex(x0,ywall);
+      for(let g=x0;g<=x1;g+=2){ const x=(g-x0)/ppm; p.vertex(g,ywall+delta(x)*dscale); }
+      p.vertex(x1,ywall); p.endShape(p.CLOSE);
+      // transição
+      const gxc=x0+xcrit*ppm;
+      if(gxc<x1){ p.stroke('#c81f1f'); p.strokeWeight(1.4); p.drawingContext.setLineDash([5,4]);
+        p.line(gxc,ywall,gxc,340); p.drawingContext.setLineDash([]);
+        p.noStroke(); p.fill('#c81f1f'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+        p.text('transição',gxc,342); }
+      p.fill('#1f47c8'); p.textSize(10); p.textAlign(p.LEFT,p.TOP);
+      p.text('laminar',x0+6,ywall+6);
+      if(gxc<x1-60){ p.text('turbulenta',gxc+8,ywall+6); }
+      // partículas dentro/fora da camada
+      p.fill('#1f4790');
+      for(let i=0;i<50;i++){ const ph=(i*0.02+ t*0.15)%1, x=ph*Lh, g=x0+x*ppm;
+        const yl=ywall+delta(x)*dscale*0.5; p.circle(g,yl,3); }
+      // rótulos de eixo
+      p.noStroke(); p.fill('#55524c'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      for(let xm=0;xm<=Lh;xm+=60) p.text(xm+' m',x0+xm*ppm,ywall+95);
+
+      const Re=v*Lh/nu;
+      el('clEq').innerHTML='Re = vL/ν = <b>'+Re.toExponential(1)+'</b> &nbsp;|&nbsp; '+
+        'transição em x ≈ '+(xcrit<1?(xcrit*100).toFixed(0)+' cm':xcrit.toFixed(0)+' m')+
+        ' &nbsp;|&nbsp; δ na popa = <b>'+delta(Lh).toFixed(2)+' m</b>';
+    };
+  });
+  el('clPlay').onclick=()=>{ playing=!playing; el('clPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Aumente a velocidade: o ponto de transição se aproxima da proa ou da popa? E a
+   espessura na popa, cresce ou diminui?
+2. Troque o casco de "liso" para "incrustado": a transição salta para quase a proa.
+   Por que isso aumenta o arrasto de atrito (tópico 3.6)?
+3. A camada limite tem ~1 m na popa de um navio de 240 m — 0,4% do comprimento. Por que,
+   ainda assim, ela responde por 75–85% da resistência?
+:::
 
 ## Onde o fenômeno vive
 

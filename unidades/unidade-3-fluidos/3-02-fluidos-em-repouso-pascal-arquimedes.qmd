@@ -103,7 +103,129 @@ tonelagem bruta (volume registrado).
 - **Reserva de flutuabilidade não cresce indefinidamente:** quanto mais se carrega, maior o calado; eventualmente, margem até o convés inferior diminui e, se chover ou houver onda, água entra.
 :::
 
-<!-- SIMULAÇÃO SUGERIDA: Gráfico (Plotly) interativo de deslocamento vs. calado; barra de carregamento que move o navio na seção transversal (p5.js). Ou: navio em perfil mostrando centros de gravidade G, centro de flutuação B, e linha de flutuação mudando com carga. -->
+## Veja o navio buscar seu calado
+
+O casco afunda até o empuxo igualar o peso: $\Delta = \rho\,V_{\text{imerso}}$. Para um
+casco de paredes verticais, o calado é $T = \Delta/(\rho\,L\,B)$. Aumente a carga e veja
+o calado subir; troque a densidade da água (doce ↔ salgada) e veja o casco subir ou
+descer sem mudar de peso — a marca de água doce (F) da escala de Plimsoll fica acima da
+de água salgada (S) exatamente por isso.
+
+```{python}
+#| fig-cap: "Calado de um casco caixão (L = 190 m, B = 32 m) em função do deslocamento, em água doce (1000) e salgada (1025 kg/m³). Para o mesmo peso, o calado é sempre maior na água doce. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+L, B = 190.0, 32.0
+disp = np.linspace(5, 80, 200)*1e6   # kg
+fig, ax = plt.subplots(figsize=(9, 3.6))
+for rho, c, lab in [(1000, '#1F47C8', 'doce 1000'), (1025, '#C81F1F', 'salgada 1025')]:
+    ax.plot(disp/1e6, disp/(rho*L*B), color=c, lw=2, label=f'água {lab}')
+ax.set_xlabel('deslocamento (mil t)'); ax.set_ylabel('calado T (m)')
+ax.legend(fontsize=9); ax.grid(alpha=0.25)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO — o casco buscando o calado de
+     equilíbrio). p5 de libs/ (offline, Q6). Casco caixão L=190, B=32; deslocamento
+     5–80 mil t (faixa SP1), densidade 1000–1030. Mesmos parâmetros da matplotlib. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .fl-wrap{max-width:1000px;margin:1rem auto;}
+  .fl-wrap .fl-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .fl-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .fl-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .fl-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .fl-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .fl-wrap #flSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .fl-wrap #flEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .fl-wrap #flEq b{color:#1f47c8;}
+</style>
+<div class="fl-wrap">
+  <div class="fl-row">
+    <div class="sld"><label>Deslocamento Δ = <span class="val" id="flDv">40</span> mil t</label>
+      <input type="range" id="flD" min="5" max="80" value="40" step="1"></div>
+    <div class="sld"><label>Densidade da água = <span class="val" id="flRv">1025</span> kg/m³</label>
+      <input type="range" id="flR" min="1000" max="1030" value="1025" step="1"></div>
+  </div>
+  <div id="flSketch"></div>
+  <div id="flEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  const L=190, B=32, Hcasco=18;             // pontal 18 m
+  const cw=()=>{ const w=(el('flSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),380).parent('flSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),380); };
+    p.draw=()=>{
+      const W=p.width;
+      const D=+el('flD').value*1e6, rho=+el('flR').value;
+      el('flDv').textContent=el('flD').value; el('flRv').textContent=rho;
+      const T=D/(rho*L*B);                    // calado (m)
+      const Ts=D/(1025*L*B), Tf=D/(1000*L*B); // marcas S e F
+
+      p.background('#eaf1f6');
+      // escala vertical: metros → px
+      const yTopo=60, mpp=13, ywl=yTopo+(Hcasco-T)*mpp;   // linha d'água
+      // água
+      p.noStroke(); p.fill(150,185,215,140); p.rect(0,ywl,W,380-ywl);
+      // casco (perfil): retângulo largo
+      const hx0=W*0.12, hx1=W*0.62, hb=yTopo+Hcasco*mpp;
+      p.fill('#6b6459'); p.rect(hx0,yTopo,hx1-hx0,Hcasco*mpp,0,0,10,10);
+      // parte imersa mais escura
+      p.fill('#454039'); p.rect(hx0,ywl,hx1-hx0,hb-ywl,0,0,10,10);
+      // linha d'água
+      p.stroke('#1f47c8'); p.strokeWeight(2); p.line(0,ywl,W,ywl);
+      // marca de Plimsoll (traços F e S) no costado
+      const px=hx1-8;
+      const markF=yTopo+(Hcasco-Tf)*mpp, markS=yTopo+(Hcasco-Ts)*mpp;
+      p.stroke('#ffd24d'); p.strokeWeight(2);
+      p.line(px-16,markF,px+2,markF); p.line(px-16,markS,px+2,markS);
+      p.noStroke(); p.fill('#7a5a00'); p.textSize(10); p.textAlign(p.LEFT,p.CENTER);
+      p.text('F',px+5,markF); p.text('S',px+5,markS);
+
+      // cota do calado
+      p.stroke('#c81f1f'); p.strokeWeight(1);
+      p.drawingContext.setLineDash([3,4]); p.line(hx0-18,ywl,hx0-18,hb); p.drawingContext.setLineDash([]);
+      p.noStroke(); p.fill('#c81f1f'); p.textSize(12); p.textAlign(p.RIGHT,p.CENTER);
+      p.text('T = '+T.toFixed(2)+' m',hx0-22,(ywl+hb)/2);
+
+      // ── mini-gráfico calado × deslocamento ──
+      const gx0=W*0.70, gx1=W-16, gy0=70, gy1=320;
+      const X=d=>gx0+(d-5)/75*(gx1-gx0), Y=t=>gy1-t/16*(gy1-gy0);
+      p.stroke('#bdb4a4'); p.line(gx0,gy1,gx1,gy1); p.line(gx0,gy0,gx0,gy1);
+      p.noStroke(); p.fill('#8a8073'); p.textSize(9); p.textAlign(p.CENTER,p.TOP);
+      p.text('Δ (mil t) →',(gx0+gx1)/2,gy1+6);
+      const curva=(rr,col)=>{ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(1.8); p.beginShape();
+        for(let d=5;d<=80;d+=2) p.vertex(X(d),Y(d*1e6/(rr*L*B))); p.endShape(); p.pop(); };
+      curva(1000,'#1f47c8'); curva(1025,'#c81f1f');
+      p.noStroke(); p.fill('#66308c'); p.circle(X(+el('flD').value),Y(T),8);
+      p.textSize(9); p.textAlign(p.LEFT,p.CENTER);
+      p.fill('#1f47c8'); p.text('doce',gx0+6,Y(78e6/(1000*L*B)));
+      p.fill('#c81f1f'); p.text('salg.',gx0+6,Y(78e6/(1025*L*B)));
+
+      el('flEq').innerHTML='T = Δ/(ρ·L·B) = <b>'+T.toFixed(2)+' m</b> &nbsp;|&nbsp; '+
+        'calado doce '+Tf.toFixed(2)+' m, salgado '+Ts.toFixed(2)+' m &nbsp;|&nbsp; '+
+        'FWA (F−S) = '+((Tf-Ts)*1000).toFixed(0)+' mm';
+    };
+  });
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Fixe o deslocamento e leve a densidade de 1025 a 1000. O calado aumenta ou diminui?
+   Por que o navio sobe ao entrar em água salgada mais densa?
+2. A distância F−S (FWA) na escala de Plimsoll depende do deslocamento? Verifique
+   movendo o slider de carga e lendo o valor no painel.
+3. Um graneleiro carrega até a marca S no rio (água doce). Ao chegar ao mar, ele estará
+   acima ou abaixo da marca S? É seguro?
+:::
 
 ## Onde o fenômeno vive
 
