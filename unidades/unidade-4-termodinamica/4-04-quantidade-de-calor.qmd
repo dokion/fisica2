@@ -141,7 +141,93 @@ que alimenta os sistemas de recuperação de calor (WHR).
   = vapor (em processo isobárico), use Q = 2257 kJ, não Q = 1 × 4,18 × 1 = 4,18 kJ.
 :::
 
-<!-- SIMULAÇÃO SUGERIDA: dois painéis lado a lado — (esquerda) barra de água com slider T (0–120 °C), mostrando Q em função de T com mudança de declive no ponto de vaporização; (direita) diagrama de fase (P–T) mostrando as três regiões e os calores latentes visualmente; lib Plotly -->
+## Veja a energia do combustível se repartir
+
+Toda a energia do combustível ($\dot{Q}_1 = \dot{m}\,\text{PCI}$) sai como trabalho útil
+($\dot{W} = \eta\,\dot{Q}_1$) mais calor rejeitado ($\dot{Q}_2 = \dot{Q}_1 - \dot{W}$).
+Ajuste a vazão de combustível e o rendimento e veja as barras da repartição — nenhuma
+energia desaparece.
+
+```{python}
+#| fig-cap: "Repartição da energia de um motor: combustível → trabalho + calor rejeitado. Com 50 kg/h de HFO (40 MJ/kg → 556 kW) e η = 45%, saem 250 kW de trabalho e 306 kW de calor. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+mdot, PCI, eta = 50.0, 40.0, 0.45
+Q1 = mdot*PCI/3.6      # kW
+W = eta*Q1; Q2 = Q1-W
+fig, ax = plt.subplots(figsize=(9, 2.8))
+ax.barh(['combustível'], [Q1], color='#8a8073')
+ax.barh(['saída'], [W], color='#1F8A3A', label='trabalho')
+ax.barh(['saída'], [Q2], left=[W], color='#C81F1F', label='calor rejeitado')
+ax.set_xlabel('potência (kW)'); ax.legend(fontsize=9, loc='lower right')
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: barras da repartição de energia, atualizadas
+     ao vivo). p5 de libs/ (offline, Q6). Mesmos parâmetros da matplotlib. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .qc-wrap{max-width:1000px;margin:1rem auto;}
+  .qc-wrap .qc-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .qc-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:160px;flex:1 1 160px;}
+  .qc-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .qc-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .qc-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .qc-wrap #qcSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .qc-wrap #qcEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .qc-wrap #qcEq b{color:#1f8a3a;}
+</style>
+<div class="qc-wrap">
+  <div class="qc-row">
+    <div class="sld"><label>Combustível = <span class="val" id="qcMv">50</span> kg/h</label>
+      <input type="range" id="qcM" min="20" max="200" value="50" step="5"></div>
+    <div class="sld"><label>Rendimento η = <span class="val" id="qcEv">45</span> %</label>
+      <input type="range" id="qcE" min="30" max="55" value="45" step="1"></div>
+  </div>
+  <div id="qcSketch"></div>
+  <div id="qcEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  const PCI=40;
+  const cw=()=>{ const w=(el('qcSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),260).parent('qcSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),260); };
+    p.draw=()=>{
+      const W=p.width, md=+el('qcM').value, eta=(+el('qcE').value)/100;
+      el('qcMv').textContent=md; el('qcEv').textContent=el('qcE').value;
+      const Q1=md*PCI/3.6, Wk=eta*Q1, Q2=Q1-Wk;
+      p.background('#faf8f4');
+      const x0=60, x1=W-30, sc=(x1-x0)/(200*PCI/3.6); // escala p/ Q1 máx
+      const barra=(y,vals)=>{ let x=x0;
+        for(const [v,c,lab] of vals){ p.noStroke(); p.fill(c); p.rect(x,y,v*sc,44,3);
+          if(v*sc>50){ p.fill('#faf8f4'); p.textSize(12); p.textAlign(p.CENTER,p.CENTER);
+            p.text(lab+' '+v.toFixed(0)+' kW',x+v*sc/2,y+22); } x+=v*sc; } };
+      p.fill('#7a7367'); p.textSize(12); p.textAlign(p.LEFT,p.BOTTOM);
+      p.text('ENTRA (combustível)',x0,60); barra(66,[[Q1,'#8a8073','']]);
+      p.text('SAI (trabalho + calor)',x0,150); barra(156,[[Wk,'#1f8a3a','W'],[Q2,'#c81f1f','Q₂']]);
+      el('qcEq').innerHTML='Q₁ = ṁ·PCI = <b>'+Q1.toFixed(0)+' kW</b> = W (<b>'+Wk.toFixed(0)+
+        ' kW</b>, '+(eta*100).toFixed(0)+'%) + Q₂ (<b>'+Q2.toFixed(0)+' kW</b>, '+((1-eta)*100).toFixed(0)+'%)';
+    };
+  });
+})();
+</script>
+```
+
+::: {.pergunta}
+1. As duas barras (entra / sai) têm sempre o mesmo comprimento total. Por que isso é a
+   primeira lei em forma de figura?
+2. Suba o rendimento de 45% para 55%: a barra verde (trabalho) cresce — mas a vermelha
+   (calor rejeitado) desaparece? Para onde vai a diferença?
+3. Mesmo no melhor caso, mais de 40% sai como calor. Que sistemas de bordo aproveitam
+   esse calor rejeitado?
+:::
 
 ## Onde o fenômeno vive
 

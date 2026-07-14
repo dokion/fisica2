@@ -118,7 +118,107 @@ exige folga a frio maior.
   confinada gera tensão. Uma junta de expansão ondulada absorve o movimento.
 :::
 
-<!-- SIMULAÇÃO SUGERIDA: barra de aço visual com slider de temperatura (20–300 °C), mostrando expansão em cores graduais (dilatação linear marcada) e indicador de tensão (mudança de cor conforme σ se aproxima do limite de escoamento); lib Plotly com diagrama ΔL vs. T -->
+## Veja a dilatação e a tensão que ela gera
+
+Aquecida, a barra cresce $\Delta L = \alpha L\,\Delta T$. Se ela pode se expandir livre,
+nada acontece além do alongamento; mas se estiver **impedida** (engastada entre apoios
+rígidos), a mesma dilatação vira tensão $\sigma = E\,\alpha\,\Delta T$, que pode superar
+o limite de escoamento. Ajuste a temperatura e compare os dois casos.
+
+```{python}
+#| fig-cap: "Barra de aço (α = 12×10⁻⁶/K, E = 200 GPa, L = 2 m) aquecida. Livre: alonga ΔL = αLΔT. Impedida: gera tensão σ = EαΔT, que atinge o limite de escoamento (~250 MPa) por volta de ΔT ≈ 100 K. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+alpha, E, L, sy = 12e-6, 200e9, 2.0, 250e6
+dT = np.linspace(0, 300, 300)
+dL = alpha*L*dT*1000       # mm
+sigma = E*alpha*dT/1e6     # MPa
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9, 3.4))
+ax1.plot(dT, dL, color='#C81F1F', lw=2); ax1.set_xlabel('ΔT (K)'); ax1.set_ylabel('ΔL livre (mm)')
+ax2.plot(dT, sigma, color='#1F47C8', lw=2); ax2.axhline(sy/1e6, ls='--', color='#C81F1F', lw=1.2)
+ax2.annotate('escoamento', xy=(10, sy/1e6+8), fontsize=9, color='#C81F1F')
+ax2.set_xlabel('ΔT (K)'); ax2.set_ylabel('σ impedida (MPa)')
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO — a barra alongando/tensionando).
+     p5 de libs/ (offline, Q6). Mesmos parâmetros da matplotlib: aço α=12e-6, E=200 GPa,
+     L=2 m, limite de escoamento ~250 MPa. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .di-wrap{max-width:1000px;margin:1rem auto;}
+  .di-wrap .di-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .di-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:160px;flex:1 1 160px;}
+  .di-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .di-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .di-wrap input[type=range]{width:100%;max-width:240px;accent-color:#c85c2e;}
+  .di-wrap #diSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .di-wrap #diEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .di-wrap #diEq b{color:#c81f1f;}
+</style>
+<div class="di-wrap">
+  <div class="di-row">
+    <div class="sld"><label>Temperatura = <span class="val" id="diTv">150</span> °C &nbsp;(ΔT desde 20 °C)</label>
+      <input type="range" id="diT" min="20" max="320" value="150" step="5"></div>
+  </div>
+  <div id="diSketch"></div>
+  <div id="diEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  const alpha=12e-6, E=200e9, L=2.0, sy=250e6;
+  const cw=()=>{ const w=(el('diSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  const colT=T=>{ const f=Math.max(0,Math.min(1,(T-20)/300)); return [120+135*f,110-70*f,90-70*f]; };
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),300).parent('diSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),300); };
+    p.draw=()=>{
+      const W=p.width, T=+el('diT').value, dT=T-20;
+      el('diTv').textContent=T;
+      const dL=alpha*L*dT, sigma=E*alpha*dT;
+      p.background('#faf8f4');
+      const bx=60, L0=W*0.42, bh=40, exagero=4000;   // exagera ΔL visualmente
+      // ── barra livre (cima) ──
+      let y=70; p.noStroke(); const c=colT(T);
+      p.stroke('#8a8073'); p.strokeWeight(3); p.line(bx-6,y-8,bx-6,y+bh+8); // apoio esq
+      p.noStroke(); p.fill(c[0],c[1],c[2]); p.rect(bx,y,L0+dL*exagero,bh,3);
+      p.fill('#7a7367'); p.textSize(12); p.textAlign(p.LEFT,p.BOTTOM); p.text('LIVRE',bx,y-6);
+      // cota ΔL
+      p.stroke('#c81f1f'); p.strokeWeight(1.5); p.line(bx+L0,y+bh+10,bx+L0+dL*exagero,y+bh+10);
+      p.noStroke(); p.fill('#c81f1f'); p.textSize(11); p.textAlign(p.LEFT,p.TOP);
+      p.text('ΔL = '+(dL*1000).toFixed(2)+' mm',bx+L0+4,y+bh+14);
+
+      // ── barra impedida (baixo) ──
+      y=185; p.stroke('#8a8073'); p.strokeWeight(3);
+      p.line(bx-6,y-8,bx-6,y+bh+8); p.line(bx+L0+6,y-8,bx+L0+6,y+bh+8); // dois apoios rígidos
+      const over=sigma>=sy;
+      p.noStroke(); p.fill(over?'#c81f1f':c[0], over?40:c[1], over?40:c[2]); p.rect(bx,y,L0,bh,3);
+      p.fill('#faf8f4'); p.textSize(12); p.textAlign(p.CENTER,p.CENTER);
+      p.text('IMPEDIDA — σ = '+(sigma/1e6).toFixed(0)+' MPa'+(over?'  ⚠ ESCOAMENTO':''),bx+L0/2,y+bh/2);
+      p.fill('#7a7367'); p.textAlign(p.LEFT,p.BOTTOM); p.text('IMPEDIDA (engastada)',bx,y-6);
+
+      el('diEq').innerHTML='ΔL = αLΔT = <b>'+(dL*1000).toFixed(2)+' mm</b> (livre) &nbsp;|&nbsp; '+
+        'σ = EαΔT = <b>'+(sigma/1e6).toFixed(0)+' MPa</b> (impedida)'+
+        (over?' — <b>acima do escoamento (250 MPa)!</b>':' — abaixo do escoamento');
+    };
+  });
+})();
+</script>
+```
+
+::: {.pergunta}
+1. A partir de que $\Delta T$ a tensão na barra impedida atinge o limite de escoamento
+   (250 MPa)? Confirme por $\sigma = E\alpha\,\Delta T$.
+2. A tensão depende do comprimento $L$ da barra? E o alongamento livre $\Delta L$?
+   Explique a diferença.
+3. Ligue com as juntas de expansão em linhas de vapor: por que elas evitam exatamente a
+   situação da barra "impedida"?
+:::
 
 ## Onde o fenômeno vive
 

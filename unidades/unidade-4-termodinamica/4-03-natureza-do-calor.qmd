@@ -119,7 +119,116 @@ calor, por mais "quente" que o óleo esteja em termos absolutos.
   para resfriar — daí por que ventiladores são críticos.
 :::
 
-<!-- SIMULAÇÃO SUGERIDA: trocador de calor visual com dois fluidos (cores quentes/frias), sliders de temperatura de entrada e vazão, mostrando as três formas de transferência ativas (condução através da parede destacada, convecção dos fluidos em movimento, radiação das superfícies externas); lib p5.js para animação de movimento de fluido + Plotly para gráfico T de saída vs. vazão -->
+## Veja o calor atravessar o trocador
+
+Num trocador **contracorrente**, o fluido quente entra por um lado e o frio pelo outro,
+correndo em sentidos opostos. O calor flui do quente para o frio ao longo de todo o
+comprimento, sempre do maior para o menor $T$. Ajuste as vazões e veja os perfis de
+temperatura e a potência trocada.
+
+```{python}
+#| fig-cap: "Perfis de temperatura num trocador contracorrente: óleo quente (95 °C) cede calor à água (35 °C) ao longo do comprimento. A diferença de temperatura local move o calor; a potência total é ṁc·ΔT de cada corrente. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(0, 1, 100)
+Th_in, Tc_in = 95.0, 35.0
+# perfis exponenciais simplificados (contracorrente)
+Th = Th_in - 35*x
+Tc = Tc_in + 30*(1-x)   # entra pela direita
+fig, ax = plt.subplots(figsize=(9, 3.2))
+ax.plot(x, Th, color='#C81F1F', lw=2, label='óleo quente →')
+ax.plot(x, Tc, color='#1F47C8', lw=2, label='← água fria')
+ax.fill_between(x, Th, Tc, color='#c85c2e', alpha=0.12)
+ax.set_xlabel('posição no trocador'); ax.set_ylabel('temperatura (°C)'); ax.legend(fontsize=9)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO — os dois fluidos correndo e trocando
+     calor). p5 de libs/ (offline, Q6). Contracorrente; vazões ajustáveis. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .tc-wrap{max-width:1000px;margin:1rem auto;}
+  .tc-wrap .tc-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .tc-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .tc-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .tc-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .tc-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .tc-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .tc-wrap #tcSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .tc-wrap #tcEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .tc-wrap #tcEq b{color:#c81f1f;}
+</style>
+<div class="tc-wrap">
+  <div class="tc-row">
+    <button id="tcPlay">⏸ Pausar</button>
+    <div class="sld"><label>Vazão de água = <span class="val" id="tcMv">1.0</span> (rel.)</label>
+      <input type="range" id="tcM" min="0.5" max="2" value="1" step="0.1"></div>
+    <div class="sld"><label>Velocidade anim. = <span class="val" id="tcSv">1</span>×</label>
+      <input type="range" id="tcS" min="0.25" max="3" value="1" step="0.25"></div>
+  </div>
+  <div id="tcSketch"></div>
+  <div id="tcEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let t=0, playing=true;
+  const cw=()=>{ const w=(el('tcSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  const colT=T=>{ const f=Math.max(0,Math.min(1,(T-30)/70)); return [60+195*f,90-50*f,200-160*f]; };
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),320).parent('tcSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),320); };
+    p.draw=()=>{
+      const W=p.width, mr=+el('tcM').value, spd=+el('tcS').value;
+      el('tcMv').textContent=mr.toFixed(1); el('tcSv').textContent=spd;
+      if(playing) t+=(p.deltaTime/1000)*spd;
+      const x0=40, x1=W-40, Thin=95, Tcin=35;
+      const dTh=35, dTc=30/mr;   // mais vazão de água → menor aquecimento dela
+      const Th=u=>Thin-dTh*u, Tc=u=>Tcin+dTc*(1-u);
+      p.background('#faf8f4');
+      // canal quente (cima) fluindo →
+      const canal=(yc,fn,dir,rot)=>{ 
+        for(let g=x0;g<x1;g+=8){ const u=(g-x0)/(x1-x0), c=colT(fn(u));
+          p.noStroke(); p.fill(c[0],c[1],c[2]); p.rect(g,yc-16,8,32); }
+        // partículas
+        p.fill('#faf8f4');
+        for(let i=0;i<24;i++){ let ph=(i/24 + dir*t*0.12*spd)%1; if(ph<0) ph+=1;
+          const g=x0+ph*(x1-x0); p.circle(g,yc,4); }
+        p.noStroke(); p.fill('#7a7367'); p.textSize(11); p.textAlign(p.LEFT,p.CENTER); p.text(rot,x0,yc-30);
+      };
+      canal(90, Th, 1, 'óleo quente 95°C →');
+      canal(210, Tc, -1, '← água fria 35°C');
+      // setas de calor entre os canais
+      p.stroke('#c85c2e'); p.strokeWeight(1.5);
+      for(let g=x0+30;g<x1;g+=60){ p.line(g,110,g,190);
+        p.noStroke(); p.fill('#c85c2e'); p.triangle(g,192,g-4,184,g+4,184); p.stroke('#c85c2e'); }
+      // rótulos de saída
+      p.noStroke(); p.fill('#c81f1f'); p.textSize(11); p.textAlign(p.RIGHT,p.CENTER);
+      p.text('→ '+Th(1).toFixed(0)+'°C',x1,90);
+      p.fill('#1f47c8'); p.textAlign(p.LEFT,p.CENTER); p.text(Tc(0).toFixed(0)+'°C ←',x0,210);
+      const Qrel=dTc*mr; // ∝ ṁ_água·ΔT_água
+      el('tcEq').innerHTML='calor flui do quente p/ o frio ao longo de todo o comprimento &nbsp;|&nbsp; '+
+        'água sai a <b>'+Tc(0).toFixed(0)+' °C</b>, óleo a '+Th(1).toFixed(0)+' °C &nbsp;|&nbsp; '+
+        'mais vazão → menos aquecimento da água, mais calor total';
+    };
+  });
+  el('tcPlay').onclick=()=>{ playing=!playing; el('tcPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. O calor sempre flui do canal quente para o frio? Verifique que a diferença de
+   temperatura local (área laranja) nunca muda de sinal num trocador bem-dimensionado.
+2. Aumente a vazão de água: ela sai mais quente ou mais fria? Por que a potência total
+   trocada pode crescer mesmo com a água aquecendo menos?
+3. Calor é energia em trânsito: o óleo não "perde calor armazenado". O que ele perde, e
+   o que a água ganha?
+:::
 
 ## Onde o fenômeno vive
 

@@ -108,7 +108,112 @@ se cada sensor de fato equilibrou com o fluido (lei zero).
   cinética mínima possível.
 :::
 
-<!-- SIMULAÇÃO SUGERIDA: termômetro virtual calibrado em duas escalas (Celsius e Kelvin), slider de temperatura (−50 °C a +100 °C), mostrando em tempo real a conversão e indicador visual de "em equilíbrio com..." para demonstrar Lei Zero; lib Plotly (gráfico de temperatura real vs. tempo) -->
+## Veja a lei zero em ação
+
+Dois corpos a temperaturas diferentes, postos em contato, trocam calor até atingirem uma
+**temperatura comum** — o equilíbrio térmico. Um termômetro mergulhado em qualquer um
+deles equilibra-se com ele e passa a indicar a mesma temperatura: é a lei zero que torna
+a medição possível. Ajuste as temperaturas e as capacidades térmicas e veja o equilíbrio.
+
+```{python}
+#| fig-cap: "Dois corpos (A quente, B frio) trocando calor até o equilíbrio. A temperatura final é a média ponderada pelas capacidades térmicas: T_eq = (C_A T_A + C_B T_B)/(C_A+C_B). Mesmos parâmetros da versão interativa (T_A = 80 °C, T_B = 20 °C, C_A = C_B)."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+TA0, TB0, CA, CB = 80.0, 20.0, 1.0, 1.0
+Teq = (CA*TA0 + CB*TB0)/(CA+CB)
+t = np.linspace(0, 10, 400)
+tau = 2.0
+TA = Teq + (TA0-Teq)*np.exp(-t/tau)
+TB = Teq + (TB0-Teq)*np.exp(-t/tau)
+fig, ax = plt.subplots(figsize=(9, 3.4))
+ax.plot(t, TA, color='#C81F1F', lw=2, label='corpo A')
+ax.plot(t, TB, color='#1F47C8', lw=2, label='corpo B')
+ax.axhline(Teq, ls='--', color='#66308C', lw=1.2, label=f'equilíbrio {Teq:.0f} °C')
+ax.set_xlabel('tempo'); ax.set_ylabel('temperatura (°C)'); ax.legend(fontsize=9)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO — as temperaturas relaxando ao
+     equilíbrio). p5 de libs/ (offline, Q6). Mesmos parâmetros da matplotlib. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .lz-wrap{max-width:1000px;margin:1rem auto;}
+  .lz-wrap .lz-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .lz-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .lz-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .lz-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .lz-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .lz-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .lz-wrap #lzSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .lz-wrap #lzEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .lz-wrap #lzEq b{color:#66308c;}
+</style>
+<div class="lz-wrap">
+  <div class="lz-row">
+    <button id="lzPlay">⏸ Pausar</button>
+    <button id="lzRst">↺ Reiniciar</button>
+    <div class="sld"><label>T<sub>A</sub> inicial = <span class="val" id="lzTAv">80</span> °C</label>
+      <input type="range" id="lzTA" min="30" max="100" value="80" step="5"></div>
+    <div class="sld"><label>T<sub>B</sub> inicial = <span class="val" id="lzTBv">20</span> °C</label>
+      <input type="range" id="lzTB" min="0" max="60" value="20" step="5"></div>
+    <div class="sld"><label>Capacidade C<sub>A</sub>/C<sub>B</sub> = <span class="val" id="lzCv">1.0</span></label>
+      <input type="range" id="lzC" min="0.25" max="4" value="1" step="0.25"></div>
+  </div>
+  <div id="lzSketch"></div>
+  <div id="lzEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let t=0, playing=true;
+  const cw=()=>{ const w=(el('lzSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  const col=T=>{ const f=Math.max(0,Math.min(1,(T-0)/100)); return [40+215*f, 60+40*(1-f), 200-160*f]; };
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),320).parent('lzSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),320); };
+    p.draw=()=>{
+      const W=p.width;
+      const TA0=+el('lzTA').value, TB0=+el('lzTB').value, Cr=+el('lzC').value;
+      el('lzTAv').textContent=TA0; el('lzTBv').textContent=TB0; el('lzCv').textContent=Cr.toFixed(2);
+      if(playing) t+=p.deltaTime/1000;
+      const CA=Cr, CB=1, Teq=(CA*TA0+CB*TB0)/(CA+CB), tau=2.0, e=Math.exp(-t/tau);
+      const TA=Teq+(TA0-Teq)*e, TB=Teq+(TB0-Teq)*e;
+      p.background('#faf8f4');
+      const bloco=(cx,T,rot)=>{ const c=col(T);
+        p.noStroke(); p.fill(c[0],c[1],c[2]); p.rect(cx-55,90,110,140,8);
+        p.fill('#faf8f4'); p.textSize(20); p.textAlign(p.CENTER,p.CENTER); p.text(T.toFixed(0)+'°C',cx,150);
+        p.fill('#7a7367'); p.textSize(13); p.text(rot,cx,110); };
+      bloco(W*0.28,TA,'corpo A'); bloco(W*0.62,TB,'corpo B');
+      // termômetro entre eles
+      const tx=W*0.45, Ttherm=(TA+TB)/2;
+      p.stroke('#8a8073'); p.strokeWeight(3); p.line(tx,100,tx,215);
+      p.noStroke(); const ct=col(Ttherm); p.fill(ct[0],ct[1],ct[2]); p.circle(tx,222,20);
+      p.fill(ct[0],ct[1],ct[2]); p.rect(tx-3,100+ (100-Ttherm),6,120-(100-Ttherm));
+      p.fill('#7a7367'); p.textSize(10); p.textAlign(p.CENTER,p.TOP); p.text('termômetro',tx,238);
+      el('lzEq').innerHTML='T<sub>eq</sub> = (C<sub>A</sub>T<sub>A</sub> + C<sub>B</sub>T<sub>B</sub>)/(C<sub>A</sub>+C<sub>B</sub>) = <b>'+
+        Teq.toFixed(1)+' °C = '+(Teq+273.15).toFixed(1)+' K</b> &nbsp;|&nbsp; '+
+        'A: '+TA.toFixed(1)+' °C, B: '+TB.toFixed(1)+' °C';
+    };
+  });
+  el('lzPlay').onclick=()=>{ playing=!playing; el('lzPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+  el('lzRst').onclick=()=>{ t=0; };
+  ['lzTA','lzTB','lzC'].forEach(id=>el(id).addEventListener('input',()=>{ t=0; }));
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Com $C_A = C_B$, a temperatura de equilíbrio fica exatamente no meio? Aumente
+   $C_A/C_B$ para 4: o equilíbrio se aproxima de qual corpo? Por quê?
+2. O termômetro sempre lê a temperatura do corpo em que está mergulhado. Por que essa
+   propriedade (lei zero) é o que permite *medir* temperatura?
+3. Converta a temperatura de equilíbrio para kelvin no painel. Por que intervalos em °C
+   e em K são iguais, mas os valores absolutos diferem de 273,15?
+:::
 
 ## Onde o fenômeno vive
 
