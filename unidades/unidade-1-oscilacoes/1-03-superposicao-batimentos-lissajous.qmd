@@ -235,74 +235,92 @@ $A_{\text{res}} = A_1 + A_2$); em oposição ($\Delta\varphi = \pi$), subtraem-s
 
 As duas fórmulas acima não caem do céu: elas são a **geometria de somar dois vetores girantes
 (fasores)**. Cada MHS $A_i\cos(\omega t+\varphi_i)$ é o fasor $A_i$ na fase $\varphi_i$; como
-os dois giram juntos (mesma $\omega$), a soma é o vetor resultante $A_{\text{res}}$ — e ele
-gira na mesma velocidade, o que é a razão de a soma ser de novo um MHS. Arraste as pontas de
-$A_1$ e $A_2$ (ou use os sliders) e acompanhe o triângulo da soma: é nele que a **lei dos
-cossenos** produz a amplitude, e a **lei dos senos** produz a fase extra $\beta$.
+os dois giram juntos (mesma $\omega$), a soma é o vetor resultante $A$ — e ele gira na mesma
+velocidade, o que é a razão de a soma ser de novo um MHS. Arraste as **pontas** $P_1$ e $P_2$
+(os vetores vão até a borda do quadro) e acompanhe, como na figura clássica de vetores
+girantes, apenas os quatro ângulos que importam: $\varphi_1$, $\varphi_2$, a fase extra
+$\beta$ e a diferença $\varphi_2-\varphi_1$.
 
-O passo que costuma escapar é o **sinal**. No triângulo cabeça-com-cauda, o ângulo interno
-onde $A_1$ encontra $A_2$ é o *suplemento* de $\Delta\varphi$, isto é $180°-\Delta\varphi$.
-A lei dos cossenos traz $-2A_1A_2\cos(180°-\Delta\varphi)$; como $\cos(180°-\Delta\varphi)=-\cos\Delta\varphi$,
-o menos vira **mais**, e é por isso que a amplitude *soma* em vez de subtrair.
+O passo que costuma escapar é o **sinal**. No triângulo da soma $O\,P_1\,P$, o ângulo interno
+onde $A_1$ encontra $A_2$ é o *suplemento* de $\Delta\varphi=\varphi_2-\varphi_1$, isto é
+$180°-\Delta\varphi$. A lei dos cossenos traz $-2A_1A_2\cos(180°-\Delta\varphi)$; como
+$\cos(180°-\Delta\varphi)=-\cos\Delta\varphi$, o menos vira **mais**, e é por isso que a
+amplitude *soma* em vez de subtrair. A fase extra $\beta$ sai da lei dos senos no mesmo
+triângulo: $A_2/\operatorname{sen}\beta = A/\operatorname{sen}(\varphi_2-\varphi_1)$.
 
 ```{python}
-#| fig-cap: "Diagrama de fasores da soma de dois MHS de mesma frequência: A₁ = 1,0 em φ₁ = 0° e A₂ = 0,7 em φ₂ = 90°. A resultante A (roxa) é a diagonal do paralelogramo; o triângulo cabeça-com-cauda (A₂ transladado à ponta de A₁) tem ângulo interno 180°−Δφ. Lei dos cossenos → A_res ≈ 1,22; lei dos senos → β ≈ 35°, logo φ_res = φ₁ + β ≈ 35°. Mesmos parâmetros da versão interativa."
+#| fig-cap: "Resultante de dois vetores girantes (fasores), no estilo da construção clássica: A₁ em φ₁ = 20° e A₂ em φ₂ = 58°. A resultante A (roxa) é a diagonal do paralelogramo O P₁ P P₂; marcam-se só os quatro ângulos φ₁, φ₂, β e φ₂−φ₁. Lei dos cossenos → A ≈ 4,82; lei dos senos → β ≈ 21°. Mesmos parâmetros da versão interativa."
 #| echo: false
 # Versão estática (paridade PDF) — mesma geometria da versão interativa (p5.js)
 import numpy as np
 import matplotlib.pyplot as plt
 
-A1, A2 = 1.0, 0.7
-p1, p2 = 0.0, np.pi/2
-P1 = np.array([A1*np.cos(p1), A1*np.sin(p1)])
-P2 = np.array([A2*np.cos(p2), A2*np.sin(p2)])
-PR = P1 + P2
-A = np.hypot(*PR)
-dphi = np.degrees(p2 - p1)
-beta = np.degrees(np.arctan2(PR[1], PR[0]) - np.arctan2(P1[1], P1[0]))
+A1, f1 = 2.3, np.radians(20)
+A2, f2 = 2.8, np.radians(58)
+P1 = np.array([A1*np.cos(f1), A1*np.sin(f1)])
+P2 = np.array([A2*np.cos(f2), A2*np.sin(f2)])
+P  = P1 + P2
+A = np.hypot(*P)
+angR = np.arctan2(P[1], P[0])
+beta = np.degrees(angR - f1)
 
-fig, ax = plt.subplots(figsize=(5.4, 5.0))
-ar = dict(arrowstyle='-|>', lw=2.4, mutation_scale=16)
-ax.annotate('', xy=P1, xytext=(0, 0), arrowprops={**ar, 'color': '#c81f1f'})   # A1
-ax.annotate('', xy=P2, xytext=(0, 0), arrowprops={**ar, 'color': '#1f47c8'})   # A2
-ax.annotate('', xy=PR, xytext=(0, 0), arrowprops={**ar, 'color': '#66308c'})   # resultante
-# triângulo: A2 transladado à ponta de A1
-ax.annotate('', xy=PR, xytext=P1, arrowprops=dict(arrowstyle='-|>', lw=2.0,
-            mutation_scale=13, color='#1f47c8', linestyle='--', alpha=0.8))
-# lado do paralelogramo (tênue)
-ax.plot([P2[0], PR[0]], [P2[1], PR[1]], color='#c81f1f', lw=1.2, ls='--', alpha=0.45)
-# arco Δφ na origem
-th = np.linspace(p1, p2, 40)
-ax.plot(0.28*np.cos(th), 0.28*np.sin(th), color='#8a94a6', lw=1.4)
-ax.text(0.36*np.cos((p1+p2)/2), 0.36*np.sin((p1+p2)/2), 'Δφ', color='#556', fontsize=11, ha='center')
-# rótulos
-ax.text(*(P1+[0.03, -0.09]), 'A₁', color='#c81f1f', fontsize=13, fontweight='bold')
-ax.text(*(P2+[-0.14, 0.02]), 'A₂', color='#1f47c8', fontsize=13, fontweight='bold')
-ax.text(*(PR+[0.04, 0.03]), 'A', color='#66308c', fontsize=13, fontweight='bold')
-ax.text(*(0.5*(P1+PR)+[0.05, 0.0]), '180°−Δφ', color='#b8860b', fontsize=9)
-ax.axhline(0, color='0.8', lw=0.8); ax.axvline(0, color='0.8', lw=0.8)
-ax.set_xlim(-0.3, 1.35); ax.set_ylim(-0.3, 1.15)
-ax.set_aspect('equal'); ax.set_xticks([]); ax.set_yticks([])
-ax.set_title(f'A_res = {A:.2f}   ·   β = {beta:.0f}°   ·   φ_res = {beta:.0f}°', fontsize=10)
+def arc(ax, r, a0, a1, color, lw=1.4, ls='-'):
+    t = np.linspace(a0, a1, 60)
+    ax.plot(r*np.cos(t), r*np.sin(t), color=color, lw=lw, ls=ls)
+
+fig, ax = plt.subplots(figsize=(6.2, 5.0))
+# eixos partindo de perto do (0,0)
+ax.annotate('', xy=(4.3, 0), xytext=(0, 0), arrowprops=dict(arrowstyle='-|>', color='#555', lw=1.3))
+ax.annotate('', xy=(0, 3.7), xytext=(0, 0), arrowprops=dict(arrowstyle='-|>', color='#555', lw=1.3))
+ax.text(4.3, -0.18, 'x', fontsize=12); ax.text(-0.2, 3.7, 'y', fontsize=12)
+ax.text(-0.22, -0.2, 'O', fontsize=12)
+# paralelogramo (lados transladados)
+ax.annotate('', xy=P, xytext=P1, arrowprops=dict(arrowstyle='-|>', color='#1f47c8', lw=2.0))  # A2'
+ax.annotate('', xy=P, xytext=P2, arrowprops=dict(arrowstyle='-|>', color='#c81f1f', lw=1.6, alpha=0.55))  # A1'
+# vetores principais
+ax.annotate('', xy=P1, xytext=(0, 0), arrowprops=dict(arrowstyle='-|>', color='#c81f1f', lw=2.6))
+ax.annotate('', xy=P2, xytext=(0, 0), arrowprops=dict(arrowstyle='-|>', color='#1f47c8', lw=2.6))
+ax.annotate('', xy=P,  xytext=(0, 0), arrowprops=dict(arrowstyle='-|>', color='#66308c', lw=3.0))
+# linha de referência: extensão de O P1 (para marcar φ2−φ1 em P1)
+ext = P1 + 0.7*np.array([np.cos(f1), np.sin(f1)])
+ax.plot([P1[0], ext[0]], [P1[1], ext[1]], color='#999', lw=1.0, ls=(0, (4, 3)))
+# --- os quatro ângulos ---
+arc(ax, 0.9, 0, f1, '#c81f1f')                       # φ1
+arc(ax, 1.5, 0, f2, '#1f47c8')                       # φ2
+arc(ax, 1.2, f1, angR, '#66308c')                    # β
+# φ2−φ1 no vértice P1 (entre a extensão de A1 e o A2 transladado)
+tt = np.linspace(f1, f2, 40); rr = 0.55
+ax.plot(P1[0] + rr*np.cos(tt), P1[1] + rr*np.sin(tt), color='#b8860b', lw=1.6)
+# rótulos de ângulo
+ax.text(1.0*np.cos(f1/2), 1.0*np.sin(f1/2)-0.02, 'φ₁', color='#c81f1f', fontsize=12)
+ax.text(1.62*np.cos(f2*0.8), 1.62*np.sin(f2*0.8), 'φ₂', color='#1f47c8', fontsize=12)
+ax.text(1.32*np.cos((f1+angR)/2), 1.32*np.sin((f1+angR)/2), 'β', color='#66308c', fontsize=13)
+ax.text(P1[0]+0.62*np.cos((f1+f2)/2), P1[1]+0.62*np.sin((f1+f2)/2), 'φ₂−φ₁', color='#b8860b', fontsize=10)
+# rótulos de ponta e de vetor
+ax.text(P1[0]+0.06, P1[1]-0.18, 'P₁', fontsize=11); ax.text(P2[0]-0.24, P2[1]+0.06, 'P₂', fontsize=11)
+ax.text(P[0]+0.07, P[1]+0.04, 'P', fontsize=12)
+ax.text(0.5*P1[0]+0.05, 0.5*P1[1]-0.16, 'A₁', color='#c81f1f', fontsize=11)
+ax.text(0.5*P2[0]-0.22, 0.5*P2[1], 'A₂', color='#1f47c8', fontsize=11)
+ax.text(0.52*P[0]-0.1, 0.52*P[1]+0.12, 'A', color='#66308c', fontsize=12)
+ax.text(0.5*(P1[0]+P[0])+0.05, 0.5*(P1[1]+P[1]), 'A₂', color='#1f47c8', fontsize=10, alpha=0.8)
+ax.set_xlim(-0.4, 4.5); ax.set_ylim(-0.4, 3.9)
+ax.set_aspect('equal'); ax.axis('off')
+ax.set_title(f'A = {A:.2f}   ·   β = {beta:.0f}°   ·   φ_res = φ₁+β = {20+beta:.0f}°', fontsize=10)
 plt.tight_layout(); plt.show()
 ```
 
 ```{=html}
-<!-- Versão interativa — p5.js (tabela Q4: construção geométrica dos fasores). Caso ω₁=ω₂:
-     dedução de A_res (lei dos cossenos) e φ_res (lei dos senos, β). Cores da página
-     (A₁ vermelho, A₂ azul, resultante roxo). p5 de libs/ (offline, Q6). Mesmos
-     parâmetros da versão matplotlib. Arraste as pontas de A₁/A₂ ou use os sliders. -->
+<!-- Versão interativa — p5.js (tabela Q4: construção geométrica dos fasores girantes,
+     estilo Fig. 3.28 / Moysés). Sem sliders: arraste as pontas P1/P2 (escala limitada
+     à borda do canvas). Marca só os 4 ângulos φ₁, φ₂, β, φ₂−φ₁. Cores da página
+     (A₁ vermelho, A₂ azul, resultante roxo). p5 de libs/ (offline, Q6). Mesma geometria
+     da versão matplotlib. -->
 <script src="../../libs/p5.min.js"></script>
 <style>
   .fs-wrap{max-width:1000px;margin:1rem auto;}
-  .fs-wrap .fs-row{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;margin-bottom:8px;}
-  .fs-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
-  .fs-wrap .sld label{font-weight:600;font-size:12.5px;}
-  .fs-wrap .sld .val{color:#c85c2e;font-weight:700;}
-  .fs-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
-  .fs-wrap .chk{display:flex;align-items:center;gap:5px;font-size:13px;white-space:nowrap;}
-  .fs-wrap .chk input{accent-color:#c85c2e;width:15px;height:15px;}
-  .fs-wrap #fsSketch canvas{display:block;border-radius:8px;max-width:100%;touch-action:none;}
+  .fs-wrap #fsSketch canvas{display:block;border-radius:8px;max-width:100%;touch-action:none;
+    box-shadow:0 1px 3px rgba(20,27,46,.10);}
+  .fs-wrap .fs-hint{font-size:12.5px;color:#6b6357;margin:6px 2px;}
   .fs-wrap .fs-eq{font-family:ui-monospace,"Courier New",monospace;font-size:13px;
     background:#f6f4ef;border-left:3px solid #66308c;padding:8px 12px;margin:8px 0;
     border-radius:0 6px 6px 0;overflow-x:auto;line-height:1.6;}
@@ -312,19 +330,8 @@ plt.tight_layout(); plt.show()
   .fs-wrap .fs-cap{font-size:12px;color:#6b6357;margin-bottom:3px;}
 </style>
 <div class="fs-wrap">
-  <div class="fs-row">
-    <div class="sld"><label>A<sub>1</sub> = <span class="val" id="fsA1v">1.0</span></label>
-      <input type="range" id="fsA1" min="0.3" max="1.3" value="1.0" step="0.1"></div>
-    <div class="sld"><label>A<sub>2</sub> = <span class="val" id="fsA2v">0.7</span></label>
-      <input type="range" id="fsA2" min="0.3" max="1.3" value="0.7" step="0.1"></div>
-    <div class="sld"><label>φ<sub>1</sub> = <span class="val" id="fsP1v">0°</span></label>
-      <input type="range" id="fsP1" min="-180" max="180" value="0" step="15"></div>
-    <div class="sld"><label>φ<sub>2</sub> = <span class="val" id="fsP2v">90°</span></label>
-      <input type="range" id="fsP2" min="-180" max="180" value="90" step="15"></div>
-  </div>
-  <div class="fs-row">
-    <span class="chk"><input type="checkbox" id="fsTri" checked>Mostrar triângulo da soma (cabeça-com-cauda)</span>
-  </div>
+  <div class="fs-hint">Arraste as pontas <b style="color:#c81f1f">P₁</b> e
+    <b style="color:#1f47c8">P₂</b> — os vetores giram em torno de O e vão até a borda do quadro.</div>
   <div id="fsSketch"></div>
   <div id="fsEq"></div>
 </div>
@@ -332,138 +339,146 @@ plt.tight_layout(); plt.show()
 (function(){
   const el=id=>document.getElementById(id);
   const cw=()=>{ const w=(el('fsSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
-  const rad=d=>d*Math.PI/180;
   new p5((p)=>{
-    let OX, OY, SC, H1={x:0,y:0}, H2={x:0,y:0}, drag=null;
-    const geom=()=>{ OX=p.width/2; OY=p.height*0.52;
-      SC=Math.min(74,(Math.min(p.width/2,OY)-34)/2.6); };
-    const toS=(x,y)=>({x:OX+x*SC, y:OY-y*SC});
+    let OX, OY, SC, sP1, sP2, drag=null, init=false;
+    // fasores em coordenadas de "unidade" (independem do tamanho do canvas)
+    let P1u={x:2.3*Math.cos(0.349), y:2.3*Math.sin(0.349)};   // A1=2.3, φ1=20°
+    let P2u={x:2.8*Math.cos(1.012), y:2.8*Math.sin(1.012)};   // A2=2.8, φ2=58°
+    const geom=()=>{ OX=44; OY=p.height-38; SC=Math.max(30,(Math.min(p.width,p.height)-72)/5); };
+    const toS=u=>({x:OX+u.x*SC, y:OY-u.y*SC});
+    const arcO=(r,a0,a1,col,wt)=>{ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(wt);
+      p.beginShape(); const n=46; for(let i=0;i<=n;i++){ const a=a0+(a1-a0)*i/n;
+        p.vertex(OX+r*Math.cos(a), OY-r*Math.sin(a)); } p.endShape(); p.pop(); };
+    const arrow=(a,b,col,wt,dash,alpha)=>{ p.push();
+      let c=p.color(col); if(alpha!==undefined) c.setAlpha(alpha);
+      p.stroke(c); p.strokeWeight(wt); if(dash)p.drawingContext.setLineDash([5,4]);
+      p.line(a.x,a.y,b.x,b.y); p.drawingContext.setLineDash([]);
+      const ang=Math.atan2(b.y-a.y,b.x-a.x), hl=10; p.noStroke(); p.fill(c);
+      p.triangle(b.x,b.y,b.x-hl*Math.cos(ang-0.4),b.y-hl*Math.sin(ang-0.4),
+        b.x-hl*Math.cos(ang+0.4),b.y-hl*Math.sin(ang+0.4)); p.pop(); };
+    // seta girante tangente (concêntrica a O), sugerindo rotação
+    const spin=u=>{ const R=Math.hypot(u.x,u.y)*SC, a0=Math.atan2(u.y,u.x); if(R<10)return;
+      const a1=a0+0.18; p.push(); p.noFill(); p.stroke('#a9a294'); p.strokeWeight(1.2);
+      p.drawingContext.setLineDash([3,3]); p.beginShape();
+      for(let i=0;i<=10;i++){ const a=a0+(a1-a0)*i/10; p.vertex(OX+R*Math.cos(a),OY-R*Math.sin(a)); }
+      p.endShape(); p.drawingContext.setLineDash([]);
+      const pe={x:OX+R*Math.cos(a1),y:OY-R*Math.sin(a1)};
+      const pb={x:OX+R*Math.cos(a1-0.06),y:OY-R*Math.sin(a1-0.06)};
+      const ang=Math.atan2(pe.y-pb.y,pe.x-pb.x), hl=6; p.noStroke(); p.fill('#a9a294');
+      p.triangle(pe.x,pe.y,pe.x-hl*Math.cos(ang-0.5),pe.y-hl*Math.sin(ang-0.5),
+        pe.x-hl*Math.cos(ang+0.5),pe.y-hl*Math.sin(ang+0.5)); p.pop(); };
+
     p.setup=()=>{ p.createCanvas(cw(),440).parent('fsSketch'); geom(); };
     p.windowResized=()=>{ p.resizeCanvas(cw(),440); geom(); };
 
-    function arc(r,a0,a1,col,wt){ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(wt);
-      p.beginShape(); const n=48; for(let i=0;i<=n;i++){ const a=a0+(a1-a0)*i/n;
-        const s=toS(r*Math.cos(a),r*Math.sin(a)); p.vertex(s.x,s.y); } p.endShape(); p.pop(); }
-
     p.draw=()=>{
       geom();
-      const A1=+el('fsA1').value, A2=+el('fsA2').value,
-            f1=+el('fsP1').value, f2=+el('fsP2').value,
-            p1=rad(f1), p2=rad(f2), showTri=el('fsTri').checked;
-      el('fsA1v').textContent=A1.toFixed(1); el('fsA2v').textContent=A2.toFixed(1);
-      el('fsP1v').textContent=f1+'°'; el('fsP2v').textContent=f2+'°';
-
-      const P1={x:A1*Math.cos(p1), y:A1*Math.sin(p1)};
-      const P2={x:A2*Math.cos(p2), y:A2*Math.sin(p2)};
-      const PR={x:P1.x+P2.x, y:P1.y+P2.y};
-      const A=Math.hypot(PR.x,PR.y);
-      const ang1=Math.atan2(P1.y,P1.x), angR=Math.atan2(PR.y,PR.x), ang2=Math.atan2(P2.y,P2.x);
-      let beta=(angR-ang1)*180/Math.PI; while(beta>180)beta-=360; while(beta<=-180)beta+=360;
-      let dphi=f2-f1;
-      const O=toS(0,0), sP1=toS(P1.x,P1.y), sP2=toS(P2.x,P2.y), sPR=toS(PR.x,PR.y);
-      H1=sP1; H2=sP2;
+      const P1=P1u, P2=P2u, PR={x:P1.x+P2.x, y:P1.y+P2.y};
+      const A1=Math.hypot(P1.x,P1.y), A2=Math.hypot(P2.x,P2.y), A=Math.hypot(PR.x,PR.y);
+      const a1=Math.atan2(P1.y,P1.x), a2=Math.atan2(P2.y,P2.x), aR=Math.atan2(PR.y,PR.x);
+      let f1=a1*180/Math.PI, f2=a2*180/Math.PI, dphi=f2-f1;
+      let beta=(aR-a1)*180/Math.PI;
+      const O={x:OX,y:OY}; sP1=toS(P1); sP2=toS(P2); const sPR=toS(PR);
 
       p.background('#faf8f4');
-      // grade + eixos
-      p.stroke('#e7e0d4'); p.strokeWeight(1);
-      for(let gx=OX%36; gx<p.width; gx+=36) p.line(gx,0,gx,p.height);
-      for(let gy=OY%36; gy<p.height; gy+=36) p.line(0,gy,p.width,gy);
+      // grade leve
+      p.stroke('#eee7db'); p.strokeWeight(1);
+      for(let gx=OX%34; gx<p.width; gx+=34) p.line(gx,0,gx,p.height);
+      for(let gy=OY%34; gy>0; gy-=34) p.line(0,gy,p.width,gy);
+      // eixos partindo de O (perto do 0,0)
       p.stroke('#c9d1de'); p.strokeWeight(1.4);
-      p.line(0,OY,p.width,OY); p.line(OX,0,OX,p.height);
+      arrow(O,{x:p.width-8,y:OY},'#9aa3b2',1.4,false);
+      arrow(O,{x:OX,y:10},'#9aa3b2',1.4,false);
+      p.noStroke(); p.fill('#8a8073'); p.textSize(12);
+      p.textAlign(p.RIGHT,p.TOP); p.text('x',p.width-8,OY+4);
+      p.textAlign(p.LEFT,p.TOP); p.text('y',OX+5,10);
+      p.textAlign(p.RIGHT,p.TOP); p.text('O',OX-4,OY+3);
 
-      const arrow=(a,b,col,wt,dash)=>{ p.push(); p.stroke(col); p.strokeWeight(wt);
-        if(dash) p.drawingContext.setLineDash([5,5]);
-        p.line(a.x,a.y,b.x,b.y); p.drawingContext.setLineDash([]);
-        const ang=Math.atan2(b.y-a.y,b.x-a.x), hl=10;
-        p.fill(col); p.noStroke();
-        p.triangle(b.x,b.y, b.x-hl*Math.cos(ang-0.4),b.y-hl*Math.sin(ang-0.4),
-                            b.x-hl*Math.cos(ang+0.4),b.y-hl*Math.sin(ang+0.4)); p.pop(); };
-
-      // lados tênues do paralelogramo
-      p.push(); p.strokeWeight(1.2); p.drawingContext.setLineDash([4,4]);
-      p.stroke(200,31,31,110); p.line(sP2.x,sP2.y,sPR.x,sPR.y);
-      if(!showTri){ p.stroke(31,71,200,110); p.line(sP1.x,sP1.y,sPR.x,sPR.y); }
-      p.drawingContext.setLineDash([]); p.pop();
-
-      // triângulo da soma: A2 transladado à ponta de A1
-      if(showTri){
-        arrow(sP1,sPR,'#1f47c8',2.2,true);
-        // ângulo interno 180°−Δφ na ponta de A1
-        const dirA=Math.atan2(-P1.y,-P1.x), dirB=Math.atan2(P2.y,P2.x);
-        p.push(); p.noFill(); p.stroke('#b8860b'); p.strokeWeight(1.8);
-        p.beginShape(); const n=40, r=0.30;
-        let dd=dirB-dirA; while(dd>Math.PI)dd-=2*Math.PI; while(dd<-Math.PI)dd+=2*Math.PI;
-        for(let i=0;i<=n;i++){ const a=dirA+dd*i/n;
-          p.vertex(sP1.x+r*SC*Math.cos(a), sP1.y-r*SC*Math.sin(a)); } p.endShape(); p.pop();
-        const midI=dirA+dd/2;
-        p.noStroke(); p.fill('#b8860b'); p.textSize(10); p.textAlign(p.CENTER,p.CENTER);
-        p.text('180°−Δφ', sP1.x+0.52*SC*Math.cos(midI), sP1.y-0.52*SC*Math.sin(midI));
-      }
+      // paralelogramo: lados transladados
+      arrow(sP1,sPR,'#1f47c8',2.0,false);           // A2' (P1->P)
+      arrow(sP2,sPR,'#c81f1f',1.6,false,120);        // A1' (P2->P), tênue
+      // linha de referência: extensão de O->P1 além de P1 (para φ2−φ1)
+      const ext={x:sP1.x+0.7*SC*Math.cos(a1), y:sP1.y-0.7*SC*Math.sin(a1)};
+      p.push(); p.stroke('#9a948a'); p.strokeWeight(1); p.drawingContext.setLineDash([4,3]);
+      p.line(sP1.x,sP1.y,ext.x,ext.y); p.drawingContext.setLineDash([]); p.pop();
 
       // vetores principais
       arrow(O,sP1,'#c81f1f',2.8,false);
       arrow(O,sP2,'#1f47c8',2.8,false);
       arrow(O,sPR,'#66308c',3.2,false);
+      // hint de rotação (girantes)
+      spin(P1); spin(P2); spin(PR);
 
-      // arco Δφ (origem, entre A1 e A2)
-      arc(0.24, ang1, ang2, '#8a94a6', 1.6);
-      const md=(ang1+ang2)/2, dl=toS(0.32*Math.cos(md),0.32*Math.sin(md));
-      p.noStroke(); p.fill('#667'); p.textSize(12); p.textAlign(p.CENTER,p.CENTER); p.text('Δφ',dl.x,dl.y);
-      // arco β (origem, entre A1 e resultante)
-      arc(0.44, ang1, angR, '#66308c', 1.6);
-      const mb=(ang1+angR)/2, bl=toS(0.54*Math.cos(mb),0.54*Math.sin(mb));
-      p.fill('#66308c'); p.text('β',bl.x,bl.y);
+      // --- só os quatro ângulos ---
+      arcO(0.9*SC, 0, a1, '#c81f1f', 1.6);           // φ1
+      arcO(1.5*SC, 0, a2, '#1f47c8', 1.6);           // φ2
+      arcO(1.2*SC, a1, aR, '#66308c', 1.8);          // β
+      // φ2−φ1 no vértice P1 (entre extensão de A1 e A2 transladado)
+      p.push(); p.noFill(); p.stroke('#b8860b'); p.strokeWeight(1.8); p.beginShape();
+      const rr=0.55*SC, n=40; for(let i=0;i<=n;i++){ const a=a1+(a2-a1)*i/n;
+        p.vertex(sP1.x+rr*Math.cos(a), sP1.y-rr*Math.sin(a)); } p.endShape(); p.pop();
 
-      // rótulos + pontas arrastáveis
-      p.textSize(13); p.textAlign(p.LEFT,p.CENTER);
-      p.fill('#c81f1f'); p.text('A₁',sP1.x+9,sP1.y-8);
-      p.fill('#1f47c8'); p.text('A₂',sP2.x+9,sP2.y-8);
-      p.fill('#66308c'); p.text('A',sPR.x+10,sPR.y+2);
+      // rótulos de ângulo
+      p.noStroke(); p.textSize(13); p.textAlign(p.CENTER,p.CENTER);
+      const lab=(r,a,txt,col)=>{ p.fill(col); p.text(txt, OX+r*Math.cos(a), OY-r*Math.sin(a)); };
+      lab(1.06*SC, a1/2, 'φ₁', '#c81f1f');
+      lab(1.66*SC, a2*0.82, 'φ₂', '#1f47c8');
+      lab(1.34*SC, (a1+aR)/2, 'β', '#66308c');
+      p.fill('#b8860b'); p.textSize(11);
+      p.text('φ₂−φ₁', sP1.x+0.66*SC*Math.cos((a1+a2)/2), sP1.y-0.66*SC*Math.sin((a1+a2)/2));
+
+      // rótulos de vetor e de ponta
+      p.textSize(12);
+      const along=(u,fr,dx,dy)=>({x:OX+fr*u.x*SC+dx, y:OY-fr*u.y*SC+dy});
+      p.textAlign(p.LEFT,p.CENTER);
+      let L;
+      L=along(P1,0.78,2,14); p.fill('#c81f1f'); p.text('A₁',L.x,L.y);
+      L=along(P2,0.64,-20,-2); p.fill('#1f47c8'); p.text('A₂',L.x,L.y);
+      L=along(PR,0.52,-16,-9); p.fill('#66308c'); p.text('A',L.x,L.y);
+      p.fill('#8a8073'); p.textSize(11);
+      p.text('P₁', sP1.x+8, sP1.y+10); p.text('P₂', sP2.x-8, sP2.y-10); p.text('P', sPR.x+9, sPR.y-4);
+
+      // pontas arrastáveis
       p.noStroke();
-      p.fill(200,31,31,drag==='A1'?255:150); p.circle(sP1.x,sP1.y,drag==='A1'?15:12);
-      p.fill(31,71,200,drag==='A2'?255:150); p.circle(sP2.x,sP2.y,drag==='A2'?15:12);
-      p.fill('#8a8073'); p.textSize(10); p.textAlign(p.LEFT,p.TOP);
-      p.text('arraste as pontas ●',8,p.height-16);
+      p.fill(200,31,31,drag==='P1'?255:170); p.circle(sP1.x,sP1.y,drag==='P1'?16:12);
+      p.fill(31,71,200,drag==='P2'?255:170); p.circle(sP2.x,sP2.y,drag==='P2'?16:12);
+      p.fill('#66308c'); p.circle(sPR.x,sPR.y,7);
 
       // painel de equações
-      const cosD=Math.cos(rad(dphi)), cosSup=Math.cos(rad(180-dphi));
+      const cosD=Math.cos(a2-a1), cosSup=Math.cos(Math.PI-(a2-a1));
       const sq=A1*A1+A2*A2, cross=2*A1*A2, A2v=sq+cross*cosD;
       const degen=A<1e-6;
-      const senB=degen?0:(A2/A)*Math.sin(rad(dphi));
+      const senB=degen?0:(A2/A)*Math.sin(a2-a1);
       const betaTxt=degen?'indefinida (A=0)':beta.toFixed(0)+'°';
       const senBtxt=degen?'—':senB.toFixed(3);
       const xTxt=degen?'0 (resultante nula)':
         A.toFixed(2)+' cos(ωt + '+f1.toFixed(0)+'° + <b>'+beta.toFixed(0)+'°</b>)';
       el('fsEq').innerHTML=
-        '<div class="fs-eq"><div class="fs-cap">Lei dos cossenos no triângulo — ângulo interno = 180°−Δφ &nbsp;(Δφ = '+dphi.toFixed(0)+'°)</div>'+
+        '<div class="fs-eq"><div class="fs-cap">Lei dos cossenos no triângulo O P₁ P — ângulo interno = 180°−Δφ &nbsp;(Δφ = '+dphi.toFixed(0)+'°)</div>'+
           'A² = A₁²+A₂² <span class="minus">−</span> 2A₁A₂·cos(180°−Δφ) = '+sq.toFixed(2)+
           ' <span class="minus">−</span> ('+(cross*cosSup).toFixed(2)+') = <b>'+(sq-cross*cosSup).toFixed(2)+'</b></div>'+
         '<div class="fs-eq"><div class="fs-cap">Como cos(180°−Δφ) = −cos(Δφ), o menos vira <span class="plus">mais</span></div>'+
           'A² = A₁²+A₂² <span class="plus">+</span> 2A₁A₂·cos(Δφ) = '+sq.toFixed(2)+
-          ' <span class="plus">+</span> '+(cross*cosD).toFixed(2)+' = <b>'+A2v.toFixed(2)+'</b> → A<sub>res</sub> = <b>'+A.toFixed(2)+'</b></div>'+
-        '<div class="fs-eq"><div class="fs-cap">Lei dos senos → fase extra β</div>'+
-          'sen β = (A₂/A)·sen(Δφ) = '+senBtxt+' → β = <b>'+betaTxt+'</b> &nbsp;→&nbsp; '+
-          'x(t) = <b>'+xTxt+'</b></div>';
+          ' <span class="plus">+</span> '+(cross*cosD).toFixed(2)+' = <b>'+A2v.toFixed(2)+'</b> → A = <b>'+A.toFixed(2)+'</b></div>'+
+        '<div class="fs-eq"><div class="fs-cap">Lei dos senos no mesmo triângulo → fase extra β</div>'+
+          'A₂/sen β = A/sen(φ₂−φ₁) ⇒ sen β = (A₂/A)·sen(Δφ) = '+senBtxt+' → β = <b>'+betaTxt+'</b>'+
+          ' &nbsp;→&nbsp; x(t) = <b>'+xTxt+'</b></div>';
     };
 
-    // arraste das pontas
-    const near=(hx,hy)=>{ const d1=p.dist(p.mouseX,p.mouseY,H1.x,H1.y),
-      d2=p.dist(p.mouseX,p.mouseY,H2.x,H2.y);
-      if(d1<16&&d1<=d2) return 'A1'; if(d2<16) return 'A2'; return null; };
-    p.mousePressed=()=>{ if(p.mouseX<0||p.mouseX>p.width||p.mouseY<0||p.mouseY>p.height) return;
-      drag=near(); };
-    p.mouseDragged=()=>{ if(!drag) return;
-      let amp=Math.hypot((p.mouseX-OX)/SC,(OY-p.mouseY)/SC);
-      amp=Math.max(0.3,Math.min(1.3,Math.round(amp*10)/10));
-      let ang=Math.atan2(OY-p.mouseY,p.mouseX-OX)*180/Math.PI;
-      ang=Math.round(ang/15)*15; if(ang>180)ang-=360; if(ang<-180)ang+=360;
-      if(drag==='A1'){ el('fsA1').value=amp; el('fsP1').value=ang; }
-      else{ el('fsA2').value=amp; el('fsP2').value=ang; }
-      return false; };
+    // arraste das pontas (sem sliders)
+    const pick=()=>{ const d1=p.dist(p.mouseX,p.mouseY,sP1.x,sP1.y),
+      d2=p.dist(p.mouseX,p.mouseY,sP2.x,sP2.y);
+      if(d1<18&&d1<=d2) return 'P1'; if(d2<18) return 'P2'; return null; };
+    const inside=()=>p.mouseX>=0&&p.mouseX<=p.width&&p.mouseY>=0&&p.mouseY<=p.height;
+    p.mousePressed=()=>{ if(!inside())return; drag=pick(); };
+    p.mouseDragged=()=>{ if(!drag)return;
+      const mx=Math.max(6,Math.min(p.width-6,p.mouseX));
+      const my=Math.max(6,Math.min(OY,p.mouseY));   // acima do eixo x (y≥0)
+      const u={x:(mx-OX)/SC, y:(OY-my)/SC};
+      if(drag==='P1') P1u=u; else P2u=u; return false; };
     p.mouseReleased=()=>{ drag=null; };
-    p.touchStarted=()=>{ if(p.mouseX<0||p.mouseX>p.width||p.mouseY<0||p.mouseY>p.height) return;
-      drag=near(); if(drag) return false; };
-    p.touchMoved=()=>{ if(!drag) return; return p.mouseDragged(); };
+    p.touchStarted=()=>{ if(!inside())return; drag=pick(); if(drag)return false; };
+    p.touchMoved=()=>{ if(!drag)return; return p.mouseDragged(); };
     p.touchEnded=()=>{ drag=null; };
   });
 })();
@@ -471,13 +486,14 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Ponha $\varphi_1=0$, $\varphi_2=90°$: confira no painel que $A_{\text{res}}\approx 1{,}22$ e
-   $\beta\approx 35°$ — os mesmos números da fórmula $\tan\varphi_{\text{res}}=A_2/A_1$.
-2. Leve $\varphi_2$ a $180°$ (oposição) com $A_1=A_2$: o triângulo degenera numa linha e
-   $A_{\text{res}}\to 0$. No painel, veja $\cos(180°-\Delta\varphi)$ tornar o produto máximo —
-   por que a forma clássica "subtrai o máximo" exatamente quando os fasores se cancelam?
-3. Arraste as pontas mantendo $\Delta\varphi$ fixo (gire os dois juntos): $A_{\text{res}}$ não
-   muda. Por que a amplitude depende só da *diferença* de fase, e não das fases absolutas?
+1. Arraste $P_2$ para perto de $P_1$ (fasores quase alinhados, $\Delta\varphi\to 0$): o arco
+   $\varphi_2-\varphi_1$ fecha e $A\to A_1+A_2$. Por que a interferência é máxima aí?
+2. Gire os dois juntos (arraste $P_1$ e $P_2$ mantendo o arco $\varphi_2-\varphi_1$ constante):
+   $A$ e $\beta$ não mudam. Por que a amplitude depende só da *diferença* de fase, não das
+   fases absolutas?
+3. Leve $P_2$ à oposição de $P_1$ ($\Delta\varphi\to 180°$) com $A_1\approx A_2$: o triângulo
+   degenera e $A\to 0$. No painel, veja $\cos(180°-\Delta\varphi)$ tornar o produto máximo —
+   por que a forma clássica "subtrai o máximo" justo quando os fasores se cancelam?
 :::
 
 ## Veja a soma virar um MHS único
