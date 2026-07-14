@@ -127,7 +127,104 @@ ou baixar $T_2$ (melhor rejeição ao mar) sobe o teto.
   para QUALQUER máquina operando entre T₁ e T₂, não só para ciclo Diesel ou Otto.
 :::
 
-<!-- SIMULAÇÃO SUGERIDA: gráfico interativo de η vs. T₁ (slider, 800–2500 K) com T₂ fixo em 300 K, mostrando duas curvas — Carnot (superior) e ciclo real (inferior), zona entre elas destacada como "perdas práticas"; lib Plotly -->
+## Veja o teto de Carnot
+
+Nenhuma máquina térmica entre duas temperaturas supera o rendimento de Carnot,
+$\eta_C = 1 - T_f/T_q$. Ele sobe ao aquecer a fonte quente ou ao esfriar a fria. Ajuste
+$T_q$ e $T_f$ e compare o teto com um rendimento real de 45% — a distância entre eles é
+a irreversibilidade prática.
+
+```{python}
+#| fig-cap: "Rendimento de Carnot em função da temperatura da fonte quente (T_f = 350 K fixa). O teto sobe com T_q; o rendimento real (~45%) fica sempre abaixo. Para T_q = 1500 K, η_C = 76,7%. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+Tf = 350.0
+Tq = np.linspace(600, 2000, 200)
+etaC = 1 - Tf/Tq
+fig, ax = plt.subplots(figsize=(9, 3.2))
+ax.plot(Tq, etaC*100, color='#1F47C8', lw=2, label='teto de Carnot')
+ax.axhline(45, ls='--', color='#C81F1F', lw=1.4, label='motor real (45%)')
+ax.plot(1500, (1-Tf/1500)*100, 'o', color='#66308C', ms=9)
+ax.set_xlabel('temperatura da combustão $T_q$ (K)'); ax.set_ylabel('rendimento (%)')
+ax.legend(fontsize=9); ax.grid(alpha=0.25)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: gráfico do teto de Carnot vs T_q).
+     p5 de libs/ (offline, Q6). Mesmos parâmetros da matplotlib. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .ca-wrap{max-width:1000px;margin:1rem auto;}
+  .ca-wrap .ca-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .ca-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:160px;flex:1 1 160px;}
+  .ca-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .ca-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .ca-wrap input[type=range]{width:100%;max-width:240px;accent-color:#c85c2e;}
+  .ca-wrap #caSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .ca-wrap #caEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .ca-wrap #caEq b{color:#1f47c8;}
+</style>
+<div class="ca-wrap">
+  <div class="ca-row">
+    <div class="sld"><label>Temperatura da combustão T<sub>q</sub> = <span class="val" id="caQv">1500</span> K</label>
+      <input type="range" id="caQ" min="600" max="2000" value="1500" step="50"></div>
+    <div class="sld"><label>Temperatura fria T<sub>f</sub> = <span class="val" id="caFv">350</span> K</label>
+      <input type="range" id="caF" min="290" max="600" value="350" step="10"></div>
+  </div>
+  <div id="caSketch"></div>
+  <div id="caEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  const cw=()=>{ const w=(el('caSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),320).parent('caSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),320); };
+    p.draw=()=>{
+      const W=p.width, Tq=+el('caQ').value, Tf=+el('caF').value;
+      el('caQv').textContent=Tq; el('caFv').textContent=Tf;
+      const etaC=1-Tf/Tq, real=0.45;
+      p.background('#faf8f4');
+      const gx0=60, gx1=W-20, gy0=30, gy1=280;
+      const X=T=>gx0+(T-600)/(2000-600)*(gx1-gx0), Y=e=>gy1-e*(gy1-gy0);
+      p.stroke('#d8cfc0'); p.line(gx0,gy1,gx1,gy1); p.line(gx0,gy0,gx0,gy1);
+      p.noStroke(); p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      for(let T=600;T<=2000;T+=350) p.text(T+'K',X(T),gy1+4);
+      p.textAlign(p.RIGHT,p.CENTER); for(let e=0;e<=1;e+=0.2) p.text((e*100).toFixed(0)+'%',gx0-4,Y(e));
+      p.textAlign(p.LEFT,p.TOP); p.fill('#7a7367'); p.text('rendimento × T_q',gx0+4,gy0);
+      // curva de Carnot
+      p.push(); p.noFill(); p.stroke('#1f47c8'); p.strokeWeight(2.4); p.beginShape();
+      for(let T=600;T<=2000;T+=10) p.vertex(X(T),Y(1-Tf/T)); p.endShape(); p.pop();
+      // real 45%
+      p.stroke('#c81f1f'); p.strokeWeight(1.6); p.drawingContext.setLineDash([6,5]);
+      p.line(gx0,Y(real),gx1,Y(real)); p.drawingContext.setLineDash([]);
+      p.noStroke(); p.fill('#c81f1f'); p.textSize(10); p.textAlign(p.LEFT,p.BOTTOM); p.text('motor real 45%',gx0+6,Y(real)-3);
+      // ponto de operação + lacuna
+      p.fill('#66308c'); p.circle(X(Tq),Y(etaC),9);
+      p.stroke('#66308c'); p.strokeWeight(1); p.drawingContext.setLineDash([2,3]);
+      p.line(X(Tq),Y(etaC),X(Tq),Y(real)); p.drawingContext.setLineDash([]);
+      el('caEq').innerHTML='η<sub>Carnot</sub> = 1 − T<sub>f</sub>/T<sub>q</sub> = <b>'+(etaC*100).toFixed(1)+'%</b>'+
+        ' &nbsp;|&nbsp; inevitável (2ª lei): '+((1-etaC)*100).toFixed(0)+'% &nbsp;|&nbsp; '+
+        'lacuna até o real: '+((etaC-real)*100).toFixed(0)+' pp &nbsp;|&nbsp; real atinge '+(real/etaC*100).toFixed(0)+'% do teto';
+    };
+  });
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Aumente $T_q$ (combustão mais quente): o teto de Carnot sobe. E se você esfriar $T_f$
+   (melhor rejeição ao mar)? Qual dos dois é mais fácil de mudar num navio?
+2. A lacuna entre o teto (roxo) e o real (45%) é a irreversibilidade prática. Ela some se
+   melhorarmos o motor? E a parte "inevitável" ($1-\eta_C$), some?
+3. Por que nem um motor perfeito converte 100% do calor em trabalho? Que grandeza a 2ª
+   lei obriga a rejeitar para a fonte fria?
+:::
 
 ## Onde o fenômeno vive
 

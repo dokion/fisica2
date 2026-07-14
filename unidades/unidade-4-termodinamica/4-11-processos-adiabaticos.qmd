@@ -145,7 +145,116 @@ pré-partida).
   C_P/C_V, não qualquer outro c. Confundir com calor específico é erro comum.
 :::
 
-<!-- SIMULAÇÃO SUGERIDA: diagrama P-V interativo mostrando um cilindro com êmbolo (visual), slider de razão de compressão r (8–25), exibindo as curvas adiabática (PV^γ = const) e isotérmica (PV = const) no plano P-V; cores das regiões indicando temperatura (gradient azul-vermelho); lib p5.js para cilindro visual, Plotly para diagrama P-V com marcação de pontos 1, 2, 3 -->
+## Veja a compressão adiabática aquecer o cilindro
+
+Comprimida rápido, sem tempo para trocar calor, a mistura segue a **adiabática**
+$PV^\gamma = $ const — mais íngreme que a isoterma, porque o gás também esquenta. Com razão
+de compressão $r$, a temperatura sobe a $T_2 = T_1 r^{\gamma-1}$, o suficiente para a
+autoignição do diesel. Ajuste $r$ e veja $T_2$.
+
+```{python}
+#| fig-cap: "Compressão no cilindro diesel (γ = 1,4, T₁ = 298 K). A adiabática PV^γ (vermelha) sobe acima da isoterma PV (cinza) porque o gás aquece. Para r = 18, T₂ ≈ 947 K (674 °C) — acima da autoignição. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+g, T1, r = 1.4, 298.0, 18.0
+V = np.linspace(1, r, 100)     # V1=r (embaixo, expandido) → V=1 (comprimido)
+P_ad = (r/V)**g
+P_iso = (r/V)
+fig, ax = plt.subplots(figsize=(9, 3.4))
+ax.plot(V, P_ad, color='#C81F1F', lw=2, label='adiabática PV^γ')
+ax.plot(V, P_iso, color='0.6', lw=1.6, ls='--', label='isoterma PV')
+ax.set_xlabel('volume relativo'); ax.set_ylabel('pressão relativa'); ax.legend(fontsize=9)
+ax.invert_xaxis()
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO — o pistão comprimindo e a curva P–V).
+     p5 de libs/ (offline, Q6). Mesmos parâmetros da matplotlib: γ=1,4, T1=298 K, r ajustável. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .ad-wrap{max-width:1000px;margin:1rem auto;}
+  .ad-wrap .ad-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .ad-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:160px;flex:1 1 160px;}
+  .ad-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .ad-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .ad-wrap input[type=range]{width:100%;max-width:240px;accent-color:#c85c2e;}
+  .ad-wrap #adSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .ad-wrap #adEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .ad-wrap #adEq b{color:#c81f1f;}
+</style>
+<div class="ad-wrap">
+  <div class="ad-row">
+    <div class="sld"><label>Razão de compressão r = <span class="val" id="adRv">18</span></label>
+      <input type="range" id="adR" min="6" max="24" value="18" step="1"></div>
+  </div>
+  <div id="adSketch"></div>
+  <div id="adEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  const g=1.4, T1=298, P1=1;
+  const cw=()=>{ const w=(el('adSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),340).parent('adSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),340); };
+    p.draw=()=>{
+      const W=p.width, r=+el('adR').value;
+      el('adRv').textContent=r;
+      const T2=T1*Math.pow(r,g-1), P2=P1*Math.pow(r,g);
+      p.background('#faf8f4');
+      // ── cilindro à esquerda (pistão comprimindo até 1/r) ──
+      const cx=95, ctop=40, cbot=300, cw2=90;
+      p.stroke('#8a8073'); p.strokeWeight(2); p.noFill(); p.rect(cx-cw2/2,ctop,cw2,cbot-ctop,3);
+      const pistonY=ctop + (cbot-ctop)*(1-1/r);   // gás comprimido embaixo
+      const cT=Math.max(0,Math.min(1,(T2-298)/1200));
+      p.noStroke(); p.fill(120+135*cT,120-70*cT,200-160*cT); p.rect(cx-cw2/2+3,pistonY,cw2-6,cbot-pistonY-3);
+      p.fill('#55524c'); p.rect(cx-cw2/2,pistonY-16,cw2,16,3);   // pistão
+      p.fill('#7a7367'); p.textSize(10); p.textAlign(p.CENTER,p.TOP); p.text('gás comprimido',cx,cbot+6);
+      p.fill('#c81f1f'); p.textSize(12); p.textAlign(p.CENTER,p.CENTER); p.text(T2.toFixed(0)+' K',cx,(pistonY+cbot)/2);
+
+      // ── diagrama P–V à direita ──
+      const gx0=190, gx1=W-20, gy0=30, gy1=300;
+      const Pmax=Math.pow(24,g)*1.05;
+      const X=V=>gx0+(V-1)/(24-1)*(gx1-gx0), Y=P=>gy1-Math.log(P)/Math.log(Pmax)*(gy1-gy0);
+      p.stroke('#d8cfc0'); p.line(gx0,gy1,gx1,gy1); p.line(gx0,gy0,gx0,gy1);
+      p.noStroke(); p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      p.text('V relativo (comprime →)',(gx0+gx1)/2,gy1+16);
+      p.textAlign(p.LEFT,p.TOP); p.fill('#7a7367'); p.text('P (bar, log)',gx0+4,gy0);
+      const curva=(fn,col,wt,dash)=>{ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(wt);
+        if(dash) p.drawingContext.setLineDash([5,4]);
+        p.beginShape(); for(let V=r;V>=1;V-=0.2) p.vertex(X(V),Y(fn(V))); p.endShape();
+        p.drawingContext.setLineDash([]); p.pop(); };
+      curva(V=>Math.pow(r/V,g),'#c81f1f',2.4,false);   // adiabática (normalizada P1=1 em V=r)
+      curva(V=>r/V,'#9a938a',1.6,true);                 // isoterma
+      p.noStroke(); p.fill('#66308c'); p.circle(X(r),Y(1),9); p.circle(X(1),Y(P2),9);
+      p.fill('#55524c'); p.textSize(11); p.textAlign(p.LEFT,p.CENTER);
+      p.text('1 (admissão)',X(r)-4,Y(1)-12); p.text('2',X(1)+6,Y(P2));
+      p.fill('#c81f1f'); p.textAlign(p.LEFT,p.TOP); p.text('adiabática',gx0+8,gy0+18);
+      p.fill('#9a938a'); p.text('isoterma',gx0+8,gy0+34);
+
+      const ign = T2>=750;
+      el('adEq').innerHTML='T₂ = T₁·r^(γ−1) = <b>'+T2.toFixed(0)+' K ('+(T2-273).toFixed(0)+' °C)</b>'+
+        ', P₂ = r^γ = <b>'+P2.toFixed(0)+' bar</b> &nbsp;|&nbsp; '+
+        (ign?'<b style="color:#1f8a3a">acima da autoignição — o diesel dispensa vela</b>':'abaixo da autoignição — falha de partida a frio');
+    };
+  });
+})();
+</script>
+```
+
+::: {.pergunta}
+1. A adiabática (vermelha) sobe acima da isoterma (cinza) para a mesma compressão. Por
+   quê? O que a isoterma "não contabiliza"?
+2. A partir de que razão de compressão $r$ a temperatura $T_2$ ultrapassa a autoignição
+   (~750 K)? Ligue com o motor diesel dispensar vela.
+3. Reduza $r$ para 6 (típico de motor a gasolina): $T_2$ fica abaixo da autoignição do
+   diesel. Por que o motor Otto precisa de centelha, e o diesel não?
+:::
 
 ## Onde o fenômeno vive
 

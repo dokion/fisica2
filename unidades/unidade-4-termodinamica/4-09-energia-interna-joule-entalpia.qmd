@@ -128,7 +128,115 @@ $\Delta h \approx 2583\ \text{kJ/kg}$) confirma a estimativa a menos de ~1%.
   (caldeira), Q = n·C_P·ΔT, não Q = n·C_V·ΔT. Diferença de 40% (C_P/C_V = 1,4).
 :::
 
-<!-- SIMULAÇÃO SUGERIDA: diagrama de fluxo de fluido em trocador de calor, mostrando duas correntes (entrada fria, saída quente), com sliders para T entrada (40–60 °C) e vazão molar (0,01–0,1 mol/s), exibindo em tempo real H entrada, H saída, e transferência de calor Q = ṅ·ΔH; lib Plotly com dois paineís (temperatura vs. posição no trocador, e balanço de entalpia) -->
+## Veja o patamar de vaporização
+
+Ao aquecer a água, a temperatura sobe até a ebulição e então **estaciona**: todo o calor
+fornecido vira calor latente, quebrando ligações, sem mudar a temperatura. A entalpia
+cresce continuamente (é ela que a caldeira "paga"), mas a temperatura tem um patamar.
+Acompanhe o percurso da água líquida ao vapor.
+
+```{python}
+#| fig-cap: "Temperatura vs. entalpia fornecida por kg de água (50 °C → vapor a ~200 °C, 16 bar). O aquecimento sensível é a subida; a vaporização é o longo patamar horizontal (calor latente ~1935 kJ/kg). Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+c, Lv, Tsat, T0 = 4.18, 1935.0, 200.0, 50.0
+h1 = c*(Tsat-T0)             # aquecer líquido
+fig, ax = plt.subplots(figsize=(9, 3.4))
+h_liq = np.linspace(0, h1, 50); T_liq = T0 + h_liq/c
+h_vap = np.linspace(h1, h1+Lv, 50); T_vap = np.full_like(h_vap, Tsat)
+ax.plot(h_liq, T_liq, color='#C81F1F', lw=2, label='aquecimento líquido')
+ax.plot(h_vap, T_vap, color='#1F47C8', lw=2, label='vaporização (patamar)')
+ax.set_xlabel('entalpia fornecida (kJ/kg)'); ax.set_ylabel('temperatura (°C)'); ax.legend(fontsize=9)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO — o ponto de estado percorrendo a
+     curva T–h). p5 de libs/ (offline, Q6). Mesmos parâmetros da matplotlib. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .en-wrap{max-width:1000px;margin:1rem auto;}
+  .en-wrap .en-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .en-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .en-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .en-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .en-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .en-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .en-wrap #enSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .en-wrap #enEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .en-wrap #enEq b{color:#1f47c8;}
+</style>
+<div class="en-wrap">
+  <div class="en-row">
+    <button id="enPlay">⏸ Pausar</button>
+    <button id="enRst">↺ Reiniciar</button>
+    <div class="sld"><label>Potência de aquecimento = <span class="val" id="enPv">1.0</span> (rel.)</label>
+      <input type="range" id="enP" min="0.5" max="3" value="1" step="0.25"></div>
+  </div>
+  <div id="enSketch"></div>
+  <div id="enEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let h=0, playing=true;
+  const c=4.18, Lv=1935, Tsat=200, T0=50, h1=c*(Tsat-T0), htot=h1+Lv;
+  const cw=()=>{ const w=(el('enSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),320).parent('enSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),320); };
+    p.draw=()=>{
+      const W=p.width, pw=+el('enP').value;
+      el('enPv').textContent=pw.toFixed(2);
+      if(playing) h+=(p.deltaTime/1000)*pw*300; if(h>htot) h=htot;
+      const Tof=hh=>hh<h1?T0+hh/c:Tsat;
+      const Tnow=Tof(h);
+      p.background('#faf8f4');
+      const gx0=60, gx1=W*0.66, gy0=40, gy1=280;
+      const X=hh=>gx0+hh/htot*(gx1-gx0), Y=T=>gy1-(T-40)/(Tsat-40+20)*(gy1-gy0);
+      p.stroke('#d8cfc0'); p.line(gx0,gy1,gx1,gy1); p.line(gx0,gy0,gx0,gy1);
+      p.noStroke(); p.fill('#8a8073'); p.textSize(10); p.textAlign(p.RIGHT,p.CENTER);
+      for(let T=50;T<=200;T+=50) p.text(T+'°C',gx0-4,Y(T));
+      p.textAlign(p.LEFT,p.TOP); p.text('T × entalpia fornecida (kJ/kg)',gx0+4,gy0);
+      // curva completa (fantasma)
+      p.push(); p.noFill(); p.stroke('#e0d8ca'); p.strokeWeight(2); p.beginShape();
+      for(let hh=0;hh<=htot;hh+=20) p.vertex(X(hh),Y(Tof(hh))); p.endShape(); p.pop();
+      // percorrida
+      p.push(); p.noFill(); p.strokeWeight(2.6); p.beginShape();
+      for(let hh=0;hh<=h;hh+=10){ p.stroke(hh<h1?'#c81f1f':'#1f47c8'); p.vertex(X(hh),Y(Tof(hh))); }
+      p.endShape(); p.pop();
+      p.noStroke(); p.fill('#66308c'); p.circle(X(h),Y(Tnow),9);
+      // recipiente com estado (líquido/vapor)
+      const cx=W*0.84, cy=160, frac=Math.max(0,(h-h1)/Lv);
+      p.stroke('#8a8073'); p.strokeWeight(2); p.noFill(); p.rect(cx-45,cy-70,90,140,4);
+      p.noStroke(); p.fill(150,185,215,180); p.rect(cx-42,cy-4+frac*67,84,73-frac*67);
+      // bolhas de vapor
+      if(h>=h1){ p.fill(200,200,220,150);
+        for(let i=0;i<10;i++){ const bx=cx-35+Math.random()*70, by=cy-65+Math.random()*(60);
+          p.circle(bx,by,3+Math.random()*4); } }
+      p.fill('#7a7367'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      p.text(h<h1?'líquido aquecendo':(h<htot?'vaporizando':'vapor'),cx,cy+74);
+      el('enEq').innerHTML='T = <b>'+Tnow.toFixed(0)+' °C</b> &nbsp;|&nbsp; entalpia fornecida = '+
+        h.toFixed(0)+' kJ/kg &nbsp;|&nbsp; '+(h<h1?'aquecendo (sensível)':'<b>patamar de vaporização</b> — T fixa, h cresce');
+    };
+  });
+  el('enPlay').onclick=()=>{ playing=!playing; el('enPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+  el('enRst').onclick=()=>{ h=0; };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Durante a vaporização a temperatura não sobe, mas a entalpia continua crescendo. Para
+   onde vai o calor fornecido nesse patamar?
+2. Compare o comprimento do trecho vermelho (aquecer 50→200 °C) com o azul (vaporizar):
+   qual custa mais entalpia? Ligue com o calor latente ~1935 kJ/kg.
+3. Por que a caldeira "paga" a entalpia (não a temperatura)? Que grandeza a tabela de
+   vapor tabela para dimensionar o processo de fluxo?
+:::
 
 ## Onde o fenômeno vive
 

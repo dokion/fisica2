@@ -136,7 +136,103 @@ $C_p$ de $C_v$.
   faixa de temperatura usual de máquinas (~250–3000 K).
 :::
 
-<!-- SIMULAÇÃO SUGERIDA: dois paineís lado a lado — (esquerda) duas moléculas de N₂ com setas indicando graus de liberdade (3 translação em cores RGB, 2 rotação em cor diferente), slider de temperatura mostrando movimento mais rápido; (direita) diagrama das capacidades C_V e C_P em função de f, com dropdown para escolher tipo de gás (monoatômico, diatômico, poliatômico) e ver γ mudar; lib p5.js para molecular visualization, Plotly para gráficos -->
+## Veja por que C_p é maior que C_v
+
+No processo **isobárico** (pistão livre), parte do calor escapa como trabalho de empurrar
+a atmosfera — por isso é preciso *mais* calor ($C_p$) para a mesma subida de temperatura.
+No **isocórico** (volume fixo), nada escapa como trabalho: todo o calor vira energia
+interna ($C_v$). Compare os dois no diagrama P–V.
+
+```{python}
+#| fig-cap: "Dois processos com 0,05 mol de ar. Isobárico (1→2, pistão livre): W = nRΔT escapa como trabalho, área sob a curva. Isocórico (2→3, volume fixo): reta vertical, W = 0, todo calor vira ΔU. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+n, R = 0.05, 8.314
+T1, T2 = 293.0, 373.0
+V1 = n*R*T1/1e5; V2 = n*R*T2/1e5   # a 1 bar
+fig, ax = plt.subplots(figsize=(9, 3.4))
+ax.plot([V1*1e3, V2*1e3], [1, 1], color='#C81F1F', lw=2.5, label='isobárico 1→2 (W>0)')
+ax.fill_between([V1*1e3, V2*1e3], [1, 1], 0, color='#C81F1F', alpha=0.12)
+ax.plot([V2*1e3, V2*1e3], [1, 10], color='#1F47C8', lw=2.5, label='isocórico 2→3 (W=0)')
+ax.plot([V1*1e3, V2*1e3, V2*1e3], [1, 1, 10], 'o', color='#66308C', ms=7)
+ax.set_xlabel('volume (L)'); ax.set_ylabel('pressão (bar)'); ax.legend(fontsize=9)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: diagrama P–V com os dois processos e as áreas
+     de trabalho). p5 de libs/ (offline, Q6). Mesmos parâmetros da matplotlib. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .cm-wrap{max-width:900px;margin:1rem auto;}
+  .cm-wrap .cm-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .cm-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:160px;flex:1 1 160px;}
+  .cm-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .cm-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .cm-wrap input[type=range]{width:100%;max-width:240px;accent-color:#c85c2e;}
+  .cm-wrap #cmSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .cm-wrap #cmEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .cm-wrap #cmEq b{color:#c81f1f;}
+</style>
+<div class="cm-wrap">
+  <div class="cm-row">
+    <div class="sld"><label>Aquecimento isobárico ΔT = <span class="val" id="cmTv">80</span> K</label>
+      <input type="range" id="cmT" min="20" max="150" value="80" step="10"></div>
+  </div>
+  <div id="cmSketch"></div>
+  <div id="cmEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  const n=0.05, R=8.314, Cv=2.5*R, Cp=3.5*R, T1=293;
+  const cw=()=>{ const w=(el('cmSketch').clientWidth)||880; return Math.max(340,Math.min(880,w)); };
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),320).parent('cmSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),320); };
+    p.draw=()=>{
+      const W=p.width, dT=+el('cmT').value, T2=T1+dT;
+      el('cmTv').textContent=dT;
+      const V1=n*R*T1/1e5, V2=n*R*T2/1e5;   // m³ a 1 bar
+      const Q1=n*Cp*dT, W1=n*R*dT, dU1=n*Cv*dT;   // isobárico
+      p.background('#faf8f4');
+      const gx0=64, gx1=W-20, gy0=30, gy1=280;
+      const Vmax=n*R*(T1+150)/1e5*1.1, Pmax=11;
+      const X=V=>gx0+V/Vmax*(gx1-gx0), Y=P=>gy1-P/Pmax*(gy1-gy0);
+      p.stroke('#d8cfc0'); p.line(gx0,gy1,gx1,gy1); p.line(gx0,gy0,gx0,gy1);
+      p.noStroke(); p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      p.text('V (L)',(gx0+gx1)/2,gy1+16);
+      p.textAlign(p.RIGHT,p.CENTER); for(let P=0;P<=10;P+=2) p.text(P,gx0-4,Y(P));
+      p.textAlign(p.LEFT,p.TOP); p.fill('#7a7367'); p.text('P (bar)',gx0+4,gy0);
+      // isobárico 1→2 (área = trabalho)
+      p.noStroke(); p.fill(200,31,31,40); p.beginShape();
+      p.vertex(X(V1),Y(1)); p.vertex(X(V2),Y(1)); p.vertex(X(V2),Y(0)); p.vertex(X(V1),Y(0)); p.endShape(p.CLOSE);
+      p.stroke('#c81f1f'); p.strokeWeight(2.6); p.line(X(V1),Y(1),X(V2),Y(1));
+      // isocórico 2→3
+      p.stroke('#1f47c8'); p.strokeWeight(2.6); p.line(X(V2),Y(1),X(V2),Y(10));
+      p.noStroke(); p.fill('#66308c'); p.circle(X(V1),Y(1),9); p.circle(X(V2),Y(1),9); p.circle(X(V2),Y(10),9);
+      p.fill('#55524c'); p.textSize(11); p.textAlign(p.LEFT,p.BOTTOM);
+      p.text('1',X(V1)-12,Y(1)); p.text('2',X(V2)+6,Y(1)+16); p.text('3',X(V2)+6,Y(10));
+      p.fill('#c81f1f'); p.textSize(10); p.textAlign(p.CENTER,p.TOP); p.text('W (área)',(X(V1)+X(V2))/2,Y(0.5));
+      el('cmEq').innerHTML='isobárico: Q = nC<sub>p</sub>ΔT = <b>'+Q1.toFixed(0)+' J</b>, W = nRΔT = '+W1.toFixed(0)+
+        ' J, ΔU = '+dU1.toFixed(0)+' J &nbsp;|&nbsp; a diferença C<sub>p</sub>−C<sub>v</sub> = R é o trabalho por grau';
+    };
+  });
+})();
+</script>
+```
+
+::: {.pergunta}
+1. No isobárico, quanto do calor fornecido vira trabalho e quanto vira energia interna?
+   Confirme $Q = W + \Delta U$ no painel.
+2. No isocórico o trabalho é zero (reta vertical, sem variação de volume). Para onde vai
+   todo o calor então?
+3. Por que $C_p - C_v = R$? Relacione a diferença com o trabalho de empurrar a atmosfera
+   a cada grau de aquecimento.
+:::
 
 ## Onde o fenômeno vive
 
