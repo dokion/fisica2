@@ -143,7 +143,96 @@ calor rejeitado, e a soma é conservada — nenhum termo pode exceder $\dot{Q}_1
   combustível, 45 J saem como trabalho (útil) e 55 J saem como calor (perda). Nada some.
 :::
 
-<!-- SIMULAÇÃO SUGERIDA: diagrama de fluxo de energia (Sankey diagram) mostrando 100 unidades de combustível dividindo-se em trabalho (45), água quente (30), exaustão (20), radiação (5); sliders para ajustar eficiência η do motor e ver como as proporções mudam (W sobe, mas Q₂ também); lib Plotly para diagrama de Sankey -->
+## Veja o balanço de energia do motor
+
+A primeira lei em forma de repartição: de cada 100 unidades de combustível, uma fração
+$\eta$ vira trabalho no eixo e o restante sai como calor — pelos gases de descarga, pela
+água de refrigeração e por radiação. Ajuste o rendimento e veja as fatias mudarem, com a
+soma sempre igual a 100.
+
+```{python}
+#| fig-cap: "Repartição típica da energia de um motor diesel: ~45% trabalho, ~30% gases de descarga, ~20% água de refrigeração, ~5% radiação. A soma é sempre 100% (primeira lei). Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+frac = {'trabalho': 45, 'gases de descarga': 30, 'água de refrigeração': 20, 'radiação': 5}
+cores = ['#1F8A3A', '#C81F1F', '#1F47C8', '#C85C2E']
+fig, ax = plt.subplots(figsize=(9, 2.4))
+left = 0
+for (nome, v), c in zip(frac.items(), cores):
+    ax.barh(['motor'], [v], left=[left], color=c, label=f'{nome} ({v}%)'); left += v
+ax.set_xlim(0, 100); ax.set_xlabel('% da energia do combustível')
+ax.legend(fontsize=8, ncol=2, loc='upper center', bbox_to_anchor=(0.5, -0.3))
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: barras de fluxo de energia atualizadas ao vivo).
+     p5 de libs/ (offline, Q6). Mesmos parâmetros da matplotlib. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .sk-wrap{max-width:1000px;margin:1rem auto;}
+  .sk-wrap .sk-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .sk-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:160px;flex:1 1 160px;}
+  .sk-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .sk-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .sk-wrap input[type=range]{width:100%;max-width:240px;accent-color:#c85c2e;}
+  .sk-wrap #skSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .sk-wrap #skEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .sk-wrap #skEq b{color:#1f8a3a;}
+</style>
+<div class="sk-wrap">
+  <div class="sk-row">
+    <div class="sld"><label>Rendimento (trabalho) = <span class="val" id="skWv">45</span> %</label>
+      <input type="range" id="skW" min="30" max="55" value="45" step="1"></div>
+    <div class="sld"><label>Radiação = <span class="val" id="skRv">5</span> %</label>
+      <input type="range" id="skR" min="2" max="10" value="5" step="1"></div>
+  </div>
+  <div id="skSketch"></div>
+  <div id="skEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  const cw=()=>{ const w=(el('skSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),240).parent('skSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),240); };
+    p.draw=()=>{
+      const W=p.width, w=+el('skW').value, rad=+el('skR').value;
+      el('skWv').textContent=w; el('skRv').textContent=rad;
+      const resto=100-w-rad;         // gases + água
+      const gases=Math.round(resto*0.6), agua=resto-Math.round(resto*0.6);
+      const fatias=[['trabalho',w,'#1f8a3a'],['gases',gases,'#c81f1f'],['água refr.',agua,'#1f47c8'],['radiação',rad,'#c85c2e']];
+      p.background('#faf8f4');
+      const x0=40, x1=W-30, y=90, bh=60, sc=(x1-x0)/100;
+      // barra de entrada
+      p.noStroke(); p.fill('#8a8073'); p.rect(x0,y-46,100*sc,18,3);
+      p.fill('#7a7367'); p.textSize(11); p.textAlign(p.LEFT,p.BOTTOM); p.text('COMBUSTÍVEL = 100%',x0,y-50);
+      // fatias de saída
+      let x=x0;
+      for(const [nome,v,col] of fatias){ p.noStroke(); p.fill(col); p.rect(x,y,v*sc,bh,3);
+        if(v*sc>44){ p.fill('#faf8f4'); p.textSize(12); p.textAlign(p.CENTER,p.CENTER);
+          p.text(nome+' '+v+'%',x+v*sc/2,y+bh/2); } x+=v*sc; }
+      p.noStroke(); p.fill('#7a7367'); p.textSize(11); p.textAlign(p.LEFT,p.TOP); p.text('SAÍDA (soma = 100%)',x0,y+bh+6);
+      el('skEq').innerHTML='trabalho <b>'+w+'%</b> + gases '+gases+'% + água '+agua+'% + radiação '+rad+
+        '% = <b>100%</b> (primeira lei) &nbsp;|&nbsp; calor rejeitado = '+(100-w)+'%';
+    };
+  });
+})();
+</script>
+```
+
+::: {.pergunta}
+1. A soma das quatro fatias é sempre 100%. Que princípio isso representa, e o que ele
+   proíbe (uma fatia "extra" que apareça do nada)?
+2. Suba o rendimento: qual fatia diminui para compensar? A energia rejeitada some ou
+   apenas encolhe?
+3. Gases de descarga (~30%) e água de refrigeração (~20%) somam metade da energia. Por
+   que a recuperação de calor (WHR) mira sobretudo os gases, e não a água?
+:::
 
 ## Onde o fenômeno vive
 

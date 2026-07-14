@@ -124,7 +124,111 @@ condutividade) sim adiciona resistência apreciável em série e derruba o desem
   camada de 0,5 mm adiciona resistência equivalente a 10 cm de latão puro.
 :::
 
-<!-- SIMULAÇÃO SUGERIDA: corte transversal de parede de trocador com cores de temperatura gradient (quente-vermelho, frio-azul), slider de espessura d e material κ, mostrando em tempo real o fluxo Q pela Lei de Fourier e como incrustação afeta o resultado; lib Plotly com mapa de calor (heatmap de T através da parede) -->
+## Veja a resistência em série da parede
+
+O calor atravessa camadas em série — metal, incrustação, isolamento — e cada uma é uma
+**resistência térmica** $R = d/(\kappa A)$. A queda de temperatura é maior na camada de
+maior resistência. Adicione incrustação e veja o degrau de temperatura nela crescer e o
+fluxo de calor cair.
+
+```{python}
+#| fig-cap: "Perfil de temperatura através de uma parede composta (metal + incrustação + isolamento) entre óleo a 90 °C e água a 30 °C. A queda de temperatura concentra-se na camada de maior resistência térmica; o fluxo Q é o mesmo em série. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+# camadas: (espessura m, condutividade W/mK)
+camadas = [('metal', 0.002, 50.0), ('incrustação', 0.0005, 1.0), ('isolamento', 0.01, 0.04)]
+Th, Tc, A = 90.0, 30.0, 1.0
+R = [d/(k*A) for _, d, k in camadas]
+Rtot = sum(R); Q = (Th-Tc)/Rtot
+xs, Ts, x = [0], [Th], 0
+for (nome, d, k), Ri in zip(camadas, R):
+    x += d; xs.append(x); Ts.append(Ts[-1] - Q*Ri)
+fig, ax = plt.subplots(figsize=(9, 3.2))
+ax.plot(np.array(xs)*1000, Ts, 'o-', color='#C81F1F', lw=2)
+xacc = 0
+for nome, d, k in camadas:
+    ax.axvspan(xacc*1000, (xacc+d)*1000, alpha=0.12); ax.text((xacc+d/2)*1000, 88, nome, ha='center', fontsize=8)
+    xacc += d
+ax.set_xlabel('espessura (mm)'); ax.set_ylabel('temperatura (°C)')
+ax.set_title(f'fluxo Q = {Q:.0f} W/m² (o mesmo em todas as camadas)', fontsize=10)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: gráfico do perfil T e da resistência em série).
+     p5 de libs/ (offline, Q6). Mesmos parâmetros da matplotlib; incrustação ajustável. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .pw-wrap{max-width:1000px;margin:1rem auto;}
+  .pw-wrap .pw-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .pw-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:170px;flex:1 1 170px;}
+  .pw-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .pw-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .pw-wrap input[type=range]{width:100%;max-width:240px;accent-color:#c85c2e;}
+  .pw-wrap #pwSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .pw-wrap #pwEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .pw-wrap #pwEq b{color:#c81f1f;}
+</style>
+<div class="pw-wrap">
+  <div class="pw-row">
+    <div class="sld"><label>Incrustação = <span class="val" id="pwIv">0.5</span> mm</label>
+      <input type="range" id="pwI" min="0" max="3" value="0.5" step="0.1"></div>
+    <div class="sld"><label>Isolamento = <span class="val" id="pwLv">10</span> mm</label>
+      <input type="range" id="pwL" min="0" max="30" value="10" step="1"></div>
+  </div>
+  <div id="pwSketch"></div>
+  <div id="pwEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  const cw=()=>{ const w=(el('pwSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  const Th=90, Tc=30, A=1;
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),340).parent('pwSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),340); };
+    p.draw=()=>{
+      const W=p.width, di=(+el('pwI').value)/1000, dl=(+el('pwL').value)/1000;
+      el('pwIv').textContent=(+el('pwI').value).toFixed(1); el('pwLv').textContent=el('pwL').value;
+      const cam=[['metal',0.002,50,'#8a9099'],['incrustação',di,1.0,'#b08050'],['isolamento',dl,0.04,'#d9c98a']];
+      const R=cam.map(c=>c[1]/(c[2]*A)); const Rtot=R.reduce((a,b)=>a+b,0)+1e-9; const Q=(Th-Tc)/Rtot;
+      p.background('#faf8f4');
+      const x0=50, x1=W-30, y0=40, y1=250;
+      const dtot=cam.reduce((a,c)=>a+c[1],0)+1e-9;
+      const Yt=T=>y1-(T-Tc)/(Th-Tc)*(y1-y0);
+      // camadas coloridas + perfil de T
+      let xacc=0, Tacc=Th; p.textAlign(p.CENTER,p.TOP); p.textSize(9);
+      let px=x0, py=Yt(Th);
+      for(let i=0;i<cam.length;i++){ const [nome,d,k,col]=cam[i];
+        const wpx=d/dtot*(x1-x0); p.noStroke(); p.fill(col); p.rect(xacc/dtot*(x1-x0)+x0,y0,wpx,y1-y0);
+        const Tnext=Tacc-Q*R[i]; const nx=px+wpx, ny=Yt(Tnext);
+        p.stroke('#c81f1f'); p.strokeWeight(2.4); p.line(px,py,nx,ny);
+        p.noStroke(); p.fill('#55524c'); if(wpx>18) p.text(nome,px+wpx/2,y1+6);
+        px=nx; py=ny; Tacc=Tnext; xacc+=d; }
+      p.stroke('#c9c2b6'); p.strokeWeight(1); p.line(x0,Yt(Th),x1,Yt(Th));
+      p.noStroke(); p.fill('#c81f1f'); p.textSize(11); p.textAlign(p.LEFT,p.CENTER);
+      p.text('óleo 90°C',x0+2,y0-2+ (Yt(Th)<y0+10?14:-2));
+      p.fill('#1f47c8'); p.textAlign(p.RIGHT,p.CENTER); p.text('água 30°C',x1,Yt(Tc));
+      el('pwEq').innerHTML='fluxo Q = ΔT/ΣR = <b>'+Q.toFixed(0)+' W/m²</b> &nbsp;|&nbsp; '+
+        'R: metal '+(R[0]*1e3).toFixed(2)+', incrust. '+(R[1]*1e3).toFixed(1)+', isol. '+(R[2]*1e3).toFixed(0)+' (×10⁻³) &nbsp;|&nbsp; '+
+        'maior queda na maior resistência';
+    };
+  });
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Com incrustação zero, em que camada está a maior queda de temperatura? Ligue com a
+   resistência térmica $R = d/\kappa A$.
+2. Aumente a incrustação de 0 a 3 mm: o fluxo de calor sobe ou desce? Por que uma camada
+   milimétrica de baixa condutividade derruba o desempenho do trocador?
+3. Por que a parede de metal, mesmo espessa, quase não segura temperatura, enquanto
+   poucos milímetros de isolamento seguram muito?
+:::
 
 ## Onde o fenômeno vive
 

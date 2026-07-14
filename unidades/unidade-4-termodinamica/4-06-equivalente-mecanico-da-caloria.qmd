@@ -125,7 +125,111 @@ e a vaporização a pressão maior que 1 atm muda ligeiramente $L_v$.
   Q₂. Não é o número de Joule que muda; é a fração do total que segue cada caminho.
 :::
 
-<!-- SIMULAÇÃO SUGERIDA: recipiente virtual com pás (como no experimento de Joule), slider de "peso caindo" (trabalho em J), mostrando em tempo real o aumento de temperatura da água correspondente (ΔT em K) pela relação W = m·c·ΔT, com equivalência em calorias exibida lado a lado; lib p5.js para animação das pás, Plotly para gráfico T vs. tempo -->
+## Veja o experimento de Joule
+
+Um peso que cai gira pás dentro da água; o trabalho mecânico $W = mgh$ vira energia
+interna e aquece a água, $\Delta T = W/(m_{\text{água}}\,c)$. Foi assim que Joule mediu o
+**equivalente mecânico da caloria** — provando que calor e trabalho são a mesma moeda,
+medida em joules. Solte o peso e veja o termômetro subir.
+
+```{python}
+#| fig-cap: "Experimento de Joule: um peso de 25 kg caindo 2 m (repetido) agita 1 kg de água. Cada joule de trabalho (W = mgh) vira energia interna; a temperatura sobe ΔT = W/(mc). Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+Mp, h, g, mA, c = 25.0, 2.0, 9.81, 1.0, 4186.0
+n = np.arange(0, 41)
+W = Mp*g*h*n
+dT = W/(mA*c)
+fig, ax = plt.subplots(figsize=(9, 3.2))
+ax.plot(n, dT, color='#C81F1F', lw=2)
+ax.set_xlabel('número de quedas do peso'); ax.set_ylabel('ΔT da água (K)')
+ax.set_title(f'cada queda: W = mgh = {Mp*g*h:.0f} J → ΔT = {Mp*g*h/(mA*c)*1000:.1f} mK', fontsize=10)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO — o peso caindo e as pás girando).
+     p5 de libs/ (offline, Q6). Mesmos parâmetros da matplotlib: peso e altura ajustáveis. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .jo-wrap{max-width:1000px;margin:1rem auto;}
+  .jo-wrap .jo-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .jo-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .jo-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .jo-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .jo-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .jo-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .jo-wrap #joSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .jo-wrap #joEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .jo-wrap #joEq b{color:#c81f1f;}
+</style>
+<div class="jo-wrap">
+  <div class="jo-row">
+    <button id="joPlay">⏸ Pausar</button>
+    <button id="joRst">↺ Zerar água</button>
+    <div class="sld"><label>Peso = <span class="val" id="joMv">25</span> kg</label>
+      <input type="range" id="joM" min="5" max="50" value="25" step="5"></div>
+    <div class="sld"><label>Altura de queda = <span class="val" id="joHv">2.0</span> m</label>
+      <input type="range" id="joH" min="0.5" max="3" value="2" step="0.5"></div>
+  </div>
+  <div id="joSketch"></div>
+  <div id="joEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let ph=0, playing=true, quedas=0, Wtot=0;
+  const g=9.81, mA=1.0, c=4186;
+  const cw=()=>{ const w=(el('joSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),340).parent('joSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),340); };
+    p.draw=()=>{
+      const W=p.width, Mp=+el('joM').value, h=+el('joH').value;
+      el('joMv').textContent=Mp; el('joHv').textContent=h.toFixed(1);
+      if(playing){ ph+=p.deltaTime/1000*0.5; if(ph>=1){ ph-=1; quedas++; Wtot+=Mp*g*h; } }
+      const dT=Wtot/(mA*c);
+      p.background('#faf8f4');
+      // peso caindo (esquerda)
+      const px=90, ytop=40, ybot=180, py=ytop+ph*(ybot-ytop);
+      p.stroke('#8a8073'); p.strokeWeight(1); p.line(px,20,px,py);   // cabo
+      p.noStroke(); p.fill('#55524c'); p.rect(px-22,py,44,34,4);
+      p.fill('#faf8f4'); p.textSize(12); p.textAlign(p.CENTER,p.CENTER); p.text(Mp+' kg',px,py+17);
+      // recipiente com água + pás girando
+      const tx=W*0.55, tw=150, ty=90, th=170;
+      const cT=Math.max(0,Math.min(1,dT/0.3)); // cor esquenta
+      p.noStroke(); p.fill(120+135*cT,150-70*cT,210-160*cT,180); p.rect(tx-tw/2,ty,tw,th,0,0,8,8);
+      p.stroke('#8a8073'); p.strokeWeight(2); p.noFill();
+      p.line(tx-tw/2,ty,tx-tw/2,ty+th); p.line(tx+tw/2,ty,tx+tw/2,ty+th); p.line(tx-tw/2,ty+th,tx+tw/2,ty+th);
+      // pás (giram proporcional à velocidade de queda)
+      p.push(); p.translate(tx,ty+th*0.5); p.rotate(quedas*2+ph*8);
+      p.stroke('#55524c'); p.strokeWeight(3);
+      for(let k=0;k<4;k++){ p.rotate(Math.PI/2); p.line(0,0,40,0); }
+      p.pop();
+      // termômetro
+      p.noStroke(); p.fill('#c81f1f'); p.textSize(13); p.textAlign(p.CENTER,p.TOP);
+      p.text('ΔT = '+(dT*1000).toFixed(1)+' mK',tx,ty+th+8);
+      el('joEq').innerHTML='cada queda: W = mgh = <b>'+(Mp*g*h).toFixed(0)+' J</b> &nbsp;|&nbsp; '+
+        'quedas: '+quedas+' → W total = '+Wtot.toFixed(0)+' J → <b>ΔT = '+(dT*1000).toFixed(1)+' mK</b>'+
+        ' &nbsp;|&nbsp; 1 cal = 4,186 J (Joule)';
+    };
+  });
+  el('joPlay').onclick=()=>{ playing=!playing; el('joPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+  el('joRst').onclick=()=>{ quedas=0; Wtot=0; ph=0; };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Cada queda aquece a água por uma fração de milikelvin. Por que Joule precisou repetir
+   o experimento centenas de vezes para medir o efeito?
+2. Dobre o peso: o aquecimento por queda dobra? Confirme por $W = mgh$ e $\Delta T = W/(mc)$.
+3. O trabalho mecânico "sumiu" em calor. Isso viola a conservação de energia, ou é
+   exatamente ela? Ligue com o equivalente mecânico 1 cal = 4,186 J.
+:::
 
 ## Onde o fenômeno vive
 

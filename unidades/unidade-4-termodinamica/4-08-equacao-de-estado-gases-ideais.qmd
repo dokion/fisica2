@@ -133,7 +133,106 @@ exigem materiais e refrigeração especiais.
   continua válida, mas n₁ ≠ n₂. Ciclos com vazamento são mais complexos.
 :::
 
-<!-- SIMULAÇÃO SUGERIDA: gráfico P-V interativo mostrando um cilindro de motor, com sliders para T (variando cor do gás visualmente: azul frio, vermelho quente), mostrando em tempo real as curvas PV = constante (isotérmicas) e PV^γ = constante (adiabáticas) no plano P-V; lib Plotly com múltiplas curvas de gás -->
+## Veja a combustão a volume constante
+
+No instante da queima, o pistão quase não se move: o volume é constante e a pressão sobe
+com a temperatura, $P/T = $ const (Gay-Lussac). No diagrama $P$–$T$, o processo é uma
+reta pela origem; no $P$–$V$, uma subida vertical. Ajuste a pressão pós-combustão e leia
+a temperatura de pico.
+
+```{python}
+#| fig-cap: "Combustão a volume constante num cilindro diesel: do ponto 2 (80 bar, 900 K) ao ponto 3. A pressão e a temperatura sobem juntas (P/T constante); para P₃ = 150 bar, T₃ = 900×150/80 ≈ 1688 K. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+P2, T2, P3 = 80.0, 900.0, 150.0
+T3 = T2*P3/P2
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9, 3.4))
+T = np.linspace(T2, T3, 50)
+ax1.plot(T, P2*T/T2, color='#C81F1F', lw=2)
+ax1.plot([T2, T3], [P2, P3], 'o', color='#66308C', ms=8)
+ax1.annotate('2', (T2, P2), textcoords='offset points', xytext=(-12, 0))
+ax1.annotate('3', (T3, P3), textcoords='offset points', xytext=(6, 0))
+ax1.set_xlabel('T (K)'); ax1.set_ylabel('P (bar)'); ax1.set_title('P–T: reta pela origem', fontsize=10)
+ax2.plot([1, 1], [P2, P3], color='#C81F1F', lw=3)
+ax2.plot([1, 1], [P2, P3], 'o', color='#66308C', ms=8)
+ax2.set_xlim(0.5, 1.5); ax2.set_xlabel('V (const)'); ax2.set_ylabel('P (bar)'); ax2.set_title('P–V: subida vertical', fontsize=10)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: gráfico P–T explorável do processo isocórico).
+     p5 de libs/ (offline, Q6). Mesmos parâmetros da matplotlib: ponto 2 (80 bar, 900 K). -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .gl-wrap{max-width:900px;margin:1rem auto;}
+  .gl-wrap .gl-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .gl-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:160px;flex:1 1 160px;}
+  .gl-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .gl-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .gl-wrap input[type=range]{width:100%;max-width:240px;accent-color:#c85c2e;}
+  .gl-wrap #glSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .gl-wrap #glEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .gl-wrap #glEq b{color:#c81f1f;}
+</style>
+<div class="gl-wrap">
+  <div class="gl-row">
+    <div class="sld"><label>Pressão pós-combustão P₃ = <span class="val" id="glPv">150</span> bar</label>
+      <input type="range" id="glP" min="80" max="220" value="150" step="5"></div>
+  </div>
+  <div id="glSketch"></div>
+  <div id="glEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  const P2=80, T2=900;
+  const cw=()=>{ const w=(el('glSketch').clientWidth)||880; return Math.max(340,Math.min(880,w)); };
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),320).parent('glSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),320); };
+    p.draw=()=>{
+      const W=p.width, P3=+el('glP').value, T3=T2*P3/P2;
+      el('glPv').textContent=P3;
+      p.background('#faf8f4');
+      const gx0=60, gx1=W*0.62, gy0=30, gy1=280;
+      const Tmax=T2*220/P2, Pmax=240;
+      const X=T=>gx0+T/Tmax*(gx1-gx0), Y=P=>gy1-P/Pmax*(gy1-gy0);
+      p.stroke('#d8cfc0'); p.line(gx0,gy1,gx1,gy1); p.line(gx0,gy0,gx0,gy1);
+      p.noStroke(); p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      for(let T=0;T<=Tmax;T+=500) p.text(T+'K',X(T),gy1+4);
+      p.textAlign(p.RIGHT,p.CENTER); for(let P=0;P<=Pmax;P+=60) p.text(P,gx0-4,Y(P));
+      p.textAlign(p.LEFT,p.TOP); p.fill('#7a7367'); p.text('P (bar) × T (K)',gx0+4,gy0);
+      // reta P/T const (pela origem)
+      p.stroke('#c81f1f'); p.strokeWeight(2.2); p.line(X(0),Y(0),X(Tmax),Y(P2/T2*Tmax));
+      // pontos 2 e 3
+      p.noStroke(); p.fill('#66308c'); p.circle(X(T2),Y(P2),10); p.circle(X(T3),Y(P3),10);
+      p.fill('#55524c'); p.textSize(12); p.textAlign(p.LEFT,p.BOTTOM);
+      p.text('2',X(T2)+6,Y(P2)); p.text('3',X(T3)+6,Y(P3)-2);
+      // cilindro à direita (volume fixo, cor pela T)
+      const cx=W*0.82, cy=155, cT=Math.max(0,Math.min(1,(T3-900)/1500));
+      p.stroke('#8a8073'); p.strokeWeight(2); p.noFill(); p.rect(cx-40,cy-70,80,140,4);
+      p.noStroke(); p.fill(120+135*cT,120-70*cT,200-160*cT); p.rect(cx-37,cy-40,74,107,3);
+      p.fill('#55524c'); p.rect(cx-40,cy-70,80,26,4);  // pistão no topo (fixo)
+      p.fill('#7a7367'); p.textSize(10); p.textAlign(p.CENTER,p.TOP); p.text('V constante',cx,cy+72);
+      el('glEq').innerHTML='P/T = const → T₃ = T₂·(P₃/P₂) = 900×('+P3+'/80) = <b>'+T3.toFixed(0)+' K</b>'+
+        ' &nbsp;|&nbsp; a pressão e a temperatura sobem juntas';
+    };
+  });
+})();
+</script>
+```
+
+::: {.pergunta}
+1. No diagrama $P$–$T$ o processo é uma reta que passa pela origem. Por quê? O que a
+   lei $P/T = $ const garante sobre a razão entre as duas grandezas?
+2. Aumente $P_3$: a temperatura de pico $T_3$ acompanha proporcionalmente. Que
+   temperatura corresponde a 200 bar?
+3. Por que a hipótese de volume constante é razoável só no *instante* da combustão? O
+   que muda quando o pistão começa a descer (ciclo Diesel real)?
+:::
 
 ## Onde o fenômeno vive
 
