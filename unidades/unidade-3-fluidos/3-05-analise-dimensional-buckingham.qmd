@@ -136,7 +136,121 @@ maior nele que no navio — mais um motivo para a correção de fricção.
 - **Confundir Froude com Mach:** Mach é para gases compressíveis; Froude é para líquidos com superfície livre. Navio = Froude; aviação = Mach/Reynolds.
 :::
 
-<!-- SIMULAÇÃO SUGERIDA: Gráfico interativo (Plotly) de Resistência vs. Velocidade, mostrando contribuições de onda e fricção para escala real e modelo (com slider de escala); ou visualizador de escala: sliders de L, v, mostrando Fr, Re, Cb em tempo real. -->
+## Veja por que Froude e Reynolds não fecham juntos
+
+O modelo e o navio real só produzem o mesmo padrão de ondas se tiverem o mesmo número
+de Froude — o que fixa a velocidade de ensaio $v_m = v_r\sqrt{L_m/L_r}$. Mas então o
+Reynolds do modelo fica $n^{3/2}$ vezes menor: impossível igualar os dois. Ajuste a
+escala e veja o Froude casar enquanto o Reynolds diverge.
+
+```{python}
+#| fig-cap: "Semelhança de Froude para um navio de 200 m a 14 nós ensaiado em escalas 1:n. Mantido Fr, a velocidade do modelo cai com √n e o Reynolds do modelo fica n^1,5 vezes menor que o real — a diferença que obriga a corrigir o atrito. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+Lr, vr, nu = 200.0, 14*0.5144, 1e-6
+n = np.linspace(10, 100, 200)
+vm = vr/np.sqrt(n)
+Re_r = vr*Lr/nu
+Re_m = vm*(Lr/n)/nu
+
+fig, ax = plt.subplots(figsize=(9, 3.4))
+ax.axhline(Re_r, color='#1F47C8', lw=2, label='Re do navio real')
+ax.plot(n, Re_m, color='#C81F1F', lw=2, label='Re do modelo (Fr igual)')
+ax.set_yscale('log'); ax.set_xlabel('escala 1 : n'); ax.set_ylabel('número de Reynolds')
+ax.legend(fontsize=9); ax.grid(alpha=0.25, which='both')
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO — modelo e navio com seus padrões de
+     onda). p5 de libs/ (offline, Q6). Mesmos parâmetros da matplotlib: L_real = 200 m,
+     v_real = 14 nós; escala e velocidade ajustáveis. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .fr-wrap{max-width:1000px;margin:1rem auto;}
+  .fr-wrap .fr-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .fr-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .fr-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .fr-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .fr-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .fr-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .fr-wrap #frSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .fr-wrap #frEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .fr-wrap #frEq b{color:#1f47c8;}
+</style>
+<div class="fr-wrap">
+  <div class="fr-row">
+    <button id="frPlay">⏸ Pausar</button>
+    <div class="sld"><label>Escala 1 : <span class="val" id="frNv">50</span></label>
+      <input type="range" id="frN" min="10" max="100" value="50" step="5"></div>
+    <div class="sld"><label>Velocidade do navio = <span class="val" id="frVv">14</span> nós</label>
+      <input type="range" id="frV" min="8" max="22" value="14" step="1"></div>
+  </div>
+  <div id="frSketch"></div>
+  <div id="frEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let t=0, playing=true;
+  const cw=()=>{ const w=(el('frSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  const Lr=200, nu=1e-6;
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),360).parent('frSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),360); };
+    const navio=(cx,cy,len,waveLen,phase,rot)=>{
+      // padrão de ondas de Kelvin simplificado (cristas em V) + casco
+      p.push(); p.noStroke();
+      for(let i=1;i<=8;i++){ const r=i*waveLen - (phase%waveLen);
+        if(r<4) continue; p.noFill(); p.stroke(31,71,200,120*Math.max(0,1-r/(len*2.2))); p.strokeWeight(1.4);
+        p.arc(cx-len*0.35,cy,r*2,r*1.1,-0.6,0.6); }
+      p.noStroke(); p.fill('#6b6459');
+      p.beginShape(); p.vertex(cx-len/2,cy-len*0.10); p.vertex(cx+len*0.42,cy-len*0.10);
+      p.vertex(cx+len/2,cy); p.vertex(cx+len*0.42,cy+len*0.10); p.vertex(cx-len/2,cy+len*0.10);
+      p.endShape(p.CLOSE);
+      p.fill('#faf8f4'); p.textSize(11); p.textAlign(p.CENTER,p.CENTER); p.text(rot,cx-len*0.04,cy);
+      p.pop();
+    };
+    p.draw=()=>{
+      const W=p.width;
+      const n=+el('frN').value, vr=(+el('frV').value)*0.5144;
+      el('frNv').textContent=n; el('frVv').textContent=el('frV').value;
+      if(playing) t+=p.deltaTime/1000;
+      const vm=vr/Math.sqrt(n), Fr=vr/Math.sqrt(9.81*Lr);
+      const Re_r=vr*Lr/nu, Re_m=vm*(Lr/n)/nu;
+      p.background('#dfe8ef');
+      p.noStroke(); p.fill('#7a7367'); p.textSize(12); p.textAlign(p.CENTER,p.TOP);
+      p.text('NAVIO REAL (200 m)',W*0.27,8); p.text('MODELO (1:'+n+')',W*0.76,8);
+      // real: casco grande, ondas longas; modelo: pequeno, ondas curtas (√n menor)
+      navio(W*0.27,150,220, 46, t*vr*6, 'real');
+      const sc=1/Math.sqrt(n);
+      navio(W*0.76,150,220*Math.min(1,Math.max(0.28,3*sc)), 46*Math.sqrt(sc)+8, t*vm*6, 'modelo');
+      // linha divisória
+      p.stroke('#bdb4a4'); p.strokeWeight(1); p.line(W*0.52,30,W*0.52,300);
+
+      el('frEq').innerHTML='<b>Fr = v/√(gL) = '+Fr.toFixed(3)+'</b> (igual nos dois) &nbsp;|&nbsp; '+
+        'v<sub>modelo</sub> = v/√n = '+vm.toFixed(2)+' m/s &nbsp;|&nbsp; '+
+        'Re<sub>real</sub> = '+Re_r.toExponential(1)+' vs Re<sub>modelo</sub> = '+Re_m.toExponential(1)+
+        ' (fator '+Math.pow(n,1.5).toFixed(0)+')';
+    };
+  });
+  el('frPlay').onclick=()=>{ playing=!playing; el('frPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Aumente a escala de 1:10 para 1:100. O Froude muda? E a razão entre os Reynolds?
+   Confirme que ela vale $n^{3/2}$.
+2. Se o modelo tem Reynolds muito menor, sua camada limite é mais laminar que a do
+   navio. Por que isso obriga a corrigir o atrito por fórmula (ITTC) em vez de apenas
+   escalar a resistência medida?
+3. Por que se escolhe manter Froude (e não Reynolds) igual, sabendo que a resistência
+   de onda é a parte mais difícil de prever teoricamente?
+:::
 
 ## Onde o fenômeno vive
 

@@ -132,7 +132,118 @@ propulsiva instalada é maior que $P$, pois há as eficiências de hélice e de 
 - **Negligenciar número de Froude na extrapolação:** resistência de onda não escala linearmente com velocidade. Fórmulas de engenharia usam Froude para isso.
 :::
 
-<!-- SIMULAÇÃO SUGERIDA: Gráfico (Plotly) de Resistência vs. Velocidade (ou vs. Número de Froude), mostrando contribuições de atrito e onda; slider de rugosidade/incrustação mostrando impacto em C_F. Ou: perfil de pressão ao redor de casco (p5.js, com animação de escoamento laminar vs. turbulento). -->
+## Veja a resistência crescer com a velocidade
+
+O arrasto de atrito segue $R_f = \tfrac{1}{2}\rho v^2 S\,C_F$ com $C_F$ de
+Kármán–Schoenherr; some-se a ele a resistência de onda, que dispara em alto Froude. Como
+a potência é $P = R\,v$, ela cresce aproximadamente com $v^3$ — a razão física do *slow
+steaming*. Ajuste a velocidade e a incrustação e veja a potência e o custo por milha.
+
+```{python}
+#| fig-cap: "Resistência de um navio-tanque (S = 8000 m², L = 240 m) em função da velocidade: atrito (Kármán–Schoenherr) + onda (termo esquemático crescente com Fr). A potência P = R·v cresce ~v³. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+rho, nu, S, L = 1025.0, 1.14e-6, 8000.0, 240.0
+v = np.linspace(3, 12, 200)
+Re = v*L/nu
+CF = 0.075/(np.log10(Re)-2)**2
+Rf = 0.5*rho*v**2*S*CF
+Fr = v/np.sqrt(9.81*L)
+Rw = 0.5*rho*v**2*S*(0.0015*(Fr/0.16)**4)   # termo de onda esquemático
+Rt = Rf + Rw
+
+fig, ax = plt.subplots(figsize=(9, 3.6))
+ax.plot(v, Rf/1e3, color='#1F47C8', lw=1.6, label='atrito')
+ax.plot(v, Rw/1e3, color='#1F8A3A', lw=1.6, label='onda (esquemático)')
+ax.plot(v, Rt/1e3, color='#C81F1F', lw=2.2, label='total')
+ax.set_xlabel('velocidade (m/s)'); ax.set_ylabel('resistência (kN)'); ax.legend(fontsize=9)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: gráfico explorável de R(v) e potência).
+     p5 de libs/ (offline, Q6). Atrito por Kármán–Schoenherr (físico); onda esquemática.
+     Mesmos parâmetros da matplotlib: S = 8000 m², L = 240 m, ρ = 1025. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .rv-wrap{max-width:1000px;margin:1rem auto;}
+  .rv-wrap .rv-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .rv-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:160px;flex:1 1 160px;}
+  .rv-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .rv-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .rv-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .rv-wrap #rvSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .rv-wrap #rvEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .rv-wrap #rvEq b{color:#c81f1f;}
+</style>
+<div class="rv-wrap">
+  <div class="rv-row">
+    <div class="sld"><label>Velocidade = <span class="val" id="rvVv">12</span> nós</label>
+      <input type="range" id="rvV" min="6" max="24" value="12" step="0.5"></div>
+    <div class="sld"><label>Incrustação (+C<sub>F</sub>) = <span class="val" id="rvKv">0.0000</span></label>
+      <input type="range" id="rvK" min="0" max="0.0010" value="0" step="0.0001"></div>
+  </div>
+  <div id="rvSketch"></div>
+  <div id="rvEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  const rho=1025, nu=1.14e-6, S=8000, L=240;
+  const cw=()=>{ const w=(el('rvSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  const CF=v=>0.075/Math.pow(Math.log10(v*L/nu)-2,2);
+  const Rf=(v,dk)=>0.5*rho*v*v*S*(CF(v)+dk);
+  const Rw=v=>{ const Fr=v/Math.sqrt(9.81*L); return 0.5*rho*v*v*S*(0.0015*Math.pow(Fr/0.16,4)); };
+  const Rt=(v,dk)=>Rf(v,dk)+Rw(v);
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),380).parent('rvSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),380); };
+    p.draw=()=>{
+      const W=p.width;
+      const vk=+el('rvV').value, v=vk*0.5144, dk=+el('rvK').value;
+      el('rvVv').textContent=vk.toFixed(1); el('rvKv').textContent=dk.toFixed(4);
+      p.background('#faf8f4');
+      const gx0=54, gx1=W-16, gy0=30, gy1=320, vmax=24*0.5144;
+      const Rmax=Rt(vmax,dk)*1.05, X=vv=>gx0+vv/vmax*(gx1-gx0), Y=R=>gy1-R/Rmax*(gy1-gy0);
+      p.stroke('#d8cfc0'); p.line(gx0,gy1,gx1,gy1); p.line(gx0,gy0,gx0,gy1);
+      p.noStroke(); p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      for(let k=6;k<=24;k+=6){ const vv=k*0.5144; p.text(k+' nós',X(vv),gy1+4); }
+      p.textAlign(p.RIGHT,p.CENTER);
+      for(let r=0;r<=Rmax;r+=200e3) p.text((r/1e3).toFixed(0)+' kN',gx0-4,Y(r));
+      const curva=(fn,col,wt)=>{ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(wt); p.beginShape();
+        for(let g=gx0;g<=gx1;g++){ const vv=(g-gx0)/(gx1-gx0)*vmax; p.vertex(g,Y(fn(vv))); } p.endShape(); p.pop(); };
+      curva(vv=>Rf(vv,dk),'#1f47c8',1.6); curva(Rw,'#1f8a3a',1.6); curva(vv=>Rt(vv,dk),'#c81f1f',2.4);
+      // ponto de operação
+      p.noStroke(); p.fill('#66308c'); p.circle(X(v),Y(Rt(v,dk)),9);
+      p.stroke('#c9c2b6'); p.strokeWeight(1); p.drawingContext.setLineDash([3,4]);
+      p.line(X(v),Y(Rt(v,dk)),X(v),gy1); p.drawingContext.setLineDash([]);
+      p.noStroke(); p.textSize(11); p.textAlign(p.LEFT,p.CENTER);
+      p.fill('#1f47c8'); p.text('atrito',gx0+8,gy0+10);
+      p.fill('#1f8a3a'); p.text('onda',gx0+8,gy0+26);
+      p.fill('#c81f1f'); p.text('total',gx0+8,gy0+42);
+
+      const R=Rt(v,dk), P=R*v;
+      el('rvEq').innerHTML='R = <b>'+(R/1e3).toFixed(0)+' kN</b> &nbsp;|&nbsp; '+
+        'P = R·v = <b>'+(P/1e6).toFixed(2)+' MW</b> &nbsp;|&nbsp; '+
+        'atrito '+(100*Rf(v,dk)/R).toFixed(0)+'% / onda '+(100*Rw(v)/R).toFixed(0)+'%'+
+        ' &nbsp;|&nbsp; consumo ∝ R por milha';
+    };
+  });
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Reduza a velocidade em 20% (ex.: de 15 para 12 nós). Quanto cai a potência? Confirme
+   a regra prática $P \propto v^3$ e explique o *slow steaming*.
+2. Aumente a incrustação: qual curva sobe, a de atrito ou a de onda? Em que fração a
+   potência cresce para $+0{,}0005$?
+3. Em baixa velocidade, quem domina — atrito ou onda? E quando o Froude cresce? Ligue
+   com a proporção 75–85% de atrito citada no texto.
+:::
 
 ## Onde o fenômeno vive
 

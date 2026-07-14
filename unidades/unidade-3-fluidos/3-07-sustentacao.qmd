@@ -131,7 +131,141 @@ pá; a potência propulsiva útil vem do empuxo, tratado por Kutta–Joukowski (
 - **Stall é cataclismático:** não é um evento instantâneo, mas transição gradual. Além disso, asa-delta (delta wing) e alguns perfis especiais têm "stall suave" onde sustentação degrada lentamente.
 :::
 
-<!-- SIMULAÇÃO SUGERIDA: Gráfico (Plotly) de C_L vs. ângulo de ataque, mostrando zona linear, máximo, e stall; ou campo vetorial de pressão ao redor de perfil NACA (p5.js ou SVG animado), com slider de ângulo de ataque mudando distribuição de pressões em tempo real. -->
+## Veja a sustentação crescer e o estol chegar
+
+A pá (ou o leme) inclina-se em relação ao escoamento pelo ângulo de ataque $\alpha$. O
+coeficiente $C_L$ cresce quase linearmente com $\alpha$ até que, perto de $15$–$18°$, o
+escoamento se descola do dorso e a sustentação **despenca** — o estol. Ajuste $\alpha$ e
+a velocidade e acompanhe $L$, $D$ e a razão $L/D$.
+
+```{python}
+#| fig-cap: "Coeficiente de sustentação de um perfil em função do ângulo de ataque: linear (C_L ≈ 0,11·α por grau) até o estol em ~16°, depois queda abrupta. Ao lado, o perfil inclinado com o lado de sucção (baixa pressão) e de pressão. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+a = np.linspace(-4, 22, 300)
+def CL(al):
+    lin = 0.11*al
+    return np.where(al <= 16, lin, np.maximum(0.3, 1.76 - 0.14*(al-16)))
+fig, ax = plt.subplots(figsize=(9, 3.4))
+ax.plot(a, CL(a), color='#1F47C8', lw=2)
+ax.axvline(16, ls='--', color='#C81F1F', lw=1.2)
+ax.annotate('estol', xy=(16, 1.2), xytext=(17, 1.2), color='#C81F1F', fontsize=9)
+ax.axhline(0, lw=0.5, color='0.7')
+ax.set_xlabel('ângulo de ataque α (graus)'); ax.set_ylabel('$C_L$')
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO — o perfil inclinando e o escoamento
+     em torno). p5 de libs/ (offline, Q6). Mesmos parâmetros da matplotlib:
+     C_L linear 0,11/grau até estol em 16°; velocidade e α ajustáveis. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .su-wrap{max-width:1000px;margin:1rem auto;}
+  .su-wrap .su-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .su-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .su-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .su-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .su-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .su-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .su-wrap #suSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .su-wrap #suEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .su-wrap #suEq b{color:#1f47c8;}
+</style>
+<div class="su-wrap">
+  <div class="su-row">
+    <button id="suPlay">⏸ Pausar</button>
+    <div class="sld"><label>Ângulo de ataque α = <span class="val" id="suAv">8</span>°</label>
+      <input type="range" id="suA" min="-4" max="22" value="8" step="1"></div>
+    <div class="sld"><label>Velocidade v = <span class="val" id="suVv">8</span> m/s</label>
+      <input type="range" id="suV" min="3" max="12" value="8" step="0.5"></div>
+  </div>
+  <div id="suSketch"></div>
+  <div id="suEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let t=0, playing=true;
+  const cw=()=>{ const w=(el('suSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  const rho=1025, A=12;
+  const CL=al=>al<=16?0.11*al:Math.max(0.3,1.76-0.14*(al-16));
+  const CD=al=>0.02+0.006*al*al/16 + (al>16?0.08*(al-16):0);
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),380).parent('suSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),380); };
+    p.draw=()=>{
+      const W=p.width;
+      const al=+el('suA').value, v=+el('suV').value;
+      el('suAv').textContent=al; el('suVv').textContent=v.toFixed(1);
+      if(playing) t+=p.deltaTime/1000;
+      const cl=CL(al), cd=CD(al), stall=al>16;
+      p.background('#eef2f6');
+      // ── esquerda: perfil + escoamento ──
+      const cx=W*0.26, cy=180, ch=120, rad=-al*Math.PI/180;
+      // linhas de corrente (adere se não estol; descola se estol)
+      for(let k=-3;k<=3;k++){ const y0=cy+k*22;
+        p.push(); p.noFill(); p.stroke(31,71,200,150); p.strokeWeight(1.3); p.beginShape();
+        for(let g=cx-ch;g<=cx+ch*1.4;g+=6){ const dx=g-cx;
+          let dy=0; const near=Math.exp(-Math.pow(dx/(ch*0.7),2));
+          if(k===0) dy=0; else dy=(k>0? -1:1)*near*(k>0? (stall?0:1):1)*8*Math.sign(k);
+          // desvio pelo perfil: acima acelera (sobe), abaixo desce
+          const defl = -Math.sign(k)*near*Math.abs(al)*0.8;
+          let yy=y0+defl;
+          if(stall && k>0 && dx>0) yy=y0 - near*30 + 12*Math.sin(dx*0.3 + t*6);  // esteira turbulenta
+          p.vertex(g,yy);
+        } p.endShape(); p.pop(); }
+      // perfil (elipse achatada) inclinado
+      p.push(); p.translate(cx,cy); p.rotate(rad);
+      p.noStroke(); p.fill('#55524c'); p.ellipse(0,0,ch*1.3,ch*0.24);
+      p.pop();
+      // setas de pressão: sucção (cima) e pressão (baixo)
+      p.stroke('#c81f1f'); p.strokeWeight(2);
+      p.line(cx,cy-30,cx,cy-30-cl*14); // sucção para cima (representa L)
+      p.noStroke(); p.fill('#c81f1f'); p.triangle(cx,cy-30-cl*14-6,cx-4,cy-30-cl*14+2,cx+4,cy-30-cl*14+2);
+      p.fill('#7a7367'); p.textSize(11); p.textAlign(p.LEFT,p.CENTER);
+      p.text('L',cx+6,cy-30-cl*7);
+      p.textAlign(p.CENTER,p.TOP); p.text(stall?'ESTOL — escoamento descolado':'escoamento aderente',cx,cy+90);
+      // seta do escoamento incidente
+      p.stroke('#8a8073'); p.strokeWeight(1.5); p.line(cx-ch-24,cy,cx-ch-6,cy);
+      p.noStroke(); p.fill('#8a8073'); p.triangle(cx-ch-6,cy,cx-ch-12,cy-4,cx-ch-12,cy+4);
+      p.textAlign(p.CENTER,p.BOTTOM); p.text('v',cx-ch-15,cy-4);
+
+      // ── direita: curva C_L(α) ──
+      const gx0=W*0.56, gx1=W-16, gy0=40, gy1=330;
+      const X=aa=>gx0+(aa+4)/26*(gx1-gx0), Y=c=>gy1-c/2*(gy1-gy0);
+      p.stroke('#d8cfc0'); p.line(gx0,gy1,gx1,gy1); p.line(gx0,gy0,gx0,gy1);
+      p.noStroke(); p.fill('#8a8073'); p.textSize(9); p.textAlign(p.CENTER,p.TOP);
+      for(let aa=0;aa<=20;aa+=5) p.text(aa+'°',X(aa),gy1+4);
+      p.textAlign(p.LEFT,p.TOP); p.text('C_L',gx0+4,gy0);
+      p.push(); p.noFill(); p.stroke('#1f47c8'); p.strokeWeight(2.2); p.beginShape();
+      for(let aa=-4;aa<=22;aa+=0.5) p.vertex(X(aa),Y(CL(aa))); p.endShape(); p.pop();
+      p.stroke('#c81f1f'); p.strokeWeight(1.2); p.drawingContext.setLineDash([5,4]);
+      p.line(X(16),gy0,X(16),gy1); p.drawingContext.setLineDash([]);
+      p.noStroke(); p.fill('#66308c'); p.circle(X(al),Y(cl),9);
+
+      const q=0.5*rho*v*v*A, L=q*cl, D=q*cd;
+      el('suEq').innerHTML='C<sub>L</sub> = <b>'+cl.toFixed(2)+'</b>, C<sub>D</sub> = '+cd.toFixed(3)+
+        ' &nbsp;|&nbsp; L = ½ρv²A·C<sub>L</sub> = <b>'+(L/1e3).toFixed(0)+' kN</b>, D = '+(D/1e3).toFixed(1)+' kN'+
+        ' &nbsp;|&nbsp; L/D = '+(cl/cd).toFixed(0)+(stall?' — ESTOL':'');
+    };
+  });
+  el('suPlay').onclick=()=>{ playing=!playing; el('suPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Aumente $\alpha$ de 0 a 15°: $C_L$ cresce como? E ao passar de 16°, o que acontece
+   com a sustentação e com o escoamento no dorso?
+2. Dobre a velocidade: a sustentação dobra ou quadruplica? Confirme por $L \propto v^2$
+   — a mesma razão de o leme "pegar" melhor com mais máquina.
+3. O ponto de melhor $L/D$ fica em ângulo baixo ou alto? Por que uma hélice eficiente
+   opera longe do estol?
+:::
 
 ## Onde o fenômeno vive
 

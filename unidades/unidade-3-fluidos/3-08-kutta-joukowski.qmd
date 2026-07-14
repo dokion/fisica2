@@ -119,7 +119,137 @@ levar a pressão local abaixo da de vapor — é a origem da cavitação de pont
 - **Esteira de vórtice é "invisível" em água:** diferentemente de aviões (onde a esteira é visível em céu claro), em água é difícil ver diretamente — mas seus efeitos (vibração, cavitação) são bem reais.
 :::
 
-<!-- SIMULAÇÃO SUGERIDA: Campo vetorial (p5.js ou SVG) mostrando escoamento ao redor de perfil, com cores indicando circulação local e magnitude de velocidade; slider de ângulo de ataque mudando circulação; ou visualizador de vórtice: mostrar linhas de corrente formando vórtice e magnitude de pressão (Plotly contour). -->
+## Veja a circulação virar força
+
+Um cilindro que gira numa corrente arrasta o fluido: cria **circulação** $\Gamma$. Por
+Kutta–Joukowski, isso gera sustentação $L' = \rho v\,\Gamma$ perpendicular ao escoamento
+— é o efeito Magnus e o princípio do rotor de Flettner. Sem rotação, o escoamento é
+simétrico e não há força; com rotação, as linhas de corrente se adensam de um lado, os
+pontos de estagnação migram e surge a força.
+
+```{python}
+#| fig-cap: "Escoamento potencial em torno de um cilindro com circulação (corrente uniforme + dupleto + vórtice). Sem circulação (esq.) o padrão é simétrico e a força é nula; com circulação (dir.) as linhas se adensam em cima, os pontos de estagnação descem e surge sustentação L' = ρvΓ. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+U, a = 1.0, 1.0
+def psi(X, Y, G):
+    R2 = X**2 + Y**2
+    return U*Y*(1 - a**2/R2) + (G/(2*np.pi))*0.5*np.log(R2/a**2)
+xx, yy = np.meshgrid(np.linspace(-3, 3, 400), np.linspace(-2.2, 2.2, 300))
+mask = xx**2 + yy**2 < a**2
+fig, axs = plt.subplots(1, 2, figsize=(9, 3.6))
+for ax, G, tit in [(axs[0], 0.0, 'Γ = 0 (simétrico)'), (axs[1], 4.0, 'Γ = 4 (assimétrico)')]:
+    Z = np.ma.array(psi(xx, yy, G), mask=mask)
+    ax.contour(xx, yy, Z, levels=25, colors='#1F47C8', linewidths=0.7)
+    ax.add_patch(plt.Circle((0, 0), a, color='#55524c'))
+    ax.set_aspect('equal'); ax.set_xticks([]); ax.set_yticks([]); ax.set_title(tit, fontsize=10)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO — partículas advectadas no campo de
+     velocidade real do escoamento potencial). p5 de libs/ (offline, Q6). Campo:
+     corrente uniforme + dupleto + vórtice; Γ ajustável. Mesmos parâmetros da matplotlib. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .mg-wrap{max-width:900px;margin:1rem auto;}
+  .mg-wrap .mg-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .mg-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .mg-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .mg-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .mg-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .mg-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .mg-wrap #mgSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .mg-wrap #mgEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .mg-wrap #mgEq b{color:#1f47c8;}
+</style>
+<div class="mg-wrap">
+  <div class="mg-row">
+    <button id="mgPlay">⏸ Pausar</button>
+    <div class="sld"><label>Circulação Γ (rotação) = <span class="val" id="mgGv">4.0</span></label>
+      <input type="range" id="mgG" min="0" max="10" value="4" step="0.5"></div>
+    <div class="sld"><label>Velocidade anim. = <span class="val" id="mgSv">1</span>×</label>
+      <input type="range" id="mgS" min="0.25" max="3" value="1" step="0.25"></div>
+  </div>
+  <div id="mgSketch"></div>
+  <div id="mgEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let parts=[], playing=true;
+  const cw=()=>{ const w=(el('mgSketch').clientWidth)||880; return Math.max(340,Math.min(880,w)); };
+  const U=1.0, a=1.0, rho=1025;
+  // velocidade em coordenadas físicas (a=1)
+  const vel=(x,y,G)=>{ const r2=x*x+y*y, r4=r2*r2;
+    const u=U - U*a*a*(x*x-y*y)/r4 - (G/(2*Math.PI))*y/r2;
+    const v=-2*U*a*a*x*y/r4 + (G/(2*Math.PI))*x/r2;
+    return [u,v]; };
+  new p5((p)=>{
+    let sc, cx, cy;
+    const seed=()=>{ parts=[]; for(let i=0;i<520;i++) parts.push({x:-4.2-Math.random()*1.5, y:-3+Math.random()*6}); };
+    p.setup=()=>{ const W=cw(); p.createCanvas(W,W*0.62).parent('mgSketch'); seed(); };
+    p.windowResized=()=>{ const W=cw(); p.resizeCanvas(W,W*0.62); };
+    p.draw=()=>{
+      const W=p.width, H=p.height;
+      const G=+el('mgG').value, spd=+el('mgS').value;
+      el('mgGv').textContent=G.toFixed(1); el('mgSv').textContent=spd;
+      sc=H/6.4; cx=W*0.42; cy=H/2;
+      const toPx=(x,y)=>[cx+x*sc, cy-y*sc];
+      p.background('#eef2f6');
+      // partículas advectadas
+      p.stroke('#1f47c8'); p.strokeWeight(1.4);
+      for(const pt of parts){
+        if(playing){ for(let s=0;s<2;s++){ const [u,v]=vel(pt.x,pt.y,G);
+          const dt=0.02*spd; pt.x+=u*dt; pt.y+=v*dt; } }
+        if(pt.x>4.4 || pt.x*pt.x+pt.y*pt.y<a*a*1.02){ pt.x=-4.2-Math.random(); pt.y=-3+Math.random()*6; }
+        const [px,py]=toPx(pt.x,pt.y);
+        const [u,v]=vel(pt.x,pt.y,G), sp=Math.hypot(u,v);
+        p.stroke(31,71,200,Math.min(255,70+sp*70)); p.strokeWeight(sp>1.4?2.2:1.4); p.point(px,py);
+      }
+      // cilindro
+      p.noStroke(); p.fill('#55524c'); const [ox,oy]=toPx(0,0); p.circle(ox,oy,2*a*sc);
+      // seta de rotação
+      if(G>0.1){ p.push(); p.stroke('#faf8f4'); p.strokeWeight(2); p.noFill();
+        p.arc(ox,oy,a*sc,a*sc,-2.4,1.4); p.pop(); }
+      // pontos de estagnação: sinθ = −Γ/(4πUa)
+      const s=-G/(4*Math.PI*U*a);
+      if(Math.abs(s)<=1){ const th=Math.asin(s);
+        for(const ang of [Math.PI-th, th]){ const [sx,sy]=toPx(a*Math.cos(ang),a*Math.sin(ang));
+          p.noStroke(); p.fill('#c85c2e'); p.circle(sx,sy,8); } }
+      // vetor de sustentação L' = ρUΓ (para cima se Γ>0)
+      if(G>0.1){ p.stroke('#c81f1f'); p.strokeWeight(3);
+        const Lpx=Math.min(H*0.4,G*10); p.line(ox,oy,ox,oy-Lpx);
+        p.noStroke(); p.fill('#c81f1f'); p.triangle(ox,oy-Lpx-7,ox-5,oy-Lpx+3,ox+5,oy-Lpx+3);
+        p.textSize(12); p.textAlign(p.LEFT,p.CENTER); p.text("L' = ρvΓ",ox+8,oy-Lpx/2); }
+      // seta do escoamento
+      p.stroke('#8a8073'); p.strokeWeight(1.5); const [ax0,ay0]=toPx(-2.8,-1.9);
+      p.line(ax0,ay0,ax0+30,ay0); p.noStroke(); p.fill('#8a8073');
+      p.triangle(ax0+30,ay0,ax0+24,ay0-4,ax0+24,ay0+4);
+      p.textAlign(p.LEFT,p.BOTTOM); p.text('v',ax0,ay0-4);
+
+      const Lp=rho*U*G;
+      el('mgEq').innerHTML="L' = ρvΓ = <b>"+(Lp).toFixed(0)+" N/m</b> (por metro de cilindro) &nbsp;|&nbsp; "+
+        (Math.abs(s)<=1?('estagnação em θ = '+(Math.asin(s)*180/Math.PI).toFixed(0)+'°'):'sem estagnação na superfície (Γ alto)')+
+        ' &nbsp;|&nbsp; Γ = 0 → força nula (simétrico)';
+    };
+  });
+  el('mgPlay').onclick=()=>{ playing=!playing; el('mgPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Com $\Gamma = 0$, o escoamento é simétrico acima e abaixo — e a força é nula. Aumente
+   $\Gamma$: de que lado as linhas de corrente se adensam, e para onde aponta a força?
+2. Acompanhe os pontos de estagnação (laranja): eles descem conforme $\Gamma$ cresce.
+   A partir de que $\Gamma$ eles saem da superfície do cilindro?
+3. $L' = \rho v\,\Gamma$ cresce linearmente com a circulação. Ligue com o rotor de
+   Flettner: como um cilindro girante pode substituir uma vela?
+:::
 
 ## Onde o fenômeno vive
 
