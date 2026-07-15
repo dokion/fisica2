@@ -75,11 +75,11 @@ plt.tight_layout(); plt.show()
 
 ```{=html}
 <!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO). Onda VIAJANTE no espaço livre.
-     Solver de corda (equação de onda por diferenças finitas), causal: começa reta e a
-     onda entra pela esquerda. Absorvente = esponja graduada PROFUNDA fora da tela
-     (~200 nós, quadrática) → a parte visível fica lossless/uniforme e nada reflete.
-     Três modos: Pulso, Contínua, Manual (você move a ponta esquerda). Altura do canvas
-     responsiva. p5 de libs/ (offline, Q6). Mesma física da matplotlib. -->
+     Solver de corda (equação de onda) rodando em Courant = 1 (esquema EXATO, sem
+     dispersão) com borda característica y[N]=y[N-1] (modo "No End" da PhET): a onda sai
+     sem reflexão. Um só solver p/ os três modos. Três modos: Pulso (largura+amplitude),
+     Contínua e Manual (move a ponta; sem controles). Altura do canvas responsiva
+     (retrato e paisagem). p5 de libs/ (offline, Q6). Mesma física da matplotlib. -->
 <script src="../../libs/p5.min.js"></script>
 <style>
   .wv-wrap{max-width:1000px;margin:1rem auto;}
@@ -94,48 +94,49 @@ plt.tight_layout(); plt.show()
   .wv-wrap .wv-cap{font-size:12.5px;color:#6b6357;margin:6px 2px;}
 </style>
 <div class="wv-wrap sim">
-  <div class="wv-row">
+  <div class="wv-row" id="wvModeRow">
     <button id="wvPulso">Pulso</button>
     <button id="wvCont" class="on">Contínua</button>
     <button id="wvManual">Manual</button>
-    <span style="width:1px;height:22px;background:#ddd6c8;"></span>
+  </div>
+  <div class="wv-row" id="wvPlayRow">
     <button id="wvPlay">⏸ Pausar</button>
     <button id="wvStep">▷ passo</button>
     <button id="wvClr">↺ reiniciar</button>
   </div>
-  <div class="wv-row">
-    <div class="sld"><label>Amplitude = <span class="val" id="wvAv">0.60</span></label>
+  <div class="wv-row" id="wvSldRow">
+    <div class="sld" id="wvAblk"><label>Amplitude = <span class="val" id="wvAv">0.60</span></label>
       <input type="range" id="wvA" min="0.1" max="1.0" value="0.6" step="0.05"></div>
-    <div class="sld"><label>Frequência = <span class="val" id="wvFv">1.5</span></label>
+    <div class="sld" id="wvFblk"><label>Frequência = <span class="val" id="wvFv">1.5</span></label>
       <input type="range" id="wvF" min="0.5" max="3.0" value="1.5" step="0.1"></div>
+    <div class="sld" id="wvWblk" style="display:none"><label>Largura do pulso = <span class="val" id="wvWv">0.55</span></label>
+      <input type="range" id="wvW" min="0.2" max="1.6" value="0.55" step="0.05"></div>
   </div>
   <div id="wvSketch"></div>
-  <div class="wv-cap" id="wvCap">A corda começa reta; a onda entra pela esquerda, viaja para a direita e sai no espaço livre (não volta). Cada conta só sobe e desce no lugar.</div>
+  <div class="wv-cap" id="wvCap">A corda começa reta; a onda entra pela esquerda, viaja para a direita e sai no espaço livre sem refletir. Cada conta só sobe e desce no lugar.</div>
 </div>
 <script>
 (function(){
   const el=id=>document.getElementById(id);
   const cw=()=>{ const w=(el('wvSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
-  const ch=()=> (window.innerWidth<560?200:300);            // altura responsiva (celular menor)
-  const NV=200, N=420, r=0.5, r2=r*r, SUB=4, Tp=46;         // NV visível; N total (cauda absorvente fora da tela)
-  const SS=NV+20;                                            // início da esponja (fora da tela)
-  const spng=new Array(N+1).fill(0);
-  for(let i=SS;i<=N;i++){ const u=(i-SS)/(N-SS); spng[i]=0.06*u*u; }   // esponja graduada quadrática
-  const xL=46;
+  const ch=()=>{ const w=window.innerWidth, h=window.innerHeight;
+    if(w<560) return 200;                                   // retrato estreito
+    if(h<560) return Math.max(150,Math.min(230,Math.round(h*0.52)));  // paisagem baixa
+    return 300; };
+  const N=200, SUB=2, xL=46;                                // Courant=1: velocidade = 1 nó/substep
   let y=new Array(N+1).fill(0), yo=new Array(N+1).fill(0), yn=new Array(N+1).fill(0);
-  let phase=0, pulseT=-1, running=true, mode='cont';
+  let phase=0, pulseT=-1, Tp=25, running=true, mode='cont';
   let grabbing=false, manualY=0;
   function reset(){ y.fill(0); yo.fill(0); yn.fill(0); phase=0; pulseT=-1; manualY=0; }
   function stepOnce(){
-    const A=+el('wvA').value, f=+el('wvF').value, omega=2*Math.PI*0.006*f;
+    const A=+el('wvA').value, f=+el('wvF').value, omega=2*Math.PI*0.012*f;
     let yL, leftDriven=true;
     if(mode==='cont'){ yL=A*Math.sin(phase); phase+=omega; }
     else if(mode==='pulse'){ if(pulseT>=0){ yL=A*Math.sin(Math.PI*(Tp-pulseT)/Tp); pulseT--; } else yL=0; }
     else { if(grabbing) yL=manualY; else leftDriven=false; }
-    for(let i=1;i<N;i++) yn[i]=2*y[i]-yo[i]+r2*(y[i+1]-2*y[i]+y[i-1]);  // interior lossless (visível uniforme)
+    for(let i=1;i<N;i++) yn[i]=y[i+1]+y[i-1]-yo[i];         // Courant 1 (exato, sem dispersão)
     yn[0]= leftDriven ? yL : yn[1];
-    yn[N]=0;
-    for(let i=SS;i<=N;i++) yn[i]*=(1-spng[i]);                          // absorção só fora da tela
+    yn[N]=y[N-1];                                           // borda característica "No End" (sem reflexão)
     const t=yo; yo=y; y=yn; yn=t;
   }
   new p5((p)=>{
@@ -144,30 +145,31 @@ plt.tight_layout(); plt.show()
     p.draw=()=>{
       el('wvAv').textContent=(+el('wvA').value).toFixed(2);
       el('wvFv').textContent=(+el('wvF').value).toFixed(1);
+      el('wvWv').textContent=(+el('wvW').value).toFixed(2);
+      Tp=Math.max(6,Math.round((+el('wvW').value)*45));
       if(running||(mode==='manual'&&grabbing)){ for(let k=0;k<SUB;k++) stepOnce(); }
       const H=p.height, yc=H*0.5, yA=H*0.34, xR=p.width-24;
-      const xOf=i=>xL+i/NV*(xR-xL), yOf=i=>yc-y[i]*yA;
+      const xOf=i=>xL+i/N*(xR-xL), yOf=i=>yc-y[i]*yA;
       p.background('#faf8f4');
       p.stroke('#e6ded0'); p.strokeWeight(1); p.line(xL,yc,xR,yc);
-      const beads=[]; for(let k=1;k<=7;k++) beads.push(Math.round(NV*k/8));
+      const beads=[]; for(let k=1;k<=7;k++) beads.push(Math.round(N*k/8));
       const cols=['#c81f1f','#e0872e','#c9a227','#2e9e5b','#1f7ac8','#3b4ea0','#7a3b8c'];
       p.stroke('#ece5d7'); p.strokeWeight(1); p.drawingContext.setLineDash([3,4]);
       beads.forEach(i=>p.line(xOf(i),yc-yA,xOf(i),yc+yA)); p.drawingContext.setLineDash([]);
       const cord=(col,wt)=>{ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(wt);
         p.strokeJoin(p.ROUND); p.strokeCap(p.ROUND); p.beginShape();
-        p.curveVertex(xOf(0),yOf(0)); for(let i=0;i<=NV;i++) p.curveVertex(xOf(i),yOf(i));
-        p.curveVertex(xOf(NV),yOf(NV)); p.endShape(); p.pop(); };
+        p.curveVertex(xOf(0),yOf(0)); for(let i=0;i<=N;i++) p.curveVertex(xOf(i),yOf(i));
+        p.curveVertex(xOf(N),yOf(N)); p.endShape(); p.pop(); };
       cord('#6b533a',6); cord('#a67c4e',2.4);
       p.noStroke(); beads.forEach((i,k)=>{ p.fill(cols[k]); p.circle(xOf(i),yOf(i),12);
         p.fill(255,255,255,150); p.circle(xOf(i)-2,yOf(i)-2,4); });
       p.stroke('#b9b2a4'); p.strokeWeight(1); p.line(xL,yc-yA,xL,yc+yA);
       p.noStroke();
       if(mode==='manual'){ p.fill(grabbing?'#66308c':'#8a5cc0'); p.circle(xL,yOf(0),22);
-        p.fill(255); p.textSize(11); p.textAlign(p.CENTER,p.CENTER); p.text('↕',xL,yOf(0)); }
+        p.fill(255); p.textSize(11); p.textAlign(p.CENTER,p.CENTER); p.text('↕',xL,yOf(0));
+        p.textAlign(p.LEFT,p.TOP); p.fill('#8a5cc0'); p.text('agarre a ponta ↕ e mexa',xL+16,H-18); }
       else { p.fill('#3a342c'); p.rectMode(p.CENTER); p.rect(xL,yOf(0),14,20,3); p.rectMode(p.CORNER); }
       p.fill('#a79e8e'); p.textSize(11); p.textAlign(p.RIGHT,p.TOP); p.text('espaço livre →',xR-2,6);
-      if(mode==='manual'){ p.textAlign(p.LEFT,p.TOP); p.fill('#8a5cc0');
-        p.text('agarre a ponta ↕ e mexa',xL+16,H-18); }
     };
     const overHandle=()=>mode==='manual'&&p.mouseX>=0&&p.mouseX<xL+70&&p.mouseY>=0&&p.mouseY<=p.height;
     const setManual=()=>{ const yc=p.height*0.5, yA=p.height*0.34; manualY=p.constrain((yc-p.mouseY)/yA,-1.15,1.15); };
@@ -178,16 +180,26 @@ plt.tight_layout(); plt.show()
     p.touchMoved=()=>{ if(grabbing){ setManual(); return false; } };
     p.touchEnded=()=>{ grabbing=false; };
   });
+  const caps={cont:'A corda começa reta; a onda entra pela esquerda, viaja e sai no espaço livre sem refletir. Cada conta só sobe e desce no lugar.',
+    pulse:'Um pulso viaja para a direita e sai no espaço livre. Ajuste a largura e a amplitude do pulso.',
+    manual:'Agarre a ponta ↕ e mexa: o seu gesto vira onda, que viaja para a direita e sai.'};
+  const updateUI=()=>{ const man=mode==='manual';
+    el('wvPlayRow').style.display=man?'none':'flex';
+    el('wvSldRow').style.display=man?'none':'flex';
+    el('wvFblk').style.display=mode==='cont'?'flex':'none';
+    el('wvWblk').style.display=mode==='pulse'?'flex':'none';
+    el('wvCap').textContent=caps[mode]; };
   const setMode=(m)=>{ mode=m; grabbing=false;
     el('wvPulso').classList.toggle('on',m==='pulse');
     el('wvCont').classList.toggle('on',m==='cont');
-    el('wvManual').classList.toggle('on',m==='manual'); };
+    el('wvManual').classList.toggle('on',m==='manual'); updateUI(); };
   el('wvPulso').onclick=()=>{ setMode('pulse'); reset(); pulseT=Tp; running=true; el('wvPlay').textContent='⏸ Pausar'; };
   el('wvCont').onclick=()=>{ setMode('cont'); reset(); running=true; el('wvPlay').textContent='⏸ Pausar'; };
-  el('wvManual').onclick=()=>{ setMode('manual'); reset(); running=true; el('wvPlay').textContent='⏸ Pausar'; };
+  el('wvManual').onclick=()=>{ setMode('manual'); reset(); running=true; };
   el('wvPlay').onclick=()=>{ running=!running; el('wvPlay').textContent=running?'⏸ Pausar':'▶ Reproduzir'; };
   el('wvStep').onclick=()=>{ for(let k=0;k<SUB;k++) stepOnce(); };
-  el('wvClr').onclick=()=>{ reset(); };
+  el('wvClr').onclick=()=>{ const wasPulse=mode==='pulse'; reset(); if(wasPulse) pulseT=Tp; };
+  updateUI();
 })();
 </script>
 ```

@@ -225,7 +225,7 @@ p img, figure img, .cell-output-display img, .figure img { max-width: 100%; heig
 .sim { margin: 1rem auto; }
 .sim canvas { max-width: 100%; }
 
-@media (max-width: 560px) {
+@media (max-width: 560px), (orientation: landscape) and (max-height: 500px) {
   // empilha e joga a ANIMAÇÃO para o topo (sempre visível); controles logo abaixo
   .sim { display: flex; flex-direction: column; }
   .sim > div[id$="Sketch"] {
