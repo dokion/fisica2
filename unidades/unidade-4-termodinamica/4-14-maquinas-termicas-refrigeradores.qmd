@@ -142,7 +142,8 @@ plt.tight_layout(); plt.show()
       el('mtQv').textContent=Tq; el('mtFv').textContent=Tf; el('mtIv').textContent=(irr*100).toFixed(0);
       const etaC=1-Tf/Tq, etaR=etaC*(1-irr), areaFrac=etaR/etaC, s=Math.sqrt(areaFrac);
       p.background('#faf8f4');
-      const gx0=55, gy0=25, gw=Math.min(360,W*0.5)-gx0+55, gx1=gx0+Math.min(360,W*0.5), gy1=310;
+      const gx0=55, gy0=25, gy1=310;
+      const px=W-148, gx1=Math.min(gx0+Math.min(360,W*0.52), px-22);   // reserva 148px à direita p/ as barras
       const PX=v=>gx0+v*(gx1-gx0), PY=v=>gy1-v*(gy1-gy0);
       // eixos
       p.stroke('#d8cfc0'); p.line(gx0,gy1,gx1,gy1); p.line(gx0,gy0,gx0,gy1);
@@ -163,18 +164,18 @@ plt.tight_layout(); plt.show()
       for(let yy=yT+6; yy<yB-4; yy+=7) p.line(xL+5,yy,xR-5,yy);
       p.pop();
       // painel de rendimento (direita) — barras
-      const px=gx1+50, pw=W-px-25, y0=60, H=160, base=y0+H;
-      p.stroke('#d8cfc0'); p.line(px,base,px+Math.min(200,pw),base);
-      const barH=v=>v*H; // v em [0,1]
+      const y0=60, Hh=160, base=y0+Hh, b1=px+16, b2=px+82, bw=40;
+      p.stroke('#d8cfc0'); p.line(px,base,px+130,base);
+      const barH=v=>v*Hh; // v em [0,1]
       p.noStroke();
-      p.fill('#1f47c8'); p.rect(px+10, base-barH(etaC), 46, barH(etaC));
-      p.fill('#66308c'); p.rect(px+80, base-barH(etaR), 46, barH(etaR));
+      p.fill('#1f47c8'); p.rect(b1, base-barH(etaC), bw, barH(etaC));
+      p.fill('#66308c'); p.rect(b2, base-barH(etaR), bw, barH(etaR));
       p.fill('#4a4038'); p.textSize(10); p.textAlign(p.CENTER,p.BOTTOM);
-      p.text((etaC*100).toFixed(0)+'%',px+33,base-barH(etaC)-2);
-      p.text((etaR*100).toFixed(0)+'%',px+103,base-barH(etaR)-2);
+      p.text((etaC*100).toFixed(0)+'%',b1+bw/2,base-barH(etaC)-2);
+      p.text((etaR*100).toFixed(0)+'%',b2+bw/2,base-barH(etaR)-2);
       p.textAlign(p.CENTER,p.TOP);
-      p.text('teto Carnot',px+33,base+4); p.text('real',px+103,base+4);
-      p.fill('#7a7367'); p.textAlign(p.LEFT,p.TOP); p.text('rendimento',px+10,y0-22);
+      p.text('teto Carnot',b1+bw/2,base+4); p.text('real',b2+bw/2,base+4);
+      p.fill('#7a7367'); p.textAlign(p.LEFT,p.TOP); p.text('rendimento',px,y0-22);
       el('mtEq').innerHTML=
         'η<sub>Carnot</sub> = 1 − T<sub>f</sub>/T<sub>q</sub> = <b>'+(etaC*100).toFixed(0)+'%</b> &nbsp;|&nbsp; '+
         'η<sub>real</sub> = η<sub>C</sub>·(1 − irr) = <b>'+(etaR*100).toFixed(0)+'%</b> &nbsp;|&nbsp; '+
