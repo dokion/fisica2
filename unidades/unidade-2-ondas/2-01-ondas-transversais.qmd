@@ -72,10 +72,11 @@ plt.tight_layout(); plt.show()
 ```
 
 ```{=html}
-<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo, corda por diferenças finitas).
-     Onda no espaço livre (borda direita absorvente — não reflete). Fio flexível + contas
-     coloridas. Pulso/contínua, play/pause/passo, sliders A e f. p5 de libs/ (offline, Q6).
-     Mesma física da matplotlib. -->
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo). Onda VIAJANTE no espaço
+     livre, forma analítica (sem reflexão, sem atenuação): contínua y = A·sin(kx − ωt);
+     pulso A·exp(−((x−vt)/w)²) que sai pela direita. Velocidade v fixa. Fio flexível +
+     contas coloridas. Pulso/contínua, play/pause/passo, sliders A e f. p5 de libs/
+     (offline, Q6). Mesma física da matplotlib. -->
 <script src="../../libs/p5.min.js"></script>
 <style>
   .wv-wrap{max-width:1000px;margin:1rem auto;}
@@ -96,7 +97,7 @@ plt.tight_layout(); plt.show()
     <span style="width:1px;height:22px;background:#ddd6c8;"></span>
     <button id="wvPlay">⏸ Pausar</button>
     <button id="wvStep">▷ passo</button>
-    <button id="wvClr">↺ limpar</button>
+    <button id="wvClr">↺ reiniciar</button>
   </div>
   <div class="wv-row">
     <div class="sld"><label>Amplitude = <span class="val" id="wvAv">0.60</span></label>
@@ -105,69 +106,59 @@ plt.tight_layout(); plt.show()
       <input type="range" id="wvF" min="0.5" max="3.0" value="1.5" step="0.1"></div>
   </div>
   <div id="wvSketch"></div>
-  <div class="wv-cap">Contas coloridas = partículas da corda. A onda anda para a direita e some no espaço livre; as contas só sobem e descem.</div>
+  <div class="wv-cap">A onda viaja para a direita e sai no espaço livre (não volta). Cada conta só sobe e desce no lugar — a partícula não acompanha a onda.</div>
 </div>
 <script>
 (function(){
   const el=id=>document.getElementById(id);
   const cw=()=>{ const w=(el('wvSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
-  const N=200, r=0.5, r2=r*r, SUB=4, Tp=46;
-  let y=new Array(N+1).fill(0), yo=new Array(N+1).fill(0), yn=new Array(N+1).fill(0);
-  let phase=0, pulseT=-1, running=true, mode='cont';
-  function reset(){ y.fill(0); yo.fill(0); yn.fill(0); phase=0; pulseT=-1; }
-  function stepOnce(){
-    const A=+el('wvA').value, f=+el('wvF').value, omega=2*Math.PI*0.006*f;
-    let yL;
-    if(mode==='cont'){ yL=A*Math.sin(phase); phase+=omega; }
-    else { if(pulseT>=0){ yL=A*Math.sin(Math.PI*(Tp-pulseT)/Tp); pulseT--; } else yL=0; }
-    for(let i=1;i<N;i++) yn[i]=2*y[i]-yo[i]+r2*(y[i+1]-2*y[i]+y[i-1]) - 0.0008*(y[i]-yo[i]);
-    yn[0]=yL;
-    yn[N]=y[N-1]+((r-1)/(r+1))*(yn[N-1]-y[N]);        // borda absorvente (Mur 1ª ordem)
-    for(let i=N-25;i<=N;i++){ const s=(i-(N-25))/25; yn[i]*=(1-0.06*s); } // reforço anti-reflexão
-    const t=yo; yo=y; y=yn; yn=t;
+  const L=10, V=3.0, W_PULSE=0.55;   // comprimento (unidades), velocidade da onda, largura do pulso
+  let t=0, running=true, mode='cont', pulseX=null;
+  function yfun(x){
+    const A=+el('wvA').value, f=+el('wvF').value;
+    if(mode==='cont'){ const w=2*Math.PI*f, k=w/V; return A*Math.sin(k*x - w*t); }
+    if(pulseX===null) return 0;
+    const dx=(x-pulseX)/W_PULSE; return A*Math.exp(-dx*dx);
   }
+  function advance(dt){ t+=dt; if(mode==='pulse'&&pulseX!==null){ pulseX+=V*dt; if(pulseX>L+3*W_PULSE) pulseX=null; } }
   new p5((p)=>{
     p.setup=()=>{ p.createCanvas(cw(),300).parent('wvSketch'); };
     p.windowResized=()=>{ p.resizeCanvas(cw(),300); };
     p.draw=()=>{
       el('wvAv').textContent=(+el('wvA').value).toFixed(2);
       el('wvFv').textContent=(+el('wvF').value).toFixed(1);
-      if(running){ for(let k=0;k<SUB;k++) stepOnce(); }
-      const W=p.width, H=p.height, xL=46, xR=W-24, yc=H*0.5, yA=H*0.34;
-      const xOf=i=>xL+i/N*(xR-xL), yOf=i=>yc-y[i]*yA;
+      if(running) advance(Math.min(p.deltaTime/1000,0.05));
+      const Wd=p.width, H=p.height, xL=46, xR=Wd-24, yc=H*0.5, yA=H*0.34;
+      const xOf=x=>xL+x/L*(xR-xL), yOf=x=>yc-yfun(x)*yA;
       p.background('#faf8f4');
-      // linha de equilíbrio
       p.stroke('#e6ded0'); p.strokeWeight(1); p.line(xL,yc,xR,yc);
-      // trilhos verticais das contas (só sobem/descem)
-      const beads=[]; for(let k=1;k<=7;k++) beads.push(Math.round(N*k/8));
+      // trilhos verticais das contas
+      const nb=7, bx=[]; for(let k=1;k<=nb;k++) bx.push(L*k/(nb+1));
       const cols=['#c81f1f','#e0872e','#c9a227','#2e9e5b','#1f7ac8','#3b4ea0','#7a3b8c'];
       p.stroke('#ece5d7'); p.strokeWeight(1); p.drawingContext.setLineDash([3,4]);
-      beads.forEach(i=>p.line(xOf(i),yc-yA,xOf(i),yc+yA)); p.drawingContext.setLineDash([]);
-      // corda (fio): sombra + realce
+      bx.forEach(x=>p.line(xOf(x),yc-yA,xOf(x),yc+yA)); p.drawingContext.setLineDash([]);
+      // corda (fio): amostra densa
+      const M=240;
       const cord=(col,wt)=>{ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(wt);
         p.strokeJoin(p.ROUND); p.strokeCap(p.ROUND); p.beginShape();
-        p.curveVertex(xOf(0),yOf(0)); for(let i=0;i<=N;i++) p.curveVertex(xOf(i),yOf(i));
-        p.curveVertex(xOf(N),yOf(N)); p.endShape(); p.pop(); };
+        for(let i=0;i<=M;i++){ const x=L*i/M; p.curveVertex(xOf(x),yOf(x)); } p.endShape(); p.pop(); };
       cord('#6b533a',6); cord('#a67c4e',2.4);
-      // contas coloridas
-      p.noStroke(); beads.forEach((i,k)=>{ p.fill(cols[k]); p.circle(xOf(i),yOf(i),12);
-        p.fill(255,255,255,150); p.circle(xOf(i)-2,yOf(i)-2,4); });
+      // contas
+      p.noStroke(); bx.forEach((x,k)=>{ p.fill(cols[k]); p.circle(xOf(x),yOf(x),12);
+        p.fill(255,255,255,150); p.circle(xOf(x)-2,yOf(x)-2,4); });
       // acionador (esquerda)
       p.stroke('#b9b2a4'); p.strokeWeight(1); p.line(xL,yc-yA,xL,yc+yA);
       p.noStroke(); p.fill('#3a342c'); p.rectMode(p.CENTER); p.rect(xL,yOf(0),14,20,3); p.rectMode(p.CORNER);
-      // fade "espaço livre" à direita
-      for(let g=0;g<26;g++){ p.noStroke(); p.fill(250,248,244,g*9); p.rect(xR-26+g,0,2,H); }
       p.fill('#a79e8e'); p.textSize(11); p.textAlign(p.RIGHT,p.TOP); p.text('espaço livre →',xR-2,6);
     };
   });
   const setMode=(m)=>{ mode=m; el('wvPulso').classList.toggle('on',m==='pulse');
     el('wvCont').classList.toggle('on',m==='cont'); };
-  el('wvPulso').onclick=()=>{ setMode('pulse'); reset(); pulseT=Tp; running=true;
-    el('wvPlay').textContent='⏸ Pausar'; };
-  el('wvCont').onclick=()=>{ setMode('cont'); reset(); running=true; el('wvPlay').textContent='⏸ Pausar'; };
+  el('wvPulso').onclick=()=>{ setMode('pulse'); t=0; pulseX=0; running=true; el('wvPlay').textContent='⏸ Pausar'; };
+  el('wvCont').onclick=()=>{ setMode('cont'); t=0; running=true; el('wvPlay').textContent='⏸ Pausar'; };
   el('wvPlay').onclick=()=>{ running=!running; el('wvPlay').textContent=running?'⏸ Pausar':'▶ Reproduzir'; };
-  el('wvStep').onclick=()=>{ for(let k=0;k<SUB;k++) stepOnce(); };
-  el('wvClr').onclick=()=>{ reset(); };
+  el('wvStep').onclick=()=>{ advance(0.045); };
+  el('wvClr').onclick=()=>{ t=0; if(mode==='pulse') pulseX=0; };
 })();
 </script>
 ```
