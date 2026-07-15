@@ -74,21 +74,251 @@ plt.tight_layout(); plt.show()
 ```
 
 ```{=html}
-<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO). Transversal × longitudinal: em ambos
-     os painéis as bolinhas SÃO as partículas do meio (posições de equilíbrio fixas). No de
-     cima elas oscilam ⊥ à propagação; no de baixo, ∥ (compressões/rarefações). Régua de
-     comprimento λ arrastável para medir crista-a-crista / compressão-a-compressão.
-     p5 de libs/ (offline, Q6). Mesmos parâmetros da matplotlib (λ, f ajustáveis). -->
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO). Onda VIAJANTE no espaço livre.
+     Solver de corda (equação de onda) rodando em Courant = 1 (esquema EXATO, sem
+     dispersão) com borda característica y[N]=y[N-1] (modo "No End" da PhET): a onda sai
+     sem reflexão. Um só solver p/ os três modos. Três modos: Pulso (largura+amplitude),
+     Contínua e Manual (move a ponta; sem controles). Altura do canvas responsiva
+     (retrato e paisagem). p5 de libs/ (offline, Q6). Mesma física da matplotlib. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .wv-wrap{max-width:1000px;margin:1rem auto;}
+  .wv-wrap .wv-row{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-bottom:8px;}
+  .wv-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .wv-wrap button.on{background:#66308c;color:#fff;border-color:#66308c;}
+  .wv-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .wv-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .wv-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .wv-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .wv-wrap #wvSketch canvas{display:block;border-radius:8px;max-width:100%;box-shadow:0 1px 3px rgba(20,27,46,.10);}
+  .wv-wrap .wv-cap{font-size:12.5px;color:#6b6357;margin:6px 2px;}
+</style>
+<div class="wv-wrap sim">
+  <div class="wv-row" id="wvModeRow">
+    <button id="wvPulso">Pulso</button>
+    <button id="wvCont" class="on">Contínua</button>
+    <button id="wvManual">Manual</button>
+  </div>
+  <div class="wv-row" id="wvPlayRow">
+    <button id="wvFire" style="display:none">＋ pulso</button>
+    <button id="wvPlay">⏸ Pausar</button>
+    <button id="wvStep">▷ passo</button>
+    <button id="wvClr">↺ reiniciar</button>
+  </div>
+  <div class="wv-row" id="wvSldRow">
+    <div class="sld" id="wvAblk"><label>Amplitude = <span class="val" id="wvAv">0.60</span></label>
+      <input type="range" id="wvA" min="0.1" max="1.0" value="0.6" step="0.05"></div>
+    <div class="sld" id="wvFblk"><label>Frequência = <span class="val" id="wvFv">1.5</span></label>
+      <input type="range" id="wvF" min="0.5" max="3.0" value="1.5" step="0.1"></div>
+    <div class="sld" id="wvWblk" style="display:none"><label>Largura do pulso = <span class="val" id="wvWv">0.55</span></label>
+      <input type="range" id="wvW" min="0.2" max="1.6" value="0.55" step="0.05"></div>
+  </div>
+  <div id="wvSketch"></div>
+  <div class="wv-cap" id="wvCap">A corda começa reta; a onda entra pela esquerda, viaja para a direita e sai no espaço livre sem refletir. Cada conta só sobe e desce no lugar.</div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  const cw=()=>{ const w=(el('wvSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  const ch=()=>{ const w=window.innerWidth, h=window.innerHeight;
+    if(w<560) return 200;                                   // retrato estreito
+    if(h<560) return Math.max(150,Math.min(230,Math.round(h*0.52)));  // paisagem baixa
+    return 300; };
+  const N=200, SUB=2, xL=46;                                // Courant=1: velocidade = 1 nó/substep
+  let y=new Array(N+1).fill(0), yo=new Array(N+1).fill(0), yn=new Array(N+1).fill(0);
+  let phase=0, pulseT=-1, Tp=25, running=true, mode='cont';
+  let grabbing=false, manualY=0;
+  function reset(){ y.fill(0); yo.fill(0); yn.fill(0); phase=0; pulseT=-1; manualY=0; }
+  function stepOnce(){
+    const A=+el('wvA').value, f=+el('wvF').value, omega=2*Math.PI*0.012*f;
+    let yL, leftDriven=true;
+    if(mode==='cont'){ yL=A*Math.sin(phase); phase+=omega; }
+    else if(mode==='pulse'){ if(pulseT>=0){ yL=A*Math.sin(Math.PI*(Tp-pulseT)/Tp); pulseT--; } else yL=0; }
+    else { if(grabbing) yL=manualY; else leftDriven=false; }
+    for(let i=1;i<N;i++) yn[i]=y[i+1]+y[i-1]-yo[i];         // Courant 1 (exato, sem dispersão)
+    yn[0]= leftDriven ? yL : yn[1];
+    yn[N]=y[N-1];                                           // borda característica "No End" (sem reflexão)
+    const t=yo; yo=y; y=yn; yn=t;
+  }
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),ch()).parent('wvSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),ch()); };
+    p.draw=()=>{
+      el('wvAv').textContent=(+el('wvA').value).toFixed(2);
+      el('wvFv').textContent=(+el('wvF').value).toFixed(1);
+      el('wvWv').textContent=(+el('wvW').value).toFixed(2);
+      Tp=Math.max(6,Math.round((+el('wvW').value)*45));
+      if(running||(mode==='manual'&&grabbing)){ for(let k=0;k<SUB;k++) stepOnce(); }
+      const H=p.height, yc=H*0.5, yA=H*0.34, xR=p.width-24;
+      const xOf=i=>xL+i/N*(xR-xL), yOf=i=>yc-y[i]*yA;
+      p.background('#faf8f4');
+      p.stroke('#e6ded0'); p.strokeWeight(1); p.line(xL,yc,xR,yc);
+      const beads=[]; for(let k=1;k<=7;k++) beads.push(Math.round(N*k/8));
+      const cols=['#c81f1f','#e0872e','#c9a227','#2e9e5b','#1f7ac8','#3b4ea0','#7a3b8c'];
+      p.stroke('#ece5d7'); p.strokeWeight(1); p.drawingContext.setLineDash([3,4]);
+      beads.forEach(i=>p.line(xOf(i),yc-yA,xOf(i),yc+yA)); p.drawingContext.setLineDash([]);
+      const cord=(col,wt)=>{ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(wt);
+        p.strokeJoin(p.ROUND); p.strokeCap(p.ROUND); p.beginShape();
+        p.curveVertex(xOf(0),yOf(0)); for(let i=0;i<=N;i++) p.curveVertex(xOf(i),yOf(i));
+        p.curveVertex(xOf(N),yOf(N)); p.endShape(); p.pop(); };
+      cord('#6b533a',6); cord('#a67c4e',2.4);
+      p.noStroke(); beads.forEach((i,k)=>{ p.fill(cols[k]); p.circle(xOf(i),yOf(i),12);
+        p.fill(255,255,255,150); p.circle(xOf(i)-2,yOf(i)-2,4); });
+      p.stroke('#b9b2a4'); p.strokeWeight(1); p.line(xL,yc-yA,xL,yc+yA);
+      p.noStroke();
+      if(mode==='manual'){ p.fill(grabbing?'#66308c':'#8a5cc0'); p.circle(xL,yOf(0),22);
+        p.fill(255); p.textSize(11); p.textAlign(p.CENTER,p.CENTER); p.text('↕',xL,yOf(0));
+        p.textAlign(p.LEFT,p.TOP); p.fill('#8a5cc0'); p.text('agarre a ponta ↕ e mexa',xL+16,H-18); }
+      else { p.fill('#3a342c'); p.rectMode(p.CENTER); p.rect(xL,yOf(0),14,20,3); p.rectMode(p.CORNER); }
+      p.fill('#a79e8e'); p.textSize(11); p.textAlign(p.RIGHT,p.TOP); p.text('espaço livre →',xR-2,6);
+    };
+    const overHandle=()=>mode==='manual'&&p.mouseX>=0&&p.mouseX<xL+70&&p.mouseY>=0&&p.mouseY<=p.height;
+    const setManual=()=>{ const yc=p.height*0.5, yA=p.height*0.34; manualY=p.constrain((yc-p.mouseY)/yA,-1.15,1.15); };
+    p.mousePressed=()=>{ if(overHandle()){ grabbing=true; setManual(); } };
+    p.mouseDragged=()=>{ if(grabbing){ setManual(); return false; } };
+    p.mouseReleased=()=>{ grabbing=false; };
+    p.touchStarted=()=>{ if(overHandle()){ grabbing=true; setManual(); return false; } };
+    p.touchMoved=()=>{ if(grabbing){ setManual(); return false; } };
+    p.touchEnded=()=>{ grabbing=false; };
+  });
+  const caps={cont:'A corda começa reta; a onda entra pela esquerda, viaja e sai no espaço livre sem refletir. Cada conta só sobe e desce no lugar.',
+    pulse:'Um pulso viaja para a direita e sai no espaço livre. Ajuste a largura e a amplitude; clique ＋ pulso para lançar vários seguidos.',
+    manual:'Agarre a ponta ↕ e mexa: o seu gesto vira onda, que viaja para a direita e sai.'};
+  const updateUI=()=>{ const man=mode==='manual';
+    el('wvPlayRow').style.display=man?'none':'flex';
+    el('wvSldRow').style.display=man?'none':'flex';
+    el('wvFblk').style.display=mode==='cont'?'flex':'none';
+    el('wvWblk').style.display=mode==='pulse'?'flex':'none';
+    el('wvFire').style.display=mode==='pulse'?'inline-block':'none';
+    el('wvCap').textContent=caps[mode]; };
+  const setMode=(m)=>{ mode=m; grabbing=false;
+    el('wvPulso').classList.toggle('on',m==='pulse');
+    el('wvCont').classList.toggle('on',m==='cont');
+    el('wvManual').classList.toggle('on',m==='manual'); updateUI(); };
+  el('wvPulso').onclick=()=>{ if(mode==='pulse'){ pulseT=Tp; } else { setMode('pulse'); reset(); pulseT=Tp; } running=true; el('wvPlay').textContent='⏸ Pausar'; };
+  el('wvFire').onclick=()=>{ pulseT=Tp; running=true; el('wvPlay').textContent='⏸ Pausar'; };  // dispara novo pulso sem resetar (N pulsos)
+  el('wvCont').onclick=()=>{ setMode('cont'); reset(); running=true; el('wvPlay').textContent='⏸ Pausar'; };
+  el('wvManual').onclick=()=>{ setMode('manual'); reset(); running=true; };
+  el('wvPlay').onclick=()=>{ running=!running; el('wvPlay').textContent=running?'⏸ Pausar':'▶ Reproduzir'; };
+  el('wvStep').onclick=()=>{ for(let k=0;k<SUB;k++) stepOnce(); };
+  el('wvClr').onclick=()=>{ const wasPulse=mode==='pulse'; reset(); if(wasPulse) pulseT=Tp; };
+  updateUI();
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Escolha uma conta colorida e siga-a por alguns segundos: que trajetória ela descreve? Ela
+   acompanha a onda para a direita, ou fica no mesmo $x$?
+2. No modo **pulso**, use o **passo** para medir a olho quanto o pulso avança a cada clique.
+   Agora mude a amplitude e repita: a velocidade da onda dependeu da amplitude?
+3. No modo **contínua**, aumente a frequência: como muda o comprimento de onda, se a velocidade
+   do meio é fixa? Confira com $v=\lambda f$.
+:::
+
+## Exemplos e meios {{< ra OE2.2 B1 >}}
+
+Ondas transversais aparecem em contextos muito diversos:
+
+- **Cordas e cabos:** uma corda vibrante (como em um violão) propaga pulsos transversais;
+- **Superfície da água:** ondulações num tanque ou no oceano são transversais — a partícula sobe e desce, o comprimento de onda avança;
+- **Radiação eletromagnética:** campos elétrico e magnético oscilam *perpendicular* à direção de propagação (fundamental para radar, comunicações navais);
+- **Vibração de estruturas:** laminas e membranas vibram transversalmente.
+
+## Diferença entre ondas transversais e longitudinais {{< ra OE2.3 B2 >}}
+
+Nem toda onda é transversal. Existem **ondas longitudinais**, em que a partícula oscila *paralela* à direção de propagação.
+
+| Tipo | Direção da partícula | Direção de propagação | Exemplo | Naval |
+|---|---|---|---|---|
+| **Transversal** | Perpendicular | Paralela | Corda vibrante; onda na água; radar (EM) | Pulsos EM de radar; scanner de ecobatímetro transdutor |
+| **Longitudinal** | Paralela | Paralela | Som em fluido ou sólido; onda de compressão | Som em água (ecobatímetro e sonar); ultrassom de diagnóstico |
+
+A distinção é crucial: som viaja como *onda longitudinal* na água (compressões e rarefações sucessivas), mas o pulso de ativação do transdutor de um ecobatímetro é um trem *transversal* de EM que viaja ao transdutor — depois *converte-se* em longitudinal (som) dentro da água.
+
+::: {.sp}
+Um transdutor de ecobatímetro dual-frequência opera a 30 kHz e 200 kHz em água do mar. O comprimento de onda da propagação longitudinal a 30 kHz na água é $\lambda_{30} \approx 50\,\text{mm}$ (a velocidade do som no local é $\approx 1500\,\text{m/s}$ — faixa típica da costa).
+
+**(a) Modelagem.** Propagação longitudinal na água com $v = 1500$ m/s; para cada canal
+do transdutor vale $\lambda = v/f$. Incógnitas: $\lambda$ nos dois canais e a comparação
+entre eles.
+
+**(b) Desenvolvimento.**
+$$\lambda_{30} = \frac{v}{f} = \frac{1500}{30\,000} = 0{,}050\ \text{m} = 50\ \text{mm}$$
+
+$$\lambda_{200} = \frac{1500}{200\,000} = 7{,}5\ \text{mm}$$
+
+**(c) Resultado.** O canal de 200 kHz opera com comprimento de onda quase 7 vezes menor
+que o de 30 kHz (7,5 mm contra 50 mm), confirmando o valor dado no enunciado para 30 kHz.
+
+**(d) Análise crítica.** A resolução vertical do ecobatímetro escala com $\lambda$: o
+canal de 200 kHz distingue estruturas menores do fundo, mas sofre absorção maior e
+alcança menos — daí o par 30/200 kHz: baixa frequência para águas profundas, alta para
+detalhe em águas rasas. Note a cadeia de conversão: o sinal que excita o transdutor é
+eletromagnético (onda transversal); a onda que sai na água é sonora (longitudinal) — a
+conversão ocorre no elemento piezoelétrico.
+:::
+
+::: {.callout-warning}
+## Erros clássicos
+
+- **"Onda = movimento de matéria"?** Não: a onda transporta energia, mas a partícula apenas oscila — em onda transversal, a partícula nunca se move junto com a frente de onda, só perpendicular a ela.
+- **Confundir "transversal" com "direção":** transversal não é uma direção absoluta no espaço — é *relativa à propagação*. Uma onda que sobe-desce é transversal se propaga horizontalmente, mas seria longitudinal se propagasse na vertical.
+- **Som na água é transversal?** Não — som é sempre longitudinal (compressões). O radar (EM) é transversal. O pulso que *ativa* o transdutor é EM (transversal), mas o pulso que sai na água é sonoro (longitudinal).
+:::
+
+## Veja os dois tipos de onda lado a lado
+
+No painel de cima, uma corda: cada ponto (as bolinhas) sobe e desce, mas a *forma* viaja
+para a direita — acompanhe a partícula vermelha e a crista marcada em laranja. No painel
+de baixo, uma onda longitudinal no mesmo meio: as partículas vão e vêm na direção da
+propagação, formando compressões e rarefações que viajam. A partícula vermelha de baixo
+nunca sai da vizinhança dela.
+
+```{python}
+#| fig-cap: "Instantâneo dos dois tipos de onda com os mesmos λ = 1,0 m e f = 1,0 Hz. Acima: transversal — deslocamento perpendicular à propagação. Abaixo: longitudinal — as partículas se deslocam ao longo da propagação, formando compressões (adensamentos) e rarefações. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+A, lam, f, t0 = 0.25, 1.0, 1.0, 0.0
+k = 2*np.pi/lam
+
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(9, 4.6))
+x = np.linspace(0, 4, 800)
+ax1.plot(x, A*np.sin(k*x - 2*np.pi*f*t0), color='#1F47C8', lw=1.6)
+xp = np.arange(0.1, 4, 0.2)
+ax1.plot(xp, A*np.sin(k*xp - 2*np.pi*f*t0), 'o', ms=4, color='#8a8073')
+ax1.plot(xp[5], A*np.sin(k*xp[5]), 'o', ms=8, color='#C81F1F')
+ax1.annotate('v', xy=(2.9, 0.3), xytext=(2.45, 0.3), color='#C85C2E',
+             arrowprops=dict(arrowstyle='-|>', color='#C85C2E'))
+ax1.set_ylim(-0.45, 0.45); ax1.set_ylabel('y (transversal)')
+ax1.set_xticks([])
+
+xp2 = np.arange(0, 4, 0.055)
+ax2.plot(xp2 + A*0.35*np.cos(k*xp2 - 2*np.pi*f*t0), 0*xp2, 'o',
+         ms=3.5, color='#8a8073')
+ax2.plot(xp2[36] + A*0.35*np.cos(k*xp2[36]), 0, 'o', ms=8, color='#C81F1F')
+ax2.set_ylim(-0.5, 0.5); ax2.set_yticks([])
+ax2.set_xlabel('x (m)'); ax2.set_ylabel('longitudinal')
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo — a diferença entre os
+     dois tipos É a direção do movimento das partículas). p5 de libs/ (offline, Q6).
+     Mesmos parâmetros da versão matplotlib: λ = 1,0 m, f = 1,0 Hz (ajustáveis). -->
 <script src="../../libs/p5.min.js"></script>
 <style>
   .tw-wrap{max-width:1000px;margin:1rem auto;}
-  .tw-wrap .tw-row{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;margin-bottom:8px;}
+  .tw-wrap .tw-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
   .tw-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
   .tw-wrap .sld label{font-weight:600;font-size:12.5px;}
   .tw-wrap .sld .val{color:#c85c2e;font-weight:700;}
   .tw-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
   .tw-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
-  .tw-wrap #twSketch canvas{display:block;border-radius:8px;max-width:100%;box-shadow:0 1px 3px rgba(20,27,46,.10);touch-action:none;}
+  .tw-wrap #twSketch canvas{display:block;border-radius:8px;max-width:100%;}
   .tw-wrap #twEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .tw-wrap #twEq b{color:#1f47c8;}
 </style>
@@ -109,113 +339,79 @@ plt.tight_layout(); plt.show()
 <script>
 (function(){
   const el=id=>document.getElementById(id);
-  const cw=()=>{ const w=(el('twSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
   let t=0, playing=true;
-  let ruler={x:0.4, y:190, grab:false};     // x = borda esquerda (m); y = px (vão entre os painéis)
+  const cw=()=>{ const w=(el('twSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+
   new p5((p)=>{
-    const H=400, x0=34, VISM=4;             // 4 m visíveis
-    const ppm=()=> (p.width-x0-16)/VISM;
-    p.setup=()=>{ p.createCanvas(cw(),H).parent('twSketch'); };
-    p.windowResized=()=>{ p.resizeCanvas(cw(),H); };
+    p.setup=()=>{ p.createCanvas(cw(),380).parent('twSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),380); };
+
     p.draw=()=>{
+      const W=p.width;
       const f=+el('twF').value, lam=+el('twL').value, spd=+el('twS').value;
-      el('twFv').textContent=f.toFixed(1); el('twLv').textContent=lam.toFixed(1); el('twSv').textContent=spd;
+      el('twFv').textContent=f.toFixed(1); el('twLv').textContent=lam.toFixed(1);
+      el('twSv').textContent=spd;
       if(playing) t+=(p.deltaTime/1000)*spd;
-      const k=2*Math.PI/lam, w=2*Math.PI*f, PPM=ppm();
-      const xpx=xm=>x0+xm*PPM;
+      const ppm=(W-60)/4;                       // 4 m visíveis
+      const k=2*Math.PI/lam, w=2*Math.PI*f, x0=30;
+      const Apx=52;
+
       p.background('#faf8f4');
+      p.noStroke(); p.fill('#7a7367'); p.textSize(12); p.textAlign(p.LEFT,p.TOP);
+      p.text('TRANSVERSAL — partícula ⊥ propagação (corda, onda EM de radar)',x0,10);
+      p.text('LONGITUDINAL — partícula ∥ propagação (som na água: ecobatímetro, sonar)',x0,206);
 
-      // ===== TRANSVERSAL (topo) =====
-      const yc1=112, A1=54;
-      p.noStroke(); p.fill('#4a4038'); p.textSize(12.5); p.textAlign(p.LEFT,p.TOP);
-      p.text('TRANSVERSAL — a partícula sobe e desce (⊥ à propagação)',x0,14);
-      p.stroke('#e6ded0'); p.strokeWeight(1); p.line(x0,yc1,p.width-16,yc1);   // equilíbrio
-      // forma da onda (linha tênue ligando as partículas)
-      p.push(); p.noFill(); p.stroke('#c9d6ea'); p.strokeWeight(1.4); p.beginShape();
-      for(let gx=x0;gx<=p.width-16;gx+=3){ const xm=(gx-x0)/PPM; p.vertex(gx,yc1-A1*Math.sin(k*xm-w*t)); }
+      // ── transversal ──
+      const yc1=110;
+      p.push(); p.noFill(); p.stroke('#1f47c8'); p.strokeWeight(1.6); p.beginShape();
+      for(let gx=x0;gx<=W-30;gx++){ const xm=(gx-x0)/ppm;
+        p.vertex(gx,yc1-Apx*Math.sin(k*xm-w*t)); }
       p.endShape(); p.pop();
-      // partículas do meio → BARRAS deslizando em trilhos verticais (oscilam ⊥)
-      const nT=18, spT=(VISM/nT)*PPM, knobW=Math.max(9,Math.min(18,spT*0.72)), redI=Math.round(nT*0.28);
-      let redT=null;
-      for(let i=0;i<nT;i++){ const xm=(i+0.5)*VISM/nT, gx=xpx(xm); if(gx>p.width-16) continue;
-        const yy=yc1-A1*Math.sin(k*xm-w*t), isRed=(i===redI);
-        p.noStroke(); p.fill('#ece7dc'); p.rect(gx-3,yc1-A1,6,2*A1,3);          // trilho vertical
-        p.fill(isRed?'#c81f1f':'#5b6b86'); p.rect(gx-knobW/2,yy-4,knobW,8,2);   // barra (knob)
-        if(isRed) redT={gx}; }
-      if(redT){ p.noStroke(); p.fill('#c81f1f'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
-        p.text('só ↕',redT.gx,yc1+A1+4); }
-      // seta de propagação
-      p.stroke('#8a8073'); p.strokeWeight(1.4); p.line(p.width-120,yc1-A1-14,p.width-24,yc1-A1-14);
-      p.noStroke(); p.fill('#8a8073'); p.triangle(p.width-24,yc1-A1-14,p.width-33,yc1-A1-18,p.width-33,yc1-A1-10);
-      p.textSize(10.5); p.textAlign(p.RIGHT,p.BOTTOM); p.text('propagação',p.width-26,yc1-A1-16);
+      p.noStroke();
+      for(let i=0;i<20;i++){ const xm=0.1+i*0.2, gx=x0+xm*ppm; if(gx>W-30) break;
+        p.fill(i===5?'#c81f1f':'#8a8073');
+        p.circle(gx,yc1-Apx*Math.sin(k*xm-w*t),i===5?13:8); }
+      // crista marcada (viaja com v = λf)
+      const xc=((0.25*lam)+ (w*t/k))%4;
+      p.fill('#c85c2e'); p.circle(x0+xc*ppm,yc1-Apx,7);
+      p.textSize(10.5); p.textAlign(p.CENTER,p.BOTTOM); p.text('crista →',x0+xc*ppm,yc1-Apx-8);
+      // trilho da partícula vermelha
+      p.stroke('#e5b8b8'); p.strokeWeight(1); p.line(x0+1.1*ppm,yc1-Apx,x0+1.1*ppm,yc1+Apx);
 
-      // ===== LONGITUDINAL (base) =====
-      const yc2=312, uAmp=0.13*lam;    // deslocamento ∥ (m), proporcional a λ
-      p.noStroke(); p.fill('#4a4038'); p.textSize(12.5); p.textAlign(p.LEFT,p.TOP);
-      p.text('LONGITUDINAL — a partícula vai e volta (∥) → compressões e rarefações',x0,212);
-      // partículas do meio → BARRAS verticais num trilho horizontal (oscilam ∥ → compressões)
-      p.noStroke(); p.fill('#ece7dc'); p.rect(x0,yc2-15,(p.width-16)-x0,30,4);   // trilho (canal)
-      const nL=60, redJ=Math.round(nL*0.28); let redL=null;
-      for(let i=0;i<nL;i++){ const xm=(i+0.5)*VISM/nL, disp=uAmp*Math.cos(k*xm-w*t);
-        const gx=xpx(xm+disp); if(gx<x0+2||gx>p.width-16) continue;
-        const dens=(Math.sin(k*xm-w*t)+1)/2, isRed=(i===redJ);   // 1 = compressão, 0 = rarefação
-        p.fill(isRed?p.color('#c81f1f'):p.lerpColor(p.color('#b8c2d4'),p.color('#33415c'),dens));
-        p.rect(gx-2,yc2-12,4,24,1);                              // barra vertical (partícula)
-        if(isRed) redL={gx}; }
-      if(redL){ p.noStroke(); p.fill('#c81f1f'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
-        p.text('só ↔',redL.gx,yc2+18); }
-      // rótulos compressão / rarefação (seguem a onda)
-      const phC=(w*t/k + 0.25*lam); const gc=xpx(phC%VISM);        // sin=+1 → compressão
-      const gr=xpx((phC+0.5*lam)%VISM);                            // sin=−1 → rarefação
-      p.noStroke(); p.textSize(10); p.textAlign(p.CENTER,p.BOTTOM);
-      p.fill('#33415c'); p.text('compressão',gc,yc2-20);
-      p.fill('#9aa3b2'); p.text('rarefação',gr,yc2-20);
+      // ── longitudinal ──
+      const yc2=300, u=0.35*Apx;
+      p.noStroke();
+      for(let i=0;i<73;i++){ const xm=i*0.055, gx0m=x0+xm*ppm; if(gx0m>W-30) break;
+        const gx=gx0m+u*Math.cos(k*xm-w*t);
+        p.fill(i===20?'#c81f1f':'#8a8073');
+        p.circle(gx,yc2,i===20?13:7); }
+      // marcador de compressão: máx. densidade onde ∂u/∂x é mínimo → fase π/2
+      const xcomp=((0.25*lam)+(w*t/k))%4;
+      p.fill('#c85c2e'); p.textAlign(p.CENTER,p.BOTTOM);
+      p.circle(x0+xcomp*ppm,yc2-26,7); p.text('compressão →',x0+xcomp*ppm,yc2-34);
+      p.stroke('#e5b8b8'); p.strokeWeight(1);
+      p.line(x0+20*0.055*ppm-u,yc2+20,x0+20*0.055*ppm+u,yc2+20);
 
-      // ===== RÉGUA λ arrastável =====
-      const rx0=xpx(ruler.x), rx1=xpx(ruler.x+lam), ry=ruler.y;
-      p.push();
-      p.stroke('#8a5a24'); p.strokeWeight(ruler.grab?3.4:2.6);
-      p.line(rx0,ry,rx1,ry);
-      p.line(rx0,ry-9,rx0,ry+9); p.line(rx1,ry-9,rx1,ry+9);   // cabeças
-      // ticks internos (frações de λ)
-      p.strokeWeight(1); for(let q=1;q<4;q++){ const gx=rx0+(rx1-rx0)*q/4; p.line(gx,ry-4,gx,ry+4); }
-      p.noStroke(); p.fill('#8a5a24'); p.textSize(12); p.textAlign(p.CENTER,p.BOTTOM);
-      p.text('◄ λ = '+lam.toFixed(1)+' m ►',(rx0+rx1)/2,ry-6);
-      p.pop();
-
-      el('twEq').innerHTML='<b>arraste a régua λ</b> e alinhe com duas cristas (ou duas compressões) — a distância é um comprimento de onda &nbsp;|&nbsp; '+
-        '<b>v = λf = '+(lam*f).toFixed(2)+' m/s</b> &nbsp;|&nbsp; T = '+(1/f).toFixed(2)+' s &nbsp;|&nbsp; k = 2π/λ = '+(k).toFixed(2)+' rad/m';
+      el('twEq').innerHTML='y(x,t) = A sen(kx − ωt) &nbsp;|&nbsp; '+
+        '<b>v = λf = '+(lam*f).toFixed(2)+' m/s</b> &nbsp;|&nbsp; '+
+        'T = '+(1/f).toFixed(2)+' s &nbsp;|&nbsp; k = 2π/λ = '+(2*Math.PI/lam).toFixed(2)+' rad/m';
     };
-    // arraste da régua
-    const overRuler=()=>{ const PPM=ppm(), lam=+el('twL').value;
-      const rx0=x0+ruler.x*PPM, rx1=x0+(ruler.x+lam)*PPM;
-      return p.mouseX>rx0-8 && p.mouseX<rx1+8 && Math.abs(p.mouseY-ruler.y)<14; };
-    const moveRuler=()=>{ const lam=+el('twL').value, PPM=ppm();
-      let nx=(p.mouseX-x0)/PPM - lam/2;                       // centraliza no cursor
-      ruler.x=Math.max(-0.2,Math.min(VISM-lam+0.2,nx));
-      ruler.y=Math.max(24,Math.min(H-16,p.mouseY)); };
-    p.mousePressed=()=>{ if(overRuler()){ ruler.grab=true; moveRuler(); } };
-    p.mouseDragged=()=>{ if(ruler.grab){ moveRuler(); return false; } };
-    p.mouseReleased=()=>{ ruler.grab=false; };
-    p.touchStarted=()=>{ if(overRuler()){ ruler.grab=true; moveRuler(); return false; } };
-    p.touchMoved=()=>{ if(ruler.grab){ moveRuler(); return false; } };
-    p.touchEnded=()=>{ ruler.grab=false; };
   });
-  el('twPlay').onclick=()=>{ playing=!playing; el('twPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+  el('twPlay').onclick=()=>{ playing=!playing;
+    el('twPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
   el('twZero').onclick=()=>{ t=0; playing=false; el('twPlay').textContent='▶ Reproduzir'; };
 })();
 </script>
 ```
 
 ::: {.pergunta}
-1. Arraste a **régua λ** até que as duas cabeças caiam sobre duas cristas vizinhas do
-   painel de cima. Agora leve a mesma régua ao painel de baixo: sobre o que ela cai —
-   duas compressões, ou duas rarefações? O que isso diz sobre o significado de λ?
-2. Pause e siga a partícula **vermelha**: no painel de cima ela só anda no trilho ↕; no de
-   baixo, só no trilho ↔. Em nenhum dos dois ela acompanha a onda para a direita. Então o
-   que viaja?
-3. Dobre $\lambda$ mantendo $f$: a régua estica e a velocidade muda. Confirme $v=\lambda f$
-   no painel. E a compressão do som — corresponde a pressão acima ou abaixo da atmosférica?
+1. Pause a animação e anote a posição da partícula vermelha de cima. Rode meio período
+   e pause de novo: ela andou na direção da onda? E a crista laranja, quanto andou?
+2. Dobre $\lambda$ mantendo $f$: o que acontece com a velocidade da crista? Confirme
+   com $v = \lambda f$ no painel de valores.
+3. No painel de baixo, a partícula vermelha oscila *horizontalmente* em torno de um
+   ponto fixo (trilho rosa). Aponte na tela onde está uma compressão e uma rarefação —
+   qual das duas corresponde a pressão acima da atmosférica no som?
 :::
 
 ## Onde o fenômeno vive
