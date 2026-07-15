@@ -160,7 +160,7 @@ plt.tight_layout(); plt.show()
   .di-wrap #diEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .di-wrap #diEq b{color:#c81f1f;}
 </style>
-<div class="di-wrap">
+<div class="di-wrap sim">
   <div class="di-row">
     <div class="sld"><label>Temperatura = <span class="val" id="diTv">150</span> °C &nbsp;(ΔT desde 20 °C)</label>
       <input type="range" id="diT" min="20" max="320" value="150" step="5"></div>

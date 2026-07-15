@@ -175,7 +175,7 @@ plt.tight_layout(); plt.show()
   .cl-wrap #clEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .cl-wrap #clEq b{color:#1f47c8;}
 </style>
-<div class="cl-wrap">
+<div class="cl-wrap sim">
   <div class="cl-row">
     <button id="clPlay">⏸ Pausar</button>
     <div class="sld"><label>Velocidade do navio = <span class="val" id="clVv">12</span> nós</label>

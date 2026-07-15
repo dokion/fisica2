@@ -160,7 +160,7 @@ plt.tight_layout(); plt.show()
   .ve-wrap #veEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .ve-wrap #veEq b{color:#1f47c8;}
 </style>
-<div class="ve-wrap">
+<div class="ve-wrap sim">
   <div class="ve-row">
     <button id="vePlay">⏸ Pausar</button>
     <div class="sld"><label>Vazão Q = <span class="val" id="veQv">0.10</span> m³/s</label>

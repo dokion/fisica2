@@ -181,7 +181,7 @@ plt.tight_layout(); plt.show()
   .fr-wrap #frEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .fr-wrap #frEq b{color:#1f47c8;}
 </style>
-<div class="fr-wrap">
+<div class="fr-wrap sim">
   <div class="fr-row">
     <button id="frPlay">⏸ Pausar</button>
     <div class="sld"><label>Escala 1 : <span class="val" id="frNv">50</span></label>

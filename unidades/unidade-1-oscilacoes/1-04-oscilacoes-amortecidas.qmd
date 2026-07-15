@@ -129,7 +129,7 @@ plt.tight_layout(); plt.show()
   .am-wrap #amEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .am-wrap #amEq b{color:#1f47c8;}
 </style>
-<div class="am-wrap">
+<div class="am-wrap sim">
   <div class="am-row">
     <button id="amPlay">⏸ Pausar</button>
     <button id="amRst">↺ Soltar de novo</button>

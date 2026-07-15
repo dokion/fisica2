@@ -97,7 +97,7 @@ plt.tight_layout(); plt.show()
   .st-wrap #stSketch canvas{display:block;border-radius:8px;max-width:100%;box-shadow:0 1px 3px rgba(20,27,46,.10);}
   .st-wrap .st-cap{font-size:12.5px;color:#6b6357;margin:6px 2px;}
 </style>
-<div class="st-wrap">
+<div class="st-wrap sim">
   <div class="st-row">
     <button id="stFix" class="on">Confinada</button>
     <button id="stFree">Livre</button>
@@ -107,6 +107,7 @@ plt.tight_layout(); plt.show()
     <span style="width:1px;height:22px;background:#ddd6c8;"></span>
     <button id="stPlay">⏸ Pausar</button>
     <button id="stStep">▷ passo</button>
+    <button id="stFire" style="display:none">＋ pulso</button>
     <button id="stClr">↺ limpar</button>
   </div>
   <div class="st-row">
@@ -122,25 +123,26 @@ plt.tight_layout(); plt.show()
 (function(){
   const el=id=>document.getElementById(id);
   const cw=()=>{ const w=(el('stSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
-  const N=200, r=0.5, r2=r*r, SUB=4, Tp=46;
+  const ch=()=>{ const w=window.innerWidth,h=window.innerHeight; if(w<560) return 200; if(h<560) return Math.max(150,Math.min(230,Math.round(h*0.52))); return 300; };
+  const N=200, SUB=2, Tp=46;                        // Courant=1: velocidade = 1 nó/substep
+  const beta=0.0015, cf=1/(beta+1);                 // amortecimento leve (limita a ressonância, pulso sobrevive à reflexão)
   let y=new Array(N+1).fill(0), yo=new Array(N+1).fill(0), yn=new Array(N+1).fill(0);
   let phase=0, pulseT=-1, running=true, mode='cont', bnd='fixed';
   function reset(){ y.fill(0); yo.fill(0); yn.fill(0); phase=0; pulseT=-1; }
   function stepOnce(){
-    const A=+el('stA').value, f=+el('stF').value, omega=2*Math.PI*0.006*f;
+    const A=+el('stA').value, f=+el('stF').value, omega=2*Math.PI*0.012*f;
     let yL;
     if(mode==='cont'){ yL=A*Math.sin(phase); phase+=omega; }
     else { if(pulseT>=0){ yL=A*Math.sin(Math.PI*(Tp-pulseT)/Tp); pulseT--; } else yL=0; }
-    const damp=0.0016;
-    for(let i=1;i<N;i++) yn[i]=2*y[i]-yo[i]+r2*(y[i+1]-2*y[i]+y[i-1]) - damp*(y[i]-yo[i]);
+    for(let i=1;i<N;i++) yn[i]=cf*((beta-1)*yo[i] + y[i+1]+y[i-1]);   // Courant 1 + amortecimento (PhET)
     yn[0]=yL;
-    if(bnd==='fixed') yn[N]=0;
-    else yn[N]=2*y[N]-yo[N]+r2*(2*y[N-1]-2*y[N]) - damp*(y[N]-yo[N]);  // extremidade livre (∂y/∂x=0)
+    if(bnd==='fixed') yn[N]=0;                        // confinada
+    else yn[N]=yn[N-1];                               // livre (loose end, ∂y/∂x = 0)
     const t=yo; yo=y; y=yn; yn=t;
   }
   new p5((p)=>{
-    p.setup=()=>{ p.createCanvas(cw(),300).parent('stSketch'); };
-    p.windowResized=()=>{ p.resizeCanvas(cw(),300); };
+    p.setup=()=>{ p.createCanvas(cw(),ch()).parent('stSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),ch()); };
     p.draw=()=>{
       el('stAv').textContent=(+el('stA').value).toFixed(2);
       el('stFv').textContent=(+el('stF').value).toFixed(1);
@@ -180,13 +182,15 @@ plt.tight_layout(); plt.show()
     };
   });
   const setMode=(m)=>{ mode=m; el('stPulso').classList.toggle('on',m==='pulse');
-    el('stCont').classList.toggle('on',m==='cont'); };
+    el('stCont').classList.toggle('on',m==='cont');
+    el('stFire').style.display=m==='pulse'?'inline-block':'none'; };
   const setBnd=(bb)=>{ bnd=bb; el('stFix').classList.toggle('on',bb==='fixed');
     el('stFree').classList.toggle('on',bb==='free'); reset(); running=true;
     el('stPlay').textContent='⏸ Pausar'; };
   el('stFix').onclick=()=>setBnd('fixed');
   el('stFree').onclick=()=>setBnd('free');
-  el('stPulso').onclick=()=>{ setMode('pulse'); reset(); pulseT=Tp; running=true; el('stPlay').textContent='⏸ Pausar'; };
+  el('stPulso').onclick=()=>{ if(mode==='pulse'){ pulseT=Tp; } else { setMode('pulse'); reset(); pulseT=Tp; } running=true; el('stPlay').textContent='⏸ Pausar'; };
+  el('stFire').onclick=()=>{ pulseT=Tp; running=true; el('stPlay').textContent='⏸ Pausar'; };  // novo pulso sem resetar (N pulsos)
   el('stCont').onclick=()=>{ setMode('cont'); reset(); running=true; el('stPlay').textContent='⏸ Pausar'; };
   el('stPlay').onclick=()=>{ running=!running; el('stPlay').textContent=running?'⏸ Pausar':'▶ Reproduzir'; };
   el('stStep').onclick=()=>{ for(let k=0;k<SUB;k++) stepOnce(); };
@@ -333,7 +337,7 @@ plt.tight_layout(); plt.show()
   .sw-wrap #swEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .sw-wrap #swEq b{color:#1f47c8;}
 </style>
-<div class="sw-wrap">
+<div class="sw-wrap sim">
   <div class="sw-row">
     <button id="swPlay">⏸ Pausar</button>
     <button id="swZero">↺ t = 0</button>

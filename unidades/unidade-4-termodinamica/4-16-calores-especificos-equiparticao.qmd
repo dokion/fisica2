@@ -113,7 +113,7 @@ plt.tight_layout(); plt.show()
   .cv-wrap #cvEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .cv-wrap #cvEq b{color:#1f47c8;}
 </style>
-<div class="cv-wrap">
+<div class="cv-wrap sim">
   <div class="cv-row">
     <div class="sld"><label>Temperatura T = <span class="val" id="cvTv">300</span> K</label>
       <input type="range" id="cvT" min="20" max="4000" value="300" step="20"></div>

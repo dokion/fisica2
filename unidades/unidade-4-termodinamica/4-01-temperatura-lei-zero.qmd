@@ -152,7 +152,7 @@ plt.tight_layout(); plt.show()
   .lz-wrap #lzEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .lz-wrap #lzEq b{color:#66308c;}
 </style>
-<div class="lz-wrap">
+<div class="lz-wrap sim">
   <div class="lz-row">
     <button id="lzPlay">⏸ Pausar</button>
     <button id="lzRst">↺ Reiniciar</button>

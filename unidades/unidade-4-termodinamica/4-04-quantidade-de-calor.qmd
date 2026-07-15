@@ -181,7 +181,7 @@ plt.tight_layout(); plt.show()
   .qc-wrap #qcEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .qc-wrap #qcEq b{color:#1f8a3a;}
 </style>
-<div class="qc-wrap">
+<div class="qc-wrap sim">
   <div class="qc-row">
     <div class="sld"><label>Combustível = <span class="val" id="qcMv">50</span> kg/h</label>
       <input type="range" id="qcM" min="20" max="200" value="50" step="5"></div>

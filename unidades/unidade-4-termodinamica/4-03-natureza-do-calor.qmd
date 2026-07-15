@@ -162,7 +162,7 @@ plt.tight_layout(); plt.show()
   .tc-wrap #tcEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .tc-wrap #tcEq b{color:#c81f1f;}
 </style>
-<div class="tc-wrap">
+<div class="tc-wrap sim">
   <div class="tc-row">
     <button id="tcPlay">⏸ Pausar</button>
     <div class="sld"><label>Vazão de água = <span class="val" id="tcMv">1.0</span> (rel.)</label>

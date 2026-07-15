@@ -101,7 +101,7 @@ plt.tight_layout(); plt.show()
   .tc-wrap #tcEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .tc-wrap #tcEq b{color:#1f47c8;}
 </style>
-<div class="tc-wrap">
+<div class="tc-wrap sim">
   <div class="tc-row">
     <div class="sld"><label>Temperatura T = <span class="val" id="tcTv">320</span> K</label>
       <input type="range" id="tcT" min="100" max="1000" value="320" step="20"></div>

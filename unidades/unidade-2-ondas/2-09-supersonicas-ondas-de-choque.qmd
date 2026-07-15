@@ -179,7 +179,7 @@ plt.tight_layout(); plt.show()
   .mc-wrap #mcEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .mc-wrap #mcEq b{color:#c81f1f;}
 </style>
-<div class="mc-wrap">
+<div class="mc-wrap sim">
   <div class="mc-row">
     <button id="mcPlay">⏸ Pausar</button>
     <div class="sld"><label>Número de Mach M = <span class="val" id="mcMv">2.0</span></label>

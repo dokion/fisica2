@@ -153,7 +153,7 @@ plt.tight_layout(); plt.show()
   .bt-wrap #btEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .bt-wrap #btEq b{color:#1f47c8;}
 </style>
-<div class="bt-wrap">
+<div class="bt-wrap sim">
   <div class="bt-row">
     <button id="btPlay">⏸ Pausar</button>
     <button id="btZero">↺ t = 0</button>

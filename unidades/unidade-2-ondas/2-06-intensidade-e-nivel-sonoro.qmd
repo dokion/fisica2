@@ -173,7 +173,7 @@ plt.tight_layout(); plt.show()
   .in-wrap #inEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .in-wrap #inEq b{color:#1f47c8;}
 </style>
-<div class="in-wrap">
+<div class="in-wrap sim">
   <div class="in-row">
     <button id="inPlay">⏸ Pausar</button>
     <div class="sld"><label>Potência P = <span class="val" id="inPv">5</span> kW</label>

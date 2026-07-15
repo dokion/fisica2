@@ -172,7 +172,7 @@ plt.tight_layout(); plt.show()
   .pw-wrap #pwEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .pw-wrap #pwEq b{color:#c81f1f;}
 </style>
-<div class="pw-wrap">
+<div class="pw-wrap sim">
   <div class="pw-row">
     <div class="sld"><label>Incrustação = <span class="val" id="pwIv">0.5</span> mm</label>
       <input type="range" id="pwI" min="0" max="3" value="0.5" step="0.1"></div>

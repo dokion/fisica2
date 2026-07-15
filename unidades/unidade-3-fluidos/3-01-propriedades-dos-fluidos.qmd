@@ -142,7 +142,7 @@ plt.tight_layout(); plt.show()
   .es-wrap #esEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .es-wrap #esEq b{color:#1f47c8;}
 </style>
-<div class="es-wrap">
+<div class="es-wrap sim">
   <div class="es-row">
     <button id="esPlay">⏸ Pausar</button>
     <button id="esDrop">↺ Soltar de novo</button>

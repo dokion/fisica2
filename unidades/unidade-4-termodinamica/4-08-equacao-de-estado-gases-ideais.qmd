@@ -177,7 +177,7 @@ plt.tight_layout(); plt.show()
   .gl-wrap #glEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .gl-wrap #glEq b{color:#c81f1f;}
 </style>
-<div class="gl-wrap">
+<div class="gl-wrap sim">
   <div class="gl-row">
     <div class="sld"><label>Pressão pós-combustão P₃ = <span class="val" id="glPv">150</span> bar</label>
       <input type="range" id="glP" min="80" max="220" value="150" step="5"></div>

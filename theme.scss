@@ -232,6 +232,8 @@ p img, figure img, .cell-output-display img, .figure img { max-width: 100%; heig
     order: -1;                       // canvas primeiro
     position: sticky; top: 0.4rem; z-index: 2;   // fica grudado enquanto rola até os controles
   }
+  // canvas não passa de ~58% da altura da tela (crucial em paisagem baixa)
+  .sim div[id$="Sketch"] canvas { max-height: 58vh; width: auto; }
   // controles mais justos
   .sim [class$="-row"] { gap: 6px 8px; margin-bottom: 6px; }
   .sim button { padding: 4px 9px; font-size: 12px; }

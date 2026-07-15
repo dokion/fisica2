@@ -166,7 +166,7 @@ plt.tight_layout(); plt.show()
   .jo-wrap #joEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .jo-wrap #joEq b{color:#c81f1f;}
 </style>
-<div class="jo-wrap">
+<div class="jo-wrap sim">
   <div class="jo-row">
     <button id="joPlay">⏸ Pausar</button>
     <button id="joRst">↺ Zerar água</button>

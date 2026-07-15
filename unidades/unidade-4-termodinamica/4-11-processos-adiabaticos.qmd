@@ -186,7 +186,7 @@ plt.tight_layout(); plt.show()
   .ad-wrap #adEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .ad-wrap #adEq b{color:#c81f1f;}
 </style>
-<div class="ad-wrap">
+<div class="ad-wrap sim">
   <div class="ad-row">
     <div class="sld"><label>Razão de compressão r = <span class="val" id="adRv">18</span></label>
       <input type="range" id="adR" min="6" max="24" value="18" step="1"></div>

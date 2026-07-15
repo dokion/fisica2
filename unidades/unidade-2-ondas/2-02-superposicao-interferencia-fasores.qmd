@@ -170,7 +170,7 @@ plt.tight_layout(); plt.show()
   .ph-wrap #phEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .ph-wrap #phEq b{color:#66308c;}
 </style>
-<div class="ph-wrap">
+<div class="ph-wrap sim">
   <div class="ph-row">
     <button id="phPlay">⏸ Pausar</button>
     <button id="phZero">↺ t = 0</button>

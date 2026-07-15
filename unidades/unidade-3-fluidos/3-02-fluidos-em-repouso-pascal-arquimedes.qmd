@@ -144,7 +144,7 @@ plt.tight_layout(); plt.show()
   .fl-wrap #flEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .fl-wrap #flEq b{color:#1f47c8;}
 </style>
-<div class="fl-wrap">
+<div class="fl-wrap sim">
   <div class="fl-row">
     <div class="sld"><label>Deslocamento Δ = <span class="val" id="flDv">40</span> mil t</label>
       <input type="range" id="flD" min="5" max="80" value="40" step="1"></div>

@@ -116,7 +116,7 @@ plt.tight_layout(); plt.show()
   .mt-wrap #mtEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .mt-wrap #mtEq b{color:#1f47c8;}
 </style>
-<div class="mt-wrap">
+<div class="mt-wrap sim">
   <div class="mt-row">
     <div class="sld"><label>T combustão T<sub>q</sub> = <span class="val" id="mtQv">1100</span> K</label>
       <input type="range" id="mtQ" min="900" max="1400" value="1100" step="50"></div>

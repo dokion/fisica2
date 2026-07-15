@@ -199,7 +199,7 @@ plt.tight_layout(); plt.show()
   .dp-wrap #dpEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .dp-wrap #dpEq b{color:#1f47c8;}
 </style>
-<div class="dp-wrap">
+<div class="dp-wrap sim">
   <div class="dp-row">
     <button id="dpPlay">⏸ Pausar</button>
     <div class="sld"><label>Animação: v<sub>fonte</sub>/v<sub>som</sub> = <span class="val" id="dpBv">0.5</span></label>

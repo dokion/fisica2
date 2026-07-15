@@ -183,7 +183,7 @@ plt.tight_layout(); plt.show()
   .sk-wrap #skEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .sk-wrap #skEq b{color:#1f8a3a;}
 </style>
-<div class="sk-wrap">
+<div class="sk-wrap sim">
   <div class="sk-row">
     <div class="sld"><label>Rendimento (trabalho) = <span class="val" id="skWv">45</span> %</label>
       <input type="range" id="skW" min="30" max="55" value="45" step="1"></div>

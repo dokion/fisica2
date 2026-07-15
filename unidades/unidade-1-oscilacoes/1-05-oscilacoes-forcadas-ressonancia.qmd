@@ -126,7 +126,7 @@ plt.tight_layout(); plt.show()
   .rs-wrap #rsEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .rs-wrap #rsEq b{color:#1f47c8;}
 </style>
-<div class="rs-wrap">
+<div class="rs-wrap sim">
   <div class="rs-row">
     <button id="rsPlay">⏸ Pausar</button>
     <div class="sld"><label>ω/ω<sub>0</sub> = <span class="val" id="rsRv">0.5</span></label>

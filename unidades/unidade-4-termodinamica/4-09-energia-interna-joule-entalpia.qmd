@@ -169,7 +169,7 @@ plt.tight_layout(); plt.show()
   .en-wrap #enEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .en-wrap #enEq b{color:#1f47c8;}
 </style>
-<div class="en-wrap">
+<div class="en-wrap sim">
   <div class="en-row">
     <button id="enPlay">⏸ Pausar</button>
     <button id="enRst">↺ Reiniciar</button>

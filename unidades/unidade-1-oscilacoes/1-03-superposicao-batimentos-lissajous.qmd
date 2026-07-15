@@ -88,7 +88,7 @@ plt.tight_layout(); plt.show()
   .sg-wrap #sgEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .sg-wrap #sgEq b{color:#66308c;}
 </style>
-<div class="sg-wrap">
+<div class="sg-wrap sim">
   <div class="sg-row">
     <button id="sgPlay">⏸ Pausar</button>
     <button id="sgZero">↺ t = 0</button>
@@ -329,7 +329,7 @@ plt.tight_layout(); plt.show()
   .fs-wrap .fs-eq .plus{color:#66308c;font-weight:700;}
   .fs-wrap .fs-cap{font-size:12px;color:#6b6357;margin-bottom:3px;}
 </style>
-<div class="fs-wrap">
+<div class="fs-wrap sim">
   <div class="fs-hint">Arraste as pontas <b style="color:#c81f1f">P₁</b> e
     <b style="color:#1f47c8">P₂</b> — os vetores giram em torno de O e vão até a borda do quadro.</div>
   <div id="fsSketch"></div>
@@ -545,7 +545,7 @@ plt.tight_layout(); plt.show()
   .sp2-wrap #sp2Eq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .sp2-wrap #sp2Eq b{color:#66308c;}
 </style>
-<div class="sp2-wrap">
+<div class="sp2-wrap sim">
   <div class="sp2-row">
     <button id="sp2Play">⏸ Pausar</button>
     <button id="sp2Zero">↺ t = 0</button>
@@ -751,7 +751,7 @@ plt.tight_layout(); plt.show()
   .sb-wrap #sbEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .sb-wrap #sbEq b{color:#66308c;}
 </style>
-<div class="sb-wrap">
+<div class="sb-wrap sim">
   <div class="sb-row">
     <button id="sbPlay">⏸ Pausar</button>
     <button id="sbZero">↺ t = 0</button>
@@ -959,7 +959,7 @@ plt.tight_layout(); plt.show()
   .lj-wrap #ljEq{font-size:14px;margin:8px 2px 0;line-height:1.5;text-align:center;}
   .lj-wrap #ljEq b{color:#1f47c8;}
 </style>
-<div class="lj-wrap">
+<div class="lj-wrap sim">
   <div class="lj-row">
     <button id="ljPlay">⏸ Pausar</button>
     <button id="ljZero">↺ t = 0</button>
@@ -1160,7 +1160,7 @@ plt.tight_layout(); plt.show()
   .bo-wrap #boEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .bo-wrap #boEq b{color:#1f47c8;}
 </style>
-<div class="bo-wrap">
+<div class="bo-wrap sim">
   <div class="bo-row">
     <button id="boPlay">⏸ Pausar</button>
     <button id="boZero">↺ t = 0</button>
@@ -1332,7 +1332,7 @@ plt.tight_layout(); plt.show()
   .mr-wrap #mrEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .mr-wrap #mrEq b{color:#1f47c8;}
 </style>
-<div class="mr-wrap">
+<div class="mr-wrap sim">
   <div class="mr-row">
     <button id="mrPlay">⏸ Pausar</button>
     <button id="mrZero">↺ t = 0</button>
@@ -1480,7 +1480,7 @@ plt.tight_layout(); plt.show()
   .mb-wrap #mbEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .mb-wrap #mbEq b{color:#66308c;}
 </style>
-<div class="mb-wrap">
+<div class="mb-wrap sim">
   <div class="mb-row">
     <button id="mbPlay">⏸ Pausar</button>
     <button id="mbZero">↺ t = 0</button>
@@ -1651,7 +1651,7 @@ plt.tight_layout(); plt.show()
   .cv-wrap #cvEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .cv-wrap #cvEq b{color:#66308c;}
 </style>
-<div class="cv-wrap">
+<div class="cv-wrap sim">
   <div class="cv-row">
     <button id="cvPlay">⏸ Pausar</button>
     <button id="cvZero">↺ t = 0</button>
@@ -1817,7 +1817,7 @@ plt.tight_layout(); plt.show()
   .hg-wrap #hgEq{font-size:14px;margin:8px 2px 0;line-height:1.5;text-align:center;}
   .hg-wrap #hgEq b{color:#1f47c8;}
 </style>
-<div class="hg-wrap">
+<div class="hg-wrap sim">
   <div class="hg-row">
     <button id="hgPlay">⏸ Pausar</button>
     <button id="hgClr">🧹 Limpar papel</button>

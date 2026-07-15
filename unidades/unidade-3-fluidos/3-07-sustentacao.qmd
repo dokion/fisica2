@@ -175,7 +175,7 @@ plt.tight_layout(); plt.show()
   .su-wrap #suEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .su-wrap #suEq b{color:#1f47c8;}
 </style>
-<div class="su-wrap">
+<div class="su-wrap sim">
   <div class="su-row">
     <button id="suPlay">⏸ Pausar</button>
     <div class="sld"><label>Ângulo de ataque α = <span class="val" id="suAv">8</span>°</label>

@@ -175,7 +175,7 @@ plt.tight_layout(); plt.show()
   .mf-wrap #mfEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .mf-wrap #mfEq b{color:#1f47c8;}
 </style>
-<div class="mf-wrap">
+<div class="mf-wrap sim">
   <div class="mf-row">
     <button id="mfPlay">⏸ Pausar</button>
     <button id="mfZero">↺ t = 0</button>

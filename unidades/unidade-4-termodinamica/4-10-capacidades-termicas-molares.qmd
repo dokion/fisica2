@@ -177,7 +177,7 @@ plt.tight_layout(); plt.show()
   .cm-wrap #cmEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .cm-wrap #cmEq b{color:#c81f1f;}
 </style>
-<div class="cm-wrap">
+<div class="cm-wrap sim">
   <div class="cm-row">
     <div class="sld"><label>Aquecimento isobárico ΔT = <span class="val" id="cmTv">80</span> K</label>
       <input type="range" id="cmT" min="20" max="150" value="80" step="10"></div>

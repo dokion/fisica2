@@ -161,7 +161,7 @@ plt.tight_layout(); plt.show()
   .sv-wrap #svEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .sv-wrap #svEq b{color:#66308c;}
 </style>
-<div class="sv-wrap">
+<div class="sv-wrap sim">
   <div class="sv-row">
     <button id="svPlay">⏸ Pausar</button>
     <div class="sld"><label>T na superfície = <span class="val" id="svTv">28</span> °C</label>

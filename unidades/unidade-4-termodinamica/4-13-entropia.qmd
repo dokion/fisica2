@@ -185,7 +185,7 @@ plt.tight_layout(); plt.show()
   .es-wrap #esEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .es-wrap #esEq b{color:#1f47c8;}
 </style>
-<div class="es-wrap">
+<div class="es-wrap sim">
   <div class="es-row">
     <div class="sld"><label>Temperatura de entrada da água = <span class="val" id="esTv">30</span> °C</label>
       <input type="range" id="esT" min="20" max="50" value="30" step="1"></div>

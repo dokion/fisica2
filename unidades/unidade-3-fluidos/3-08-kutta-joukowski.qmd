@@ -166,7 +166,7 @@ plt.tight_layout(); plt.show()
   .mg-wrap #mgEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .mg-wrap #mgEq b{color:#1f47c8;}
 </style>
-<div class="mg-wrap">
+<div class="mg-wrap sim">
   <div class="mg-row">
     <button id="mgPlay">⏸ Pausar</button>
     <div class="sld"><label>Circulação Γ (rotação) = <span class="val" id="mgGv">4.0</span></label>

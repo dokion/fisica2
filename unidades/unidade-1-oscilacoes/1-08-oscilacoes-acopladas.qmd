@@ -206,7 +206,7 @@ plt.tight_layout(); plt.show()
   .ac-wrap #acEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .ac-wrap #acEq b{color:#1f47c8;}
 </style>
-<div class="ac-wrap">
+<div class="ac-wrap sim">
   <div class="ac-row">
     <button id="acPlay">⏸ Pausar</button>
     <button id="acM1">Modo 1 (em fase)</button>

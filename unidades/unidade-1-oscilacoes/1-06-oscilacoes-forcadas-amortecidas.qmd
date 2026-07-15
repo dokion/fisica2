@@ -121,7 +121,7 @@ plt.tight_layout(); plt.show()
   .fa-wrap #faEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .fa-wrap #faEq b{color:#1f47c8;}
 </style>
-<div class="fa-wrap">
+<div class="fa-wrap sim">
   <div class="fa-row">
     <button id="faPlay">⏸ Pausar</button>
     <div class="sld"><label>γ/ω<sub>0</sub> = <span class="val" id="faZv">0.1</span></label>

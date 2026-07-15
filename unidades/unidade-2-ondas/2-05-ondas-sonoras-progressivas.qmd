@@ -160,7 +160,7 @@ plt.tight_layout(); plt.show()
   .pw-wrap #pwEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .pw-wrap #pwEq b{color:#1f47c8;}
 </style>
-<div class="pw-wrap">
+<div class="pw-wrap sim">
   <div class="pw-row">
     <button id="pwPlay">⏸ Pausar</button>
     <button id="pwZero">↺ t = 0</button>

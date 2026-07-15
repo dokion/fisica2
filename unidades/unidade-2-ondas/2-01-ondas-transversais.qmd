@@ -100,6 +100,7 @@ plt.tight_layout(); plt.show()
     <button id="wvManual">Manual</button>
   </div>
   <div class="wv-row" id="wvPlayRow">
+    <button id="wvFire" style="display:none">＋ pulso</button>
     <button id="wvPlay">⏸ Pausar</button>
     <button id="wvStep">▷ passo</button>
     <button id="wvClr">↺ reiniciar</button>
@@ -181,19 +182,21 @@ plt.tight_layout(); plt.show()
     p.touchEnded=()=>{ grabbing=false; };
   });
   const caps={cont:'A corda começa reta; a onda entra pela esquerda, viaja e sai no espaço livre sem refletir. Cada conta só sobe e desce no lugar.',
-    pulse:'Um pulso viaja para a direita e sai no espaço livre. Ajuste a largura e a amplitude do pulso.',
+    pulse:'Um pulso viaja para a direita e sai no espaço livre. Ajuste a largura e a amplitude; clique ＋ pulso para lançar vários seguidos.',
     manual:'Agarre a ponta ↕ e mexa: o seu gesto vira onda, que viaja para a direita e sai.'};
   const updateUI=()=>{ const man=mode==='manual';
     el('wvPlayRow').style.display=man?'none':'flex';
     el('wvSldRow').style.display=man?'none':'flex';
     el('wvFblk').style.display=mode==='cont'?'flex':'none';
     el('wvWblk').style.display=mode==='pulse'?'flex':'none';
+    el('wvFire').style.display=mode==='pulse'?'inline-block':'none';
     el('wvCap').textContent=caps[mode]; };
   const setMode=(m)=>{ mode=m; grabbing=false;
     el('wvPulso').classList.toggle('on',m==='pulse');
     el('wvCont').classList.toggle('on',m==='cont');
     el('wvManual').classList.toggle('on',m==='manual'); updateUI(); };
-  el('wvPulso').onclick=()=>{ setMode('pulse'); reset(); pulseT=Tp; running=true; el('wvPlay').textContent='⏸ Pausar'; };
+  el('wvPulso').onclick=()=>{ if(mode==='pulse'){ pulseT=Tp; } else { setMode('pulse'); reset(); pulseT=Tp; } running=true; el('wvPlay').textContent='⏸ Pausar'; };
+  el('wvFire').onclick=()=>{ pulseT=Tp; running=true; el('wvPlay').textContent='⏸ Pausar'; };  // dispara novo pulso sem resetar (N pulsos)
   el('wvCont').onclick=()=>{ setMode('cont'); reset(); running=true; el('wvPlay').textContent='⏸ Pausar'; };
   el('wvManual').onclick=()=>{ setMode('manual'); reset(); running=true; };
   el('wvPlay').onclick=()=>{ running=!running; el('wvPlay').textContent=running?'⏸ Pausar':'▶ Reproduzir'; };
@@ -319,7 +322,7 @@ plt.tight_layout(); plt.show()
   .tw-wrap #twEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
   .tw-wrap #twEq b{color:#1f47c8;}
 </style>
-<div class="tw-wrap">
+<div class="tw-wrap sim">
   <div class="tw-row">
     <button id="twPlay">⏸ Pausar</button>
     <button id="twZero">↺ t = 0</button>
