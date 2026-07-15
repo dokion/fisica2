@@ -134,16 +134,16 @@ plt.tight_layout(); plt.show()
       p.push(); p.noFill(); p.stroke('#c9d6ea'); p.strokeWeight(1.4); p.beginShape();
       for(let gx=x0;gx<=p.width-16;gx+=3){ const xm=(gx-x0)/PPM; p.vertex(gx,yc1-A1*Math.sin(k*xm-w*t)); }
       p.endShape(); p.pop();
-      // partículas do meio (x fixo, oscilam na vertical)
-      const nT=29; let redT=null;
+      // partículas do meio → BARRAS deslizando em trilhos verticais (oscilam ⊥)
+      const nT=18, spT=(VISM/nT)*PPM, knobW=Math.max(9,Math.min(18,spT*0.72)), redI=Math.round(nT*0.28);
+      let redT=null;
       for(let i=0;i<nT;i++){ const xm=(i+0.5)*VISM/nT, gx=xpx(xm); if(gx>p.width-16) continue;
-        const yy=yc1-A1*Math.sin(k*xm-w*t); const isRed=(i===Math.round(nT*0.28));
-        p.noStroke(); p.fill(isRed?'#c81f1f':'#7c8aa5'); p.circle(gx,yy,isRed?13:8);
-        if(isRed) redT={gx,xm}; }
-      if(redT){ p.stroke('#e5b8b8'); p.strokeWeight(1); p.drawingContext.setLineDash([3,4]);
-        p.line(redT.gx,yc1-A1,redT.gx,yc1+A1); p.drawingContext.setLineDash([]);
-        p.noStroke(); p.fill('#c81f1f'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
-        p.text('só ↕',redT.gx,yc1+A1+3); }
+        const yy=yc1-A1*Math.sin(k*xm-w*t), isRed=(i===redI);
+        p.noStroke(); p.fill('#ece7dc'); p.rect(gx-3,yc1-A1,6,2*A1,3);          // trilho vertical
+        p.fill(isRed?'#c81f1f':'#5b6b86'); p.rect(gx-knobW/2,yy-4,knobW,8,2);   // barra (knob)
+        if(isRed) redT={gx}; }
+      if(redT){ p.noStroke(); p.fill('#c81f1f'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+        p.text('só ↕',redT.gx,yc1+A1+4); }
       // seta de propagação
       p.stroke('#8a8073'); p.strokeWeight(1.4); p.line(p.width-120,yc1-A1-14,p.width-24,yc1-A1-14);
       p.noStroke(); p.fill('#8a8073'); p.triangle(p.width-24,yc1-A1-14,p.width-33,yc1-A1-18,p.width-33,yc1-A1-10);
@@ -153,18 +153,17 @@ plt.tight_layout(); plt.show()
       const yc2=312, uAmp=0.13*lam;    // deslocamento ∥ (m), proporcional a λ
       p.noStroke(); p.fill('#4a4038'); p.textSize(12.5); p.textAlign(p.LEFT,p.TOP);
       p.text('LONGITUDINAL — a partícula vai e volta (∥) → compressões e rarefações',x0,212);
-      const nL=90; let redL=null;
-      for(let i=0;i<nL;i++){ const xm=(i+0.5)*VISM/nL; const disp=uAmp*Math.cos(k*xm-w*t);
-        const gx=xpx(xm+disp); if(gx<x0-2||gx>p.width-14) continue;
-        const dens=(Math.sin(k*xm-w*t)+1)/2;        // 1 = compressão, 0 = rarefação
-        const isRed=(i===Math.round(nL*0.28));
-        p.noStroke();
-        p.fill(isRed?p.color('#c81f1f'):p.lerpColor(p.color('#cfd6e0'),p.color('#33415c'),dens));
-        p.circle(gx,yc2,isRed?12:6.5);
-        if(isRed) redL={eqx:xm}; }
-      if(redL){ const gxe=xpx(redL.eqx); p.stroke('#e5b8b8'); p.strokeWeight(1); p.drawingContext.setLineDash([3,4]);
-        p.line(gxe-uAmp*PPM,yc2+20,gxe+uAmp*PPM,yc2+20); p.drawingContext.setLineDash([]);
-        p.noStroke(); p.fill('#c81f1f'); p.textSize(10); p.textAlign(p.CENTER,p.TOP); p.text('só ↔',gxe,yc2+24); }
+      // partículas do meio → BARRAS verticais num trilho horizontal (oscilam ∥ → compressões)
+      p.noStroke(); p.fill('#ece7dc'); p.rect(x0,yc2-15,(p.width-16)-x0,30,4);   // trilho (canal)
+      const nL=60, redJ=Math.round(nL*0.28); let redL=null;
+      for(let i=0;i<nL;i++){ const xm=(i+0.5)*VISM/nL, disp=uAmp*Math.cos(k*xm-w*t);
+        const gx=xpx(xm+disp); if(gx<x0+2||gx>p.width-16) continue;
+        const dens=(Math.sin(k*xm-w*t)+1)/2, isRed=(i===redJ);   // 1 = compressão, 0 = rarefação
+        p.fill(isRed?p.color('#c81f1f'):p.lerpColor(p.color('#b8c2d4'),p.color('#33415c'),dens));
+        p.rect(gx-2,yc2-12,4,24,1);                              // barra vertical (partícula)
+        if(isRed) redL={gx}; }
+      if(redL){ p.noStroke(); p.fill('#c81f1f'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+        p.text('só ↔',redL.gx,yc2+18); }
       // rótulos compressão / rarefação (seguem a onda)
       const phC=(w*t/k + 0.25*lam); const gc=xpx(phC%VISM);        // sin=+1 → compressão
       const gr=xpx((phC+0.5*lam)%VISM);                            // sin=−1 → rarefação
