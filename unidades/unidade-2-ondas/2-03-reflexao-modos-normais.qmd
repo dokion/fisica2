@@ -30,6 +30,182 @@ Antinós estão em $x = (n + 1/2)\frac{\lambda}{2}$ (onde construtivamente se re
 
 Esta é a assinatura de uma onda refletida: o padrão se torna **estacionário**, não progressivo.
 
+## Veja a reflexão montar a onda estacionária
+
+A mesma corda, agora **presa na direita**. Com a extremidade **confinada**, o pulso volta
+*invertido* (a inversão de fase $\pi$ da fórmula acima) — use o **passo a passo** para congelar
+o instante exato da reflexão. Com a extremidade **livre** (um anel que desliza sem atrito), o
+pulso volta *em pé*. No modo **contínua**, as reflexões sucessivas se somam e montam sozinhas a
+**onda estacionária**: as contas nos **nós** quase não se mexem, as dos **antinós** varrem toda
+a amplitude.
+
+```{python}
+#| fig-cap: "Onda estacionária numa corda de extremidade confinada: y(x) = 2A·sin(kx), com nós (deslocamento nulo) e antinós (deslocamento 2A). As contas coloridas nos antinós varrem toda a amplitude; as próximas dos nós quase não se movem. É o padrão que a reflexão sucessiva monta no modo contínuo. Mesma física da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesma física da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+L = 10.0
+x = np.linspace(0, L, 500)
+nhalf = 4                 # 4 meios-comprimentos de onda
+k = nhalf*np.pi/L
+A = 0.55
+env = 2*A*np.sin(k*x)     # envelope (amplitude do antinó = 2A)
+fig, ax = plt.subplots(figsize=(9, 3.0))
+# envelope tracejado (limites da oscilação)
+ax.plot(x, env, color='#c9b48a', lw=1.0, ls=(0, (5, 4)))
+ax.plot(x, -env, color='#c9b48a', lw=1.0, ls=(0, (5, 4)))
+# corda num instante (fio)
+inst = env*0.85
+ax.plot(x, inst, color='#6b533a', lw=5, solid_capstyle='round')
+ax.plot(x, inst, color='#a67c4e', lw=1.8, solid_capstyle='round')
+# nós e antinós
+xn = np.arange(0, nhalf+1)*L/nhalf
+ax.plot(xn, np.zeros_like(xn), 'o', mfc='white', mec='#555', ms=8, zorder=6)
+for xx in xn: ax.text(xx, -2*A*1.28, 'nó', ha='center', fontsize=8, color='#555')
+xa = (np.arange(nhalf)+0.5)*L/nhalf
+# contas coloridas nos antinós
+cols = ['#c81f1f', '#2e9e5b', '#1f7ac8', '#7a3b8c']
+for xc, c in zip(xa, cols):
+    ax.plot(xc, 2*A*np.sin(k*xc)*0.85, 'o', color=c, ms=11, zorder=7)
+    ax.annotate('', xy=(xc, -2*A*np.sin(k*xc)*0.5), xytext=(xc, 2*A*np.sin(k*xc)*0.85),
+                arrowprops=dict(arrowstyle='<->', color=c, lw=1.2, alpha=0.6))
+# paredes (extremidades fixas)
+for xx in (0, L): ax.axvline(xx, color='#3a342c', lw=3)
+ax.axhline(0, color='0.85', lw=0.7)
+ax.set_ylim(-2*A*1.5, 2*A*1.5); ax.set_xlim(-0.3, L+0.3)
+ax.set_yticks([]); ax.set_xticks([]); ax.set_xlabel('nós parados · antinós varrem 2A — padrão estacionário')
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO, corda por diferenças finitas).
+     Extremidade direita confinada (fixa) ou livre (anel). Reflexão → onda estacionária.
+     Fio flexível + contas coloridas. Pulso/contínua, play/pause/passo, sliders A e f.
+     p5 de libs/ (offline, Q6). Mesma física da matplotlib. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .st-wrap{max-width:1000px;margin:1rem auto;}
+  .st-wrap .st-row{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-bottom:8px;}
+  .st-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .st-wrap button.on{background:#66308c;color:#fff;border-color:#66308c;}
+  .st-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:150px;flex:1 1 150px;}
+  .st-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .st-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .st-wrap input[type=range]{width:100%;max-width:220px;accent-color:#c85c2e;}
+  .st-wrap #stSketch canvas{display:block;border-radius:8px;max-width:100%;box-shadow:0 1px 3px rgba(20,27,46,.10);}
+  .st-wrap .st-cap{font-size:12.5px;color:#6b6357;margin:6px 2px;}
+</style>
+<div class="st-wrap">
+  <div class="st-row">
+    <button id="stFix" class="on">Confinada</button>
+    <button id="stFree">Livre</button>
+    <span style="width:1px;height:22px;background:#ddd6c8;"></span>
+    <button id="stPulso">Pulso</button>
+    <button id="stCont" class="on">Contínua</button>
+    <span style="width:1px;height:22px;background:#ddd6c8;"></span>
+    <button id="stPlay">⏸ Pausar</button>
+    <button id="stStep">▷ passo</button>
+    <button id="stClr">↺ limpar</button>
+  </div>
+  <div class="st-row">
+    <div class="sld"><label>Amplitude = <span class="val" id="stAv">0.45</span></label>
+      <input type="range" id="stA" min="0.1" max="0.8" value="0.45" step="0.05"></div>
+    <div class="sld"><label>Frequência = <span class="val" id="stFv">1.6</span></label>
+      <input type="range" id="stF" min="0.5" max="3.0" value="1.6" step="0.1"></div>
+  </div>
+  <div id="stSketch"></div>
+  <div class="st-cap">Confinada: o pulso volta invertido. Livre: volta em pé. Contínua: a reflexão monta a estacionária — nós parados, antinós varrendo 2A.</div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  const cw=()=>{ const w=(el('stSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  const N=200, r=0.5, r2=r*r, SUB=4, Tp=46;
+  let y=new Array(N+1).fill(0), yo=new Array(N+1).fill(0), yn=new Array(N+1).fill(0);
+  let phase=0, pulseT=-1, running=true, mode='cont', bnd='fixed';
+  function reset(){ y.fill(0); yo.fill(0); yn.fill(0); phase=0; pulseT=-1; }
+  function stepOnce(){
+    const A=+el('stA').value, f=+el('stF').value, omega=2*Math.PI*0.006*f;
+    let yL;
+    if(mode==='cont'){ yL=A*Math.sin(phase); phase+=omega; }
+    else { if(pulseT>=0){ yL=A*Math.sin(Math.PI*(Tp-pulseT)/Tp); pulseT--; } else yL=0; }
+    const damp=0.0016;
+    for(let i=1;i<N;i++) yn[i]=2*y[i]-yo[i]+r2*(y[i+1]-2*y[i]+y[i-1]) - damp*(y[i]-yo[i]);
+    yn[0]=yL;
+    if(bnd==='fixed') yn[N]=0;
+    else yn[N]=2*y[N]-yo[N]+r2*(2*y[N-1]-2*y[N]) - damp*(y[N]-yo[N]);  // extremidade livre (∂y/∂x=0)
+    const t=yo; yo=y; y=yn; yn=t;
+  }
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),300).parent('stSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),300); };
+    p.draw=()=>{
+      el('stAv').textContent=(+el('stA').value).toFixed(2);
+      el('stFv').textContent=(+el('stF').value).toFixed(1);
+      if(running){ for(let k=0;k<SUB;k++) stepOnce(); }
+      const W=p.width, H=p.height, xL=46, xR=W-40, yc=H*0.5, yA=H*0.30;
+      const xOf=i=>xL+i/N*(xR-xL), yOf=i=>yc-y[i]*yA;
+      p.background('#faf8f4');
+      p.stroke('#e6ded0'); p.strokeWeight(1); p.line(xL,yc,xR,yc);
+      // trilhos das contas
+      const beads=[]; for(let k=1;k<=7;k++) beads.push(Math.round(N*k/8));
+      const cols=['#c81f1f','#e0872e','#c9a227','#2e9e5b','#1f7ac8','#3b4ea0','#7a3b8c'];
+      p.stroke('#ece5d7'); p.strokeWeight(1); p.drawingContext.setLineDash([3,4]);
+      beads.forEach(i=>p.line(xOf(i),yc-yA,xOf(i),yc+yA)); p.drawingContext.setLineDash([]);
+      // corda (fio)
+      const cord=(col,wt)=>{ p.push(); p.noFill(); p.stroke(col); p.strokeWeight(wt);
+        p.strokeJoin(p.ROUND); p.strokeCap(p.ROUND); p.beginShape();
+        p.curveVertex(xOf(0),yOf(0)); for(let i=0;i<=N;i++) p.curveVertex(xOf(i),yOf(i));
+        p.curveVertex(xOf(N),yOf(N)); p.endShape(); p.pop(); };
+      cord('#6b533a',6); cord('#a67c4e',2.4);
+      // contas
+      p.noStroke(); beads.forEach((i,k)=>{ p.fill(cols[k]); p.circle(xOf(i),yOf(i),12);
+        p.fill(255,255,255,150); p.circle(xOf(i)-2,yOf(i)-2,4); });
+      // acionador (esquerda)
+      p.stroke('#b9b2a4'); p.strokeWeight(1); p.line(xL,yc-yA,xL,yc+yA);
+      p.noStroke(); p.fill('#3a342c'); p.rectMode(p.CENTER); p.rect(xL,yOf(0),14,20,3); p.rectMode(p.CORNER);
+      // extremidade direita
+      if(bnd==='fixed'){
+        p.fill('#3a342c'); p.rect(xR,0,W-xR,H);      // parede
+        p.stroke('#5a4632'); p.strokeWeight(1);
+        for(let yy=6;yy<H;yy+=12) p.line(xR,yy,W,yy-6);
+      } else {
+        p.stroke('#8a8073'); p.strokeWeight(3); p.line(xR,10,xR,H-10);   // poste
+        p.noFill(); p.stroke('#3a342c'); p.strokeWeight(3); p.circle(xR,yOf(N),20); // anel
+      }
+      p.noStroke(); p.fill('#a79e8e'); p.textSize(11); p.textAlign(p.RIGHT,p.TOP);
+      p.text(bnd==='fixed'?'confinada':'livre', xR-4, 6);
+    };
+  });
+  const setMode=(m)=>{ mode=m; el('stPulso').classList.toggle('on',m==='pulse');
+    el('stCont').classList.toggle('on',m==='cont'); };
+  const setBnd=(bb)=>{ bnd=bb; el('stFix').classList.toggle('on',bb==='fixed');
+    el('stFree').classList.toggle('on',bb==='free'); reset(); running=true;
+    el('stPlay').textContent='⏸ Pausar'; };
+  el('stFix').onclick=()=>setBnd('fixed');
+  el('stFree').onclick=()=>setBnd('free');
+  el('stPulso').onclick=()=>{ setMode('pulse'); reset(); pulseT=Tp; running=true; el('stPlay').textContent='⏸ Pausar'; };
+  el('stCont').onclick=()=>{ setMode('cont'); reset(); running=true; el('stPlay').textContent='⏸ Pausar'; };
+  el('stPlay').onclick=()=>{ running=!running; el('stPlay').textContent=running?'⏸ Pausar':'▶ Reproduzir'; };
+  el('stStep').onclick=()=>{ for(let k=0;k<SUB;k++) stepOnce(); };
+  el('stClr').onclick=()=>{ reset(); };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. No modo **pulso** com extremidade **confinada**, use o **passo** para chegar ao instante da
+   reflexão: o pulso volta para cima ou para baixo? Troque para **livre** e repita — qual a
+   diferença, e o que ela diz sobre a condição de contorno?
+2. No modo **contínua**, deixe o padrão se estabelecer: onde ficam os **nós** (contas paradas)?
+   Confira que a distância entre nós vizinhos é $\lambda/2$.
+3. Aumente a frequência aos poucos: em certos valores o padrão "trava" grande e limpo
+   (ressonância — um modo normal), em outros fica bagunçado. Por que só algumas frequências
+   cabem inteiras na corda?
+:::
+
 ## Modos normais em meios limitados {{< ra OE2.9 B2 >}}
 
 Considere uma camada de água entre a superfície (refletor perfeito) e o fundo (também refletor). Uma onda que se propaga para baixo reflete no fundo e volta para cima. Se a profundidade for tal que um número inteiro de meios-comprimentos de onda caiba entre os dois refletores, a onda refletida interfere *construtivamente* com novas ondas incidentes — ocorre **ressonância**. Isso é um **modo normal**.
