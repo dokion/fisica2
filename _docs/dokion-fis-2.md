@@ -17,21 +17,21 @@ codigo: FIS-2 · descricao: Oscilações, ondas, mecânica dos fluidos e termodi
 - ondas transversais
 - princípio da superposição, interferência e fasores
 - reflexão de ondas. Modos normais de vibração
-- diferenças entre ondas audíveis, ultrassônicas e infrassônicas ondas sonoras e velocidade do som
+- diferenças entre ondas audíveis, ultrassônicas e infrassônicas; ondas sonoras e velocidade do som
 - ondas sonoras progressivas
 - intensidade e nível sonoro
-- batímento
+- batimento
 - Efeito Doppler
 - velocidades supersônicas e ondas de choque
-#### assunto: Mecânica dos fluidos
+#### assunto: Mecânica dos Fluidos
 - propriedades dos fluidos: pressão, tensão superficial, massa específica e viscosidade
 - fluidos em repouso: princípios de Pascal e Arquimedes
-- fluidos em movimento:equação da continuidade, equação de Bernoulli
-- escoamento de fluidos: número de Reynolds, equação de Navier-stokes, camada limite
+- fluidos em movimento: equação da continuidade, equação de Bernoulli
+- escoamento de fluidos: número de Reynolds, equação de Navier-Stokes, camada limite
 - análise dimensional: Teorema π de Buckingham
 - arrasto: arrasto de pressão, arrasto de atrito, arrasto total
 - sustentação: determinação da sustentação a partir da distribuição de pressões no corpo
-- Teorema Kutta-Joukowski
+- Teorema de Kutta-Joukowski
 #### assunto: Termodinâmica
 - temperatura e Lei Zero da Termodinâmica
 - dilatação térmica
@@ -64,21 +64,21 @@ codigo: FIS-2 · descricao: Oscilações, ondas, mecânica dos fluidos e termodi
 - ondas transversais
 - princípio da superposição, interferência e fasores
 - reflexão de ondas. Modos normais de vibração
-- diferenças entre ondas audíveis, ultrassônicas e infrassônicas ondas sonoras e velocidade do som
+- diferenças entre ondas audíveis, ultrassônicas e infrassônicas; ondas sonoras e velocidade do som
 - ondas sonoras progressivas
 - intensidade e nível sonoro
-- batímento
+- batimento
 - Efeito Doppler
 - velocidades supersônicas e ondas de choque
-### unidade: Mecânica dos fluidos
+### unidade: Mecânica dos Fluidos
 - propriedades dos fluidos: pressão, tensão superficial, massa específica e viscosidade
 - fluidos em repouso: princípios de Pascal e Arquimedes
-- fluidos em movimento:equação da continuidade, equação de Bernoulli
-- escoamento de fluidos: número de Reynolds, equação de Navier-stokes, camada limite
+- fluidos em movimento: equação da continuidade, equação de Bernoulli
+- escoamento de fluidos: número de Reynolds, equação de Navier-Stokes, camada limite
 - análise dimensional: Teorema π de Buckingham
 - arrasto: arrasto de pressão, arrasto de atrito, arrasto total
 - sustentação: determinação da sustentação a partir da distribuição de pressões no corpo
-- Teorema Kutta-Joukowski
+- Teorema de Kutta-Joukowski
 ### unidade: Termodinâmica
 - temperatura e Lei Zero da Termodinâmica
 - dilatação térmica
@@ -159,7 +159,7 @@ codigo: FIS-2 · descricao: Oscilações, ondas, mecânica dos fluidos e termodi
 - RA30 · bloom: 4 · topico: princípio da superposição, interferência e fasores
   Locais das aulas: a- sala de aula com equipamento multimídia; e b- Laboratório de Física Básica, Termodinâmica e Dinâmica dos Fluídos e Embarcações
 - RA31 · bloom: 3 · topico: princípio da superposição, interferência e fasores
-  Segurança recomendada: par a as aulas práticas o D oce nte e o s D i s c e n t e s deverão utilizar o EPI (Equipamento de Proteção Individual) determinados pel o sistema de se gur anç a. O D oce nte de ve r á supervisionar as atividades dos alunos, no intuito de evitar acidentes pessoais e danos ao material. AVALIAÇÃO DA APRENDIZAGEM a- será realizada por meio de duas provas escritas, sendo: - 1ª prova - abrangendo as U E 1 a 2; e - 2ª prova- abrangendo todas as U E. b- serão atribuídos graus que variam de zero a dez, com aproximação a décimos; c- a critério do Docente e com aprovação do Coordenador do curso, para a aferição do aprendizado poderá ser exigido a elaboração e apresentação de trabalhos em grupos, valendo até vinte por cento da nota da prova; e d- serão destinadas quatro horas-aula para as avaliações RECURSOS INSTRUCIONAIS (RI) a - quadro branco; b - conjunto de multimídia; c - folhas tarefas; d - recursos computacionais – simulador das situações abordadas; e e - outros a critério do professor REFERÊNCIAS BIBLIOGRÁFICAS (RB) a - BISTAFA, S. R. Mecânica dos fluidos: noções e aplicações. 1. ed. São Paulo: Edgard Blucher, 2012. b - BRUNETTI, F. Mecânica dos fluidos. 2. ed. São Paulo: Pearson Prentice Hall, 2008. c - NUSSENZVEIG, H. M. Curso de física básica: vol. 2 – Fluidos, oscilações, ondas e calor. 4. ed. São Paulo: Edgard Blucher, 2002. d - RESNICK, R.; HALLIDAY, D. Fundamentos de física: vol. 2. 10. ed. Rio de Janeiro: Livros Técnicos e Científicos Editora S.A., 2018. e - SANTOS, E. M. dos. Princípios de hidrodinâmica e a ação das ondas sobre o movimento do navio. 1. ed. São Paulo: Conapra, 2021. f - SHAMES, I. H. Mecânica dos fluidos: vol. 1 – Princípios básicos. 3. ed. São Paulo: Edgard Blucher, 1977. g - _____. Mecânica dos fluidos: vol. 2 – Análise de escoamentos. 3. ed. São Paulo: Edgard Blucher, 1977
+  Segurança recomendada: par a as aulas práticas o D oce nte e o s D i s c e n t e s deverão utilizar o EPI (Equipamento de Proteção Individual) determinados pel o sistema de se gur anç a. O D oce nte de ve r á supervisionar as atividades dos alunos, no intuito de evitar acidentes pessoais e danos ao material. AVALIAÇÃO DA APRENDIZAGEM a- será realizada por meio de duas provas escritas, sendo: - 1ª prova - abrangendo as U E 1 a 2; e - 2ª prova- abrangendo todas as U E. b- serão atribuídos graus que variam de zero a dez, com aproximação a décimos; c- a critério do Docente e com aprovação do Coordenador do curso, para a aferição do aprendizado poderá ser exigido a elaboração e apresentação de trabalhos em grupos, valendo até vinte por cento da nota da prova; e d- serão destinadas quatro horas-aula para as avaliações RECURSOS INSTRUCIONAIS (RI) a - quadro branco; b - conjunto de multimídia; c - folhas tarefas; d - recursos computacionais – simulador das situações abordadas; e e - outros a critério do professor REFERÊNCIAS BIBLIOGRÁFICAS (RB) a - BISTAFA, S. R. Mecânica dos Fluidos: noções e aplicações. 1. ed. São Paulo: Edgard Blucher, 2012. b - BRUNETTI, F. Mecânica dos Fluidos. 2. ed. São Paulo: Pearson Prentice Hall, 2008. c - NUSSENZVEIG, H. M. Curso de física básica: vol. 2 – Fluidos, oscilações, ondas e calor. 4. ed. São Paulo: Edgard Blucher, 2002. d - RESNICK, R.; HALLIDAY, D. Fundamentos de física: vol. 2. 10. ed. Rio de Janeiro: Livros Técnicos e Científicos Editora S.A., 2018. e - SANTOS, E. M. dos. Princípios de hidrodinâmica e a ação das ondas sobre o movimento do navio. 1. ed. São Paulo: Conapra, 2021. f - SHAMES, I. H. Mecânica dos Fluidos: vol. 1 – Princípios básicos. 3. ed. São Paulo: Edgard Blucher, 1977. g - _____. Mecânica dos Fluidos: vol. 2 – Análise de escoamentos. 3. ed. São Paulo: Edgard Blucher, 1977
 - RA32 · bloom: 3 · topico: princípio da superposição, interferência e fasores
   resolver problemas de interferência
 - RA33 · bloom: 2 · topico: reflexão de ondas. Modos normais de vibração
@@ -168,11 +168,11 @@ codigo: FIS-2 · descricao: Oscilações, ondas, mecânica dos fluidos e termodi
   explicar a formação de modos normais de vibração em meios limitados
 - RA35 · bloom: 4 · topico: reflexão de ondas. Modos normais de vibração
   analisar exemplos de modos normais em cordas e tubos sonoros
-- RA36 · bloom: 1 · topico: diferenças entre ondas audíveis, ultrassônicas e infrassônicas ondas sonoras e velocidade do som
+- RA36 · bloom: 1 · topico: diferenças entre ondas audíveis, ultrassônicas e infrassônicas; ondas sonoras e velocidade do som
   definir ondas sonoras e sua propagação em diferentes meios
-- RA37 · bloom: 2 · topico: diferenças entre ondas audíveis, ultrassônicas e infrassônicas ondas sonoras e velocidade do som
+- RA37 · bloom: 2 · topico: diferenças entre ondas audíveis, ultrassônicas e infrassônicas; ondas sonoras e velocidade do som
   explicar os fatores que influenciam a velocidade do som
-- RA38 · bloom: 2 · topico: diferenças entre ondas audíveis, ultrassônicas e infrassônicas ondas sonoras e velocidade do som
+- RA38 · bloom: 2 · topico: diferenças entre ondas audíveis, ultrassônicas e infrassônicas; ondas sonoras e velocidade do som
   comparar a velocidade do som em sólidos, líquidos e gases
 - RA39 · bloom: 2 · topico: ondas sonoras progressivas
   caracterizar ondas sonoras progressivas e sua equação de onda
@@ -186,9 +186,9 @@ codigo: FIS-2 · descricao: Oscilações, ondas, mecânica dos fluidos e termodi
   relacionar intensidade sonora com amplitude e potência da onda
 - RA44 · bloom: 3 · topico: intensidade e nível sonoro
   resolver problemas envolvendo nível sonoro e sua variação
-- RA45 · bloom: 2 · topico: batímento
+- RA45 · bloom: 2 · topico: batimento
   explicar o fenômeno do batimento sonoro
-- RA46 · bloom: 3 · topico: batímento
+- RA46 · bloom: 3 · topico: batimento
   determinar a frequência dos batimentos a partir da diferença de frequências
 - RA47 · bloom: 2 · topico: Efeito Doppler
   explicar o efeito Doppler e sua aplicação na percepção de frequência
@@ -218,23 +218,23 @@ codigo: FIS-2 · descricao: Oscilações, ondas, mecânica dos fluidos e termodi
   determinar a pressão em diferentes profundidades usando a equação da hidrostática
 - RA60 · bloom: 3 · topico: fluidos em repouso: princípios de Pascal e Arquimedes
   resolver problemas sobre equilíbrio de corpos flutuantes
-- RA61 · bloom: 2 · topico: fluidos em movimento:equação da continuidade, equação de Bernoulli
+- RA61 · bloom: 2 · topico: fluidos em movimento: equação da continuidade, equação de Bernoulli
   explicar o conceito de escoamento e sua classificação em laminar ou turbulento
-- RA62 · bloom: 3 · topico: fluidos em movimento:equação da continuidade, equação de Bernoulli
+- RA62 · bloom: 3 · topico: fluidos em movimento: equação da continuidade, equação de Bernoulli
   derivar a equação da continuidade e aplicá-la à conservação de massa em fluidos
-- RA63 · bloom: 3 · topico: fluidos em movimento:equação da continuidade, equação de Bernoulli
+- RA63 · bloom: 3 · topico: fluidos em movimento: equação da continuidade, equação de Bernoulli
   aplicar a equação de Bernoulli para analisar variações de pressão e velocidade
-- RA64 · bloom: 3 · topico: fluidos em movimento:equação da continuidade, equação de Bernoulli
+- RA64 · bloom: 3 · topico: fluidos em movimento: equação da continuidade, equação de Bernoulli
   resolver problemas práticos envolvendo escoamento em tubos e dutos
-- RA65 · bloom: 3 · topico: escoamento de fluidos: número de Reynolds, equação de Navier-stokes, camada limite
+- RA65 · bloom: 3 · topico: escoamento de fluidos: número de Reynolds, equação de Navier-Stokes, camada limite
   determinar o número de Reynolds
-- RA66 · bloom: 2 · topico: escoamento de fluidos: número de Reynolds, equação de Navier-stokes, camada limite
+- RA66 · bloom: 2 · topico: escoamento de fluidos: número de Reynolds, equação de Navier-Stokes, camada limite
   classificar regimes de escoamento
-- RA67 · bloom: 2 · topico: escoamento de fluidos: número de Reynolds, equação de Navier-stokes, camada limite
+- RA67 · bloom: 2 · topico: escoamento de fluidos: número de Reynolds, equação de Navier-Stokes, camada limite
   explicar a equação de Navier-Stokes e sua importância na dinâmica dos fluidos
-- RA68 · bloom: 2 · topico: escoamento de fluidos: número de Reynolds, equação de Navier-stokes, camada limite
+- RA68 · bloom: 2 · topico: escoamento de fluidos: número de Reynolds, equação de Navier-Stokes, camada limite
   descrever a formação e influência da camada limite em superfícies sólidas
-- RA69 · bloom: 4 · topico: escoamento de fluidos: número de Reynolds, equação de Navier-stokes, camada limite
+- RA69 · bloom: 4 · topico: escoamento de fluidos: número de Reynolds, equação de Navier-Stokes, camada limite
   analisar a transição do escoamento laminar para turbulento
 - RA70 · bloom: 2 · topico: análise dimensional: Teorema π de Buckingham
   explicar o conceito de análise dimensional e suas aplicações
@@ -260,13 +260,13 @@ codigo: FIS-2 · descricao: Oscilações, ondas, mecânica dos fluidos e termodi
   aplicar a equação da sustentação para perfis aerodinâmicos
 - RA81 · bloom: 4 · topico: sustentação: determinação da sustentação a partir da distribuição de pressões no corpo
   comparar a sustentação em diferentes condições de escoamento
-- RA82 · bloom: 2 · topico: Teorema Kutta-Joukowski
+- RA82 · bloom: 2 · topico: Teorema de Kutta-Joukowski
   explicar o Teorema de Kutta-Joukowski e sua relação com a circulação
-- RA83 · bloom: 3 · topico: Teorema Kutta-Joukowski
+- RA83 · bloom: 3 · topico: Teorema de Kutta-Joukowski
   determinar a força de sustentação sobre corpos imersos em fluxo usando o teorema
-- RA84 · bloom: 2 · topico: Teorema Kutta-Joukowski
+- RA84 · bloom: 2 · topico: Teorema de Kutta-Joukowski
   relacionar o teorema com vórtices e o funcionamento de asas e hélices
-- RA85 · bloom: 3 · topico: Teorema Kutta-Joukowski
+- RA85 · bloom: 3 · topico: Teorema de Kutta-Joukowski
   aplicar o conceito de vórtice de esteira para análise de escoamentos ao redor de perfis
 - RA86 · bloom: 2 · topico: temperatura e Lei Zero da Termodinâmica
   explicar o conceito de temperatura e sua relação com o equilíbrio térmico
