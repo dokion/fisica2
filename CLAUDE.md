@@ -23,6 +23,7 @@ documento vence. Sempre.
 | `FIS_2_RA.md` | RAs já extraídos e formatados | **Fonte oficial dos RAs de FIS-02.** NÃO reinventar nem reordenar RAs — usar estes. |
 | `guia-replicacao-novo-curso.md` | Guia de replicação | **Como clonar esta estrutura para outro curso** (FIS-1, FIS-3): inventário de arquivos, pipeline em 5 fases, prompt de partida |
 | `mc-7.03-extrato.md` / `mc-7.04-extrato.md` | Extratos das fontes IMO | **Consulta local aos Model Courses** (learning objectives de física, literais). Substituem o ciclo NotebookLM do Apêndice III — consultar estes antes de abrir os PDFs |
+| `roteiro-moyses-ue3.md` | Concordância Moysés ↔ UE 3 | **Ordem de leitura e fio condutor da UE 3** (Mecânica dos Fluidos). Na UE 3, a sequência é a do Moysés (cap. 1–2); os tópicos da Parte B são balizas de cobertura, não de ordem. Ler antes de tocar em `unidades/unidade-3-fluidos/` |
 
 Antes de qualquer tarefa, leia o Mestre + o(s) apêndice(s) relevante(s). Não trabalhe de memória.
 
