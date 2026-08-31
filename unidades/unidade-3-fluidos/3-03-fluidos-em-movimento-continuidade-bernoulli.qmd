@@ -16,72 +16,465 @@ OE 3.12 [B3] Resolver problemas práticos envolvendo escoamento em tubos e dutos
 
 {{< aula 23-24 >}}
 
-Quando o fluido está em movimento, as coisas mudam drasticamente. Pressão, velocidade e altura se conectam por leis que governam bombas, sistema de propulsão, leme e toda a circulação de água e óleo a bordo. Este tópico é o coração da hidráulica naval: aprenderemos a **conservação de massa** (continuidade) — que liga vazão à velocidade — e a **conservação de energia** (Bernoulli) — que liga pressão à velocidade. Juntas, essas leis explicam por que a hélice empurra o navio e por que o leme funciona.
+A dinâmica dos fluidos é um assunto bastante complexo; vamos nos limitar a algumas noções
+introdutórias. Toda a estática do tópico anterior saiu de uma equação —
+$\mathbf{f} = \operatorname{grad} p$ — que só vale porque o fluido está em **repouso**. Foi o
+repouso que eliminou as tensões tangenciais.
 
-## Escoamento: descrição e classificação {{< ra OE3.9 B2 >}}
+Agora o fluido vai se mover, e há duas perguntas novas: **como descrever** o movimento de um meio
+contínuo, e **o que substitui** a equação da estática quando há aceleração. Das respostas saem os
+dois resultados centrais desta unidade — a equação da continuidade (conservação da massa) e a
+equação de Bernoulli (conservação da energia) —, e delas saem as bombas de bordo, o tubo de
+Pitot, o Venturi, o squat em água rasa e a propulsão.
 
-Um **escoamento** descreve como o fluido se move no espaço. Duas classificações são centrais:
+## Métodos de descrição e regimes de escoamento {{< ra OE3.9 B2 >}}
 
-**Escoamento laminar vs. turbulento:**
-- **Laminar:** o fluido flui em camadas paralelas, sem mistura lateral. As partículas se movem em trajetórias ordenadas. Típico a baixas velocidades ou em tubos de diâmetro pequeno.
-- **Turbulento:** o escoamento é caótico. Redemoinhes e vórtices aparecem, aumentando a mistura. Típico a velocidades altas ou em geometrias complexas.
+Como descrever o movimento de um fluido? Uma possibilidade é imaginá-lo subdividido em elementos
+de volume suficientemente pequenos para tratar cada um como uma partícula, e depois descrever o
+movimento de **cada partícula**.
 
-Nos sistemas de bombeamento de bordo (porão, lastro, refrigeração), o escoamento pode ser laminar (óleos viscosos em tubos finos) ou turbulento (água em tubos largos de alta velocidade). A classificação depende do **número de Reynolds**, que veremos em detalhes no próximo tópico.
+Para identificar uma partícula, basta dar sua posição $\mathbf{r}_0$ num dado instante $t_0$; num
+instante posterior ela ocupará $\mathbf{r} = \mathbf{r}(t,\mathbf{r}_0,t_0)$, e quando $t$ varia
+esse vetor descreve a **trajetória** da partícula. Na prática, individualiza-se a partícula
+colocando um pouco de corante em $\mathbf{r}_0$ no instante $t_0$; a trajetória é então
+materializada por uma fotografia de **longa exposição**.
 
-**Escoamento permanente vs. transiente:**
-- **Permanente:** em cada ponto do espaço, a velocidade não muda no tempo (pode mudar de um ponto a outro, mas em cada ponto é constante).
-- **Transiente:** velocidade muda no tempo — ex., abrindo ou fechando uma válvula.
+Este é o método de **Lagrange**. É difícil obter uma solução tão completa, e em geral não há
+interesse em conhecer as trajetórias integralmente — de modo que não é muito empregado.
 
-Neste tópico, tratamos escoamento permanente.
+No método mais utilizado, devido a **Euler**, fixamos a atenção em cada ponto $\mathbf{r}$ do
+fluido e descrevemos como a velocidade varia com o tempo **nesse ponto fixo**:
 
-## Equação da continuidade {{< ra OE3.10 B3 >}}
+$$\mathbf{v} = \mathbf{v}(\mathbf{r},t) \qquad \text{(Moysés 2.1.1)}$$
 
-A **equação da continuidade** expressa a conservação de massa: toda a massa que entra em um tubo deve sair (se não há vazamento). A **vazão volumétrica** é:
+Em geral, a cada instante $t$ será uma **partícula diferente** que passa pela posição
+$\mathbf{r}$ — e é justamente isso que torna o método prático: o instrumento de bordo está fixo
+na tubulação, não viaja com a água.
 
-$$Q = A \cdot v$$
+A associação de um vetor a cada ponto define um **campo vetorial**, aqui o campo de velocidades.
+Para visualizá-lo num dado instante, introduzem-se partículas de corante em diferentes pontos e
+tira-se uma fotografia de **exposição curta**: a direção e o comprimento de cada traço dão a
+direção e a magnitude de $\mathbf{v}$ naquele ponto.
 
-onde $A$ é a área da seção transversal e $v$ é a velocidade média do fluido.
+### Linhas e tubos de corrente
 
-Se o tubo tem dois trechos — seção 1 de área $A_1$ e velocidade $v_1$, seção 2 de área $A_2$ e velocidade $v_2$ — a continuidade de massa exige:
+Chama-se **linha de corrente**, num dado instante, uma linha **tangente em cada ponto ao vetor
+$\mathbf{v}$ nesse ponto**. São as "linhas de força" do campo de velocidade — o análogo das
+linhas de campo magnético visualizadas com limalha de ferro.
 
-$$\rho_1 A_1 v_1 = \rho_2 A_2 v_2$$
+Chama-se **tubo de corrente** a superfície formada, num determinado instante, por todas as linhas
+de corrente que passam pelos pontos de uma curva fechada $C$ situada no fluido. Em geral, linhas e
+tubos de corrente variam de instante para instante.
 
-Para fluido incompressível (água, óleos), $\rho$ é constante:
+### Escoamento estacionário
 
-$$A_1 v_1 = A_2 v_2 = Q$$
+O escoamento de um fluido chama-se **estacionário** (ou em **regime permanente**) quando o campo
+de velocidade não varia com o tempo, ou seja, quando a (2.1.1) se reduz a
 
-Interpretação: se o tubo estreita ($A_2 < A_1$), a velocidade cresce ($v_2 > v_1$) para manter a mesma vazão. Essa propriedade é usada em medidores de vazão e em tubos de sucção de bombas — quanto menor a secção, maior a velocidade e, consequentemente, maior a queda de pressão (como veremos em Bernoulli).
+$$\mathbf{v} = \mathbf{v}(\mathbf{r}) \qquad \text{(Moysés 2.1.2)}$$
+
+Isso significa que diferentes partículas sempre passam pelo mesmo ponto com a mesma velocidade,
+embora $\mathbf{v}$ possa variar de ponto a ponto. O escoamento de água a baixas velocidades numa
+canalização ligada a um grande reservatório é, com boa aproximação, estacionário.
+
+Num escoamento estacionário, as linhas de corrente **coincidem com as trajetórias** das
+partículas, e duas linhas de corrente **nunca podem se cruzar** — num ponto de cruzamento haveria
+ambiguidade na direção da velocidade, com duas direções diferentes no mesmo ponto. A consequência
+é forte: as partículas que estão dentro de um tubo de corrente num dado instante nunca podem
+atravessar as paredes desse tubo. O fluido escoa dentro dele **como se suas paredes fossem
+sólidas**, constituindo uma canalização.
+
+Num escoamento **não estacionário**, as linhas de corrente variam a cada instante e não coincidem
+mais com as trajetórias. O caso extremo é o **escoamento turbulento**, como o da água numa
+cachoeira, em que $\mathbf{v}$ varia de forma extremamente rápida e irregular tanto com $t$ quanto
+com $\mathbf{r}$.
+
+A bordo, os dois regimes convivem: óleo lubrificante viscoso escoando devagar em tubo estreito
+tende ao laminar ordenado; água de lastro correndo a vários metros por segundo num tubo largo é
+francamente turbulenta. O critério quantitativo que separa um do outro — o número de Reynolds — é
+o assunto do tópico 3.4, e depende justamente da viscosidade que aqui vamos ignorar.
+
+## Conservação da massa: a equação da continuidade {{< ra OE3.10 B3 >}}
+
+Os resultados básicos da dinâmica dos fluidos decorrem de **leis de conservação**. A primeira
+delas é a conservação da massa.
+
+Considere um tubo de corrente cuja seção transversal (perpendicular a $\mathbf{v}$) no entorno de
+um dado ponto tem área $A$. Qual é a massa $\Delta m$ que atravessa essa seção num intervalo
+infinitésimo $\Delta t$? Se $v = |\mathbf{v}|$ é a velocidade nesse ponto, a massa é a contida num
+cilindro de base $A$ e altura $v\,\Delta t$, de volume $Av\,\Delta t$. Logo,
+
+$$\Delta m = \rho\,A\,v\,\Delta t \qquad \text{(Moysés 2.2.1)}$$
+
+Considere agora um escoamento **estacionário** e uma porção do tubo de corrente entre duas seções
+de áreas $A_1$ e $A_2$, com velocidades e densidades $(\mathbf{v}_1,\rho_1)$ e
+$(\mathbf{v}_2,\rho_2)$. Como o escoamento é estacionário, a massa contida entre as seções não
+pode variar com o tempo: a massa $\Delta m_1$ que entra por $A_1$ tem de ser igual à massa
+$\Delta m_2$ que sai por $A_2$ no mesmo intervalo:
+
+$$\Delta m_1 = \rho_1 A_1 v_1\,\Delta t = \Delta m_2 = \rho_2 A_2 v_2\,\Delta t
+\qquad \text{(Moysés 2.2.2)}$$
+
+$$\boxed{\;\rho_1 A_1 v_1 = \rho_2 A_2 v_2\;} \qquad \text{(Moysés 2.2.3)}$$
+
+O produto $\rho A v$ permanece constante ao longo do tubo de corrente, e representa o **fluxo de
+massa por unidade de tempo** através da seção transversal.
+
+Em particular, se o fluido é **incompressível**, $\rho_1 = \rho_2 = \rho$, e a (2.2.3) fica
+
+$$\boxed{\;A_1 v_1 = A_2 v_2\;} \qquad \text{(fluido incompressível, Moysés 2.2.4)}$$
+
+O produto $Av$ mede então o volume de fluido que atravessa a seção por unidade de tempo, e chama-se
+**vazão**, medida em m³/s.
+
+A (2.2.4) mostra que, num fluido incompressível, **a velocidade é inversamente proporcional à área
+da seção**. Nas regiões onde o tubo sofre um estrangulamento, o fluido tem de escoar mais
+rapidamente para que a vazão permaneça a mesma — e isso corresponde a uma **maior densidade das
+linhas de corrente**. Daí a convenção usual no traçado: *a velocidade é maior onde as linhas de
+corrente estão mais próximas entre si*.
+
+Os resultados valem também para o escoamento estacionário numa canalização: aqui o tubo de
+corrente é definido pelas próprias paredes, pois o fluido escoa tangencialmente a elas. É a forma
+em que a continuidade aparece na praça de máquinas — a redução de bitola entre a sucção e a
+descarga de uma bomba é exatamente a (2.2.4) em serviço.
+
+Para um fluido **compressível**, como um gás, se a área $A$ permanece a mesma, a (2.2.3) mostra
+que a densidade varia na razão inversa da velocidade. O resultado pode ser aplicado ao escoamento
+estacionário de carros numa estrada: onde a velocidade diminui — em frente a um posto de
+fiscalização, por exemplo —, a densidade de carros tende a aumentar.
+
+### A forma geral
+
+Para formular a conservação da massa no caso geral do escoamento **não estacionário** de um fluido
+compressível, não adianta considerar um tubo de corrente, porque as linhas de corrente mudam a
+cada instante.
+
+Considere então um volume $V$ **fixo** do fluido, limitado por uma superfície fechada $S$, e seja
+$\hat{\mathbf{n}}$ o vetor unitário da normal externa em cada ponto de $S$. A massa $\Delta m$ que
+atravessa um elemento $\Delta S$ no intervalo $\Delta t$ está contida num cilindro de base
+$\Delta S$ e geratriz $\mathbf{v}\,\Delta t$, em geral oblíqua a $\Delta S$; sua altura é
+$\mathbf{v}\cdot\hat{\mathbf{n}}\,\Delta t$, de modo que
+
+$$\Delta m = \rho\,\mathbf{v}\cdot\hat{\mathbf{n}}\,\Delta t\,\Delta S \qquad \text{(Moysés 2.2.5)}$$
+
+A quantidade $\mathbf{v}\cdot\hat{\mathbf{n}}\,\Delta S$ representa o fluxo de massa **para fora**
+do volume $V$, por unidade de tempo, através de $\Delta S$. Isso continua valendo se
+$\mathbf{v}\cdot\hat{\mathbf{n}} < 0$: o sinal negativo significa simplesmente que o fluxo está
+dirigido para **dentro** de $V$.
+
+A massa total contida em $V$ num dado instante é
+
+$$m = \int_V \rho\,dV \qquad \text{(Moysés 2.2.6)}$$
+
+Essa massa pode variar com o tempo. Entretanto, como **massa não pode ser criada nem destruída**,
+tal variação só pode ser devida ao fluxo resultante através de $S$: $m$ aumenta se entra mais
+fluido do que sai, e diminui em caso contrário. Pela (2.2.5), o fluxo resultante por unidade de
+tempo é
+
+$$\oint_S \rho\,\mathbf{v}\cdot\hat{\mathbf{n}}\,dS \qquad \text{(Moysés 2.2.7)}$$
+
+e esse fluxo representa o **decréscimo** por unidade de tempo da massa contida em $V$:
+
+$$\boxed{\;\oint_S \rho\,\mathbf{v}\cdot\hat{\mathbf{n}}\,dS
+= -\frac{dm}{dt} = -\frac{d}{dt}\int_V \rho\,dV\;} \qquad \text{(Moysés 2.2.8)}$$
+
+onde o sinal é negativo porque $dm/dt < 0$ quando o fluxo total para fora é positivo. Esta é a
+expressão geral da lei de conservação da massa, e chama-se **equação da continuidade**.
+
+Num escoamento estacionário, $\rho$ em cada ponto é independente do tempo, o 2º membro se anula, e
+tomando como $V$ a porção de tubo de corrente entre $A_1$ e $A_2$ o 1º membro se reduz a
+$\rho_2A_2v_2 - \rho_1A_1v_1$ — de modo que a (2.2.8) se reduz à (2.2.3). Note que o fluxo através
+da superfície **lateral** de um tubo de corrente é nulo, porque
+$\mathbf{v}\cdot\hat{\mathbf{n}} = 0$ nas paredes do tubo.
+
+## Forças num fluido em movimento: o fluido perfeito
+
+Considere uma partícula do fluido de volume $\Delta V$. A equação de movimento dessa partícula é
+dada pela 2ª lei de Newton:
+
+$$\Delta m\,\mathbf{a} = \rho\,\mathbf{a}\,\Delta V = \Delta\mathbf{F}_v + \Delta\mathbf{F}_s
+\qquad \text{(Moysés 2.3.1)}$$
+
+onde $\mathbf{a}$ é a aceleração da partícula, $\Delta\mathbf{F}_v$ a resultante das forças
+volumétricas e $\Delta\mathbf{F}_s$ a das superficiais.
+
+Além das forças volumétricas externas, como a gravidade, há uma força volumétrica **interna** que
+corresponde ao atrito no deslizamento de camadas fluidas umas sobre as outras: a força de
+**viscosidade** (tópico 3.1). Essa força **só surge quando o fluido está em movimento**, e
+corresponde ao aparecimento de tensões tangenciais.
+
+Um fluido real sempre tem alguma viscosidade, embora para a água ela seja muito menor do que para
+um fluido espesso como o mel. Como a viscosidade introduz complicações consideráveis, a dinâmica
+dos fluidos desenvolveu-se em primeiro lugar **ignorando** os seus efeitos, levando-os em conta
+somente numa abordagem posterior. Chama-se **fluido perfeito** (ou ideal) um fluido de viscosidade
+desprezível.
+
+::: {.callout-note}
+## A hipótese que vale até o tópico 3.7
+
+Tudo o que vem a seguir neste tópico, e nos tópicos 3.8 e 3.7, supõe **fluido perfeito**. Nenhum
+fluido real é perfeito — e no final do tópico 3.7 veremos essa hipótese produzir um resultado
+frontalmente contrário à experiência, o que nos obrigará a reintroduzir a viscosidade no tópico
+3.4. Vale a pena guardar onde ela foi feita.
+:::
+
+Num fluido perfeito **não existem tensões tangenciais mesmo quando ele está em movimento**, de
+modo que as forças superficiais continuam correspondendo a pressões, normais às superfícies sobre
+as quais atuam. Continua valendo também a (1.2.8): a pressão num ponto não depende da orientação
+do elemento de superfície sobre o qual atua.
+
+O argumento é o mesmo da demonstração da isotropia, e vale a pena ver por quê. Lá, a contribuição
+das forças volumétricas foi desprezada por ser proporcional a $\Delta V$, infinitésimo de ordem
+superior. Para um fluido em movimento, o 1º membro da (2.3.1) — que representa o efeito do
+movimento — **também** é proporcional a $\Delta V$, de forma que a demonstração continua válida: a
+pressão num fluido perfeito em movimento só pode depender da posição.
+
+A resultante das forças volumétricas e de pressão sobre um elemento $\Delta V$, calculada para um
+fluido em equilíbrio, permanece portanto válida:
+
+$$\Delta\mathbf{F}_v + \Delta\mathbf{F}_s = (\mathbf{f} - \operatorname{grad} p)\,\Delta V
+\qquad \text{(Moysés 2.3.2)}$$
+
+Substituindo a (2.3.2) na (2.3.1), obtemos a equação de movimento de um fluido perfeito:
+
+$$\boxed{\;\rho\,\mathbf{a} = \mathbf{f} - \operatorname{grad} p\;} \qquad \text{(Moysés 2.3.3)}$$
+
+Um alerta importante: a relação entre a aceleração $\mathbf{a}$ e a velocidade $\mathbf{v}$ num
+ponto fixo **não é simples**, porque $\mathbf{a}$ é a aceleração de uma partícula do fluido,
+*acompanhada em seu movimento*, enquanto $\mathbf{v}$ se refere a um **ponto fixo**.
+
+No caso mais importante na prática, $\mathbf{f}$ se reduz à densidade de força gravitacional
+(1.4.4):
+
+$$\mathbf{f} = -\operatorname{grad}(\rho g z) \qquad \text{(Moysés 2.3.4)}$$
+
+e a (2.3.3) fica
+
+$$\boxed{\;\rho\,\mathbf{a} = -\operatorname{grad}\,(p + \rho g z)\;} \qquad \text{(Moysés 2.3.5)}$$
+
+mostrando que **a pressão $p$ se comporta como uma densidade de energia potencial**, associada às
+forças superficiais internas, que podem realizar trabalho sobre a superfície de um elemento de
+volume quando essa superfície se desloca.
+
+Para $\mathbf{a} = 0$, as (2.3.3) e (2.3.5) se reduzem às equações básicas da estática, (1.3.7) e
+(1.4.5). A estática é o caso particular sem aceleração — não uma teoria à parte.
 
 ## Equação de Bernoulli {{< ra OE3.11 B3 >}}
 
-A **equação de Bernoulli** é a forma da conservação de energia para escoamento de fluido. Ela afirma que ao longo de uma linha de corrente (uma trajetória que o fluido segue), a soma de três formas de energia por unidade de volume é constante:
+Vamos aplicar ao movimento de um fluido perfeito, descrito pela (2.3.5), a **lei de conservação da
+energia** — note que, como ignoramos a viscosidade, não há atrito. Limitamo-nos ao escoamento
+**estacionário** de um fluido perfeito **incompressível**.
 
-$$P + \frac{1}{2}\rho v^2 + \rho g h = \text{constante}$$
+Considere um tubo de corrente limitado por duas seções transversais de áreas $A_1$ e $A_2$,
+situadas no entorno dos pontos 1 e 2, onde as pressões são $p_1$ e $p_2$, as velocidades $v_1$ e
+$v_2$, e as alturas em relação a um plano horizontal de referência $z_1$ e $z_2$. O tubo deve ser
+suficientemente delgado para que se possa desprezar a variação dessas grandezas sobre a seção
+transversal; um tubo estreito assim se chama **filete de corrente**.
 
-Cada termo tem unidade de pressão (Pa):
-- $P$: pressão estática (força por unidade de área)
-- $\frac{1}{2}\rho v^2$: pressão dinâmica (energia cinética por unidade de volume)
-- $\rho g h$: pressão hidrostática (energia potencial por unidade de volume)
+Durante o intervalo $\Delta t$, a porção do filete compreendida entre as seções 1 e 2 se desloca
+para uma nova posição, entre 1′ e 2′. Como o escoamento é estacionário, **a porção entre 1′ e 2
+não precisa ser levada em conta** no balanço de energia: nessa porção as condições permanecem as
+mesmas. Tudo se passa como se a porção entre 1 e 1′ fosse transportada para a região entre 2 e 2′.
+Pela (2.2.4), as massas dessas duas porções são iguais:
 
-Entre dois pontos 1 e 2 em um escoamento permanente, sem perdas por atrito:
+$$\Delta m_1 = \rho A_1 v_1 \Delta t = \rho A_2 v_2 \Delta t = \Delta m_2 \qquad \text{(Moysés 2.4.1)}$$
 
-$$P_1 + \frac{1}{2}\rho v_1^2 + \rho g h_1 = P_2 + \frac{1}{2}\rho v_2^2 + \rho g h_2$$
+A variação de energia cinética correspondente a esse transporte é
 
-Rearrajando:
+$$\Delta T = \tfrac{1}{2}\Delta m_2 v_2^2 - \tfrac{1}{2}\Delta m_1 v_1^2 \qquad \text{(Moysés 2.4.2)}$$
 
-$$P_1 - P_2 = \frac{1}{2}\rho (v_2^2 - v_1^2) + \rho g (h_2 - h_1)$$
+e é igual ao trabalho realizado pelas forças que atuam sobre o sistema — as forças de pressão e a
+gravidade.
 
-Interpretação física: se a velocidade aumenta, a pressão estática diminui. Se a altura aumenta, a pressão hidrostática cresce. A soma das três é a energia total conservada.
+O deslocamento $1 \to 1'$ é **no mesmo sentido** das forças de pressão, enquanto $2 \to 2'$ é em
+sentido contrário, de modo que o trabalho das forças de pressão é
 
-## Aplicações navais: tubo Pitot, hélice e leme {{< ra OE3.12 B3 >}}
+$$(p_1 A_1)(v_1\Delta t) - (p_2 A_2)(v_2\Delta t) \qquad \text{(Moysés 2.4.3)}$$
 
-**Medição de velocidade:** um tubo Pitot (tubo de pressão dinâmica) tem uma abertura frontal voltada para o escoamento (ponto de estagnação, onde $v = 0$) e uma abertura lateral (pressão estática). A diferença de pressão entre elas dá a velocidade:
+O trabalho realizado pelas forças gravitacionais é contrário à variação da energia potencial:
 
-$$P_{\text{dinâmica}} = \frac{1}{2}\rho v^2 \quad \Rightarrow \quad v = \sqrt{\frac{2(P_{\text{dinâmica}} - P_{\text{estática}})}{\rho}}$$
+$$-g\,(\Delta m_2 z_2 - \Delta m_1 z_1) \qquad \text{(Moysés 2.4.4)}$$
 
-**Tubo Venturi:** um tubo que estreita (como no carburador). Pela continuidade, a velocidade aumenta; pela Bernoulli, a pressão cai — esse vácuo pode ser usado para sugar fluido (ex., sucção de bomba).
+Somando (2.4.3) e (2.4.4) e igualando o resultado à (2.4.2), e notando que
+$A_1 v_1 \Delta t = \Delta m_1/\rho$ e $A_2 v_2 \Delta t = \Delta m_2/\rho$:
 
-**Hélice e leme:** a hélice cria um escoamento de água ao redor de suas pás. A pressão mais baixa de um lado da pá (sucção) e mais alta do outro (pressão) gera uma força de empuxo — explicado completamente pela Bernoulli e mais adiante pelo Teorema de Kutta-Joukowski (Tópico 3.8).
+$$\tfrac{1}{2}\Delta m_2 v_2^2 - \tfrac{1}{2}\Delta m_1 v_1^2
+= p_1\frac{\Delta m_1}{\rho} - p_2\frac{\Delta m_2}{\rho} - g(\Delta m_2 z_2 - \Delta m_1 z_1)$$
+
+Como $\Delta m_1 = \Delta m_2$, dividindo por essa massa comum resulta
+
+$$\tfrac{1}{2}v_2^2 + g z_2 + \frac{p_2}{\rho}
+= \tfrac{1}{2}v_1^2 + g z_1 + \frac{p_1}{\rho} \qquad \text{(Moysés 2.4.5)}$$
+
+que exprime a conservação da **energia por unidade de massa** ao longo do filete. Foi suposto que
+o fluido é incompressível porque, para um fluido compressível, existe a possibilidade adicional de
+variação da **energia interna**, armazenada sob forma de energia térmica — assunto da UE 4.
+
+Multiplicando por $\rho$, chegamos à **equação de Bernoulli**, publicada por Daniel Bernoulli em
+seu tratado "Hidrodinâmica" (1738):
+
+$$\boxed{\;\tfrac{1}{2}\rho v^2 + p + \rho g z = C\;} \qquad \text{(Moysés 2.4.6)}$$
+
+onde $C$ é constante **ao longo de um filete**. Note que, como na equação de movimento (2.3.5), a
+pressão se comporta como uma densidade de energia potencial.
+
+### Duas advertências e uma forma alternativa
+
+A constante $C$ pode, em geral, tomar valores diferentes sobre filetes diferentes — a rigor, um
+valor de $C$ deve ser associado a **cada linha de corrente**. Entretanto, é comum na prática
+aplicar Bernoulli ao escoamento estacionário de um líquido que se origina num grande reservatório,
+cuja superfície livre está em contato com a atmosfera. Todas as linhas de corrente têm origem
+nessa superfície, que é horizontal e se mantém quase inalterada apesar do escoamento se o
+reservatório for suficientemente grande. Logo, na superfície, $p = p_0$, $z = z_0$ e $v^2$ é
+desprezível, dando
+
+$$C = p_0 + \rho g z_0 \qquad \text{(Moysés 2.4.7)}$$
+
+com **o mesmo valor para todo o escoamento**. É a hipótese que legitima aplicar Bernoulli entre
+dois pontos quaisquer nos problemas de bordo — e ela precisa ser verificada, não presumida.
+
+A hidrostática é o caso limite $v \to 0$: então $C$ é constante em todo o fluido e a (2.4.6) se
+reduz à (1.4.6).
+
+Dividindo todos os termos da (2.4.6) por $\rho g$, obtemos a forma equivalente em **alturas**:
+
+$$\boxed{\;z + \frac{v^2}{2g} + \frac{p}{\rho g} = C'\;} \qquad \text{(Moysés 2.4.8)}$$
+
+Todos os termos têm dimensão de comprimento:
+
+| Termo | Nome | Significado |
+|---|---|---|
+| $z$ | altura **geométrica** | altura do filete sobre o plano de referência |
+| $v^2/2g$ | altura **cinética** | altura de queda livre a partir do repouso para adquirir $v$ (fórmula de Torricelli) |
+| $p/\rho g$ | altura **piezométrica** | altura da coluna do fluido correspondente a $p$ num barômetro |
+
+Ou seja: **a soma das alturas geométrica, cinética e piezométrica permanece constante ao longo de
+cada linha de corrente**, no escoamento estacionário de um fluido incompressível no campo
+gravitacional. É nessa forma que a hidráulica de bordo escreve Bernoulli — "altura manométrica" de
+uma bomba é exatamente $C'$.
+
+## Aplicações: Torricelli, Pitot e Venturi {{< ra OE3.12 B3 >}}
+
+### (a) Fórmula de Torricelli
+
+Considere um reservatório contendo líquido, em cuja parede lateral há um pequeno orifício circular
+por onde o líquido escoa. A veia líquida que escapa pelo orifício O se afunila, sofrendo uma
+contração, até assumir forma cilíndrica num ponto B bem próximo à parede. Como o orifício é
+pequeno, o nível do reservatório baixa muito lentamente e a velocidade $v_0$ na superfície é
+desprezível.
+
+Aplicando a (2.4.8) entre um ponto A na superfície livre (onde a pressão é $p_0$) e o ponto B na
+parte cilíndrica do jato (onde a pressão volta a ser $p_0$ e a velocidade é $v$):
+
+$$z + \frac{v^2}{2g} + \frac{p_0}{\rho g}
+= z_0 + \underbrace{\frac{v_0^2}{2g}}_{\approx\,0} + \frac{p_0}{\rho g}$$
+
+Como $z_0 - z = h$ é a altura de que o líquido desce entre a superfície livre e o orifício,
+
+$$\boxed{\;v = \sqrt{2gh}\;} \qquad \text{(Moysés 2.5.1)}$$
+
+A velocidade de saída é **a mesma que seria atingida na queda livre de uma altura $h$** — resultado
+obtido por Torricelli em 1636. É a altura cinética da (2.4.8) lida ao contrário.
+
+Na prática, o **fator de contração** da veia líquida é da ordem de 0,61 a 0,64: a área da seção do
+jato na porção cilíndrica B é $\approx 60\%$ da área $A$ do orifício, e a vazão é portanto
+$\approx 0{,}6\,Av$, não $Av$. Para formas não circulares do orifício, obtêm-se resultados
+diferentes. Vale registrar isso quando se estima o tempo de esvaziamento de um tanque por um
+dreno.
+
+### (b) Tubo de Pitot
+
+Para medir a pressão ou a velocidade num fluido em movimento é necessário introduzir nele um
+instrumento, que geralmente **perturba o escoamento**. Para relacionar o resultado obtido com a
+grandeza a medir, é preciso compreender a natureza dessa perturbação.
+
+Se introduzirmos num campo de escoamento inicialmente uniforme, de velocidade $v$, um corpo
+afilado de forma "aerodinâmica", ele perturba as linhas de corrente. No ponto O, na frente do
+corpo, o fluido é **freado** — a velocidade se reduz praticamente a zero. Tal ponto chama-se
+**ponto de estagnação**. Por outro lado, num ponto A ao lado do corpo, a velocidade quase não
+sofre perturbação e continua igual a $v$.
+
+Se $p$ é a pressão em A e $p_0$ a pressão em O, como a diferença de altura entre esses pontos é
+desprezível, a equação de Bernoulli (2.4.6) com $v_0 = 0$ em O resulta em
+
+$$\boxed{\;p_0 = p + \tfrac{1}{2}\rho v^2\;} \qquad \text{(Moysés 2.5.2)}$$
+
+A pressão no ponto de estagnação se eleva para $p_0$, chamada **pressão dinâmica**, em razão do
+freamento do fluido.
+
+Acoplando o corpo a um manômetro diferencial para medir $p_0 - p$, obtemos um **tubo de Pitot**. Se
+$\rho_0$ é a densidade do fluido no tubo em U e $h$ a diferença de nível entre os dois ramos, temos,
+analogamente à (1.5.1),
+
+$$p_0 - p = \rho_0 g h = \tfrac{1}{2}\rho v^2 \quad\text{[pela (2.5.2)]}$$
+
+o que permite medir a velocidade de escoamento do fluido:
+
+$$\boxed{\;v = \sqrt{2\,\frac{\rho_0}{\rho}\,g h}\;} \qquad \text{(Moysés 2.5.3)}$$
+
+É o sistema usado para medir a velocidade de aviões — e, com o tubo submerso no casco, o princípio
+do odômetro de pressão que mede a velocidade do navio **através da água** (distinta da velocidade
+sobre o fundo, que exige o log Doppler do tópico 2.8).
+
+### (c) Fenômeno de Venturi
+
+Considere o escoamento estacionário de um fluido incompressível numa canalização horizontal de
+seção transversal variável. Sejam $A_1$ e $A_2$ as áreas da seção nos pontos 1 e 2, com
+$(p_1,v_1)$ e $(p_2,v_2)$; supomos as seções suficientemente pequenas para que essas grandezas
+sejam constantes sobre elas, e as alturas geométricas idênticas. A equação de Bernoulli (2.4.6)
+resulta em
+
+$$p_1 + \tfrac{1}{2}\rho v_1^2 = p_2 + \tfrac{1}{2}\rho v_2^2 \qquad \text{(Moysés 2.5.4)}$$
+
+e a equação da continuidade (2.2.4) resulta em
+
+$$v_2 = \frac{A_1}{A_2}\,v_1 \qquad \text{(Moysés 2.5.5)}$$
+
+de modo que $v_2 > v_1$ e, consequentemente, $p_2 < p_1$:
+
+> **Nas regiões de estrangulamento, onde a velocidade de escoamento é maior, a pressão é menor.**
+
+Esse fenômeno foi primeiro observado por Venturi, que esperava obter o resultado **contrário**,
+acreditando que a pressão teria de aumentar no estrangulamento em razão do espaço mais reduzido. É
+um erro de intuição que vale reproduzir em sala antes de dar a resposta. Pela constância da vazão,
+a velocidade tem de aumentar; e essa aceleração tem de ser devida a uma força, que só pode se
+originar de uma **queda** da pressão.
+
+Se o líquido sobe até alturas $h_1$ e $h_2$ em manômetros inseridos nos pontos 1 e 2, isso permite
+medir a diferença de pressão:
+
+$$p_1 - p_2 = (p_0 + \rho g h_1) - (p_0 + \rho g h_2) = \rho g (h_1 - h_2) = \rho g h
+\qquad \text{(Moysés 2.5.6)}$$
+
+Resolvendo as (2.5.4), (2.5.5) e (2.5.6) em relação a $v_1$, obtém-se o **medidor de Venturi**:
+
+$$\boxed{\;v_1 = A_2\sqrt{\frac{2gh}{A_1^2 - A_2^2}}\;} \qquad \text{(Moysés 2.5.7)}$$
+
+e a vazão é $A_1 v_1$. Insere-se um estrangulamento na tubulação, mede-se a diferença de pressão, e
+lê-se a vazão — sem nenhuma parte móvel dentro do fluido.
+
+O fenômeno de Venturi também é aplicado para **aspirar** fluidos e produzir vácuo, utilizando a
+queda de pressão no estrangulamento: é o princípio das **bombas aspirantes**, como a trompa de
+água, que pode evacuar um recipiente até pressões da ordem de 20 mm Hg. A aspiração de ar para
+mistura com o jato de gás num bico de Bunsen e a aspiração de vapor de gasolina num motor de
+explosão baseiam-se no mesmo princípio — e, a bordo, é o **edutor** de porão: água de alta
+velocidade cria a baixa pressão que aspira o compartimento, sem uma única peça girante submersa.
+
+### O paradoxo hidrodinâmico
+
+Se duas folhas de papel estão bem juntas e se procura separá-las **soprando** no espaço entre
+elas, elas se grudam uma na outra. Uma forma de realizar o experimento: sopra-se pela abertura A de
+um tubo de papel que se comunica com o espaço entre dois discos de papel bem próximos; o disco de
+baixo, em vez de se afastar, é **aspirado para cima**.
+
+A explicação desse **paradoxo hidrodinâmico** é o fenômeno de Venturi: o escapamento de ar com
+grande velocidade reduz a pressão no interstício entre os discos. A face de cima do disco inferior
+fica então sujeita a uma pressão menor que a de baixo, onde atua a pressão atmosférica — e o disco
+é soerguido por essa diferença.
+
+O mesmo mecanismo, em escala de navio, é a **interação hidrodinâmica**: dois cascos passando
+próximos aceleram o fluxo entre si, a pressão no interstício cai, e os navios são sugados um
+contra o outro. É por isso que a manobra de ultrapassagem em canal estreito tem regra própria.
 
 ::: {.sp}
 Uma bomba de porão de navio graneleiro move água de lastro entre tanques a uma vazão $Q = 500$ m³/h ≈ 0.139 m³/s. A tubulação de sucção tem diâmetro $D_s = 250$ mm (seção 1); a tubulação de descarga tem diâmetro $D_d = 200$ mm (seção 2). A bomba eleva a água 15 m verticamente. Calcule as velocidades em cada seção e a diferença de pressão necessária (sem considerar perdas por atrito).
@@ -111,8 +504,15 @@ faixa recomendada (evita cavitação na entrada).
 ::: {.callout-warning}
 ## Erros clássicos
 
+- **Aplicar Bernoulli entre filetes diferentes.** A (2.4.6) garante $C$ constante **ao longo de
+  uma linha de corrente**. Só se pode usar o mesmo $C$ em todo o escoamento quando as linhas têm
+  origem comum num grande reservatório, como na (2.4.7) — e isso tem de ser verificado.
+- **A intuição de Venturi.** Espaço mais estreito não significa pressão maior. É o contrário: a
+  vazão constante exige aceleração, e a aceleração exige queda de pressão. Venturi errou primeiro.
 - **Bernoulli com perdas:** a equação clássica assume fluido ideal, sem atrito. Fluidos reais perdem energia por viscosidade — Bernoulli com perdas inclui termo de dissipação $h_f$.
 - **Confundir pressão dinâmica com velocidade:** $\frac{1}{2}\rho v^2$ é energia cinética por volume; a velocidade é $v = \sqrt{2P_{\text{din}} / \rho}$.
+- **Esquecer o fator de contração em Torricelli.** A (2.5.1) dá a **velocidade** no jato, não a
+  vazão. A vazão real por um orifício é ~0,6 $Av$.
 - **Nível de referência errado:** altura $h$ em Bernoulli deve sempre referir-se ao mesmo nível. Errar a referência erra toda a conta.
 :::
 
@@ -237,6 +637,8 @@ plt.tight_layout(); plt.show()
 2. Dobre a vazão $Q$. A queda de pressão na garganta dobra ou quadruplica? Por quê?
 3. Se a pressão na garganta cair abaixo da pressão de vapor da água, o que acontece?
    Ligue com a cavitação de hélice (tópico 3.7).
+4. A simulação mostra as partículas mais próximas na garganta. Que convenção de traçado de linhas
+   de corrente isso reproduz, e de que equação ela decorre?
 :::
 
 ## Onde o fenômeno vive
@@ -249,10 +651,22 @@ plt.tight_layout(); plt.show()
   é a defesa. Validade: escoamento quase-ideal, efeito real medido em provas.
 - **Interação em ultrapassagem e efeito de banco** — dois cascos próximos (ou casco e
   margem) aceleram o fluxo entre si: sucção lateral que o prático compensa no leme.
+  É o paradoxo hidrodinâmico dos dois discos de papel, em escala de navio.
 - **Edutores de porão** — ejetores sem partes móveis: água em alta velocidade cria
   baixa pressão que aspira o porão; Bernoulli como bomba.
+- **Odômetro de pressão** — o tubo de Pitot submerso no casco mede a velocidade **através da
+  água**, não sobre o fundo; a diferença entre as duas leituras é a corrente.
+- **Esvaziamento de tanque por dreno** — Torricelli com fator de contração: a vazão real por um
+  orifício é ~0,6 $Av$, e é isso que decide o tempo de operação.
 
 <!-- EXEMPLO A SIMULAR: squat (p5.js): perfil do canal com slider de velocidade e de
      UKC; linhas de corrente acelerando sob a quilha e afundamento dinâmico. -->
 
-**Conexão com o próximo tópico:** as equações de continuidade e Bernoulli valem para fluidos ideais. Mas no navio, a viscosidade importa — regime laminar vs. turbulento é a questão central, e o número de Reynolds classifica tudo. Tópico 3.4.
+**Conexão com o próximo tópico:** Bernoulli e a continuidade descrevem o que acontece **ao longo
+de** uma linha de corrente. Mas há uma pergunta que elas não respondem: como caracterizar o
+escoamento **como um todo** — em particular, se o fluido está girando sobre si mesmo enquanto
+avança? A grandeza que responde a isso é a **circulação**, uma integral de linha do campo de
+velocidades sobre um circuito fechado. Dela sairão a distinção entre escoamentos rotacionais e
+irrotacionais, os vórtices, e o teorema que garante que a circulação se conserva — as ferramentas
+com que, no tópico seguinte, explicaremos por que uma asa (ou uma pá de hélice, ou um leme) gera
+força.
