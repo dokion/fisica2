@@ -18,77 +18,332 @@ OE 3.17 [B4] Analisar a transição do escoamento laminar para turbulento
 
 {{< aula 25-26 >}}
 
-A viscosidade que definimos no Tópico 3.1 volta agora como protagonista. Quando um fluido viscoso escoa, forças de atrito (fricção) aparecem e competem com forças de inércia. O equilíbrio entre essas duas determina se o escoamento é laminar (ordenado, viscoso) ou turbulento (caótico, inercial). Este tópico é a ponte entre a mecânica de fluidos clássica (continuidade, Bernoulli) e a realidade do navio: cascos em movimento geram uma camada de fluido viscoso junto à superfície — a **camada limite** — que é responsável por até 80% da resistência ao avanço. Compreender Reynolds, Navier-Stokes e camada limite é compreender a resistência do navio.
+O tópico anterior terminou num impasse: o fluido perfeito nos deu sustentação, mas também
+resistência **nula** ao avanço — o paradoxo de d'Alembert — e nenhum mecanismo para gerar o
+vórtice de partida de que a própria sustentação depende. A origem de ambas as contradições é a
+hipótese de viscosidade desprezível.
 
-## Número de Reynolds {{< ra OE3.13 B3 >}}
+Vamos discutir agora, de forma sumária, alguns efeitos da viscosidade. Dela sai o escoamento
+laminar num tubo, o parâmetro adimensional que decide o regime de qualquer escoamento, e a fina
+camada junto à parede onde tudo acontece — a que responde por 75 a 85% da resistência ao avanço de
+um navio.
 
-O **número de Reynolds** é um número adimensional que compara forças de inércia com forças viscosas:
+## Definição da viscosidade
 
-$$\text{Re} = \frac{\text{forças de inércia}}{\text{forças viscosas}} = \frac{\rho v L}{\mu}$$
+Conforme mencionado no tópico 3.3, a viscosidade é uma força volumétrica de **atrito interno** que
+aparece no deslizamento de camadas fluidas umas sobre as outras, dando origem a tensões
+tangenciais.
 
-ou equivalentemente:
+Considere uma camada de fluido contida entre duas placas planas paralelas, de área $A$ e
+espaçamento $d$. A experiência mostra que, se puxarmos a placa superior para a direita exercendo
+uma força constante $\mathbf{F}$, ela se desloca com **velocidade constante** $\mathbf{v}_0$ — de
+modo que a força viscosa do fluido é igual e contrária a $\mathbf{F}$.
 
-$$\text{Re} = \frac{v L}{\nu}$$
+O fato experimental central é este:
 
-onde:
-- $v$ é a velocidade característica (m/s)
-- $L$ é um comprimento característico (ex.: diâmetro do tubo, comprimento do casco)
-- $\mu$ é a viscosidade dinâmica (Pa·s)
-- $\nu = \mu/\rho$ é a viscosidade cinemática (m²/s)
+> Um fluido real, em contato com um sólido, **permanece em repouso em relação à superfície de
+> contato**, de modo que é arrastado juntamente com ela.
 
-Reynolds é adimensional (sem unidade). Seu valor classifica o tipo de escoamento:
+É a condição de **não-deslizamento**. Assim, o fluido em contato com a placa superior se desloca
+também com velocidade $\mathbf{v}_0$; a placa inferior e o fluido em contato com ela permanecem em
+repouso; e as camadas intermediárias vão sendo arrastadas por atrito com velocidades decrescentes
+de cima para baixo.
 
-**Em tubos:** Re < 2300 → laminar; 2300 < Re < 4000 → transição; Re > 4000 → turbulento.
+A experiência mostra que, para $v_0$ não demasiado elevado, a velocidade varia **linearmente**
+entre esses dois extremos:
 
-**Ao redor de um casco:** Re < 5×10⁵ → tendência laminar; Re > 5×10⁶ → turbulento.
+$$\mathbf{v}(y) = \frac{v_0}{d}\,y\,\mathbf{i} = v(y)\,\mathbf{i} \qquad \text{(Moysés 2.7.1)}$$
 
-Um navio comercial de 200 m de comprimento viajando a 15 nós em água a 15°C tem:
+O escoamento se chama **laminar**, porque o fluido se desloca em camadas planas paralelas, ou
+lâminas, que deslizam umas sobre as outras — como as cartas de um baralho.
 
-$$\text{Re} = \frac{7.7 \text{ m/s} \times 200 \text{ m}}{1.14 \times 10^{-6} \text{ m}^2/\text{s}} \approx 1.35 \times 10^9$$
+A tensão tangencial $F/A$ necessária para manter o deslocamento da placa superior é dada pela
+**lei de Newton da viscosidade**:
 
-Esse é um Reynolds **muito grande**, significando que o escoamento ao redor do navio é altamente turbulento. Mesmo assim, bem pertinho do casco, uma fina camada laminar persiste — a camada limite.
+$$\boxed{\;\frac{F}{A} = \eta\,\frac{v_0}{d} = \eta\,\frac{dv}{dy}\;} \qquad \text{(Moysés 2.7.2)}$$
 
-## Classificação de regimes de escoamento {{< ra OE3.14 B2 >}}
+ou seja, a tensão é proporcional à **taxa de variação espacial da velocidade** — exatamente o que
+antecipamos no tópico 3.1 ao dizer que o fluido resiste à *taxa* de deformação. Newton enunciou
+essa lei como uma hipótese nos "Principia".
 
-O número de Reynolds governa a classificação:
+A constante de proporcionalidade $\eta$ é o **coeficiente de viscosidade** do fluido. A unidade SI
+é $\text{N}\cdot\text{s}/\text{m}^2$; a unidade mais empregada na prática é o **centipoise** (cp):
 
-| Regime | Reynolds | Características | Exemplo naval |
-|---|---|---|---|
-| Laminar | Re < 2300 (tubo) | Camadas paralelas; sem mistura transversal; padrão previsível | Óleo em tubulação fina; escoamento muito lento |
-| Transição | 2300 < Re < 4000 (tubo) | Laminar e turbulência coexistem; comportamento instável | Raro de encontrar em navios |
-| Turbulento | Re > 4000 (tubo), Re > 5×10⁶ (casco) | Redemoinhes e vórtices; mistura caótica; arrasto muito maior | Água ao redor do casco; escoamento de alta velocidade |
+$$1\ \text{cp} = 10^{-2}\ \text{poise} = 10^{-3}\ \text{N}\cdot\text{s}/\text{m}^2$$
 
-A transição laminar → turbulento ocorre a um Reynolds crítico que depende da geometria e da rugosidade da superfície. Para cascos de navio, a transição típica está ao redor de Re = 5×10⁵ a 10⁶, mas complexidades (corrosão, incrustações biológicas) movem o ponto crítico.
+Para um líquido, $\eta$ é tanto maior quanto mais "espesso" o líquido, e geralmente **diminui**
+quando a temperatura aumenta. Para um gás, em geral, $\eta$ **aumenta** com a temperatura. Valores
+típicos a 20 °C:
 
-## Equação de Navier-Stokes {{< ra OE3.15 B2 >}}
+| Fluido | $\eta$ (cp) |
+|---|---|
+| ar | $1{,}8\times10^{-2}$ |
+| água | $1$ |
+| glicerina | $800$ |
+| piche | $2{,}3\times10^{11}$ |
 
-A **equação de Navier-Stokes** é a extensão de Bernoulli que inclui os efeitos da viscosidade. Na sua forma mais geral (para escoamento incompressível em uma direção x):
+Note a razão de $10^{13}$ entre a água e o piche — é ela que faz o piche parecer sólido na escala
+de tempo de uma martelada e fluido na escala de meses.
 
-$$\rho \left( \frac{\partial v}{\partial t} + v \frac{\partial v}{\partial x} \right) = -\frac{\partial P}{\partial x} + \mu \frac{\partial^2 v}{\partial y^2}$$
+### O escoamento viscoso é rotacional
 
-Leitura: o lado esquerdo é a aceleração (inércia); o lado direito soma a força de gradiente de pressão com a força viscosa. A viscosidade aparece como derivada segunda da velocidade — quanto maior a curvatura do perfil de velocidade, maior a dissipação viscosa.
+Um detalhe de consequências grandes: o escoamento descrito pela (2.7.1) é **rotacional**. É fácil
+ver tomando a circulação ao longo de um circuito retangular $\Gamma$ entre as placas: os lados
+verticais não contribuem (porque $\mathbf{v}$ é perpendicular a eles), e os lados horizontais, de
+comprimento $l$, dão $C_\Gamma = (v_1 - v_3)\,l$. Como a velocidade $v_1$ no lado de cima é maior
+que $v_3$ no lado de baixo, temos uma **circulação positiva** no sentido horário.
 
-Navier-Stokes é a equação fundamental da dinâmica de fluidos. Sua solução, em geral, é muito difícil (problema em aberto em matemática pura). Mas para geometrias simples (tubo reto, placa plana) e condições especiais (escoamento laminar permanente), ela tem solução analítica — que fornece perfis de velocidade usados em modelos de resistência.
+Uma partícula fluida inicialmente de forma cúbica se deforma durante o escoamento, e essa
+deformação — consequência de a velocidade ser maior em cima do que embaixo — está claramente
+associada a uma **rotação** no sentido horário.
 
-## Camada limite {{< ra OE3.16 B2 >}}
+Guarde isso: onde há viscosidade, há vorticidade. É o que faltava ao fluido perfeito no tópico
+3.7, e é de onde a asa tira a sua circulação.
 
-Quando um fluido escoa ao redor de um corpo sólido, a condição de contorno é que a velocidade do fluido na superfície do corpo é **zero** (o fluido não escorrega na parede — hipótese de não-deslizamento). Mas a uma distância $\delta$ da parede, a velocidade volta ao valor do escoamento livre. Essa fina camada de transição é a **camada limite**.
+## A equação de Navier-Stokes {{< ra OE3.15 B2 >}}
 
-Dentro da camada limite, há um **gradiente de velocidade**: próximo à parede, é quase zero; longe da parede, é quase a velocidade do fluxo livre. Esse gradiente gera uma **tensão de cisalhamento** viscosa:
+A equação de movimento do fluido perfeito (2.3.3), $\rho\,\mathbf{a} = \mathbf{f} - \operatorname{grad} p$,
+ignora exatamente a força que acabamos de definir. Acrescentando-a, obtém-se a equação geral do
+movimento de um fluido viscoso incompressível — a **equação de Navier-Stokes**:
 
-$$\tau = \mu \frac{dv}{dy}$$
+$$\boxed{\;\rho\left(\frac{\partial\mathbf{v}}{\partial t}
++ (\mathbf{v}\cdot\nabla)\,\mathbf{v}\right)
+= -\operatorname{grad} p + \mathbf{f} + \eta\,\nabla^2\mathbf{v}\;}$$
 
-A integração dessa tensão sobre toda a superfície do casco fornece o **arrasto viscoso** ou **arrasto de atrito** — que para navios é tipicamente 75–85% da resistência total.
+A leitura, termo a termo:
 
-A espessura da camada limite cresce ao longo do casco: $\delta \approx 0.37 x / \text{Re}_x^{0.2}$ (para escoamento turbulento). Para um casco de 200 m a 15 nós, $\delta$ no final do navio é da ordem de 0.5–1 m.
+| Termo | Significado |
+|---|---|
+| $\rho\,\partial\mathbf{v}/\partial t$ | inércia local — o campo mudando no tempo num ponto fixo |
+| $\rho\,(\mathbf{v}\cdot\nabla)\mathbf{v}$ | inércia convectiva — a partícula levada para uma região de velocidade diferente; é o termo **não linear**, e é dele que vem toda a dificuldade |
+| $-\operatorname{grad} p$ | força de pressão, a mesma da (2.3.3) |
+| $\mathbf{f}$ | forças volumétricas externas (gravidade) |
+| $\eta\,\nabla^2\mathbf{v}$ | força viscosa, a novidade: derivada **segunda** da velocidade |
+
+O termo viscoso ser uma derivada segunda tem leitura física direta: **quanto maior a curvatura do
+perfil de velocidades, maior a força viscosa**. Onde o perfil é reto, as camadas deslizam sem
+resultante; onde ele encurva, sobra força.
+
+Fazendo $\eta = 0$ recupera-se a equação do fluido perfeito (2.3.3); a hidrostática (1.3.7) é o
+caso $\mathbf{v} = 0$. As três equações da unidade são a mesma equação com termos ligados e
+desligados.
+
+Sua solução geral é muito difícil — a existência e regularidade das soluções é um problema em
+aberto da matemática. Mas para geometrias simples e escoamento laminar permanente ela tem solução
+analítica exata, e a próxima seção é justamente uma delas.
+
+## A lei de Hagen-Poiseuille
+
+Considere o escoamento de um fluido viscoso através de uma tubulação cilíndrica de seção circular
+e raio $a$. Para velocidades não muito grandes, o escoamento é **laminar**, com velocidade máxima
+no centro do tubo e decrescente até zero nas paredes: podemos imaginar o fluido decomposto em
+camadas cilíndricas concêntricas de espessura infinitésima, que escorregam umas sobre as outras
+como tubos que se encaixam numa montagem telescópica.
+
+Em regime estacionário, o fluido escoa através de uma porção de comprimento $l$ sob o efeito de uma
+diferença de pressão $p_1 - p_2$. Sobre um cilindro fluido coaxial de raio $r$ atua uma força
+$(p_1 - p_2)\pi r^2$ em razão dessa diferença. Como a área da superfície lateral do cilindro é
+$2\pi r l$, essa força provoca uma tensão tangencial distribuída sobre essa superfície de valor
+
+$$\frac{F}{A} = \frac{(p_1-p_2)\,\pi r^2}{2\pi r l} = \frac{(p_1-p_2)}{2l}\,r
+\qquad \text{(Moysés 2.7.3)}$$
+
+A velocidade $v$ a uma distância $r$ do eixo só depende de $r$, e temos $dv/dr < 0$, de modo que a
+lei de Newton (2.7.2) fica
+
+$$\frac{F}{A} = -\eta\,\frac{dv}{dr} \qquad \text{(Moysés 2.7.4)}$$
+
+Identificando as (2.7.3) e (2.7.4):
+
+$$\frac{dv}{dr} = -\frac{(p_1-p_2)}{2l\eta}\,r$$
+
+Integrando ambos os membros em relação a $r$, de um dado valor até $a$, e lembrando que a
+velocidade se anula nas paredes ($v(a) = 0$):
+
+$$\boxed{\;v(r) = \frac{(p_1-p_2)}{4l\eta}\left(a^2 - r^2\right)\;} \qquad \text{(Moysés 2.7.5)}$$
+
+O gráfico de $v(r)$ é uma **parábola**: diz-se que o perfil de velocidades é **parabólico**.
+
+Para calcular a vazão total $V$ — o volume que escoa por unidade de tempo através da seção —,
+considere a contribuição $dV$ da porção compreendida entre dois cilindros de raios $r$ e $r+dr$. A
+área do anel circular é $2\pi r\,dr$, e a (2.7.5) resulta em
+
+$$dV = v(r)\cdot 2\pi r\,dr = \frac{\pi(p_1-p_2)}{2l\eta}\left(a^2 - r^2\right)r\,dr$$
+
+Integrando entre $r = 0$ e $r = a$, com
+$\int_0^a (a^2 - r^2)r\,dr = a^4/2 - a^4/4 = a^4/4$:
+
+$$\boxed{\;V = \frac{\pi a^4}{8\eta}\left(\frac{p_1-p_2}{l}\right)\;} \qquad \text{(Moysés 2.7.6)}$$
+
+A vazão é, portanto, **proporcional à queda de pressão por unidade de comprimento**,
+**inversamente proporcional ao coeficiente de viscosidade** e **varia com a quarta potência do
+raio do tubo**.
+
+A (2.7.6) é a **lei de Hagen-Poiseuille**, obtida experimentalmente por Hagen e Poiseuille entre
+1839 e 1846 — Poiseuille, que também era médico, estava investigando o escoamento do sangue
+através de um capilar. Uma de suas aplicações práticas importantes é **medir o coeficiente de
+viscosidade** $\eta$, determinando a vazão através de um tubo em regime laminar.
+
+A dependência com $a^4$ é dramática e vale insistir. Aplicada à circulação do sangue, uma
+vasoconstrição por um fator 2 no raio diminui a vazão por um fator **16**. A bordo, a mesma conta
+explica por que reduzir a bitola de uma linha de óleo é muito mais caro em pressão do que a
+intuição sugere, e por que um filtro parcialmente obstruído derruba a vazão de forma
+desproporcional.
+
+## O número de Reynolds {{< ra OE3.13 B3 >}}
+
+O movimento de um corpo através de um fluido viscoso depende criticamente do seu tamanho, da
+velocidade $v$ com que se move, e da densidade $\rho$ e viscosidade $\eta$ do fluido. Essa
+dependência pode ser expressa por meio de um parâmetro conhecido como **número de Reynolds**, Re —
+e vale a pena obtê-lo por estimativa de ordens de grandeza, não como definição decorada.
+
+Para um corpo de tamanho $a$ que se desloca de uma distância igual ao seu tamanho, a massa de
+fluido deslocada é $\sim \rho a^3$, e a energia cinética correspondente é
+
+$$T \sim \rho a^3 v^2$$
+
+que mede a **resistência inercial** oposta pelo fluido ao deslocamento.
+
+A resistência de atrito, para velocidades não muito grandes, é proporcional a $v$ e também a
+$\eta$; o coeficiente de atrito correspondente é proporcional a $\eta a$ (pode ser calculado
+explicitamente para uma esfera). Assim, a **resistência de atrito** é $F \sim \eta a v$, e para um
+deslocamento $a$ a energia dissipada pelo atrito é
+
+$$W = F a \sim \eta a^2 v$$
+
+O número de Reynolds é definido por
+
+$$\boxed{\;\mathrm{Re} = \frac{\text{resistência inercial}}{\text{resistência de atrito}}
+= \frac{T}{W} = \frac{\rho a v}{\eta}\;} \qquad \text{(Moysés 2.7.7)}$$
+
+que mede a razão (força de inércia)/(força de atrito viscoso). Em termos da viscosidade cinemática
+$\nu = \eta/\rho$ do tópico 3.1, $\mathrm{Re} = av/\nu$.
+
+Re é **adimensional** — e é essa a razão de ele, e não a velocidade ou o tamanho isoladamente,
+governar o regime. Dois escoamentos de mesma geometria e mesmo Re são o mesmo escoamento, ainda que
+com fluidos, tamanhos e velocidades completamente diferentes. Esse é o fato que o tópico 3.5 vai
+generalizar.
+
+### Ordens de grandeza
+
+Para a água à temperatura ambiente, $\rho \approx 10^3\ \text{kg/m}^3$ e
+$\eta \approx 1\ \text{cp} = 10^{-3}\ \text{N}\cdot\text{s}/\text{m}^2$, de modo que
+
+$$\mathrm{Re} \approx \frac{a\,(\text{m})\cdot v\,(\text{m/s})}{10^{-6}\ \text{m}^2/\text{s}}$$
+
+| Corpo | $a$ | $v$ | Re | Regime |
+|---|---|---|---|---|
+| bactéria | $1\ \mu$m | $10\ \mu$m/s | $10^{-5}$ | atrito domina |
+| peixe | $10$ cm | $1$ m/s | $10^{5}$ | inércia domina |
+| nadador | $2$ m | $1$ m/s | $10^{6}$ | inércia domina |
+| casco de navio | $200$ m | $7$ m/s | $10^{9}$ | inércia domina largamente |
+
+A leitura biológica é instrutiva. Para o peixe, a inércia é muito mais importante que o atrito
+viscoso, e por isso muitos peixes se propelem com as nadadeiras **empurrando a água para trás** —
+como nós fazemos com os braços. Para a bactéria, ao contrário, $\mathrm{Re} \approx 10^{-5}$: a
+inércia é desprezível diante do atrito viscoso. Nesse mundo, na presença de uma força externa, a
+velocidade seria proporcional à força — valeria a física aristotélica.
+
+Uma bactéria que parasse de nadar percorreria, por inércia, cerca de $0{,}1$ Å antes de parar: ela
+para instantaneamente. É como se um peixe procurasse nadar num tanque cheio de piche. A evolução
+resolveu isso com o **flagelo** helicoidal acionado por um motor rotatório — uma solução que só faz
+sentido a Re baixíssimo.
+
+## Classificação dos regimes de escoamento {{< ra OE3.14 B2 >}}
+
+Aumentando progressivamente a velocidade do escoamento em torno de um obstáculo — ou seja,
+aumentando Re —, observa-se uma sequência bem definida de regimes:
+
+| Re (esfera) | Regime | O que se vê |
+|---|---|---|
+| $\sim 10^2$ | camada limite colada | linhas de corrente acompanham o obstáculo; escoamento estacionário |
+| $\sim 10^2$–$10^3$ | esteira com vórtices | dois vórtices simétricos atrás do obstáculo, com refluxo |
+| $\sim 10^2$–$10^4$ | fileira de vórtices | vórtices se destacam alternadamente e são arrastados; deixa de ser estacionário |
+| $\gtrsim 10^4$ | turbulento | movimento irregular e aparentemente caótico; linhas de corrente mudam a cada instante |
+
+Fotografias clássicas de escoamento em torno de uma esfera registram exatamente essa evolução em
+Re $= 118$ (colada), Re $= 140$ (fileira de vórtices) e Re $= 15\,000$ (turbulência).
+
+Um exemplo astronômico de escoamento turbulento é a **grande mancha vermelha** de Júpiter — uma
+tempestade persistente de dimensões maiores do que a Terra.
+
+Para escoamento **em tubos**, os valores de referência da engenharia, com Re calculado sobre o
+diâmetro, são:
+
+**Re < 2300 → laminar; 2300 < Re < 4000 → transição; Re > 4000 → turbulento.**
+
+Um navio comercial de 200 m a 15 nós (7,7 m/s) em água a 15 °C tem
+$\mathrm{Re} = 7{,}7 \times 200 / (1{,}14\times10^{-6}) \approx 1{,}35\times10^9$ — um Reynolds
+enorme, e o escoamento em torno do casco é francamente turbulento. Mesmo assim, bem junto ao
+casco, sobrevive uma camada fina onde a viscosidade manda: é para ela que vamos agora.
+
+## A camada limite {{< ra OE3.16 B2 >}}
+
+No escoamento de um fluido perfeito, nada impede que ele deslize sobre um sólido com velocidade
+tangencial não nula — é o que sucede, por exemplo, no escoamento em torno de um cilindro do tópico
+3.7. Para um fluido real, a viscosidade **não permite** esse deslizamento: como vimos, na
+superfície de contato com o sólido, o fluido tem de estar em repouso em relação a ele.
+
+Para um fluido de viscosidade pequena, como a água, a ação da viscosidade confina-se geralmente a
+uma camada muito delgada junto à superfície do obstáculo, de espessura muito menor do que as
+dimensões dele. Nessa **camada limite**, cuja existência foi sugerida por **Prandtl em 1904**, a
+velocidade varia rapidamente, desde um valor nulo junto à parede até um valor característico do
+escoamento, no seio do fluido.
+
+Essa variação da magnitude da velocidade transversalmente à direção do escoamento representa um
+**escoamento rotacional** dentro da camada limite — exatamente a situação das duas placas
+paralelas do início deste tópico.
+
+Aqui está o resultado que reconcilia toda a unidade:
+
+> Para velocidades de escoamento suficientemente baixas, a camada limite permanece **colada** ao
+> obstáculo. O escoamento **fora dela**, com muito boa aproximação, continua sendo **irrotacional e
+> praticamente idêntico ao de um fluido perfeito**. Nessa região, a hidrodinâmica clássica pode ser
+> aplicada — o que justifica e define o seu domínio de validade.
+
+Ou seja: Bernoulli, o Venturi, a circulação e o Kutta-Joukowski não foram desperdício. Eles valem
+fora da camada limite, e é lá que está quase todo o escoamento. O que eles não podem dar é o que
+acontece *dentro* dela — e é dentro dela que nasce a resistência.
+
+A tensão de cisalhamento na parede é, pela (2.7.2), $\tau = \eta\,dv/dy$. A integração dessa tensão
+sobre toda a superfície molhada do casco fornece o **arrasto de atrito**, que para navios é
+tipicamente **75 a 85% da resistência total** — assunto do tópico 3.6.
+
+A espessura da camada limite **cresce** ao longo do casco. Para regime turbulento,
+$\delta \approx 0{,}37\,x/\mathrm{Re}_x^{0{,}2}$; para um casco de 200 m a 15 nós, $\delta$ na popa
+é da ordem de 0,5 a 1 m — menos de 0,5% do comprimento do navio, e ainda assim a origem da maior
+parte da sua resistência.
 
 ## Transição laminar-turbulento {{< ra OE3.17 B4 >}}
 
-A transição da camada limite laminar para turbulenta acontece a um Reynolds local crítico $\text{Re}_{x,\text{crit}}$. Para superfícies lisas, $\text{Re}_{x,\text{crit}} \approx 5 \times 10^5$. Para superfícies rugosas (cascos com incrustações, corrosão), a transição pode ocorrer a valores muito menores.
+A camada limite não nasce turbulenta. Junto à proa ela é **laminar** e fina; a partir de um
+Reynolds local crítico $\mathrm{Re}_{x,\text{crít}}$, calculado com a distância $x$ desde o bordo
+de ataque, ela transiciona para **turbulenta** e passa a crescer bem mais rápido:
 
-Uma vez que a camada limite fica turbulenta, o arrasto aumenta drasticamente: aumenta de um fator 5–10 em relação ao regime laminar. Por isso, manter o casco liso (pintura anti-incrustação, limpeza) é crítico para a eficiência do navio.
+$$\mathrm{Re}_x = \frac{v\,x}{\nu},
+\qquad
+\mathrm{Re}_{x,\text{crít}} \approx 5\times10^5 \;\text{(superfície lisa)}$$
 
-Outra consideração prática: a **rugosidade relativa** $k/L$ (tamanho da rugosidade / comprimento) afeta o ponto de transição. Cascos sujos têm transição mais cedo e arrasto maior.
+Para um casco a 6 m/s em água ($\nu = 10^{-6}$), isso dá
+$x_{\text{crít}} = 5\times10^5 \times 10^{-6}/6 \approx 8$ cm. Ou seja: **praticamente todo o casco
+de um navio escoa em regime turbulento**; o trecho laminar cabe na palma da mão, junto à proa.
+
+Duas consequências práticas:
+
+**Rugosidade antecipa a transição.** Para superfícies rugosas — cascos com incrustação biológica,
+corrosão, pintura degradada — a transição ocorre a valores de $\mathrm{Re}_x$ muito menores, e o
+trecho laminar desaparece por completo. Com uma rugosidade de $150\ \mu$m, a transição acontece
+essencialmente em $x = 0$.
+
+**A camada limite turbulenta arrasta mais.** O arrasto de atrito de uma camada limite turbulenta é
+várias vezes maior que o de uma laminar de mesma extensão, porque o transporte transversal de
+quantidade de movimento é muito mais eficiente. Manter o casco liso — pintura anti-incrustante,
+limpeza periódica, docagem — é, literalmente, manutenção de camada limite, e a curva de consumo em
+função do tempo desde a última docagem é a medida disso.
+
+Para velocidades de escoamento mais elevadas, a camada limite deixa de permanecer colada: ela
+**se descola** do obstáculo, e forma-se uma esteira com vórtices. É aí que a resistência muda de
+natureza — e é onde o próximo tópico começa.
 
 ::: {.sp}
 Um navio-tanque de comprimento $L = 240$ m viaja a $v = 12$ nós (6.17 m/s) em água de temperatura $T = 20°C$ (viscosidade cinemática $\nu = 1.0 \times 10^{-6}$ m²/s). Calcule o número de Reynolds e classifique o escoamento. Se a rugosidade média do casco é $k = 150$ μm, em que ponto do casco a camada limite transiciona para turbulenta? Qual será a espessura da camada limite no final do navio?
@@ -124,8 +379,12 @@ na popa) está certa.
 - **Confundir Re global com Re local:** escoamento pode ser laminar perto da proa e turbulento na popa. Re global diz a tendência, mas a camada limite localmente transiciona.
 - **Negligenciar rugosidade:** para Reynolds baixos (Re < 10⁵), rugosidade não importa; para Re alto (cascos de navio), rugosidade adianta a transição em ordens de magnitude.
 - **Viscosidade de fluido incompressível:** água tem $\nu \approx 1.0 \times 10^{-6}$ m²/s a 20°C; óleo ISO 46 tem $\nu \approx 46 \times 10^{-6}$ m²/s — diferença de 46 vezes muda a classificação de escoamento.
+- **Achar que a hidrodinâmica clássica foi descartada.** Ela continua válida **fora** da
+  camada limite, que é onde está quase todo o escoamento. O que ela não descreve é a fina
+  camada junto à parede — e é justamente lá que nasce a resistência.
+- **Usar Hagen-Poiseuille fora do regime laminar.** A (2.7.6) supõe escoamento laminar; numa
+  tubulação de lastro com Re > 4000 o perfil não é parabólico e a vazão não segue $a^4$.
 :::
-
 ## Veja a camada limite crescer
 
 Junto ao casco a água "gruda" (velocidade nula na parede) e retoma a velocidade livre a
@@ -267,8 +526,20 @@ plt.tight_layout(); plt.show()
 - **Modelo × navio real** — o tanque de provas não consegue igualar o Re do real;
   ensaia-se com semelhança de Froude e corrige-se o atrito por linhas de correlação.
 
+- **Bactéria e flagelo** — Re ≈ 10⁻⁵: a inércia não existe, a bactéria para em 0,1 Å ao
+  desligar o motor. O flagelo helicoidal é a solução evolutiva para um mundo puramente
+  viscoso — e um lembrete de que "Re alto" não é um detalhe técnico, é um regime físico.
+- **Vazão que despenca com a bitola** — Hagen-Poiseuille com $a^4$: reduzir o raio pela
+  metade corta a vazão a 1/16. É a mesma conta da vasoconstrição e a de um filtro entupindo
+  numa linha de óleo lubrificante.
+
 <!-- EXEMPLO A SIMULAR: crescimento da camada limite ao longo do casco (p5.js ou
      gráfico): espessura δ(x) laminar × turbulenta com slider de velocidade e ponto
      de transição. -->
 
-**Conexão com o próximo tópico:** conhecendo Reynolds e camada limite, agora reduzimos problemas complexos de fluidos usando **análise dimensional** — o Teorema π de Buckingham — que permite prever o comportamento de um navio real a partir de testes em modelo reduzido. Tópico 3.5.
+**Conexão com o próximo tópico:** já temos a viscosidade, o parâmetro que decide o regime e a
+camada onde a viscosidade age. Falta transformar isso em **força**. A baixas velocidades, antes do
+descolamento, a resistência vem do atrito na camada limite e é proporcional a $\eta v$; a
+velocidades mais altas, quando a camada se descola e se forma a esteira com vórtices, a resistência
+passa a ser dominada pela assimetria de pressões e cresce com $v^2$. São os dois arrastos — de
+atrito e de pressão — e a sua soma é a resistência ao avanço do navio.

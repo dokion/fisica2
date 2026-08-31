@@ -16,41 +16,127 @@ OE 3.25 [B4] Analisar a influência da viscosidade no arrasto de atrito
 
 {{< aula 29-30 >}}
 
-Toda embarcação que se move encontra resistência do meio: a água "segura" a proa, o casco sofre atrito, as formas geram ondas. Esse é o **arrasto** — a força que a máquina do navio deve vencer para manter velocidade. Este tópico decompõe a resistência em dois componentes fundamentais: **arrasto de atrito** (resulta da viscosidade na camada limite) e **arrasto de pressão** (resulta da distribuição de pressões ao redor do casco). Dominar essa distinção e o **coeficiente de arrasto** é dominar a engenharia naval — determina diretamente a potência necessária e, portanto, o tamanho da máquina e o custo de operação do navio.
+O tópico 3.7 fechou com o paradoxo de d'Alembert: **um fluido perfeito não oferece resistência
+alguma** ao deslocamento de um corpo. O tópico 3.4 mostrou de onde vem a correção — a viscosidade,
+confinada a uma camada delgada junto à parede. Falta agora o passo que fecha o argumento:
+transformar a camada limite em **força**.
 
-## Tipos de arrasto {{< ra OE3.22 B1 >}}
+A resposta tem duas metades, e elas correspondem a dois regimes distintos de escoamento. É a
+decomposição da resistência ao avanço do navio — a força que a máquina precisa vencer, e portanto o
+que decide a potência instalada e o consumo.
 
-O arrasto total que age sobre um navio é a soma de dois componentes:
+## Descolamento da camada limite e a esteira
 
-**1. Arrasto de atrito (ou arrasto viscoso):**
-Originário da tensão de cisalhamento viscosa na camada limite. A viscosidade da água faz o fluido "grudar" na parede do casco. Essa aderência gera uma força tangencial (paralela à superfície) ao longo de toda a área molhada. O arrasto de atrito é proporcional à velocidade (a baixa velocidade) e cresce com a área de contato com a água.
+No tópico 3.4 vimos que, para velocidades de escoamento suficientemente baixas, a camada limite
+permanece **colada** ao obstáculo, e o escoamento fora dela é praticamente o de um fluido perfeito.
 
-**2. Arrasto de pressão (ou arrasto de forma):**
-Originário da diferença de pressão entre o lado dianteiro (proa) e o lado traseiro (popa) do casco. Na proa, o escoamento é comprimido (pressão alta); na popa, o escoamento se separa e deixa uma esteira de baixa pressão. Essa assimetria de pressão cria uma força de arrasto. Para cascos bem-projetados, essa separação é minimizada. Para corpos com formato muito rombudo (cilindros, esferas), o arrasto de pressão é dominante.
+Para velocidades mais elevadas, isso deixa de valer: a camada limite **se descola** do obstáculo,
+em pontos situados na parte de trás dele, e forma-se uma **esteira** — uma região atrás do corpo
+onde aparecem vórtices, trazendo um **refluxo** em direção ao obstáculo.
 
-Para um navio típico em velocidade de serviço:
-- Arrasto de atrito: ~75–85% do arrasto total.
-- Arrasto de pressão (onda): ~15–25% do arrasto total.
+Continuando a aumentar a velocidade, verifica-se que os vórtices se destacam e começam a ser
+arrastados pelo fluido. À medida que isso acontece, novos vórtices se formam na esteira e vão-se
+destacando por sua vez, criando **fileiras de vórtices** atrás do obstáculo. O regime de escoamento
+deixa de ser estacionário. Para velocidades ainda maiores, o escoamento na esteira se torna
+**turbulento**.
 
-A proporção depende da velocidade (medida pelo número de Froude) e da forma do casco.
+Por uma mudança de referencial, podemos aplicar esses resultados ao deslocamento de um corpo
+através do fluido. E aqui está o ponto: **a resistência oposta pelo fluido a esse deslocamento
+depende do regime de escoamento** — ou seja, do número de Reynolds.
 
-## Forma do casco e coeficiente de arrasto {{< ra OE3.23 B2 >}}
+## Os dois regimes de resistência {{< ra OE3.22 B1 >}}
 
-Um navio graneleiro (corpo volumoso, boca grande, calado fundo) tem um casco com proporções que minimizam o arrasto de pressão e maximizam a capacidade de carga. Um iate de corrida (corpo fino, alongado) minimiza a área molhada. A **finura** do casco é medida pelo **coeficiente de bloco** Cb = volume deslocado / (L × B × T).
+### Antes do descolamento: arrasto de atrito
 
-A relação entre forma e arrasto é descrita pelo **coeficiente de arrasto** (adimensional):
+Para baixas velocidades, **antes do descolamento da camada limite**, a resistência provém do
+**atrito na camada limite**. Pela lei de Newton da viscosidade (2.7.2), a tensão tangencial na
+parede é $\tau = \eta\,dv/dy$, e integrá-la sobre a superfície molhada dá uma força proporcional à
+velocidade $v$ e ao coeficiente de viscosidade $\eta$:
 
-$$C_D = \frac{R}{q \cdot A}$$
+$$R_{\text{atrito}} \propto \eta\,v$$
 
-onde:
-- $R$ é o arrasto total (N)
-- $q = \frac{1}{2}\rho v^2$ é a pressão dinâmica (Pa)
-- $A$ é a área de referência (m²) — para navios, geralmente a área molhada
+É a mesma dependência linear da resistência do ar na queda de um corpo a baixa velocidade, e é ela
+que aparece na lei de Stokes para uma esfera, $F = 6\pi\eta r v$ — a que governa o viscosímetro de
+queda do tópico 3.1.
 
-O coeficiente de arrasto típico para cascos de navio é $C_D \approx 0.003 - 0.01$ (dependendo de forma, velocidade, rugosidade). Um cilindro liso tem $C_D \approx 1.0$; uma esfera lisa, $C_D \approx 0.47$ — muito maior que um navio.
+Esse é o **arrasto de atrito** (ou viscoso). Ele age **tangencialmente** à superfície, ao longo de
+toda a área molhada, e existe mesmo quando o escoamento acompanha perfeitamente a forma do corpo.
 
-A forma do casco importa: proa fina reduz a elevação de onda (arrasto de pressão); popa bem-desenhada evita separação do escoamento; apreço da água (bulbosa) reduz o padrão de onda gerada.
+### Depois do descolamento: arrasto de pressão
 
+Para velocidades mais elevadas, quando se forma a esteira com vórtices, a resistência passa a ser
+dominada por outra coisa: a **assimetria na distribuição de pressões** entre as partes dianteira e
+traseira do obstáculo.
+
+Na parte dianteira há um **ponto de estagnação** e, como no tubo de Pitot (2.5.2), a pressão
+aumenta ali por um termo proporcional a $v^2$ — a pressão dinâmica. Na esteira, atrás do corpo,
+isso **não acontece**: a pressão lá é baixa e desorganizada. A diferença é uma força resultante
+para trás, e como o termo dianteiro cresce com $v^2$:
+
+$$R_{\text{pressão}} \propto v^2$$
+
+Esse é o **arrasto de pressão** (ou de forma). Note que ele é exatamente o que o fluido perfeito
+não conseguia produzir: lá a distribuição de pressões era **simétrica** entre a frente e a
+traseira, e a resultante se anulava — o paradoxo de d'Alembert. É o **descolamento**, que só a
+viscosidade produz, que quebra a simetria e faz a força aparecer.
+
+### O arrasto total
+
+$$\boxed{\;R_{\text{total}} = R_{\text{atrito}} + R_{\text{pressão}}\;}$$
+
+| | Origem física | Direção | Depende de | Cresce com |
+|---|---|---|---|---|
+| **Atrito** | tensão viscosa na camada limite | tangencial à superfície | área molhada, $\eta$, rugosidade | $\sim v$ (laminar), $\sim v^{1{,}8}$ (turbulento) |
+| **Pressão** | assimetria proa/esteira após descolamento | normal à superfície | forma do corpo | $\sim v^2$ |
+
+Para um navio mercante em velocidade de serviço, a repartição típica é:
+
+- **Arrasto de atrito: 75 a 85%** da resistência total — porque o casco é longo e a área molhada é
+  enorme, e porque a forma é desenhada justamente para evitar o descolamento.
+- **Arrasto de pressão e de onda: 15 a 25%** — crescendo rapidamente com a velocidade.
+
+A proporção depende da velocidade (medida pelo número de Froude, tópico 3.5) e da forma do casco.
+Num corpo rombudo — um cilindro, uma esfera, uma âncora flutuante — a relação se inverte e o
+arrasto de pressão domina.
+
+## Forma do corpo e coeficiente de arrasto {{< ra OE3.23 B2 >}}
+
+A conclusão de projeto sai direto do mecanismo:
+
+> Um corpo de forma aerodinâmica, **arredondado na parte dianteira e afilado na traseira** — como
+> um peixe ou uma asa de avião —, dá origem a um escoamento estacionário em que as linhas de
+> corrente acompanham a forma do corpo, **sem descolamento da camada limite**, o que minimiza a
+> resistência oposta pelo fluido ao deslocamento.
+
+Não é a "penetração" da proa que importa mais: é a **popa**. A proa afilada ajuda, mas é a traseira
+afilada que evita o descolamento e mata o arrasto de pressão. Um corpo com proa fina e popa cortada
+a prumo arrasta muito mais do que um com proa romba e popa afilada — motivo pelo qual gotas, peixes
+e perfis de asa têm todos a mesma silhueta.
+
+No navio, isso aparece na forma da popa e no desenho da região de saída do escoamento antes do
+hélice. A **finura** do casco é medida pelo **coeficiente de bloco**
+$C_b = \nabla/(L\times B\times T)$ — a razão entre o volume deslocado e o do paralelepípedo
+circunscrito. Graneleiros têm $C_b$ alto (0,80–0,85: muito volume, pouca finura); navios rápidos,
+$C_b$ baixo.
+
+A relação entre forma e arrasto é condensada no **coeficiente de arrasto**, adimensional:
+
+$$\boxed{\;C_D = \frac{R}{q\,A}, \qquad q = \tfrac{1}{2}\rho v^2\;}$$
+
+onde $R$ é o arrasto (N), $q$ a pressão dinâmica (Pa) e $A$ a área de referência (para navios, em
+geral a área molhada). Adimensionalizar assim não é cosmético: como Re, $C_D$ é o que permite
+comparar corpos de tamanhos diferentes em fluidos diferentes — e é o objeto que o tópico 3.5 vai
+justificar.
+
+| Corpo | $C_D$ típico |
+|---|---|
+| casco de navio (sobre área molhada) | 0,003 – 0,01 |
+| esfera lisa | ≈ 0,47 |
+| cilindro liso (escoamento transversal) | ≈ 1,0 |
+| placa plana perpendicular ao escoamento | ≈ 1,2 |
+
+A ordem de grandeza conta a história inteira: o casco tem $C_D$ **cem vezes menor** que um cilindro
+de mesma área frontal, porque quase não tem arrasto de pressão. O que sobra é atrito.
 ## Coeficiente de arrasto e fórmulas de engenharia {{< ra OE3.24 B3 >}}
 
 Na prática de engenharia, o arrasto é calculado separando atrito e pressão:
@@ -130,6 +216,12 @@ propulsiva instalada é maior que $P$, pois há as eficiências de hélice e de 
 - **Área de referência errada:** para navio, usa-se área molhada (S), não projeção frontal. Cilindro usa área frontal; navio usa área de contato com água.
 - **Confundir $C_D$ com $C_F$:** $C_D$ é adimensional para arrasto total; $C_F$ é apenas para atrito. São números diferentes de magnitudes diferentes.
 - **Negligenciar número de Froude na extrapolação:** resistência de onda não escala linearmente com velocidade. Fórmulas de engenharia usam Froude para isso.
+- **Achar que a proa afilada é o que reduz o arrasto.** É a **popa**. A proa fina ajuda na
+  resistência de onda, mas o que mata o arrasto de pressão é a traseira afilada, que impede o
+  descolamento da camada limite. Proa romba com popa afilada arrasta menos que o inverso.
+- **Usar uma única lei de potência para todo o intervalo.** A resistência é $\propto v$ antes
+  do descolamento e $\propto v^2$ depois. Um navio opera no segundo regime, mas a transição
+  existe e é onde as fórmulas empíricas trocam de forma.
 :::
 
 ## Veja a resistência crescer com a velocidade
@@ -256,9 +348,23 @@ plt.tight_layout(); plt.show()
   temporal.
 - **Incrustação** — casco sujo eleva o coeficiente de arrasto friccional em dezenas
   de por cento; a curva consumo × tempo desde a docagem é o arrasto virando dinheiro.
+- **Esteira de vórtices atrás de um pilar de píer** — a fileira alternada de vórtices do
+  §2.7 a olho nu, na correnteza; a mesma que faz um cabo de antena "cantar" ao vento.
+- **Bulbo de proa** — gera um sistema de ondas em oposição de fase ao do casco, cancelando
+  parte da resistência de onda. Validade: só na faixa de velocidade para a qual foi
+  projetado; fora dela, atrapalha.
 
 <!-- EXEMPLO A SIMULAR: potência × velocidade (gráfico interativo, faixa SP4:
      10–25 nós, 5–80 MW): slider de velocidade e de fator de incrustação; custo de
      combustível por milha. -->
 
-**Conexão com o próximo tópico:** o arrasto que acabamos de estudar é uma face da resistência. A outra face é a **sustentação** — a força perpendicular ao escoamento que move a água de modo produtivo, impulsionando o navio pela hélice e governando-o pelo leme. Tópico 3.7.
+
+**Conexão com o próximo tópico:** o arrasto acabou de ser escrito como
+$R = \tfrac{1}{2}\rho v^2 A\,C_D$, e o regime, no tópico 3.4, como $\mathrm{Re} = \rho a v/\eta$.
+Note o que os dois têm em comum: são **números adimensionais** que capturam o comportamento de
+famílias inteiras de escoamentos, independentemente do tamanho, da velocidade e do fluido. Isso não
+foi coincidência nem sorte — há um método sistemático que produz esses agrupamentos a partir apenas
+das dimensões das grandezas envolvidas, e um teorema que diz quantos deles existem. É a **análise
+dimensional**, com o Teorema π de Buckingham, e ela traz junto o adimensional que ainda falta — o
+número de Froude — e a resposta para a pergunta prática que fecha a unidade: como prever a
+resistência de um navio de 240 m a partir de um modelo de 4 m num tanque de provas.
