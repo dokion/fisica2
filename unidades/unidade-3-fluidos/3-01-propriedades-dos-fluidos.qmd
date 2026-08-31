@@ -478,8 +478,127 @@ plt.tight_layout(); plt.show()
 - **Piche e asfalto** — o exemplo clássico da fronteira sólido/fluido: fratura sob impacto
   brusco, escoa sob carga lenta. O que decide não é a substância, é a escala de tempo.
 
-<!-- EXEMPLO A SIMULAR: viscosidade do HFO × temperatura (gráfico interativo):
-     curva μ(T) típica com slider de T e faixa-alvo da purificadora destacada. -->
+### Viscosidade do óleo combustível × temperatura
+
+O HFO 380 a bordo chega ao tanque com $\nu = 380$ cSt a 50 °C — viscoso demais para ser
+bombeado, purificado ou injetado. Toda a linha de tratamento existe para trazê-lo à faixa
+estreita que a purificadora e os injetores exigem, e o único parâmetro disponível é a
+**temperatura**. A dependência segue a relação de Walther (ASTM D341):
+
+$$\log_{10}\left[\log_{10}(\nu + 0{,}7)\right] = A - B\,\log_{10} T$$
+
+com $T$ em kelvin. É uma exponencial dupla: poucos graus a menos e a viscosidade dispara.
+
+```{python}
+#| fig-cap: "Viscosidade cinemática de um HFO 380 em função da temperatura, pela relação de Walther ancorada em 380 cSt a 50 °C e 15 cSt a 130 °C. A faixa 13–17 cSt (verde) é a exigida na entrada da purificadora e dos injetores: ela só é atingida acima de ~125 °C. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+A, B = 9.15572, 3.48450          # ancorado em 380 cSt @ 50 °C e 15 cSt @ 130 °C
+def nu(Tc):
+    T = np.asarray(Tc) + 273.15
+    return 10**(10**(A - B*np.log10(T))) - 0.7
+
+Tc = np.linspace(40, 160, 400)
+fig, ax = plt.subplots(figsize=(9, 3.6))
+ax.axhspan(13, 17, color='#2E9E5B', alpha=0.18, label='faixa-alvo 13–17 cSt')
+ax.plot(Tc, nu(Tc), color='#1F47C8', lw=2)
+for T0, txt in [(50, '380 cSt'), (98, '~39 cSt'), (130, '15 cSt')]:
+    ax.plot(T0, nu(T0), 'o', color='#C81F1F', ms=6)
+    ax.annotate(txt, (T0, nu(T0)), textcoords='offset points', xytext=(6, 6), fontsize=9, color='#C81F1F')
+ax.set_yscale('log'); ax.set_ylim(5, 600)
+ax.set_xlabel('temperatura (°C)'); ax.set_ylabel('ν (cSt)  [escala log]')
+ax.legend(fontsize=9); ax.grid(alpha=0.25, which='both')
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: gráfico explorável; p5 por ser a única lib
+     disponível offline, Q6). Walther ASTM D341 com A = 9,15572 e B = 3,48450 — mesmos
+     parâmetros da matplotlib. Slider de temperatura; faixa-alvo 13–17 cSt destacada. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .hf-wrap{max-width:1000px;margin:1rem auto;}
+  .hf-wrap .hf-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .hf-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:180px;flex:1 1 180px;}
+  .hf-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .hf-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .hf-wrap input[type=range]{width:100%;max-width:260px;accent-color:#c85c2e;}
+  .hf-wrap #hfSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .hf-wrap #hfEq{font-size:14px;margin:8px 2px 0;line-height:1.5;}
+  .hf-wrap #hfEq b{color:#1f47c8;}
+</style>
+<div class="hf-wrap sim">
+  <div class="hf-row">
+    <div class="sld"><label>Temperatura do óleo = <span class="val" id="hfTv">50</span> °C</label>
+      <input type="range" id="hfT" min="40" max="160" value="50" step="1"></div>
+  </div>
+  <div id="hfSketch"></div>
+  <div id="hfEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  const A=9.15572, B=3.48450;
+  const nu=Tc=>Math.pow(10,Math.pow(10,A-B*Math.log10(Tc+273.15)))-0.7;
+  const cw=()=>{ const w=(el('hfSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),360).parent('hfSketch'); p.noLoop();
+      el('hfT').addEventListener('input',()=>p.redraw()); window.addEventListener('resize',()=>p.redraw()); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),360); p.redraw(); };
+    p.draw=()=>{
+      const W=p.width, H=p.height, T=+el('hfT').value;
+      el('hfTv').textContent=T;
+      const gx0=64, gx1=W-20, gy0=28, gy1=H-42;
+      const X=t=>gx0+(t-40)/120*(gx1-gx0);
+      const L=v=>Math.log10(v), Lmin=L(5), Lmax=L(600);
+      const Y=v=>gy1-(L(v)-Lmin)/(Lmax-Lmin)*(gy1-gy0);
+      p.background('#faf8f4');
+      // faixa-alvo
+      p.noStroke(); p.fill(46,158,91,45); p.rect(gx0,Y(17),gx1-gx0,Y(13)-Y(17));
+      p.fill('#2e7d4f'); p.textSize(10); p.textAlign(p.LEFT,p.BOTTOM);
+      p.text('faixa-alvo 13–17 cSt (purificadora / injeção)',gx0+6,Y(13)-2);
+      // eixos + grade log
+      p.stroke('#d8cfc0'); p.strokeWeight(1);
+      for(const v of [5,10,20,50,100,200,500]){ p.line(gx0,Y(v),gx1,Y(v));
+        p.noStroke(); p.fill('#8a8073'); p.textSize(10); p.textAlign(p.RIGHT,p.CENTER);
+        p.text(v,gx0-6,Y(v)); p.stroke('#d8cfc0'); }
+      p.stroke('#bdb4a4'); p.strokeWeight(1.4); p.line(gx0,gy1,gx1,gy1); p.line(gx0,gy0,gx0,gy1);
+      p.noStroke(); p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      for(let t=40;t<=160;t+=20) p.text(t+'°',X(t),gy1+5);
+      p.textAlign(p.CENTER,p.TOP); p.text('temperatura (°C)',(gx0+gx1)/2,gy1+20);
+      p.push(); p.translate(16,(gy0+gy1)/2); p.rotate(-p.HALF_PI); p.textAlign(p.CENTER,p.CENTER);
+      p.text('ν (cSt) — escala log',0,0); p.pop();
+      // curva
+      p.push(); p.noFill(); p.stroke('#1f47c8'); p.strokeWeight(2.4); p.beginShape();
+      for(let t=40;t<=160;t+=0.5){ const v=nu(t); if(v<=600&&v>=5) p.vertex(X(t),Y(v)); }
+      p.endShape(); p.pop();
+      // ponto atual
+      const v=nu(T), inband=(v>=13&&v<=17);
+      p.stroke(inband?'#2e9e5b':'#c81f1f'); p.strokeWeight(1.2);
+      p.drawingContext.setLineDash([4,4]);
+      p.line(X(T),gy1,X(T),Y(Math.min(600,Math.max(5,v)))); p.drawingContext.setLineDash([]);
+      p.noStroke(); p.fill(inband?'#2e9e5b':'#c81f1f'); p.circle(X(T),Y(Math.min(600,Math.max(5,v))),10);
+
+      el('hfEq').innerHTML='T = '+T+' °C &nbsp;→&nbsp; ν = <b>'+v.toFixed(1)+' cSt</b> &nbsp;|&nbsp; '+
+        (inband?'<span style="color:#2e7d4f;font-weight:700">dentro da faixa</span>'
+              :(v>17?'acima da faixa — aquecer mais':'abaixo da faixa — reduzir aquecimento'))+
+        ' &nbsp;|&nbsp; a 50 °C seriam '+nu(50).toFixed(0)+' cSt';
+    };
+  });
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Leve a temperatura de 50 °C a 130 °C: por quanto a viscosidade cai? Compare com a razão
+   entre as temperaturas absolutas — a queda é proporcional?
+2. A faixa-alvo tem 4 cSt de largura. Quantos graus de temperatura ela corresponde? O que
+   isso diz sobre a precisão exigida do controle do aquecedor?
+3. Se o aquecedor falha e o óleo cai de 130 °C para 110 °C, a viscosidade sai da faixa. Que
+   consequência isso tem na purificadora e na bomba de injeção?
 
 **Conexão com o próximo tópico:** sabemos agora que num fluido em equilíbrio a força superficial
 é puramente normal e que a pressão num ponto não depende da direção. Falta descobrir como ela

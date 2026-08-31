@@ -609,9 +609,424 @@ plt.tight_layout(); plt.show()
 - **Balde girante e o perfil parabólico** — a (1.4.12) num tanque em rotação; o clássico de
   laboratório que também explica o esferoide oblato dos oceanos.
 
-<!-- EXEMPLO A SIMULAR: metacentro (p5.js, tabela Q4: movimento): casco adornando com
-     slider de ângulo e de altura de KG; B migrando para B′, vertical por B′ cortando
-     a linha de centro em M, e o binário restaurador/emborcador indicado. -->
+### Metacentro: por que o navio volta (ou não)
+
+Esta é a construção da seção "Equilíbrio dos corpos flutuantes" posta em movimento. Para um
+casco caixão de boca $B$ e calado $T$, os três comprimentos que decidem tudo são:
+
+$$KB = \frac{T}{2}, \qquad
+BM = \frac{I}{\nabla} = \frac{L B^3/12}{L B T} = \frac{B^2}{12\,T}, \qquad
+KM = KB + BM$$
+
+e a **altura metacêntrica** é $GM = KM - KG$. Adorne o casco e acompanhe: o centro de empuxo
+migra de $B$ para $B'$, a vertical por $B'$ corta a linha de centro em $M$, e o braço de
+endireitamento é
+
+$$GZ = GM\,\sin\varphi$$
+
+Se $M$ está **acima** de $G$, o binário restabelece; se está **abaixo**, ele emborca.
+
+```{python}
+#| fig-cap: "Construção do metacentro para um casco caixão de B = 32 m e T = 10 m, adornado 15°. KB = 5,0 m, BM = B²/12T = 8,53 m, KM = 13,53 m. À esquerda, KG = 11 m (GM = +2,53 m): o binário E–P endireita. À direita, KG = 15 m (GM = −1,47 m): o mesmo binário emborca. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+Bm, Tm, phi = 32.0, 10.0, np.radians(15)
+KB, BM = Tm/2, Bm**2/(12*Tm)
+KM = KB + BM
+
+fig, axs = plt.subplots(1, 2, figsize=(9, 4.2))
+for ax, KG in zip(axs, [11.0, 15.0]):
+    GM = KM - KG
+    u = np.array([-np.sin(phi), np.cos(phi)])      # linha de centro, do fundo p/ cima
+    K = np.array([0.0, 0.0])
+    M, G = K + KM*u, K + KG*u
+    Bl = M - np.array([0.0, BM])                   # B' fica BM abaixo de M, na vertical
+    # casco adornado (retângulo B × pontal 18)
+    R = np.array([[np.cos(phi), np.sin(phi)], [-np.sin(phi), np.cos(phi)]])
+    hull = np.array([[-Bm/2, 0], [Bm/2, 0], [Bm/2, 18], [-Bm/2, 18]]) @ R.T
+    ax.fill(hull[:, 0], hull[:, 1], color='#6b6459', alpha=.45, zorder=1)
+    ax.axhline(Tm, color='#1F47C8', lw=1.4, zorder=2)          # linha d'água
+    ax.plot([K[0], (K + 20*u)[0]], [K[1], (K + 20*u)[1]], color='#8a8073', lw=1, ls='--', zorder=3)
+    for pt, lab, c in [(K, 'K', '#444'), (Bl, "B'", '#1F47C8'), (G, 'G', '#C81F1F'), (M, 'M', '#66308C')]:
+        ax.plot(*pt, 'o', color=c, ms=7, zorder=5)
+        ax.annotate(lab, pt, textcoords='offset points', xytext=(7, 4), color=c, fontsize=11, weight='bold')
+    ax.axvline(Bl[0], color='#1F47C8', lw=1, ls=':', zorder=4)  # vertical do empuxo
+    ax.axvline(G[0], color='#C81F1F', lw=1, ls=':', zorder=4)   # vertical do peso
+    ax.annotate('', xy=(Bl[0], Bl[1] + 9), xytext=(Bl[0], Bl[1]),
+                arrowprops=dict(arrowstyle='-|>', color='#1F47C8', lw=2))
+    ax.annotate('', xy=(G[0], G[1] - 9), xytext=(G[0], G[1]),
+                arrowprops=dict(arrowstyle='-|>', color='#C81F1F', lw=2))
+    ax.set_aspect('equal'); ax.set_xlim(-24, 24); ax.set_ylim(-2, 26)
+    ax.set_xticks([]); ax.set_yticks([])
+    ax.set_title(f'KG = {KG:.0f} m → GM = {GM:+.2f} m\n'
+                 + ('estável (M acima de G)' if GM > 0 else 'INSTÁVEL (M abaixo de G)'),
+                 fontsize=10, color=('#2E7D4F' if GM > 0 else '#C81F1F'))
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO — o casco adornando e B migrando).
+     p5 de libs/ (offline, Q6). Casco caixão B = 32 m, T = 10 m; KB = T/2, BM = B²/12T.
+     Sliders de ângulo de adernamento e de KG. Mesmos parâmetros da matplotlib. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .mc-wrap{max-width:1000px;margin:1rem auto;}
+  .mc-wrap .mc-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .mc-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:170px;flex:1 1 170px;}
+  .mc-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .mc-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .mc-wrap input[type=range]{width:100%;max-width:240px;accent-color:#c85c2e;}
+  .mc-wrap #mcSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .mc-wrap #mcEq{font-size:14px;margin:8px 2px 0;line-height:1.6;}
+  .mc-wrap #mcEq b{color:#1f47c8;}
+</style>
+<div class="mc-wrap sim">
+  <div class="mc-row">
+    <div class="sld"><label>Adernamento φ = <span class="val" id="mcPv">15</span>°</label>
+      <input type="range" id="mcP" min="0" max="25" value="15" step="1"></div>
+    <div class="sld"><label>Altura do CG: KG = <span class="val" id="mcGv">11.0</span> m</label>
+      <input type="range" id="mcG" min="6" max="17" value="11" step="0.5"></div>
+  </div>
+  <div id="mcSketch"></div>
+  <div id="mcEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  const Bm=32, Tm=10, KB=Tm/2, BM=Bm*Bm/(12*Tm), KM=KB+BM;
+  const cw=()=>{ const w=(el('mcSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),420).parent('mcSketch'); p.noLoop();
+      ['mcP','mcG'].forEach(id=>el(id).addEventListener('input',()=>p.redraw())); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),420); p.redraw(); };
+    p.draw=()=>{
+      const W=p.width, H=p.height;
+      const phi=+el('mcP').value*Math.PI/180, KG=+el('mcG').value;
+      el('mcPv').textContent=el('mcP').value; el('mcGv').textContent=KG.toFixed(1);
+      const GM=KM-KG, GZ=GM*Math.sin(phi);
+      const sc=Math.min((W*0.85)/48, (H-60)/28), cx=W/2, cy=H-42;   // metros -> px
+      const P=(x,y)=>[cx+x*sc, cy-y*sc];
+      const ux=-Math.sin(phi), uy=Math.cos(phi);                     // linha de centro
+      const K=[0,0], M=[KM*ux,KM*uy], G=[KG*ux,KG*uy], Bl=[M[0],M[1]-BM];
+
+      p.background('#eaf1f6');
+      // água
+      const [ , wy]=P(0,Tm); p.noStroke(); p.fill(150,185,215,120); p.rect(0,wy,W,H-wy);
+      // casco adornado
+      p.push(); const [ox,oy]=P(0,0); p.translate(ox,oy); p.rotate(-phi);
+      p.noStroke(); p.fill(107,100,89,150); p.rect(-Bm/2*sc,-18*sc,Bm*sc,18*sc);
+      p.stroke('#55524c'); p.strokeWeight(2); p.noFill(); p.rect(-Bm/2*sc,-18*sc,Bm*sc,18*sc);
+      p.pop();
+      // linha d'água
+      p.stroke('#1f47c8'); p.strokeWeight(1.6); p.line(0,wy,W,wy);
+      // linha de centro
+      p.stroke('#8a8073'); p.strokeWeight(1); p.drawingContext.setLineDash([5,5]);
+      const [k0,k1]=P(K[0],K[1]), [c0,c1]=P(20*ux,20*uy); p.line(k0,k1,c0,c1);
+      p.drawingContext.setLineDash([]);
+      // verticais do empuxo e do peso
+      const [bx,by]=P(Bl[0],Bl[1]), [gx,gy]=P(G[0],G[1]), [mx,my]=P(M[0],M[1]);
+      p.stroke('#1f47c8'); p.strokeWeight(1); p.drawingContext.setLineDash([3,4]);
+      p.line(bx,by+20,bx,40); p.stroke('#c81f1f'); p.line(gx,gy-20,gx,H-8);
+      p.drawingContext.setLineDash([]);
+      // setas E (para cima, em B') e P (para baixo, em G)
+      p.stroke('#1f47c8'); p.strokeWeight(3); p.line(bx,by,bx,by-58);
+      p.noStroke(); p.fill('#1f47c8'); p.triangle(bx,by-66,bx-6,by-54,bx+6,by-54);
+      p.textSize(13); p.textAlign(p.LEFT,p.CENTER); p.text('E',bx+9,by-40);
+      p.stroke('#c81f1f'); p.strokeWeight(3); p.line(gx,gy,gx,gy+58);
+      p.noStroke(); p.fill('#c81f1f'); p.triangle(gx,gy+66,gx-6,gy+54,gx+6,gy+54);
+      p.textAlign(p.LEFT,p.CENTER); p.text('P',gx+9,gy+40);
+      // braço GZ
+      if(Math.abs(GZ)>0.02){
+        p.stroke(GM>0?'#2e9e5b':'#c81f1f'); p.strokeWeight(2.5); p.line(gx,gy,bx,gy);
+        p.noStroke(); p.fill(GM>0?'#2e7d4f':'#c81f1f'); p.textSize(11);
+        p.textAlign(p.CENTER,p.BOTTOM); p.text('GZ = '+GZ.toFixed(2)+' m',(gx+bx)/2,gy-4);
+      }
+      // pontos K, B', G, M
+      const pts=[[K,'K','#444'],[Bl,"B'",'#1f47c8'],[G,'G','#c81f1f'],[M,'M','#66308c']];
+      for(const [q,lab,c] of pts){ const [qx,qy]=P(q[0],q[1]);
+        p.noStroke(); p.fill(c); p.circle(qx,qy,10);
+        p.textSize(13); p.textStyle(p.BOLD); p.textAlign(p.LEFT,p.BOTTOM);
+        p.text(lab,qx+7,qy-3); p.textStyle(p.NORMAL); }
+
+      el('mcEq').innerHTML='KB = '+KB.toFixed(2)+' m &nbsp;|&nbsp; BM = B²/12T = '+BM.toFixed(2)+
+        ' m &nbsp;|&nbsp; KM = <b>'+KM.toFixed(2)+' m</b> &nbsp;|&nbsp; KG = '+KG.toFixed(1)+' m<br>'+
+        'GM = KM − KG = <b>'+GM.toFixed(2)+' m</b> &nbsp;|&nbsp; GZ = GM·sen φ = '+GZ.toFixed(2)+' m &nbsp;|&nbsp; '+
+        (GM>0?'<span style="color:#2e7d4f;font-weight:700">M acima de G — binário RESTAURADOR</span>'
+             :'<span style="color:#c81f1f;font-weight:700">M abaixo de G — binário EMBORCADOR</span>');
+    };
+  });
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Com $KG = 11$ m, aumente o adernamento de 0° a 25°. O braço $GZ$ cresce — como? Confirme
+   pela $GZ = GM\sin\varphi$ e explique por que ele é nulo em $\varphi = 0$.
+2. Suba o $KG$ lentamente. Em que valor exato o binário troca de sinal? Relacione com $KM$
+   lido no painel.
+3. $BM = B^2/12T$ cresce com o **quadrado da boca**. Por que alargar o navio é a forma mais
+   eficaz de ganhar estabilidade — e o que isso custa em resistência ao avanço (tópico 3.6)?
+4. Carga alta no convés e gelo na superestrutura elevam $G$. Água em tanque parcialmente cheio
+   tem efeito equivalente (superfície livre). Em qual dos parâmetros do painel esse efeito
+   aparece?
+:::
+
+### Paradoxo hidrostático: mesma base, mesma altura, pesos diferentes
+
+Três recipientes de **mesma área de base** $A$ e **mesma altura de líquido** $h$, mas de formas
+muito diferentes. Pela lei de Stevin (1.4.7), a pressão no fundo é $p = p_0 + \rho g h$ em
+todos — logo a **força sobre a base é a mesma nos três**, ainda que o peso do líquido seja
+muito diferente. A balança, no entanto, acusa o peso correto: a diferença está na resultante
+vertical das forças que o líquido exerce sobre as **paredes inclinadas**.
+
+```{python}
+#| fig-cap: "Paradoxo hidrostático: três recipientes de mesma base (A = 0,10 m²) e mesma altura de água (h = 0,40 m). A força sobre a base é ρgh·A ≈ 392 N nos três; os pesos de líquido são muito diferentes. As setas nas paredes inclinadas mostram a componente vertical que reconcilia a balança: para baixo no vaso que alarga, para cima no que estreita. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+rho, g, h, A = 1000.0, 9.81, 0.40, 0.10
+rb = np.sqrt(A/np.pi)                       # raio da base
+F_base = rho*g*h*A
+formas = [('alarga', 2.2), ('reto', 1.0), ('estreita', 0.45)]
+
+fig, axs = plt.subplots(1, 3, figsize=(9, 3.4))
+for ax, (nome, k) in zip(axs, formas):
+    z = np.linspace(0, h, 100)
+    r = rb*(1 + (k-1)*z/h)                  # raio variando linearmente com a altura
+    V = np.trapezoid(np.pi*r**2, z)         # volume de revolução
+    P = rho*g*V
+    ax.fill_betweenx(z, -r, r, color='#7FB2D9', alpha=.65)
+    ax.plot(r, z, color='#55524c', lw=2); ax.plot(-r, z, color='#55524c', lw=2)
+    ax.plot([-rb, rb], [0, 0], color='#55524c', lw=3)
+    sgn = -1 if k > 1 else (1 if k < 1 else 0)
+    if sgn:
+        for zz in np.linspace(0.08*h, 0.92*h, 4):
+            rr = rb*(1 + (k-1)*zz/h)
+            ax.annotate('', xy=(rr*1.28, zz + sgn*0.055), xytext=(rr*1.02, zz),
+                        arrowprops=dict(arrowstyle='-|>', color='#C81F1F', lw=1.4))
+    ax.set_title(f'{nome}\nP = {P:.0f} N', fontsize=10)
+    ax.set_xlim(-0.42, 0.42); ax.set_ylim(-0.03, h*1.12)
+    ax.set_aspect('equal'); ax.set_xticks([]); ax.set_yticks([])
+fig.suptitle(f'força sobre a base = ρgh·A = {F_base:.0f} N nos três', fontsize=11, y=1.02)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: gráfico/esquema explorável). p5 de libs/
+     (offline, Q6). Três vasos de revolução de mesma base A = 0,10 m² e mesma altura h;
+     slider de h e do fator de abertura. Mesmos parâmetros da matplotlib. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .ph-wrap{max-width:1000px;margin:1rem auto;}
+  .ph-wrap .ph-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .ph-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:170px;flex:1 1 170px;}
+  .ph-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .ph-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .ph-wrap input[type=range]{width:100%;max-width:240px;accent-color:#c85c2e;}
+  .ph-wrap #phSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .ph-wrap #phEq{font-size:14px;margin:8px 2px 0;line-height:1.6;}
+  .ph-wrap #phEq b{color:#1f47c8;}
+</style>
+<div class="ph-wrap sim">
+  <div class="ph-row">
+    <div class="sld"><label>Altura do líquido h = <span class="val" id="phHv">0.40</span> m</label>
+      <input type="range" id="phH" min="0.10" max="0.60" value="0.40" step="0.02"></div>
+    <div class="sld"><label>Abertura do vaso 1 = <span class="val" id="phKv">2.2</span>×</label>
+      <input type="range" id="phK" min="1.2" max="3.0" value="2.2" step="0.1"></div>
+  </div>
+  <div id="phSketch"></div>
+  <div id="phEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  const rho=1000, g=9.81, A=0.10, rb=Math.sqrt(A/Math.PI);
+  const cw=()=>{ const w=(el('phSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  const vol=(h,k)=>{ let s=0, n=200; for(let i=0;i<n;i++){ const z=(i+0.5)/n*h, r=rb*(1+(k-1)*z/h); s+=Math.PI*r*r*(h/n); } return s; };
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),330).parent('phSketch'); p.noLoop();
+      ['phH','phK'].forEach(id=>el(id).addEventListener('input',()=>p.redraw())); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),330); p.redraw(); };
+    p.draw=()=>{
+      const W=p.width, H=p.height, h=+el('phH').value, k1=+el('phK').value;
+      el('phHv').textContent=(+el('phH').value).toFixed(2); el('phKv').textContent=k1.toFixed(1);
+      const Fb=rho*g*h*A;
+      const formas=[['alarga',k1],['reto',1.0],['estreita',0.45]];
+      const sc=Math.min((W/3)*0.34/(rb*3.0), (H-96)/0.62);
+      p.background('#faf8f4');
+      formas.forEach(([nome,k],i)=>{
+        const cx=W*(i+0.5)/3, base=H-52;
+        const V=vol(h,k), P=rho*g*V;
+        // líquido
+        p.noStroke(); p.fill(127,178,217,170); p.beginShape();
+        for(let j=0;j<=40;j++){ const z=j/40*h, r=rb*(1+(k-1)*z/h); p.vertex(cx+r*sc, base-z*sc); }
+        for(let j=40;j>=0;j--){ const z=j/40*h, r=rb*(1+(k-1)*z/h); p.vertex(cx-r*sc, base-z*sc); }
+        p.endShape(p.CLOSE);
+        // paredes
+        p.stroke('#55524c'); p.strokeWeight(2); p.noFill();
+        p.beginShape(); for(let j=0;j<=40;j++){ const z=j/40*h, r=rb*(1+(k-1)*z/h); p.vertex(cx+r*sc, base-z*sc); } p.endShape();
+        p.beginShape(); for(let j=0;j<=40;j++){ const z=j/40*h, r=rb*(1+(k-1)*z/h); p.vertex(cx-r*sc, base-z*sc); } p.endShape();
+        p.strokeWeight(3.5); p.line(cx-rb*sc,base,cx+rb*sc,base);
+        // setas nas paredes (componente vertical da reação)
+        const sgn = k>1.02 ? 1 : (k<0.98 ? -1 : 0);
+        if(sgn!==0){ p.stroke('#c81f1f'); p.strokeWeight(1.6);
+          for(let m=0;m<4;m++){ const z=(0.12+0.25*m)*h, r=rb*(1+(k-1)*z/h);
+            const x0=cx+r*sc*1.03, y0=base-z*sc, x1=x0+11, y1=y0+sgn*13;
+            p.line(x0,y0,x1,y1); p.noStroke(); p.fill('#c81f1f');
+            p.circle(x1,y1,4); p.stroke('#c81f1f'); } }
+        // rótulos
+        p.noStroke(); p.fill('#55524c'); p.textSize(12); p.textAlign(p.CENTER,p.TOP);
+        p.text(nome, cx, base+8);
+        p.fill('#c81f1f'); p.textSize(11); p.text('P = '+P.toFixed(0)+' N', cx, base+26);
+      });
+      p.noStroke(); p.fill('#1f47c8'); p.textSize(13); p.textAlign(p.CENTER,p.TOP);
+      p.text('força sobre a base = ρ g h A = '+Fb.toFixed(0)+' N  —  igual nos três', W/2, 10);
+
+      const Vs=formas.map(([n,k])=>rho*g*vol(h,k));
+      el('phEq').innerHTML='ρ g h A = <b>'+Fb.toFixed(0)+' N</b> nos três &nbsp;|&nbsp; '+
+        'peso do líquido: alarga '+Vs[0].toFixed(0)+' N, reto '+Vs[1].toFixed(0)+' N, estreita '+Vs[2].toFixed(0)+' N'+
+        ' &nbsp;|&nbsp; a diferença é a componente vertical nas paredes';
+    };
+  });
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Mova o slider de abertura. A força sobre a base muda? E o peso do líquido? De que equação
+   vem cada uma das duas respostas?
+2. No vaso que **alarga**, a componente vertical nas paredes aponta para baixo; no que
+   **estreita**, para cima. Some-a à força na base em cada caso e confirme que dá o peso.
+3. Se você equilibrar uma balança com o frasco vazio e depois despejar o líquido, a diferença
+   de peso é igual ao peso do líquido — nos três. Por que isso **não** contradiz a força igual
+   sobre a base?
+:::
+
+### Prensa hidráulica: o que é amplificado e o que não é
+
+Pascal aplicado. Dois pistões de áreas $A_1$ e $A_2$ ligados pelo mesmo líquido: a variação de
+pressão se transmite integralmente, de modo que $F_1/A_1 = F_2/A_2$. A força é multiplicada por
+$A_2/A_1$ — mas o **curso** é dividido pelo mesmo fator, porque o líquido é incompressível e o
+volume deslocado é o mesmo: $A_1 d_1 = A_2 d_2$. O trabalho $F d$ é igual dos dois lados.
+
+```{python}
+#| fig-cap: "Prensa hidráulica com A₂/A₁ = 20 (a razão típica de um macaco de praça de máquinas). Uma força de 500 N no pistão pequeno levanta 10 kN no grande, mas 200 mm de curso na entrada rendem só 10 mm na saída. O trabalho, 100 J, é o mesmo nos dois lados. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+F1, d1, razao = 500.0, 0.200, 20.0
+r = np.linspace(2, 50, 300)
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9, 3.2))
+ax1.plot(r, F1*r/1e3, color='#1F47C8', lw=2)
+ax1.plot(razao, F1*razao/1e3, 'o', color='#C81F1F', ms=7)
+ax1.set_xlabel('razão de áreas $A_2/A_1$'); ax1.set_ylabel('$F_2$ (kN)'); ax1.grid(alpha=.25)
+ax2.plot(r, d1/r*1e3, color='#1F47C8', lw=2)
+ax2.plot(razao, d1/razao*1e3, 'o', color='#C81F1F', ms=7)
+ax2.set_xlabel('razão de áreas $A_2/A_1$'); ax2.set_ylabel('curso $d_2$ (mm)'); ax2.grid(alpha=.25)
+fig.suptitle(f'$F_1$ = {F1:.0f} N, $d_1$ = {d1*1e3:.0f} mm → trabalho = {F1*d1:.0f} J em ambos os lados',
+             fontsize=10, y=1.03)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO — os pistões deslocando-se em razão
+     inversa das áreas). p5 de libs/ (offline, Q6). F1 = 500 N, d1 = 200 mm; razão de áreas
+     ajustável. Mesmos parâmetros da matplotlib. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .pr-wrap{max-width:1000px;margin:1rem auto;}
+  .pr-wrap .pr-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .pr-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:170px;flex:1 1 170px;}
+  .pr-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .pr-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .pr-wrap input[type=range]{width:100%;max-width:240px;accent-color:#c85c2e;}
+  .pr-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .pr-wrap #prSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .pr-wrap #prEq{font-size:14px;margin:8px 2px 0;line-height:1.6;}
+  .pr-wrap #prEq b{color:#1f47c8;}
+</style>
+<div class="pr-wrap sim">
+  <div class="pr-row">
+    <button id="prPlay">⏸ Pausar</button>
+    <div class="sld"><label>Razão de áreas A₂/A₁ = <span class="val" id="prRv">20</span></label>
+      <input type="range" id="prR" min="2" max="50" value="20" step="1"></div>
+    <div class="sld"><label>Força de entrada F₁ = <span class="val" id="prFv">500</span> N</label>
+      <input type="range" id="prF" min="100" max="1000" value="500" step="50"></div>
+  </div>
+  <div id="prSketch"></div>
+  <div id="prEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let t=0, playing=true;
+  const d1=0.200;                                   // curso de entrada (m)
+  const cw=()=>{ const w=(el('prSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),320).parent('prSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),320); };
+    p.draw=()=>{
+      const W=p.width, H=p.height, R=+el('prR').value, F1=+el('prF').value;
+      el('prRv').textContent=R; el('prFv').textContent=F1;
+      const F2=F1*R, d2=d1/R;
+      if(playing) t+=p.deltaTime/1000;
+      const s=0.5-0.5*Math.cos(t*1.1);               // 0..1, curso normalizado
+      p.background('#faf8f4');
+      // geometria: cilindro pequeno esq., grande dir., ligados por baixo
+      const yb=H-56, x1=W*0.22, x2=W*0.70;
+      const w1=Math.max(16, 120/Math.sqrt(R)), w2=w1*Math.sqrt(R);
+      const cyl=(x,w,top)=>{ p.noStroke(); p.fill(150,185,215,150); p.rect(x-w/2,top,w,yb-top);
+        p.stroke('#8a8073'); p.strokeWeight(2); p.noFill();
+        p.line(x-w/2,top,x-w/2,yb); p.line(x+w/2,top,x+w/2,yb); };
+      p.noStroke(); p.fill(150,185,215,150); p.rect(x1-w1/2,yb-14,x2-x1+w2/2+w1/2,14);
+      cyl(x1,w1,70); cyl(x2,w2,70);
+      // pistões: o pequeno desce d1·s, o grande sobe d2·s (escala visual comum)
+      const pxm=170;                                  // px por metro de curso (entrada)
+      const y1=120+s*d1*pxm;                          // pistão de entrada desce d₁·s
+      p.noStroke(); p.fill('#55524c'); p.rect(x1-w1/2-3,y1,w1+6,12,3);
+      p.fill('#3d5a3d'); p.rect(x2-w2/2-3,120-s*d2*pxm,w2+6,12,3);
+      // setas de força
+      p.stroke('#c81f1f'); p.strokeWeight(3); p.line(x1,y1-46,x1,y1-6);
+      p.noStroke(); p.fill('#c81f1f'); p.triangle(x1,y1-2,x1-6,y1-12,x1+6,y1-12);
+      p.textSize(12); p.textAlign(p.CENTER,p.BOTTOM); p.text('F₁ = '+F1+' N',x1,y1-50);
+      const yg=120-s*d2*pxm;
+      p.stroke('#2e9e5b'); p.strokeWeight(3+Math.min(6,R/8)); p.line(x2,yg-46,x2,yg-6);
+      p.noStroke(); p.fill('#2e9e5b'); p.triangle(x2,yg-52,x2-9,yg-40,x2+9,yg-40);
+      p.textSize(12); p.textAlign(p.CENTER,p.BOTTOM);
+      p.text('F₂ = '+(F2/1000).toFixed(1)+' kN',x2,yg-56);
+      // cotas de curso
+      p.stroke('#66308c'); p.strokeWeight(1.2); p.drawingContext.setLineDash([3,4]);
+      p.line(x1-w1/2-22,120,x1-w1/2-22,120+d1*pxm);
+      p.line(x2+w2/2+22,120,x2+w2/2+22,120-d2*pxm); p.drawingContext.setLineDash([]);
+      p.noStroke(); p.fill('#66308c'); p.textSize(10); p.textAlign(p.RIGHT,p.CENTER);
+      p.text('d₁='+(d1*1000).toFixed(0)+'mm',x1-w1/2-26,120+d1*pxm/2);
+      p.textAlign(p.LEFT,p.CENTER);
+      p.text('d₂='+(d2*1000).toFixed(1)+'mm',x2+w2/2+26,120);
+
+      el('prEq').innerHTML='F₂ = F₁·(A₂/A₁) = <b>'+(F2/1000).toFixed(1)+' kN</b> &nbsp;|&nbsp; '+
+        'd₂ = d₁/(A₂/A₁) = <b>'+(d2*1000).toFixed(1)+' mm</b> &nbsp;|&nbsp; '+
+        'trabalho: F₁d₁ = '+(F1*d1).toFixed(0)+' J = F₂d₂ = '+(F2*d2).toFixed(0)+' J';
+    };
+  });
+  el('prPlay').onclick=()=>{ playing=!playing; el('prPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Aumente a razão de áreas de 2 para 50. A força de saída cresce 25 vezes — e o curso? Que
+   grandeza permanece constante nos dois lados?
+2. Por que a prensa **não** viola a conservação de energia, apesar de "multiplicar força"?
+3. Um macaco hidráulico de praça de máquinas com razão 50 precisa de muitos golpes de alavanca
+   para levantar poucos centímetros. Explique isso pelo painel.
+:::
 
 **Conexão com o próximo tópico:** toda a estática saiu de uma única equação,
 $\mathbf{f} = \operatorname{grad} p$, que só vale porque o fluido está em **repouso** — foi o
