@@ -282,9 +282,144 @@ plt.tight_layout(); plt.show()
 - **Estimativa de ordem de grandeza** — sem tabela à mão, a análise dimensional
   entrega a forma da resposta (arrasto ∝ ρv²A) a menos de um coeficiente.
 
-<!-- EXEMPLO A SIMULAR: escala de Froude (calculadora interativa): slider de razão
-     de escala do modelo; velocidades, tempos e potências correspondentes do navio
-     real. -->
+### Calculadora de escala: do modelo ao navio
+
+A simulação anterior mostrou **por que** Froude e Reynolds não fecham juntos. Esta faz a conta
+que o tanque de provas faz todo dia: dada a razão de escala $n = L_{\text{navio}}/L_{\text{modelo}}$,
+manter $\mathrm{Fr}$ constante fixa **todas** as demais grandezas do ensaio.
+
+$$\mathrm{Fr}_m = \mathrm{Fr}_s
+\;\Longrightarrow\;
+\frac{v_m}{v_s} = \frac{1}{\sqrt{n}},\qquad
+\frac{t_m}{t_s} = \frac{1}{\sqrt{n}},\qquad
+\frac{F_s}{F_m} = n^3,\qquad
+\frac{P_s}{P_m} = n^{3{,}5}$$
+
+E o preço da escolha aparece na última linha do painel: o Reynolds do modelo fica
+$n^{1{,}5}$ vezes menor que o do navio. É por isso que a resistência de atrito **não** pode ser
+escalada junto — ela é extrapolada por linha de correlação (tópico 3.6), e só a de onda vem do
+ensaio.
+
+```{python}
+#| fig-cap: "Leis de escala de Froude para um navio de 200 m a 14 nós. À esquerda, as grandezas do modelo em função da razão de escala: velocidade e tempo caem com 1/√n. À direita, os fatores de conversão modelo → navio: força com n³, potência com n^3,5 — e o Reynolds do modelo, que fica n^1,5 vezes menor, a lacuna que obriga a correção de atrito. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+Ls, vs_kn, nu, kn = 200.0, 14.0, 1.14e-6, 0.5144
+vs = vs_kn*kn
+n = np.linspace(10, 100, 300)
+
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9, 3.3))
+ax1.plot(n, Ls/n, color='#1F47C8', lw=2, label='comprimento do modelo (m)')
+ax1.plot(n, vs/np.sqrt(n)/kn, color='#C81F1F', lw=2, label='velocidade de ensaio (nós)')
+ax1.plot(50, Ls/50, 'o', color='#66308C', ms=7); ax1.plot(50, vs/np.sqrt(50)/kn, 'o', color='#66308C', ms=7)
+ax1.set_xlabel('razão de escala n'); ax1.legend(fontsize=8); ax1.grid(alpha=.25)
+ax1.set_title('o modelo', fontsize=10)
+
+ax2.plot(n, n**3, color='#1F47C8', lw=2, label='força:  $n^3$')
+ax2.plot(n, n**3.5, color='#C81F1F', lw=2, label='potência:  $n^{3,5}$')
+ax2.plot(n, n**1.5, color='#2E9E5B', lw=2, label='razão Re$_s$/Re$_m$:  $n^{1,5}$')
+ax2.set_yscale('log'); ax2.set_xlabel('razão de escala n'); ax2.set_ylabel('fator modelo → navio')
+ax2.legend(fontsize=8); ax2.grid(alpha=.25, which='both')
+ax2.set_title('os fatores de conversão', fontsize=10)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: gráfico/calculadora explorável). p5 de libs/
+     (offline, Q6). Navio L = 200 m; sliders de razão de escala e de velocidade de serviço.
+     Leis de Froude: v ∝ 1/√n, t ∝ 1/√n, F ∝ n³, P ∝ n^3,5, Re ∝ n^1,5.
+     Mesmos parâmetros da matplotlib. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .fs-wrap{max-width:1000px;margin:1rem auto;}
+  .fs-wrap .fs-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .fs-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:180px;flex:1 1 180px;}
+  .fs-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .fs-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .fs-wrap input[type=range]{width:100%;max-width:250px;accent-color:#c85c2e;}
+  .fs-wrap #fsSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .fs-wrap #fsEq{font-size:13.5px;margin:8px 2px 0;line-height:1.7;}
+  .fs-wrap #fsEq b{color:#1f47c8;}
+</style>
+<div class="fs-wrap sim">
+  <div class="fs-row">
+    <div class="sld"><label>Razão de escala n = 1:<span class="val" id="fsNv">50</span></label>
+      <input type="range" id="fsN" min="10" max="100" value="50" step="1"></div>
+    <div class="sld"><label>Velocidade de serviço = <span class="val" id="fsVv">14</span> nós</label>
+      <input type="range" id="fsV" min="8" max="24" value="14" step="0.5"></div>
+  </div>
+  <div id="fsSketch"></div>
+  <div id="fsEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  const Ls=200, nu=1.14e-6, kn=0.5144, g=9.81;
+  const cw=()=>{ const w=(el('fsSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),300).parent('fsSketch'); p.noLoop();
+      ['fsN','fsV'].forEach(id=>el(id).addEventListener('input',()=>p.redraw())); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),300); p.redraw(); };
+    p.draw=()=>{
+      const W=p.width, H=p.height;
+      const n=+el('fsN').value, vkn=+el('fsV').value;
+      el('fsNv').textContent=n; el('fsVv').textContent=vkn.toFixed(1);
+      const vs=vkn*kn, Lm=Ls/n, vm=vs/Math.sqrt(n);
+      const Fr=vs/Math.sqrt(g*Ls);
+      const Res=vs*Ls/nu, Rem=vm*Lm/nu;
+      p.background('#faf8f4');
+      // silhuetas comparadas (mesma escala de tela)
+      const sc=(W*0.42)/Ls, yb=H*0.52;
+      const casco=(x0,L,alt,cor,rot)=>{
+        p.noStroke(); p.fill(cor); p.beginShape();
+        p.vertex(x0,yb-alt); p.vertex(x0+L*sc*0.86,yb-alt); p.vertex(x0+L*sc,yb-alt*0.45);
+        p.vertex(x0+L*sc,yb); p.vertex(x0,yb); p.endShape(p.CLOSE);
+        p.fill('#55524c'); p.textSize(11); p.textAlign(p.LEFT,p.TOP); p.text(rot,x0,yb+6); };
+      casco(40, Ls, 26, '#6b6459', 'navio  L = '+Ls+' m,  v = '+vkn.toFixed(1)+' nós');
+      casco(40, Lm, Math.max(3,26/n*6), '#c85c2e',
+            'modelo  L = '+Lm.toFixed(2)+' m,  v = '+(vm/kn).toFixed(2)+' nós ('+vm.toFixed(2)+' m/s)');
+      // barra do Reynolds (escala log)
+      const bx0=W*0.56, bx1=W-20, by=H*0.30, bh=16;
+      const lg=x=>Math.log10(x), l0=4, l1=10;
+      const Xl=x=>bx0+(lg(x)-l0)/(l1-l0)*(bx1-bx0);
+      p.stroke('#bdb4a4'); p.strokeWeight(1); p.line(bx0,by+bh+10,bx1,by+bh+10);
+      p.noStroke(); p.fill('#8a8073'); p.textSize(9.5); p.textAlign(p.CENTER,p.TOP);
+      for(let e=4;e<=10;e++) p.text('10^'+e,Xl(Math.pow(10,e)),by+bh+13);
+      p.fill('#1f47c8'); p.rect(bx0,by,Math.max(2,Xl(Res)-bx0),bh,3);
+      p.fill('#c85c2e'); p.rect(bx0,by+bh+26,Math.max(2,Xl(Rem)-bx0),bh,3);
+      p.fill('#55524c'); p.textSize(10.5); p.textAlign(p.LEFT,p.CENTER);
+      p.text('Re navio = '+Res.toExponential(1),bx0+4,by+bh/2);
+      p.text('Re modelo = '+Rem.toExponential(1),bx0+4,by+bh+26+bh/2);
+      p.fill('#c81f1f'); p.textSize(11); p.textAlign(p.RIGHT,p.TOP);
+      p.text('lacuna de Re: '+Math.pow(n,1.5).toFixed(0)+'×',bx1,by+bh+40);
+
+      el('fsEq').innerHTML=
+        'Fr = v/√(gL) = <b>'+Fr.toFixed(3)+'</b> — mantido igual nos dois<br>'+
+        'modelo: L = <b>'+Lm.toFixed(2)+' m</b>, v = <b>'+vm.toFixed(2)+' m/s</b> (1/√n), '+
+        'e um ensaio que no navio duraria 1 min dura <b>'+(60/Math.sqrt(n)).toFixed(1)+' s</b><br>'+
+        'conversão modelo → navio: força ×<b>'+Math.pow(n,3).toExponential(2)+'</b> (n³), '+
+        'potência ×<b>'+Math.pow(n,3.5).toExponential(2)+'</b> (n^3,5)<br>'+
+        '<span style="color:#c81f1f">Re do modelo é '+Math.pow(n,1.5).toFixed(0)+
+        '× menor que o do navio — só a resistência de ONDA vem do ensaio; o atrito é extrapolado</span>';
+    };
+  });
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Com $n = 50$, um navio de 200 m vira um modelo de 4 m. Que velocidade de ensaio corresponde
+   a 14 nós de serviço, e por que ela **não** é 14/50?
+2. Um ensaio que no navio duraria 1 minuto dura poucos segundos no modelo. De onde vem o
+   $1/\sqrt{n}$ nos tempos, e que consequência isso tem para a instrumentação do tanque?
+3. A potência escala com $n^{3,5}$ — um expoente que não é inteiro. Mostre que ele é o produto
+   de $n^3$ (força) por $n^{0,5}$ (velocidade).
+4. A lacuna de Reynolds cresce com $n^{1,5}$. Um modelo maior reduziria essa lacuna — por que,
+   então, não se ensaiam modelos de 40 m?
+:::
 
 **Fecho da unidade:** os oito tópicos percorreram o caminho do Moysés de ponta a ponta. Partimos da
 única propriedade que separa sólido de fluido — a incapacidade de equilibrar tensões tangenciais —

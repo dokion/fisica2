@@ -533,9 +533,169 @@ plt.tight_layout(); plt.show()
   metade corta a vazão a 1/16. É a mesma conta da vasoconstrição e a de um filtro entupindo
   numa linha de óleo lubrificante.
 
-<!-- EXEMPLO A SIMULAR: crescimento da camada limite ao longo do casco (p5.js ou
-     gráfico): espessura δ(x) laminar × turbulenta com slider de velocidade e ponto
-     de transição. -->
+### Hagen-Poiseuille: o perfil parabólico e a lei da quarta potência
+
+A (2.7.5) e a (2.7.6) em serviço numa linha de óleo lubrificante de bordo. O perfil de
+velocidades é a parábola
+
+$$v(r) = \frac{(p_1-p_2)}{4l\eta}\left(a^2 - r^2\right)$$
+
+e a vazão que dela resulta é
+
+$$V = \frac{\pi a^4}{8\eta}\left(\frac{p_1-p_2}{l}\right)$$
+
+Arraste o raio e olhe o readout: **a vazão varia com $a^4$**. Reduzir o raio à metade — uma
+tubulação com metade da bitola, um filtro parcialmente obstruído, uma vasoconstrição — corta a
+vazão a **um dezesseis avos**. É a conta que a intuição sempre subestima.
+
+O painel mostra também o número de Reynolds, porque a (2.7.6) só vale em **regime laminar**:
+se Re passar de ~2300, o perfil deixa de ser parabólico e a lei $a^4$ deixa de valer.
+
+```{python}
+#| fig-cap: "Escoamento laminar de óleo (η = 0,10 Pa·s, ρ = 900 kg/m³) num tubo com gradiente de pressão de 5000 Pa/m. Esquerda: perfil parabólico v(r) para três raios; a velocidade média é sempre metade da máxima. Direita: a vazão em função do raio — a curva é a⁴, de modo que metade do raio dá um dezesseis avos da vazão. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+eta, rho, dpl = 0.10, 900.0, 5000.0          # Pa·s, kg/m³, Pa/m
+def vmax(a): return dpl*a**2/(4*eta)
+def Q(a):    return np.pi*a**4*dpl/(8*eta)
+
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9, 3.3))
+for a, c in [(0.010, '#1F47C8'), (0.007, '#C85C2E'), (0.005, '#C81F1F')]:
+    r = np.linspace(-a, a, 200)
+    ax1.plot(dpl/(4*eta)*(a**2 - r**2), r*1e3, color=c, lw=2,
+             label=f'a = {a*1e3:.0f} mm → Q = {Q(a)*1e3:.3f} L/s')
+ax1.axhline(0, color='0.8', lw=.6)
+ax1.set_xlabel('v(r)  (m/s)'); ax1.set_ylabel('r (mm)'); ax1.legend(fontsize=8); ax1.grid(alpha=.25)
+ax1.set_title('perfil parabólico', fontsize=10)
+
+a = np.linspace(0.002, 0.014, 300)
+ax2.plot(a*1e3, Q(a)*1e3, color='#1F47C8', lw=2.2)
+for a0 in (0.005, 0.010):
+    ax2.plot(a0*1e3, Q(a0)*1e3, 'o', color='#C81F1F', ms=6)
+    ax2.annotate(f'{Q(a0)*1e3:.3f} L/s', (a0*1e3, Q(a0)*1e3), textcoords='offset points',
+                 xytext=(-4, 8), fontsize=8.5, color='#C81F1F', ha='right')
+ax2.set_xlabel('raio a (mm)'); ax2.set_ylabel('vazão (L/s)'); ax2.grid(alpha=.25)
+ax2.set_title(r'$V \propto a^4$', fontsize=10)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO — as camadas telescópicas deslizando).
+     p5 de libs/ (offline, Q6). Óleo η = 0,10 Pa·s, ρ = 900 kg/m³, gradiente 5000 Pa/m;
+     sliders de raio e de viscosidade. Mesmos parâmetros da matplotlib. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .hp-wrap{max-width:1000px;margin:1rem auto;}
+  .hp-wrap .hp-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .hp-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:170px;flex:1 1 170px;}
+  .hp-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .hp-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .hp-wrap input[type=range]{width:100%;max-width:240px;accent-color:#c85c2e;}
+  .hp-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .hp-wrap #hpSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .hp-wrap #hpEq{font-size:14px;margin:8px 2px 0;line-height:1.6;}
+  .hp-wrap #hpEq b{color:#1f47c8;}
+</style>
+<div class="hp-wrap sim">
+  <div class="hp-row">
+    <button id="hpPlay">⏸ Pausar</button>
+    <div class="sld"><label>Raio do tubo a = <span class="val" id="hpAv">10.0</span> mm</label>
+      <input type="range" id="hpA" min="2" max="14" value="10" step="0.5"></div>
+    <div class="sld"><label>Viscosidade η = <span class="val" id="hpEv">0.10</span> Pa·s</label>
+      <input type="range" id="hpE" min="0.02" max="0.40" value="0.10" step="0.01"></div>
+  </div>
+  <div id="hpSketch"></div>
+  <div id="hpEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let parts=[], playing=true;
+  const rho=900, dpl=5000;
+  const cw=()=>{ const w=(el('hpSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),340).parent('hpSketch');
+      for(let i=0;i<220;i++) parts.push({x:Math.random(), u:Math.random()*2-1}); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),340); };
+    p.draw=()=>{
+      const W=p.width, H=p.height;
+      const a=+el('hpA').value/1000, eta=+el('hpE').value;
+      el('hpAv').textContent=(a*1000).toFixed(1); el('hpEv').textContent=eta.toFixed(2);
+      const vmax=dpl*a*a/(4*eta), Q=Math.PI*Math.pow(a,4)*dpl/(8*eta), vmed=vmax/2;
+      const Re=rho*vmed*2*a/eta;
+      const amax=0.014, sc=(H*0.30)/amax;                 // metros -> px (raio)
+      const tx0=40, tx1=W*0.60, cyl=H*0.36;
+      p.background('#faf8f4');
+      // paredes do tubo (raio máximo em cinza, tubo atual em traço forte)
+      p.noStroke(); p.fill(230,226,218); p.rect(tx0,cyl-amax*sc,tx1-tx0,2*amax*sc);
+      p.fill(150,185,215,110); p.rect(tx0,cyl-a*sc,tx1-tx0,2*a*sc);
+      p.stroke('#8a8073'); p.strokeWeight(3);
+      p.line(tx0,cyl-a*sc,tx1,cyl-a*sc); p.line(tx0,cyl+a*sc,tx1,cyl+a*sc);
+      // partículas com velocidade parabólica
+      p.stroke('#1f47c8');
+      for(const q of parts){
+        const r=q.u*a, v=dpl/(4*eta)*(a*a-r*r);
+        if(playing) q.x += (p.deltaTime/1000)*v/1.3*0.55;
+        if(q.x>1) q.x=0;
+        const gx=tx0+q.x*(tx1-tx0), gy=cyl+r*sc;
+        p.strokeWeight(1.2+2.0*v/Math.max(vmax,1e-6)); p.point(gx,gy);
+      }
+      // perfil parabólico desenhado como setas
+      p.stroke('#c81f1f'); p.strokeWeight(1.8);
+      const px=tx1-64;
+      for(let k=-6;k<=6;k++){ const r=k/6*a, v=dpl/(4*eta)*(a*a-r*r);
+        const L=v/Math.max(vmax,1e-6)*52; const y=cyl+r*sc;
+        p.line(px,y,px+L,y);
+        if(Math.abs(k)===6) continue;
+        p.noStroke(); p.fill('#c81f1f'); p.triangle(px+L+5,y,px+L-3,y-3,px+L-3,y+3); p.stroke('#c81f1f'); }
+      p.push(); p.noFill(); p.stroke('#c81f1f'); p.strokeWeight(2); p.beginShape();
+      for(let k=-24;k<=24;k++){ const r=k/24*a, v=dpl/(4*eta)*(a*a-r*r);
+        p.vertex(px+v/Math.max(vmax,1e-6)*52, cyl+r*sc); } p.endShape(); p.pop();
+      p.noStroke(); p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      p.text('v = 0 na parede (não-deslizamento)',(tx0+tx1)/2,cyl+amax*sc+8);
+
+      // ── gráfico Q(a) ──
+      const gx0=W*0.68, gx1=W-18, gy0=44, gy1=H-56;
+      const Qof=aa=>Math.PI*Math.pow(aa,4)*dpl/(8*eta);
+      const Qmax=Qof(amax);
+      const X=aa=>gx0+(aa-0.002)/(amax-0.002)*(gx1-gx0), Y=q=>gy1-q/Qmax*(gy1-gy0);
+      p.stroke('#bdb4a4'); p.strokeWeight(1); p.line(gx0,gy1,gx1,gy1); p.line(gx0,gy0,gx0,gy1);
+      p.push(); p.noFill(); p.stroke('#1f47c8'); p.strokeWeight(2.2); p.beginShape();
+      for(let aa=0.002;aa<=amax;aa+=0.0002) p.vertex(X(aa),Y(Qof(aa))); p.endShape(); p.pop();
+      p.noStroke(); p.fill('#66308c'); p.circle(X(a),Y(Q),8);
+      // marcador de a/2
+      if(a/2>=0.002){ p.fill('#c81f1f'); p.circle(X(a/2),Y(Qof(a/2)),6);
+        p.textSize(9.5); p.textAlign(p.LEFT,p.BOTTOM);
+        p.text('a/2 → Q/16',X(a/2)+5,Y(Qof(a/2))-3); }
+      p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      p.text('raio a  →',(gx0+gx1)/2,gy1+5);
+      p.textAlign(p.LEFT,p.BOTTOM); p.text('V ∝ a⁴',gx0+4,gy0+12);
+
+      el('hpEq').innerHTML='v<sub>máx</sub> = <b>'+vmax.toFixed(2)+' m/s</b> &nbsp;|&nbsp; '+
+        'v<sub>média</sub> = v<sub>máx</sub>/2 = '+vmed.toFixed(2)+' m/s &nbsp;|&nbsp; '+
+        'V = πa⁴Δp/8ηl = <b>'+(Q*1000).toFixed(3)+' L/s</b> &nbsp;|&nbsp; '+
+        'Re = '+Re.toFixed(0)+(Re<2300?' <span style="color:#2e7d4f">(laminar — a lei vale)</span>'
+                                     :' <span style="color:#c81f1f;font-weight:700">(&gt; 2300 — perfil já não é parabólico)</span>');
+    };
+  });
+  el('hpPlay').onclick=()=>{ playing=!playing; el('hpPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Leve o raio de 10 mm para 5 mm. A vazão cai por qual fator? Confirme com o marcador
+   vermelho no gráfico e com a $V \propto a^4$.
+2. Dobre a viscosidade. A vazão cai pela metade — que expoente de $\eta$ aparece na (2.7.6)?
+   Por que a dependência com $\eta$ é tão mais suave que a com $a$?
+3. Reduza a viscosidade ao mínimo com o raio no máximo: o painel avisa que Re passou de 2300.
+   Que hipótese da dedução da (2.7.5) foi violada, e o que acontece com o perfil?
+4. A velocidade média é sempre metade da máxima. Isso vale para qualquer perfil ou é
+   particularidade da parábola? (Integre $v(r)$ sobre a seção e verifique.)
+:::
 
 **Conexão com o próximo tópico:** já temos a viscosidade, o parâmetro que decide o regime e a
 camada onde a viscosidade age. Falta transformar isso em **força**. A baixas velocidades, antes do

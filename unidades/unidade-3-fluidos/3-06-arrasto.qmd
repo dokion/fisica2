@@ -354,9 +354,325 @@ plt.tight_layout(); plt.show()
   parte da resistência de onda. Validade: só na faixa de velocidade para a qual foi
   projetado; fora dela, atrapalha.
 
-<!-- EXEMPLO A SIMULAR: potência × velocidade (gráfico interativo, faixa SP4:
-     10–25 nós, 5–80 MW): slider de velocidade e de fator de incrustação; custo de
-     combustível por milha. -->
+### Descolamento e esteira: a sequência de regimes
+
+Esta é a passagem do §2.7 que decide a natureza da resistência, e é a única da unidade que o
+texto não conseguia mostrar. Aumente o número de Reynolds e percorra a sequência:
+
+| Re | O que acontece | Quem domina a resistência |
+|---|---|---|
+| $\lesssim 5$ | camada limite **colada**; linhas de corrente acompanham o corpo | atrito, $R \propto \eta v$ |
+| $5$–$40$ | camada **descola**; dois vórtices simétricos com refluxo | transição |
+| $40$–$1000$ | os vórtices se **destacam alternadamente** — fileira de vórtices; deixa de ser estacionário | pressão, $R \propto v^2$ |
+| $\gtrsim 1000$ | esteira **turbulenta**, irregular e aparentemente caótica | pressão, $R \propto v^2$ |
+
+As fotografias clássicas que o Moysés reproduz registram exatamente isso em
+$\mathrm{Re} = 118$, $140$ (fileira de vórtices) e $15\,000$ (turbulência).
+
+O ponto conceitual: enquanto a camada está colada, o escoamento é quase simétrico entre a
+frente e a traseira — e é essa simetria que anula a resultante no fluido perfeito, o paradoxo
+de d'Alembert. **É o descolamento que quebra a simetria e faz a força aparecer.**
+
+```{python}
+#| fig-cap: "Esquema dos quatro regimes de escoamento em torno de um cilindro, na sequência do §2.7. A representação é esquemática (não é solução de Navier-Stokes): o que ela reproduz fielmente é a topologia da esteira em cada faixa de Re e o ponto O de estagnação na frente. Mesmos regimes da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos regimes da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+def linhas(ax, Re):
+    a = 1.0
+    y0 = np.linspace(-2.3, 2.3, 17)
+    for y in y0:
+        if abs(y) < 0.08:
+            continue
+        x = np.linspace(-3, 4.2, 300)
+        psi = y
+        # escoamento potencial: y afastado do corpo, deslocado na região do corpo
+        yy = np.sign(psi)*np.sqrt(np.maximum(psi**2 + a**2*(1 - np.clip(x**2/(x**2 + psi**2), 0, 1)), 1e-6))
+        yy = np.where(x > 0.6, psi + np.sign(psi)*a**2/np.maximum(np.abs(psi), .3)*np.exp(-(x-0.6)/2.2)*
+                      (0 if Re < 5 else 0.55), yy)
+        ax.plot(x, yy, color='#6f8fb5', lw=.9)
+    ax.add_patch(plt.Circle((0, 0), a, color='#55524c', zorder=5))
+    ax.plot(-a, 0, 'o', color='#C85C2E', ms=5, zorder=6)
+    ax.annotate('O', (-a, 0), textcoords='offset points', xytext=(-12, 4), fontsize=8, color='#C85C2E')
+    if 5 <= Re < 40:                                        # dois vórtices simétricos
+        for s in (+1, -1):
+            ax.annotate('', xy=(1.35, .28*s), xytext=(2.0, .28*s),
+                        arrowprops=dict(arrowstyle='-|>', color='#2E9E5B', lw=1.6,
+                                        connectionstyle=f'arc3,rad={.9*s}'))
+    elif 40 <= Re < 1000:                                   # fileira alternada
+        for i, xv in enumerate([1.6, 2.5, 3.4]):
+            s = 1 if i % 2 == 0 else -1
+            ax.plot(xv, .5*s, 'o', color='#2E9E5B', ms=9, alpha=.75, zorder=6)
+    elif Re >= 1000:                                        # turbulenta
+        rng = np.random.default_rng(3)
+        ax.scatter(rng.uniform(1.2, 4.2, 90), rng.uniform(-1.1, 1.1, 90),
+                   s=rng.uniform(4, 26, 90), color='#2E9E5B', alpha=.5, zorder=6)
+    ax.set_xlim(-3, 4.2); ax.set_ylim(-2.4, 2.4); ax.set_aspect('equal')
+    ax.set_xticks([]); ax.set_yticks([])
+
+fig, axs = plt.subplots(1, 4, figsize=(9, 2.5))
+for ax, (Re, tit) in zip(axs, [(2, 'Re ≈ 2\ncolada'), (20, 'Re ≈ 20\ndois vórtices'),
+                               (140, 'Re ≈ 140\nfileira de vórtices'), (15000, 'Re ≈ 15 000\nturbulenta')]):
+    linhas(ax, Re); ax.set_title(tit, fontsize=8.5)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO — as partículas atravessando o campo e a
+     esteira mudando de topologia). p5 de libs/ (offline, Q6). ESQUEMÁTICO: partículas
+     advectadas no escoamento potencial em torno do cilindro, com a esteira desenhada
+     conforme o regime de Re. Mesmos regimes da matplotlib. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .es2-wrap{max-width:1000px;margin:1rem auto;}
+  .es2-wrap .es2-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .es2-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:210px;flex:1 1 210px;}
+  .es2-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .es2-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .es2-wrap input[type=range]{width:100%;max-width:280px;accent-color:#c85c2e;}
+  .es2-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .es2-wrap #es2Sketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .es2-wrap #es2Eq{font-size:14px;margin:8px 2px 0;line-height:1.6;}
+  .es2-wrap #es2Eq b{color:#1f47c8;}
+</style>
+<div class="es2-wrap sim">
+  <div class="es2-row">
+    <button id="es2Play">⏸ Pausar</button>
+    <div class="sld"><label>Número de Reynolds = <span class="val" id="es2Rv">140</span></label>
+      <input type="range" id="es2R" min="0" max="100" value="62" step="1"></div>
+  </div>
+  <div id="es2Sketch"></div>
+  <div id="es2Eq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let parts=[], vort=[], playing=true, tshed=0;
+  const a=1.0;
+  const cw=()=>{ const w=(el('es2Sketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  const ReOf=s=>Math.pow(10, s/100*5.0);              // 1 .. 1e5, log
+  // escoamento potencial em torno do cilindro (sem circulação)
+  const vel=(x,y)=>{ const r2=x*x+y*y, r4=r2*r2;
+    return [1 - a*a*(x*x-y*y)/r4, -2*a*a*x*y/r4]; };
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),340).parent('es2Sketch');
+      for(let i=0;i<420;i++) parts.push({x:-4.5+Math.random()*9, y:-2.6+Math.random()*5.2}); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),340); };
+    p.draw=()=>{
+      const W=p.width, H=p.height, Re=ReOf(+el('es2R').value);
+      el('es2Rv').textContent = Re<10?Re.toFixed(1):Re.toFixed(0);
+      const sc=Math.min(H/5.6, W/10.5), cx=W*0.34, cy=H/2;
+      const P=(x,y)=>[cx+x*sc, cy-y*sc];
+      const dt=playing?p.deltaTime/1000:0;
+      const regime = Re<5?0 : Re<40?1 : Re<1000?2 : 3;
+
+      p.background('#eef2f6');
+      // partículas
+      for(const q of parts){
+        let [u,v]=vel(q.x,q.y);
+        const naEsteira = q.x>0.6 && Math.abs(q.y)<1.6;
+        if(naEsteira){
+          if(regime===1){ u*=0.25; v+= (q.y>0?1:-1)*0.35*Math.exp(-(q.x-0.9)); }        // refluxo
+          if(regime===2){ u*=0.55; v+= 0.9*Math.sin(q.x*1.7 - p.frameCount*0.05); }      // ondulação
+          if(regime===3){ u*=0.6; u+=(Math.random()-0.5)*1.2; v+=(Math.random()-0.5)*1.6; }
+        }
+        if(playing){ q.x+=u*dt*1.5; q.y+=v*dt*1.5; }
+        if(q.x>5.2 || q.x*q.x+q.y*q.y<a*a*1.03){ q.x=-4.6-Math.random(); q.y=-2.6+Math.random()*5.2; }
+        const [px,py]=P(q.x,q.y), sp=Math.hypot(u,v);
+        p.stroke(31,71,200, 60+Math.min(150,sp*90)); p.strokeWeight(sp>1.3?2.2:1.4); p.point(px,py);
+      }
+      // vórtices: dois fixos (regime 1) ou fileira alternada (regime 2)
+      if(regime===1){
+        for(const s of [1,-1]){ const [vx,vy]=P(1.6,0.42*s);
+          p.noFill(); p.stroke('#2e9e5b'); p.strokeWeight(2);
+          p.arc(vx,vy,0.9*sc,0.9*sc, s>0?-2.2:0.9, s>0?1.6:4.7); }
+        vort=[];
+      } else if(regime===2){
+        tshed+=dt; const per=0.55;
+        if(tshed>per){ tshed=0; vort.push({x:1.5, y:(vort.length%2?1:-1)*0.5}); }
+        for(const w of vort){ if(playing) w.x+=dt*1.1;
+          const [vx,vy]=P(w.x,w.y);
+          p.noStroke(); p.fill(46,158,91,90); p.circle(vx,vy,0.55*sc);
+          p.noFill(); p.stroke('#2e9e5b'); p.strokeWeight(1.8); p.circle(vx,vy,0.55*sc); }
+        vort=vort.filter(w=>w.x<5.2);
+      } else vort=[];
+      // cilindro e ponto de estagnação
+      const [ox,oy]=P(0,0);
+      p.noStroke(); p.fill('#55524c'); p.circle(ox,oy,2*a*sc);
+      const [sx,sy]=P(-a,0); p.fill('#c85c2e'); p.circle(sx,sy,9);
+      p.textSize(11); p.textAlign(p.RIGHT,p.CENTER); p.text('O',sx-8,sy);
+      // pontos de descolamento A e B
+      if(regime>=1){ for(const s of [1,-1]){ const ang=s*Math.PI*0.30;
+        const [dx,dy]=P(a*Math.cos(ang), a*Math.sin(ang));
+        p.noStroke(); p.fill('#c81f1f'); p.circle(dx,dy,8);
+        p.textSize(11); p.textAlign(p.LEFT,p.CENTER); p.text(s>0?'A':'B',dx+7,dy); } }
+      // rótulo do regime
+      const nomes=['camada limite COLADA','dois vórtices simétricos','fileira de vórtices (não estacionário)','esteira TURBULENTA'];
+      const cores=['#2e7d4f','#c85c2e','#c81f1f','#8e1f1f'];
+      p.noStroke(); p.fill(cores[regime]); p.textSize(13); p.textAlign(p.LEFT,p.TOP);
+      p.text(nomes[regime], 12, 10);
+
+      const lei = regime===0 ? 'R ∝ ηv (atrito na camada limite)'
+                : regime===1 ? 'transição — atrito e pressão comparáveis'
+                : 'R ∝ v² (assimetria de pressões proa/esteira)';
+      el('es2Eq').innerHTML='Re = <b>'+(Re<10?Re.toFixed(1):Re.toFixed(0))+'</b> &nbsp;|&nbsp; '+
+        nomes[regime]+' &nbsp;|&nbsp; <b>'+lei+'</b>'+
+        (regime===0?' &nbsp;|&nbsp; quase simétrico frente/trás — é o caso do paradoxo de d\'Alembert':'');
+    };
+  });
+  el('es2Play').onclick=()=>{ playing=!playing; el('es2Play').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Comece em Re baixo: o escoamento fecha atrás do cilindro e a figura é quase simétrica entre
+   frente e traseira. Que consequência isso tem para a resultante das forças de pressão, e que
+   paradoxo é esse?
+2. Suba até Re ≈ 20 e observe os pontos A e B aparecerem. O que está acontecendo com a camada
+   limite ali, e por que a partir daí existe uma esteira?
+3. Em Re ≈ 140 os vórtices se destacam alternadamente. Por que o escoamento **deixa de ser
+   estacionário** — e o que isso significa para as linhas de corrente do tópico 3.3?
+4. A lei da resistência muda de $\eta v$ para $v^2$ ao longo da faixa. Em que ponto da sequência
+   essa troca acontece, e qual mecanismo passa a dominar?
+:::
+
+### Slow steaming: o arrasto virando dinheiro
+
+A resistência de atrito usa a linha de correlação de Kármán–Schoenherr,
+$C_F = 0{,}075/(\log_{10}\mathrm{Re} - 2)^2$, e a de onda entra por um termo que cresce com o
+número de Froude. A potência efetiva é $P = R\,v$ — e como $R$ já cresce com $v^2$, a potência
+cresce aproximadamente com $v^3$.
+
+É daí que sai a conta que redesenhou a operação da marinha mercante: **reduzir 20% da
+velocidade corta quase metade da potência**. O painel traduz isso em toneladas por dia e em
+custo por milha, e mostra o que a incrustação faz com a mesma conta.
+
+```{python}
+#| fig-cap: "Navio-tanque de S = 8000 m², L = 240 m em água salgada. Esquerda: potência efetiva P = R·v, casco limpo e com incrustação (ΔC_F = +0,0005); a curva cresce como ~v³. Direita: consumo por milha — o mínimo não está na velocidade mínima, porque o consumo por hora cai mais devagar do que o tempo de viagem aumenta. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+S, L, rho, nu, g = 8000.0, 240.0, 1025.0, 1.14e-6, 9.81
+eta_prop, sfoc, preco = 0.65, 180.0, 600.0      # −, g/kWh, USD/t
+kn = 0.5144
+
+def resistencia(v, dCF=0.0):
+    Re = v*L/nu
+    CF = 0.075/(np.log10(Re) - 2)**2 + dCF
+    Fr = v/np.sqrt(g*L)
+    CW = 0.7*Fr**4
+    q = 0.5*rho*v**2*S
+    return q*CF, q*CW
+
+v = np.linspace(10, 25, 300)*kn
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9, 3.3))
+for dCF, c, lab in [(0.0, '#1F47C8', 'casco limpo'), (0.0005, '#C81F1F', 'incrustado (ΔC_F = +0,0005)')]:
+    Rf, Rw = resistencia(v, dCF)
+    P = (Rf + Rw)*v/1e6
+    ax1.plot(v/kn, P, color=c, lw=2, label=lab)
+    kgmi = (P*1e3/eta_prop)*sfoc/1e3/(v/kn)          # kg de óleo por milha
+    ax2.plot(v/kn, kgmi*preco/1e3, color=c, lw=2, label=lab)
+ax1.set_xlabel('velocidade (nós)'); ax1.set_ylabel('potência efetiva (MW)')
+ax1.legend(fontsize=8); ax1.grid(alpha=.25)
+ax2.set_xlabel('velocidade (nós)'); ax2.set_ylabel('custo de combustível (USD/milha)')
+ax2.legend(fontsize=8); ax2.grid(alpha=.25)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: gráfico explorável). p5 de libs/ (offline, Q6).
+     S = 8000 m², L = 240 m, rho = 1025, nu = 1,14e-6; Kármán–Schoenherr + termo de onda
+     0,7·Fr⁴; eta_prop = 0,65, SFOC = 180 g/kWh, óleo a USD 600/t. Faixa SP4: 10–25 nós.
+     Mesmos parâmetros da matplotlib. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .ss-wrap{max-width:1000px;margin:1rem auto;}
+  .ss-wrap .ss-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .ss-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:180px;flex:1 1 180px;}
+  .ss-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .ss-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .ss-wrap input[type=range]{width:100%;max-width:250px;accent-color:#c85c2e;}
+  .ss-wrap #ssSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .ss-wrap #ssEq{font-size:14px;margin:8px 2px 0;line-height:1.6;}
+  .ss-wrap #ssEq b{color:#1f47c8;}
+</style>
+<div class="ss-wrap sim">
+  <div class="ss-row">
+    <div class="sld"><label>Velocidade = <span class="val" id="ssVv">14</span> nós</label>
+      <input type="range" id="ssV" min="10" max="25" value="14" step="0.5"></div>
+    <div class="sld"><label>Incrustação ΔC_F = <span class="val" id="ssFv">0.0000</span></label>
+      <input type="range" id="ssF" min="0" max="10" value="0" step="1"></div>
+  </div>
+  <div id="ssSketch"></div>
+  <div id="ssEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  const S=8000, L=240, rho=1025, nu=1.14e-6, g=9.81, kn=0.5144;
+  const etaP=0.65, sfoc=180, preco=600;
+  const cw=()=>{ const w=(el('ssSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  const Res=(v,dCF)=>{ const Re=v*L/nu, CF=0.075/Math.pow(Math.log10(Re)-2,2)+dCF;
+    const Fr=v/Math.sqrt(g*L), CW=0.7*Math.pow(Fr,4), q=0.5*rho*v*v*S;
+    return [q*CF, q*CW]; };
+  const potMW=(vkn,dCF)=>{ const v=vkn*kn, [Rf,Rw]=Res(v,dCF); return (Rf+Rw)*v/1e6; };
+  const kgMilha=(vkn,dCF)=>potMW(vkn,dCF)*1e3/etaP*sfoc/1e3/vkn;
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),350).parent('ssSketch'); p.noLoop();
+      ['ssV','ssF'].forEach(id=>el(id).addEventListener('input',()=>p.redraw())); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),350); p.redraw(); };
+    p.draw=()=>{
+      const W=p.width, H=p.height;
+      const vkn=+el('ssV').value, dCF=+el('ssF').value*5e-5;
+      el('ssVv').textContent=vkn.toFixed(1); el('ssFv').textContent=dCF.toFixed(4);
+      p.background('#faf8f4');
+      const painel=(gx0,gx1,fn,rot,cor2)=>{
+        const gy0=44, gy1=H-56;
+        let ymax=0; for(let s=10;s<=25;s+=0.5) ymax=Math.max(ymax,fn(s,5e-4));
+        const X=s=>gx0+(s-10)/15*(gx1-gx0), Y=y=>gy1-y/(ymax*1.06)*(gy1-gy0);
+        p.stroke('#bdb4a4'); p.strokeWeight(1); p.line(gx0,gy1,gx1,gy1); p.line(gx0,gy0,gx0,gy1);
+        const curva=(d,c)=>{ p.push(); p.noFill(); p.stroke(c); p.strokeWeight(2.2); p.beginShape();
+          for(let s=10;s<=25;s+=0.25) p.vertex(X(s),Y(fn(s,d))); p.endShape(); p.pop(); };
+        curva(0,'#1f47c8'); if(dCF>0) curva(dCF,cor2);
+        p.noStroke(); p.fill('#66308c'); p.circle(X(vkn),Y(fn(vkn,dCF)),8);
+        p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+        for(let s=10;s<=25;s+=5) p.text(s,X(s),gy1+4);
+        p.text('nós',(gx0+gx1)/2,gy1+20);
+        p.textAlign(p.LEFT,p.BOTTOM); p.fill('#55524c'); p.textSize(11); p.text(rot,gx0+2,gy0-4);
+      };
+      painel(50, W*0.47, potMW, 'potência efetiva (MW)', '#c81f1f');
+      painel(W*0.57, W-18, kgMilha, 'combustível (kg/milha)', '#c81f1f');
+
+      const P=potMW(vkn,dCF), P0=potMW(vkn,0), kg=kgMilha(vkn,dCF);
+      const tdia=P*1e3/etaP*sfoc/1e3*24/1e3, usd=kg*preco/1e3;
+      const Pref=potMW(14,dCF), Pslow=potMW(14*0.8,dCF);
+      el('ssEq').innerHTML='P = R·v = <b>'+P.toFixed(2)+' MW</b>'+
+        (dCF>0?' (limpo: '+P0.toFixed(2)+' MW → <b>+'+((P/P0-1)*100).toFixed(0)+'%</b>)':'')+
+        ' &nbsp;|&nbsp; consumo <b>'+tdia.toFixed(1)+' t/dia</b> &nbsp;|&nbsp; '+
+        kg.toFixed(0)+' kg/milha ≈ <b>USD '+usd.toFixed(0)+'/milha</b><br>'+
+        'slow steaming: de 14 para 11,2 nós (−20%) a potência cai de '+Pref.toFixed(2)+' para '+
+        Pslow.toFixed(2)+' MW — <b>−'+((1-Pslow/Pref)*100).toFixed(0)+'%</b>';
+    };
+  });
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Reduza a velocidade de 14 para 11,2 nós (−20%). Quanto cai a potência? Confirme com a
+   dependência aproximada $P \propto v^3$ e explique de onde vêm os três fatores de $v$.
+2. Ligue a incrustação no máximo. Quanto a potência sobe à mesma velocidade? Traduza em
+   toneladas de combustível por dia — e compare com o custo de uma docagem.
+3. O gráfico da direita é o consumo por **milha**, não por hora. Por que ele não cai
+   indefinidamente conforme se reduz a velocidade?
+4. A resistência de atrito depende de $C_F(\mathrm{Re})$ e a de onda, de $\mathrm{Fr}$. Qual
+   das duas cresce mais rápido nesta faixa de velocidade?
+:::
 
 
 **Conexão com o próximo tópico:** o arrasto acabou de ser escrito como
