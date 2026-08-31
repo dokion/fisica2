@@ -63,7 +63,8 @@ Páginas referem-se ao PDF do extrato (cap. 1 e 2, 48 páginas).
 | 1.5(a) | Princípio de Pascal | 9–10 | — | `3-02` | Enunciado + prensa hidráulica na citação de Pascal (1663) |
 | 1.5(b) | Vasos comunicantes | 10 | — | `3-02` | — |
 | 1.5(c) | Pressão atmosférica. Manômetros | 10–11 | 1.5.1 | `3-02` | Torricelli; manômetro de tubo aberto |
-| 1.6 | Princípio de Arquimedes | 11–14 | 1.6.1–1.6.2 | `3-02` | Empuxo por **integração das pressões** no cilindro; depois o **princípio de solidificação** de Stevin (1586) |
+| 1.6 | Princípio de Arquimedes | 11–14 | 1.6.1–1.6.2 | `3-02` | Empuxo por **integração das pressões** no cilindro; depois o **princípio de solidificação** de Stevin (1586); centro de empuxo |
+| 1.6′ | — Equilíbrio dos corpos flutuantes | 13–14 | — | `3-02` | **Metacentro M** e o critério M acima/abaixo de G; **paradoxo hidrostático** e sua explicação pela pesagem do líquido. Subseção de §1.6, não numerada |
 | 1.7 | Pressão atmosférica × altitude | 14–16 | 1.7.1–1.7.4 | `3-02` (extensão) | Fórmula barométrica. Fora da ementa da UE 3; entra como fecho do cap. 1 e ponte para a UE 4 |
 | — | Problemas | 16–19 | — | banco | Fonte de exercícios; **não** publicar (Apêndice Q §Q1) |
 

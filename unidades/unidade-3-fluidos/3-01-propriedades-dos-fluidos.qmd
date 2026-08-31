@@ -16,44 +16,260 @@ OE 3.4 [B2] Identificar o impacto da viscosidade no escoamento dos fluidos
 
 {{< aula 21-22 >}}
 
-A Mecânica dos Fluidos que abre esta unidade é o alicerce de tudo que um oficial de máquinas ou navegação precisa saber sobre o seu navio. Toda manobra — calado que você lê no costado, carga que você distribui entre tanques, bombeamento de porão, até o leme que governa a proa — depende intimamente de quatro propriedades fundamentais dos fluidos: **pressão**, **massa específica**, **viscosidade** e **tensão superficial**. Este tópico define cada uma e mostra como a variação delas ao longo da profundidade e da temperatura governam a flutuabilidade, a estabilidade e o desempenho do casco no mar.
+Até aqui estudamos corpos rígidos — uma idealização de sólidos. Nesta unidade e na próxima
+tratamos dos **fluidos**, que compreendem tanto líquidos quanto gases. Um sólido tem volume e
+forma bem definidos; um líquido conserva o volume mas não a forma, amoldando-se ao recipiente e
+mantendo uma **superfície livre** no contato com a atmosfera; um gás não tem nem forma nem
+volume próprios, expandindo-se enquanto houver espaço acessível.
 
-## Pressão {{< ra OE3.1 B1 >}}
+O que líquidos e gases têm em comum — e o que os separa dos sólidos — é a facilidade de
+deformação: eles podem **escoar**. Toda a mecânica dos fluidos que governa o calado que você lê
+no costado, a carga que distribui entre tanques e o porão que bombeia nasce dessa única
+diferença. É por ela que começamos.
 
-A **pressão** é a força por unidade de área exercida por um fluido perpendicularmente a uma superfície. Formalmente:
+## Sólidos e fluidos: a resposta às tensões {{< ra OE3.2 B2 >}}
 
-$$P = \frac{F}{A}$$
+Para uma definição precisa de fluido, é preciso classificar as forças que atuam num meio
+material. Sobre um elemento de superfície situado no meio — externo ou interno — as forças são
+geralmente proporcionais à sua área. A força por unidade de área chama-se **tensão**, e conforme
+a direção distinguimos:
 
-Sua unidade SI é o pascal (Pa = N/m²). No navio, conversões práticas são essenciais: 1 bar ≈ 10⁵ Pa ≈ 1 kgf/cm²; as cartas de carga listam valores em toneladas de água doce (TPC — tonnes per centimetre immersion), que relaciona massa específica e área de flutuação. A pressão não tem direção — é um escalar que atua em todas as direções em um ponto dentro do fluido.
+- **Tensões normais**, perpendiculares à superfície. Podem ser de **tração** (um bloco pendurado
+  no teto por um fio) ou de **compressão** — e uma tensão normal de compressão é o que chamamos
+  de **pressão**.
+- **Tensões tangenciais**, paralelas à superfície, também chamadas de **cisalhamento**. São as
+  que tenderiam a produzir o deslizamento de camadas adjacentes umas sobre as outras.
 
-## Massa específica e densidade relativa {{< ra OE3.2 B2 >}}
+A diferença fundamental entre sólidos e fluidos está na forma de responder às **tensões
+tangenciais**.
 
-A **massa específica** (ou densidade) $\rho$ é a massa por unidade de volume:
+Um sólido submetido a uma força externa tangencial à sua superfície **se deforma** até que
+sejam produzidas tensões tangenciais internas que equilibrem a força externa; depois disso
+permanece em equilíbrio, em repouso. Se a força não for excessiva, a deformação é elástica e o
+sólido volta à situação inicial quando ela é retirada.
 
-$$\rho = \frac{m}{V}$$
+Um fluido, ao contrário, **é incapaz de equilibrar uma força tangencial, por menor que ela
+seja**. Submetido a uma tensão tangencial, o fluido se escoa, e permanece em movimento enquanto
+a força estiver sendo aplicada. Pense na cola ainda líquida entre duas paredes: ela escorre sob
+a ação do peso; é só quando solidifica que passa a equilibrar as forças tangenciais.
 
-Unidade SI: kg/m³. Dois valores são críticos para o navio:
-- Água doce: $\rho_{\text{doce}} \approx 1000\ \text{kg/m}^3$
-- Água salgada: $\rho_{\text{salgada}} \approx 1025\ \text{kg/m}^3$
+A consequência disso é a proposição que sustenta todo o resto deste tópico e do próximo:
 
-Esses valores variam com temperatura e salinidade, e essa variação afeta diretamente o calado do navio quando ele troca águas (deflection em cartas de carga). A **densidade relativa** é o quociente entre a massa específica de um fluido e a da água doce padrão; ela não tem unidade e é usada para comparar óleos, combustíveis marinhos e salmoura de lastro.
+> Num fluido em equilíbrio (velocidade nula), **não pode haver tensões tangenciais**.
 
-## Viscosidade {{< ra OE3.4 B2 >}}
+A fronteira entre sólido e fluido não é nítida. Existe uma gama enorme de substâncias
+intermediárias — massa de pão, chiclete, gelatina, piche —, e o comportamento depende da
+natureza e da magnitude das forças, da temperatura e da escala de tempo. O piche se fratura como
+um sólido sob a martelada, mas escoa como um fluido, com extrema lentidão, como o asfalto sendo
+aplicado numa estrada.
 
-A **viscosidade** é a resistência que o fluido oferece ao escoamento — a medida da coesão interna das camadas do fluido. Existem duas formas de expressá-la:
+## Viscosidade: resistência à taxa de deformação {{< ra OE3.4 B2 >}}
 
-- **Viscosidade dinâmica** $\mu$: unidade SI = Pa·s (pascal·segundo). Relacionada à força necessária para fazer duas camadas de fluido deslizar uma sobre a outra.
-- **Viscosidade cinemática** $\nu = \mu / \rho$: unidade SI = m²/s.
+Uma força arbitrariamente pequena pode produzir num fluido uma deformação arbitrariamente
+grande, desde que atue durante tempo suficiente. Mas um fluido real **opõe resistência** ao
+deslizamento relativo de camadas adjacentes: essa resistência mede a **viscosidade** do fluido.
 
-Um fluido com viscosidade elevada (mel, óleo ISO 46) flui lentamente; um fluido com baixa viscosidade (água, ar) flui rapidamente. No navio, a viscosidade do combustível, do óleo de cilindro e da água de lastro impacta sistemas de bombeamento, tubulações de porão e resfriamento de máquinas. Quanto maior a temperatura, menor a viscosidade (os líquidos se tornam "mais finos").
+O ponto decisivo é *de que* essa resistência depende:
 
-## Tensão superficial {{< ra OE3.3 B4 >}}
+| | Sólido | Fluido |
+|---|---|---|
+| A resistência a esforços tangenciais depende de | da **deformação** | da **velocidade de deformação** |
 
-A **tensão superficial** $\gamma$ é a energia (ou força por unidade de comprimento) necessária para criar uma nova superfície em um fluido. Formalmente, é o trabalho por unidade de área:
+É exatamente por isso que forças pequenas atuando durante tempos grandes produzem grandes
+deformações num fluido: para velocidades de deformação menores, a resistência oposta é menor.
+Num sólido, a resistência cresce com o quanto ele já se deformou e o processo para; num fluido,
+ela depende de quão rápido ele está se deformando, e o escoamento continua.
+
+Operacionalmente, a viscosidade é expressa de duas formas:
+
+- **Viscosidade dinâmica** $\mu$ (também escrita $\eta$) — unidade SI Pa·s. É o coeficiente que
+  liga a tensão tangencial ao gradiente de velocidade entre camadas.
+- **Viscosidade cinemática** $\nu = \mu/\rho$ — unidade SI m²/s. É a que aparece quando o que
+  importa é a competição entre viscosidade e inércia.
+
+$$\nu = \frac{\mu}{\rho}$$
+
+Um fluido de viscosidade elevada (mel, óleo ISO 46) escoa lentamente; um de baixa viscosidade
+(água, ar) escoa com facilidade. E a dependência com a temperatura é forte: quanto mais quente
+o líquido, menor $\mu$ — o princípio por trás das serpentinas de aquecimento nos tanques de
+óleo combustível de bordo.
+
+A viscosidade é, portanto, o que distingue um **fluido real** de um **fluido perfeito** — a
+idealização de viscosidade desprezível com que trabalharemos nos tópicos 3.3, 3.7 e 3.8. A lei
+que relaciona quantitativamente a tensão tangencial ao gradiente de velocidade, e o escoamento
+laminar num tubo que dela decorre, aparecem no tópico 3.4, quando o fluido estiver em
+movimento. Aqui basta reter: **em repouso, a viscosidade não se manifesta**; ela só entra em
+cena quando há deslizamento.
+
+## Densidade e pressão num fluido {{< ra OE3.1 B1 >}}
+
+Na escala macroscópica, um fluido se comporta como um **meio contínuo**: suas propriedades
+variam com continuidade num entorno de cada ponto. Isso deixaria de valer na escala
+microscópica, em dimensões da ordem das distâncias interatômicas, onde as propriedades sofrem
+flutuações que refletem a estrutura atômica da matéria.
+
+Falaremos com frequência em "elementos de volume infinitésimos". Um elemento
+$\Delta V = \Delta x\,\Delta y\,\Delta z$ deve ser entendido como um **infinitésimo físico**:
+suas dimensões devem ser muito menores que distâncias macroscópicas, mas ao mesmo tempo muito
+maiores que distâncias interatômicas, para que $\Delta V$ contenha um grande número de átomos e
+as flutuações sejam desprezíveis. Como as distâncias interatômicas típicas são da ordem de
+$10^{-8}$ cm, é fácil satisfazer as duas condições: para o ar em condições normais, um cubo de
+$10^{-3}$ cm de aresta ainda contém da ordem de $3\times10^{10}$ moléculas.
+
+Com isso podemos definir a **densidade** (ou massa específica) $\rho$ num ponto P do fluido:
+
+$$\rho = \lim_{\Delta V \to 0}\left(\frac{\Delta m}{\Delta V}\right) = \frac{dm}{dV}
+\qquad \text{(Moysés 1.2.1)}$$
+
+onde $\Delta m$ é a massa contida no volume $\Delta V$ em torno de P, e o limite
+$\Delta V \to 0$ significa que $\Delta V$ é um infinitésimo físico. A unidade SI é o kg/m³.
+
+Os dois valores que o oficial usa todos os dias:
+
+- água doce: $\rho \approx 1000\ \text{kg/m}^3$
+- água salgada: $\rho \approx 1025\ \text{kg/m}^3$
+
+A **densidade relativa** é o quociente entre a massa específica de um fluido e a da água doce
+padrão — adimensional, é como se comparam óleos, combustíveis marítimos e salmoura de lastro.
+
+### Forças volumétricas e forças superficiais
+
+Um fluido está em equilíbrio quando cada porção dele está em equilíbrio, o que exige que a
+resultante das forças sobre cada porção se anule. Essas forças são de dois tipos:
+
+**Forças volumétricas** são de longo alcance, atuam em todos os pontos do meio, e a força
+resultante sobre um elemento de volume é proporcional ao volume. No caso da gravidade, sobre um
+elemento $\Delta V$ em torno de um ponto onde a densidade é $\rho$:
+
+$$\Delta \mathbf{F} = \Delta m\,\mathbf{g} = \rho\,\mathbf{g}\,\Delta V
+\qquad \text{(Moysés 1.2.2)}$$
+
+**Forças superficiais** são forças de interação entre uma dada porção do meio, limitada por uma
+superfície $S$, e as porções adjacentes; são de curto alcance, transmitidas através de $S$. Num
+recipiente com líquido, a força que uma porção acima de uma seção horizontal exerce sobre a
+porção abaixo é uma força superficial, aplicada na superfície de separação.
+
+Convenciona-se orientar cada elemento $dS$ pela **normal externa** $\hat{\mathbf{n}}$, que
+aponta para fora da porção do meio considerada. Uma componente positiva de tensão ao longo de
+$\hat{\mathbf{n}}$ representa tração; uma componente negativa, uma pressão.
+
+Para um fluido **em equilíbrio**, vale a proposição da seção anterior: não há tensões
+tangenciais. Logo a força superficial sobre um elemento $dS$ é puramente normal, e corresponde
+a uma pressão $p$:
+
+$$d\mathbf{F} = -p\,\hat{\mathbf{n}}\,dS \qquad \text{(Moysés 1.2.3)}$$
+
+$$p = \left|\frac{d\mathbf{F}}{dS}\right|
+= \lim_{\Delta S \to 0}\left|\frac{\Delta \mathbf{F}}{\Delta S}\right|
+\qquad \text{(Moysés 1.2.4)}$$
+
+A pressão assim definida é sempre positiva; o sinal $(-)$ em (1.2.3) é o que indica tratar-se de
+uma pressão e não de uma tração. Note que **a pressão é uma grandeza escalar**.
+
+### A pressão num ponto é a mesma em todas as direções
+
+A pressão $p$ num ponto P poderia, a princípio, depender não só de P mas também da orientação
+$\hat{\mathbf{n}}$ do elemento $dS$ — ou seja, $p = p(\text{P},\hat{\mathbf{n}})$. Vamos mostrar
+que, num fluido em equilíbrio, ela não depende: **a pressão num ponto é a mesma em todas as
+direções**.
+
+Considere um cilindro infinitésimo de fluido, de bases $dS$ e $dS'$ com normais externas
+$\hat{\mathbf{n}}$ e $\hat{\mathbf{n}}'$, geratriz $dz$, com o eixo $z$ tomado paralelo a
+$\hat{\mathbf{n}}$, e $\theta$ o ângulo entre $\hat{\mathbf{n}}$ e $\hat{\mathbf{n}}'$. A
+condição de equilíbrio é que a resultante de todas as forças sobre o cilindro se anule;
+escrevemos a componente $z$.
+
+As pressões sobre a superfície lateral são normais ao eixo $z$ e não contribuem. Pela (1.2.3), a
+força na base superior contribui com
+
+$$-p(\text{P}',\hat{\mathbf{n}}')\,dS'\,\hat{\mathbf{n}}'\cdot\mathbf{k}
+= -p(\text{P}',\hat{\mathbf{n}}')\,dS'\cos\theta$$
+
+e a força na base inferior contribui com
+
+$$-p(\text{P},-\hat{\mathbf{n}})\,dS\,(-\hat{\mathbf{n}}\cdot\mathbf{k}) = p(\text{P},\hat{\mathbf{n}})\,dS$$
+
+pois $\hat{\mathbf{n}} = \mathbf{k}$ e $p(\text{P},-\hat{\mathbf{n}}) = p(\text{P},\hat{\mathbf{n}})$,
+pela definição de $p$ e pelo princípio de ação e reação. Como a projeção da base oblíqua sobre a
+reta é
+
+$$dS'\cos\theta = dS \qquad \text{(Moysés 1.2.5)}$$
+
+a contribuição total das forças superficiais fica
+
+$$\left[-p(\text{P}',\hat{\mathbf{n}}') + p(\text{P},\hat{\mathbf{n}})\right]dS
+\qquad \text{(Moysés 1.2.6)}$$
+
+A contribuição das forças volumétricas pode ser desprezada: ela é proporcional a $dS\,dz$, um
+infinitésimo de ordem superior. Analogamente, como a diferença entre as pressões em P e P′ é
+infinitésima,
+
+$$p(\text{P},\hat{\mathbf{n}}') = p(\text{P}',\hat{\mathbf{n}}')
+\qquad \text{(Moysés 1.2.7)}$$
+
+A condição de equilíbrio resulta então em
+$\left[-p(\text{P},\hat{\mathbf{n}}') + p(\text{P},\hat{\mathbf{n}})\right]dS = 0$, ou seja,
+
+$$\boxed{\,p(\text{P},\hat{\mathbf{n}}') = p(\text{P},\hat{\mathbf{n}})\,}
+\qquad \text{(Moysés 1.2.8)}$$
+
+quaisquer que sejam $\hat{\mathbf{n}}$ e $\hat{\mathbf{n}}'$ — como queríamos demonstrar. **A
+pressão no interior do fluido só depende da posição P**: $p = p(\text{P})$.
+
+É um resultado de consequências práticas imediatas: a pressão que a água exerce sobre o casco
+submerso num ponto não depende da inclinação da chapa naquele ponto, só da posição. Um manômetro
+mede a mesma coisa qualquer que seja a orientação da sua tomada.
+
+### Unidades de pressão
+
+A unidade SI é $1\ \text{N/m}^2 = 1\ \text{pascal} = 1\ \text{Pa}$. Também se usam:
+
+| Unidade | Equivalência |
+|---|---|
+| bar | $10^5\ \text{N/m}^2 = 10\ \text{N/cm}^2 = 10^3$ milibars |
+| atmosfera (atm) | $1{,}013\times10^5\ \text{N/m}^2$ |
+| milímetro de mercúrio (mm-Hg) | $1{,}316\times10^{-3}$ atm |
+
+A bordo, a conversão prática mais usada é $1\ \text{bar} \approx 1\ \text{kgf/cm}^2$.
+
+## Tensão superficial e capilaridade {{< ra OE3.3 B4 >}}
+
+As moléculas no interior de um líquido são atraídas em todas as direções pelas vizinhas; as da
+superfície não têm vizinhas acima. O resultado é uma resultante para dentro que torna
+energeticamente custoso **criar superfície** — e é isso que se chama **tensão superficial**
+$\gamma$: o trabalho por unidade de área necessário para aumentar a superfície do líquido, ou,
+equivalentemente, a força por unidade de comprimento ao longo de uma linha na superfície.
 
 $$\gamma = \frac{E_{\text{sup}}}{A} = \frac{F}{L}$$
 
-Unidade SI: N/m. Causa fenômenos como a forma esférica das gotas, a ascensão capilar em tubos finos e a "pele" invisível que se forma na superfície de um líquido. Em contextos navais, a tensão superficial afeta a formação de bolhas em sistemas de refrigeração e o comportamento de surfactantes (agentes de limpeza) em águas de lastro. Relaciona-se ao movimento de fluido em capilares — ex., umidade ascendendo pelas paredes de um tubo de pequeno diâmetro — fenômeno raramente crítico em engenharia de navio, mas presente em instrumentação fina.
+Unidade SI: N/m. Para a água a 20 °C, $\gamma \approx 0{,}073\ \text{N/m}$.
+
+É a tensão superficial que dá à gota livre a forma esférica — a esfera é a superfície de menor
+área para um dado volume.
+
+### Ascensão capilar
+
+Num tubo de raio pequeno mergulhado num líquido que **molha** a parede, a linha de contato sobe
+até que a componente vertical da força de tensão superficial equilibre o peso da coluna
+levantada. Ao longo da circunferência de contato, de comprimento $2\pi r$, a força vale
+$\gamma\cos\theta$ por unidade de comprimento, onde $\theta$ é o ângulo de contato:
+
+$$F_{\uparrow} = 2\pi r\,\gamma\cos\theta$$
+
+O peso da coluna de altura $h$ é $P = \rho g\,\pi r^2 h$. No equilíbrio:
+
+$$2\pi r\,\gamma\cos\theta = \rho g\,\pi r^2 h$$
+
+$$\boxed{\,h = \frac{2\gamma\cos\theta}{\rho g r}\,}$$
+
+A altura de ascensão é **inversamente proporcional ao raio**: quanto mais fino o tubo, mais alto
+o líquido sobe. Para $\theta > 90°$ (líquido que não molha — mercúrio em vidro), $\cos\theta$ é
+negativo e há **depressão** em vez de ascensão.
+
+A consequência para o instrumento de bordo é direta: num manômetro de tubo em U de diâmetro
+pequeno, a capilaridade desloca o menisco e falseia a leitura. É por isso que manômetros
+de coluna usam tubos de diâmetro generoso, e por isso que se lê sempre o mesmo ponto do menisco
+(a base, para água; o topo, para mercúrio) nos dois ramos.
 
 ::: {.sp}
 Um navio-tanque com deslocamento de 50 mil toneladas flutua em água salgada de densidade 1025 kg/m³. Ao sair de um porto fluvial (água doce, ρ = 1000 kg/m³) e entrar em mar aberto, observa-se que o calado aumenta em cerca de 20 cm. A transição ocorre em águas salobras (ρ intermediária) ao longo de 30 km.
@@ -90,9 +306,19 @@ calado.
 ::: {.callout-warning}
 ## Erros clássicos
 
-- **Confundir ρ doce/salgada:** água doce = 1000 kg/m³; salgada = 1025 kg/m³. Navio com calado maior em água doce — precisa deslocar **mais volume** da água menos densa.
-- **Viscosidade não é só temperatura:** fluidos não-newtonianos (suspensões, emulsões) não obedecem $\mu = f(T)$ simples. Exemplo: salmoura de lastro muda viscosidade com concentração de sal.
-- **Tensão superficial negligenciada em escala grande:** em navios, negligenciável; em instrumentação fina (manômetros de tubo em U), crítica.
+- **Tratar a pressão como vetor.** A pressão é escalar; o que tem direção é a *força*
+  $d\mathbf{F} = -p\,\hat{\mathbf{n}}\,dS$, e a direção vem de $\hat{\mathbf{n}}$, não de $p$.
+  Dizer "a pressão aponta para baixo" não significa nada.
+- **Achar que a isotropia da pressão vale sempre.** A demonstração (1.2.5)–(1.2.8) usa
+  explicitamente a hipótese de **equilíbrio** — é ela que elimina as tensões tangenciais. Num
+  fluido viscoso em movimento a tensão sobre um elemento depende, sim, da orientação.
+- **Confundir ρ doce/salgada:** água doce = 1000 kg/m³; salgada = 1025 kg/m³. Navio com calado
+  maior em água doce — precisa deslocar **mais volume** da água menos densa.
+- **Viscosidade não é só temperatura:** fluidos não-newtonianos (suspensões, emulsões) não
+  obedecem $\mu = f(T)$ simples. Exemplo: salmoura de lastro muda viscosidade com concentração
+  de sal.
+- **Tensão superficial negligenciada em escala grande:** em navios, negligenciável; em
+  instrumentação fina (manômetros de tubo em U), crítica.
 :::
 
 ## Veja a viscosidade em ação
@@ -232,6 +458,8 @@ plt.tight_layout(); plt.show()
    (onde a lei de Stokes vale)? O que aconteceria com uma esfera grande em água?
 3. Ligue a queda: a velocidade cresce e satura. Que forças estão em jogo no início
    (quase queda livre) e no fim (terminal)?
+4. A esfera em queda está em movimento — e a viscosidade se manifesta. Se ela parasse no meio do
+   óleo, que tensões o fluido exerceria sobre ela? Compare com o resultado (1.2.8).
 :::
 
 ## Onde o fenômeno vive
@@ -247,8 +475,15 @@ plt.tight_layout(); plt.show()
 - **Água doce × salgada** — os 2,5% de diferença de densidade mudam o calado (marcas
   de borda-livre distintas) e a velocidade do som (tópico 2.4): a mesma propriedade
   aparecendo em dois instrumentos.
+- **Piche e asfalto** — o exemplo clássico da fronteira sólido/fluido: fratura sob impacto
+  brusco, escoa sob carga lenta. O que decide não é a substância, é a escala de tempo.
 
 <!-- EXEMPLO A SIMULAR: viscosidade do HFO × temperatura (gráfico interativo):
      curva μ(T) típica com slider de T e faixa-alvo da purificadora destacada. -->
 
-**Conexão com o próximo tópico:** definidas as quatro propriedades, agora veremos como a pressão em repouso varia com a profundidade (Lei de Pascal) — e como essa variação de pressão é o fundamento da flutuabilidade (Princípio de Arquimedes).
+**Conexão com o próximo tópico:** sabemos agora que num fluido em equilíbrio a força superficial
+é puramente normal e que a pressão num ponto não depende da direção. Falta descobrir como ela
+varia **de ponto a ponto**. No próximo tópico, escrevemos a condição de equilíbrio de um
+elemento de volume sob a ação de uma força volumétrica qualquer — dela sai a equação geral da
+estática dos fluidos, e da equação saem, como casos particulares, a lei de Stevin, o princípio
+de Pascal e o princípio de Arquimedes.

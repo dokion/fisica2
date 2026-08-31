@@ -16,53 +16,402 @@ OE 3.8 [B3] Resolver problemas sobre equilíbrio de corpos flutuantes
 
 {{< aula 21-22 >}}
 
-Quando um fluido está em repouso (ou em movimento muito lento), as forças de inércia desaparecem e o que governa tudo é o **equilíbrio de pressões**. Este tópico explora dois princípios que nasceram da estática de fluidos e moldam a engenharia naval: o **Princípio de Pascal** — que permite amplificar forças em sistemas hidráulicos — e o **Princípio de Arquimedes** — que explica por que um navio flutua. Veremos também como a pressão varia com a profundidade, informação que você consulta toda vez que abre uma carta de estabilidade ou calcula o centro de empuxo.
+No tópico anterior estabelecemos que, num fluido em equilíbrio, a força superficial sobre um
+elemento é puramente normal e a pressão num ponto não depende da direção. Falta o passo
+decisivo: descobrir **como a pressão varia de um ponto para outro**.
 
-## Equação fundamental da hidrostática {{< ra OE3.7 B3 >}}
+Vamos obter uma única equação — a condição de equilíbrio de um elemento de volume sob uma força
+volumétrica qualquer. Dela sairão, como casos particulares, a lei de Stevin, o princípio de
+Pascal, o princípio de Arquimedes e o equilíbrio do navio flutuando. Não são quatro leis
+independentes: são quatro leituras da mesma equação.
 
-Quando um fluido está em equilíbrio estático, a variação de pressão com a profundidade segue uma lei simples: a mudança de pressão é proporcional à profundidade, à densidade do fluido e ao campo gravitacional:
+## Equilíbrio num campo de forças
 
-$$\frac{dP}{dz} = -\rho g$$
+Considere um fluido em equilíbrio num campo de forças. Seja
 
-Integrando de uma profundidade zero (superfície, onde $P = P_0$) até profundidade $h$ (medida para baixo):
+$$\Delta\mathbf{F} = \mathbf{f}\,\Delta V \qquad \text{(Moysés 1.3.1)}$$
 
-$$P(h) = P_0 + \rho g h$$
+a força volumétrica que atua sobre um volume $\Delta V$ do fluido, onde $\mathbf{f}$ é a
+**densidade de força** (força por unidade de volume). No caso do campo gravitacional, pela
+(1.2.2),
 
-Essa é a **equação da hidrostática**. A pressão aumenta linearmente com a profundidade. No contexto do navio: a pressão na quilha é muito maior que na linha d'água; por isso, o casco é mais espesso (reforçado) nas partes mais profundas.
+$$\mathbf{f} = \rho\,\mathbf{g} \qquad \text{(Moysés 1.3.2)}$$
 
-## Princípio de Pascal {{< ra OE3.5 B2 >}}
+Para obter o efeito das forças volumétricas sobre o equilíbrio, tomamos um elemento de volume
+cilíndrico de base $dS$ e geratriz $dz$, com o eixo vertical. Diferentemente do que fizemos ao
+demonstrar a isotropia da pressão, agora é **preciso** incluir no cálculo os infinitésimos da
+ordem de $dS\,dz$ — é exatamente neles que a informação está.
 
-O **Princípio de Pascal** afirma que uma mudança de pressão aplicada a um ponto em um fluido confinado é transmitida, sem diminuição, a todos os outros pontos do fluido e às paredes do recipiente. Formalmente: se você aumenta a pressão em um ponto por $\Delta P$, a pressão em qualquer outro ponto aumenta da mesma quantidade $\Delta P$.
+A força volumétrica na direção $z$ que atua sobre o cilindro é, pelas (1.3.1) e (1.3.2),
 
-Consequência prática: uma força pequena aplicada em uma área pequena pode ser amplificada em uma área grande. Se um êmbolo de área $A_1$ é comprimido com força $F_1$, a pressão sobe por $\Delta P = F_1 / A_1$. Essa pressão atua em um segundo êmbolo de área $A_2 > A_1$, gerando força:
+$$f_z\,dS\,dz \qquad \text{(Moysés 1.3.3)}$$
 
-$$F_2 = \Delta P \times A_2 = F_1 \frac{A_2}{A_1}$$
+As coordenadas dos centros das bases são $(x,y,z)$ e $(x,y,z+dz)$. Logo, pela (1.2.6), a
+contribuição das forças superficiais é
 
-Aplicações navais: sistemas de frenagem hidráulica, macacos hidráulicos para levantar maquinário, prensas de selagem. Toda bomba hidráulica de bordo funciona nesse princípio.
+$$\left[-p(x,y,z+dz) + p(x,y,z)\right]dS \qquad \text{(Moysés 1.3.4)}$$
 
-## Princípio de Arquimedes e empuxo {{< ra OE3.6 B3 >}}
+e aqui não podemos mais aproximar as duas pressões como iguais. A menos de infinitésimos de
+ordem superior,
 
-O **Princípio de Arquimedes** afirma que todo corpo imerso (ou parcialmente imerso) em um fluido experimenta uma força vertical ascendente igual ao peso do fluido deslocado. Formalmente:
+$$p(x,y,z+dz) - p(x,y,z) = \frac{\partial p}{\partial z}(x,y,z)\,dz$$
 
-$$F_{\text{empuxo}} = \rho_{\text{fluido}} \cdot g \cdot V_{\text{imerso}}$$
+Somando (1.3.3) e (1.3.4), a condição de equilíbrio fica
 
-Interpretação física: a pressão é maior nas profundidades maiores; a diferença de pressão entre a face inferior e superior de um corpo imerso resulta em uma força vertical para cima.
+$$\left(f_z - \frac{\partial p}{\partial z}\right)dS\,dz = 0$$
 
-Para um navio em equilíbrio, o peso da embarcação iguala o empuxo:
+o que resulta em
 
-$$W_{\text{navio}} = F_{\text{empuxo}}$$
+$$f_z = \frac{\partial p}{\partial z} \qquad \text{(Moysés 1.3.5)}$$
 
-$$M_{\text{navio}} \cdot g = \rho_{\text{água}} \cdot g \cdot V_{\text{imerso}}$$
+ou seja: **a componente $z$ da densidade de força volumétrica é igual à taxa de variação da
+pressão com $z$**. Tomando o cilindro com eixo paralelo a $x$ ou a $y$ chega-se ao resultado
+análogo para as outras componentes. Portanto,
 
-A massa de água deslocada é chamada de **deslocamento** do navio. Conhecer o deslocamento é conhecer exatamente quanta água o navio afasta — informação crítica para cartas de estabilidade e documentos de carga.
+$$\boxed{\;f_x = \frac{\partial p}{\partial x},\qquad
+f_y = \frac{\partial p}{\partial y},\qquad
+f_z = \frac{\partial p}{\partial z}\;}
+\qquad \text{(Moysés 1.3.6)}$$
 
-## Flutuabilidade e equilíbrio de corpos flutuantes {{< ra OE3.8 B3 >}}
+que são as **equações básicas da estática dos fluidos**. Lembrando a definição de gradiente,
+elas se escrevem numa linha só:
 
-Um corpo flutua quando está em equilíbrio entre seu peso e o empuxo. Se o navio ganhar peso (por carregamento de cargo), o equilíbrio é quebrado: a embarcação pesa mais que o fluido que desloca e começa a submergir. Para restaurar o equilíbrio, mais volume é imerso, aumentando o empuxo até igualar o novo peso.
+$$\boxed{\;\mathbf{f} = \operatorname{grad} p\;} \qquad \text{(Moysés 1.3.7)}$$
 
-Esse processo é contínuo: à medida que o navio carrega, seu calado aumenta ao longo de uma **curva de deslocamento vs. calado** que é específica de cada embarcação. A curva é não-linear (porque a área de flutuação varia com a altura) e é tabelada em documentos de carga.
+**A densidade de força volumétrica é igual ao gradiente da pressão.** Esse resultado tem uma
+leitura geométrica imediata. As **superfícies isobáricas** — aquelas sobre as quais $p$ é
+constante — são normais ao gradiente; logo, pela (1.3.7), a força volumétrica em cada ponto é
+**perpendicular à superfície isobárica** que passa por ele, e aponta no sentido em que $p$
+cresce.
 
-A **reserva de flutuabilidade** é o volume de compartimentos estanques acima da linha d'água. Quanto maior, melhor — garante que o navio não afunda rapidamente se sofrer uma pequena inundação.
+Uma força volumétrica que sempre atua sobre o fluido é a gravitacional, cuja densidade é
+
+$$\mathbf{f} = \rho\,\mathbf{g} = -\rho g\,\mathbf{k} \qquad \text{(Moysés 1.3.8)}$$
+
+com o eixo $z$ orientado verticalmente para cima. Neste caso $f_x = f_y = 0$, e as (1.3.6)
+mostram que **$p$ só depende da altitude** $z$, $p = p(z)$, com
+
+$$\boxed{\;\frac{dp}{dz} = -\rho g\;} \qquad \text{(Moysés 1.3.9)}$$
+
+No campo gravitacional a pressão decresce com a altitude e cresce com a profundidade, como seria
+de esperar, e a sua taxa de variação é igual ao **peso específico** $\rho g$ do fluido — o peso
+por unidade de volume. Para o elemento cilíndrico, a força de pressão sobre a base inferior
+excede a exercida sobre a base superior exatamente pelo peso do fluido contido no cilindro.
+
+## Fluido incompressível no campo gravitacional: a lei de Stevin {{< ra OE3.7 B3 >}}
+
+A densidade de um líquido varia muito pouco, mesmo sob pressões consideráveis: a da água só
+aumenta cerca de 0,5% quando a pressão vai de 1 atm a 100 atm, à temperatura ambiente. Podemos
+então, com muito boa aproximação, tratar um líquido na estática como **fluido incompressível**,
+definido por $\rho = \text{constante}$.
+
+Em muitos casos a força volumétrica é **conservativa**, o que implica $\mathbf{F} = -\operatorname{grad} U$
+(1.4.1). Se $u$ é a densidade de energia potencial correspondente — energia potencial por unidade
+de volume —, então, pelas (1.3.1) e (1.3.7),
+
+$$\mathbf{f} = -\operatorname{grad} u = \operatorname{grad} p \qquad \text{(Moysés 1.4.2)}$$
+
+Como as derivadas parciais de $(-u)$ e de $p$ em relação a $x$, $y$ e $z$ têm de ser iguais,
+essas duas funções da posição só podem diferir por uma constante:
+
+$$p = -u + \text{constante} \qquad \text{(Moysés 1.4.3)}$$
+
+Em particular, **as superfícies isobáricas são também superfícies equipotenciais**.
+
+Esse resultado explica por que a superfície livre de um líquido é horizontal. A superfície livre,
+em contato com a atmosfera, é isobárica — todos os seus pontos estão à pressão atmosférica.
+Logo, pela (1.4.3), ela é uma **superfície equipotencial** do campo gravitacional. Na escala do
+oceano isso significa uma superfície esférica com centro no centro da Terra; na escala do
+laboratório — ou de um tanque de bordo —, um plano horizontal.
+
+Na vizinhança da superfície da Terra, a energia potencial de uma massa $m$ é $mgz$, de modo que
+a densidade de energia potencial de um fluido de densidade $\rho$ é
+
+$$u = \rho g z \qquad \text{(Moysés 1.4.4)}$$
+
+e a (1.4.3) fica
+
+$$p(z) = -\rho g z + \text{constante} \qquad \text{(Moysés 1.4.5)}$$
+
+o que também decorre diretamente de integrar a (1.3.9) em relação a $z$. A variação de pressão
+entre as altitudes $z_1$ e $z_2$ é
+
+$$\boxed{\;p(z_2) - p(z_1) = -\rho g\,(z_2 - z_1)\;} \qquad \text{(Moysés 1.4.6)}$$
+
+Se $z_1$ corresponde à superfície livre, $p(z_1) = p_0$ é a pressão atmosférica, e
+$z_1 - z_2 = h$ é a **profundidade** abaixo da superfície livre. A (1.4.6) dá então
+
+$$\boxed{\;p = p_0 + \rho g h\;} \qquad \text{(Moysés 1.4.7)}$$
+
+que é a **lei de Stevin**: a pressão no interior do fluido aumenta linearmente com a
+profundidade.
+
+É a equação que o oficial usa para calcular a pressão sobre o casco submerso a qualquer calado,
+e é a razão de o chapeamento e as cavernas serem mais reforçados quanto mais fundo — a carga
+sobre a estrutura cresce em proporção direta com $h$. Num calado de 10 m em água salgada,
+$\rho g h = 1025 \times 9{,}81 \times 10 \approx 1{,}01\times10^5\ \text{Pa} \approx 1$ atm de
+sobrepressão sobre a chapa da quilha.
+
+### Líquido em rotação: o perfil parabólico
+
+A (1.3.7) vale para qualquer força volumétrica, não só a gravidade — e um caso de bordo é o
+líquido girando com o recipiente. Num referencial não inercial $S'$ que gira com velocidade
+angular $\omega$, o líquido está em equilíbrio, mas além da gravidade atuam as forças
+centrífugas, dadas por
+
+$$\Delta\mathbf{F}_c = \Delta m\cdot\omega^2 r\,\hat{\mathbf{r}} \qquad \text{(Moysés 1.4.8)}$$
+
+para uma massa $\Delta m = \rho\,\Delta V$ situada à distância $r$ do eixo. A densidade de força
+centrífuga é então
+
+$$\mathbf{f}_c = \rho\,\omega^2 r\,\hat{\mathbf{r}}
+= -\operatorname{grad} u_c = -\frac{du_c}{dr}\,\hat{\mathbf{r}}
+\qquad \text{(Moysés 1.4.9)}$$
+
+com a densidade de "energia potencial centrífuga"
+
+$$u_c(r) = -\tfrac{1}{2}\rho\,\omega^2 r^2 \qquad \text{(Moysés 1.4.10)}$$
+
+que se soma à (1.4.4). Substituindo na (1.4.3) e tomando a origem O no ponto da superfície livre
+situado no eixo (onde $r = z = 0$ e $p = p_0$):
+
+$$p = p_0 + \tfrac{1}{2}\rho\,\omega^2 r^2 - \rho g z \qquad \text{(Moysés 1.4.11)}$$
+
+A equação da superfície livre ($p = p_0$) é portanto
+
+$$\boxed{\;z = \frac{\omega^2}{2g}\,r^2\;} \qquad \text{(Moysés 1.4.12)}$$
+
+um **paraboloide de revolução**. É o mesmo princípio pelo qual se constroem espelhos parabólicos
+girando um recipiente com mercúrio, e é a razão de a rotação da Terra fazer da superfície dos
+oceanos um esferoide oblato em vez de uma esfera.
+
+## Aplicações: Pascal, vasos comunicantes e manômetros {{< ra OE3.5 B2 >}}
+
+Pela lei de Stevin (1.4.6), a **diferença** de pressão entre dois pontos de um líquido homogêneo
+em equilíbrio é constante, dependendo apenas do desnível entre esses pontos. A consequência é
+imediata:
+
+> Se produzirmos uma variação de pressão num ponto de um líquido em equilíbrio, essa variação se
+> transmite a todo o líquido — todos os pontos sofrem a **mesma** variação de pressão.
+
+Este é o **princípio de Pascal**, enunciado no "Tratado sobre o equilíbrio dos líquidos" (1663),
+onde ele próprio o aplicou à **prensa hidráulica**:
+
+> "Se um recipiente fechado cheio de água tem duas aberturas, uma cem vezes maior que a outra:
+> colocando um pistão bem justo em cada uma, um homem empurrando o pistão pequeno igualará a
+> força de cem homens empurrando o pistão cem vezes maior… E qualquer que seja a proporção das
+> aberturas, estarão em equilíbrio."
+
+Ou seja, se $F_1$ e $F_2$ são as magnitudes das forças sobre os pistões de áreas $A_1$ e $A_2$:
+
+$$\boxed{\;\frac{F_1}{A_1} = \frac{F_2}{A_2}
+\quad\Longrightarrow\quad
+F_2 = F_1\,\frac{A_2}{A_1}\;}$$
+
+A razão $A_2/A_1$ é a **vantagem mecânica** do sistema. Toda a hidráulica de bordo vive disso:
+máquina do leme, guindastes de convés, prensas de amarração, macacos de praça de máquinas. O
+que o sistema **não** amplifica é o trabalho — o pistão grande avança $A_1/A_2$ do curso do
+pequeno, e $F_2 d_2 = F_1 d_1$.
+
+### Vasos comunicantes
+
+Se um recipiente é formado por diversos ramos que se comunicam entre si, a superfície livre do
+líquido ocupa a mesma altura $h$ em todos os ramos — o **princípio dos vasos comunicantes**.
+Isso resulta imediatamente da lei de Stevin (1.4.7) e da igualdade da pressão $p$ em qualquer
+ponto do fundo do recipiente. A pressão também tem o mesmo valor em quaisquer pontos dos
+diferentes ramos que estejam à mesma altura $z$.
+
+Se, em dois ramos de um tubo em U, temos dois líquidos de densidades diferentes
+$\rho_1 \neq \rho_2$ que não se misturam, eles subirão a alturas diferentes $h_1$ e $h_2$ em
+relação ao plano AB que atravessa os dois ramos pelo mesmo fluido. Se $p$ é a pressão sobre AB,
+a (1.4.7) resulta em $p = p_0 + \rho_1 g h_1 = p_0 + \rho_2 g h_2$, de modo que
+
+$$\frac{h_1}{h_2} = \frac{\rho_2}{\rho_1}$$
+
+As alturas são inversamente proporcionais às densidades — é assim que se compara a densidade de
+dois líquidos sem pesá-los.
+
+### Pressão atmosférica: Torricelli e os manômetros
+
+O princípio da bomba aspirante era conhecido desde a Antiguidade, e explicava-se dizendo que "a
+Natureza tem horror ao vácuo". Na época de Galileu, um construtor projetou para os jardins do
+duque de Toscana uma bomba aspirante de grande altura, e verificou-se que ela **não conseguia
+elevar a água acima de ~10 m**. A explicação foi dada por Evangelista Torricelli: "Vivemos no
+fundo de um oceano de ar, que, conforme mostra a experiência, sem dúvida tem peso" — logo, exerce
+sobre um corpo uma **pressão atmosférica**.
+
+Se essa pressão é justamente suficiente para elevar uma coluna de água a ~10 m, Torricelli previu
+que elevaria uma coluna de mercúrio (13,6 vezes mais denso) a $10/13{,}6 \approx 76$ cm. O
+experimento, realizado em 1643, confirmou: um tubo de ~1 m cheio de mercúrio, invertido numa
+cuba, tem sua coluna baixando até ~76 cm, formando acima dela o "espaço de Torricelli", um bom
+vácuo. Pela (1.4.7),
+
+$$p_0 = \rho g h$$
+
+e o instrumento é o **barômetro de mercúrio**: a altura da coluna lê diretamente a pressão
+atmosférica.
+
+Pascal levou o argumento adiante: se a pressão é o peso do ar acima, a coluna deve **diminuir**
+no alto de uma montanha. Pediu ao cunhado Périer que fizesse a experiência no Puy de Dôme, e o
+resultado (1648) foi que, para uma diferença de altitude da ordem de 1.000 m, a coluna baixou
+cerca de 8 cm.
+
+O **manômetro de tubo aberto** é um tubo em U contendo líquido, com uma extremidade aberta para a
+atmosfera e a outra ligada ao recipiente cuja pressão $p$ se quer medir. Pela (1.4.7), a pressão
+num ponto C do fundo se escreve de duas maneiras:
+
+$$p_C = p + \rho g z = p_0 + \rho g\,(h + z)$$
+
+o que resulta em
+
+$$\boxed{\;p - p_0 = \rho g h\;} \qquad \text{(Moysés 1.5.1)}$$
+
+O instrumento mede a **pressão manométrica** $p - p_0$; conhecida a pressão atmosférica $p_0$,
+obtém-se a **pressão absoluta** $p$. É a distinção que todo manômetro de bordo carrega: o
+manômetro do ar de partida marcando 30 bar indica 30 bar *acima* da atmosfera, ou seja, 31 bar
+absolutos.
+
+## Princípio de Arquimedes {{< ra OE3.6 B3 >}}
+
+Considere um corpo sólido cilíndrico circular, de área da base $A$ e altura $h$, totalmente
+imerso num fluido em equilíbrio de densidade $\rho$. Por simetria, as forças sobre a superfície
+lateral do cilindro se equilibram duas a duas. Entretanto, a pressão $p_2$ exercida sobre a base
+inferior é **maior** do que a pressão $p_1$ sobre a base superior. Pela (1.4.7),
+
+$$p_2 - p_1 = \rho g h$$
+
+Logo, a resultante das forças superficiais exercidas pelo fluido sobre o cilindro é uma força
+vertical $\mathbf{E} = E\,\mathbf{k}$ dirigida para cima, com
+
+$$\boxed{\;E = p_2 A - p_1 A = \rho g h A = \rho\,V g = m g\;} \qquad \text{(Moysés 1.6.1)}$$
+
+onde $V = hA$ é o volume do cilindro e $m = \rho V$ é a **massa de fluido deslocada** por ele.
+Essa força chama-se **empuxo**:
+
+$$\boxed{\;\mathbf{E} = mg\,\mathbf{k} = -\mathbf{P}_f\;} \qquad \text{(Moysés 1.6.2)}$$
+
+onde $\mathbf{P}_f$ é o peso da porção de fluido deslocada. O empuxo não é uma força nova: é o
+**resultado líquido da variação de pressão com a profundidade** que obtivemos na (1.4.7).
+
+### O princípio de solidificação e o centro de empuxo
+
+Chega-se ao mesmo resultado por um argumento muito mais geral, o **princípio de solidificação**,
+enunciado por Stevin em 1586. Suponha que o corpo sólido imerso fosse totalmente substituído
+pelo próprio fluido. O volume de fluido que ele deslocou estaria em equilíbrio com o resto do
+fluido; logo, a resultante das forças superficiais sobre a superfície $S$ desse volume é igual e
+contrária à resultante das forças volumétricas que atuam sobre ele — ou seja, ao peso da porção
+de fluido deslocada.
+
+O passo decisivo: **as pressões superficiais não se alteram se imaginarmos a superfície $S$
+"solidificada"**. O fluido do lado de fora não sabe o que há do lado de dentro. Logo o resultado
+não depende da forma do sólido imerso — vale para o cilindro, para o casco de um navio ou para
+uma coroa de ouro.
+
+Esse raciocínio dá também o **ponto de aplicação**. No fluido substituído, $\mathbf{E}$ e
+$\mathbf{P}_f$ se equilibram e estão aplicados no centro de gravidade C da porção de fluido
+deslocada. Logo o empuxo sobre o sólido está aplicado nesse ponto C, que se chama **centro de
+empuxo** — na literatura naval, o ponto **B** das cartas de estabilidade. Note que C é o centro
+de gravidade *do fluido deslocado*, não do corpo: para um casco, é o centroide do volume imerso,
+e ele se desloca quando o navio adorna.
+
+Além do empuxo, atua sobre o sólido o peso $\mathbf{P}$, aplicado no centro de gravidade G do
+sólido. Se a densidade média do sólido é menor que a do líquido, ele não pode ficar totalmente
+imerso, porque isso daria $|\mathbf{E}| > |\mathbf{P}|$; ele **flutua**, com o empuxo da porção
+imersa equilibrando o peso total. Obtemos assim o enunciado geral:
+
+> **Princípio de Arquimedes:** um corpo total ou parcialmente imerso num fluido recebe do fluido
+> um empuxo igual e contrário ao peso da porção de fluido deslocada, aplicado no centro de
+> gravidade dessa porção.
+
+Para o navio em equilíbrio, isso é a definição operacional de **deslocamento**:
+
+$$\Delta = \rho\,V_{\text{imerso}}$$
+
+A massa de água deslocada *é* a massa do navio. A **reserva de flutuabilidade** é o volume de
+compartimentos estanques acima da linha d'água — o empuxo que ainda está disponível se o navio
+afundar mais, e portanto a margem contra o alagamento.
+
+## Equilíbrio dos corpos flutuantes {{< ra OE3.8 B3 >}}
+
+Na posição de equilíbrio, não basta que a resultante de $\mathbf{E}$ (empuxo) e $\mathbf{P}$
+(peso) seja nula: o torque resultante também tem de ser nulo, o que exige que **o centro de
+empuxo C e o centro de gravidade G estejam sobre a mesma vertical**.
+
+Entretanto, isso **não garante a estabilidade** do equilíbrio. Quando o corpo gira, a porção de
+fluido deslocada muda de forma, e o centro de empuxo se desloca para uma nova posição C′.
+
+### Metacentro
+
+A vertical que passa por C′ corta o eixo CG num ponto **M** que, para pequenas inclinações,
+resulta ser praticamente independente do ângulo de inclinação. Esse ponto chama-se
+**metacentro**.
+
+- Se **M está acima de G**, o torque gerado por $\mathbf{E}$ e $\mathbf{P}$ tende a
+  **restabelecer** a posição de equilíbrio: o equilíbrio é **estável**.
+- Se **M está abaixo de G**, o torque tende a **aumentar ainda mais o desvio**: o equilíbrio é
+  **instável**.
+
+É todo o critério de estabilidade transversal do navio numa frase. A distância GM é a **altura
+metacêntrica**, e é ela que a carta de estabilidade tabela. Quando uma ou mais pessoas sentadas
+se erguem num barco, isto eleva G; se G subir acima de M, o barco vira. Carga alta no convés,
+tanques de topo cheios e gelo acumulado na superestrutura fazem exatamente isso, em escala de
+navio.
+
+### Paradoxo hidrostático
+
+Conforme já havia sido observado por Stevin e por Pascal: tome recipientes de formas muito
+diferentes, mas de **mesma área da base** $A$, e encha-os até a **mesma altura** $h$ de líquido.
+A força exercida sobre a base é a mesma em todos, **ainda que o peso do líquido seja muito
+diferente**. Isso resulta imediatamente da (1.4.7): as pressões sobre o fundo só dependem da
+altura $h$.
+
+O paradoxo se dissolve quando se lembra que a base não é a única superfície em contato com o
+líquido. A força que o líquido exerce sobre o prato de uma balança é a resultante de **todas** as
+forças exercidas por ele sobre as paredes do frasco, e essas forças, normais às paredes em cada
+ponto, são iguais e contrárias às exercidas pelas paredes sobre o líquido. Pela demonstração do
+princípio de Arquimedes, a resultante dessas últimas é igual e contrária ao peso do líquido. Logo
+a resultante sobre o prato é, efetivamente, igual ao peso — como a balança acusa.
+
+Num recipiente que se alarga para cima, a resultante das pressões sobre as paredes laterais tem
+componente **para baixo**, que responde pela diferença entre o peso do líquido e a força sobre a
+base; num recipiente que se estreita para cima, essa componente é **para cima**; e só no
+recipiente de paredes verticais a força sobre a base é igual ao peso do líquido.
+
+## Extensão: a atmosfera e a lei de Halley
+
+A (1.3.9), $dp/dz = -\rho g$, vale para qualquer fluido em equilíbrio no campo gravitacional.
+Para um líquido, $\rho$ é constante e chegamos à (1.4.6). Para um **gás**, é preciso levar em
+conta a compressibilidade, ou seja, o fato de que $\rho$ varia com a pressão.
+
+Num recipiente de dimensões de laboratório a variação de pressão entre o fundo e o topo de um gás
+é desprezível, porque $\rho$ é muito pequeno. Isso não vale para a atmosfera na escala de vários
+quilômetros. Supondo a atmosfera **isotérmica** — razoável até $\lesssim 1$ km —, a lei dos gases
+perfeitos dá que a densidade é diretamente proporcional à pressão:
+
+$$\frac{\rho(z)}{p(z)} = \frac{\rho(0)}{p(0)} = \frac{\rho_0}{p_0} \qquad \text{(Moysés 1.7.1)}$$
+
+com $z = 0$ ao nível do mar. Substituindo na (1.3.9):
+
+$$\frac{dp}{p} = -\frac{\rho_0 g}{p_0}\,dz = -\lambda\,dz \qquad \text{(Moysés 1.7.2)}$$
+
+Integrando,
+
+$$\int_{p_0}^{p}\frac{dp'}{p'} = \ln\left(\frac{p}{p_0}\right) = -\lambda\int_0^z dz' = -\lambda z
+\qquad \text{(Moysés 1.7.3)}$$
+
+o que leva à **lei de Halley**, ou fórmula barométrica:
+
+$$\boxed{\;p(z) = p_0\,e^{-\lambda z},\qquad \lambda = \frac{\rho_0 g}{p_0}\;}
+\qquad \text{(Moysés 1.7.4)}$$
+
+A pressão decresce **exponencialmente** com a altitude, caindo a $1/e \approx 0{,}37$ do valor
+inicial numa altura $z = 1/\lambda = p_0/(\rho_0 g)$. Para o ar a 15 °C, com
+$p_0 = 1{,}013\times10^5\ \text{N/m}^2$ e $\rho_0 = 1{,}226\ \text{kg/m}^3$, isso dá
+$1/\lambda = 8{,}4$ km — a ordem de grandeza da altura da **troposfera**.
+
+Contraste com o líquido: a mesma equação (1.3.9), com $\rho$ constante, dá pressão **linear** com
+a profundidade; com $\rho \propto p$, dá **exponencial** com a altitude. A diferença entre as
+duas está inteiramente na equação de estado do fluido — assunto da UE 4.
 
 ::: {.sp}
 Um navio-graneleiro de boca $B = 32$ m, comprimento $L = 190$ m, com área de flutuação ≈ 5800 m² no calado de projeto ($T = 10$ m), é carregado no porto de Rio Grande (água doce, $\rho = 1000$ kg/m³) até deslocamento $\Delta = 50000$ t. Qual será seu calado? Se depois sai para o mar aberto (água salgada, $\rho = 1025$ kg/m³), qual será o novo calado, mantendo o mesmo deslocamento?
@@ -98,8 +447,19 @@ tonelagem bruta (volume registrado).
 ::: {.callout-warning}
 ## Erros clássicos
 
+- **Achar que o empuxo depende da forma do corpo.** Pelo princípio de solidificação, ele depende
+  só do **volume deslocado** e da densidade do fluido. A forma do casco importa para a
+  estabilidade (posição de B e do metacentro), não para o valor de $E$.
+- **Confundir o centro de empuxo com o centro de gravidade.** B é o centroide do **volume
+  imerso**; G é o do **navio**. Eles coincidem sobre a mesma vertical no equilíbrio, mas são
+  pontos de coisas diferentes — e B se move quando o navio adorna, G não (a menos que a carga
+  corra).
+- **Pensar que M acima de G é o mesmo que B acima de G.** B está sempre abaixo de G num navio
+  carregado; o que garante estabilidade é o **metacentro** M estar acima de G.
 - **Deslocamento vs. tonelagem bruta:** deslocamento é massa de água (em toneladas métricas, t ou ton); tonelagem bruta (GT) é medida de volume interno registrado. Não são a mesma coisa.
 - **Pressão não é força:** $P = F/A$. Em diferentes profundidades de um mesmo navio, a pressão é diferente mesmo com o mesmo fluido — pressão aumenta com profundidade.
+- **Achar que a força no fundo do tanque é o peso do líquido.** Só num tanque de paredes
+  verticais. É o paradoxo hidrostático: a força sobre a base depende de $h$, não do peso.
 - **Reserva de flutuabilidade não cresce indefinidamente:** quanto mais se carrega, maior o calado; eventualmente, margem até o convés inferior diminui e, se chover ou houver onda, água entra.
 :::
 
@@ -225,6 +585,8 @@ plt.tight_layout(); plt.show()
    movendo o slider de carga e lendo o valor no painel.
 3. Um graneleiro carrega até a marca S no rio (água doce). Ao chegar ao mar, ele estará
    acima ou abaixo da marca S? É seguro?
+4. O calado da simulação sai de $\Delta = \rho V$ — a (1.6.1) resolvida para $T$. Onde, nessa
+   conta, entrou a lei de Stevin (1.4.7)?
 :::
 
 ## Onde o fenômeno vive
@@ -240,9 +602,20 @@ plt.tight_layout(); plt.show()
 - **Docagem** — conforme a doca esvazia, o empuxo é transferido gradualmente ao
   picadeiro; o instante crítico de estabilidade é quando a quilha toca e o navio
   ainda "meio flutua".
+- **Superfície livre em tanque parcialmente cheio** — a superfície do líquido é isobárica, logo
+  equipotencial: ela se mantém perpendicular à resultante gravidade + aceleração. Quando o navio
+  adorna, a carga líquida escorre e G sobe efetivamente — é a razão física das regras de
+  superfície livre em estabilidade.
+- **Balde girante e o perfil parabólico** — a (1.4.12) num tanque em rotação; o clássico de
+  laboratório que também explica o esferoide oblato dos oceanos.
 
-<!-- EXEMPLO A SIMULAR: navio carregando/descarregando (p5.js): slider de deslocamento
-     (5–80 mil t, faixa SP1) e densidade da água (1000/1025); calado resultante e
-     marca de Plimsoll. -->
+<!-- EXEMPLO A SIMULAR: metacentro (p5.js, tabela Q4: movimento): casco adornando com
+     slider de ângulo e de altura de KG; B migrando para B′, vertical por B′ cortando
+     a linha de centro em M, e o binário restaurador/emborcador indicado. -->
 
-**Conexão com o próximo tópico:** dominado o equilíbrio em repouso, agora veremos o que acontece quando o fluido **se move** — equações de continuidade e Bernoulli abrem a porta para entender bombas, propulsão e resistência do navio ao avanço.
+**Conexão com o próximo tópico:** toda a estática saiu de uma única equação,
+$\mathbf{f} = \operatorname{grad} p$, que só vale porque o fluido está em **repouso** — foi o
+repouso que eliminou as tensões tangenciais. Agora o fluido vai se mover, e a pergunta muda: como
+descrever o movimento de um meio contínuo, e o que substitui a (1.3.7) quando há aceleração? Do
+método de descrição saem a equação da continuidade e a equação de Bernoulli — e com elas as
+bombas, o tubo de Pitot, o Venturi e a propulsão.
