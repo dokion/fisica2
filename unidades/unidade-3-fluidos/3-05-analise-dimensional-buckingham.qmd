@@ -14,9 +14,26 @@ OE 3.21 [B3] Relacionar grandezas adimensionais como coeficiente de arrasto e n�
             → naval: Coeficiente de bloco Cb; número de Froude
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 27-28 >}}
+{{< aula 29-30 >}}
 
-Calcular a resistência ao avanço de um navio inteiro a partir de primeiros princípios (Navier-Stokes, camada limite, turbulência) é inviável — o problema é muito complexo. Mas existe um caminho prático: **semelhança dinâmica** — a ideia de que um modelo reduzido, testado em tanque de provas, pode revelar o comportamento do navio real se construído e ensaiado sob as condições certas. A ferramenta que torna isso possível é a **análise dimensional**, baseada no **Teorema π de Buckingham**. Este tópico mostra como reduzir o número de variáveis em um problema e como extrair leis de escala que permitem prever o desempenho de um navio a partir de testes em modelo.
+Ao longo desta unidade apareceram, sem que déssemos nome ao método, três grandezas **adimensionais**
+que resolveram problemas muito diferentes:
+
+- $\mathrm{Re} = \rho a v/\eta$ (tópico 3.4), obtido comparando a resistência inercial $\rho a^3v^2$
+  com a de atrito $\eta a^2 v$ — um argumento puro de ordens de grandeza;
+- $C_D = R/(\tfrac{1}{2}\rho v^2 A)$ (tópico 3.6), a resistência dividida pela pressão dinâmica;
+- $C_L$ (tópico 3.7), o mesmo para a sustentação.
+
+Nenhum deles tem unidade, e todos têm a mesma virtude: **descrevem famílias inteiras de escoamentos
+de uma vez**, independentemente do tamanho do corpo, da velocidade e do fluido. Dois escoamentos
+geometricamente semelhantes e com o mesmo Re são o mesmo escoamento.
+
+Isso não foi sorte. Há um método sistemático que produz esses agrupamentos a partir apenas das
+dimensões das grandezas envolvidas, e um teorema que diz **quantos** deles existem: a **análise
+dimensional** e o **Teorema π de Buckingham**. Este tópico fecha a unidade generalizando o que já
+usamos, acrescentando o adimensional que ainda falta — o número de Froude — e respondendo à pergunta
+prática que resume tudo: **como prever a resistência de um navio de 240 m a partir de um modelo de
+4 m num tanque de provas.**
 
 ## Análise dimensional: conceito e objetivo {{< ra OE3.18 B2 >}}
 
@@ -269,4 +286,20 @@ plt.tight_layout(); plt.show()
      de escala do modelo; velocidades, tempos e potências correspondentes do navio
      real. -->
 
-**Conexão com o próximo tópico:** usando análise dimensional e semelhança, agora podemos falar de **arrasto** em detalhe — seus componentes (pressão, atrito, total) — e como a geometria do casco e escoamento afetam a resistência. Tópico 3.6.
+**Fecho da unidade:** os oito tópicos percorreram o caminho do Moysés de ponta a ponta. Partimos da
+única propriedade que separa sólido de fluido — a incapacidade de equilibrar tensões tangenciais —
+e dela tiramos a isotropia da pressão, a equação geral do equilíbrio e, como casos particulares,
+Stevin, Pascal e Arquimedes. Pusemos o fluido em movimento e obtivemos a continuidade e Bernoulli;
+com a circulação, explicamos a sustentação do leme e da pá. Aí a hipótese de fluido perfeito
+mostrou o seu limite no paradoxo de d'Alembert, a viscosidade voltou, e com ela vieram a camada
+limite, o descolamento e os dois arrastos. A análise dimensional, por fim, organizou tudo em
+adimensionais e tornou o ensaio em modelo possível.
+
+O que fica em pé, para o exercício profissional: flutuabilidade e estabilidade (3.1–3.2), sistemas
+de bombeamento e a hidrodinâmica da manobra (3.3), propulsão e governo (3.7–3.8), resistência ao
+avanço e previsão de potência (3.4–3.6), e o método de escalar do modelo para o navio (3.5).
+
+**Próxima unidade:** falta a fonte de tudo isso. A **UE 4 — Termodinâmica** trata de como a máquina
+propulsiva (motor diesel, turbina, caldeira) converte combustível em trabalho mecânico — o trabalho
+que, entregue ao hélice, gera a circulação da pá e vence a resistência que acabamos de calcular.
+FIM DA UNIDADE 3.

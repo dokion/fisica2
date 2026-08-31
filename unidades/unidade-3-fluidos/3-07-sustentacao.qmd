@@ -14,7 +14,7 @@ OE 3.29 [B4] Comparar a sustentação em diferentes condições de escoamento
             → naval: Hélice de passo fixo vs. passo controlável
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 29-30 >}}
+{{< aula 25-26 >}}
 
 O tópico anterior estabeleceu que a força vale $L' = \rho v \Gamma$ e deixou uma pergunta em
 aberto: **de onde vem $\Gamma$?** Aqui a respondemos duas vezes — primeiro pelo caso mais simples,

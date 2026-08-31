@@ -16,7 +16,7 @@ OE 3.17 [B4] Analisar a transição do escoamento laminar para turbulento
             → naval: Número de Reynolds crítico para cascos de navio
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 25-26 >}}
+{{< aula 27-28 >}}
 
 O tópico anterior terminou num impasse: o fluido perfeito nos deu sustentação, mas também
 resistência **nula** ao avanço — o paradoxo de d'Alembert — e nenhum mecanismo para gerar o

@@ -17,6 +17,10 @@ A disciplina aborda os fenômenos físicos relacionados a oscilações, ondas, m
 ## 2. Cronograma
 
 > Régua: par de aulas (Apêndice II). CHD = 80 h-aula = 40 pares. 4 h-aula de avaliação = 2 pares.
+>
+> Na **UE 3**, a ordem de ensino é a dos capítulos 1 e 2 do Moysés, não a numérica da Parte B:
+> 3.1 → 3.2 → 3.3 → 3.8 → 3.7 → 3.4 → 3.6 → 3.5. A coluna de OE acima já reflete essa ordem.
+> Concordância seção a seção em `_docs/roteiro-moyses-ue3.md`.
 
 | Aulas | UE | Tópicos | OE (objetivos específicos) | Verificação |
 |---|---|---|---|---|
@@ -31,11 +35,11 @@ A disciplina aborda os fenômenos físicos relacionados a oscilações, ondas, m
 | 17-18 | 2 | Intensidade sonora; batimentos; efeito Doppler | 2.16–2.24 | C2 Estudo de caso (ecobatímetro/log Doppler) |
 | 19-20 | 2 | Velocidades supersônicas; ondas de choque; cone de Mach | 2.25–2.27 | — |
 | {PAR} | — | **PROVA 1 — Ciclo 1 (UE 1 + UE 2)** | — | P1 |
-| 21-22 | 3 | Propriedades dos fluidos; Pascal; Arquimedes; hidrostática | 3.1–3.7 | — |
-| 23-24 | 3 | Equilíbrio de flutuantes; escoamento; continuidade; Bernoulli | 3.8–3.12 | — |
-| 25-26 | 3 | Reynolds; Navier-Stokes; camada limite; transição | 3.13–3.17 | C3 Quiz Dokion |
-| 27-28 | 3 | Análise dimensional; Buckingham; grandezas adimensionais | 3.18–3.21 | — |
-| 29-30 | 3 | Arrasto; sustentação; Kutta-Joukowski; vórtice de esteira | 3.22–3.33 | — |
+| 21-22 | 3 | Tensões e viscosidade; pressão e isotropia; equilíbrio; Stevin; Pascal; Arquimedes; flutuantes | 3.1–3.8 | — |
+| 23-24 | 3 | Euler; continuidade; fluido perfeito; Bernoulli; Torricelli, Pitot, Venturi | 3.9–3.12 | — |
+| 25-26 | 3 | Circulação; rotacional × irrotacional; Thomson; Kutta-Joukowski; Magnus; aerofólio; d'Alembert | 3.26–3.33 | C3 Quiz Dokion |
+| 27-28 | 3 | Viscosidade e Hagen-Poiseuille; Navier-Stokes; Reynolds; camada limite; transição | 3.13–3.17 | — |
+| 29-30 | 3 | Descolamento e esteira; arrasto de atrito e de pressão; $C_D$; análise dimensional; Buckingham; Froude | 3.18–3.25 | — |
 | 31-32 | 4 | Lei Zero; temperatura; dilatação térmica; calor | 4.1–4.14 | — |
 | 33-34 | 4 | Condução; Fourier; 1ª Lei; gases ideais; entalpia | 4.15–4.30 | C4 Projeto computacional (início) |
 | 35-36 | 4 | Calores específicos; adiabáticos; Poisson | 4.31–4.36 | — |

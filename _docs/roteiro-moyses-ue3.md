@@ -149,11 +149,29 @@ Um caso de conteúdo repartido, também deliberado:
 - Provas, blueprints e banco Dokion continuam fora do Quarto (Apêndice Q §Q1) — os problemas
   dos capítulos 1 e 2 alimentam o banco, não a apostila.
 
-## 6. Pendências abertas (fora do escopo desta reordenação)
+## 6. Badges de aula e cronograma
 
-- Os `{{< aula >}}` da UE 3 ainda estão distribuídos na ordem numérica antiga; serão
-  redistribuídos na fase final.
-- A linha da UE 3 no cronograma do `index.qmd` ainda lista os OE em ordem numérica.
+Os `{{< aula >}}` foram redistribuídos para acompanhar a ordem de leitura, mantendo os mesmos
+cinco pares que a UE 3 já ocupava:
+
+| Par | Tópicos |
+|---|---|
+| 21-22 | 3.1, 3.2 |
+| 23-24 | 3.3 |
+| 25-26 | 3.8, 3.7 |
+| 27-28 | 3.4 |
+| 29-30 | 3.6, 3.5 |
+
+A linha da UE 3 no cronograma do `index.qmd` foi reescrita para bater com isso, e a verificação
+C3 (Quiz Dokion) foi mantida no par 25-26 — a posição do instrumento é decisão do professor, e o
+Apêndice I amarra avaliação a par de aulas, não a tópico.
+
+## 7. Pendências abertas (fora do escopo desta reordenação)
+
 - A UE 3 tem 16 h-aula expositivas + 4 práticas = 10 pares (Apêndice II §II1), mas os badges
-  cobrem 5 pares e as 4 h-aula práticas não têm contrapartida.
+  cobrem 5 pares e as 4 h-aula práticas não têm contrapartida. A compressão é global (o
+  cronograma inteiro usa 20 pares para 40 pares de CHD), não específica da UE 3.
 - `_quarto.yml` não declara `format: pdf`, exigido pelo CLAUDE.md §5.
+- Ordem interna do `3-05`: as seções seguem 3.18, 3.19, 3.21, 3.20 — os adimensionais são
+  definidos antes da semelhança dinâmica, porque não se pode falar em escala de Froude antes de
+  definir Fr. Sem base no Moysés para arbitrar; mantido por coerência lógica.
