@@ -121,6 +121,12 @@ Dois, ambos deliberados:
    para a viscosidade. Na ordem de leitura o `3-07` é o último tópico sob a hipótese de fluido
    perfeito, então é dele que a ponte sai. O `3-06` reabre citando o paradoxo para resolvê-lo.
 
+3. **O trecho da asa em §2.7(c) sobe para o `3-07`.** No fim de §2.7, ao discutir a resistência,
+   o Moysés explica de onde vem a circulação da asa: o enrolamento no bordo de fuga gera o
+   **vórtice de partida**, e a circulação horária em torno da asa é a contrapartida exigida pelo
+   teorema de Thomson (2.6.15). Esse é o fecho lógico de §2.6(c) e responde à pergunta que o
+   `3-08` deixa em aberto, então é lido junto com o aerofólio, não seis páginas depois.
+
 Um caso de conteúdo repartido, também deliberado:
 
 3. **Viscosidade aparece duas vezes, em níveis diferentes.** O Moysés a introduz
