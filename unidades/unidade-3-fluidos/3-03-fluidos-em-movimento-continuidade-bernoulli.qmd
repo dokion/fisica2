@@ -659,8 +659,290 @@ plt.tight_layout(); plt.show()
 - **Esvaziamento de tanque por dreno** — Torricelli com fator de contração: a vazão real por um
   orifício é ~0,6 $Av$, e é isso que decide o tempo de operação.
 
-<!-- EXEMPLO A SIMULAR: squat (p5.js): perfil do canal com slider de velocidade e de
-     UKC; linhas de corrente acelerando sob a quilha e afundamento dinâmico. -->
+### Squat: continuidade e Bernoulli virando acidente de navegação
+
+Num canal, a água que passa sob a quilha não tem por onde escapar: a seção disponível
+diminui, e pela continuidade (2.2.4) o escoamento **acelera**. Por Bernoulli (2.4.6), onde a
+velocidade sobe a pressão cai — e o navio **afunda dinamicamente**.
+
+O modelo sai direto das duas equações. Sendo $A_s$ a área da seção mestra imersa e $A_c$ a
+seção do canal, o **fator de bloqueio** é $S = A_s/A_c$. A continuidade obriga a água a passar
+pela seção livre $A_c - A_s$, de modo que a velocidade sob a quilha é
+
+$$v_{\text{sob a quilha}} = \frac{v}{1 - S}$$
+
+e a queda de nível pela Bernoulli é
+
+$$\boxed{\;\Delta h = \frac{v^2}{2g}\left[\frac{1}{(1-S)^2} - 1\right]\;}$$
+
+A prática usa fórmulas empíricas (Barrass, ICORELS) que acrescentam o efeito de trim e da
+forma do casco, mas o mecanismo é este — e mostra por que a defesa é **reduzir velocidade**:
+o squat cresce com $v^2$.
+
+```{python}
+#| fig-cap: "Squat de um navio de seção mestra 320 m² (B = 32 m, T = 10 m) num canal de 200 m de largura, para três profundidades. O afundamento cresce com v² e explode quando a folga sob a quilha diminui: a 10 nós em 11 m de profundidade passa de meio metro. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+Bs, Ts, Wc, g = 32.0, 10.0, 200.0, 9.81
+As = Bs*Ts
+kn = 0.5144
+v = np.linspace(2, 12, 300)*kn
+fig, ax = plt.subplots(figsize=(9, 3.4))
+for Hc, c in [(11.0, '#C81F1F'), (13.0, '#C85C2E'), (16.0, '#1F47C8')]:
+    S = As/(Wc*Hc)
+    dh = v**2/(2*g)*(1/(1-S)**2 - 1)
+    ax.plot(v/kn, dh, color=c, lw=2, label=f'profundidade {Hc:.0f} m  (UKC inicial {Hc-Ts:.0f} m, S = {S:.3f})')
+ax.set_xlabel('velocidade (nós)'); ax.set_ylabel('squat Δh (m)')
+ax.legend(fontsize=8.5); ax.grid(alpha=.25)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO — linhas de corrente acelerando sob a
+     quilha e o casco afundando). p5 de libs/ (offline, Q6). Casco B=32, T=10 (A_s=320 m²),
+     canal de 200 m; sliders de velocidade e de profundidade. Mesmos parâmetros da matplotlib. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .sq-wrap{max-width:1000px;margin:1rem auto;}
+  .sq-wrap .sq-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .sq-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:170px;flex:1 1 170px;}
+  .sq-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .sq-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .sq-wrap input[type=range]{width:100%;max-width:240px;accent-color:#c85c2e;}
+  .sq-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .sq-wrap #sqSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .sq-wrap #sqEq{font-size:14px;margin:8px 2px 0;line-height:1.6;}
+  .sq-wrap #sqEq b{color:#1f47c8;}
+</style>
+<div class="sq-wrap sim">
+  <div class="sq-row">
+    <button id="sqPlay">⏸ Pausar</button>
+    <div class="sld"><label>Velocidade = <span class="val" id="sqVv">8</span> nós</label>
+      <input type="range" id="sqV" min="2" max="12" value="8" step="0.5"></div>
+    <div class="sld"><label>Profundidade do canal = <span class="val" id="sqHv">13</span> m</label>
+      <input type="range" id="sqH" min="10.5" max="20" value="13" step="0.5"></div>
+  </div>
+  <div id="sqSketch"></div>
+  <div id="sqEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let parts=[], playing=true;
+  const Bs=32, Ts=10, Wc=200, g=9.81, As=Bs*Ts, kn=0.5144;
+  const cw=()=>{ const w=(el('sqSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),360).parent('sqSketch');
+      for(let i=0;i<160;i++) parts.push({x:Math.random(), y:Math.random()}); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),360); };
+    p.draw=()=>{
+      const W=p.width, H=p.height;
+      const vkn=+el('sqV').value, Hc=+el('sqH').value;
+      el('sqVv').textContent=vkn.toFixed(1); el('sqHv').textContent=Hc.toFixed(1);
+      const v=vkn*kn, S=As/(Wc*Hc);
+      const dh=v*v/(2*g)*(1/((1-S)*(1-S))-1);
+      const ukc0=Hc-Ts, ukc=ukc0-dh;
+      // escala vertical: metros -> px
+      const ytop=54, mpp=(H-96)/22, yfundo=ytop+Hc*mpp;
+      p.background('#eaf1f6');
+      // água e fundo
+      p.noStroke(); p.fill(150,185,215,150); p.rect(0,ytop,W,yfundo-ytop);
+      p.fill('#a89878'); p.rect(0,yfundo,W,H-yfundo);
+      // casco (afundado por dh)
+      const hx0=W*0.30, hx1=W*0.70, ykeel=ytop+(Ts+dh)*mpp;
+      p.fill('#55524c'); p.beginShape();
+      p.vertex(hx0,ytop-26+dh*mpp); p.vertex(hx1,ytop-26+dh*mpp);
+      p.vertex(hx1,ykeel-10); p.vertex(hx1-26,ykeel); p.vertex(hx0+26,ykeel); p.vertex(hx0,ykeel-10);
+      p.endShape(p.CLOSE);
+      // linha d'água
+      p.stroke('#1f47c8'); p.strokeWeight(1.6); p.line(0,ytop,W,ytop);
+      // partículas: aceleram sob a quilha
+      const vsob=v/(1-S), vmax=vsob;
+      p.stroke('#1f47c8'); p.strokeWeight(1.6);
+      for(const q of parts){
+        const gx=q.x*W, sob=(gx>hx0&&gx<hx1);
+        const yy = sob ? ykeel+2+q.y*(yfundo-ykeel-4) : ytop+2+q.y*(yfundo-ytop-4);
+        const vloc = sob ? vsob : v;
+        if(playing) q.x += (p.deltaTime/1000)*vloc/vmax*0.16;
+        if(q.x>1){ q.x=0; q.y=Math.random(); }
+        p.stroke(31,71,200, sob?235:120); p.strokeWeight(sob?2.4:1.4);
+        p.point(gx,yy);
+      }
+      // cotas
+      p.stroke('#c81f1f'); p.strokeWeight(1.4); p.drawingContext.setLineDash([3,4]);
+      p.line(W*0.80,ytop,W*0.80,ytop+dh*mpp); p.drawingContext.setLineDash([]);
+      p.noStroke(); p.fill('#c81f1f'); p.textSize(11); p.textAlign(p.LEFT,p.CENTER);
+      p.text('squat '+dh.toFixed(2)+' m',W*0.81,ytop+dh*mpp/2);
+      p.stroke(ukc<1?'#c81f1f':'#2e9e5b'); p.strokeWeight(2); p.drawingContext.setLineDash([4,4]);
+      p.line(W*0.50,ykeel,W*0.50,yfundo); p.drawingContext.setLineDash([]);
+      p.noStroke(); p.fill(ukc<1?'#c81f1f':'#2e7d4f'); p.textAlign(p.LEFT,p.CENTER);
+      p.text('UKC '+ukc.toFixed(2)+' m',W*0.51,(ykeel+yfundo)/2);
+      p.fill('#7a7367'); p.textSize(11); p.textAlign(p.LEFT,p.TOP);
+      p.text('v sob a quilha = v/(1−S) = '+vsob.toFixed(2)+' m/s   (livre: '+v.toFixed(2)+' m/s)',10,H-24);
+
+      el('sqEq').innerHTML='S = A_s/A_c = <b>'+S.toFixed(3)+'</b> &nbsp;|&nbsp; '+
+        'Δh = (v²/2g)[1/(1−S)² − 1] = <b>'+dh.toFixed(2)+' m</b> &nbsp;|&nbsp; '+
+        'UKC: '+ukc0.toFixed(2)+' → <b>'+ukc.toFixed(2)+' m</b>'+
+        (ukc<1?' <span style="color:#c81f1f;font-weight:700">— folga crítica</span>':'');
+    };
+  });
+  el('sqPlay').onclick=()=>{ playing=!playing; el('sqPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. A 13 m de profundidade, dobre a velocidade de 5 para 10 nós. O squat dobra? Confirme pela
+   dependência em $v^2$ e explique por que "reduzir a máquina" é a manobra de defesa.
+2. Fixe 8 nós e reduza a profundidade de 20 m para 10,5 m. O squat cresce muito mais rápido
+   que linearmente — qual termo da fórmula é responsável?
+3. As partículas correm mais rápido sob a quilha. Que equação obriga isso, e que equação
+   converte essa velocidade maior em afundamento?
+4. Por que o squat é mais perigoso num canal estreito do que em mar aberto à mesma
+   profundidade?
+:::
+
+### Torricelli e o fator de contração
+
+O jato que sai de um orifício tem velocidade $v = \sqrt{2gh}$ (2.5.1) — a mesma da queda livre
+de uma altura $h$. Mas a **vazão** não é $Av$: a veia líquida se contrai logo depois do
+orifício, e a seção real do jato é cerca de 60% da área do furo. Quem dimensiona o tempo de
+esvaziamento de um tanque por um dreno esquecendo isso erra por 40%.
+
+Fora do tanque, o jato é um lançamento horizontal: com o orifício a uma altura $H - h$ do
+piso, o alcance é
+
+$$x = v\,t = \sqrt{2gh}\cdot\sqrt{\frac{2(H-h)}{g}} = 2\sqrt{h\,(H-h)}$$
+
+que é **máximo em $h = H/2$** — o furo no meio da parede é o que joga a água mais longe.
+
+```{python}
+#| fig-cap: "Escoamento por orifício num tanque de H = 1,2 m. Esquerda: trajetórias do jato para três profundidades do furo; o alcance x = 2√(h(H−h)) é máximo com o furo na meia-altura. Direita: velocidade de saída (√2gh) e vazão ideal contra a real, com fator de contração 0,62. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+Ht, g, Aor, Cc = 1.20, 9.81, 3e-4, 0.62      # tanque 1,2 m; orifício 3 cm²
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9, 3.4))
+for h, c in [(0.30, '#1F47C8'), (0.60, '#C81F1F'), (0.90, '#2E9E5B')]:
+    v = np.sqrt(2*g*h); y0 = Ht - h
+    t = np.linspace(0, np.sqrt(2*y0/g), 60)
+    ax1.plot(v*t, y0 - g*t**2/2, color=c, lw=2, label=f'h = {h:.2f} m → x = {2*np.sqrt(h*(Ht-h)):.2f} m')
+ax1.plot([0, 0], [0, Ht], color='#55524c', lw=3)
+ax1.axhline(0, color='#a89878', lw=3)
+ax1.set_xlabel('alcance (m)'); ax1.set_ylabel('altura (m)'); ax1.legend(fontsize=8); ax1.grid(alpha=.25)
+h = np.linspace(0.02, Ht, 200)
+ax2.plot(h, np.sqrt(2*g*h)*Aor*1e3, color='#1F47C8', lw=2, label='vazão ideal  $A\\sqrt{2gh}$')
+ax2.plot(h, Cc*np.sqrt(2*g*h)*Aor*1e3, color='#C81F1F', lw=2, label=f'vazão real  ({Cc}·ideal)')
+ax2.set_xlabel('profundidade do orifício h (m)'); ax2.set_ylabel('vazão (L/s)')
+ax2.legend(fontsize=8); ax2.grid(alpha=.25)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO — o jato saindo e caindo). p5 de libs/
+     (offline, Q6). Tanque H = 1,2 m, orifício 3 cm², fator de contração 0,62. Slider de
+     profundidade do furo. Mesmos parâmetros da matplotlib. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .to-wrap{max-width:1000px;margin:1rem auto;}
+  .to-wrap .to-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .to-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:190px;flex:1 1 190px;}
+  .to-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .to-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .to-wrap input[type=range]{width:100%;max-width:250px;accent-color:#c85c2e;}
+  .to-wrap #toSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .to-wrap #toEq{font-size:14px;margin:8px 2px 0;line-height:1.6;}
+  .to-wrap #toEq b{color:#1f47c8;}
+</style>
+<div class="to-wrap sim">
+  <div class="to-row">
+    <div class="sld"><label>Profundidade do orifício h = <span class="val" id="toHv">0.60</span> m</label>
+      <input type="range" id="toH" min="0.05" max="1.15" value="0.60" step="0.05"></div>
+  </div>
+  <div id="toSketch"></div>
+  <div id="toEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  const Ht=1.20, g=9.81, Aor=3e-4, Cc=0.62;
+  const cw=()=>{ const w=(el('toSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  new p5((p)=>{
+    let drops=[];
+    p.setup=()=>{ p.createCanvas(cw(),340).parent('toSketch');
+      for(let i=0;i<70;i++) drops.push({t:Math.random()*0.6}); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),340); };
+    p.draw=()=>{
+      const W=p.width, H=p.height, h=+el('toH').value;
+      el('toHv').textContent=h.toFixed(2);
+      const v=Math.sqrt(2*g*h), y0=Ht-h, tf=Math.sqrt(2*y0/g), alc=2*Math.sqrt(h*(Ht-h));
+      const Qi=Aor*v*1000, Qr=Cc*Qi;
+      const sc=Math.min((H-70)/1.35, (W*0.55)/1.5);
+      const px0=W*0.14, py0=H-42;                       // origem: pé da parede
+      const P=(x,y)=>[px0+x*sc, py0-y*sc];
+      p.background('#faf8f4');
+      // piso e tanque
+      p.noStroke(); p.fill('#a89878'); p.rect(0,py0,W,H-py0);
+      const [tx,ty]=P(0,Ht);
+      p.fill(127,178,217,150); p.rect(tx-52,ty,52,Ht*sc);
+      p.stroke('#55524c'); p.strokeWeight(3); p.noFill();
+      p.line(tx,ty,tx,py0); p.line(tx-52,ty,tx-52,py0); p.line(tx-52,py0,tx,py0);
+      p.stroke('#1f47c8'); p.strokeWeight(1.6); p.line(tx-52,ty,tx,ty);
+      // cota h
+      const [ox,oy]=P(0,y0);
+      p.stroke('#66308c'); p.strokeWeight(1.2); p.drawingContext.setLineDash([3,4]);
+      p.line(tx-62,ty,tx-62,oy); p.drawingContext.setLineDash([]);
+      p.noStroke(); p.fill('#66308c'); p.textSize(11); p.textAlign(p.RIGHT,p.CENTER);
+      p.text('h = '+h.toFixed(2)+' m',tx-66,(ty+oy)/2);
+      // trajetória do jato
+      p.push(); p.noFill(); p.stroke('#1f47c8'); p.strokeWeight(2.4); p.beginShape();
+      for(let i=0;i<=60;i++){ const t=i/60*tf; const [jx,jy]=P(v*t, y0-g*t*t/2); p.vertex(jx,jy); }
+      p.endShape(); p.pop();
+      // gotas animadas + veia contraída
+      p.noStroke(); p.fill('#1f47c8');
+      for(const d of drops){ d.t+=p.deltaTime/1000*0.9; if(d.t>tf) d.t=0;
+        const [jx,jy]=P(v*d.t, y0-g*d.t*d.t/2); p.circle(jx,jy,4); }
+      p.fill('#c85c2e'); p.circle(ox+7,oy,7);
+      p.textSize(10); p.textAlign(p.LEFT,p.BOTTOM);
+      p.text('veia contraída ≈ 62% da área',ox+12,oy-6);
+      // alcance
+      const [ax1,ay1]=P(alc,0);
+      p.stroke('#2e9e5b'); p.strokeWeight(2); p.line(ox,py0+12,ax1,py0+12);
+      p.noStroke(); p.fill('#2e7d4f'); p.textSize(11); p.textAlign(p.CENTER,p.TOP);
+      p.text('x = '+alc.toFixed(2)+' m',(ox+ax1)/2,py0+15);
+      // curva de alcance x(h)
+      const gx0=W*0.70, gx1=W-18, gy0=44, gy1=H-70;
+      const X=hh=>gx0+hh/Ht*(gx1-gx0), Y=xx=>gy1-xx/(Ht*1.05)*(gy1-gy0);
+      p.stroke('#bdb4a4'); p.strokeWeight(1); p.line(gx0,gy1,gx1,gy1); p.line(gx0,gy0,gx0,gy1);
+      p.push(); p.noFill(); p.stroke('#2e9e5b'); p.strokeWeight(2); p.beginShape();
+      for(let hh=0.02;hh<=Ht;hh+=0.01) p.vertex(X(hh),Y(2*Math.sqrt(hh*(Ht-hh)))); p.endShape(); p.pop();
+      p.noStroke(); p.fill('#66308c'); p.circle(X(h),Y(alc),8);
+      p.fill('#8a8073'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      p.text('alcance × profundidade do furo',(gx0+gx1)/2,gy1+5);
+      p.textAlign(p.CENTER,p.BOTTOM); p.text('máx. em h = H/2',X(Ht/2),Y(Ht)-4);
+
+      el('toEq').innerHTML='v = √(2gh) = <b>'+v.toFixed(2)+' m/s</b> &nbsp;|&nbsp; '+
+        'alcance x = 2√(h(H−h)) = <b>'+alc.toFixed(2)+' m</b> &nbsp;|&nbsp; '+
+        'vazão ideal A·v = '+Qi.toFixed(2)+' L/s &nbsp;→&nbsp; <b>real ≈ '+Qr.toFixed(2)+' L/s</b> (0,62·ideal)';
+    };
+  });
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Desça o furo até quase o fundo: a velocidade de saída é máxima, mas o alcance é pequeno.
+   Por quê? Onde fica o alcance máximo, e o que a curva à direita mostra?
+2. A velocidade $\sqrt{2gh}$ é a da queda livre de uma altura $h$. De onde veio essa
+   coincidência — que equação a produziu?
+3. Um dreno de 3 cm² no fundo de um tanque: se você dimensionar o tempo de esvaziamento por
+   $Q = Av$, vai errar para mais ou para menos, e por quanto?
+:::
 
 **Conexão com o próximo tópico:** Bernoulli e a continuidade descrevem o que acontece **ao longo
 de** uma linha de corrente. Mas há uma pergunta que elas não respondem: como caracterizar o

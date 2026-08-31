@@ -420,8 +420,188 @@ plt.tight_layout(); plt.show()
   mercantes atuais, gerando empuxo por Magnus com o vento de través.
 - **Bola com efeito** — Magnus na esfera; o clássico não naval que todo aluno já viu.
 
-<!-- EXEMPLO A SIMULAR: força de leme × ângulo de ataque (p5.js): curva com estol e
-     slider de velocidade mostrando a dependência em v². -->
+### O vórtice de partida: de onde a asa tira a circulação
+
+Esta é a construção da seção "De onde vem a circulação da asa", posta em movimento. A asa parte
+do **repouso**, com circulação nula em todo o fluido. Conforme ela acelera, o escoamento não
+consegue contornar o bordo de fuga afilado: a linha de corrente se enrola e um vórtice é
+**largado** ali — o vórtice de partida, anti-horário.
+
+Acompanhe as três contagens no painel. Pelo teorema de Thomson (2.6.15), a circulação no
+circuito grande ABCD, formado sempre das mesmas partículas, **permanece nula o tempo todo**.
+Pela propriedade aditiva (2.6.8),
+
+$$C_{\text{ABCD}} = C_{\text{AEFD}} + C_{\text{EBCF}} = 0
+\quad\Longrightarrow\quad
+\underbrace{C_{\text{AEFD}}}_{\text{asa, horária}} = -\underbrace{C_{\text{EBCF}}}_{\text{vórtice, anti-horária}}$$
+
+A sustentação não é de graça: a circulação da asa é **paga** com um vórtice de sinal oposto,
+deixado para trás na partida.
+
+```{python}
+#| fig-cap: "Geração da circulação da asa em três instantes (t = 0, t = τ e t = 4τ, com Γ∞ = 6,0 m²/s). O vórtice de partida (verde, anti-horário) é largado no bordo de fuga e afasta-se a jusante; a circulação ligada à asa (vermelha, horária) cresce em módulo exatamente igual. A soma sobre o circuito ABCD é nula em todos os instantes — teorema de Thomson. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+Ginf, tau, v = 6.0, 0.6, 2.0
+def perfil(xc, yc, c=1.0, al=8):
+    u = np.linspace(0, 1, 60)
+    up = -0.13*c*np.sin(np.pi*u**0.75)
+    lo = 0.05*c*np.sin(np.pi*u**0.9)
+    x = np.r_[(u-0.5)*c, (u[::-1]-0.5)*c]
+    y = np.r_[up, lo[::-1]]
+    a = np.radians(al)
+    return xc + x*np.cos(a) + y*np.sin(a), yc - x*np.sin(a) + y*np.cos(a)
+
+fig, axs = plt.subplots(1, 3, figsize=(9, 2.9))
+for ax, t in zip(axs, [0.0, tau, 4*tau]):
+    Gb = Ginf*(1 - np.exp(-t/tau))
+    ax.add_patch(plt.Rectangle((-1.6, -1.25), 6.4, 2.5, fill=False, ec='#8a8073', lw=1.2))
+    ax.axvline(1.1, color='#8a8073', lw=1.0, ls='--')          # partição EF
+    xa, ya = perfil(0.0, 0.0)
+    ax.fill(xa, ya, color='#55524c')
+    if Gb > 0.05:                                              # circulação ligada (horária)
+        ax.annotate('', xy=(0.45, 0.30), xytext=(-0.45, 0.30),
+                    arrowprops=dict(arrowstyle='-|>', color='#C81F1F', lw=1 + 2.4*Gb/Ginf,
+                                    connectionstyle='arc3,rad=-0.55'))
+        xv = 0.5 + v*t                                         # vórtice de partida
+        ax.plot(xv, -0.10, 'o', color='#2E9E5B', ms=6 + 9*Gb/Ginf, alpha=.85)
+        ax.annotate('', xy=(xv - 0.28, -0.10), xytext=(xv + 0.28, -0.10),
+                    arrowprops=dict(arrowstyle='-|>', color='#2E9E5B', lw=1 + 2.4*Gb/Ginf,
+                                    connectionstyle='arc3,rad=-0.55'))
+    for lab, xy in [('A', (-1.6, -1.25)), ('B', (4.8, -1.25)), ('C', (4.8, 1.25)), ('D', (-1.6, 1.25)),
+                    ('E', (1.1, -1.25)), ('F', (1.1, 1.25))]:
+        ax.annotate(lab, xy, textcoords='offset points', xytext=(3, 3), fontsize=8.5, color='#6b6357')
+    ax.set_title(f't = {t/tau:.0f}τ\n$C_{{AEFD}}$ = {Gb:+.2f},  $C_{{EBCF}}$ = {-Gb:+.2f},  soma = 0',
+                 fontsize=8.5)
+    ax.set_xlim(-2, 5.2); ax.set_ylim(-1.6, 1.6); ax.set_aspect('equal')
+    ax.set_xticks([]); ax.set_yticks([])
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO — a partida do repouso e o vórtice
+     sendo largado). p5 de libs/ (offline, Q6). Γ_b(t) = Γ∞(1−e^{−t/τ}) com Γ∞ = 6,0 e
+     τ = 0,6 s; vórtice convectado a v = 2,0. Mesmos parâmetros da matplotlib. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .vp-wrap{max-width:1000px;margin:1rem auto;}
+  .vp-wrap .vp-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .vp-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:170px;flex:1 1 170px;}
+  .vp-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .vp-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .vp-wrap input[type=range]{width:100%;max-width:240px;accent-color:#c85c2e;}
+  .vp-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .vp-wrap #vpSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .vp-wrap #vpEq{font-size:14px;margin:8px 2px 0;line-height:1.6;}
+  .vp-wrap #vpEq b{color:#1f47c8;}
+</style>
+<div class="vp-wrap sim">
+  <div class="vp-row">
+    <button id="vpGo">↺ partir do repouso</button>
+    <button id="vpPlay">⏸ Pausar</button>
+    <div class="sld"><label>Circulação final Γ∞ = <span class="val" id="vpGv">6.0</span> m²/s</label>
+      <input type="range" id="vpG" min="2" max="12" value="6" step="0.5"></div>
+  </div>
+  <div id="vpSketch"></div>
+  <div id="vpEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let t=0, playing=true;
+  const tau=0.6, v=2.0;
+  const cw=()=>{ const w=(el('vpSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  new p5((p)=>{
+    // arco com ponta de seta, raio r em torno de (x,y); sentido: +1 horário, -1 anti-horário
+    const arco=(x,y,r,sentido,cor,esp)=>{
+      p.push(); p.noFill(); p.stroke(cor); p.strokeWeight(esp);
+      p.arc(x,y,2*r,2*r,-2.5,1.9);
+      const a=sentido>0?1.9:-2.5, ax=x+r*Math.cos(a), ay=y+r*Math.sin(a);
+      p.translate(ax,ay); p.rotate(a+sentido*p.HALF_PI);
+      p.noStroke(); p.fill(cor); p.triangle(0,-7,-5,4,5,4); p.pop();
+    };
+    p.setup=()=>{ p.createCanvas(cw(),330).parent('vpSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),330); };
+    p.draw=()=>{
+      const W=p.width, H=p.height, Ginf=+el('vpG').value;
+      el('vpGv').textContent=Ginf.toFixed(1);
+      if(playing) t+=p.deltaTime/1000;
+      const Gb=Ginf*(1-Math.exp(-t/tau)), frac=Gb/Ginf;
+      const sc=Math.min((W-70)/7.2, (H-100)/3.2);
+      const cx=W*0.24, cy=H*0.46, X=u=>cx+u*sc, Y=u=>cy-u*sc;
+
+      p.background('#f4f6f8');
+      // circuito ABCD + partição EF
+      p.noFill(); p.stroke('#8a8073'); p.strokeWeight(1.4);
+      p.rect(X(-1.6),Y(1.25),(4.8+1.6)*sc,2.5*sc);
+      p.strokeWeight(1); p.drawingContext.setLineDash([5,5]);
+      p.line(X(1.1),Y(1.25),X(1.1),Y(-1.25)); p.drawingContext.setLineDash([]);
+      p.noStroke(); p.fill('#6b6357'); p.textSize(11);
+      const rot=[['A',-1.6,-1.25],['B',4.8,-1.25],['C',4.8,1.25],['D',-1.6,1.25],['E',1.1,-1.25],['F',1.1,1.25]];
+      for(const [lab,ux,uy] of rot){ p.textAlign(p.CENTER,p.CENTER); p.text(lab,X(ux)+(ux<0?-11:11),Y(uy)+(uy<0?13:-13)); }
+      // rótulos dos subcircuitos
+      p.fill('#c81f1f'); p.textSize(10.5); p.textAlign(p.CENTER,p.TOP);
+      p.text('AEFD (asa)',X(-0.25),Y(1.25)+6);
+      p.fill('#2e7d4f'); p.text('EBCF (vórtice)',X(2.95),Y(1.25)+6);
+      // escoamento
+      p.stroke('#9fb4c9'); p.strokeWeight(1);
+      for(let k=0;k<7;k++){ const yy=Y(-1.05+k*0.35); p.line(X(-1.9),yy,X(-1.65),yy); }
+      p.noStroke(); p.fill('#7a8899'); p.textSize(10); p.textAlign(p.RIGHT,p.CENTER);
+      p.text('v',X(-1.95),cy);
+      // aerofólio
+      p.push(); p.translate(X(0),Y(0)); p.rotate(-8*Math.PI/180);
+      p.noStroke(); p.fill('#55524c'); p.beginShape();
+      for(let i=0;i<=40;i++){ const u=i/40; p.vertex((u-0.5)*sc, -0.13*sc*Math.sin(Math.PI*Math.pow(u,0.75))); }
+      for(let i=40;i>=0;i--){ const u=i/40; p.vertex((u-0.5)*sc, 0.05*sc*Math.sin(Math.PI*Math.pow(u,0.9))); }
+      p.endShape(p.CLOSE); p.pop();
+      // circulação ligada (horária) e vórtice de partida (anti-horária)
+      if(frac>0.02){
+        arco(X(0),Y(0.02),0.42*sc,+1,'#c81f1f',1.2+3.2*frac);
+        const xv=0.5+v*t;
+        if(xv<5.0){
+          const r=(0.16+0.16*frac)*sc;
+          p.noStroke(); p.fill(46,158,91,60); p.circle(X(xv),Y(-0.10),2*r);
+          arco(X(xv),Y(-0.10),r,-1,'#2e9e5b',1.2+3.2*frac);
+        } else {
+          p.noStroke(); p.fill('#2e7d4f'); p.textSize(10.5); p.textAlign(p.RIGHT,p.CENTER);
+          p.text('vórtice de partida ficou para trás →',X(4.7),Y(-0.85));
+        }
+      } else {
+        p.noStroke(); p.fill('#8a8073'); p.textSize(12); p.textAlign(p.CENTER,p.CENTER);
+        p.text('repouso: circulação nula em todo o fluido',X(1.6),Y(-0.85));
+      }
+      // barras das três circulações
+      const bx=W-16, by0=H-70, bw=Math.min(150,W*0.20), esc=bw/Ginf;
+      p.noStroke(); p.textSize(10); p.textAlign(p.RIGHT,p.CENTER);
+      p.fill('#c81f1f'); p.rect(bx-Gb*esc,by0,Gb*esc,12); p.text('AEFD +'+Gb.toFixed(2),bx-bw-8,by0+6);
+      p.fill('#2e9e5b'); p.rect(bx-Gb*esc,by0+18,Gb*esc,12); p.text('EBCF −'+Gb.toFixed(2),bx-bw-8,by0+24);
+      p.fill('#6b6357'); p.rect(bx-2,by0+36,2,12); p.text('ABCD  0,00',bx-bw-8,by0+42);
+
+      el('vpEq').innerHTML='t = '+t.toFixed(2)+' s &nbsp;|&nbsp; Γ_asa = Γ∞(1−e^(−t/τ)) = <b>'+Gb.toFixed(2)+
+        ' m²/s</b> (horária) &nbsp;|&nbsp; Γ_vórtice = <b>−'+Gb.toFixed(2)+' m²/s</b> (anti-horária) &nbsp;|&nbsp; '+
+        'C<sub>ABCD</sub> = <b>0,00</b> — Thomson (2.6.15) &nbsp;|&nbsp; L′ = ρvΓ = '+(1025*v*Gb/1000).toFixed(1)+' kN/m';
+    };
+  });
+  el('vpGo').onclick=()=>{ t=0; };
+  el('vpPlay').onclick=()=>{ playing=!playing; el('vpPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Clique em "partir do repouso" e acompanhe as três barras. A do circuito ABCD nunca sai do
+   zero — que teorema garante isso, e que hipótese sobre o fluido ele exige?
+2. As barras AEFD e EBCF crescem juntas e em sentidos opostos. Que propriedade da circulação
+   força essa igualdade?
+3. O vórtice de partida se afasta e acaba saindo do circuito. A circulação da asa desaparece
+   junto? Reflita sobre o que acontece com o circuito ABCD quando ele deixa de conter o vórtice.
+4. Para o fluido se enrolar no bordo de fuga em vez de contorná-lo, é preciso que ele **não
+   consiga** dar a volta na quina afilada. Que propriedade do fluido real garante isso — e que
+   o fluido perfeito não tem?
+:::
 
 **Conexão com o próximo tópico:** o fluido perfeito nos deu a sustentação — e nos deu, junto, dois
 absurdos: nenhuma resistência ao avanço, e nenhuma maneira de gerar o vórtice de partida de que a

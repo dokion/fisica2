@@ -545,9 +545,163 @@ plt.tight_layout(); plt.show()
 - **Anel de fumaça** — filete de vórtice fechado sobre si mesmo; sua persistência é o teorema de
   Thomson visível a olho nu.
 
-<!-- EXEMPLO A SIMULAR: perfil de velocidade do filete de vórtice retilíneo (gráfico
-     interativo): v(r) linear no núcleo (r < r₀) e ∝ 1/r fora, com slider de r₀ e de Γ;
-     rodinha de pás indicando rotacional dentro e irrotacional fora. -->
+### O filete de vórtice e a rodinha de pás
+
+O modelo do filete de vórtice retilíneo combina os dois exemplos deste tópico: um **núcleo**
+cilíndrico de raio $r_0$ onde o fluido gira como corpo rígido (Exemplo 1) e, fora dele, o
+escoamento irrotacional de circulação constante (Exemplo 2):
+
+$$v(r) = \begin{cases}
+\omega\,r, & r \le r_0 \quad\text{(rotacional)}\\[4pt]
+\dfrac{\Gamma}{2\pi r}, & r > r_0 \quad\text{(irrotacional)}
+\end{cases}
+\qquad\text{com}\qquad \Gamma = 2\pi r_0^2\,\omega$$
+
+Aqui está o ponto que a fórmula sozinha não entrega. Solte uma **rodinha de pás** em cada
+região: dentro do núcleo ela **gira** enquanto é transportada; fora, ela é transportada
+**sem girar** — apesar de descrever um círculo. Trajetória curva não é rotação.
+
+```{python}
+#| fig-cap: "Filete de vórtice retilíneo com r₀ = 1,0 e Γ = 6,0. Esquerda: perfil de velocidades — linear no núcleo, ∝ 1/r fora, contínuo em r₀. Direita: taxa de giro próprio de uma rodinha de pás: constante e igual a ω dentro do núcleo, exatamente zero fora, que é a leitura de C_Γ/área = 2ω e C_Γ/área = 0. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+r0, G = 1.0, 6.0
+w = G/(2*np.pi*r0**2)
+r = np.linspace(0.01, 4, 500)
+v = np.where(r <= r0, w*r, G/(2*np.pi*r))
+spin = np.where(r <= r0, w, 0.0)
+
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9, 3.2))
+ax1.plot(r, v, color='#1F47C8', lw=2.2)
+ax1.axvline(r0, color='#C81F1F', ls='--', lw=1.2)
+ax1.annotate('$r_0$ (borda do núcleo)', (r0, w*r0), textcoords='offset points',
+             xytext=(8, -14), color='#C81F1F', fontsize=9)
+ax1.set_xlabel('r'); ax1.set_ylabel('v(r)'); ax1.grid(alpha=.25)
+ax1.set_title('perfil de velocidades', fontsize=10)
+ax2.plot(r, spin, color='#2E9E5B', lw=2.2)
+ax2.axvline(r0, color='#C81F1F', ls='--', lw=1.2)
+ax2.fill_between(r, 0, spin, color='#2E9E5B', alpha=.18)
+ax2.set_xlabel('r'); ax2.set_ylabel('giro próprio da rodinha')
+ax2.set_ylim(-0.2, w*1.35); ax2.grid(alpha=.25)
+ax2.set_title('rotacional dentro, irrotacional fora', fontsize=10)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO — as rodinhas orbitando, uma girando e
+     outra não). p5 de libs/ (offline, Q6). Filete de vórtice com r₀ e Γ ajustáveis;
+     ω = Γ/(2πr₀²). Mesmos parâmetros da matplotlib. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .vx-wrap{max-width:1000px;margin:1rem auto;}
+  .vx-wrap .vx-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .vx-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:170px;flex:1 1 170px;}
+  .vx-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .vx-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .vx-wrap input[type=range]{width:100%;max-width:240px;accent-color:#c85c2e;}
+  .vx-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .vx-wrap #vxSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .vx-wrap #vxEq{font-size:14px;margin:8px 2px 0;line-height:1.6;}
+  .vx-wrap #vxEq b{color:#1f47c8;}
+</style>
+<div class="vx-wrap sim">
+  <div class="vx-row">
+    <button id="vxPlay">⏸ Pausar</button>
+    <div class="sld"><label>Raio do núcleo r₀ = <span class="val" id="vxRv">1.0</span></label>
+      <input type="range" id="vxR" min="0.4" max="2.0" value="1.0" step="0.1"></div>
+    <div class="sld"><label>Circulação Γ = <span class="val" id="vxGv">6.0</span></label>
+      <input type="range" id="vxG" min="2" max="14" value="6" step="0.5"></div>
+  </div>
+  <div id="vxSketch"></div>
+  <div id="vxEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  let playing=true, th1=0, th2=0, spin1=0;
+  const cw=()=>{ const w=(el('vxSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),380).parent('vxSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),380); };
+    // desenha uma rodinha de 4 pás centrada em (x,y), girada de ang
+    const roda=(x,y,ang,cor)=>{ p.push(); p.translate(x,y); p.rotate(ang);
+      p.stroke(cor); p.strokeWeight(2.4);
+      for(let k=0;k<4;k++){ p.rotate(p.HALF_PI); p.line(0,0,13,0); }
+      p.noStroke(); p.fill(cor); p.circle(0,0,6); p.pop(); };
+    p.draw=()=>{
+      const W=p.width, H=p.height;
+      const r0=+el('vxR').value, G=+el('vxG').value;
+      el('vxRv').textContent=r0.toFixed(1); el('vxGv').textContent=G.toFixed(1);
+      const w=G/(2*Math.PI*r0*r0);
+      const rin=r0*0.55, rout=r0*2.1;                      // raios das duas rodinhas
+      const Oin=w, Oout=G/(2*Math.PI*rout*rout);            // vel. angular orbital
+      const dt=playing?p.deltaTime/1000:0;
+      th1+=Oin*dt*0.55; th2+=Oout*dt*0.55; spin1+=w*dt*0.55;
+
+      p.background('#f2f0ec');
+      // ── painel esquerdo: campo ──
+      const cx=W*0.27, cy=H/2, sc=Math.min(H*0.40/2.6, W*0.22/2.6);
+      // núcleo
+      p.noStroke(); p.fill(200,60,60,38); p.circle(cx,cy,2*r0*sc);
+      p.stroke('#c81f1f'); p.strokeWeight(1.4); p.noFill(); p.circle(cx,cy,2*r0*sc);
+      p.noStroke(); p.fill('#c81f1f'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      p.text('núcleo r₀ (rotacional)',cx,cy+r0*sc+4);
+      // linhas de corrente
+      p.noFill(); p.stroke(31,71,200,90); p.strokeWeight(1);
+      for(const rr of [0.35,0.7,1.4,1.9,2.4]) p.circle(cx,cy,2*rr*r0*sc/1.0*0.9);
+      // rodinhas
+      const x1=cx+rin*sc*Math.cos(th1), y1=cy+rin*sc*Math.sin(th1);
+      const x2=cx+rout*sc*Math.cos(th2), y2=cy+rout*sc*Math.sin(th2);
+      roda(x1,y1,spin1,'#c81f1f');       // dentro: gira
+      roda(x2,y2,0,'#2e9e5b');           // fora: NÃO gira
+      p.noStroke(); p.textSize(10.5); p.textAlign(p.CENTER,p.BOTTOM);
+      p.fill('#c81f1f'); p.text('gira',x1,y1-18);
+      p.fill('#2e7d4f'); p.text('não gira',x2,y2-18);
+
+      // ── painel direito: v(r) ──
+      const gx0=W*0.56, gx1=W-20, gy0=48, gy1=H-52, rmax=4;
+      const vmax=w*r0*1.15;
+      const X=r=>gx0+r/rmax*(gx1-gx0), Y=v=>gy1-v/vmax*(gy1-gy0);
+      p.stroke('#bdb4a4'); p.strokeWeight(1); p.line(gx0,gy1,gx1,gy1); p.line(gx0,gy0,gx0,gy1);
+      p.push(); p.noFill(); p.stroke('#1f47c8'); p.strokeWeight(2.4); p.beginShape();
+      for(let r=0.01;r<=rmax;r+=0.01){ const v=(r<=r0)?w*r:G/(2*Math.PI*r); p.vertex(X(r),Y(v)); }
+      p.endShape(); p.pop();
+      p.stroke('#c81f1f'); p.strokeWeight(1.2); p.drawingContext.setLineDash([4,4]);
+      p.line(X(r0),gy0,X(r0),gy1); p.drawingContext.setLineDash([]);
+      p.noStroke(); p.fill('#c81f1f'); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+      p.text('r₀',X(r0),gy1+4);
+      p.fill('#8a8073'); p.textAlign(p.CENTER,p.TOP); p.text('r →',(gx0+gx1)/2,gy1+20);
+      p.textAlign(p.LEFT,p.BOTTOM); p.text('v(r)',gx0+4,gy0+12);
+      p.fill('#c81f1f'); p.textSize(10); p.textAlign(p.CENTER,p.BOTTOM);
+      p.text('linear ω r',X(r0*0.5),Y(w*r0*0.5)-6);
+      p.fill('#2e7d4f'); p.text('∝ 1/r',X(r0*2.1),Y(G/(2*Math.PI*r0*2.1))-6);
+      // marcadores das duas rodinhas no gráfico
+      p.noStroke(); p.fill('#c81f1f'); p.circle(X(rin),Y(w*rin),7);
+      p.fill('#2e9e5b'); p.circle(X(rout),Y(G/(2*Math.PI*rout)),7);
+
+      el('vxEq').innerHTML='ω = Γ/(2πr₀²) = <b>'+w.toFixed(2)+'</b> &nbsp;|&nbsp; '+
+        'C<sub>Γ</sub>/área = <b>2ω = '+(2*w).toFixed(2)+'</b> dentro do núcleo (2.6.11) &nbsp;e&nbsp; '+
+        '<b>0</b> fora (2.6.12) &nbsp;|&nbsp; v(r₀) = '+(w*r0).toFixed(2)+' pelos dois lados — o perfil é contínuo';
+    };
+  });
+  el('vxPlay').onclick=()=>{ playing=!playing; el('vxPlay').textContent=playing?'⏸ Pausar':'▶ Reproduzir'; };
+})();
+</script>
+```
+
+::: {.pergunta}
+1. A rodinha verde descreve um **círculo** e mesmo assim não gira sobre si mesma. Como isso é
+   possível? Ligue com a (2.6.12) e com a definição de escoamento irrotacional.
+2. Aumente $r_0$ mantendo $\Gamma$: o que acontece com $\omega$ e com a velocidade máxima? E se
+   $r_0 \to 0$ — o que a (2.6.6) prevê no eixo, e por que é preciso excluí-lo do escoamento?
+3. As duas expressões de $v(r)$ dão o mesmo valor em $r = r_0$. Verifique no painel e mostre
+   que isso decorre de $\Gamma = 2\pi r_0^2\omega$.
+4. Um redemoinho no ralo, um tornado e o vórtice de ponta de uma pá de hélice compartilham
+   este modelo. Em qual das duas regiões a viscosidade é indispensável, e por quê?
+:::
 
 **Conexão com o próximo tópico:** o teorema de Kutta-Joukowski diz que a força é $\rho v \Gamma$,
 mas deixou uma pergunta em aberto: **de onde vem $\Gamma$?** Pelo teorema de Thomson, um
