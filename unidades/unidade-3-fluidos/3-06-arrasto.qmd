@@ -394,7 +394,7 @@ e traseira, e é essa simetria que anula a resultante no fluido perfeito, o para
 d'Alembert. **É o descolamento que quebra a simetria e faz a força surgir.**
 
 ```{python}
-#| fig-cap: "Esquema dos quatro regimes de escoamento em torno de um cilindro, na sequência do §2.7. A representação é esquemática (não é solução de Navier-Stokes): o que ela reproduz fielmente é a topologia da esteira em cada faixa de Re e o ponto O de estagnação na frente. Mesmos regimes da versão interativa."
+#| fig-cap: "Esquema dos quatro regimes de escoamento em torno de um cilindro, na sequência apresentada no texto. A representação é esquemática (não é solução de Navier-Stokes): o que ela reproduz fielmente é a topologia da esteira em cada faixa de Re e o ponto O de estagnação na frente. Mesmos regimes da versão interativa."
 #| echo: false
 # Versão estática (paridade PDF) — mesmos regimes da versão interativa (p5.js)
 import numpy as np
@@ -687,7 +687,7 @@ plt.tight_layout(); plt.show()
 1. Reduzida a velocidade de 14 para 11,2 nós (−20%), quanto cai a potência? Confirme com a
    dependência aproximada $P \propto v^3$ e identifique a origem dos três fatores de $v$.
 2. Com a incrustação no máximo, quanto sobe a potência à mesma velocidade? Traduza o resultado em
-   toneladas de combustível por dia e compare com o custo de uma docagem.
+   toneladas de combustível por dia e confronte com o custo de uma docagem.
 3. O gráfico da direita traz o consumo por **milha**, não por hora. Por que ele não decresce
    indefinidamente com a redução da velocidade?
 4. A resistência de atrito depende de $C_F(\mathrm{Re})$ e a de onda, de $\mathrm{Fr}$. Qual das

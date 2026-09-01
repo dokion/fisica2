@@ -592,7 +592,7 @@ plt.tight_layout(); plt.show()
 
       el('vpEq').innerHTML='t = '+t.toFixed(2)+' s &nbsp;|&nbsp; Γ_asa = Γ∞(1−e^(−t/τ)) = <b>'+Gb.toFixed(2)+
         ' m²/s</b> (horária) &nbsp;|&nbsp; Γ_vórtice = <b>−'+Gb.toFixed(2)+' m²/s</b> (anti-horária) &nbsp;|&nbsp; '+
-        'C<sub>ABCD</sub> = <b>0,00</b> — Thomson (2.6.15) &nbsp;|&nbsp; L′ = ρvΓ = '+(1025*v*Gb/1000).toFixed(1)+' kN/m';
+        'C<sub>ABCD</sub> = <b>0,00</b> — teorema de Thomson &nbsp;|&nbsp; L′ = ρvΓ = '+(1025*v*Gb/1000).toFixed(1)+' kN/m';
     };
   });
   el('vpGo').onclick=()=>{ t=0; };
@@ -607,7 +607,7 @@ plt.tight_layout(); plt.show()
 2. As barras AEFD e EBCF crescem juntas e em sentidos opostos. Que propriedade da circulação
    impõe essa igualdade?
 3. O vórtice de partida se afasta e acaba saindo do circuito. A circulação da asa desaparece com
-   ele? Considere o que sucede ao circuito ABCD quando deixa de conter o vórtice.
+   ele? Analise o que sucede ao circuito ABCD quando deixa de conter o vórtice.
 4. Para que o fluido se enrole no bordo de fuga em vez de contorná-lo, é preciso que **não
    consiga** contornar a quina afilada. Que propriedade do fluido real assegura isso, e que o
    fluido perfeito não possui?

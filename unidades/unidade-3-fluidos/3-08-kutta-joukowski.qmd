@@ -16,49 +16,49 @@ OE 3.33 [B3] Aplicar o conceito de vórtice de esteira para análise de escoamen
 
 {{< aula 25-26 >}}
 
-A continuidade e Bernoulli descrevem o que acontece **ao longo de** uma linha de corrente. Mas
-elas não respondem a uma pergunta que é decisiva para entender o leme e a pá do hélice: o fluido,
-enquanto avança, está **girando sobre si mesmo**?
+A continuidade e Bernoulli descrevem o que ocorre **ao longo de** uma linha de corrente, mas nada
+dizem sobre a questão decisiva para o entendimento do leme e da pá do hélice: enquanto avança, o
+fluido **gira sobre si mesmo**?
 
-A grandeza que responde a isso é a **circulação** — uma integral de linha do campo de velocidades
-sobre um circuito fechado. Neste tópico ela é construída, mostra-se que ela separa dois tipos
-fundamentalmente diferentes de escoamento, e prova-se que ela **se conserva**. Com essas três
-peças, o teorema de Kutta-Joukowski liga circulação a força numa única equação — e o tópico
-seguinte a aplica ao aerofólio, à pá e ao leme.
+A grandeza que responde à questão é a **circulação**, integral de linha do campo de velocidades
+sobre um circuito fechado. Este tópico a constrói, mostra que ela separa dois tipos
+fundamentalmente distintos de escoamento e demonstra que **se conserva**. Com essas três peças, o
+teorema de Kutta-Joukowski relaciona circulação e força numa única equação, aplicada no tópico
+seguinte ao aerofólio, à pá e ao leme.
 
-Continuamos na hipótese de **fluido perfeito** feita no estudo dos fluidos em movimento.
+Mantém-se a hipótese de **fluido perfeito**, adotada no estudo dos fluidos em movimento.
 
 ## Circulação
 
-Uma grandeza importante para caracterizar o tipo de escoamento de um fluido é a **circulação**.
-Seja $\Gamma$ uma curva fechada **orientada** — ou seja, para a qual é definido um sentido positivo
-de percurso, por exemplo o anti-horário — situada no interior do fluido. Chama-se **circulação
-$C_\Gamma$ ao longo de $\Gamma$** a integral de linha
+A **circulação** é grandeza central na caracterização do tipo de escoamento. Seja $\Gamma$ uma
+curva fechada **orientada**, isto é, dotada de sentido positivo de percurso, por exemplo o
+anti-horário, situada no interior do fluido. Denomina-se **circulação $C_\Gamma$ ao longo de
+$\Gamma$** a integral de linha
 
 $$\boxed{\;C_\Gamma = \oint_\Gamma \mathbf{v}\cdot d\mathbf{l}\;} \qquad \text{(Moysés 2.6.1)}$$
 
-onde $\mathbf{v}$ é a velocidade do fluido e $d\mathbf{l}$ o elemento de linha ao longo de
-$\Gamma$, orientado no sentido positivo de percurso. Como se trata de um produto escalar, só
-intervém a **componente da velocidade ao longo do caminho**. A unidade SI é m²/s.
+em que $\mathbf{v}$ é a velocidade do fluido e $d\mathbf{l}$ o elemento de linha ao longo de
+$\Gamma$, orientado no sentido positivo de percurso. Tratando-se de produto escalar, intervém
+apenas a **componente da velocidade ao longo do caminho**. A unidade SI é m²/s.
 
-Dois exemplos, que parecem semelhantes e são profundamente diferentes, organizam todo o resto.
+Dois exemplos, aparentemente semelhantes e profundamente distintos, organizam todo o resto.
 
 ### Exemplo 1 — líquido em rotação
 
-Um recipiente cilíndrico contendo líquido em rotação uniforme com velocidade angular $\omega$
-(a estática dos fluidos). O líquido gira como um **corpo rígido**, de modo que a velocidade num ponto P à
-distância $r$ do eixo é
+Seja um recipiente cilíndrico contendo líquido em rotação uniforme com velocidade angular
+$\omega$, situação já examinada na estática dos fluidos. O líquido gira como **corpo rígido**, de
+modo que a velocidade num ponto P à distância $r$ do eixo vale
 
 $$\mathbf{v} = \omega r\,\hat{\boldsymbol{\theta}} = v\,\hat{\boldsymbol{\theta}}$$
 
-Tomando para $\Gamma$ um círculo de raio $r$ centrado na origem, orientado no sentido da rotação,
-$d\mathbf{l} = r\,d\theta\,\hat{\boldsymbol{\theta}}$ e $\mathbf{v}\cdot d\mathbf{l} = v r\,d\theta$
-elemento de linha ao longo do círculo, o que resulta em
+Tomado para $\Gamma$ um círculo de raio $r$ centrado na origem e orientado no sentido da rotação,
+tem-se $d\mathbf{l} = r\,d\theta\,\hat{\boldsymbol{\theta}}$ e
+$\mathbf{v}\cdot d\mathbf{l} = v r\,d\theta$, donde
 
 $$C_\Gamma = v r \oint_\Gamma d\theta = v r\int_0^{2\pi} d\theta = 2\pi r v$$
 
-Como $\Gamma$ coincide com uma linha de corrente e $v$ é constante ao longo dela, $C_\Gamma$ é
-simplesmente o produto de $v$ pelo comprimento $2\pi r$ do caminho. Como $v = \omega r$,
+Coincidindo $\Gamma$ com uma linha de corrente e sendo $v$ constante ao longo dela, $C_\Gamma$ é o
+produto de $v$ pelo comprimento $2\pi r$ do caminho. Com $v = \omega r$,
 
 $$C_\Gamma = 2\pi r^2 \omega$$
 
@@ -66,22 +66,22 @@ ou seja, a circulação sobre um círculo de raio $r$ **cresce com $r^2$**.
 
 ### Exemplo 2 — o vórtice
 
-Considere agora outro escoamento com linhas de corrente circulares e $|\mathbf{v}|$ função só de
-$r$, ao qual impomos a condição de que a circulação $C_\Gamma$ sobre **qualquer** círculo de raio
-$r$ centrado no eixo seja **constante** — independente de $r$. Pela circulação sobre um círculo, devemos ter, em lugar
-da velocidade no líquido em rotação,
+Seja agora outro escoamento, com linhas de corrente circulares e $|\mathbf{v}|$ função apenas de
+$r$, sujeito à condição de que a circulação $C_\Gamma$ sobre **qualquer** círculo de raio $r$
+centrado no eixo seja **constante**, isto é, independente de $r$. Da expressão da circulação sobre
+um círculo resulta, em lugar da velocidade do líquido em rotação,
 
 $$v = \frac{C_\Gamma}{2\pi r}, \qquad \mathbf{v} = v\,\hat{\boldsymbol{\theta}}$$
 
-A velocidade varia **inversamente** com $r$, em lugar de ser proporcional a $r$. Como
-$v \to \infty$ quando $r \to 0$, o eixo é uma **linha singular**, e é preciso geralmente excluir do
-escoamento um entorno do eixo.
+A velocidade varia **inversamente** com $r$, e não proporcionalmente a $r$. Como
+$v \to \infty$ quando $r \to 0$, o eixo constitui **linha singular**, e em geral se exclui do
+escoamento uma vizinhança do eixo.
 
 A realização prática aproximada é o **redemoinho**: o líquido escapa do recipiente pelo orifício
-inferior, circulando em torno do eixo, com a velocidade aumentando à medida que nos aproximamos do
-eixo — como a água escoando pelo ralo de uma banheira. A superfície livre assume a forma afunilada
-característica, que a fórmula de Bernoulli forma em alturas da equação de Bernoulli explica de imediato: como $p = p_0$ é constante
-sobre a superfície livre, pela velocidade no vórtice,
+inferior, circulando em torno do eixo, com velocidade crescente em direção a ele, como a água que
+escoa pelo ralo. A superfície livre assume a forma afunilada característica, explicada de imediato
+pela forma em alturas da equação de Bernoulli: sendo $p = p_0$ constante sobre a superfície livre,
+e pela velocidade no vórtice,
 
 $$z + \frac{v^2}{2g} = z + \frac{C_\Gamma^2}{8\pi^2 g r^2} = \text{constante}$$
 
@@ -89,32 +89,32 @@ de modo que a equação da superfície livre é
 
 $$z = A - \frac{B}{r^2}$$
 
-com $A$ e $B > 0$ constantes. Compare com o paraboloide $z = (\omega^2/2g)r^2$ da estática dos fluidos: um
-sobe com $r^2$, o outro desce com $1/r^2$. São escoamentos opostos.
+com $A$ e $B > 0$ constantes. Em confronto com o paraboloide $z = (\omega^2/2g)r^2$ da estática dos
+fluidos, um sobe com $r^2$ e o outro desce com $1/r^2$: são escoamentos opostos.
 
 ## Escoamentos rotacionais e irrotacionais
 
-A circulação ao longo de um caminho tem uma **propriedade aditiva**: se decompusermos $\Gamma$ em
-dois circuitos de mesma orientação, CABC e BADB, por meio de uma partição por um arco AB, temos
+A circulação ao longo de um caminho goza de **propriedade aditiva**: decomposto $\Gamma$ em dois
+circuitos de mesma orientação, CABC e BADB, por partição mediante um arco AB, vale
 
 $$C_\Gamma = C_{\text{CABC}} + C_{\text{BADB}}$$
 
 porque a porção comum AB é percorrida **duas vezes em sentidos opostos**
 ($d\mathbf{l} \to -d\mathbf{l}$), e as contribuições correspondentes se cancelam.
 
-Utilizando essa propriedade, podemos tomar uma superfície qualquer de contorno $\Gamma$ e
-decompô-la numa malha de subcircuitos de mesma orientação: $C_\Gamma$ se reduz à **soma das
-circulações** ao longo de todos os subcircuitos. Tomando subcircuitos infinitesimais, podemos
-associar a circulação a uma propriedade **local**, definida em cada ponto do fluido.
+Por essa propriedade, uma superfície qualquer de contorno $\Gamma$ pode ser decomposta em malha
+de subcircuitos de mesma orientação, e $C_\Gamma$ se reduz à **soma das circulações** ao longo de
+todos eles. Com subcircuitos infinitesimais, a circulação se associa a uma propriedade **local**,
+definida em cada ponto do fluido.
 
-Deste ponto de vista, existe uma diferença fundamental entre os Exemplos 1 e 2. Considere um
-circuito infinitésimo ABCD de abertura $d\theta$, com centro no eixo, compreendido entre os
-círculos de raios $r$ e $r+dr$. Em ambos os exemplos $\mathbf{v} = v\,\hat{\boldsymbol{\theta}}$,
-com $v = v(r)$; logo, sobre os lados radiais AB e CD, $\mathbf{v}\cdot d\mathbf{l} = 0$, e vem
+Sob esse ponto de vista, há diferença fundamental entre os Exemplos 1 e 2. Tome-se um circuito
+infinitésimo ABCD de abertura $d\theta$, com centro no eixo, compreendido entre os círculos de
+raios $r$ e $r+dr$. Em ambos os exemplos $\mathbf{v} = v\,\hat{\boldsymbol{\theta}}$, com
+$v = v(r)$, de modo que, sobre os lados radiais AB e CD, $\mathbf{v}\cdot d\mathbf{l} = 0$, e
 
 $$C_{\text{ABCD}} = \left[(r+dr)\,v(r+dr) - r\,v(r)\right]d\theta$$
 
-**No Exemplo 1**, pela velocidade no líquido em rotação, $v(r) = \omega r$, de modo que
+**No Exemplo 1**, com $v(r) = \omega r$,
 
 $$C_{\text{ABCD}} = \omega\left[(r+dr)^2 - r^2\right]d\theta \approx 2\omega\cdot r\,dr\,d\theta$$
 
@@ -127,13 +127,13 @@ A circulação **por unidade de área** é constante e igual a $2\omega$. Pela p
 isso continua valendo para um circuito finito, como confirma a circulação no líquido em rotação:
 $C_\Gamma/(\pi r^2) = 2\omega$.
 
-**No Exemplo 2**, pela velocidade no vórtice, $(r+dr)\,v(r+dr) = r\,v(r) = C_\Gamma/(2\pi)$, e a circulação no circuito infinitésimo resulta
-em
+**No Exemplo 2**, sendo $(r+dr)\,v(r+dr) = r\,v(r) = C_\Gamma/(2\pi)$, a circulação no circuito
+infinitésimo resulta
 
 $$\frac{C_\Gamma}{\text{área}_\Gamma} = 0$$
 
-Pela propriedade aditiva, este resultado se estende a qualquer circuito **que não envolve o eixo**
-(nesse caso o eixo é uma linha singular e deve ser excluído).
+Pela propriedade aditiva, o resultado se estende a qualquer circuito **que não envolva o eixo**,
+linha singular a ser excluída.
 
 ### A distinção e como detectá-la
 
@@ -141,36 +141,34 @@ Pela propriedade aditiva, este resultado se estende a qualquer circuito **que n�
 > escoamento nessa região chama-se **irrotacional** (Exemplo 2). Caso contrário, o escoamento se
 > diz **rotacional** (Exemplo 1).
 
-A distinção é fundamental: **no escoamento rotacional, um elemento do fluido num ponto possui
-momento angular em torno desse ponto** — ele gira ao mesmo tempo em que é transportado pelo
-movimento. No escoamento irrotacional, o momento angular de cada partícula fluida em torno de seu
-próprio centro é nulo.
+A distinção é fundamental: **no escoamento rotacional, o elemento de fluido possui momento
+angular em torno do próprio ponto**, girando ao mesmo tempo em que é transportado. No escoamento
+irrotacional, o momento angular de cada partícula fluida em torno do próprio centro é nulo.
 
-Há um teste operacional bonito: coloque uma pequena **rodinha de pás** no interior do fluido. No
-escoamento rotacional, a rodinha **gira** enquanto é transportada; no irrotacional, ela é
-transportada **sem girar**. Note o que isso significa no Exemplo 2: as partículas descrevem
-círculos em torno do eixo, e ainda assim o escoamento é irrotacional — a trajetória é curva, mas o
-elemento fluido não gira sobre si mesmo.
+O teste operacional consiste em introduzir no fluido uma pequena **rodinha de pás**: no
+escoamento rotacional ela **gira** enquanto é transportada; no irrotacional, é transportada **sem
+girar**. O Exemplo 2 ilustra a sutileza: as partículas descrevem círculos em torno do eixo e ainda
+assim o escoamento é irrotacional, pois a trajetória é curva mas o elemento fluido não gira sobre
+si mesmo.
 
 Se o escoamento é irrotacional, a propriedade aditiva implica
 
 $$C_\Gamma = \oint_\Gamma \mathbf{v}\cdot d\mathbf{l} = 0$$
 
-para **qualquer** circuito $\Gamma$ na região considerada. Por analogia com o que se viu para
-forças conservativas, a anulação da circulação em escoamento irrotacional implica a existência de uma função $\varphi$ tal que
+para **qualquer** circuito $\Gamma$ na região considerada. Em analogia com o caso das forças
+conservativas, a anulação da circulação implica a existência de uma função $\varphi$ tal que
 
 $$\mathbf{v} = \operatorname{grad}\varphi$$
 
-A função $\varphi$ chama-se **potencial de velocidades**, e um escoamento irrotacional é também
-chamado, por isso, de **escoamento potencial**. Os exemplos de escoamento vistos até aqui — o
-Venturi, o Pitot, o jato de Torricelli — são todos irrotacionais.
+A função $\varphi$ denomina-se **potencial de velocidades**, e daí a designação alternativa de
+**escoamento potencial** para o escoamento irrotacional. Os exemplos examinados até aqui, o
+Venturi, o Pitot e o jato de Torricelli, são todos irrotacionais.
 
 ## Conservação da circulação: o teorema de Thomson
 
-Em lugar de considerar a circulação $C_\Gamma$ ao longo de um circuito $\Gamma$ **fixo no fluido**,
-podemos considerar a circulação ao longo de um circuito $\Gamma_t$ formado **sempre das mesmas
-partículas fluidas**, e que portanto varia com o tempo (daí o índice $t$), acompanhando o fluido em
-seu deslocamento.
+Em lugar da circulação $C_\Gamma$ ao longo de um circuito $\Gamma$ **fixo no fluido**, considere-se
+a circulação ao longo de um circuito $\Gamma_t$ formado **sempre das mesmas partículas fluidas**,
+que portanto varia com o tempo, daí o índice $t$, acompanhando o fluido em seu deslocamento.
 
 William Thomson (Lord Kelvin) demonstrou em 1869 o seguinte teorema:
 
@@ -180,100 +178,99 @@ William Thomson (Lord Kelvin) demonstrou em 1869 o seguinte teorema:
 > ou seja, **a circulação ao longo de um circuito formado sempre das mesmas partículas fluidas se
 > conserva.**
 
-A demonstração requer recursos mais avançados, mas as consequências são imediatas e fortes. Se um
-escoamento é irrotacional num dado instante $t_0$, temos $C_{\Gamma_{t_0}} = 0$ para qualquer
-circuito no fluido. O teorema de Thomson mostra então que, nessas condições, **o movimento permanece sempre
-irrotacional**. Em particular:
+A demonstração exige recursos mais avançados, mas as consequências são imediatas e fortes. Se um
+escoamento é irrotacional num instante $t_0$, então $C_{\Gamma_{t_0}} = 0$ para qualquer circuito
+no fluido, e o teorema garante que **o movimento permanece irrotacional**. Em particular:
 
 > Para um fluido perfeito, homogêneo, sujeito apenas a forças conservativas, qualquer escoamento
 > iniciado a partir do repouso é **sempre irrotacional**.
 
-Guarde essa frase. Ela é a chave do mecanismo de geração de sustentação do tópico seguinte — e é
-também uma das afirmações que o fluido real vai desmentir.
+O enunciado é a chave do mecanismo de geração de sustentação tratado no tópico seguinte, e
+também uma das afirmações que o fluido real desmente.
 
 ### Vórtices
 
-**Vórtices** (também conhecidos como turbilhões ou redemoinhos) desempenham papel importante nos
-escoamentos rotacionais. Combinando os escoamentos dos Exemplos 1 e 2, obtemos o modelo de um
-**filete de vórtice retilíneo**: um núcleo cilíndrico de raio $r_0$, em que o fluido gira como um
-corpo rígido (Exemplo 1), em torno do qual se superpõe o escoamento irrotacional de circulação
-constante velocidade no vórtice, com
+Os **vórtices**, também designados turbilhões ou redemoinhos, desempenham papel importante nos
+escoamentos rotacionais. A combinação dos escoamentos dos Exemplos 1 e 2 fornece o modelo do
+**filete de vórtice retilíneo**: um núcleo cilíndrico de raio $r_0$, em que o fluido gira como
+corpo rígido, em torno do qual se superpõe o escoamento irrotacional de circulação constante,
+com
 
 $$C_\Gamma = 2\pi r_0^2\,\omega \qquad \text{[cf. circulação no líquido em rotação]}$$
 
-O perfil de velocidades é, portanto, **linear na região do núcleo** ($v = \omega r$) e
-**proporcional a $1/r$** na região externa. O escoamento só é rotacional dentro do núcleo, e a
-circulação em torno do filete é constante.
+O perfil de velocidades é, pois, **linear na região do núcleo** ($v = \omega r$) e **proporcional
+a $1/r$** na região externa. O escoamento é rotacional apenas dentro do núcleo, e a circulação em
+torno do filete é constante.
 
-Um **anel de vórtice** pode ser pensado como um filete cilíndrico que se enrola em forma de anel
-(toro). O fluido circula em torno do anel enquanto este se desloca — o exemplo mais conhecido são
-os anéis de fumaça, inclusive os expelidos por vulcões.
+O **anel de vórtice** corresponde a um filete cilíndrico enrolado em forma de toro. O fluido
+circula em torno do anel enquanto este se desloca; o exemplo mais conhecido são os anéis de
+fumaça, inclusive os expelidos por vulcões.
 
-O teorema de Thomson e resultados análogos devidos a **Helmholtz** mostram que, num fluido
-perfeito, filetes de vórtice (em particular anéis), em seu deslocamento, são **sempre formados
-pelas mesmas partículas fluidas**, e a circulação em torno deles se conserva. Esses resultados
-estão relacionados com a lei de conservação do momento angular.
+O teorema de Thomson e resultados análogos devidos a **Helmholtz** estabelecem que, num fluido
+perfeito, os filetes de vórtice, anéis inclusive, são em seu deslocamento **sempre formados pelas
+mesmas partículas fluidas**, conservando-se a circulação em torno deles. Tais resultados se
+vinculam à lei de conservação do momento angular.
 
 ## O teorema de Kutta-Joukowski {{< ra OE3.30 B2 >}}
 
-Reunimos agora as peças. Superpondo a um escoamento uniforme de velocidade $v$ um escoamento
-circulatório de circulação $\Gamma$ em torno de um corpo, a distribuição de velocidades fica
-**assimétrica** — maior de um lado, menor do outro. Pelo fenômeno de Venturi, a pressão é menor
-onde a velocidade é maior, e a resultante das forças de pressão é uma força **perpendicular ao
-escoamento**, que já chamamos de empuxo dinâmico.
+Reúnem-se agora as peças. Superposto a um escoamento uniforme de velocidade $v$ um escoamento
+circulatório de circulação $\Gamma$ em torno de um corpo, a distribuição de velocidades torna-se
+**assimétrica**, maior de um lado e menor do outro. Pelo fenômeno de Venturi, a pressão é menor
+onde a velocidade é maior, e a resultante das forças de pressão é força **perpendicular ao
+escoamento**, o empuxo dinâmico.
 
 O resultado quantitativo é o **teorema de Kutta-Joukowski**:
 
 $$\boxed{\;L' = \rho\,v\,\Gamma\;}$$
 
-onde $L'$ é a força de sustentação **por unidade de envergadura** (N/m), $\rho$ a densidade do
+em que $L'$ é a força de sustentação **por unidade de envergadura** (N/m), $\rho$ a densidade do
 fluido, $v$ a velocidade do escoamento não perturbado e $\Gamma$ a circulação em torno da seção. A
-força é perpendicular a $\mathbf{v}$, e seu sentido se inverte quando se inverte o sentido de
-$\Gamma$.
+força é perpendicular a $\mathbf{v}$ e inverte de sentido com a inversão de $\Gamma$.
 
-Três leituras que vale explicitar:
+Três consequências merecem registro:
 
-1. **A sustentação é diretamente proporcional à circulação.** Sem circulação, $\Gamma = 0$, não há
-   sustentação — qualquer que seja a forma do corpo.
+1. **A sustentação é diretamente proporcional à circulação.** Com $\Gamma = 0$ não há
+   sustentação, qualquer que seja a forma do corpo.
 2. **O resultado não depende da forma do perfil**, só de $\Gamma$ e de $v$. A forma do perfil
    entra apenas na *determinação* de $\Gamma$, não na relação entre $\Gamma$ e a força.
-3. **É uma força sem viscosidade.** O teorema vale para fluido perfeito. Isso levanta uma questão
-   incômoda que o a sustentação vai enfrentar de frente: se o fluido é perfeito e o escoamento
-   começou do repouso, o teorema de Thomson diz que a circulação **deveria continuar nula**. De
-   onde, então, vem o $\Gamma$?
+3. **É força obtida sem viscosidade.** O teorema vale para fluido perfeito, o que suscita a
+   questão enfrentada no tópico da sustentação: sendo o fluido perfeito e tendo o escoamento
+   partido do repouso, o teorema de Thomson exige que a circulação **permaneça nula**. De onde,
+   então, provém $\Gamma$?
 
 Para a envergadura $b$ inteira, com circulação uniforme ao longo dela,
 
 $$L = \rho\,v\,\Gamma\,b$$
 
-A dimensão confirma: $[\rho][v][\Gamma] = (\text{kg/m}^3)(\text{m/s})(\text{m}^2/\text{s})
-= \text{N/m}$ — força por unidade de comprimento. Multiplicar por $b$ dá newtons.
+A verificação dimensional confirma:
+$[\rho][v][\Gamma] = (\text{kg/m}^3)(\text{m/s})(\text{m}^2/\text{s}) = \text{N/m}$, força por
+unidade de comprimento; o produto por $b$ resulta em newtons.
 
 ## A força sobre a pá: determinação por Γ {{< ra OE3.31 B3 >}}
 
-Aplicar o teorema exige conhecer $\Gamma$. Para uma pá de hélice ou um leme, a circulação de cada
-seção é determinada pela geometria do perfil e pelo ângulo de ataque, e cresce aproximadamente de
-forma linear com esse ângulo até o estol (a sustentação), quando o descolamento destrói a circulação.
+A aplicação do teorema exige o conhecimento de $\Gamma$. Numa pá de hélice ou num leme, a
+circulação de cada seção é determinada pela geometria do perfil e pelo ângulo de ataque, e cresce
+aproximadamente de forma linear com esse ângulo até o estol, quando o descolamento a destrói.
 
-Na prática de projeto naval, o procedimento é o inverso do que a física sugere: mede-se ou tabela-se
-o coeficiente de sustentação $C_L$ do perfil, calcula-se a força, e a circulação é obtida a
-posteriori igualando as duas expressões:
+Na prática de projeto naval o procedimento inverte a ordem lógica da física: mede-se ou tabela-se
+o coeficiente de sustentação $C_L$ do perfil, calcula-se a força e obtém-se a circulação *a
+posteriori*, igualando as duas expressões:
 
 $$\rho\,v\,\Gamma = \tfrac{1}{2}\rho\,v^2 c\,C_L
 \quad\Longrightarrow\quad
 \boxed{\;\Gamma = \tfrac{1}{2}\,v\,c\,C_L\;}$$
 
-onde $c$ é a corda do perfil. É a ponte entre a teoria da circulação e a tabela de $C_L$ que o
-projetista usa.
+em que $c$ é a corda do perfil. É a ponte entre a teoria da circulação e a tabela de $C_L$
+empregada pelo projetista.
 
 Para uma pá com circulação variável ao longo do raio, $\Gamma = \Gamma(r)$, a força propulsiva
 total é a integral das contribuições de cada seção:
 
 $$T = \int_{r_{\text{raiz}}}^{r_{\text{ponta}}} \rho\,v(r)\,\Gamma(r)\,dr$$
 
-onde $v(r)$ é a velocidade relativa vista pela seção — composição da velocidade de avanço do navio
-com a velocidade tangencial $\omega r$ da rotação. A curva $\Gamma(r)$ é a **distribuição de
-carga** da pá, e é o objeto central do projeto de hélice.
+em que $v(r)$ é a velocidade relativa na seção, composição da velocidade de avanço do navio com a
+velocidade tangencial $\omega r$ da rotação. A curva $\Gamma(r)$ constitui a **distribuição de
+carga** da pá, objeto central do projeto de hélice.
 
 ## Vórtices, asas e hélices {{< ra OE3.32 B2 >}}
 
@@ -282,59 +279,60 @@ exigem que um **filete de vórtice não termine no interior do fluido** — ele 
 termina numa fronteira, ou se estende ao infinito. A consequência é o **sistema de vórtices** que
 acompanha toda superfície sustentadora:
 
-- **Vórtice ligado** (*bound vortex*) — a circulação $\Gamma$ em torno da própria seção da pá; é
-  ele que gera a força, pela $L' = \rho v \Gamma$.
+- **Vórtice ligado** (*bound vortex*) — a circulação $\Gamma$ em torno da própria seção da pá,
+  responsável pela força, segundo $L' = \rho v \Gamma$.
 - **Vórtices marginais** (*trailing*) — onde $\Gamma(r)$ varia ao longo da envergadura, a
-  diferença tem de escapar como vórtice livre. Na ponta da pá, onde $\Gamma$ cai a zero, forma-se
-  o vórtice mais intenso.
+  diferença escapa como vórtice livre; na ponta da pá, com $\Gamma$ caindo a zero, forma-se o
+  vórtice mais intenso.
 - **Vórtice de partida** (*starting vortex*) — largado no bordo de fuga quando a circulação se
-  estabelece. É a peça que o a sustentação vai usar para resolver o problema deixado em aberto acima.
+  estabelece. É a peça com que o tópico da sustentação resolve o problema deixado em aberto
+  acima.
 
-Para uma hélice de $z$ pás, cada pá arrasta o seu sistema de vórtices, e a esteira resultante é um
-conjunto de **hélices de vórtice** que se afastam a ré. Isso tem três consequências operacionais:
+Num hélice de $z$ pás, cada pá arrasta seu próprio sistema de vórtices, e a esteira resultante é
+um conjunto de **hélices de vórtice** que se afastam a ré. Daí três consequências operacionais:
 
-**Vibração de ordem de pá.** Os vórtices que uma pá deixa passam pela pá seguinte e pela estrutura
-da popa, gerando excitação periódica na frequência $z \times$ RPM. É a "ordem de pá" que aparece no
-espectro de vibração do navio (UE 1) — e casá-la com uma frequência natural do casco é exatamente
-o que se evita.
+**Vibração de ordem de pá.** Os vórtices deixados por uma pá atravessam a pá seguinte e a
+estrutura da popa, gerando excitação periódica na frequência $z \times$ RPM. É a ordem de pá que
+comparece no espectro de vibração do navio, estudado na unidade de oscilações, e cuja coincidência
+com uma frequência natural do casco se procura evitar.
 
-**Hélice skew-back.** Uma pá com *skew* — bordo inclinado angularmente ao longo do raio — faz com
-que as diferentes seções radiais não cruzem a região de esteira ao mesmo tempo. O pico de carga se
-espalha no tempo em vez de se concentrar, e a excitação cai. É projeto mais caro, justificado em
-navios que exigem baixa vibração.
+**Hélice com *skew*.** A pá de bordo angularmente inclinado ao longo do raio faz com que as
+diferentes seções radiais não cruzem a região de esteira ao mesmo tempo: o pico de carga se
+distribui no tempo em vez de se concentrar, e a excitação diminui. É projeto mais oneroso,
+justificado em navios que exigem baixa vibração.
 
 **Cavitação de ponta.** No núcleo do vórtice marginal a velocidade tangencial é alta e, por
-Bernoulli, a pressão despenca. Se ela cai abaixo da pressão de vapor da água, forma-se cavidade de
-vapor: é a cavitação de ponta, visível como um filamento branco espiralando atrás da pá. Ela
-erode a pá, gera ruído de banda larga e reduz o empuxo.
+Bernoulli, a pressão despenca. Caindo abaixo da pressão de vapor da água, forma-se cavidade de
+vapor: é a cavitação de ponta, visível como filamento branco espiralando atrás da pá. Erode a pá,
+gera ruído de banda larga e reduz o empuxo.
 
 ## Vórtice de esteira e análise de escoamento {{< ra OE3.33 B3 >}}
 
-O vórtice marginal não é só um efeito colateral: ele **realimenta** o escoamento sobre a própria
-pá. O campo induzido pelos vórtices livres tem, na região da pá, uma componente dirigida para
-baixo — a **velocidade induzida** $w$. Ela compõe-se com a velocidade de avanço e reduz o ângulo
-de ataque efetivamente visto pela seção:
+O vórtice marginal não constitui mero efeito colateral: **realimenta** o escoamento sobre a
+própria pá. O campo induzido pelos vórtices livres apresenta, na região da pá, componente dirigida
+para baixo, a **velocidade induzida** $w$, que se compõe com a velocidade de avanço e reduz o
+ângulo de ataque efetivamente visto pela seção:
 
 $$\alpha_{\text{efetivo}} = \alpha_{\text{geométrico}} - \arctan\!\left(\frac{w}{v}\right)$$
 
 Duas consequências, ambas mensuráveis:
 
-1. **A sustentação real é menor** que a prevista pelo ângulo geométrico — a pá "não vê" o ângulo
-   que o projetista desenhou.
-2. **A força resultante inclina-se para trás**, e sua componente na direção do escoamento é uma
-   resistência que não existiria num escoamento bidimensional: o **arrasto induzido**, o preço
-   inevitável de gerar sustentação com envergadura finita. É por isso que asas de planador e pás
-   de hélice de alto rendimento são longas e estreitas — alongamento alto reduz $w$.
+1. **A sustentação real é menor** que a prevista pelo ângulo geométrico: a seção não opera no
+   ângulo desenhado em projeto.
+2. **A força resultante inclina-se para trás**, e sua componente na direção do escoamento é
+   resistência inexistente num escoamento bidimensional: o **arrasto induzido**, custo inevitável
+   de gerar sustentação com envergadura finita. Daí serem longas e estreitas as asas de planador e
+   as pás de hélice de alto rendimento: o alongamento elevado reduz $w$.
 
-Para a análise do escoamento em torno de um perfil, isso define o método: modela-se a pá pelo seu
-vórtice ligado, a esteira pelos vórtices livres que dela se desprendem, e calcula-se o campo
-induzido por esse sistema. É a **teoria da linha sustentadora**, e é o esqueleto de todo código de
-projeto de hélice.
+Daí decorre o método de análise do escoamento em torno de um perfil: modela-se a pá pelo seu
+vórtice ligado e a esteira pelos vórtices livres que dela se desprendem, calculando-se o campo
+induzido por esse sistema. É a **teoria da linha sustentadora**, base de todo código de projeto de
+hélice.
 
-O **"singing" do hélice** é um caso extremo dessa interação: o desprendimento periódico de
-vórtices no bordo de fuga da pá pode sincronizar-se com um modo natural de vibração da própria pá,
-e o hélice passa a emitir um tom puro e intenso — ressonância (UE 1) excitada pela esteira. A
-correção é alterar o bordo de fuga para dessintonizar o desprendimento.
+O ***singing*** do hélice é caso extremo dessa interação: o desprendimento periódico de vórtices
+no bordo de fuga pode sincronizar-se com um modo natural de vibração da própria pá, e o hélice
+passa a emitir tom puro e intenso, ressonância excitada pela esteira. Corrige-se alterando o bordo
+de fuga, de modo a dessintonizar o desprendimento.
 
 ::: {.sp}
 Uma pá de hélice de navio experimenta uma velocidade média de fluxo $v = 7$ m/s e circulação média ao longo da envergadura $\Gamma = 8$ m²/s. A densidade de água é $\rho = 1025$ kg/m³. O navio tem 4 pás e o hélice gira a $N = 120$ rpm. Calcule:
@@ -364,39 +362,47 @@ $$v_\theta = \frac{4}{2\pi(0{,}1)} \approx 6{,}4\ \text{m/s}
 $\approx 230\ \text{kN}$ de empuxo, movendo o navio a 12 nós com $\approx 1{,}4\ \text{MW}$.
 O vórtice de ponta baixa a pressão local em ~0,2 bar.
 
-**(d) Análise crítica.** Nota de rigor: $L = \rho v\,\Gamma$ é, dimensionalmente, força
-por *unidade de envergadura* — a pá inteira precisaria de $L = \rho v\,\Gamma\,b$; o
-enunciado adota a forma simplificada do texto, então os 57 kN valem dentro dessa
-convenção [VERIFICAR com o modelo de pá real]. A queda de 0,2 bar depende do raio de
-núcleo assumido (0,1 m); em um vórtice mais concentrado a depressão é maior e pode
-levar a pressão local abaixo da de vapor — é a origem da cavitação de ponta e do
-"singing" do hélice. Empuxo sem circulação seria zero: $\Gamma$ é a grandeza de projeto.
+**(d) Análise crítica.** Observação de rigor: $L = \rho v\,\Gamma$ é, dimensionalmente,
+força por *unidade de envergadura*, de modo que a pá inteira exigiria
+$L = \rho v\,\Gamma\,b$. O enunciado adota a forma simplificada do texto, e os 57 kN
+valem dentro dessa convenção [VERIFICAR com o modelo de pá real]. A queda de 0,2 bar
+depende do raio de núcleo assumido, 0,1 m; num vórtice mais concentrado a depressão é
+maior e pode levar a pressão local abaixo da de vapor, origem da cavitação de ponta e
+do *singing* do hélice. Sem circulação o empuxo seria nulo: $\Gamma$ é a grandeza de
+projeto.
 :::
 
 ::: {.callout-warning}
 ## Erros clássicos
 
-- **Achar que trajetória circular significa escoamento rotacional.** No Exemplo 2 (o vórtice), as
-  partículas descrevem círculos e o escoamento é **irrotacional**: a rodinha de pás é transportada
-  sem girar. O que define rotacional é a circulação **por unidade de área** no entorno do ponto,
-  circulação por unidade de área no líquido em rotação–circulação por unidade de área no vórtice, não a forma da trajetória.
-- **Confundir circulação com rotação angular:** circulação Γ tem dimensão [L²/T]; rotação angular ω tem dimensão [1/T]. Não são a mesma coisa — um hélice pode girar e ter circulação, ou estar parado (hidro-dinâmica) e ter circulação do escoamento ao seu redor.
+- **Tomar trajetória circular por escoamento rotacional.** No Exemplo 2, o vórtice, as partículas
+  descrevem círculos e o escoamento é **irrotacional**: a rodinha de pás é transportada sem girar.
+  O que define o caráter rotacional é a circulação **por unidade de área** no entorno do ponto,
+  não a forma da trajetória.
+- **Confundir circulação com velocidade angular.** A circulação $\Gamma$ tem dimensão
+  $[\text{L}^2/\text{T}]$ e a velocidade angular $\omega$, $[1/\text{T}]$: são grandezas
+  distintas. Um hélice pode girar e ter circulação, ou estar parado e ainda assim haver circulação
+  no escoamento em torno dele.
 - **Esquecer que $L' = \rho v \Gamma$ é força por unidade de envergadura.** Para a pá inteira é
   preciso integrar ao longo do raio, com $\Gamma(r)$ e $v(r)$ variáveis.
 - **Aplicar o teorema de Thomson ao fluido real.** O teorema de Thomson exige fluido **perfeito**,
   homogêneo, sob forças conservativas. Num fluido real é fácil gerar vórtices — e é justamente
   essa falha que permite à asa adquirir circulação.
-- **Vórtice de Rankine vs. vórtice irrotacional:** o vórtice idealizado em Kutta-Joukowski é **irrotacional** (fluido não rotaciona globalmente, só ao redor do núcleo); fluidos reais têm um núcleo viscoso onde há rotação. Modelo de Rankine combina os dois.
-- **Esteira de vórtice é "invisível" em água:** diferentemente de aviões (onde a esteira é visível em céu claro), em água é difícil ver diretamente — mas seus efeitos (vibração, cavitação) são bem reais.
+- **Confundir o vórtice de Rankine com o vórtice irrotacional.** O vórtice idealizado em
+  Kutta-Joukowski é **irrotacional**; os fluidos reais têm núcleo viscoso, em que há rotação. O
+  modelo de Rankine combina os dois comportamentos.
+- **Concluir que a esteira de vórtices não existe por ser invisível na água.** Ao contrário das
+  aeronaves, cuja esteira se torna visível em céu claro, na água a observação direta é difícil,
+  mas os efeitos, vibração e cavitação, são plenamente mensuráveis.
 :::
 
 ## Circulação e força sobre um cilindro
 
-Um cilindro que gira numa corrente arrasta o fluido: cria **circulação** $\Gamma$. Por
-Kutta–Joukowski, isso gera sustentação $L' = \rho v\,\Gamma$ perpendicular ao escoamento
-— é o efeito Magnus e o princípio do rotor de Flettner. Sem rotação, o escoamento é
-simétrico e não há força; com rotação, as linhas de corrente se adensam de um lado, os
-pontos de estagnação migram e surge a força.
+Um cilindro em rotação numa corrente arrasta o fluido e cria **circulação** $\Gamma$. Por
+Kutta-Joukowski, disso resulta sustentação $L' = \rho v\,\Gamma$ perpendicular ao escoamento: é o
+efeito Magnus e o princípio do rotor de Flettner. Sem rotação o escoamento é simétrico e a força é
+nula; com rotação, as linhas de corrente se adensam de um lado, os pontos de estagnação migram e a
+força surge.
 
 ```{python}
 #| fig-cap: "Escoamento potencial em torno de um cilindro com circulação (corrente uniforme + dupleto + vórtice). Sem circulação (esq.) o padrão é simétrico e a força é nula; com circulação (dir.) as linhas se adensam em cima, os pontos de estagnação descem e surge sustentação L' = ρvΓ. Mesmos parâmetros da versão interativa."
@@ -514,14 +520,15 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Com $\Gamma = 0$, o escoamento é simétrico acima e abaixo — e a força é nula. Aumente
-   $\Gamma$: de que lado as linhas de corrente se adensam, e para onde aponta a força?
-2. Acompanhe os pontos de estagnação (laranja): eles descem conforme $\Gamma$ cresce.
-   A partir de que $\Gamma$ eles saem da superfície do cilindro?
-3. $L' = \rho v\,\Gamma$ cresce linearmente com a circulação. Ligue com o rotor de
-   Flettner: como um cilindro girante pode substituir uma vela?
-4. O campo simulado é a superposição de corrente uniforme, dupleto e vórtice — todos irrotacionais.
-   Uma rodinha de pás solta nesse escoamento giraria? Justifique pela circulação por unidade de área no vórtice.
+1. Com $\Gamma = 0$ o escoamento é simétrico acima e abaixo, e a força é nula. Aumentado
+   $\Gamma$, de que lado as linhas de corrente se adensam, e para onde aponta a força?
+2. Os pontos de estagnação, em laranja, descem à medida que $\Gamma$ cresce. A partir de que
+   $\Gamma$ eles deixam a superfície do cilindro?
+3. $L' = \rho v\,\Gamma$ cresce linearmente com a circulação. Relacione com o rotor de Flettner:
+   de que modo um cilindro girante substitui uma vela?
+4. O campo simulado é superposição de corrente uniforme, dupleto e vórtice, todos irrotacionais.
+   Uma rodinha de pás solta nesse escoamento giraria? Justifique pela circulação por unidade de
+   área.
 :::
 
 ## Onde o fenômeno vive
@@ -529,17 +536,17 @@ plt.tight_layout(); plt.show()
 <!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
      em sessões futuras, a pedido do professor. -->
 
-- **Rotor de Flettner** — cilindros girantes verticais que propulsionam navios reais
-  por efeito Magnus: circulação imposta pela rotação + vento = força de
-  Kutta–Joukowski ($L' = \rho v \Gamma$) apontando para a proa.
-- **Bola com efeito** — o clássico do Magnus: a rotação arrasta o ar, cria circulação
-  e a trajetória curva.
-- **Circulação na pá do hélice** — a sustentação de cada seção da pá é ρvΓ; a esteira
-  helicoidal que fica atrás do navio é a contrapartida dos vórtices ligados às pás.
+- **Rotor de Flettner** — cilindros girantes verticais que propulsionam navios em operação por
+  efeito Magnus: a circulação imposta pela rotação, combinada com o vento, produz a força de
+  Kutta-Joukowski ($L' = \rho v \Gamma$) dirigida à proa.
+- **Bola com efeito** — caso clássico do efeito Magnus: a rotação arrasta o ar, cria circulação
+  e encurva a trajetória.
+- **Circulação na pá do hélice** — a sustentação de cada seção vale ρvΓ, e a esteira helicoidal
+  deixada atrás do navio é a contrapartida dos vórtices ligados às pás.
 - **Redemoinho no ralo e no dreno de tanque** — o Exemplo 2 em estado puro: $v \propto 1/r$ e a
   superfície livre $z = A - B/r^2$. Validade: fora do núcleo viscoso, onde o perfil vira linear.
-- **Anel de fumaça** — filete de vórtice fechado sobre si mesmo; sua persistência é o teorema de
-  Thomson visível a olho nu.
+- **Anel de fumaça** — filete de vórtice fechado sobre si mesmo, cuja persistência exibe a olho
+  nu o teorema de Thomson.
 
 ### O filete de vórtice e a rodinha de pás
 
@@ -553,9 +560,9 @@ $$v(r) = \begin{cases}
 \end{cases}
 \qquad\text{com}\qquad \Gamma = 2\pi r_0^2\,\omega$$
 
-Aqui está o ponto que a fórmula sozinha não entrega. Solte uma **rodinha de pás** em cada
-região: dentro do núcleo ela **gira** enquanto é transportada; fora, ela é transportada
-**sem girar** — apesar de descrever um círculo. Trajetória curva não é rotação.
+A fórmula, isoladamente, não revela o ponto essencial. Solta uma **rodinha de pás** em cada
+região, dentro do núcleo ela **gira** enquanto é transportada; fora dele, é transportada **sem
+girar**, ainda que descreva um círculo. Trajetória curva não é rotação.
 
 ```{python}
 #| fig-cap: "Filete de vórtice retilíneo com r₀ = 1,0 e Γ = 6,0. Esquerda: perfil de velocidades — linear no núcleo, ∝ 1/r fora, contínuo em r₀. Direita: taxa de giro próprio de uma rodinha de pás: constante e igual a ω dentro do núcleo, exatamente zero fora, que é a leitura de C_Γ/área = 2ω e C_Γ/área = 0. Mesmos parâmetros da versão interativa."
@@ -689,19 +696,20 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. A rodinha verde descreve um **círculo** e mesmo assim não gira sobre si mesma. Como isso é
-   possível? Ligue com a circulação por unidade de área no vórtice e com a definição de escoamento irrotacional.
-2. Aumente $r_0$ mantendo $\Gamma$: o que acontece com $\omega$ e com a velocidade máxima? E se
-   $r_0 \to 0$ — o que a velocidade no vórtice prevê no eixo, e por que é preciso excluí-lo do escoamento?
-3. As duas expressões de $v(r)$ dão o mesmo valor em $r = r_0$. Verifique no painel e mostre
-   que isso decorre de $\Gamma = 2\pi r_0^2\omega$.
-4. Um redemoinho no ralo, um tornado e o vórtice de ponta de uma pá de hélice compartilham
-   este modelo. Em qual das duas regiões a viscosidade é indispensável, e por quê?
+1. A rodinha verde descreve um **círculo** e ainda assim não gira sobre si mesma. Como isso é
+   possível? Relacione com a circulação por unidade de área no vórtice e com a definição de
+   escoamento irrotacional.
+2. Aumentado $r_0$ com $\Gamma$ constante, o que sucede a $\omega$ e à velocidade máxima? E com
+   $r_0 \to 0$, o que a expressão prevê no eixo, e por que este deve ser excluído do escoamento?
+3. As duas expressões de $v(r)$ fornecem o mesmo valor em $r = r_0$. Verifique no painel e mostre
+   que o resultado decorre de $\Gamma = 2\pi r_0^2\omega$.
+4. Um redemoinho no ralo, um tornado e o vórtice de ponta de uma pá de hélice compartilham este
+   modelo. Em qual das duas regiões a viscosidade é indispensável, e por quê?
 :::
 
-**Conexão com o próximo tópico:** o teorema de Kutta-Joukowski diz que a força é $\rho v \Gamma$,
-mas deixou uma pergunta em aberto: **de onde vem $\Gamma$?** Pelo teorema de Thomson, um
-escoamento de fluido perfeito iniciado do repouso deveria permanecer irrotacional para sempre — e
-uma asa parada que começa a se mover deveria, portanto, nunca adquirir circulação e nunca sustentar
-nada. O tópico seguinte responde a isso com o efeito Magnus e o aerofólio, e termina levando a
-hipótese de fluido perfeito ao seu limite de ruptura.
+**Conexão com o próximo tópico:** o teorema de Kutta-Joukowski fixa a força em $\rho v \Gamma$,
+mas deixa em aberto a origem de $\Gamma$. Pelo teorema de Thomson, um escoamento de fluido
+perfeito iniciado do repouso permaneceria irrotacional indefinidamente, e uma asa posta em
+movimento jamais adquiriria circulação nem sustentaria coisa alguma. O tópico seguinte responde
+pela via do efeito Magnus e do aerofólio, e conclui conduzindo a hipótese de fluido perfeito ao seu
+ponto de ruptura.

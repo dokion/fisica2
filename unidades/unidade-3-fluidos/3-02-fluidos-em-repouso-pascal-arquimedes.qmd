@@ -453,10 +453,10 @@ tonelagem bruta (volume registrado).
 ## Calado de equilíbrio
 
 O casco afunda até o empuxo igualar o peso: $\Delta = \rho\,V_{\text{imerso}}$. Para um
-casco de paredes verticais, o calado é $T = \Delta/(\rho\,L\,B)$. Aumente a carga e veja
-o calado subir; troque a densidade da água (doce ↔ salgada) e veja o casco subir ou
-descer sem mudar de peso — a marca de água doce (F) da escala de Plimsoll fica acima da
-de água salgada (S) exatamente por isso.
+casco de paredes verticais, o calado vale $T = \Delta/(\rho\,L\,B)$. O aumento da carga eleva o
+calado; a troca da densidade da água, de doce para salgada, faz o casco subir ou descer sem
+alteração de peso. É por isso que a marca de água doce (F) da escala de Plimsoll fica acima da de
+água salgada (S).
 
 ```{python}
 #| fig-cap: "Calado de um casco caixão (L = 190 m, B = 32 m) em função do deslocamento, em água doce (1000) e salgada (1025 kg/m³). Para o mesmo peso, o calado é sempre maior na água doce. Mesmos parâmetros da versão interativa."
@@ -750,9 +750,9 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Com $KG = 11$ m, aumente o adernamento de 0° a 25°. O braço $GZ$ cresce — como? Confirme
-   pela $GZ = GM\sin\varphi$ e explique por que ele é nulo em $\varphi = 0$.
-2. Suba o $KG$ lentamente. Em que valor exato o binário troca de sinal? Relacione com $KM$
+1. Com $KG = 11$ m, elevando o adernamento de 0° a 25°, como cresce o braço $GZ$? Confirme por
+   $GZ = GM\sin\varphi$ e explique por que se anula em $\varphi = 0$.
+2. Elevando lentamente o $KG$, em que valor exato o binário troca de sinal? Relacione com o $KM$
    lido no painel.
 3. $BM = B^2/12T$ cresce com o **quadrado da boca**. Por que alargar o navio é a forma mais
    eficaz de ganhar estabilidade — e o que isso custa em resistência ao avanço (o arrasto)?

@@ -177,10 +177,10 @@ maior que a do navio, razão adicional para a correção de fricção.
 
 ## Incompatibilidade entre as semelhanças de Froude e de Reynolds
 
-O modelo e o navio real só produzem o mesmo padrão de ondas se tiverem o mesmo número
-de Froude — o que fixa a velocidade de ensaio $v_m = v_r\sqrt{L_m/L_r}$. Mas então o
-Reynolds do modelo fica $n^{3/2}$ vezes menor: impossível igualar os dois. Ajuste a
-escala e veja o Froude casar enquanto o Reynolds diverge.
+O modelo e o navio real só produzem o mesmo padrão de ondas com o mesmo número de Froude, o que
+fixa a velocidade de ensaio em $v_m = v_r\sqrt{L_m/L_r}$. Nessas condições, porém, o Reynolds do
+modelo fica $n^{3/2}$ vezes menor, e a igualdade simultânea é inatingível. A variação da escala
+mantém o Froude e afasta o Reynolds.
 
 ```{python}
 #| fig-cap: "Semelhança de Froude para um navio de 200 m a 14 nós ensaiado em escalas 1:n. Mantido Fr, a velocidade do modelo cai com √n e o Reynolds do modelo fica n^1,5 vezes menor que o real — a diferença que obriga a corrigir o atrito. Mesmos parâmetros da versão interativa."

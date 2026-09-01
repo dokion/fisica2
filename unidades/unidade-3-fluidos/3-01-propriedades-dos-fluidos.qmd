@@ -442,8 +442,8 @@ plt.tight_layout(); plt.show()
    (onde a lei de Stokes vale)? O que aconteceria com uma esfera grande em água?
 3. Ligue a queda: a velocidade cresce e satura. Que forças estão em jogo no início
    (quase queda livre) e no fim (terminal)?
-4. A esfera em queda está em movimento, e a viscosidade se manifesta. Caso ela parasse no meio
-   do óleo, que tensões o fluido exerceria sobre ela? Compare com o resultado obtido para a
+4. A esfera em queda está em movimento, e a viscosidade se manifesta. Caso parasse no meio do
+   óleo, que tensões o fluido exerceria sobre ela? Confronte com o resultado obtido para a
    isotropia da pressão.
 :::
 
@@ -579,10 +579,10 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Leve a temperatura de 50 °C a 130 °C: por quanto a viscosidade cai? Compare com a razão
-   entre as temperaturas absolutas — a queda é proporcional?
-2. A faixa-alvo tem 4 cSt de largura. Quantos graus de temperatura ela corresponde? O que
-   isso diz sobre a precisão exigida do controle do aquecedor?
+1. Elevada a temperatura de 50 °C a 130 °C, por quanto cai a viscosidade? Confronte com a razão
+   entre as temperaturas absolutas: a queda é proporcional?
+2. A faixa-alvo tem 4 cSt de largura. A quantos graus de temperatura ela corresponde, e o que
+   isso indica sobre a precisão exigida do controle do aquecedor?
 3. Se o aquecedor falha e o óleo cai de 130 °C para 110 °C, a viscosidade sai da faixa. Que
    consequência isso tem na purificadora e na bomba de injeção?
 :::
