@@ -78,7 +78,7 @@ $$L_p(r) = L_p(r_0) - 20\log_{10}\left(\frac{r}{r_0}\right)$$
 
 isto é, o nível **cai 20 dB a cada fator 10 na distância**, ou cerca de 6 dB a cada duplicação.
 
-Exemplo prático: um odômetro acústico, que mede velocidade por correlação de microrruídos turbulentos sob a quilha, emite pulsos de cerca de 120 dB re 1 μPa a 1 m, com distância de medida típica de 1 a 5 metros. A 1 m, $L_p = 120$ dB; a 5 m, $L_p = 120 - 20\log_{10}(5) \approx 120 - 14 = 106$ dB. Para ruído de fundo de cerca de 90 dB, o SNR é de 30 dB a 1 m e de 16 dB a 5 m.
+Exemplo prático: um log acústico, que mede velocidade por correlação de microrruídos turbulentos sob a quilha, emite pulsos de cerca de 120 dB re 1 μPa a 1 m, com distância de medida típica de 1 a 5 metros. A 1 m, $L_p = 120$ dB; a 5 m, $L_p = 120 - 20\log_{10}(5) \approx 120 - 14 = 106$ dB. Para ruído de fundo de cerca de 90 dB, o SNR é de 30 dB a 1 m e de 16 dB a 5 m.
 
 ::: {.sp}
 Um sonar ativo de um navio patrulha transmite em frequência 30 kHz com potência $P_{\text{tx}} = 5\,\text{kW}$. A água tem densidade $\rho = 1025\,\text{kg/m}^3$, velocidade do som $v = 1500\,\text{m/s}$. Um alvo submarino de pequeno porte reflete cerca de 1% da potência incidente, isto é, a potência recebida de volta é $P_{\text{rx}} = 0{,}01 P_{\text{tx}}$.

@@ -14,14 +14,14 @@ OE 2.24 [B3] Resolver problemas práticos envolvendo o efeito Doppler
 
 {{< aula 17-18 >}}
 
-Quando a **fonte** de uma onda (ex.: transdutor de sonar) ou o **observador** (receptor) se move em relação ao meio de propagação, a frequência percebida muda — é o **efeito Doppler**. Este é um dos fenômenos mais práticos da ondulatória em navegação: o log Doppler de um navio mede a **velocidade sobre o fundo** enviando sons para baixo e analisando o deslocamento de frequência do eco. Entender o efeito Doppler em diferentes situações (navio em movimento, fundo fixo; ambos móveis; fonte vs. observador) é essencial para operar sistemas de navegação modernos.
+Quando a **fonte** de uma onda, o transdutor de sonar por exemplo, ou o **observador** que a recebe se move em relação ao meio de propagação, a frequência percebida muda: é o **efeito Doppler**. Dele vive o log Doppler, que mede a **velocidade sobre o fundo** enviando som para baixo e lendo o deslocamento de frequência do eco. A operação dos sistemas de navegação modernos exige distinguir as situações possíveis: navio em movimento com fundo fixo, ambos móveis, fonte ou observador em deslocamento.
 
 ## Efeito Doppler: conceito {{< ra OE2.22 B2 >}}
 
 O **efeito Doppler** descreve como a frequência de uma onda muda quando há movimento relativo entre fonte e observador.
 
 **Caso 1: observador em movimento, fonte fixa.**
-Um observador que se aproxima de uma fonte ouve frequência **maior** que a emitida; que se afasta ouve frequência **menor**.
+Um observador que se aproxima da fonte ouve frequência **maior** que a emitida; ao se afastar, ouve frequência **menor**.
 
 A frequência percebida é:
 
@@ -30,7 +30,7 @@ $$f' = f\left(1 + \frac{v_{\text{obs}}}{v}\right)$$
 onde $f$ é a frequência emitida, $v_{\text{obs}}$ é a velocidade do observador (positiva se se aproxima) e $v$ é a velocidade do som no meio.
 
 **Caso 2: fonte em movimento, observador fixo.**
-Uma fonte que se aproxima do observador emite frequência percebida mais alta; que se afasta, mais baixa.
+Uma fonte que se aproxima do observador produz frequência percebida mais alta; ao se afastar, mais baixa.
 
 $$f' = f\left(\frac{1}{1 - v_{\text{fonte}}/v}\right) \approx f\left(1 + \frac{v_{\text{fonte}}}{v}\right)$$
 
@@ -45,7 +45,7 @@ A **mudança de frequência** é chamada **desvio Doppler**:
 
 $$\Delta f = f' - f$$
 
-A **razão Doppler** é a razão entre a frequência percebida e a emitida:
+A **razão Doppler** compara a frequência percebida à emitida:
 
 $$\frac{f'}{f} = \frac{v + v_{\text{obs}}}{v - v_{\text{fonte}}}$$
 
@@ -74,7 +74,7 @@ A **velocidade é recuperada** medindo o desvio Doppler:
 
 $$v_{\text{navio}} = \frac{v}{2f_0}|\Delta f|$$
 
-Esta é a base do **log Doppler**: mede $\Delta f$ e calcula $v_{\text{navio}}$ diretamente.
+É a base do **log Doppler**, que mede $\Delta f$ e daí obtém $v_{\text{navio}}$.
 
 ## Aplicação prática: cálculo de velocidade {{< ra OE2.24 B3 >}}
 
@@ -88,29 +88,29 @@ Convertendo para nós (1 nó = 0,5144 m/s):
 
 $$v \approx \frac{2{,}22}{0{,}5144} \approx 4{,}3\,\text{nós}$$
 
-Isto é uma velocidade típica de cruzeiro — aproximadamente 8 km/h.
+Trata-se de velocidade típica de cruzeiro, cerca de 8 km/h.
 
 ## Comparação com medições por corrente {{< ra OE2.24 B3 >}} (complementação)
 
-O log Doppler mede a velocidade *sobre o fundo* (velocidade de deslocamento do navio relativa ao leito marinho). Isto é diferente da velocidade *sobre a água* (velocidade do navio relativa à massa de água). Se há corrente de 0,5 nós na mesma direção, o log mostraria 4,8 nós enquanto a velocidade de propulsão seria 4,3 nós. Esse distingue é importante em navegação de segurança (aproximação a portos, ancoragem).
+O log Doppler mede a velocidade *sobre o fundo*, isto é, o deslocamento do navio em relação ao leito marinho, grandeza distinta da velocidade *sobre a água*, medida em relação à massa líquida. Com corrente de 0,5 nós na mesma direção, o log indicaria 4,8 nós enquanto a velocidade de propulsão seria de 4,3 nós. A distinção importa à segurança da navegação, na aproximação a portos e na ancoragem.
 
 ::: {.sp}
-Um navio patrulha em aproximação ao porto usa log Doppler de banda única (400 kHz) em água profunda com $v_{\text{som}} = 1500\,\text{m/s}$. Durante uma manobra, o velocímetro de corrente (ADCP — Acoustic Doppler Current Profiler, que mede velocidade em várias profundidades) registra:
+Um navio patrulha em aproximação ao porto usa log Doppler de banda única (400 kHz) em água profunda com $v_{\text{som}} = 1500\,\text{m/s}$. Durante uma manobra, o perfilador de correntes (ADCP, *Acoustic Doppler Current Profiler*, que mede velocidade em várias profundidades) registra:
 
 - Camada superior (0–10 m): corrente de 0,5 nós para a direita (leste)
 - Camada intermediária (10–50 m): corrente de 0,2 nós (leste)
 - Camada profunda (50–150 m): corrente negligenciável
 
-O log Doppler simples (usa uma frequência única a uma profundidade fixa, ~80% da profundidade total) registra uma velocidade média ponderada pelo padrão de reflexão.
+O log Doppler simples, de frequência única referida a uma profundidade fixa, cerca de 80% da total, registra velocidade média ponderada pelo padrão de reflexão.
 
 <!-- [VERIFICAR: o enunciado não informa a velocidade do navio nem o rumo; assumi
      velocidade sobre o fundo de 6,0 nós com proa na direção da corrente (leste).] -->
 
-**(a) Modelagem.** O log com referência a ~80% da profundidade "ancora" a medida na
-camada profunda (50–150 m), onde a corrente é desprezível — nessa condição a leitura
-aproxima a velocidade sobre o fundo (SOG). Se a referência cair numa camada com
-corrente $u$, a leitura passa a ser $v_{\text{log}} = v_{\text{SOG}} - u$ (componente
-na direção do rumo). Assumir $v_{\text{SOG}} = 6{,}0$ nós, proa leste.
+**(a) Modelagem.** O log com referência a cerca de 80% da profundidade fixa a medida na
+camada profunda (50–150 m), onde a corrente é desprezível, e nessa condição a leitura
+aproxima a velocidade sobre o fundo (SOG). Caso a referência caia numa camada com corrente
+$u$, a leitura passa a $v_{\text{log}} = v_{\text{SOG}} - u$, tomada a componente na
+direção do rumo. Supor $v_{\text{SOG}} = 6{,}0$ nós, proa a leste.
 
 **(b) Desenvolvimento.** Leitura conforme a camada que serve de referência:
 
@@ -125,30 +125,30 @@ $$v_{\text{água}} = v_{\text{SOG}} - u_{\text{sup}} = 5{,}5\ \text{nós}$$
 água superficial é 0,5 nós menor. A escolha da camada de referência muda a leitura em
 até 0,5 nós.
 
-**(d) Análise crítica.** Um único número de log não descreve o cisalhamento de
-corrente: na aproximação final, o que desloca o navio em relação ao cais é a corrente
-superficial, mesmo com SOG corretamente medida — daí o valor do ADCP, que resolve o
-perfil por células. O sinal da correção inverte se a corrente for de proa; e em águas
-rasas o log pode perder o retorno da camada profunda e mudar sozinho de referência
-(bottom track → water track), saltando a leitura em 0,5 nó sem aviso.
+**(d) Análise crítica.** Um único número de log não descreve o cisalhamento de corrente:
+na aproximação final, o que desloca o navio em relação ao cais é a corrente superficial,
+ainda que a SOG esteja corretamente medida. Daí o valor do ADCP, que resolve o perfil por
+células. O sinal da correção inverte com corrente de proa e, em águas rasas, o log pode
+perder o retorno da camada profunda e trocar de referência por conta própria, do fundo
+para a água (*bottom track* para *water track*), saltando a leitura em 0,5 nó sem aviso.
 :::
 
 ::: {.callout-warning}
 ## Erros clássicos
 
-- **Confundir velocidade sobre água com velocidade sobre fundo:** log Doppler mede sobre o fundo; deve-se subtrair/somar corrente para obter velocidade de propulsão real.
-- **Aplicar fórmula clássica de Doppler sem conta do "duplo efeito":** o som vai e volta, logo o desvio Doppler é 2× o de uma única passagem. Sem isso, a velocidade calculada fica errada por um fator 2.
-- **Assumir Doppler é observação instantânea:** na realidade, log Doppler integra sobre um volume de água (células de profundidade). Gradientes de corrente podem produzir resultados inesperados se não entendidos.
+- **Confundir velocidade sobre a água com velocidade sobre o fundo:** o log Doppler mede sobre o fundo, e a velocidade de propulsão real exige somar ou subtrair a corrente.
+- **Aplicar a fórmula clássica de Doppler sem levar em conta o duplo efeito:** o som vai e volta, e o desvio é o dobro do de uma única passagem. Ignorá-lo erra a velocidade por um fator 2.
+- **Supor o Doppler uma observação instantânea:** o log integra sobre um volume de água, dividido em células de profundidade, e gradientes de corrente produzem leituras que só se explicam por esse perfil.
 :::
 
-## Veja as frentes de onda se comprimirem
+## Compressão das frentes de onda por uma fonte em movimento
 
-A fonte (círculo laranja) emite cristas em intervalos iguais enquanto se move. À frente
-dela as cristas ficam **comprimidas** (comprimento de onda menor → frequência maior);
-atrás, **esticadas**. O slider de cima controla a razão $v_{\text{fonte}}/v_{\text{som}}$
-— exagerada para o efeito ser visível. O painel de baixo aplica as fórmulas ao caso
-naval real: log Doppler de 400 kHz, som a 1500 m/s, navio na velocidade que você
-escolher.
+A fonte, o círculo laranja, emite cristas em intervalos iguais enquanto se move. À frente
+dela as cristas ficam **comprimidas**, de comprimento de onda menor e frequência maior, e
+atrás ficam **esticadas**. O controle de cima fixa a razão
+$v_{\text{fonte}}/v_{\text{som}}$, exagerada para tornar o efeito visível. O painel de
+baixo aplica as fórmulas ao caso naval real: log Doppler de 400 kHz, som a 1500 m/s e
+velocidade do navio ajustável.
 
 ```{python}
 #| fig-cap: "Frentes de onda de uma fonte que se move para a direita com v_fonte = 0,5·v_som. Cada círculo foi emitido quando a fonte estava no ponto marcado: à frente as cristas se comprimem (f' > f), atrás se afastam (f' < f). Mesmos parâmetros da versão interativa."
@@ -266,15 +266,15 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Com $\beta = 0$, as cristas são círculos concêntricos. Aumente $\beta$ devagar: quem
-   se move são as *cristas já emitidas* ou os *centros de emissão*? Por que isso basta
-   para mudar a frequência recebida?
-2. Um observador parado à frente da fonte recebe as cristas comprimidas. Meça na tela
-   (pause!) a razão entre os espaçamentos atrás/à frente para $\beta = 0{,}5$ e compare
-   com $(1+\beta)/(1-\beta) = 3$.
-3. No painel real: a 10 nós o desvio é $\Delta f \approx 2{,}7$ kHz em 400 kHz — uma
-   parte em 146. Por que o log mede $\Delta f$ (e não $f_2$ diretamente) e por que o
-   fator 2 aparece na fórmula?
+1. Com $\beta = 0$ as cristas são círculos concêntricos. Elevado $\beta$ devagar, o que se
+   move são as *cristas já emitidas* ou os *centros de emissão*? Por que isso basta para
+   mudar a frequência recebida?
+2. Um observador parado à frente da fonte recebe as cristas comprimidas. Com a animação
+   congelada em $\beta = 0{,}5$, a razão entre os espaçamentos atrás e à frente confere
+   com $(1+\beta)/(1-\beta) = 3$?
+3. No painel real, a 10 nós o desvio é $\Delta f \approx 2{,}7$ kHz em 400 kHz, uma parte
+   em 146. Por que o log mede $\Delta f$, e não $f_2$ diretamente, e por que o fator 2
+   figura na fórmula?
 :::
 
 ## Onde o fenômeno vive
@@ -282,15 +282,15 @@ plt.tight_layout(); plt.show()
 <!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
      em sessões futuras, a pedido do professor. -->
 
-- **Log Doppler e ADCP** — já detalhados neste tópico: velocidade sobre o fundo e
-  perfil de correntes extraídos do desvio de frequência do eco.
-- **Radar de navegação com processamento Doppler** — separa alvos móveis do clutter
-  do mar pelo desvio de frequência do eco EM; mesmo princípio, outra onda.
-- **Sirene de embarcação passando** — o clássico audível: aguda na aproximação,
-  grave no afastamento; a mudança abrupta no través marca o instante de distância
-  mínima.
+- **Log Doppler e ADCP** — velocidade sobre o fundo e perfil de correntes, ambos
+  extraídos do desvio de frequência do eco.
+- **Radar de navegação com processamento Doppler** — separa alvos móveis do eco parasita
+  do mar (*clutter*) pelo desvio de frequência do eco eletromagnético: mesmo princípio,
+  outra onda.
+- **Sirene de embarcação passando** — aguda na aproximação e grave no afastamento; a
+  mudança abrupta no través marca o instante de distância mínima.
 
 <!-- EXEMPLO A SIMULAR: sirene passando (p5.js + WebAudio): fonte cruzando a tela
      com f'(t) calculado e áudio com a frequência percebida variando. -->
 
-**Conexão com o próximo tópico:** estudamos até agora ondas com velocidades pequenas comparadas à velocidade do som ($v_{\text{obj}} \ll v_{\text{som}}$), onde o desvio Doppler é linear. Mas o que acontece quando objetos se movem a velocidades comparáveis ou superiores à velocidade do som? Surgem **ondas de choque** e fenômenos exóticos de propagação — tema do tópico final 2.9.
+**Conexão com o próximo tópico:** o tratamento acima supõe objetos lentos frente ao som ($v_{\text{obj}} \ll v_{\text{som}}$), regime em que o desvio Doppler é linear. Para velocidades comparáveis ou superiores à do som surgem as **ondas de choque**, objeto do tópico que fecha a unidade.

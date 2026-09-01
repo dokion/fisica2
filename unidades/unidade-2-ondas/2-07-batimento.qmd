@@ -11,11 +11,11 @@ OE 2.21 [B3] Determinar a frequência dos batimentos
 
 {{< aula 17-18 >}}
 
-Quando **duas ondas sonoras de frequências ligeiramente diferentes** propagam-se simultaneamente, o ouvido não percebe duas frequências distintas — percebe *uma* frequência média que oscila em amplitude lentamente. Esse efeito é chamado **batimento**. Na navegação acústica, batimentos aparecem quando ecos de múltiplas frequências ou reflexões fantasmas se sobrepõem — conhecê-los permite ao operador de sonar distinguir sinais úteis de ruído estruturado.
+Quando **duas ondas sonoras de frequências ligeiramente diferentes** se propagam simultaneamente, o ouvido percebe *uma* frequência média cuja amplitude oscila devagar, e não duas frequências distintas. O efeito chama-se **batimento**. Na navegação acústica ele aparece na sobreposição de ecos de múltiplas frequências ou de reflexões fantasmas, e reconhecê-lo permite ao operador de sonar separar sinal útil de ruído estruturado.
 
 ## O fenômeno do batimento {{< ra OE2.20 B2 >}}
 
-Suponha duas ondas de mesma amplitude $A$ mas frequências ligeiramente diferentes, $f_1$ e $f_2$, onde $f_2 - f_1 = \Delta f$ é pequeno:
+Sejam duas ondas de mesma amplitude $A$ e frequências ligeiramente diferentes, $f_1$ e $f_2$, com $f_2 - f_1 = \Delta f$ pequeno:
 
 $$y_1 = A\cos(2\pi f_1 t), \quad y_2 = A\cos(2\pi f_2 t)$$
 
@@ -31,9 +31,9 @@ $$= 2A\cos(\pi \Delta f \cdot t)\cos\left(\pi f_{\text{méd}} \cdot t\right)$$
 
 onde $f_{\text{méd}} = (f_1 + f_2)/2$ é a frequência média e $\Delta f = f_2 - f_1$.
 
-Esta forma revela a estrutura do batimento: é uma **onda de frequência média** $f_{\text{méd}}$ com **amplitude modulada** por $2A\cos(\pi \Delta f \cdot t)$. A amplitude oscila com frequência $\Delta f$ — é muito mais lenta que $f_{\text{méd}}$ quando $\Delta f \ll f_{\text{méd}}$.
+A forma exibe a estrutura do batimento: uma **onda de frequência média** $f_{\text{méd}}$ com **amplitude modulada** por $2A\cos(\pi \Delta f \cdot t)$. A amplitude oscila com frequência $\Delta f$, muito mais lenta que $f_{\text{méd}}$ quando $\Delta f \ll f_{\text{méd}}$.
 
-O ouvido percebe a variação lenta de amplitude — o "batimento" — enquanto a frequência média soa como uma nota contínua levemente pulsante.
+O ouvido percebe a variação lenta de amplitude, o batimento, enquanto a frequência média soa como nota contínua levemente pulsante.
 
 ## Frequência de batimento {{< ra OE2.21 B3 >}}
 
@@ -41,26 +41,26 @@ A **frequência de batimento** é a frequência com que a amplitude varia:
 
 $$f_{\text{batimento}} = |f_2 - f_1| = \Delta f$$
 
-Por exemplo, se um sonar transmite em 37,5 kHz e capta um eco fantasma (reflexão múltipla) que é ligeiramente deslocado por efeito Doppler para 37,6 kHz, o batimento tem frequência:
+Se um sonar transmite em 37,5 kHz e capta um eco fantasma de reflexão múltipla, deslocado por efeito Doppler para 37,6 kHz, o batimento tem frequência:
 
 $$f_{\text{batimento}} = 37{,}6 - 37{,}5 = 0{,}1\,\text{kHz} = 100\,\text{Hz}$$
 
-O operador ouvirá um "buzzer" de 100 Hz — um som grave e repetitivo que identifica a presença de múltiplas reflexões de frequências próximas. Este é o método clássico de diagnóstico acústico: sonares monofeixe usam batimentos para distinguir ecos múltiplos de contatos verdadeiros.
+O operador ouve um zumbido de 100 Hz, som grave e repetitivo que denuncia múltiplas reflexões de frequências próximas. É o método clássico de diagnóstico acústico: sonares monofeixe recorrem ao batimento para separar ecos múltiplos de contatos verdadeiros.
 
-**Período de batimento:** o intervalo de tempo entre dois máximos de amplitude consecutivos é:
+**Período de batimento:** o intervalo entre dois máximos consecutivos de amplitude vale:
 
 $$T_{\text{batimento}} = \frac{1}{f_{\text{batimento}}} = \frac{1}{\Delta f}$$
 
-Com $\Delta f = 100$ Hz, $T_{\text{batimento}} = 10$ ms — dez ciclos de batimento por segundo.
+Com $\Delta f = 100$ Hz, $T_{\text{batimento}} = 10$ ms, ou cem ciclos de batimento por segundo.
 
 ## Aplicação prática: batimento entre sinais de sonar
 
-No exemplo acima, se o operador ouve um batimento de 100 Hz, ele sabe que há dois componentes de frequência separados por 100 Hz no retorno. Ao aumentar a frequência de transmissão ligeiramente (ex.: de 37,5 para 37,4 kHz), o batimento mudaria para $|37{,}4 - 37{,}6| = 0{,}2$ kHz = 200 Hz (mais agudo). Essa variação permite ao operador ajustar a frequência de transmissão para "sair" de ressonâncias da coluna de água ou cancelar ecos fantasma.
+No exemplo acima, o batimento de 100 Hz informa ao operador que o retorno traz dois componentes de frequência separados por 100 Hz. Alterada ligeiramente a frequência de transmissão, de 37,5 para 37,4 kHz, o batimento passa a $|37{,}4 - 37{,}6| = 0{,}2$ kHz = 200 Hz, mais agudo. A variação permite ajustar a transmissão de modo a escapar de ressonâncias da coluna de água ou a cancelar ecos fantasma.
 
-Em sistemas digitais modernos, a detecção de batimento é feita por análise de espectro (transformada de Fourier rápida — FFT). Componentes de frequência próximas à transmitida são identificadas, medidas e subtraídas do sinal útil.
+Em sistemas digitais modernos a detecção de batimento se faz por análise de espectro, com transformada rápida de Fourier (FFT): componentes de frequência próximas à transmitida são identificadas, medidas e subtraídas do sinal útil.
 
 ::: {.sp}
-Um sonar ativo de navio oceanogrăfico opera em freqüência nominal $f_0 = 120\,\text{kHz}$. O transdutor transmite um pulso curto. Em águas rasas, a reflexão múltipla (fundo + superfície + fundo novamente) cria um eco à frequência $f_0$, porém ligeiramente atenuado. Ao mesmo tempo, uma reflectência em camada de sal cria um eco em freqüência $f_0 + 80\,\text{Hz} = 120{,}00008\,\text{kHz}$ (deslocamento Doppler negativo pelo movimento vertical da coluna).
+Um sonar ativo de navio oceanográfico opera em frequência nominal $f_0 = 120\,\text{kHz}$. O transdutor transmite um pulso curto. Em águas rasas, a reflexão múltipla (fundo + superfície + fundo novamente) cria um eco à frequência $f_0$, porém ligeiramente atenuado. Ao mesmo tempo, uma reflexão em camada de sal cria um eco em frequência $f_0 + 80\,\text{Hz} = 120{,}00008\,\text{kHz}$ (deslocamento Doppler negativo pelo movimento vertical da coluna).
 
 <!-- [VERIFICAR: o enunciado escreve f₀ + 80 Hz = 120,00008 kHz, mas 120 kHz + 80 Hz
      = 120,08 kHz. Adotei Δf = 80 Hz como dado governante do problema.] -->
@@ -85,8 +85,8 @@ com máximos separados por $12{,}5\,\text{ms}$.
 definido ($\Delta f \ll f_{\text{méd}}$). Há, porém, uma condição de observabilidade que
 o operador precisa conhecer: o batimento só se manifesta se os dois ecos se sobrepõem no
 tempo por pelo menos um período de batimento. Um pulso de sonar de $1\,\text{ms}$ é curto
-demais para exibir modulação de $12{,}5\,\text{ms}$ — a detecção exige pulso longo (ou
-emissão contínua) ou, em sistemas digitais, FFT com janela maior que
+demais para exibir modulação de $12{,}5\,\text{ms}$: a detecção exige pulso longo, ou
+emissão contínua, ou ainda, em sistemas digitais, FFT com janela maior que
 $1/\Delta f = 12{,}5\,\text{ms}$ para resolver as duas raias espectrais.
 :::
 
@@ -94,17 +94,17 @@ $1/\Delta f = 12{,}5\,\text{ms}$ para resolver as duas raias espectrais.
 ## Erros clássicos
 
 - **Confundir frequência de batimento com frequência média:** $f_{\text{bat}} = \Delta f$, não $f_{\text{méd}}$. Uma diferença de 1 Hz entre 100 kHz e 100,001 kHz produz batimento a 1 Hz, não 100 kHz.
-- **Assumir que batimento só ocorre em acústica:** batimentos aparecem sempre que duas ondas de frequências próximas se somam — em eletromagnetismo (interferência de duas frequências de rádio), ótica (figura de batimento de duas cores próximas), etc.
-- **Esquecer que magnitude importa:** para detectar batimento, $\Delta f$ deve ser pequeno comparado a $f_{\text{méd}}$. Se $\Delta f \sim f_{\text{méd}}$ (diferença de 50% de frequência), o resultado não é um batimento audível — são duas notas distintas.
+- **Supor que o batimento só ocorre em acústica:** ele aparece sempre que duas ondas de frequências próximas se somam, seja em eletromagnetismo, na interferência de duas frequências de rádio, seja em ótica, na figura de batimento de duas cores próximas.
+- **Esquecer que a magnitude importa:** para haver batimento, $\Delta f$ deve ser pequeno frente a $f_{\text{méd}}$. Com $\Delta f \sim f_{\text{méd}}$, caso de diferença de 50% na frequência, ouvem-se duas notas distintas, e não um batimento.
 :::
 
-## Veja e ouça o batimento
+## Duas frequências próximas: envoltória e som do batimento
 
-O painel superior mostra as duas ondas ($f_1 = 100\,\text{Hz}$ fixa; $f_2$ ajustável)
-numa janela de 60 ms que avança em câmera lenta — observe as duas senoides escorregando
-de fase uma em relação à outra. O painel inferior mostra a soma $y_1 + y_2$ em 1 s de
-sinal, com a envoltória $\pm 2A\cos(\pi\,\Delta f\,t)$ tracejada. O botão de áudio
-reproduz as duas frequências nos alto-falantes: o pulsar audível é o batimento.
+O painel superior traz as duas ondas ($f_1 = 100\,\text{Hz}$ fixa e $f_2$ ajustável) numa
+janela de 60 ms que avança em câmera lenta, com as senoides escorregando de fase uma em
+relação à outra. O painel inferior traz a soma $y_1 + y_2$ em 1 s de sinal, com a
+envoltória $\pm 2A\cos(\pi\,\Delta f\,t)$ tracejada. O botão de áudio reproduz as duas
+frequências nos alto-falantes, e o pulsar audível é o batimento.
 
 ```{python}
 #| fig-cap: "Batimento entre f₁ = 100 Hz e f₂ = 103 Hz, amplitudes iguais. Acima: as duas componentes numa janela de 60 ms. Abaixo: a soma em 1 s de sinal, com a envoltória ±2A cos(π Δf t); a amplitude pulsa com f_bat = 3 Hz. Mesmos parâmetros da versão interativa."
@@ -258,14 +258,14 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Leve $f_2$ até $100\,\text{Hz}$ ($\Delta f = 0$). O que acontece com a envoltória e
-   com o som? A amplitude da soma depende de quê, nesse caso?
-2. Com $f_2 = 103\,\text{Hz}$, meça na tela o intervalo entre dois nós consecutivos da
-   envoltória e compare com $T_{\text{bat}} = 1/\Delta f$. A função
-   $\cos(\pi\,\Delta f\,t)$ tem período $2/\Delta f$ — o dobro. Por que a pulsação
-   percebida ocorre, ainda assim, $\Delta f$ vezes por segundo?
-3. Ouvindo o áudio: por que se percebe um único tom pulsante, e não duas notas
-   distintas? Estime a partir de que $\Delta f$ o ouvido passaria a separar os dois tons.
+1. Levado $f_2$ a $100\,\text{Hz}$ ($\Delta f = 0$), o que ocorre com a envoltória e com o
+   som? De que depende, nesse caso, a amplitude da soma?
+2. Com $f_2 = 103\,\text{Hz}$, o intervalo entre dois nós consecutivos da envoltória
+   confere com $T_{\text{bat}} = 1/\Delta f$? A função $\cos(\pi\,\Delta f\,t)$ tem
+   período $2/\Delta f$, o dobro; por que a pulsação percebida ocorre, ainda assim,
+   $\Delta f$ vezes por segundo?
+3. No áudio, por que se percebe um único tom pulsante em vez de duas notas distintas?
+   Estime a partir de que $\Delta f$ o ouvido passaria a separar os dois tons.
 :::
 
 ## Onde o fenômeno vive
@@ -276,14 +276,14 @@ plt.tight_layout(); plt.show()
 - **Sincronização de geradores** — antes de fechar o disjuntor em paralelo, as duas
   tensões batem na diferença de frequência; lâmpadas de sincronização (ou o
   sincronoscópio) piscam em $f_{\text{bat}}$, e fecha-se no escuro das lâmpadas.
-- **Hélices gêmeas fora de sincronismo** — em navios de dois eixos, RPMs ligeiramente
-  diferentes produzem um "uó-uó" acústico periódico na acomodação: batimento entre
-  as ordens de pá.
-- **Afinação de instrumentos** — o clássico: o músico ajusta a corda até o batimento
-  com a referência desaparecer ($\Delta f \to 0$).
+- **Hélices gêmeas fora de sincronismo** — em navios de dois eixos, rotações ligeiramente
+  diferentes produzem na acomodação uma pulsação acústica periódica: o batimento entre as
+  ordens de pá.
+- **Afinação de instrumentos** — o músico ajusta a corda até desaparecer o batimento com
+  a referência ($\Delta f \to 0$).
 
 <!-- EXEMPLO A SIMULAR: lâmpadas de sincronização de gerador (p5.js): duas senoides
      de 60 Hz e 60±Δf Hz, lâmpadas piscando em f_bat e botão "fechar disjuntor" que
      só aceita perto do zero de diferença. -->
 
-**Conexão com o próximo tópico:** batimentos são um efeito de interferência entre duas frequências *próximas*. Agora consideramos o caso oposto: **o que acontece quando o *observador* se move** em relação à fonte? A frequência percebida muda — este é o **efeito Doppler**, crucial para o log Doppler de velocidade de um navio.
+**Conexão com o próximo tópico:** o batimento é interferência entre duas frequências *próximas*. Resta o caso do **movimento relativo entre fonte e observador**, que altera a frequência percebida: o **efeito Doppler**, princípio do log Doppler de velocidade do navio.
