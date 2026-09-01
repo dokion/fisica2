@@ -13,31 +13,30 @@ OE 2.3 [B2] Diferenciar ondas transversais de longitudinais
 
 {{< aula 13-14 >}}
 
-Uma onda é uma perturbação que se propaga no espaço, transportando energia e informação. Nesta unidade começamos com **ondas transversais**, onde a perturbação ocorre *perpendicular* à direção de propagação. Este é o tipo mais visível em cordas e na superfície da água — mas também é o tipo que a engenharia de navegação usa em radar para detectar alvos, e que governa a estrutura eletromagnética do escâner de ecobatímetro moderno.
+Uma onda é uma perturbação que se propaga no espaço, transportando energia e informação. A unidade abre pelas **ondas transversais**, o tipo mais visível em cordas e na superfície da água, empregado pelo radar na detecção de alvos e no acionamento do escâner de ecobatímetro moderno.
 
 ## Conceito de onda transversal {{< ra OE2.1 B1 >}}
 
-Uma **onda transversal** é uma perturbação em que as partículas do meio oscilam *perpendicular* à direção de propagação. Imagine uma corda tensa: quando você "sacode" uma extremidade para cima e para baixo, a frente de onda viaja ao longo do comprimento da corda — mas cada ponto da corda sobe e desce, nunca se move na direção de propagação.
+Uma **onda transversal** é uma perturbação em que as partículas do meio oscilam *perpendicular* à direção de propagação. Seja uma corda tensa cuja extremidade é sacudida para cima e para baixo: a frente de onda viaja ao longo do comprimento da corda, mas cada ponto da corda sobe e desce, sem nunca se deslocar na direção de propagação.
 
-Formalmente, para uma onda 1D propagando no eixo $x$, a perturbação $y(x, t)$ (deslocamento transversal) é função de $x$ e $t$, mas a velocidade de cada partícula é sempre no eixo $y$:
+Para uma onda unidimensional que se propaga no eixo $x$, o deslocamento transversal $y(x,t)$ é função de $x$ e $t$, mas a velocidade de cada partícula está sempre no eixo $y$:
 
 $$v_{\text{partícula}} = \frac{\partial y}{\partial t} \perp \hat{x} = \text{direção de propagação}$$
 
-A velocidade da frente de onda (velocidade de grupo ou de fase) — chamada **velocidade de propagação** ou **velocidade de fase** — é uma propriedade do meio, não do oscilador:
+A velocidade da frente de onda, denominada **velocidade de propagação**, velocidade de fase ou velocidade de grupo, é propriedade do meio, não do oscilador:
 
 $$v_{\text{onda}} = \frac{\lambda}{T} = \lambda f$$
 
 onde $\lambda$ é o comprimento de onda, $T$ o período e $f$ a frequência.
 
-## Veja a onda percorrer a corda livre
+## Propagação de um pulso numa corda livre
 
-Sacuda a extremidade esquerda e a perturbação viaja pela corda — aqui, no **espaço livre**,
-ela avança e some pela direita, sem voltar. Repare nas **contas coloridas**: cada uma
-*sobe e desce no lugar* (movimento transversal), enquanto a *forma* da onda caminha para a
-direita. A corda começa **reta**: escolha **contínua** (a onda entra pela esquerda e enche a
-corda), **pulso** (uma única corcova que sai pela direita) ou **manual** — aí você agarra a
-ponta esquerda (↕) e a move com o mouse, e o seu gesto vira onda. Use **passo a passo** para
-congelar o instante e confirmar que nenhuma conta anda para o lado — só a onda anda.
+Sacudida a extremidade esquerda, a perturbação viaja pela corda e, no espaço livre,
+sai pela direita sem voltar. Cada conta colorida *sobe e desce no lugar*, enquanto a
+*forma* da onda caminha para a direita. A corda começa reta, em três modos: **contínua**,
+com a onda entrando pela esquerda até encher a corda; **pulso**, uma única corcova que sai
+pela direita; e **manual**, em que a ponta esquerda (↕) é arrastada com o mouse. O passo a
+passo congela o instante e confirma que nenhuma conta anda para o lado: só a onda anda.
 
 ```{python}
 #| fig-cap: "Instantâneo de uma onda transversal progressiva numa corda (A = 0,6; comprimento de onda da frequência padrão). As contas coloridas marcam partículas do meio: cada uma só se desloca na vertical (setas), enquanto a forma da onda avança na horizontal com velocidade v = λf. Mesmos parâmetros da versão interativa."
@@ -168,7 +167,7 @@ plt.tight_layout(); plt.show()
       p.noStroke();
       if(mode==='manual'){ p.fill(grabbing?'#66308c':'#8a5cc0'); p.circle(xL,yOf(0),22);
         p.fill(255); p.textSize(11); p.textAlign(p.CENTER,p.CENTER); p.text('↕',xL,yOf(0));
-        p.textAlign(p.LEFT,p.TOP); p.fill('#8a5cc0'); p.text('agarre a ponta ↕ e mexa',xL+16,H-18); }
+        p.textAlign(p.LEFT,p.TOP); p.fill('#8a5cc0'); p.text('ponta ↕ móvel',xL+16,H-18); }
       else { p.fill('#3a342c'); p.rectMode(p.CENTER); p.rect(xL,yOf(0),14,20,3); p.rectMode(p.CORNER); }
       p.fill('#a79e8e'); p.textSize(11); p.textAlign(p.RIGHT,p.TOP); p.text('espaço livre →',xR-2,6);
     };
@@ -182,8 +181,8 @@ plt.tight_layout(); plt.show()
     p.touchEnded=()=>{ grabbing=false; };
   });
   const caps={cont:'A corda começa reta; a onda entra pela esquerda, viaja e sai no espaço livre sem refletir. Cada conta só sobe e desce no lugar.',
-    pulse:'Um pulso viaja para a direita e sai no espaço livre. Ajuste a largura e a amplitude; clique ＋ pulso para lançar vários seguidos.',
-    manual:'Agarre a ponta ↕ e mexa: o seu gesto vira onda, que viaja para a direita e sai.'};
+    pulse:'Um pulso viaja para a direita e sai no espaço livre. A largura e a amplitude são ajustáveis; o botão ＋ pulso lança vários seguidos.',
+    manual:'A ponta ↕ move-se com o mouse: o gesto vira onda, que viaja para a direita e sai.'};
   const updateUI=()=>{ const man=mode==='manual';
     el('wvPlayRow').style.display=man?'none':'flex';
     el('wvSldRow').style.display=man?'none':'flex';
@@ -208,22 +207,22 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Escolha uma conta colorida e siga-a por alguns segundos: que trajetória ela descreve? Ela
-   acompanha a onda para a direita, ou fica no mesmo $x$?
-2. No modo **pulso**, use o **passo** para medir a olho quanto o pulso avança a cada clique.
-   Agora mude a amplitude e repita: a velocidade da onda dependeu da amplitude?
-3. No modo **contínua**, aumente a frequência: como muda o comprimento de onda, se a velocidade
-   do meio é fixa? Confira com $v=\lambda f$.
+1. Que trajetória descreve uma conta colorida acompanhada por alguns segundos? Ela segue a
+   onda para a direita, ou permanece no mesmo $x$?
+2. No modo **pulso**, o passo permite medir a olho quanto o pulso avança a cada acionamento.
+   Alterada a amplitude, a velocidade da onda mudou?
+3. No modo **contínua**, elevada a frequência, como muda o comprimento de onda, se a
+   velocidade do meio é fixa? Confira com $v=\lambda f$.
 :::
 
 ## Exemplos e meios {{< ra OE2.2 B1 >}}
 
-Ondas transversais aparecem em contextos muito diversos:
+Ondas transversais aparecem em contextos diversos:
 
 - **Cordas e cabos:** uma corda vibrante (como em um violão) propaga pulsos transversais;
-- **Superfície da água:** ondulações num tanque ou no oceano são transversais — a partícula sobe e desce, o comprimento de onda avança;
+- **Superfície da água:** ondulações num tanque ou no oceano são transversais: a partícula sobe e desce enquanto o comprimento de onda avança;
 - **Radiação eletromagnética:** campos elétrico e magnético oscilam *perpendicular* à direção de propagação (fundamental para radar, comunicações navais);
-- **Vibração de estruturas:** laminas e membranas vibram transversalmente.
+- **Vibração de estruturas:** lâminas e membranas vibram transversalmente.
 
 ## Diferença entre ondas transversais e longitudinais {{< ra OE2.3 B2 >}}
 
@@ -234,10 +233,10 @@ Nem toda onda é transversal. Existem **ondas longitudinais**, em que a partícu
 | **Transversal** | Perpendicular | Paralela | Corda vibrante; onda na água; radar (EM) | Pulsos EM de radar; scanner de ecobatímetro transdutor |
 | **Longitudinal** | Paralela | Paralela | Som em fluido ou sólido; onda de compressão | Som em água (ecobatímetro e sonar); ultrassom de diagnóstico |
 
-A distinção é crucial: som viaja como *onda longitudinal* na água (compressões e rarefações sucessivas), mas o pulso de ativação do transdutor de um ecobatímetro é um trem *transversal* de EM que viaja ao transdutor — depois *converte-se* em longitudinal (som) dentro da água.
+A distinção é essencial: na água o som viaja como *onda longitudinal*, em compressões e rarefações sucessivas, ao passo que o pulso que ativa o transdutor do ecobatímetro é eletromagnético, portanto *transversal*, e só *converte-se* em longitudinal dentro da água.
 
 ::: {.sp}
-Um transdutor de ecobatímetro dual-frequência opera a 30 kHz e 200 kHz em água do mar. O comprimento de onda da propagação longitudinal a 30 kHz na água é $\lambda_{30} \approx 50\,\text{mm}$ (a velocidade do som no local é $\approx 1500\,\text{m/s}$ — faixa típica da costa).
+Um transdutor de ecobatímetro dual-frequência opera a 30 kHz e 200 kHz em água do mar. O comprimento de onda da propagação longitudinal a 30 kHz na água é $\lambda_{30} \approx 50\,\text{mm}$ (velocidade do som no local $\approx 1500\,\text{m/s}$, faixa típica da costa).
 
 **(a) Modelagem.** Propagação longitudinal na água com $v = 1500$ m/s; para cada canal
 do transdutor vale $\lambda = v/f$. Incógnitas: $\lambda$ nos dois canais e a comparação
@@ -252,31 +251,30 @@ $$\lambda_{200} = \frac{1500}{200\,000} = 7{,}5\ \text{mm}$$
 que o de 30 kHz (7,5 mm contra 50 mm), confirmando o valor dado no enunciado para 30 kHz.
 
 **(d) Análise crítica.** A resolução vertical do ecobatímetro escala com $\lambda$: o
-canal de 200 kHz distingue estruturas menores do fundo, mas sofre absorção maior e
-alcança menos — daí o par 30/200 kHz: baixa frequência para águas profundas, alta para
-detalhe em águas rasas. Note a cadeia de conversão: o sinal que excita o transdutor é
-eletromagnético (onda transversal); a onda que sai na água é sonora (longitudinal) — a
-conversão ocorre no elemento piezoelétrico.
+canal de 200 kHz distingue estruturas menores do fundo, mas sofre absorção maior e alcança
+menos. Daí o par 30/200 kHz: baixa frequência para águas profundas, alta para detalhe em
+águas rasas. O sinal que excita o transdutor é eletromagnético, e a onda que sai na água é
+sonora; a conversão entre as duas ocorre no elemento piezoelétrico.
 :::
 
 ::: {.callout-warning}
 ## Erros clássicos
 
-- **"Onda = movimento de matéria"?** Não: a onda transporta energia, mas a partícula apenas oscila — em onda transversal, a partícula nunca se move junto com a frente de onda, só perpendicular a ela.
-- **Confundir "transversal" com "direção":** transversal não é uma direção absoluta no espaço — é *relativa à propagação*. Uma onda que sobe-desce é transversal se propaga horizontalmente, mas seria longitudinal se propagasse na vertical.
-- **Som na água é transversal?** Não — som é sempre longitudinal (compressões). O radar (EM) é transversal. O pulso que *ativa* o transdutor é EM (transversal), mas o pulso que sai na água é sonoro (longitudinal).
+- **"Onda = movimento de matéria"?** Não: a onda transporta energia, mas a partícula apenas oscila. Em onda transversal, ela nunca acompanha a frente de onda, deslocando-se apenas perpendicularmente a ela.
+- **Confundir "transversal" com "direção":** transversal qualifica a orientação *relativa à propagação*, não uma direção absoluta. Uma onda que sobe e desce é transversal se propaga horizontalmente, e longitudinal se propagasse na vertical.
+- **Som na água é transversal?** Não: o som é sempre longitudinal, feito de compressões. O radar é transversal, por ser onda eletromagnética. O pulso que *ativa* o transdutor é eletromagnético, portanto transversal, mas o pulso que sai na água é sonoro, portanto longitudinal.
 :::
 
-## Veja os dois tipos de onda lado a lado
+## Onda transversal e onda longitudinal lado a lado
 
-No painel de cima, uma corda: cada ponto (as bolinhas) sobe e desce, mas a *forma* viaja
-para a direita — acompanhe a partícula vermelha e a crista marcada em laranja. No painel
-de baixo, uma onda longitudinal no mesmo meio: as partículas vão e vêm na direção da
-propagação, formando compressões e rarefações que viajam. A partícula vermelha de baixo
-nunca sai da vizinhança dela.
+No painel de cima, uma corda: cada bolinha sobe e desce, enquanto a *forma* viaja para a
+direita, como mostram a partícula vermelha e a crista assinalada em laranja. No painel de
+baixo, uma onda longitudinal no mesmo meio: as partículas vão e vêm na direção da
+propagação, formando compressões e rarefações que viajam, e a partícula vermelha nunca sai
+da própria vizinhança.
 
 ```{python}
-#| fig-cap: "Instantâneo dos dois tipos de onda com os mesmos λ = 1,0 m e f = 1,0 Hz. Acima: transversal — deslocamento perpendicular à propagação. Abaixo: longitudinal — as partículas se deslocam ao longo da propagação, formando compressões (adensamentos) e rarefações. Mesmos parâmetros da versão interativa."
+#| fig-cap: "Instantâneo dos dois tipos de onda com os mesmos λ = 1,0 m e f = 1,0 Hz. Acima: transversal, com deslocamento perpendicular à propagação. Abaixo: longitudinal, com as partículas deslocando-se ao longo da propagação e formando compressões (adensamentos) e rarefações. Mesmos parâmetros da versão interativa."
 #| echo: false
 # Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
 import numpy as np
@@ -405,13 +403,13 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Pause a animação e anote a posição da partícula vermelha de cima. Rode meio período
-   e pause de novo: ela andou na direção da onda? E a crista laranja, quanto andou?
-2. Dobre $\lambda$ mantendo $f$: o que acontece com a velocidade da crista? Confirme
+1. Anotada a posição da partícula vermelha de cima e decorrido meio período, ela andou na
+   direção da onda? E a crista laranja, quanto andou?
+2. Dobrado $\lambda$ com $f$ mantido, o que ocorre com a velocidade da crista? Confirme
    com $v = \lambda f$ no painel de valores.
-3. No painel de baixo, a partícula vermelha oscila *horizontalmente* em torno de um
-   ponto fixo (trilho rosa). Aponte na tela onde está uma compressão e uma rarefação —
-   qual das duas corresponde a pressão acima da atmosférica no som?
+3. No painel de baixo, a partícula vermelha oscila *horizontalmente* em torno de um ponto
+   fixo, o trilho rosa. Entre uma compressão e uma rarefação, qual corresponde a pressão
+   acima da atmosférica no som?
 :::
 
 ## Onde o fenômeno vive
@@ -419,10 +417,10 @@ plt.tight_layout(); plt.show()
 <!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
      em sessões futuras, a pedido do professor. -->
 
-- **Cabo de amarração "cantando"** — vento ou corrente excitam ondas transversais no
+- **Canto do cabo de amarração (*singing*)** — vento ou corrente excitam ondas transversais no
   cabo tenso; a frequência depende da tração e da densidade linear (é o monitor
   audível da tração).
-- **Pulso EM do radar** — campos elétrico e magnético perpendiculares à propagação:
+- **Pulso eletromagnético do radar** — campos elétrico e magnético perpendiculares à propagação:
   onda transversal por excelência, a 3 GHz ou mais.
 - **Ondas do mar** — na superfície real as partículas descrevem órbitas (mistura de
   transversal e longitudinal que decai com a profundidade); a idealização "onda
@@ -433,4 +431,4 @@ plt.tight_layout(); plt.show()
      movimento): círculos que encolhem com a profundidade, comparados lado a lado
      com a corda ideal puramente transversal. -->
 
-**Conexão com o próximo tópico:** definida a existência de dois tipos de onda, aprendemos agora que **duas ondas da mesma natureza podem somar-se** — é o princípio da superposição, que gera interferência construtiva, destrutiva e fasores.
+**Conexão com o próximo tópico:** estabelecidos os dois tipos de onda, segue-se que **duas ondas da mesma natureza podem somar-se**, princípio da superposição de que decorrem a interferência e a representação por fasores.

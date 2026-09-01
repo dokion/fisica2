@@ -14,25 +14,25 @@ OE 2.7 [B3] Resolver problemas de interferência
 
 {{< aula 13-14 >}}
 
-Quando duas ondas viajam no mesmo meio, elas não "colidem" e desaparecem — em vez disso, **somam-se**. Esse princípio, válido para ondas em regimes lineares, é a base para entender como dois ecos no sonar se reforçam ou se cancelam, e como o engenheiro de sistemas navais interpreta a assinatura acústica de um contato. Aqui estudamos o princípio da superposição e duas ferramentas poderosas: fasores e interferência.
+Duas ondas que viajam no mesmo meio **somam-se**, em vez de colidir e desaparecer. O princípio vale em regime linear e sustenta a leitura de dois ecos de sonar que se reforçam ou se cancelam, e daí a interpretação da assinatura acústica de um contato.
 
 ## Princípio da superposição {{< ra OE2.4 B2 >}}
 
-O **princípio da superposição** afirma que, quando duas ou mais ondas ocupam a mesma região do espaço, o deslocamento resultante é a **soma algébrica** dos deslocamentos individuais:
+Quando duas ou mais ondas ocupam a mesma região do espaço, o **princípio da superposição** dá o deslocamento resultante como a **soma algébrica** dos deslocamentos individuais:
 
 $$y_{\text{total}}(x, t) = y_1(x, t) + y_2(x, t) + \cdots$$
 
-Isso é válido enquanto as amplitudes forem pequenas o suficiente para que o meio responda linearmente (assumido em toda esta unidade). Consequência: a presença de uma onda não altera a trajetória da outra — apenas somam-se.
+A validade exige amplitudes pequenas o bastante para que o meio responda linearmente, hipótese adotada em toda a unidade. Segue-se que uma onda não altera a trajetória da outra: os deslocamentos apenas se somam.
 
-Em navegação acústica, duas reflexões do fundo (eco primário e eco fantasma por múltipla reflexão) chegam ao receptor em tempos ligeiramente diferentes e com fases diferentes. O algoritmo de processamento de sonar usa exatamente esse princípio: detecta a soma e deduz qual onda corresponde ao alvo e qual ao ruído.
+Em navegação acústica, o eco primário do fundo e o eco fantasma por múltipla reflexão chegam ao receptor em tempos e fases ligeiramente diferentes. O processamento de sonar apoia-se nesse princípio: detecta a soma e deduz qual onda corresponde ao alvo e qual ao ruído.
 
 ## Interferência construtiva e destrutiva {{< ra OE2.5 B4 >}}
 
-Suponha duas ondas harmônicas de mesma frequência $f$ e comprimento de onda $\lambda$, mas com amplitudes $A_1$ e $A_2$ e fases iniciais $\varphi_1$ e $\varphi_2$:
+Sejam duas ondas harmônicas de mesma frequência $f$ e comprimento de onda $\lambda$, com amplitudes $A_1$ e $A_2$ e fases iniciais $\varphi_1$ e $\varphi_2$:
 
 $$y_1 = A_1\cos(kx - \omega t + \varphi_1), \quad y_2 = A_2\cos(kx - \omega t + \varphi_2)$$
 
-A soma é outra onda harmônica de mesma frequência, mas com amplitude resultante que depende da **diferença de fase** $\Delta\varphi = \varphi_2 - \varphi_1$:
+A soma é outra onda harmônica de mesma frequência, com amplitude dependente da **diferença de fase** $\Delta\varphi = \varphi_2 - \varphi_1$:
 
 $$A_{\text{res}} = \sqrt{A_1^2 + A_2^2 + 2A_1 A_2\cos(\Delta\varphi)}$$
 
@@ -41,43 +41,43 @@ Casos-limite:
 - **Interferência construtiva** ($\Delta\varphi = 0, 2\pi, 4\pi, \ldots$): $A_{\text{res}} = A_1 + A_2$ (máximo)
 - **Interferência destrutiva** ($\Delta\varphi = \pi, 3\pi, 5\pi, \ldots$): $A_{\text{res}} = |A_1 - A_2|$ (mínimo; se $A_1 = A_2$, anulam-se completamente)
 
-Na prática naval, um eco múltiplo (reflexão do fundo que bate novamente na superfície antes de retornar ao navio) chega com atraso e possível inversão de fase. O sonar detecta a interferência e subtrai a contribuição espúria do sinal útil.
+Na prática naval, o eco múltiplo, que bate de novo na superfície antes de retornar ao navio, chega com atraso e possível inversão de fase; o sonar detecta a interferência e subtrai a contribuição espúria do sinal útil.
 
 ## Representação por fasores {{< ra OE2.6 B3 >}}
 
 A ferramenta mais prática para somar ondas é o **fasor**: uma seta num plano, de comprimento igual à amplitude e ângulo igual à fase no instante $t = 0$.
 
-Para $y_1 = A_1\cos(\omega t + \varphi_1)$ e $y_2 = A_2\cos(\omega t + \varphi_2)$, desenhamos:
+Para $y_1 = A_1\cos(\omega t + \varphi_1)$ e $y_2 = A_2\cos(\omega t + \varphi_2)$, traçam-se:
 
-- Um vetor de módulo $A_1$ fazendo ângulo $\varphi_1$ com o eixo real;
-- Um vetor de módulo $A_2$ fazendo ângulo $\varphi_2$ com o eixo real.
+- Um vetor de módulo $A_1$ a ângulo $\varphi_1$ do eixo real;
+- Um vetor de módulo $A_2$ a ângulo $\varphi_2$ do eixo real.
 
-A soma $y_1 + y_2$ é representada pelo vetor resultante: sua projeção no eixo real (ou imaginário, dependendo da convenção) é o deslocamento total, e seu módulo é a amplitude resultante.
+A soma $y_1 + y_2$ é o vetor resultante: a projeção dele no eixo real, ou no imaginário conforme a convenção, é o deslocamento total, e o módulo é a amplitude resultante.
 
-Vantagem: operações trigonométricas complicadas viram somas de vetores — geometria plana resolve o problema.
+Vantagem: operações trigonométricas laboriosas convertem-se em soma de vetores, e o problema passa a ser de geometria plana.
 
 ## Resolução de problemas de interferência {{< ra OE2.7 B3 >}}
 
-Um ecobatímetro transmite um pulso de 50 kHz em água com profundidade $d = 100\,\text{m}$ e velocidade do som $v = 1500\,\text{m/s}$. O pulso reflete no fundo (amplitude $A_0$) e em uma interface de sedimento a 80 m de profundidade (amplitude $0{,}4A_0$). Os dois ecos retornam com diferença de atraso temporal.
+Um ecobatímetro transmite um pulso de 50 kHz em água com profundidade $d = 100\,\text{m}$ e velocidade do som $v = 1500\,\text{m/s}$. O pulso reflete no fundo (amplitude $A_0$) e numa interface de sedimento a 80 m de profundidade (amplitude $0{,}4A_0$).
 
 Diferença de distância: $\Delta d = 2(100 - 80) = 40\,\text{m}$ (ida e volta).
 Atraso temporal: $\Delta t = \frac{40}{1500} \approx 26{,}7\,\text{ms}$.
 Diferença de fase: $\Delta\varphi = 2\pi f \Delta t = 2\pi \times 50\,000 \times 0{,}0267 \approx 8{,}39\,\text{rad} \approx 480° \approx 120°$.
 
-Usando a fórmula de amplitude resultante com $A_1 = A_0$, $A_2 = 0{,}4A_0$, $\Delta\varphi = 120°$:
+Com $A_1 = A_0$, $A_2 = 0{,}4A_0$ e $\Delta\varphi = 120°$:
 
 $$A_{\text{res}} = \sqrt{A_0^2 + (0{,}4A_0)^2 + 2 \times A_0 \times 0{,}4A_0 \times \cos(120°)}$$
 
 $$= A_0\sqrt{1 + 0{,}16 + 0{,}8 \times (-0{,}5)} = A_0\sqrt{1 + 0{,}16 - 0{,}4} = A_0\sqrt{0{,}76} \approx 0{,}87A_0$$
 
-A amplitude resultante é levemente menor que o eco principal — há interferência *parcialmente destrutiva*. O operador de sonar vê dois picos distintos (resolvidos pela diferença de atraso), mas com o segundo reduzido. Marcação correta do fundo: requer limiares ajustados e rejeição de eco fantasma (tópico 2.3).
+A amplitude resultante fica levemente abaixo da do eco principal, caso de interferência *parcialmente destrutiva*. O operador de sonar observa dois picos distintos, resolvidos pela diferença de atraso, com o segundo reduzido. A marcação correta do fundo exige limiares ajustados e rejeição de eco fantasma, tratada no estudo da reflexão e dos modos normais.
 
 ::: {.sp}
-Um sonar ativo em freqüência 37,5 kHz detecta dois ecos de um contato submerso. O primeiro eco (reflexão da popa) retorna após 4,0 s; o segundo (reflexão do costado) após 4,8 s. Na água, $v = 1500\,\text{m/s}$. Ambos os ecos têm amplitude nominal $A_0$ na origem.
+Um sonar ativo em frequência 37,5 kHz detecta dois ecos de um contato submerso. O primeiro eco (reflexão da popa) retorna após 4,0 s; o segundo (reflexão do costado) após 4,8 s. Na água, $v = 1500\,\text{m/s}$. Ambos os ecos têm amplitude nominal $A_0$ na origem.
 
 **(a) Modelagem.** Cada eco corresponde a uma distância $d = v\,t/2$. Antes de aplicar
 qualquer fórmula de interferência, é preciso verificar se os dois ecos se sobrepõem no
-tempo — condição necessária para interferirem — ou se chegam resolvidos.
+tempo, condição necessária para interferirem, ou se chegam resolvidos.
 
 **(b) Desenvolvimento.**
 $$d_1 = \frac{1500 \times 4{,}0}{2} = 3\,000\ \text{m},
@@ -88,37 +88,37 @@ $$\Delta t = 0{,}8\ \text{s}
 \quad\Rightarrow\quad
 \Delta d = 600\ \text{m (diferença de percurso, ida e volta)}$$
 
-**(c) Resultado.** Dois ecos resolvidos, separados por 0,8 s — não há superposição
-temporal, portanto não há interferência: o receptor os detecta como eventos
-independentes, a 3000 m e 3600 m.
+**(c) Resultado.** Dois ecos resolvidos, separados por 0,8 s. Sem superposição temporal
+não há interferência: o receptor os detecta como eventos independentes, a 3000 m e
+3600 m.
 
-**(d) Análise crítica.** A separação de 600 m entre "popa" e "costado" é incompatível
-com as dimensões de qualquer navio — o segundo eco é, com maior probabilidade,
-multitrajeto (reflexão adicional em superfície ou fundo) ou um segundo contato. A
-fórmula de $A_{\text{res}}$ com diferença de fase só se aplica quando os pulsos
-coincidem no tempo; com pulsos de duração típica de milissegundos, um atraso de 0,8 s
-os torna eventos distintos. Interferência de fato ocorreria entre reflexões de partes
-do casco separadas por metros — atrasos da ordem de ms — dentro de um mesmo pulso longo.
+**(d) Análise crítica.** A separação de 600 m entre popa e costado é incompatível com as
+dimensões de qualquer navio: o segundo eco é, mais provavelmente, multitrajeto ou um
+segundo contato. A fórmula de $A_{\text{res}}$ com diferença de fase só se aplica a pulsos
+coincidentes no tempo, e um atraso de 0,8 s separa pulsos de duração típica de
+milissegundos em eventos distintos. Interferência ocorreria dentro de um mesmo pulso longo,
+entre reflexões de partes do casco separadas por metros, com atrasos da ordem de
+milissegundos.
 :::
 
 ::: {.callout-warning}
 ## Erros clássicos
 
-- **Somar amplitudes diretamente:** $A_{\text{res}} \neq A_1 + A_2$ em geral — depende da fase. Só vale se $\Delta\varphi = 0$ (interferência construtiva).
-- **Confundir diferença de fase com diferença de caminho:** $\Delta\varphi \neq \Delta d$ — a relação é $\Delta\varphi = 2\pi \Delta d / \lambda = k \Delta d$ (k = número de onda).
-- **Esquecer que "mesma frequência" é condição para superposição simples:** se frequências diferem, há batimentos (tópico 2.7), não interferência estacionária.
+- **Somar amplitudes diretamente:** em geral $A_{\text{res}} \neq A_1 + A_2$, pois o resultado depende da fase. A igualdade só vale para $\Delta\varphi = 0$, na interferência construtiva.
+- **Confundir diferença de fase com diferença de caminho:** $\Delta\varphi \neq \Delta d$; a relação é $\Delta\varphi = 2\pi \Delta d / \lambda = k \Delta d$, com $k$ o número de onda.
+- **Esquecer que a igualdade de frequências é condição para a superposição simples:** frequências distintas produzem batimento, objeto de tópico próprio nesta unidade, e não interferência estacionária.
 :::
 
-## Veja a soma de fasores
+## Soma de duas ondas por fasores
 
-À esquerda, os dois fasores giram juntos (a diferença de fase $\Delta\varphi$ entre eles
-é fixa) e o fasor cinza mostra a soma vetorial — a ponta dele é a ponta do segundo fasor
-transladado (regra do paralelogramo). À direita, a projeção de cada fasor gera a
-respectiva onda; a onda roxa é a soma. Os valores iniciais reproduzem o exemplo do
-texto: $A_1 = A_0$, $A_2 = 0{,}4A_0$, $\Delta\varphi = 120°$.
+À esquerda, os dois fasores giram juntos, com $\Delta\varphi$ fixa, e o fasor cinza é a
+soma vetorial: a ponta dele coincide com a do segundo fasor transladado, pela regra do
+paralelogramo. À direita, a projeção de cada fasor gera a respectiva onda, e a onda roxa é
+a soma. Os valores iniciais reproduzem o exemplo do texto: $A_1 = A_0$, $A_2 = 0{,}4A_0$,
+$\Delta\varphi = 120°$.
 
 ```{python}
-#| fig-cap: "Soma por fasores com A₁ = 1, A₂ = 0,4 e Δφ = 120° (o exemplo do texto). Esq.: diagrama de fasores em t = 0 — o resultante (roxo) é a soma vetorial. Dir.: as ondas correspondentes; a resultante tem A_res = 0,87, interferência parcialmente destrutiva. Mesmos parâmetros da versão interativa."
+#| fig-cap: "Soma por fasores com A₁ = 1, A₂ = 0,4 e Δφ = 120° (o exemplo do texto). Esq.: diagrama de fasores em t = 0, em que o resultante (roxo) é a soma vetorial. Dir.: as ondas correspondentes; a resultante tem A_res = 0,87, interferência parcialmente destrutiva. Mesmos parâmetros da versão interativa."
 #| echo: false
 # Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
 import numpy as np
@@ -269,14 +269,14 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Com $A_1 = A_2 = 1$, varra $\Delta\varphi$ de $0°$ a $360°$. Em que ângulos
+1. Com $A_1 = A_2 = 1$ e $\Delta\varphi$ varrido de $0°$ a $360°$, em que ângulos
    $A_{\text{res}} = 2$? Em qual $A_{\text{res}} = 0$? Confira no gráfico que a onda
-   roxa desaparece de fato.
+   roxa de fato desaparece.
 2. O fasor cinza tracejado é $A_2$ transladado para a ponta de $A_1$. Por que a soma de
    ondas de mesma frequência vira geometria de triângulo? Que papel o giro comum
    $\omega t$ desempenha?
-3. Reproduza o eco duplo do texto ($A_1 = 1$, $A_2 = 0{,}4$, $\Delta\varphi = 120°$) e
-   verifique $A_{\text{res}} \approx 0{,}87$. Se o operador pudesse ajustar a
+3. Reproduzido o eco duplo do texto ($A_1 = 1$, $A_2 = 0{,}4$, $\Delta\varphi = 120°$),
+   verifica-se $A_{\text{res}} \approx 0{,}87$. Se o operador pudesse ajustar a
    frequência para levar $\Delta\varphi$ a $0°$, qual seria o ganho de amplitude?
 :::
 
@@ -285,16 +285,16 @@ plt.tight_layout(); plt.show()
 <!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
      em sessões futuras, a pedido do professor. -->
 
-- **Arranjo de transdutores (beamforming)** — o sonar moderno soma os sinais de vários
-  elementos com fases controladas: interferência construtiva na direção desejada,
-  destrutiva nas demais. O feixe é literalmente um diagrama de fasores.
-- **Multipercurso de rádio/AIS** — sinal direto + reflexão no mar chegam com fases
-  diferentes; o desvanecimento periódico ao se afastar do transmissor é o mapa de
-  interferência sendo atravessado.
+- **Arranjo de transdutores (conformação de feixe, *beamforming*)** — o sonar moderno soma
+  os sinais de vários elementos com fases controladas: interferência construtiva na direção
+  desejada e destrutiva nas demais. O feixe é um diagrama de fasores.
+- **Multipercurso de rádio/AIS** — o sinal direto e a reflexão no mar chegam com fases
+  diferentes; o desvanecimento periódico observado ao afastar-se do transmissor
+  corresponde à travessia do mapa de interferência.
 - **Zona de silêncio entre duas sirenes** — dois emissores coerentes no mesmo píer
   produzem faixas onde as pressões se cancelam.
 
 <!-- EXEMPLO A SIMULAR: dois emissores pontuais num plano (p5.js): mapa de franjas
      de interferência com slider de separação entre fontes e de fase relativa. -->
 
-**Conexão com o próximo tópico:** quando ondas viajam num meio com contornos (superfícies sólidas, fundos, mudanças de propriedade), elas não apenas interferem — **refletem**. A reflexão é a origem dos ecos de sonar e ecobatímetro, e a chave para entender modos normais de vibração.
+**Conexão com o próximo tópico:** num meio com contornos, sejam superfícies sólidas, fundos ou mudanças de propriedade, as ondas além de interferir também **refletem**. A reflexão origina os ecos de sonar e de ecobatímetro e sustenta o estudo dos modos normais de vibração.
