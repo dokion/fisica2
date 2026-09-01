@@ -13,11 +13,11 @@ OE 2.16 [B4] Analisar a relação entre frequência, comprimento de onda e veloc
 
 {{< aula 15-16 >}}
 
-Uma onda sonora progressiva é aquela que se propaga numa única direção, levando energia do ponto de emissão ao de recepção. No ecobatímetro e no sonar, o pulso sonoro é justamente uma onda progressiva — emitida pelo transdutor, viaja até o fundo, reflete e retorna. Neste tópico, descrevemos formalmente como caracterizar uma onda sonora progressiva, qual é a equação que governa sua propagação e como relacionar os parâmetros observáveis (frequência, comprimento de onda, tempo de viagem).
+Uma onda sonora progressiva propaga-se numa única direção, levando energia do ponto de emissão ao de recepção. No ecobatímetro e no sonar o pulso sonoro é uma onda progressiva: emitido pelo transdutor, viaja até o fundo, reflete e retorna.
 
 ## Caracterização de ondas sonoras progressivas {{< ra OE2.14 B2 >}}
 
-Uma **onda sonora progressiva** se propaga numa única direção (ex.: $+x$) e é descrita por uma função que depende de $x$ e $t$ na forma:
+Uma **onda sonora progressiva** que avança no sentido $+x$ é descrita por uma função de $x$ e $t$ na forma:
 
 $$p(x, t) = p_0\cos(kx - \omega t + \varphi)$$
 
@@ -32,7 +32,7 @@ A relação fundamental entre $k$, $\omega$ e velocidade de propagação é a **
 
 $$\omega = kv \quad \Rightarrow \quad v = \frac{\omega}{k} = \frac{2\pi f}{2\pi / \lambda} = f\lambda$$
 
-Esta é a equação de **relação entre frequência, comprimento de onda e velocidade**. Para uma onda sonora progressiva num meio homogêneo (velocidade constante), ela descreve completamente o comportamento ondulação.
+É a **relação entre frequência, comprimento de onda e velocidade**, que descreve por completo o comportamento ondulatório de uma progressiva em meio homogêneo, de velocidade constante.
 
 ## Propagação em meios homogêneos {{< ra OE2.15 B2 >}}
 
@@ -40,23 +40,23 @@ Num meio homogêneo (densidade e compressibilidade constantes), a velocidade do 
 
 $$\frac{\partial^2 p}{\partial x^2} = \frac{1}{v^2}\frac{\partial^2 p}{\partial t^2}$$
 
-Podemos verificar que $p(x, t) = p_0\cos(kx - \omega t)$ satisfaz esta equação, desde que $\omega = kv$.
+Verifica-se que $p(x, t) = p_0\cos(kx - \omega t)$ a satisfaz, desde que $\omega = kv$.
 
-**Fisicamente:** no ecobatímetro, um transdutor piezoelétrico oscila numa frequência fixa $f$ (ex.: 50 kHz), criando uma onda de compressão na água. Essa onda se propaga com velocidade $v \approx 1500\,\text{m/s}$ (temperatura e pressão dependentes). O comprimento de onda é $\lambda = v/f \approx 0{,}030\,\text{m}$ — muito menor que a profundidade, o que justifica a aproximação de "raio" (propagação praticamente reta em camadas homogêneas).
+**Fisicamente:** no ecobatímetro um transdutor piezoelétrico oscila em frequência fixa $f$, 50 kHz por exemplo, e cria uma onda de compressão na água. Ela se propaga com $v \approx 1500\,\text{m/s}$, valor dependente de temperatura e pressão. O comprimento de onda resultante, $\lambda = v/f \approx 0{,}030\,\text{m}$, é muito menor que a profundidade, o que justifica a aproximação de raio, com propagação praticamente reta em camadas homogêneas.
 
 ## Frequência, comprimento de onda e velocidade {{< ra OE2.16 B4 >}}
 
-A relação $v = f\lambda$ é tão central que vale examinar casos práticos em detalhe.
+A relação $v = f\lambda$ organiza os casos práticos a seguir.
 
 **Exemplo 1:** Um transdutor de 200 kHz emite num tanque com água doce ($v = 1480\,\text{m/s}$).
 $$\lambda = \frac{v}{f} = \frac{1480}{200\,000} = 7{,}4\,\text{mm}$$
 
-Comprimento de onda muito curto — excelente resolução vertical (capacidade de diferenciar estruturas pequenas no fundo).
+Comprimento de onda muito curto, e daí a resolução vertical fina, capaz de separar estruturas pequenas do fundo.
 
 **Exemplo 2:** Mesmo transdutor em água salgada ($v = 1540\,\text{m/s}$).
 $$\lambda = \frac{1540}{200\,000} = 7{,}7\,\text{mm}$$
 
-Pequena mudança de velocidade → pequena mudança de comprimento de onda. Mas o tempo de viagem (usado para calcular profundidade) **é inversamente proporcional a $v$**: se $v$ muda de 1480 para 1540 m/s, o tempo cai, e uma profundidade lida incorretamente será subestimada sem correção.
+Pequena mudança de velocidade, pequena mudança de comprimento de onda. O tempo de viagem, de que se extrai a profundidade, **é inversamente proporcional a $v$**: com $v$ passando de 1480 a 1540 m/s o tempo cai e, sem correção, a profundidade fica subestimada.
 
 **Cálculo de profundidade:** o ecobatímetro envia um pulso no instante $t=0$ e recebe o eco no instante $t_r$ (tempo de retorno). A profundidade é:
 
@@ -66,10 +66,10 @@ O fator 2 aparece porque o som viaja de ida (transdutor → fundo) e volta (fund
 
 $$d = \frac{1500 \times 0{,}267}{2} = 200{,}25\,\text{m}$$
 
-Qualquer incerteza em $v$ (por termoclina, salinidade) afeta diretamente a profundidade calculada — é por isso que ecobatímetros modernos incluem sensores de temperatura.
+Qualquer incerteza em $v$, por termoclina ou salinidade, afeta diretamente a profundidade calculada; daí os sensores de temperatura dos ecobatímetros modernos.
 
 ::: {.sp}
-Um navio em navegação coastal usa ecobatímetro de 38 kHz para mapear o fundo. No momento da medida, a profundidade verdadeira é 150 m. A temperatura é 15 °C (velocidade $v = 1485\,\text{m/s}$), salinidade 30 PSU (pequena redução de $v$ em relação a 35 PSU).
+Um navio em navegação costeira usa ecobatímetro de 38 kHz para mapear o fundo. No momento da medida, a profundidade verdadeira é 150 m. A temperatura é 15 °C (velocidade $v = 1485\,\text{m/s}$), salinidade 30 PSU (pequena redução de $v$ em relação a 35 PSU).
 
 <!-- [VERIFICAR: o enunciado não informa a velocidade de calibração do aparelho;
      interpretei como o valor-padrão 1500 m/s.] -->
@@ -93,7 +93,7 @@ $$\lambda = \frac{v}{f} = \frac{1485}{38\,000} \approx 39\ \text{mm}$$
 **(d) Análise crítica.** O erro de 1% é pequeno em 150 m, mas o sentido é inseguro
 (indica mais água do que há) e o mesmo percentual em uma barra de porto com folga de
 1 m sob a quilha seria inaceitável. Parte da diferença entre 1500 e 1485 m/s vem da
-temperatura (15 °C) e parte da salinidade reduzida (30 PSU) — ambas diminuem $v$; a
+temperatura (15 °C) e parte da salinidade reduzida (30 PSU), pois ambas diminuem $v$; a
 correção é ajustar o aparelho à velocidade local ou aplicar a tabela T/S do fabricante.
 :::
 
@@ -101,17 +101,17 @@ correção é ajustar o aparelho à velocidade local ou aplicar a tabela T/S do 
 ## Erros clássicos
 
 - **Confundir $v$ (velocidade de propagação da onda) com velocidade da partícula:** $v$ é uma propriedade do meio; a partícula oscila com amplitude e frequência muito menores.
-- **Esquecer o fator 2 em $d = vt/2$:** o som vai e volta — comum cometer o erro $d = vt$ (sem dividir por 2), gerando profundidade dobrada.
-- **Assumir que frequência e comprimento de onda são independentes:** não são — estão vinculados por $v = f\lambda$. Se $v$ muda, ou $f$ muda ou $\lambda$ muda (ou ambos), mas o produto fica determinado.
+- **Esquecer o fator 2 em $d = vt/2$:** o som vai e volta, e o erro comum, $d = vt$, dobra a profundidade.
+- **Supor frequência e comprimento de onda independentes:** estão vinculados por $v = f\lambda$. Se $v$ muda, muda $f$, muda $\lambda$ ou mudam ambos, mas o produto fica determinado.
 :::
 
 ## Uma onda, dois retratos
 
-A mesma função $p(x,t) = p_0\cos(kx - \omega t)$ pode ser lida de dois jeitos. Painel de
-cima: uma **foto** — $p$ contra $x$ num instante; o padrão inteiro desliza para a
-direita com velocidade $v$, e a distância entre cristas é $\lambda$. Painel de baixo: um
-**registro num ponto fixo** (o hidrofone laranja) — $p$ contra $t$; o intervalo entre
-máximos é o período $T$. Os sliders mudam $f$ e $v$; observe o que muda em cada retrato.
+A mesma função $p(x,t) = p_0\cos(kx - \omega t)$ admite duas leituras. No painel de cima,
+uma **foto**: $p$ contra $x$ num instante, com o padrão inteiro deslizando para a direita
+com velocidade $v$ e distância $\lambda$ entre cristas. No painel de baixo, um **registro
+num ponto fixo**, o hidrofone laranja: $p$ contra $t$, com intervalo $T$ entre máximos. Os
+controles de $f$ e de $v$ agem de modo distinto sobre cada retrato.
 
 ```{python}
 #| fig-cap: "Os dois retratos de p(x,t) = p₀cos(kx − ωt) com f = 1 Hz e v = 1 m/s. Acima: p vs. x num instante (a separação entre cristas é λ = v/f = 1 m). Abaixo: p vs. t na posição do hidrofone (a separação entre máximos é T = 1/f = 1 s). Mesmos parâmetros da versão interativa."
@@ -248,12 +248,12 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Aumente $v$ mantendo $f$: o que muda na foto ($\lambda$) e o que **não** muda no
+1. Elevado $v$ com $f$ mantido, o que muda na foto ($\lambda$) e o que **não** muda no
    registro do hidrofone ($T$)? Explique com $v = \lambda f$.
-2. Aumente $f$ mantendo $v$: agora os dois retratos mudam. Qual grandeza é imposta pela
-   fonte e qual pelo meio?
-3. O ponto roxo (crista) leva quanto tempo para cruzar a tela de 4 m? Cronometrie e
-   compare com $4/v$. É esse o tempo que o ecobatímetro explora quando calcula
+2. Elevado $f$ com $v$ mantido, os dois retratos mudam. Qual grandeza é imposta pela fonte
+   e qual pelo meio?
+3. Quanto tempo o ponto roxo, a crista, leva para cruzar a tela de 4 m? Cronometre e
+   compare com $4/v$. É esse o tempo que o ecobatímetro explora ao calcular
    $d = v\,t/2$.
 :::
 
@@ -262,17 +262,16 @@ plt.tight_layout(); plt.show()
 <!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
      em sessões futuras, a pedido do professor. -->
 
-- **O ping do ecobatímetro** — um pulso progressivo real: desce, reflete, volta; o
-  registro $p(t)$ no transdutor é exatamente o "segundo retrato" desta seção, e
-  $d = v\,t/2$ é a leitura dele.
-- **Hidrofone de vigilância** — detona-se ou passa-se um navio a quilômetros; o que
-  chega é a onda progressiva com o atraso $d/v$, base de toda localização acústica
-  passiva.
-- **A "ola" do estádio** — o clássico visual: a forma percorre a arquibancada,
-  nenhuma pessoa sai do lugar.
+- **O *ping* do ecobatímetro** — pulso progressivo real, que desce, reflete e volta; o
+  registro $p(t)$ no transdutor é o segundo dos dois retratos acima, e $d = v\,t/2$ é a
+  leitura dele.
+- **Hidrofone de vigilância** — de um navio que passa a quilômetros chega a onda
+  progressiva com o atraso $d/v$, base de toda localização acústica passiva.
+- **A *ola* do estádio** — a forma percorre a arquibancada sem que ninguém saia do
+  lugar.
 
 <!-- EXEMPLO A SIMULAR: ida e volta completa do ping (p5.js): pulso descendo e
      subindo na coluna d'água com o traço do transdutor ao lado e cronômetro
      marcando t e d = vt/2. -->
 
-**Conexão com o próximo tópico:** definida a forma e a propagação de uma onda sonora, falta quantificar sua "força" — *quanto* de energia ela carrega, e como essa energia varia com a amplitude e a frequência. Isso é **intensidade e nível sonoro**, tema do tópico 2.6.
+**Conexão com o próximo tópico:** definidas a forma e a propagação da onda sonora, resta quantificar a energia que ela carrega e a dependência dessa energia com a amplitude e a frequência, objeto da **intensidade e do nível sonoro**.

@@ -13,7 +13,7 @@ OE 2.19 [B3] Resolver problemas envolvendo nível sonoro e sua variação
 
 {{< aula 17-18 >}}
 
-Uma onda sonora carrega energia. Quando o transdutor de um sonar emite um pulso, essa energia se distribui por todas as direções (no espaço) e diminui com a distância. A noção de **intensidade** cuantifica essa energia por unidade de área, e o **nível sonoro em decibéis** é a escala logarítmica universal para compará-la. Nestes conceitos residem a razão de por que um sonar consegue detectar um alvo a 50 km de distância e por que o "ruído de fundo" do oceano limita essa capacidade.
+Uma onda sonora carrega energia. Emitido o pulso pelo transdutor de um sonar, essa energia se distribui em todas as direções e diminui com a distância. A **intensidade** quantifica a energia por unidade de área, e o **nível sonoro em decibéis** é a escala logarítmica com que se comparam intensidades. Desses conceitos decorrem tanto o alcance de detecção de um sonar, da ordem de 50 km, quanto o limite que o ruído de fundo do oceano lhe impõe.
 
 ## Intensidade sonora {{< ra OE2.17 B1 >}}
 
@@ -21,48 +21,48 @@ A **intensidade sonora** $I$ é a **potência média por unidade de área** perp
 
 $$I = \frac{P_{\text{média}}}{A}$$
 
-com unidade $[\text{W/m}^2]$. Ela é directamente relacionada à amplitude de pressão da onda sonora:
+com unidade $[\text{W/m}^2]$. Relaciona-se diretamente à amplitude de pressão da onda:
 
 $$I = \frac{p_0^2}{2\rho v}$$
 
 onde $p_0$ é a amplitude de pressão, $\rho$ é a densidade do meio e $v$ é a velocidade do som.
 
-Esta fórmula revela um facto importante: **intensidade é proporcional ao quadrado da amplitude** de pressão. Logo, dobrar a amplitude de pressão aumenta a intensidade 4 vezes.
+A fórmula estabelece que a **intensidade é proporcional ao quadrado da amplitude** de pressão: dobrada a amplitude, a intensidade aumenta 4 vezes.
 
 Para uma fonte de potência acústica $P$ que irradia uniformemente em todas as direções (fonte esférica isotrópica), a intensidade a distância $r$ é:
 
 $$I(r) = \frac{P}{4\pi r^2}$$
 
-Portanto, a **intensidade decresce com o quadrado da distância** — lei do inverso do quadrado. A distância máxima a que um sonar consegue detectar um alvo é limitada por quando a intensidade cai para um nível mínimo detectável pelo receptor.
+A **intensidade decresce, portanto, com o quadrado da distância**, pela lei do inverso do quadrado. O alcance máximo de detecção de um sonar é a distância em que a intensidade cai ao nível mínimo detectável pelo receptor.
 
 ## Relação com amplitude e potência {{< ra OE2.18 B2 >}}
 
 A intensidade depende de:
-1. **Amplitude de pressão $p_0$:** quantificar "força" da vibração. Ondas mais vigorosas têm $p_0$ maior.
-2. **Propriedades do meio** ($\rho$, $v$): água salgada tem densidade ~5% maior que água doce, afetando a transmissão acústica.
-3. **Frequência** (indiretamente): ondas de frequência maior têm menor comprimento de onda, o que altera a radiação pela fonte.
+1. **Amplitude de pressão $p_0$:** mede a intensidade da vibração; ondas mais fortes têm $p_0$ maior.
+2. **Propriedades do meio** ($\rho$, $v$): a água salgada tem densidade cerca de 5% maior que a doce, o que altera a transmissão acústica.
+3. **Frequência**, indiretamente: frequência maior significa comprimento de onda menor, o que altera a radiação da fonte.
 
 Na prática naval, o **alcance de detecção acústica** é determinado pela razão sinal-ruído (SNR):
 
 $$\text{SNR} = \frac{I_{\text{sinal}}}{I_{\text{ruído}}}$$
 
-Um sonar ativo que emite pulsos com potência $P_{\text{tx}}$ consegue detectar alvos até uma distância onde $\text{SNR} > \text{SNR}_{\text{mín}}$ (tipicamente 3–10 dB). Solos com perdas acústicas altas (sedimento fino, silte) atenuam o eco — reduzem a detectabilidade. A profundidade também importa: em águas rasas (< 50 m), reverberação do fundo e superfície degradam o SNR.
+Um sonar ativo de potência $P_{\text{tx}}$ detecta alvos até a distância em que $\text{SNR} > \text{SNR}_{\text{mín}}$, tipicamente 3–10 dB. Fundos de perda acústica alta, de sedimento fino ou silte, atenuam o eco e reduzem a detectabilidade. Em águas rasas, abaixo de 50 m, a reverberação do fundo e da superfície degrada o SNR.
 
 ## Nível sonoro em decibéis {{< ra OE2.17 B1 >}} (complementação)
 
-Como a intensidade varia sobre 13+ ordens de magnitude (de $10^{-12}\,\text{W/m}^2$ — limiar de audição humana em 1 kHz — a $10^{1}\,\text{W/m}^2$ — som que causa lesão auditiva), uma escala logarítmica é mais prática:
+A intensidade varia por mais de 13 ordens de grandeza, de $10^{-12}\,\text{W/m}^2$, limiar de audição humana em 1 kHz, a $10^{1}\,\text{W/m}^2$, nível que causa lesão auditiva. Daí o emprego de escala logarítmica:
 
 $$L_I = 10\log_{10}\left(\frac{I}{I_0}\right) \quad [\text{dB}]$$
 
 onde $I_0 = 10^{-12}\,\text{W/m}^2$ é a intensidade de referência (limiar de audição no ar a 1 kHz). O resultado é chamado **nível de intensidade sonora** em decibéis.
 
-Da mesma forma, o **nível de pressão sonora** (NPL ou SPL em inglês) é:
+Do mesmo modo, o **nível de pressão sonora** (NPS; *sound pressure level*, SPL, em inglês) é:
 
 $$L_p = 20\log_{10}\left(\frac{p}{p_0}\right) \quad [\text{dB}]$$
 
-onde $p_0 = 20\,\mu\text{Pa} = 2 \times 10^{-5}\,\text{Pa}$ é a pressão de referência. Nota: $L_p$ é a grandeza mais usada em engenharia acústica.
+onde $p_0 = 20\,\mu\text{Pa} = 2 \times 10^{-5}\,\text{Pa}$ é a pressão de referência. $L_p$ é a grandeza de uso corrente em engenharia acústica.
 
-A escala é intuitiva: cada 10 dB corresponde a 10× de aumento de intensidade. Cada 6 dB corresponde a ~2× de aumento (já que $10\log_{10}(2) \approx 3$ dB, e $20\log_{10}(2) \approx 6$ dB para pressão).
+Cada 10 dB corresponde a um fator 10 em intensidade. Um fator 2 corresponde a 3 dB em intensidade, pois $10\log_{10}(2) \approx 3$, e a 6 dB em pressão, pois $20\log_{10}(2) \approx 6$.
 
 **Exemplos de referência:**
 - Limiar de audição: 0 dB
@@ -76,12 +76,12 @@ Se uma fonte irradia com potência $P$ e a intensidade a distância $r$ é $I(r)
 
 $$L_p(r) = L_p(r_0) - 20\log_{10}\left(\frac{r}{r_0}\right)$$
 
-isto é, **cai 20 dB cada vez que a distância aumenta de um fator 10**. Isto é a "regra de atenuação": a cada duplicação de distância, o nível cai ~6 dB.
+isto é, o nível **cai 20 dB a cada fator 10 na distância**, ou cerca de 6 dB a cada duplicação.
 
-Exemplo prático: um log acústico (medidor de velocidade por correlação de micro-ruídos turbulentos sob a quilha) emite pulsos de ~120 dB re 1 μPa a 1 m. A distância de medida típica é 1–5 metros. A 1 m, $L_p = 120$ dB; a 5 m, $L_p = 120 - 20\log_{10}(5) \approx 120 - 14 = 106$ dB. Se o ruído de fundo é ~90 dB, o SNR a 1 m é 30 dB (excelente); a 5 m é 16 dB (aceitável).
+Exemplo prático: um odômetro acústico, que mede velocidade por correlação de microrruídos turbulentos sob a quilha, emite pulsos de cerca de 120 dB re 1 μPa a 1 m, com distância de medida típica de 1 a 5 metros. A 1 m, $L_p = 120$ dB; a 5 m, $L_p = 120 - 20\log_{10}(5) \approx 120 - 14 = 106$ dB. Para ruído de fundo de cerca de 90 dB, o SNR é de 30 dB a 1 m e de 16 dB a 5 m.
 
 ::: {.sp}
-Um sonar ativo de um navio patrulha transmite em freqüência 30 kHz com potência $P_{\text{tx}} = 5\,\text{kW}$. A água tem densidade $\rho = 1025\,\text{kg/m}^3$, velocidade do som $v = 1500\,\text{m/s}$. Um alvo submarino (pequeno contato) reflete ~1% da potência incidente — isto é, a potência recebida de volta é $P_{\text{rx}} = 0{,}01 P_{\text{tx}}$.
+Um sonar ativo de um navio patrulha transmite em frequência 30 kHz com potência $P_{\text{tx}} = 5\,\text{kW}$. A água tem densidade $\rho = 1025\,\text{kg/m}^3$, velocidade do som $v = 1500\,\text{m/s}$. Um alvo submarino de pequeno porte reflete cerca de 1% da potência incidente, isto é, a potência recebida de volta é $P_{\text{rx}} = 0{,}01 P_{\text{tx}}$.
 
 <!-- [VERIFICAR: interpretei "potência recebida de volta é 0,01·P_tx" como a potência
      reirradiada pelo alvo (P_ref = 50 W), espalhando-se esfericamente no retorno.] -->
@@ -102,34 +102,33 @@ $$I_{\text{eco}} = \frac{4{,}0 \times 10^{-6}}{25} \approx 1{,}6 \times 10^{-7}\
 \quad\Rightarrow\quad
 L_I \approx 52\ \text{dB}$$
 
-**(c) Resultado.** O nível do eco cai de $\approx 66$ dB (1 km) para $\approx 52$ dB
-(5 km) — queda de 20 dB por década de distância, conforme a lei do inverso do quadrado
+**(c) Resultado.** O nível do eco cai de $\approx 66$ dB, a 1 km, para $\approx 52$ dB, a
+5 km: queda de 20 dB por década de distância, conforme a lei do inverso do quadrado
 aplicada ao trecho de retorno.
 
-**(d) Análise crítica.** O modelo do enunciado é otimista: na realidade a potência que
-o alvo intercepta também cai com $1/r^2$, de modo que o eco real decai com $1/r^4$
-(40 dB por década) — é a forma elementar da equação do sonar. Faltam ainda a absorção
-na água (que cresce com a frequência) e a reverberação. Nota de convenção: em acústica
-submarina o nível é usualmente referido a 1 μPa de pressão, não a $10^{-12}$ W/m²
-(referência do ar usada aqui por coerência com o texto) — os números absolutos em dB
-não são comparáveis entre as duas convenções.
+**(d) Análise crítica.** O modelo do enunciado é otimista: a potência que o alvo intercepta
+também cai com $1/r^2$, de modo que o eco real decai com $1/r^4$, 40 dB por década, na forma
+elementar da equação do sonar. Faltam ainda a absorção na água, que cresce com a frequência,
+e a reverberação. Quanto à convenção, em acústica submarina o nível se refere usualmente a
+1 μPa de pressão, e não a $10^{-12}$ W/m², referência do ar adotada aqui por coerência com o
+texto; os números absolutos em dB não são comparáveis entre as duas convenções.
 :::
 
 ::: {.callout-warning}
 ## Erros clássicos
 
-- **Confundir dB de intensidade com dB de pressão:** $L_I = 10\log_{10}(I/I_0)$, mas $L_p = 20\log_{10}(p/p_0)$. O fator 2 é crucial: relação linear $I \propto p^2$.
+- **Confundir dB de intensidade com dB de pressão:** $L_I = 10\log_{10}(I/I_0)$, mas $L_p = 20\log_{10}(p/p_0)$. O fator 2 decorre de $I \propto p^2$.
 - **Somar dB linearmente:** 100 dB + 100 dB ≠ 200 dB. A soma de duas fontes de mesma intensidade é $L_{\text{total}} = L_{\text{uma}} + 10\log_{10}(2) \approx L_{\text{uma}} + 3$ dB, não o dobro.
 - **Esquecer a lei do inverso do quadrado:** alcance máximo de sonar cresce com $\sqrt{P_{\text{tx}}}$, não linearmente com potência.
 :::
 
-## Veja a intensidade se diluir com a distância
+## Diluição da intensidade com a distância
 
-À esquerda, a fonte emite frentes esféricas — repare que os anéis esmaecem ao crescer: a
+À esquerda, a fonte emite frentes esféricas, e os anéis esmaecem à medida que crescem: a
 mesma potência atravessa esferas cada vez maiores. À direita, o nível $L_I(r)$ em escala
-logarítmica de distância: uma **reta que cai 20 dB por década**. A linha tracejada é o
-ruído de fundo; onde a reta cruza o ruído está o **alcance de detecção**. Ajuste a
-potência e o ruído e veja o alcance responder.
+logarítmica de distância, uma **reta que cai 20 dB por década**. A linha tracejada é o
+ruído de fundo, e o cruzamento entre as duas marca o **alcance de detecção**, que responde
+à potência e ao ruído.
 
 ```{python}
 #| fig-cap: "Nível de intensidade L_I(r) = 10 log₁₀[(P/4πr²)/10⁻¹²] para P = 5 kW: reta de −20 dB/década no eixo log. O cruzamento com o ruído de fundo (90 dB, tracejado) define o alcance de detecção r_max ≈ 630 m. Mesmos parâmetros da versão interativa."
@@ -260,13 +259,13 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Dobre a potência de 5 para 10 kW: quantos dB o nível sobe em qualquer distância? E o
+1. Dobrada a potência de 5 para 10 kW, quantos dB o nível sobe em qualquer distância? E o
    alcance, cresce por qual fator? Confirme a previsão $r_{\max} \propto \sqrt{P}$.
-2. Suba o ruído de 90 para 100 dB (mar agitado, tráfego). Quanta potência a mais seria
-   preciso para recuperar o alcance original? Responda usando só a regra dos 20
+2. Elevado o ruído de 90 para 100 dB, caso de mar agitado ou tráfego intenso, quanta
+   potência a mais recuperaria o alcance original? Responda apenas pela regra dos 20
    dB/década.
-3. Nos anéis da esquerda: entre $r$ e $2r$, a mesma energia atravessa uma esfera com
-   quantas vezes mais área? Ligue isso à queda de 6 dB por duplicação de distância.
+3. Nos anéis da esquerda, entre $r$ e $2r$ a mesma energia atravessa uma esfera de quantas
+   vezes mais área? Relacione com a queda de 6 dB por duplicação de distância.
 :::
 
 ## Onde o fenômeno vive
@@ -274,9 +273,9 @@ plt.tight_layout(); plt.show()
 <!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
      em sessões futuras, a pedido do professor. -->
 
-- **Proteção auditiva na praça de máquinas** — níveis típicos de 100–110 dB(A);
-  como a intensidade dobra a cada 3 dB, o tempo seguro de exposição cai à metade a
-  cada 3 dB acima do limite — a aritmética logarítmica é norma de segurança.
+- **Proteção auditiva na praça de máquinas** — níveis típicos de 100–110 dB(A); como a
+  intensidade dobra a cada 3 dB, o tempo seguro de exposição cai à metade a cada 3 dB acima
+  do limite, e a aritmética logarítmica vira norma de segurança.
 - **Assinatura acústica do navio** — o ruído irradiado (dB re 1 µPa) é medido em
   raias de espectro e regulado; navios de pesquisa e militares investem em
   silenciamento para reduzi-lo.
@@ -287,4 +286,4 @@ plt.tight_layout(); plt.show()
      (85–115 dB) e tempo de exposição; readout da dose e do tempo máximo permitido
      (regra dos 3 dB). -->
 
-**Conexão com o próximo tópico:** definida a intensidade de uma onda sonora, estudamos agora o que acontece quando **duas frequências** estão presentes simultaneamente — ocorre o fenômeno de **batimento**, onde a onda resultante oscila em amplitude lentamente no tempo.
+**Conexão com o próximo tópico:** definida a intensidade de uma onda sonora, resta o que ocorre na presença simultânea de **duas frequências**: o **batimento**, em que a amplitude da onda resultante oscila lentamente no tempo.
