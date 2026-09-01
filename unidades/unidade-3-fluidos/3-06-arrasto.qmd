@@ -16,33 +16,33 @@ OE 3.25 [B4] Analisar a influência da viscosidade no arrasto de atrito
 
 {{< aula 29-30 >}}
 
-O a sustentação fechou com o paradoxo de d'Alembert: **um fluido perfeito não oferece resistência
-alguma** ao deslocamento de um corpo. O o escoamento viscoso mostrou de onde vem a correção — a viscosidade,
-confinada a uma camada delgada junto à parede. Falta agora o passo que fecha o argumento:
-transformar a camada limite em **força**.
+O tópico da sustentação encerrou-se no paradoxo de d'Alembert: **um fluido perfeito não oferece
+resistência alguma** ao deslocamento de um corpo. O estudo do escoamento viscoso indicou a origem
+da correção, a viscosidade confinada a uma camada delgada junto à parede. Resta o passo que fecha
+o argumento: converter a camada limite em **força**.
 
-A resposta tem duas metades, e elas correspondem a dois regimes distintos de escoamento. É a
-decomposição da resistência ao avanço do navio — a força que a máquina precisa vencer, e portanto o
-que decide a potência instalada e o consumo.
+A resposta tem duas partes, correspondentes a dois regimes distintos de escoamento. Delas resulta
+a decomposição da resistência ao avanço do navio, força que a máquina deve vencer e que determina
+a potência instalada e o consumo.
 
 ## Descolamento da camada limite e a esteira
 
-No o escoamento viscoso vimos que, para velocidades de escoamento suficientemente baixas, a camada limite
-permanece **colada** ao obstáculo, e o escoamento fora dela é praticamente o de um fluido perfeito.
+Ficou estabelecido no estudo do escoamento viscoso que, para velocidades suficientemente baixas,
+a camada limite permanece **colada** ao obstáculo e o escoamento fora dela é praticamente o de um
+fluido perfeito.
 
-Para velocidades mais elevadas, isso deixa de valer: a camada limite **se descola** do obstáculo,
-em pontos situados na parte de trás dele, e forma-se uma **esteira** — uma região atrás do corpo
-onde aparecem vórtices, trazendo um **refluxo** em direção ao obstáculo.
+A velocidades mais elevadas isso deixa de valer: a camada limite **descola-se** do obstáculo em
+pontos da sua parte posterior e forma-se uma **esteira**, região atrás do corpo onde surgem
+vórtices e um **refluxo** dirigido ao obstáculo.
 
-Continuando a aumentar a velocidade, verifica-se que os vórtices se destacam e começam a ser
-arrastados pelo fluido. À medida que isso acontece, novos vórtices se formam na esteira e vão-se
-destacando por sua vez, criando **fileiras de vórtices** atrás do obstáculo. O regime de escoamento
-deixa de ser estacionário. Para velocidades ainda maiores, o escoamento na esteira se torna
-**turbulento**.
+Com o aumento adicional da velocidade, os vórtices se destacam e passam a ser arrastados pelo
+fluido, enquanto novos se formam na esteira e por sua vez se destacam, constituindo **fileiras de
+vórtices** atrás do obstáculo. O regime deixa de ser estacionário e, a velocidades ainda maiores,
+o escoamento na esteira torna-se **turbulento**.
 
-Por uma mudança de referencial, podemos aplicar esses resultados ao deslocamento de um corpo
-através do fluido. E aqui está o ponto: **a resistência oposta pelo fluido a esse deslocamento
-depende do regime de escoamento** — ou seja, do número de Reynolds.
+Por mudança de referencial, esses resultados se aplicam ao deslocamento de um corpo através do
+fluido, do que decorre o ponto essencial: **a resistência oposta pelo fluido depende do regime de
+escoamento**, isto é, do número de Reynolds.
 
 ## Os dois regimes de resistência {{< ra OE3.22 B1 >}}
 
@@ -55,30 +55,31 @@ velocidade $v$ e ao coeficiente de viscosidade $\eta$:
 
 $$R_{\text{atrito}} \propto \eta\,v$$
 
-É a mesma dependência linear da resistência do ar na queda de um corpo a baixa velocidade, e é ela
-que aparece na lei de Stokes para uma esfera, $F = 6\pi\eta r v$ — a que governa o viscosímetro de
-queda das propriedades dos fluidos.
+É a mesma dependência linear da resistência do ar na queda de um corpo a baixa velocidade, e a
+que figura na lei de Stokes para a esfera, $F = 6\pi\eta r v$, base do viscosímetro de queda visto
+entre as propriedades dos fluidos.
 
-Esse é o **arrasto de atrito** (ou viscoso). Ele age **tangencialmente** à superfície, ao longo de
-toda a área molhada, e existe mesmo quando o escoamento acompanha perfeitamente a forma do corpo.
+Trata-se do **arrasto de atrito**, ou viscoso, que age **tangencialmente** à superfície ao longo
+de toda a área molhada e subsiste mesmo quando o escoamento acompanha perfeitamente a forma do
+corpo.
 
 ### Depois do descolamento: arrasto de pressão
 
-Para velocidades mais elevadas, quando se forma a esteira com vórtices, a resistência passa a ser
-dominada por outra coisa: a **assimetria na distribuição de pressões** entre as partes dianteira e
-traseira do obstáculo.
+A velocidades mais elevadas, formada a esteira com vórtices, a resistência passa a ser dominada
+pela **assimetria na distribuição de pressões** entre as partes dianteira e traseira do
+obstáculo.
 
-Na parte dianteira há um **ponto de estagnação** e, como no tubo de Pitot expressão da pressão dinâmica, a pressão
-aumenta ali por um termo proporcional a $v^2$ — a pressão dinâmica. Na esteira, atrás do corpo,
-isso **não acontece**: a pressão lá é baixa e desorganizada. A diferença é uma força resultante
-para trás, e como o termo dianteiro cresce com $v^2$:
+Na parte dianteira há um **ponto de estagnação** e, como no tubo de Pitot, a pressão ali cresce
+de um termo proporcional a $v^2$, a pressão dinâmica. Na esteira, atrás do corpo, isso **não
+ocorre**: a pressão é baixa e desorganizada. A diferença constitui força resultante para trás e,
+como o termo dianteiro cresce com $v^2$,
 
 $$R_{\text{pressão}} \propto v^2$$
 
-Esse é o **arrasto de pressão** (ou de forma). Note que ele é exatamente o que o fluido perfeito
-não conseguia produzir: lá a distribuição de pressões era **simétrica** entre a frente e a
-traseira, e a resultante se anulava — o paradoxo de d'Alembert. É o **descolamento**, que só a
-viscosidade produz, que quebra a simetria e faz a força aparecer.
+Trata-se do **arrasto de pressão**, ou de forma, precisamente o que o fluido perfeito não podia
+produzir: nele a distribuição de pressões era **simétrica** entre frente e traseira e a resultante
+se anulava, resultado conhecido como paradoxo de d'Alembert. É o **descolamento**, exclusivo dos
+fluidos viscosos, que quebra a simetria e faz surgir a força.
 
 ### O arrasto total
 
@@ -91,42 +92,42 @@ $$\boxed{\;R_{\text{total}} = R_{\text{atrito}} + R_{\text{pressão}}\;}$$
 
 Para um navio mercante em velocidade de serviço, a repartição típica é:
 
-- **Arrasto de atrito: 75 a 85%** da resistência total — porque o casco é longo e a área molhada é
-  enorme, e porque a forma é desenhada justamente para evitar o descolamento.
-- **Arrasto de pressão e de onda: 15 a 25%** — crescendo rapidamente com a velocidade.
+- **Arrasto de atrito: 75 a 85%** da resistência total, dado o comprimento do casco, a extensão
+  da área molhada e o desenho das formas, concebido justamente para evitar o descolamento.
+- **Arrasto de pressão e de onda: 15 a 25%**, com crescimento rápido em função da velocidade.
 
-A proporção depende da velocidade (medida pelo número de Froude, a análise dimensional) e da forma do casco.
-Num corpo rombudo — um cilindro, uma esfera, uma âncora flutuante — a relação se inverte e o
-arrasto de pressão domina.
+A proporção depende da velocidade, medida pelo número de Froude na análise dimensional, e da
+forma do casco. Num corpo rombudo, como um cilindro, uma esfera ou uma âncora flutuante, a relação
+se inverte e o arrasto de pressão predomina.
 
 ## Forma do corpo e coeficiente de arrasto {{< ra OE3.23 B2 >}}
 
-A conclusão de projeto sai direto do mecanismo:
+A conclusão de projeto decorre diretamente do mecanismo:
 
 > Um corpo de forma aerodinâmica, **arredondado na parte dianteira e afilado na traseira** — como
 > um peixe ou uma asa de avião —, dá origem a um escoamento estacionário em que as linhas de
 > corrente acompanham a forma do corpo, **sem descolamento da camada limite**, o que minimiza a
 > resistência oposta pelo fluido ao deslocamento.
 
-Não é a "penetração" da proa que importa mais: é a **popa**. A proa afilada ajuda, mas é a traseira
-afilada que evita o descolamento e mata o arrasto de pressão. Um corpo com proa fina e popa cortada
-a prumo arrasta muito mais do que um com proa romba e popa afilada — motivo pelo qual gotas, peixes
-e perfis de asa têm todos a mesma silhueta.
+O elemento decisivo não é a penetração da proa, e sim a **popa**: a proa afilada auxilia, mas é a
+traseira afilada que impede o descolamento e suprime o arrasto de pressão. Um corpo de proa fina e
+popa cortada a prumo arrasta muito mais do que outro de proa romba e popa afilada, razão pela qual
+gotas, peixes e perfis de asa apresentam a mesma silhueta.
 
-No navio, isso aparece na forma da popa e no desenho da região de saída do escoamento antes do
-hélice. A **finura** do casco é medida pelo **coeficiente de bloco**
-$C_b = \nabla/(L\times B\times T)$ — a razão entre o volume deslocado e o do paralelepípedo
-circunscrito. Graneleiros têm $C_b$ alto (0,80–0,85: muito volume, pouca finura); navios rápidos,
-$C_b$ baixo.
+No navio, o princípio se traduz na forma da popa e no desenho da região de saída do escoamento
+antes do hélice. A **finura** do casco é medida pelo **coeficiente de bloco**
+$C_b = \nabla/(L\times B\times T)$, razão entre o volume deslocado e o do paralelepípedo
+circunscrito. Graneleiros têm $C_b$ alto, de 0,80 a 0,85, com muito volume e pouca finura; navios
+rápidos, $C_b$ baixo.
 
 A relação entre forma e arrasto é condensada no **coeficiente de arrasto**, adimensional:
 
 $$\boxed{\;C_D = \frac{R}{q\,A}, \qquad q = \tfrac{1}{2}\rho v^2\;}$$
 
-onde $R$ é o arrasto (N), $q$ a pressão dinâmica (Pa) e $A$ a área de referência (para navios, em
-geral a área molhada). Adimensionalizar assim não é cosmético: como Re, $C_D$ é o que permite
-comparar corpos de tamanhos diferentes em fluidos diferentes — e é o objeto que o a análise dimensional vai
-justificar.
+em que $R$ é o arrasto (N), $q$ a pressão dinâmica (Pa) e $A$ a área de referência, nos navios em
+geral a área molhada. A adimensionalização não é convenção de notação: tal como Re, $C_D$ permite
+comparar corpos de tamanhos diferentes em fluidos diferentes, e é o objeto que a análise
+dimensional justifica.
 
 | Corpo | $C_D$ típico |
 |---|---|
@@ -135,53 +136,68 @@ justificar.
 | cilindro liso (escoamento transversal) | ≈ 1,0 |
 | placa plana perpendicular ao escoamento | ≈ 1,2 |
 
-A ordem de grandeza conta a história inteira: o casco tem $C_D$ **cem vezes menor** que um cilindro
-de mesma área frontal, porque quase não tem arrasto de pressão. O que sobra é atrito.
+A ordem de grandeza é eloquente: o casco tem $C_D$ **cem vezes menor** que um cilindro de mesma
+área frontal, por ser quase nulo o seu arrasto de pressão. O que resta é atrito.
+
 ## Coeficiente de arrasto e fórmulas de engenharia {{< ra OE3.24 B3 >}}
 
-Na prática de engenharia, o arrasto é calculado separando atrito e pressão:
+Na prática de engenharia, o arrasto é calculado separando-se atrito e pressão:
 
 $$R_{\text{total}} = R_{\text{atrito}} + R_{\text{onda}}$$
 
-**Arrasto de atrito** é calculado usando fórmulas empíricas como a de Kármán-Schoenherr (baseada em experimentos de placa plana):
+O **arrasto de atrito** obtém-se por fórmulas empíricas como a de Kármán-Schoenherr, baseada em
+experimentos com placa plana:
 
 $$C_F = \frac{0.075}{(\log_{10} \text{Re} - 2)^2}$$
 
-A resistência de atrito é então:
+A resistência de atrito resulta então
 
 $$R_{\text{atrito}} = \frac{1}{2} \rho v^2 A_{\text{molhada}} C_F$$
 
-**Arrasto de onda** vem de testes em modelo (porque sua previsão teórica é complexa). A relação entre arrasto do modelo e do navio é garantida pelo número de Froude constante.
+O **arrasto de onda** provém de ensaios em modelo, dada a complexidade de sua previsão teórica. A
+correspondência entre o arrasto do modelo e o do navio é assegurada pela igualdade do número de
+Froude.
 
-A potência necessária é:
+A potência necessária vale
 
 $$P = R_{\text{total}} \times v$$
 
-Um navio de 50 mil toneladas a 14 nós pode ter resistência de ~400 kN, requerendo ~3 MW de potência propulsiva (considerar eficiências de hélice e motor reduzem a potência entregue pela máquina).
+Um navio de 50 mil toneladas a 14 nós apresenta resistência da ordem de 400 kN, o que exige cerca
+de 3 MW de potência propulsiva; as eficiências de hélice e de motor elevam a potência que a
+máquina deve entregar.
 
 ## Influência da viscosidade e incrustações {{< ra OE3.25 B4 >}}
 
-A viscosidade do fluido aparece indiretamente no coeficiente de atrito via número de Reynolds. Mas há uma dependência mais direta: uma mudança na temperatura da água muda a viscosidade cinemática $\nu$.
+A viscosidade do fluido comparece indiretamente no coeficiente de atrito, por meio do número de
+Reynolds. Há, porém, dependência mais direta: a temperatura da água altera a viscosidade
+cinemática $\nu$.
 
-Agua doce a 20°C: $\nu \approx 1.0 \times 10^{-6}$ m²/s.
-Agua salgada a 20°C: $\nu \approx 1.05 \times 10^{-6}$ m²/s.
-Agua salgada a 0°C: $\nu \approx 1.9 \times 10^{-6}$ m²/s.
+| Fluido | Temperatura | $\nu$ (m²/s) |
+|---|---|---|
+| água doce | 20 °C | $1{,}0\times10^{-6}$ |
+| água salgada | 20 °C | $1{,}05\times10^{-6}$ |
+| água salgada | 0 °C | $1{,}9\times10^{-6}$ |
 
-Uma redução de temperatura pode aumentar $\nu$ (e reduzir Re), deslocando a transição laminar-turbulenta e alterando $C_F$.
+A queda de temperatura aumenta $\nu$ e reduz Re, deslocando a transição laminar-turbulenta e
+alterando $C_F$.
 
-**Incrustações no casco** aumentam a rugosidade relativa $k/L$ drasticamente. Uma incrustação biológica típica adiciona $k \approx 200-500$ μm. Isso afeta:
-1. Aumenta o coeficiente de friction $C_F$ (placa áspera vs. lisa).
-2. Antecipa a transição laminar → turbulenta na camada limite.
-3. Pode aumentar arrasto em 10–30% dependendo da extensão.
+As **incrustações no casco** elevam drasticamente a rugosidade relativa $k/L$: uma incrustação
+biológica típica acrescenta $k \approx 200$ a $500\ \mu$m. As consequências são três:
 
-Tanques de provas modelos tentam reproduzir esse efeito adicionando uma "margem de correlação" $\Delta C_F$ (típico: +0.0005 a +0.001) ao coeficiente de atrito extrapolado, simulando um casco moderadamente sujo.
+1. eleva-se o coeficiente de atrito $C_F$, próprio de placa áspera e não de placa lisa;
+2. antecipa-se a transição laminar-turbulenta na camada limite;
+3. o arrasto pode crescer de 10 a 30%, conforme a extensão afetada.
+
+Os tanques de provas reproduzem esse efeito somando ao coeficiente de atrito extrapolado uma
+margem de correlação $\Delta C_F$, tipicamente de $+0{,}0005$ a $+0{,}001$, que simula um casco
+moderadamente sujo.
 
 ::: {.sp}
 Um navio-tanque de área molhada $A_{\text{molhada}} = 8000$ m² e comprimento $L = 240$ m viaja a $v = 12$ nós (6.17 m/s) em água salgada a $T = 15°C$ ($\nu = 1.14 \times 10^{-6}$ m²/s, $\rho = 1025$ kg/m³). Calcule:
 (a) O número de Reynolds.
-(b) O coeficiente de friction $C_F$ (Kármán-Schoenherr).
+(b) O coeficiente de atrito $C_F$ (Kármán-Schoenherr).
 (c) A resistência de atrito e potência correspondente.
-(d) Como a resistência muda se o casco ficar incrustado (adicionar ~0.0005 a $C_F$)?
+(d) A variação da resistência com o casco incrustado (acréscimo de ~0,0005 a $C_F$).
 
 **(a) Modelagem.** $\text{Re} = vL/\nu$; coeficiente de atrito de Kármán–Schoenherr
 $C_F = 0{,}075/(\log_{10}\text{Re} - 2)^2$; resistência de atrito
@@ -203,19 +219,23 @@ $P \approx 1{,}91\ \text{MW}$.
 $P \approx 1{,}4\ \text{MW}$. Casco incrustado: $R \approx 310\ \text{kN}$,
 $P \approx 1{,}9\ \text{MW}$ — aumento de **34%**.
 
-**(d) Análise crítica.** Só a margem de incrustação já custa ~0,5 MW a mais nesta
-velocidade — dinheiro em combustível a cada milha, e a razão de a docagem para pintura
-se pagar. Este é apenas o arrasto de *atrito*; a resistência total inclui ainda o
-arrasto de onda (15–25%), que cresce fortemente com o número de Froude. A potência
-propulsiva instalada é maior que $P$, pois há as eficiências de hélice e de transmissão.
+**(d) Análise crítica.** A margem de incrustação, isoladamente, custa cerca de 0,5 MW a
+mais nesta velocidade, o que se traduz em combustível a cada milha navegada e explica
+por que a docagem para pintura se paga. O valor obtido corresponde apenas ao arrasto de
+*atrito*: a resistência total inclui ainda o arrasto de onda, de 15 a 25%, que cresce
+fortemente com o número de Froude. A potência propulsiva instalada supera $P$, pois há
+que considerar as eficiências de hélice e de transmissão.
 :::
 
 ::: {.callout-warning}
 ## Erros clássicos
 
-- **Área de referência errada:** para navio, usa-se área molhada (S), não projeção frontal. Cilindro usa área frontal; navio usa área de contato com água.
-- **Confundir $C_D$ com $C_F$:** $C_D$ é adimensional para arrasto total; $C_F$ é apenas para atrito. São números diferentes de magnitudes diferentes.
-- **Negligenciar número de Froude na extrapolação:** resistência de onda não escala linearmente com velocidade. Fórmulas de engenharia usam Froude para isso.
+- **Área de referência errada.** No navio emprega-se a área molhada $S$, não a projeção frontal;
+  esta é a referência do cilindro.
+- **Confundir $C_D$ com $C_F$.** $C_D$ refere-se ao arrasto total e $C_F$, apenas ao atrito: são
+  grandezas distintas e de magnitudes distintas.
+- **Negligenciar o número de Froude na extrapolação.** A resistência de onda não escala
+  linearmente com a velocidade, e as fórmulas de engenharia recorrem a Froude para tratá-la.
 - **Achar que a proa afilada é o que reduz o arrasto.** É a **popa**. A proa fina ajuda na
   resistência de onda, mas o que mata o arrasto de pressão é a traseira afilada, que impede o
   descolamento da camada limite. Proa romba com popa afilada arrasta menos que o inverso.
@@ -226,10 +246,10 @@ propulsiva instalada é maior que $P$, pois há as eficiências de hélice e de 
 
 ## Resistência e potência em função da velocidade
 
-O arrasto de atrito segue $R_f = \tfrac{1}{2}\rho v^2 S\,C_F$ com $C_F$ de
-Kármán–Schoenherr; some-se a ele a resistência de onda, que dispara em alto Froude. Como
-a potência é $P = R\,v$, ela cresce aproximadamente com $v^3$ — a razão física do *slow
-steaming*. Ajuste a velocidade e a incrustação e veja a potência e o custo por milha.
+O arrasto de atrito segue $R_f = \tfrac{1}{2}\rho v^2 S\,C_F$, com $C_F$ de Kármán-Schoenherr, ao
+qual se soma a resistência de onda, que dispara a Froude elevado. Sendo a potência $P = R\,v$, ela
+cresce aproximadamente com $v^3$: é a razão física do *slow steaming*. A variação da velocidade e
+da incrustação altera a potência e o custo por milha.
 
 ```{python}
 #| fig-cap: "Resistência de um navio-tanque (S = 8000 m², L = 240 m) em função da velocidade: atrito (Kármán–Schoenherr) + onda (termo esquemático crescente com Fr). A potência P = R·v cresce ~v³. Mesmos parâmetros da versão interativa."
@@ -329,12 +349,12 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Reduza a velocidade em 20% (ex.: de 15 para 12 nós). Quanto cai a potência? Confirme
-   a regra prática $P \propto v^3$ e explique o *slow steaming*.
-2. Aumente a incrustação: qual curva sobe, a de atrito ou a de onda? Em que fração a
-   potência cresce para $+0{,}0005$?
-3. Em baixa velocidade, quem domina — atrito ou onda? E quando o Froude cresce? Ligue
-   com a proporção 75–85% de atrito citada no texto.
+1. Reduzida a velocidade em 20%, de 15 para 12 nós, quanto cai a potência? Confirme a regra
+   prática $P \propto v^3$ e justifique o *slow steaming*.
+2. Com o aumento da incrustação, qual curva sobe, a de atrito ou a de onda? Em que fração cresce
+   a potência para $+0{,}0005$?
+3. A baixa velocidade, qual parcela predomina, atrito ou onda? E com o crescimento de Froude?
+   Relacione com a proporção de 75 a 85% de atrito citada no texto.
 :::
 
 ## Onde o fenômeno vive
@@ -342,22 +362,22 @@ plt.tight_layout(); plt.show()
 <!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
      em sessões futuras, a pedido do professor. -->
 
-- **Slow steaming** — potência de arrasto cresce ~v³: reduzir 20% da velocidade corta
-  quase metade do consumo — a conta que redesenhou a operação da marinha mercante.
+- **Slow steaming** — a potência de arrasto cresce com cerca de $v^3$: reduzir 20% da velocidade
+  corta quase metade do consumo. É a conta que redesenhou a operação da marinha mercante.
 - **Âncora flutuante (drogue)** — arrasto usado a favor: segura a proa ao mar em
   temporal.
-- **Incrustação** — casco sujo eleva o coeficiente de arrasto friccional em dezenas
-  de por cento; a curva consumo × tempo desde a docagem é o arrasto virando dinheiro.
-- **Esteira de vórtices atrás de um pilar de píer** — a fileira alternada de vórtices do
-  §2.7 a olho nu, na correnteza; a mesma que faz um cabo de antena "cantar" ao vento.
+- **Incrustação** — o casco sujo eleva o coeficiente de arrasto de atrito em dezenas por cento;
+  a curva de consumo em função do tempo desde a docagem mede diretamente esse custo.
+- **Esteira de vórtices atrás de um pilar de píer** — a fileira alternada de vórtices visível a
+  olho nu na correnteza, a mesma que faz um cabo de antena vibrar ao vento.
 - **Bulbo de proa** — gera um sistema de ondas em oposição de fase ao do casco, cancelando
   parte da resistência de onda. Validade: só na faixa de velocidade para a qual foi
   projetado; fora dela, atrapalha.
 
 ### Descolamento e esteira: a sequência de regimes
 
-Esta é a passagem do §2.7 que decide a natureza da resistência, e é a única da unidade que o
-texto não conseguia mostrar. Aumente o número de Reynolds e percorra a sequência:
+É a passagem que decide a natureza da resistência. O aumento progressivo do número de Reynolds
+percorre a sequência:
 
 | Re | O que acontece | Quem domina a resistência |
 |---|---|---|
@@ -366,12 +386,12 @@ texto não conseguia mostrar. Aumente o número de Reynolds e percorra a sequên
 | $40$–$1000$ | os vórtices se **destacam alternadamente** — fileira de vórtices; deixa de ser estacionário | pressão, $R \propto v^2$ |
 | $\gtrsim 1000$ | esteira **turbulenta**, irregular e aparentemente caótica | pressão, $R \propto v^2$ |
 
-As fotografias clássicas que o Moysés reproduz registram exatamente isso em
-$\mathrm{Re} = 118$, $140$ (fileira de vórtices) e $15\,000$ (turbulência).
+As fotografias clássicas reproduzidas no Moysés registram exatamente esses estágios em
+$\mathrm{Re} = 118$, $140$, com fileira de vórtices, e $15\,000$, já turbulento.
 
-O ponto conceitual: enquanto a camada está colada, o escoamento é quase simétrico entre a
-frente e a traseira — e é essa simetria que anula a resultante no fluido perfeito, o paradoxo
-de d'Alembert. **É o descolamento que quebra a simetria e faz a força aparecer.**
+Conceitualmente: enquanto a camada permanece colada, o escoamento é quase simétrico entre frente
+e traseira, e é essa simetria que anula a resultante no fluido perfeito, o paradoxo de
+d'Alembert. **É o descolamento que quebra a simetria e faz a força surgir.**
 
 ```{python}
 #| fig-cap: "Esquema dos quatro regimes de escoamento em torno de um cilindro, na sequência do §2.7. A representação é esquemática (não é solução de Navier-Stokes): o que ela reproduz fielmente é a topologia da esteira em cada faixa de Re e o ponto O de estagnação na frente. Mesmos regimes da versão interativa."
@@ -528,27 +548,27 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Comece em Re baixo: o escoamento fecha atrás do cilindro e a figura é quase simétrica entre
-   frente e traseira. Que consequência isso tem para a resultante das forças de pressão, e que
-   paradoxo é esse?
-2. Suba até Re ≈ 20 e observe os pontos A e B aparecerem. O que está acontecendo com a camada
-   limite ali, e por que a partir daí existe uma esteira?
-3. Em Re ≈ 140 os vórtices se destacam alternadamente. Por que o escoamento **deixa de ser
-   estacionário** — e o que isso significa para as linhas de corrente dos fluidos em movimento?
+1. A Re baixo o escoamento fecha atrás do cilindro e a figura é quase simétrica entre frente e
+   traseira. Que consequência disso decorre para a resultante das forças de pressão, e que
+   paradoxo se configura?
+2. Elevado Re a cerca de 20, surgem os pontos A e B. O que ocorre ali com a camada limite, e por
+   que a partir daí existe uma esteira?
+3. A Re ≈ 140 os vórtices se destacam alternadamente. Por que o escoamento **deixa de ser
+   estacionário**, e o que isso implica para as linhas de corrente?
 4. A lei da resistência muda de $\eta v$ para $v^2$ ao longo da faixa. Em que ponto da sequência
-   essa troca acontece, e qual mecanismo passa a dominar?
+   se dá essa troca, e qual mecanismo passa a predominar?
 :::
 
 ### Slow steaming: o arrasto virando dinheiro
 
-A resistência de atrito usa a linha de correlação de Kármán–Schoenherr,
-$C_F = 0{,}075/(\log_{10}\mathrm{Re} - 2)^2$, e a de onda entra por um termo que cresce com o
-número de Froude. A potência efetiva é $P = R\,v$ — e como $R$ já cresce com $v^2$, a potência
-cresce aproximadamente com $v^3$.
+A resistência de atrito emprega a linha de correlação de Kármán-Schoenherr,
+$C_F = 0{,}075/(\log_{10}\mathrm{Re} - 2)^2$, e a de onda entra por um termo crescente com o número
+de Froude. A potência efetiva é $P = R\,v$ e, como $R$ já cresce com $v^2$, a potência cresce
+aproximadamente com $v^3$.
 
-É daí que sai a conta que redesenhou a operação da marinha mercante: **reduzir 20% da
-velocidade corta quase metade da potência**. O painel traduz isso em toneladas por dia e em
-custo por milha, e mostra o que a incrustação faz com a mesma conta.
+Daí a conta que redesenhou a operação da marinha mercante: **reduzir 20% da velocidade corta
+quase metade da potência**. O painel traduz o resultado em toneladas por dia e custo por milha, e
+mostra o efeito da incrustação sobre o mesmo cálculo.
 
 ```{python}
 #| fig-cap: "Navio-tanque de S = 8000 m², L = 240 m em água salgada. Esquerda: potência efetiva P = R·v, casco limpo e com incrustação (ΔC_F = +0,0005); a curva cresce como ~v³. Direita: consumo por milha — o mínimo não está na velocidade mínima, porque o consumo por hora cai mais devagar do que o tempo de viagem aumenta. Mesmos parâmetros da versão interativa."
@@ -664,14 +684,14 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Reduza a velocidade de 14 para 11,2 nós (−20%). Quanto cai a potência? Confirme com a
-   dependência aproximada $P \propto v^3$ e explique de onde vêm os três fatores de $v$.
-2. Ligue a incrustação no máximo. Quanto a potência sobe à mesma velocidade? Traduza em
-   toneladas de combustível por dia — e compare com o custo de uma docagem.
-3. O gráfico da direita é o consumo por **milha**, não por hora. Por que ele não cai
-   indefinidamente conforme se reduz a velocidade?
-4. A resistência de atrito depende de $C_F(\mathrm{Re})$ e a de onda, de $\mathrm{Fr}$. Qual
-   das duas cresce mais rápido nesta faixa de velocidade?
+1. Reduzida a velocidade de 14 para 11,2 nós (−20%), quanto cai a potência? Confirme com a
+   dependência aproximada $P \propto v^3$ e identifique a origem dos três fatores de $v$.
+2. Com a incrustação no máximo, quanto sobe a potência à mesma velocidade? Traduza o resultado em
+   toneladas de combustível por dia e compare com o custo de uma docagem.
+3. O gráfico da direita traz o consumo por **milha**, não por hora. Por que ele não decresce
+   indefinidamente com a redução da velocidade?
+4. A resistência de atrito depende de $C_F(\mathrm{Re})$ e a de onda, de $\mathrm{Fr}$. Qual das
+   duas cresce mais rápido nesta faixa de velocidade?
 :::
 
 

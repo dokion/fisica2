@@ -16,79 +16,79 @@ OE 3.29 [B4] Comparar a sustentação em diferentes condições de escoamento
 
 {{< aula 25-26 >}}
 
-O tópico anterior estabeleceu que a força vale $L' = \rho v \Gamma$ e deixou uma pergunta em
-aberto: **de onde vem $\Gamma$?** Aqui a respondemos duas vezes — primeiro pelo caso mais simples,
-o cilindro girante, depois pelo aerofólio, que é o leme e a pá do hélice.
+O tópico anterior estabeleceu que a força vale $L' = \rho v \Gamma$ e deixou em aberto a questão
+central: **de onde vem $\Gamma$?** A resposta é dada aqui em dois tempos, primeiro pelo caso mais
+simples, o cilindro girante, depois pelo aerofólio, que é o leme e a pá do hélice.
 
-E o tópico fecha levando a hipótese de fluido perfeito, feita lá no estudo dos fluidos em movimento, até o ponto em que
-ela se rompe.
+O tópico encerra-se conduzindo a hipótese de fluido perfeito, formulada no estudo dos fluidos em
+movimento, até o ponto em que ela se rompe.
 
 ## Efeito Magnus: circulação imposta a um cilindro {{< ra OE3.26 B2 >}}
 
-Se um cilindro é introduzido num campo de escoamento inicialmente uniforme, as linhas de corrente
-em torno dele se distribuem simetricamente. Conforme mencionado no estudo dos fluidos em movimento, a velocidade é
-maior na região onde as linhas de corrente estão mais juntas; a grande distância, o escoamento
-permanece aproximadamente uniforme.
+Introduzido um cilindro num campo de escoamento inicialmente uniforme, as linhas de corrente em
+torno dele se distribuem simetricamente. Conforme estabelecido no estudo dos fluidos em
+movimento, a velocidade é maior onde as linhas de corrente se adensam; a grande distância, o
+escoamento permanece aproximadamente uniforme.
 
-Superponha agora a esse escoamento uma **circulação** em torno do cilindro — o escoamento do
-Exemplo 2 da circulação, com $\mathbf{v}$ dado pela velocidade no vórtice. As linhas de corrente resultantes são
-a **superposição** dos dois escoamentos: a velocidade em cada ponto é a soma vetorial das
-velocidades correspondentes. Escoamentos irrotacionais de fluidos incompressíveis (potenciais)
-podem ser superpostos dessa forma — decorre da definição do gradiente, pois
+Superponha-se a esse escoamento uma **circulação** em torno do cilindro, correspondente ao
+Exemplo 2 do estudo da circulação, com $\mathbf{v}$ dado pela velocidade no vórtice. As linhas de
+corrente resultantes são a **superposição** dos dois escoamentos, a velocidade em cada ponto
+sendo a soma vetorial das velocidades correspondentes. Escoamentos irrotacionais de fluidos
+incompressíveis, ditos potenciais, admitem essa superposição, o que decorre da definição de
+gradiente:
 $\operatorname{grad}(\varphi_1 + \varphi_2) = \operatorname{grad}\varphi_1 + \operatorname{grad}\varphi_2$.
 
-Em pontos **acima** do cilindro, as velocidades dos dois escoamentos se somam em magnitude; **abaixo**,
-elas se subtraem. Isso dá origem à distribuição assimétrica de linhas de corrente, cuja densidade
-é maior acima do que abaixo do cilindro — correspondendo a uma velocidade de escoamento mais
-elevada na metade superior.
+Nos pontos **acima** do cilindro as velocidades dos dois escoamentos se somam em magnitude;
+**abaixo**, subtraem-se. Resulta distribuição assimétrica de linhas de corrente, mais densas
+acima do que abaixo do cilindro, o que corresponde a velocidade de escoamento mais elevada na
+metade superior.
 
-Em consequência do **fenômeno de Venturi** (os fluidos em movimento), essa assimetria da distribuição de
-velocidade produz uma assimetria correspondente da distribuição de pressão sobre o cilindro:
+Em consequência do **fenômeno de Venturi**, a assimetria da distribuição de velocidade produz
+assimetria correspondente na distribuição de pressão sobre o cilindro:
 
 $$\text{velocidade maior acima} \;\Rightarrow\; \text{pressão menor acima} \;\Rightarrow\;
 \text{pressão abaixo} > \text{pressão acima}$$
 
 A resultante das forças de pressão é, portanto, um **empuxo vertical $\mathbf{E}$ dirigido para
-cima**, que se chama **empuxo dinâmico**. Se invertermos o sentido da circulação, inverte-se
-também o sentido de $\mathbf{E}$ — o que a $L' = \rho v \Gamma$ da circulação já antecipava pelo
-sinal de $\Gamma$.
+cima**, denominado **empuxo dinâmico**. Invertido o sentido da circulação, inverte-se o de
+$\mathbf{E}$, conforme já antecipava o sinal de $\Gamma$ em $L' = \rho v \Gamma$.
 
-Esse efeito, estudado experimentalmente por Magnus em 1853, é conhecido como **efeito Magnus**.
-Passando para um referencial em que o fluido a grande distância está em repouso, o escoamento
-descreve o deslocamento do cilindro dentro do fluido — e **a circulação pode ser obtida
-imprimindo-se uma rotação ao cilindro**. Eis a primeira resposta à pergunta de onde vem $\Gamma$:
-neste caso, ela é imposta mecanicamente, pela rotação.
+O efeito, estudado experimentalmente por Magnus em 1853, denomina-se **efeito Magnus**. Num
+referencial em que o fluido a grande distância está em repouso, o escoamento descreve o
+deslocamento do cilindro dentro do fluido, e **a circulação se obtém imprimindo rotação ao
+cilindro**. Está aí a primeira resposta à origem de $\Gamma$: nesse caso, ela é imposta
+mecanicamente.
 
-O efeito Magnus atuando sobre uma esfera é responsável pelo desvio das bolas de tênis ou
-pingue-pongue lançadas "com efeito", de forma a girar rapidamente sobre o próprio eixo.
+O efeito Magnus sobre uma esfera responde pelo desvio das bolas de tênis ou de tênis de mesa
+lançadas com efeito, isto é, em rotação rápida sobre o próprio eixo.
 
-Em 1920, **Flettner** propôs utilizar o efeito Magnus para a propulsão de um barco pelo vento,
-utilizando, em lugar de uma vela, um cilindro vertical em rotação rápida: o empuxo dinâmico, nesse
-caso, é **horizontal**. A ideia não alcançou muito sucesso na prática à época, embora tenha sido
-usada num navio que cruzou o Atlântico — e voltou ao mercado nos últimos anos como rotor de
-propulsão auxiliar para redução de consumo.
+Em 1920, **Flettner** propôs empregar o efeito Magnus na propulsão a vento, substituindo a vela
+por um cilindro vertical em rotação rápida, caso em que o empuxo dinâmico é **horizontal**. A
+solução teve pouco êxito prático à época, embora tenha equipado um navio que cruzou o Atlântico,
+e retornou ao mercado nos últimos anos como rotor de propulsão auxiliar destinado à redução de
+consumo.
 
 ## O aerofólio: distribuição de pressões e sustentação {{< ra OE3.27 B2 >}}
 
-O empuxo dinâmico resultante da combinação de um escoamento uniforme com uma circulação é também
-responsável pela **sustentação dos aviões** — e, no navio, pela força do leme e pelo empuxo da pá
-do hélice.
+O empuxo dinâmico resultante da combinação de escoamento uniforme com circulação responde
+igualmente pela **sustentação dos aviões** e, no navio, pela força do leme e pelo empuxo da pá do
+hélice.
 
-Considere, para simplificar, um corte vertical da asa, conhecido como **aerofólio**. A asa
-corresponde a um cilindro muito longo, de perfil **arredondado de um lado e afilado do outro**,
-inserido num campo de escoamento inicialmente uniforme de velocidade $v_0$. Essa é a situação
-típica num túnel de vento, que simula o deslocamento do avião com velocidade $-v_0$ através da
-atmosfera em repouso, visto do referencial do avião.
+Considere-se um corte vertical da asa, o **aerofólio**. A asa corresponde a um cilindro muito
+longo, de perfil **arredondado de um lado e afilado do outro**, inserido num campo de escoamento
+inicialmente uniforme de velocidade $v_0$. É a situação típica do túnel de vento, que simula, no
+referencial do avião, o deslocamento deste com velocidade $-v_0$ através da atmosfera em
+repouso.
 
-As linhas de corrente do escoamento em torno do aerofólio, num plano de seção transversal, mostram
-que **a velocidade é maior na parte superior da asa do que na inferior**: o ar tem uma distância
-maior a percorrer por cima, em virtude da assimetria introduzida pelo perfil e pelo **ângulo de
-ataque** $\alpha$ com a horizontal.
+As linhas de corrente do escoamento em torno do aerofólio, num plano de seção transversal,
+mostram que **a velocidade é maior na parte superior da asa do que na inferior**, por ser maior a
+distância a percorrer por cima, em virtude da assimetria introduzida pelo perfil e pelo **ângulo
+de ataque** $\alpha$ com a horizontal.
 
-Novamente, pela equação de Bernoulli (fenômeno de Venturi), a velocidade maior de escoamento
-**reduz a pressão** na parte superior, e é o empuxo dinâmico $\mathbf{E}$ resultante que sustenta o
-avião. A analogia com o cilindro da seção anterior é exata: como naquele caso, **há uma circulação
-em torno do aerofólio**, de sentido horário.
+Pela equação de Bernoulli, na forma do fenômeno de Venturi, a velocidade maior **reduz a
+pressão** na parte superior, e o empuxo dinâmico $\mathbf{E}$ resultante sustenta o avião. A
+analogia com o cilindro da seção anterior é exata: também aqui **há circulação em torno do
+aerofólio**, de sentido horário.
 
 Na linguagem naval, os dois lados têm nome:
 
@@ -97,56 +97,58 @@ Na linguagem naval, os dois lados têm nome:
 | Dorso (extradorso) | curvatura maior | alta | **baixa** | lado de **sucção** |
 | Ventre (intradorso) | curvatura menor | baixa | **alta** | lado de **pressão** |
 
-A diferença de pressão entre os dois lados, integrada sobre a área, é a sustentação. Para uma pá de
-hélice o mecanismo é o mesmo, com o eixo girado: a diferença de pressão entre o lado de sucção e o
-de pressão da pá empurra a água para ré, e a reação empurra o navio avante.
+A diferença de pressão entre os dois lados, integrada sobre a área, é a sustentação. Numa pá de
+hélice o mecanismo é idêntico, com o eixo girado: a diferença de pressão entre o lado de sucção e
+o de pressão empurra a água para ré, e a reação impulsiona o navio avante.
 
 ### De onde vem a circulação da asa
 
-Falta fechar o argumento — e aqui está o ponto mais sutil do tópico. Pelo teorema de Thomson, num fluido perfeito a circulação ao longo de um circuito formado sempre das mesmas
-partículas **se conserva**. Uma asa parada, com o fluido em repouso, tem circulação nula. Ao começar
-a se mover, deveria portanto continuar com circulação nula para sempre — e nunca sustentar nada.
+Resta fechar o argumento, no ponto mais sutil do tópico. Pelo teorema de Thomson, num fluido
+perfeito a circulação ao longo de um circuito formado sempre das mesmas partículas **se
+conserva**. Uma asa parada, com o fluido em repouso, tem circulação nula; posta em movimento,
+deveria portanto conservá-la nula indefinidamente, e jamais sustentar coisa alguma.
 
-O que acontece de fato é o seguinte. A descontinuidade na direção da velocidade entre as linhas de
-corrente que passam por cima e por baixo dá origem a um **enrolamento** da linha de corrente que
-passa pela ponta afilada — o bordo de fuga —, gerando um vórtice. Considere então dois circuitos:
+O que de fato ocorre é outra coisa. A descontinuidade na direção da velocidade entre as linhas
+de corrente que passam por cima e por baixo produz o **enrolamento** da linha de corrente que
+passa pela ponta afilada, o bordo de fuga, gerando um vórtice. Tomem-se então dois circuitos:
 
 - Um circuito ABCD suficientemente distante para que o fluido possa ser tratado como perfeito. A
   circulação ao longo dele era inicialmente nula, e **permanece nula** pelo teorema de Thomson.
 - Dentro dele, a porção EBCF que envolve o vórtice largado no bordo de fuga — o **vórtice de
   partida** —, onde há uma circulação anti-horária.
 
-Pela propriedade aditiva propriedade aditiva da circulação, se o total é nulo e uma parte é anti-horária, a outra parte tem
-de compensar: cria-se uma **circulação horária no circuito AEFD que envolve a asa**, dando origem
-ao empuxo dinâmico que a sustenta.
+Pela propriedade aditiva da circulação, sendo nulo o total e anti-horária uma das partes, a
+outra há de compensá-la: cria-se **circulação horária no circuito AEFD, que envolve a asa**, e
+dela decorre o empuxo dinâmico que a sustenta.
 
-A circulação da asa não viola a conservação — ela é **paga** com um vórtice de sinal oposto,
-deixado para trás na partida. Guarde a peça que falta: para que a linha de corrente se enrole na
-ponta afilada em vez de contorná-la, o fluido precisa **não conseguir** dar a volta no bordo de
-fuga — e um fluido perfeito conseguiria. Voltamos a isso no fim do tópico.
+A circulação da asa não viola a conservação: é **paga** com um vórtice de sinal oposto, deixado
+para trás na partida. Fica pendente, porém, uma peça: para que a linha de corrente se enrole na
+ponta afilada em vez de contorná-la, o fluido precisa **não conseguir** contornar o bordo de
+fuga, coisa que um fluido perfeito conseguiria. O ponto é retomado no fecho do tópico.
 
 ## A equação da sustentação {{< ra OE3.28 B3 >}}
 
 Na prática de projeto não se calcula $\Gamma$ diretamente: adimensionaliza-se a força pela pressão
-dinâmica $\tfrac{1}{2}\rho v^2$ e por uma área de referência $A$, e se tabela o resultado. Define-se
-o **coeficiente de sustentação** $C_L$ por
+dinâmica $\tfrac{1}{2}\rho v^2$ e por uma área de referência $A$, e tabela-se o resultado.
+Define-se assim o **coeficiente de sustentação** $C_L$:
 
 $$\boxed{\;L = \tfrac{1}{2}\,\rho\,v^2 A\,C_L\;}$$
 
-e, analogamente, o coeficiente de arrasto $C_D$ por $D = \tfrac{1}{2}\rho v^2 A\,C_D$. Aqui $v$ é a
-velocidade do escoamento relativo e $A$ a área de referência (planta da asa, área expandida da pá).
+e, analogamente, o coeficiente de arrasto $C_D$ por $D = \tfrac{1}{2}\rho v^2 A\,C_D$, sendo $v$ a
+velocidade do escoamento relativo e $A$ a área de referência: a planta da asa ou a área expandida
+da pá.
 
-A ponte com o a circulação é imediata: igualando as duas expressões da mesma força por unidade de
-envergadura, $\rho v \Gamma = \tfrac{1}{2}\rho v^2 c\,C_L$, obtém-se
-$\Gamma = \tfrac{1}{2}v\,c\,C_L$. **$C_L$ é a circulação em roupa adimensional** — não uma teoria
+A ligação com a circulação é imediata: igualadas as duas expressões da mesma força por unidade de
+envergadura, $\rho v \Gamma = \tfrac{1}{2}\rho v^2 c\,C_L$, resulta
+$\Gamma = \tfrac{1}{2}v\,c\,C_L$. **$C_L$ é a circulação sob forma adimensional**, não uma teoria
 concorrente.
 
 ### A curva $C_L(\alpha)$ e o estol
 
-Para um perfil típico, $C_L$ cresce **quase linearmente** com o ângulo de ataque, com inclinação da
-ordem de $0{,}1$ por grau, até um máximo em torno de $\alpha \approx 15$–$18°$. Além desse ponto,
-o escoamento **se descola** do dorso, a circulação se destrói, e a sustentação **despenca**: é o
-**estol**.
+Num perfil típico, $C_L$ cresce **quase linearmente** com o ângulo de ataque, à razão aproximada
+de $0{,}1$ por grau, até um máximo em torno de $\alpha \approx 15$ a $18°$. Ultrapassado esse
+ponto, o escoamento **descola-se** do dorso, a circulação se destrói e a sustentação **despenca**:
+é o **estol**.
 
 | Faixa de $\alpha$ | Comportamento |
 |---|---|
@@ -154,73 +156,74 @@ o escoamento **se descola** do dorso, a circulação se destrói, e a sustentaç
 | $10$–$16°$ | ainda crescente, mas $C_D$ sobe rápido e $L/D$ cai |
 | $> 16°$ | descolamento; $C_L$ cai abruptamente — estol |
 
-A força total sobre a pá é a resultante das duas componentes,
-$F = \sqrt{L^2 + D^2}$, e o que se maximiza no projeto é a razão $L/D$: muita sustentação com pouco
-arrasto. Para um hélice, isso significa operar em ângulos de ataque moderados, bem longe do estol.
+A força total sobre a pá é a resultante das duas componentes, $F = \sqrt{L^2 + D^2}$, e o objeto
+de maximização no projeto é a razão $L/D$: máxima sustentação com mínimo arrasto. Num hélice, isso
+implica operar em ângulos de ataque moderados, bem afastados do estol.
 
 ## Sustentação em diferentes condições de escoamento {{< ra OE3.29 B4 >}}
 
-**Efeito do número de Reynolds.** O valor de $C_L$ e o ângulo de estol dependem do regime do
-escoamento — assunto do escoamento viscoso. A baixos Re o descolamento é gradual e perfis delgados
-funcionam melhor; a Re alto (o caso de qualquer casco, leme ou hélice de navio, com
-Re $> 10^6$) a camada limite turbulenta **resiste mais ao descolamento**, e perfis mais espessos
-sustentam até ângulos maiores. É uma das razões de o ensaio em modelo reduzido não transferir
-diretamente para o navio (a análise dimensional).
+**Efeito do número de Reynolds.** O valor de $C_L$ e o ângulo de estol dependem do regime de
+escoamento, objeto do estudo do escoamento viscoso. A Re baixo o descolamento é gradual e os
+perfis delgados têm melhor desempenho; a Re alto, caso de qualquer casco, leme ou hélice de navio,
+com Re $> 10^6$, a camada limite turbulenta **resiste mais ao descolamento** e perfis mais
+espessos sustentam até ângulos maiores. É uma das razões pelas quais o ensaio em modelo reduzido
+não se transfere diretamente ao navio, conforme se detalha na análise dimensional.
 
-**Ângulo de ataque variável: passo fixo × passo controlável.** Uma pá de **passo fixo** tem o
-ângulo geométrico congelado no projeto. Como o ângulo de ataque efetivo é a diferença entre esse
-ângulo e a direção do escoamento relativo — que depende da velocidade de avanço do navio e da
-rotação —, mudar o regime de operação tira a pá do seu ponto de projeto e o rendimento cai.
+**Ângulo de ataque variável: passo fixo e passo controlável.** A pá de **passo fixo** tem ângulo
+geométrico definido em projeto. Sendo o ângulo de ataque efetivo a diferença entre esse ângulo e a
+direção do escoamento relativo, que depende da velocidade de avanço do navio e da rotação, toda
+mudança de regime de operação afasta a pá do ponto de projeto e reduz o rendimento.
 
-Uma pá de **passo controlável** gira em torno do próprio eixo, ajustando o ângulo geométrico ao
-regime. Isso permite manter $\alpha$ perto do ótimo em toda a faixa de velocidades — e é por isso
-que rebocadores, navios de pesquisa e embarcações de apoio offshore, que operam de zero a plena
-velocidade, o adotam apesar do custo e da complexidade mecânica.
+A pá de **passo controlável** gira em torno do próprio eixo e ajusta o ângulo geométrico ao
+regime, o que mantém $\alpha$ próximo do ótimo em toda a faixa de velocidades. Daí sua adoção em
+rebocadores, navios de pesquisa e embarcações de apoio *offshore*, que operam de zero a plena
+velocidade, a despeito do custo e da complexidade mecânica.
 
-**Cavitação.** No lado de sucção a pressão é baixa por construção. Se a velocidade for alta o
-suficiente, ela pode cair **abaixo da pressão de vapor da água**: forma-se cavidade de vapor, o
-escoamento sobre o dorso se desorganiza e a sustentação se degrada — além da erosão da pá e do
-ruído. É o limite físico que separa "aumentar $\alpha$ para ganhar empuxo" de "perder a pá", e é
-por isso que o projeto do hélice guarda margem de cavitação.
+**Cavitação.** No lado de sucção a pressão é baixa por construção e, a velocidade suficientemente
+alta, pode cair **abaixo da pressão de vapor da água**: forma-se cavidade de vapor, o escoamento
+sobre o dorso se desorganiza e a sustentação se degrada, com erosão da pá e ruído. É o limite
+físico entre aumentar $\alpha$ para ganhar empuxo e comprometer a pá, e a razão pela qual o
+projeto do hélice preserva margem de cavitação.
 
 ## Crítica da hidrodinâmica clássica: o paradoxo de d'Alembert
 
-A dinâmica dos fluidos perfeitos, também conhecida como **hidrodinâmica clássica**, conduz a uma
-série de resultados em flagrante contradição com a experiência. Vale a pena ver o mais grave.
+A dinâmica dos fluidos perfeitos, também designada **hidrodinâmica clássica**, conduz a uma série
+de resultados em flagrante contradição com a experiência. Examina-se aqui o mais grave deles.
 
-Retome o cilindro em escoamento uniforme, **sem** circulação. A magnitude da velocidade em torno
-dele está distribuída simetricamente — não só em relação ao plano horizontal que passa pelo
-centro, mas também em relação ao **plano vertical**. Pela equação de Bernoulli, a distribuição de
-pressões terá a mesma simetria. Logo, a resultante das forças de pressão — que é a força exercida
-pelo fluido sobre o cilindro — **se anula**: não só não há empuxo dinâmico, como também não há
-componente horizontal da força.[^1]
+Retome-se o cilindro em escoamento uniforme, **sem** circulação. A magnitude da velocidade em
+torno dele distribui-se simetricamente, tanto em relação ao plano horizontal que passa pelo centro
+quanto em relação ao **plano vertical**. Pela equação de Bernoulli, a distribuição de pressões tem
+a mesma simetria, e a resultante das forças de pressão, isto é, a força exercida pelo fluido sobre
+o cilindro, **anula-se**: não há empuxo dinâmico nem componente horizontal da força.[^1]
 
-[^1]: Não estamos levando em conta as forças gravitacionais que dão origem ao empuxo hidrostático
-(a estática dos fluidos).
+[^1]: Não se consideram aqui as forças gravitacionais que dão origem ao empuxo hidrostático,
+tratadas na estática dos fluidos.
 
-A mesma simetria, levando ao mesmo resultado, existe no escoamento em torno de uma esfera. E num
+A mesma simetria, com o mesmo resultado, ocorre no escoamento em torno de uma esfera. Num
 referencial em que o fluido a grande distância está em repouso, esses escoamentos descrevem o
-**deslocamento do cilindro (ou esfera) através do fluido**. Logo:
+**deslocamento do cilindro, ou da esfera, através do fluido**. Segue-se que:
 
 > **Um fluido perfeito não oferece resistência ao deslocamento de um corpo através dele.**
 
-O resultado é válido não só para cilindros e esferas: pode-se mostrar que vale para o escoamento
+O resultado não se restringe a cilindros e esferas: demonstra-se válido para o escoamento
 estacionário irrotacional de um fluido perfeito incompressível em torno de **qualquer obstáculo
 finito**. É o **paradoxo de d'Alembert**.
 
-Um fluido real, naturalmente, sempre opõe resistência ao deslocamento de um corpo através dele.
-Qualquer pessoa que já tenha remado, nadado ou empurrado a mão pela água sabe disso.
+Um fluido real, evidentemente, sempre opõe resistência ao deslocamento de um corpo através dele,
+como atesta a experiência mais elementar de remar ou nadar.
 
-E há a segunda contradição, que já encontramos ao falar da asa: num fluido perfeito, sob a ação de
-forças conservativas, qualquer movimento iniciado a partir do repouso **permanece sempre
-irrotacional**. Num fluido real, nessas condições, é fácil gerar vórtices e outros movimentos
-rotacionais — e foi de um vórtice, o de partida, que a asa tirou a sua circulação.
+Há ainda a segunda contradição, já encontrada no tratamento da asa: num fluido perfeito, sob ação
+de forças conservativas, todo movimento iniciado a partir do repouso **permanece irrotacional**.
+Num fluido real, nas mesmas condições, vórtices e outros movimentos rotacionais se produzem com
+facilidade, e foi precisamente de um vórtice, o de partida, que a asa extraiu sua circulação.
 
-O matemático John von Neumann chamava o tratamento da água como fluido perfeito de
-**"hidrodinâmica da água seca"**, e como fluido real de **"hidrodinâmica da água molhada"**.
+O matemático John von Neumann designava o tratamento da água como fluido perfeito por
+**hidrodinâmica da água seca**, e o tratamento como fluido real por **hidrodinâmica da água
+molhada**.
 
-A origem de todas essas contradições é uma só: **a hipótese de que o fluido é perfeito**, ou seja,
-que tem viscosidade desprezível. Foi ela que assumimos no estudo dos fluidos em movimento, e é ela que precisa cair.
+A origem de todas essas contradições é única: **a hipótese de fluido perfeito**, isto é, de
+viscosidade desprezível, adotada no estudo dos fluidos em movimento. É essa hipótese que precisa
+cair.
 
 ::: {.sp}
 Uma pá de hélice de navio graneleiro tem área aproximada $A = 12$ m² e opera em água salgada ($\rho = 1025$ kg/m³) a uma velocidade relativa (navio + rotação) $v = 8$ m/s. O coeficiente de sustentação do perfil é $C_L = 0.8$ e o coeficiente de arrasto é $C_D = 0.04$. Calcule:
@@ -247,33 +250,42 @@ custo $\approx 126\ \text{kW}$. A 10 m/s a sustentação salta para $\approx 492
 (fator 1,56). Aumentando o ângulo de ataque: mais sustentação (394 kN), mas a
 eficiência $L/D$ cai de 20 para 17.
 
-**(d) Análise crítica.** A dependência $L \propto v^2$ é a mesma do leme (por isso se dá
-máquina adiante ao manobrar a baixa velocidade). Aumentar o ângulo de ataque rende mais
-empuxo, mas com queda de $L/D$ — e, perto do estol ou em alta velocidade, o lado de
-sucção pode cair abaixo da pressão de vapor e cavitar, destruindo a sustentação: por
-isso o projeto do hélice guarda margem. Note que $P = D\,v$ é só o custo do arrasto da
-pá; a potência propulsiva útil vem do empuxo, tratado por Kutta–Joukowski (a circulação).
+**(d) Análise crítica.** A dependência $L \propto v^2$ é a mesma do leme, e explica por que
+se dá máquina adiante ao manobrar a baixa velocidade. O aumento do ângulo de ataque rende
+mais empuxo, mas reduz $L/D$; perto do estol ou em alta velocidade, o lado de sucção pode
+cair abaixo da pressão de vapor e cavitar, destruindo a sustentação, razão pela qual o
+projeto do hélice preserva margem. $P = D\,v$ representa apenas o custo do arrasto da pá:
+a potência propulsiva útil provém do empuxo, tratado por Kutta-Joukowski no estudo da
+circulação.
 :::
 
 ::: {.callout-warning}
 ## Erros clássicos
 
-- **Explicar sustentação pelo "tempo de trânsito igual".** A versão popular — as duas porções de
-  ar teriam de se reencontrar no bordo de fuga — é falsa e dá o valor errado. A explicação correta
-  é a assimetria de velocidades produzida pela circulação, e a circulação vem do vórtice de partida.
-- **Achar que o fluido perfeito explica tudo.** Ele dá a sustentação certa e o arrasto **zero**. A
-  força perpendicular ele acerta; a paralela, erra completamente. É o paradoxo de d'Alembert.
-- **Sustentação sempre perpendicular ao escoamento?** Em teoria, sim; na prática, há uma pequena componente paralela (componente de arrasto que depende de $\alpha$). Não são perfeitamente desacopladas.
-- **Confundir ângulo de ataque com ângulo de passo:** ângulo de passo é a inclinação geométrica da pá; ângulo de ataque é o ângulo entre a corda da pá e a velocidade do escoamento relativo. Diferem se há velocidade rotacional.
-- **Stall é cataclismático:** não é um evento instantâneo, mas transição gradual. Além disso, asa-delta (delta wing) e alguns perfis especiais têm "stall suave" onde sustentação degrada lentamente.
+- **Explicar a sustentação pelo tempo de trânsito igual.** A versão popular, segundo a qual as
+  duas porções de ar teriam de se reencontrar no bordo de fuga, é falsa e fornece valor errado. A
+  explicação correta é a assimetria de velocidades produzida pela circulação, esta originada no
+  vórtice de partida.
+- **Supor que o fluido perfeito explique tudo.** Ele fornece a sustentação correta e arrasto
+  **nulo**: acerta a força perpendicular e erra por completo a paralela. É o paradoxo de
+  d'Alembert.
+- **Tomar a sustentação como rigorosamente perpendicular ao escoamento.** Em teoria o é; na
+  prática subsiste pequena componente paralela, dependente de $\alpha$. As duas forças não são
+  perfeitamente desacopladas.
+- **Confundir ângulo de ataque com ângulo de passo.** O ângulo de passo é a inclinação
+  geométrica da pá; o de ataque, o ângulo entre a corda e a velocidade do escoamento relativo.
+  Diferem sempre que há velocidade rotacional.
+- **Tomar o estol por evento catastrófico e instantâneo.** Trata-se de transição gradual; a
+  asa-delta e alguns perfis especiais apresentam estol suave, com degradação lenta da
+  sustentação.
 :::
 
 ## Coeficiente de sustentação e estol
 
-A pá (ou o leme) inclina-se em relação ao escoamento pelo ângulo de ataque $\alpha$. O
-coeficiente $C_L$ cresce quase linearmente com $\alpha$ até que, perto de $15$–$18°$, o
-escoamento se descola do dorso e a sustentação **despenca** — o estol. Ajuste $\alpha$ e
-a velocidade e acompanhe $L$, $D$ e a razão $L/D$.
+A pá, ou o leme, inclina-se em relação ao escoamento pelo ângulo de ataque $\alpha$. O
+coeficiente $C_L$ cresce quase linearmente com $\alpha$ até que, por volta de $15$ a $18°$, o
+escoamento se descola do dorso e a sustentação **despenca**: é o estol. A variação de $\alpha$ e
+da velocidade permite acompanhar $L$, $D$ e a razão $L/D$.
 
 ```{python}
 #| fig-cap: "Coeficiente de sustentação de um perfil em função do ângulo de ataque: linear (C_L ≈ 0,11·α por grau) até o estol em ~16°, depois queda abrupta. Ao lado, o perfil inclinado com o lado de sucção (baixa pressão) e de pressão. Mesmos parâmetros da versão interativa."
@@ -393,14 +405,14 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Aumente $\alpha$ de 0 a 15°: $C_L$ cresce como? E ao passar de 16°, o que acontece
-   com a sustentação e com o escoamento no dorso?
-2. Dobre a velocidade: a sustentação dobra ou quadruplica? Confirme por $L \propto v^2$
-   — a mesma razão de o leme "pegar" melhor com mais máquina.
-3. O ponto de melhor $L/D$ fica em ângulo baixo ou alto? Por que uma hélice eficiente
-   opera longe do estol?
-4. A simulação mostra $D > 0$ em todo o intervalo. Um fluido perfeito daria que valor de $D$?
-   Que hipótese o simulador está, portanto, abandonando?
+1. Elevando $\alpha$ de 0 a 15°, como cresce $C_L$? E ultrapassados 16°, o que sucede com a
+   sustentação e com o escoamento no dorso?
+2. Dobrada a velocidade, a sustentação dobra ou quadruplica? Confirme por $L \propto v^2$, mesma
+   razão pela qual o leme atua melhor com mais máquina.
+3. O ponto de melhor $L/D$ situa-se em ângulo baixo ou alto? Por que um hélice eficiente opera
+   longe do estol?
+4. A simulação apresenta $D > 0$ em todo o intervalo. Que valor de $D$ forneceria um fluido
+   perfeito, e que hipótese o simulador abandona, portanto?
 :::
 
 ## Onde o fenômeno vive
@@ -408,33 +420,32 @@ plt.tight_layout(); plt.show()
 <!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
      em sessões futuras, a pedido do professor. -->
 
-- **Leme** — uma asa vertical: força ∝ v²; por isso o navio "perde o leme" a baixa
-  velocidade e por isso dá-se máquina adiante ao girar — o jato do hélice restaura o
-  v² sobre o leme.
-- **Hélice** — cada pá é uma asa em rotação; o empuxo é a soma das sustentações das
-  seções da pá.
+- **Leme** — asa vertical, com força ∝ v². Daí o navio perder governo a baixa velocidade e a
+  prática de dar máquina adiante ao girar: o jato do hélice restaura o $v^2$ sobre o leme.
+- **Hélice** — cada pá é uma asa em rotação, e o empuxo é a soma das sustentações de suas
+  seções.
 - **Estabilizadores de aleta** — asas retráteis no bojo que geram momento contra o
   roll, comandadas em fase pela central de estabilização.
-- **Rotor de propulsão auxiliar** — o Flettner de 1920 voltou: cilindros girantes em navios
-  mercantes atuais, gerando empuxo por Magnus com o vento de través.
-- **Bola com efeito** — Magnus na esfera; o clássico não naval que todo aluno já viu.
+- **Rotor de propulsão auxiliar** — retomada do Flettner de 1920: cilindros girantes em navios
+  mercantes atuais, que geram empuxo por Magnus com vento de través.
+- **Bola com efeito** — o efeito Magnus na esfera, exemplo não naval de observação imediata.
 
 ### O vórtice de partida: de onde a asa tira a circulação
 
-Esta é a construção da seção "De onde vem a circulação da asa", posta em movimento. A asa parte
-do **repouso**, com circulação nula em todo o fluido. Conforme ela acelera, o escoamento não
-consegue contornar o bordo de fuga afilado: a linha de corrente se enrola e um vórtice é
-**largado** ali — o vórtice de partida, anti-horário.
+Trata-se da construção da seção "De onde vem a circulação da asa", posta em movimento. A asa
+parte do **repouso**, com circulação nula em todo o fluido. À medida que acelera, o escoamento não
+consegue contornar o bordo de fuga afilado: a linha de corrente se enrola e ali se **larga** um
+vórtice, o vórtice de partida, anti-horário.
 
-Acompanhe as três contagens no painel. Pelo teorema de Thomson, a circulação no
-circuito grande ABCD, formado sempre das mesmas partículas, **permanece nula o tempo todo**.
-Pela propriedade aditiva propriedade aditiva da circulação,
+O painel exibe as três medidas simultaneamente. Pelo teorema de Thomson, a circulação no
+circuito grande ABCD, formado sempre das mesmas partículas, **permanece nula em todo instante**.
+Pela propriedade aditiva da circulação,
 
 $$C_{\text{ABCD}} = C_{\text{AEFD}} + C_{\text{EBCF}} = 0
 \quad\Longrightarrow\quad
 \underbrace{C_{\text{AEFD}}}_{\text{asa, horária}} = -\underbrace{C_{\text{EBCF}}}_{\text{vórtice, anti-horária}}$$
 
-A sustentação não é de graça: a circulação da asa é **paga** com um vórtice de sinal oposto,
+A sustentação tem contrapartida: a circulação da asa é **paga** com um vórtice de sinal oposto,
 deixado para trás na partida.
 
 ```{python}
@@ -591,15 +602,15 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Clique em "partir do repouso" e acompanhe as três barras. A do circuito ABCD nunca sai do
-   zero — que teorema garante isso, e que hipótese sobre o fluido ele exige?
+1. Acionada a partida do repouso, a barra do circuito ABCD nunca sai do zero. Que teorema
+   garante isso, e que hipótese sobre o fluido ele exige?
 2. As barras AEFD e EBCF crescem juntas e em sentidos opostos. Que propriedade da circulação
-   força essa igualdade?
-3. O vórtice de partida se afasta e acaba saindo do circuito. A circulação da asa desaparece
-   junto? Reflita sobre o que acontece com o circuito ABCD quando ele deixa de conter o vórtice.
-4. Para o fluido se enrolar no bordo de fuga em vez de contorná-lo, é preciso que ele **não
-   consiga** dar a volta na quina afilada. Que propriedade do fluido real garante isso — e que
-   o fluido perfeito não tem?
+   impõe essa igualdade?
+3. O vórtice de partida se afasta e acaba saindo do circuito. A circulação da asa desaparece com
+   ele? Considere o que sucede ao circuito ABCD quando deixa de conter o vórtice.
+4. Para que o fluido se enrole no bordo de fuga em vez de contorná-lo, é preciso que **não
+   consiga** contornar a quina afilada. Que propriedade do fluido real assegura isso, e que o
+   fluido perfeito não possui?
 :::
 
 **Conexão com o próximo tópico:** o fluido perfeito nos deu a sustentação — e nos deu, junto, dois
