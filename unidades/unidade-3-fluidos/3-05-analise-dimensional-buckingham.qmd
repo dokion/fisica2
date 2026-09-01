@@ -16,48 +16,56 @@ OE 3.21 [B3] Relacionar grandezas adimensionais como coeficiente de arrasto e n�
 
 {{< aula 29-30 >}}
 
-Ao longo desta unidade apareceram, sem que déssemos nome ao método, três grandezas **adimensionais**
-que resolveram problemas muito diferentes:
+Ao longo desta unidade apareceram, sem menção ao método que as produz, três grandezas
+**adimensionais** empregadas em problemas muito distintos:
 
-- $\mathrm{Re} = \rho a v/\eta$ (o escoamento viscoso), obtido comparando a resistência inercial $\rho a^3v^2$
-  com a de atrito $\eta a^2 v$ — um argumento puro de ordens de grandeza;
-- $C_D = R/(\tfrac{1}{2}\rho v^2 A)$ (o arrasto), a resistência dividida pela pressão dinâmica;
-- $C_L$ (a sustentação), o mesmo para a sustentação.
+- $\mathrm{Re} = \rho a v/\eta$, do escoamento viscoso, obtido por comparação entre a resistência
+  inercial $\rho a^3v^2$ e a de atrito $\eta a^2 v$, em argumento puro de ordens de grandeza;
+- $C_D = R/(\tfrac{1}{2}\rho v^2 A)$, do arrasto, resistência dividida pela pressão dinâmica;
+- $C_L$, o análogo para a força de sustentação.
 
-Nenhum deles tem unidade, e todos têm a mesma virtude: **descrevem famílias inteiras de escoamentos
-de uma vez**, independentemente do tamanho do corpo, da velocidade e do fluido. Dois escoamentos
-geometricamente semelhantes e com o mesmo Re são o mesmo escoamento.
+Nenhum deles tem unidade, e todos partilham a mesma virtude: **descrevem famílias inteiras de
+escoamentos de uma só vez**, independentemente do tamanho do corpo, da velocidade e do fluido.
+Dois escoamentos geometricamente semelhantes e de mesmo Re são o mesmo escoamento.
 
-Isso não foi sorte. Há um método sistemático que produz esses agrupamentos a partir apenas das
-dimensões das grandezas envolvidas, e um teorema que diz **quantos** deles existem: a **análise
-dimensional** e o **Teorema π de Buckingham**. Este tópico fecha a unidade generalizando o que já
-usamos, acrescentando o adimensional que ainda falta — o número de Froude — e respondendo à pergunta
-prática que resume tudo: **como prever a resistência de um navio de 240 m a partir de um modelo de
-4 m num tanque de provas.**
+A coincidência não é fortuita. Existe método sistemático que produz esses agrupamentos apenas a
+partir das dimensões das grandezas envolvidas, e um teorema que estabelece **quantos** deles
+existem: a **análise dimensional** e o **teorema π de Buckingham**. Este tópico encerra a unidade
+generalizando os adimensionais já utilizados, acrescentando o que ainda falta, o número de
+Froude, e respondendo à questão prática que a tudo resume: **como prever a resistência de um navio
+de 240 m a partir de um modelo de 4 m num tanque de provas.**
 
 ## Análise dimensional: conceito e objetivo {{< ra OE3.18 B2 >}}
 
-A **análise dimensional** é a técnica de descrever um fenômeno físico usando apenas as dimensões das variáveis envolvidas (comprimento L, massa M, tempo T, temperatura Θ), sem resolver as equações diferenciais. A ideia é que toda equação física válida **deve ter dimensionalidade consistente**: os dois lados de uma igualdade têm as mesmas dimensões.
+A **análise dimensional** descreve um fenômeno físico a partir apenas das dimensões das variáveis
+envolvidas — comprimento L, massa M, tempo T, temperatura Θ —, sem resolver as equações
+diferenciais que o regem. Funda-se no requisito de que toda equação física válida seja
+**dimensionalmente consistente**: os dois membros de uma igualdade têm as mesmas dimensões.
 
-Exemplo: força tem dimensão $\text{MLT}^{-2}$ (massa × aceleração). Se uma força $F$ depende de massa $m$, velocidade $v$ e comprimento $L$, a forma geral é:
+A força, por exemplo, tem dimensão $\text{MLT}^{-2}$, produto de massa por aceleração. Se uma
+força $F$ depende da massa $m$, da velocidade $v$ e do comprimento $L$, sua forma geral é
 
 $$F = f(m, v, L)$$
 
-A análise dimensional não diz o que é $f$, mas reduz as variáveis a grupos adimensionais — números sem unidade que têm o mesmo significado em qualquer sistema de unidades.
+A análise dimensional nada determina sobre $f$, mas reduz as variáveis a grupos adimensionais,
+números sem unidade cujo significado independe do sistema de unidades adotado.
 
 ## Teorema π de Buckingham {{< ra OE3.19 B3 >}}
 
-O **Teorema π de Buckingham** afirma que se um fenômeno físico envolve $n$ variáveis com dimensões expressas usando $k$ dimensões fundamentais (no máximo 7: L, M, T, Θ, I, J, N), então o fenômeno pode ser descrito por $(n - k)$ grupos adimensionais independentes, chamados de **números π**.
+O **teorema π de Buckingham** estabelece que um fenômeno físico envolvendo $n$ variáveis, cujas
+dimensões se exprimem por meio de $k$ dimensões fundamentais (no máximo sete: L, M, T, Θ, I, J,
+N), admite descrição por $(n - k)$ grupos adimensionais independentes, denominados **números
+π**.
 
 **Procedimento:**
 
-1. Listar todas as $n$ variáveis envolvidas (variáveis dependentes e independentes).
-2. Contar as $k$ dimensões fundamentais que aparecem.
-3. Calcular $m = n - k$ (número de grupos π).
-4. Escolher um conjunto de $k$ variáveis "pivô" (linearly independent em termos dimensionais).
-5. Expressar cada um dos $m$ grupos π como produto de potências das variáveis.
+1. Listar as $n$ variáveis envolvidas, dependentes e independentes.
+2. Contar as $k$ dimensões fundamentais presentes.
+3. Calcular $m = n - k$, o número de grupos π.
+4. Escolher $k$ variáveis pivô, dimensionalmente independentes entre si.
+5. Exprimir cada um dos $m$ grupos π como produto de potências das variáveis.
 
-**Exemplo prático:** Suponha que a resistência ao avanço de um navio $R$ dependa de:
+**Exemplo.** Admita-se que a resistência ao avanço de um navio, $R$, dependa de:
 - Comprimento $L$ (m)
 - Velocidade $v$ (m/s)
 - Densidade $\rho$ (kg/m³)
@@ -66,32 +74,38 @@ O **Teorema π de Buckingham** afirma que se um fenômeno físico envolve $n$ va
 
 Total de variáveis: $n = 6$. Dimensões: L, M, T (k = 3). Logo, $m = 6 - 3 = 3$ grupos π.
 
-Um conjunto de 3 números π são:
+Um conjunto possível de três números π é:
 - $\pi_1 = \text{Cd} = \dfrac{R}{\frac{1}{2}\rho v^2 A}$ (coeficiente de arrasto)
 - $\pi_2 = \text{Re} = \dfrac{\rho v L}{\mu}$ (número de Reynolds)
 - $\pi_3 = \text{Fr} = \dfrac{v}{\sqrt{gL}}$ (número de Froude)
 
-A relação geral é: $\text{Cd} = f(\text{Re}, \text{Fr})$.
+A relação geral fica $\text{Cd} = f(\text{Re}, \text{Fr})$.
 
 ## Números adimensionais em navios {{< ra OE3.21 B3 >}}
 
-Para o projeto de um navio, vários números π têm significado específico:
+No projeto de um navio, diversos números π têm significado específico:
 
 | Número | Definição | Significado |
 |---|---|---|
 | $\text{Re} = \rho v L / \mu$ | Razão inércia / viscosidade | Tipo de escoamento (laminar vs. turbulento) |
 | $\text{Fr} = v / \sqrt{gL}$ | Razão inércia / gravitação | Importância da elevação de onda |
 | $\text{Cd}$ (coeficiente de arrasto) | $R / (\frac{1}{2}\rho v^2 A)$ | Eficiência aerodinâmica (ou hidrodinâmica) |
-| $\text{Cb}$ (coeficiente de bloco) | $\Delta / (L \times B \times T)$ | Proporção de "rechonchudice" do casco |
+| $\text{Cb}$ (coeficiente de bloco) | $\Delta / (L \times B \times T)$ | Grau de preenchimento do casco |
 
-Para navios:
-- Re é sempre muito alto (>10⁶), indicando escoamento turbulento.
-- Fr depende da velocidade e é crítico para projeto: Fr ~ 0.1–0.4 para navios mercantes. Baixo Fr significa menor geração de onda (e menos resistência); alto Fr significa onda grande (e arrasto maior).
-- Cb típico é 0.6–0.85 para navios mercantes; 0.8–0.9 para graneleiros (volumosos); 0.5–0.65 para navios-tanque (mais finos).
+Nos navios:
+
+- Re é sempre muito elevado, acima de $10^6$, o que caracteriza escoamento turbulento.
+- Fr depende da velocidade e é determinante no projeto, com valores de 0,1 a 0,4 nos navios
+  mercantes. Fr baixo corresponde a menor geração de onda e menor resistência; Fr alto, a onda
+  grande e arrasto maior.
+- Cb situa-se entre 0,6 e 0,85 nos navios mercantes, entre 0,8 e 0,9 nos graneleiros, de formas
+  cheias, e entre 0,5 e 0,65 nos navios-tanque, de formas mais finas.
 
 ## Semelhança dinâmica em modelos {{< ra OE3.20 B3 >}}
 
-Para que um modelo reduzido $(1:n)$ reproduza o comportamento do navio real, seus números π devem ser **iguais** aos do navio. Mas manter $\text{Re}$ e $\text{Fr}$ simultaneamente iguais é impossível em água:
+Para que um modelo reduzido na escala $1:n$ reproduza o comportamento do navio real, seus números
+π devem ser **iguais** aos deste. Manter $\text{Re}$ e $\text{Fr}$ simultaneamente iguais, porém, é
+impossível em água:
 
 $$\text{Re}_{\text{modelo}} = \rho v_m L_m / \mu = \text{Re}_{\text{real}}$$
 $$\text{Fr}_{\text{modelo}} = v_m / \sqrt{g L_m} = \text{Fr}_{\text{real}}$$
@@ -102,13 +116,17 @@ $$\frac{v_m}{v_{\text{real}}} = \sqrt{\frac{L_m}{L_{\text{real}}}} = \sqrt{1/n}$
 
 $$v_m / v_{\text{real}} = 1 / \sqrt{n}$$
 
-Substituindo na primeira equação, obtemos que $\text{Re}_{\text{modelo}} \ll \text{Re}_{\text{real}}$ — impossível igualar ambos.
+Substituída essa razão na primeira equação, resulta
+$\text{Re}_{\text{modelo}} \ll \text{Re}_{\text{real}}$: a igualdade simultânea é inatingível.
 
-**Solução:** a regra de **Froude** ensaia o modelo mantendo Fr constante (iguais velocidades de Froude) e depois **corrigi-se o arrasto** para Reynolds real usando **coeficiente de fricção** de placas planas (ITTC, Kármán-Schoenherr). A resistência total predita é:
+**Solução adotada:** a regra de **Froude** ensaia o modelo mantendo Fr constante e corrige em
+seguida o arrasto para o Reynolds real por meio de **coeficientes de fricção** de placa plana
+(ITTC, Kármán-Schoenherr). A resistência total predita é
 
 $$R_{\text{real}} = R_{\text{onda}} + R_{\text{fricção (real)}}$$
 
-onde $R_{\text{onda}}$ vem do modelo (mantém Fr) e $R_{\text{fricção}}$ é extrapolado usando fórmulas de engenharia.
+em que $R_{\text{onda}}$ provém do ensaio do modelo, que preserva Fr, e $R_{\text{fricção}}$ é
+extrapolada por fórmulas de engenharia.
 
 ::: {.sp}
 Um navio-graneleiro de comprimento $L = 200$ m, velocidade de serviço $v = 14$ nós (7.2 m/s), é testado em modelo reduzido na escala $1:50$. O modelo mede $L_m = 4$ m. Calcule:
@@ -139,18 +157,22 @@ contra $\text{Re}_m \approx 4{,}1{\times}10^6$ — o modelo tem Reynolds 354 vez
 (c) $C_b \approx 0{,}69$, típico de graneleiro.
 
 **(d) Análise crítica.** A impossibilidade de igualar Re é o cerne do ensaio de modelo:
-mantém-se Fr (acerta a onda) e corrige-se o atrito por fórmula de placa plana (ITTC).
-O $C_b \approx 0{,}69$ confirma a forma cheia do graneleiro (contra ~0,6 de um
-navio-tanque fino). Como o modelo tem Re menor, a fração laminar da camada limite é
-maior nele que no navio — mais um motivo para a correção de fricção.
+mantém-se Fr, o que acerta a onda, e corrige-se o atrito por fórmula de placa plana
+(ITTC). O $C_b \approx 0{,}69$ confirma a forma cheia do graneleiro, ante cerca de 0,6
+de um navio-tanque fino. Com Re menor, o modelo tem fração laminar da camada limite
+maior que a do navio, razão adicional para a correção de fricção.
 :::
 
 ::: {.callout-warning}
 ## Erros clássicos
 
-- **Pensar que o modelo é exato:** nenhum modelo é perfeitamente semelhante. A regra de Froude é um compromisso — traz a onda certo, mas fricção precisa ser corrigida.
-- **Negligenciar escala de rugosidade:** um modelo pintado liso tem rugosidade relativa $k/L_m$ maior que o navio, mudando a transição laminar-turbulenta e o perfil de fricção.
-- **Confundir Froude com Mach:** Mach é para gases compressíveis; Froude é para líquidos com superfície livre. Navio = Froude; aviação = Mach/Reynolds.
+- **Supor o modelo exato.** Nenhum modelo é perfeitamente semelhante. A regra de Froude é um
+  compromisso: reproduz corretamente a onda, mas exige correção da fricção.
+- **Negligenciar a escala de rugosidade.** Um modelo pintado liso tem rugosidade relativa
+  $k/L_m$ maior que a do navio, o que altera a transição laminar-turbulenta e o perfil de
+  fricção.
+- **Confundir Froude com Mach.** Mach aplica-se a gases compressíveis; Froude, a líquidos com
+  superfície livre. O navio se rege por Froude; a aeronáutica, por Mach e Reynolds.
 :::
 
 ## Incompatibilidade entre as semelhanças de Froude e de Reynolds
@@ -260,13 +282,13 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Aumente a escala de 1:10 para 1:100. O Froude muda? E a razão entre os Reynolds?
-   Confirme que ela vale $n^{3/2}$.
-2. Se o modelo tem Reynolds muito menor, sua camada limite é mais laminar que a do
-   navio. Por que isso obriga a corrigir o atrito por fórmula (ITTC) em vez de apenas
-   escalar a resistência medida?
-3. Por que se escolhe manter Froude (e não Reynolds) igual, sabendo que a resistência
-   de onda é a parte mais difícil de prever teoricamente?
+1. Passando a escala de 1:10 para 1:100, o Froude muda? E a razão entre os Reynolds? Confirme
+   que ela vale $n^{3/2}$.
+2. Com Reynolds muito menor, o modelo tem camada limite mais laminar que a do navio. Por que
+   isso obriga a corrigir o atrito por fórmula (ITTC), em vez de simplesmente escalar a
+   resistência medida?
+3. Por que se opta por manter Froude, e não Reynolds, sabendo-se que a resistência de onda é a
+   parcela mais difícil de prever teoricamente?
 :::
 
 ## Onde o fenômeno vive
@@ -274,19 +296,20 @@ plt.tight_layout(); plt.show()
 <!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
      em sessões futuras, a pedido do professor. -->
 
-- **Tanque de provas** — o teorema Π em operação: iguala-se Froude (ondas) porque é
-  impossível igualar Froude e Reynolds ao mesmo tempo; o atrito entra por correlação.
-  Toda previsão de potência de casco novo nasce dessa escolha.
+- **Tanque de provas** — o teorema π em operação: iguala-se Froude, responsável pelas ondas,
+  por ser impossível igualar Froude e Reynolds simultaneamente, e o atrito entra por correlação.
+  Toda previsão de potência de casco novo decorre dessa escolha.
 - **Diagrama de Moody** — $f = f(\mathrm{Re}, \varepsilon/D)$: séculos de dados de
   tubulação colapsados em dois grupos adimensionais.
-- **Estimativa de ordem de grandeza** — sem tabela à mão, a análise dimensional
-  entrega a forma da resposta (arrasto ∝ ρv²A) a menos de um coeficiente.
+- **Estimativa de ordem de grandeza** — na ausência de tabelas, a análise dimensional fornece a
+  forma da resposta, arrasto ∝ ρv²A, a menos de um coeficiente.
 
 ### Calculadora de escala: do modelo ao navio
 
-A simulação anterior mostrou **por que** Froude e Reynolds não fecham juntos. Esta faz a conta
-que o tanque de provas faz todo dia: dada a razão de escala $n = L_{\text{navio}}/L_{\text{modelo}}$,
-manter $\mathrm{Fr}$ constante fixa **todas** as demais grandezas do ensaio.
+A simulação anterior evidenciou **por que** Froude e Reynolds não se compatibilizam. Esta executa
+o cálculo corrente no tanque de provas: dada a razão de escala
+$n = L_{\text{navio}}/L_{\text{modelo}}$, manter $\mathrm{Fr}$ constante fixa **todas** as demais
+grandezas do ensaio.
 
 $$\mathrm{Fr}_m = \mathrm{Fr}_s
 \;\Longrightarrow\;
@@ -411,30 +434,31 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Com $n = 50$, um navio de 200 m vira um modelo de 4 m. Que velocidade de ensaio corresponde
-   a 14 nós de serviço, e por que ela **não** é 14/50?
-2. Um ensaio que no navio duraria 1 minuto dura poucos segundos no modelo. De onde vem o
-   $1/\sqrt{n}$ nos tempos, e que consequência isso tem para a instrumentação do tanque?
-3. A potência escala com $n^{3,5}$ — um expoente que não é inteiro. Mostre que ele é o produto
-   de $n^3$ (força) por $n^{0,5}$ (velocidade).
-4. A lacuna de Reynolds cresce com $n^{1,5}$. Um modelo maior reduziria essa lacuna — por que,
-   então, não se ensaiam modelos de 40 m?
+1. Com $n = 50$, um navio de 200 m corresponde a um modelo de 4 m. Que velocidade de ensaio
+   corresponde a 14 nós de serviço, e por que ela **não** é 14/50?
+2. Um ensaio que no navio duraria 1 minuto dura poucos segundos no modelo. De onde provém o
+   fator $1/\sqrt{n}$ nos tempos, e que consequência traz para a instrumentação do tanque?
+3. A potência escala com $n^{3,5}$, expoente não inteiro. Mostre que ele resulta do produto de
+   $n^3$, da força, por $n^{0,5}$, da velocidade.
+4. A lacuna de Reynolds cresce com $n^{1,5}$, e um modelo maior a reduziria. Por que, então, não
+   se ensaiam modelos de 40 m?
 :::
 
-**Fecho da unidade:** os oito tópicos percorreram o caminho do Moysés de ponta a ponta. Partimos da
-única propriedade que separa sólido de fluido — a incapacidade de equilibrar tensões tangenciais —
-e dela tiramos a isotropia da pressão, a equação geral do equilíbrio e, como casos particulares,
-Stevin, Pascal e Arquimedes. Pusemos o fluido em movimento e obtivemos a continuidade e Bernoulli;
-com a circulação, explicamos a sustentação do leme e da pá. Aí a hipótese de fluido perfeito
-mostrou o seu limite no paradoxo de d'Alembert, a viscosidade voltou, e com ela vieram a camada
-limite, o descolamento e os dois arrastos. A análise dimensional, por fim, organizou tudo em
-adimensionais e tornou o ensaio em modelo possível.
+**Fecho da unidade:** os oito tópicos percorreram integralmente o caminho do Moysés. A única
+propriedade que separa sólido de fluido, a incapacidade de equilibrar tensões tangenciais, deu
+origem à isotropia da pressão, à equação geral do equilíbrio e, como casos particulares, a
+Stevin, Pascal e Arquimedes. Posto o fluido em movimento, vieram a continuidade e Bernoulli e,
+com a circulação, a sustentação do leme e da pá. A hipótese de fluido perfeito revelou então seu
+limite no paradoxo de d'Alembert; reintroduzida a viscosidade, seguiram-se a camada limite, o
+descolamento e os dois arrastos. A análise dimensional, por fim, organizou o conjunto em
+adimensionais e tornou possível o ensaio em modelo.
 
-O que fica em pé, para o exercício profissional: flutuabilidade e estabilidade (3.1–3.2), sistemas
-de bombeamento e a hidrodinâmica da manobra (3.3), propulsão e governo (3.7–3.8), resistência ao
-avanço e previsão de potência (3.4–3.6), e o método de escalar do modelo para o navio (3.5).
+Restam, para o exercício profissional: flutuabilidade e estabilidade; sistemas de bombeamento e
+hidrodinâmica da manobra; propulsão e governo; resistência ao avanço e previsão de potência; e o
+método de escalar do modelo para o navio.
 
-**Próxima unidade:** falta a fonte de tudo isso. A **UE 4 — Termodinâmica** trata de como a máquina
-propulsiva (motor diesel, turbina, caldeira) converte combustível em trabalho mecânico — o trabalho
-que, entregue ao hélice, gera a circulação da pá e vence a resistência que acabamos de calcular.
+**Próxima unidade:** falta a fonte de toda essa energia. A **UE 4 — Termodinâmica** trata da
+conversão de combustível em trabalho mecânico pela máquina propulsiva, seja motor diesel, turbina
+ou caldeira: o trabalho que, entregue ao hélice, gera a circulação da pá e vence a resistência
+aqui calculada.
 FIM DA UNIDADE 3.
