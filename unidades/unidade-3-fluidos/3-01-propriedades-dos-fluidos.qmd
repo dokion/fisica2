@@ -194,7 +194,8 @@ $$p(\text{P},\hat{\mathbf{n}}') = p(\text{P}',\hat{\mathbf{n}}')$$
 A condição de equilíbrio resulta então em
 $\left[-p(\text{P},\hat{\mathbf{n}}') + p(\text{P},\hat{\mathbf{n}})\right]dS = 0$, ou seja,
 
-$$\boxed{\,p(\text{P},\hat{\mathbf{n}}') = p(\text{P},\hat{\mathbf{n}})\,}$$
+$$\boxed{\,p(\text{P},\hat{\mathbf{n}}') = p(\text{P},\hat{\mathbf{n}})\,}
+\qquad \text{(Moysés 1.2.8)}$$
 
 quaisquer que sejam $\hat{\mathbf{n}}$ e $\hat{\mathbf{n}}'$. **A pressão no interior do fluido
 depende apenas da posição**: $p = p(\text{P})$.

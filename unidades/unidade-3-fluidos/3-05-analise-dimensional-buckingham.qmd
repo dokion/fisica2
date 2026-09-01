@@ -19,10 +19,10 @@ OE 3.21 [B3] Relacionar grandezas adimensionais como coeficiente de arrasto e n�
 Ao longo desta unidade apareceram, sem que déssemos nome ao método, três grandezas **adimensionais**
 que resolveram problemas muito diferentes:
 
-- $\mathrm{Re} = \rho a v/\eta$ (tópico 3.4), obtido comparando a resistência inercial $\rho a^3v^2$
+- $\mathrm{Re} = \rho a v/\eta$ (o escoamento viscoso), obtido comparando a resistência inercial $\rho a^3v^2$
   com a de atrito $\eta a^2 v$ — um argumento puro de ordens de grandeza;
-- $C_D = R/(\tfrac{1}{2}\rho v^2 A)$ (tópico 3.6), a resistência dividida pela pressão dinâmica;
-- $C_L$ (tópico 3.7), o mesmo para a sustentação.
+- $C_D = R/(\tfrac{1}{2}\rho v^2 A)$ (o arrasto), a resistência dividida pela pressão dinâmica;
+- $C_L$ (a sustentação), o mesmo para a sustentação.
 
 Nenhum deles tem unidade, e todos têm a mesma virtude: **descrevem famílias inteiras de escoamentos
 de uma vez**, independentemente do tamanho do corpo, da velocidade e do fluido. Dois escoamentos
@@ -153,7 +153,7 @@ maior nele que no navio — mais um motivo para a correção de fricção.
 - **Confundir Froude com Mach:** Mach é para gases compressíveis; Froude é para líquidos com superfície livre. Navio = Froude; aviação = Mach/Reynolds.
 :::
 
-## Veja por que Froude e Reynolds não fecham juntos
+## Incompatibilidade entre as semelhanças de Froude e de Reynolds
 
 O modelo e o navio real só produzem o mesmo padrão de ondas se tiverem o mesmo número
 de Froude — o que fixa a velocidade de ensaio $v_m = v_r\sqrt{L_m/L_r}$. Mas então o
@@ -297,7 +297,7 @@ $$\mathrm{Fr}_m = \mathrm{Fr}_s
 
 E o preço da escolha aparece na última linha do painel: o Reynolds do modelo fica
 $n^{1{,}5}$ vezes menor que o do navio. É por isso que a resistência de atrito **não** pode ser
-escalada junto — ela é extrapolada por linha de correlação (tópico 3.6), e só a de onda vem do
+escalada junto — ela é extrapolada por linha de correlação (o arrasto), e só a de onda vem do
 ensaio.
 
 ```{python}

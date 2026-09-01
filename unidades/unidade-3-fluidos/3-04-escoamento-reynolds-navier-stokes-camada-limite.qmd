@@ -30,7 +30,7 @@ um navio.
 
 ## Definição da viscosidade
 
-Conforme mencionado no tópico 3.3, a viscosidade é uma força volumétrica de **atrito interno** que
+Conforme mencionado no estudo dos fluidos em movimento, a viscosidade é uma força volumétrica de **atrito interno** que
 aparece no deslizamento de camadas fluidas umas sobre as outras, dando origem a tensões
 tangenciais.
 
@@ -52,7 +52,7 @@ de cima para baixo.
 A experiência mostra que, para $v_0$ não demasiado elevado, a velocidade varia **linearmente**
 entre esses dois extremos:
 
-$$\mathbf{v}(y) = \frac{v_0}{d}\,y\,\mathbf{i} = v(y)\,\mathbf{i} \qquad \text{(Moysés 2.7.1)}$$
+$$\mathbf{v}(y) = \frac{v_0}{d}\,y\,\mathbf{i} = v(y)\,\mathbf{i}$$
 
 O escoamento se chama **laminar**, porque o fluido se desloca em camadas planas paralelas, ou
 lâminas, que deslizam umas sobre as outras — como as cartas de um baralho.
@@ -63,7 +63,7 @@ A tensão tangencial $F/A$ necessária para manter o deslocamento da placa super
 $$\boxed{\;\frac{F}{A} = \eta\,\frac{v_0}{d} = \eta\,\frac{dv}{dy}\;} \qquad \text{(Moysés 2.7.2)}$$
 
 ou seja, a tensão é proporcional à **taxa de variação espacial da velocidade** — exatamente o que
-antecipamos no tópico 3.1 ao dizer que o fluido resiste à *taxa* de deformação. Newton enunciou
+antecipamos no estudo das propriedades dos fluidos ao dizer que o fluido resiste à *taxa* de deformação. Newton enunciou
 essa lei como uma hipótese nos "Principia".
 
 A constante de proporcionalidade $\eta$ é o **coeficiente de viscosidade** do fluido. A unidade SI
@@ -87,7 +87,7 @@ de tempo de uma martelada e fluido na escala de meses.
 
 ### O escoamento viscoso é rotacional
 
-Um detalhe de consequências grandes: o escoamento descrito pela (2.7.1) é **rotacional**. É fácil
+Um detalhe de consequências grandes: o escoamento descrito pelo perfil linear de velocidades entre as placas é **rotacional**. É fácil
 ver tomando a circulação ao longo de um circuito retangular $\Gamma$ entre as placas: os lados
 verticais não contribuem (porque $\mathbf{v}$ é perpendicular a eles), e os lados horizontais, de
 comprimento $l$, dão $C_\Gamma = (v_1 - v_3)\,l$. Como a velocidade $v_1$ no lado de cima é maior
@@ -102,7 +102,7 @@ Guarde isso: onde há viscosidade, há vorticidade. É o que faltava ao fluido p
 
 ## A equação de Navier-Stokes {{< ra OE3.15 B2 >}}
 
-A equação de movimento do fluido perfeito (2.3.3), $\rho\,\mathbf{a} = \mathbf{f} - \operatorname{grad} p$,
+A equação de movimento do fluido perfeito, $\rho\,\mathbf{a} = \mathbf{f} - \operatorname{grad} p$,
 ignora exatamente a força que acabamos de definir. Acrescentando-a, obtém-se a equação geral do
 movimento de um fluido viscoso incompressível — a **equação de Navier-Stokes**:
 
@@ -116,7 +116,7 @@ A leitura, termo a termo:
 |---|---|
 | $\rho\,\partial\mathbf{v}/\partial t$ | inércia local — o campo mudando no tempo num ponto fixo |
 | $\rho\,(\mathbf{v}\cdot\nabla)\mathbf{v}$ | inércia convectiva — a partícula levada para uma região de velocidade diferente; é o termo **não linear**, e é dele que vem toda a dificuldade |
-| $-\operatorname{grad} p$ | força de pressão, a mesma da (2.3.3) |
+| $-\operatorname{grad} p$ | força de pressão, a mesma da equação de movimento do fluido perfeito |
 | $\mathbf{f}$ | forças volumétricas externas (gravidade) |
 | $\eta\,\nabla^2\mathbf{v}$ | força viscosa, a novidade: derivada **segunda** da velocidade |
 
@@ -124,7 +124,7 @@ O termo viscoso ser uma derivada segunda tem leitura física direta: **quanto ma
 perfil de velocidades, maior a força viscosa**. Onde o perfil é reto, as camadas deslizam sem
 resultante; onde ele encurva, sobra força.
 
-Fazendo $\eta = 0$ recupera-se a equação do fluido perfeito (2.3.3); a hidrostática (1.3.7) é o
+Fazendo $\eta = 0$ recupera-se a equação do fluido perfeito equação de movimento do fluido perfeito; a hidrostática equação geral do equilíbrio é o
 caso $\mathbf{v} = 0$. As três equações da unidade são a mesma equação com termos ligados e
 desligados.
 
@@ -145,15 +145,14 @@ diferença de pressão $p_1 - p_2$. Sobre um cilindro fluido coaxial de raio $r$
 $(p_1 - p_2)\pi r^2$ em razão dessa diferença. Como a área da superfície lateral do cilindro é
 $2\pi r l$, essa força provoca uma tensão tangencial distribuída sobre essa superfície de valor
 
-$$\frac{F}{A} = \frac{(p_1-p_2)\,\pi r^2}{2\pi r l} = \frac{(p_1-p_2)}{2l}\,r
-\qquad \text{(Moysés 2.7.3)}$$
+$$\frac{F}{A} = \frac{(p_1-p_2)\,\pi r^2}{2\pi r l} = \frac{(p_1-p_2)}{2l}\,r$$
 
 A velocidade $v$ a uma distância $r$ do eixo só depende de $r$, e temos $dv/dr < 0$, de modo que a
-lei de Newton (2.7.2) fica
+lei de Newton lei de Newton da viscosidade fica
 
-$$\frac{F}{A} = -\eta\,\frac{dv}{dr} \qquad \text{(Moysés 2.7.4)}$$
+$$\frac{F}{A} = -\eta\,\frac{dv}{dr}$$
 
-Identificando as (2.7.3) e (2.7.4):
+Identificando as tensão tangencial no cilindro coaxial e lei de Newton aplicada ao tubo:
 
 $$\frac{dv}{dr} = -\frac{(p_1-p_2)}{2l\eta}\,r$$
 
@@ -166,7 +165,7 @@ O gráfico de $v(r)$ é uma **parábola**: diz-se que o perfil de velocidades é
 
 Para calcular a vazão total $V$ — o volume que escoa por unidade de tempo através da seção —,
 considere a contribuição $dV$ da porção compreendida entre dois cilindros de raios $r$ e $r+dr$. A
-área do anel circular é $2\pi r\,dr$, e a (2.7.5) resulta em
+área do anel circular é $2\pi r\,dr$, e o perfil parabólico de velocidades resulta em
 
 $$dV = v(r)\cdot 2\pi r\,dr = \frac{\pi(p_1-p_2)}{2l\eta}\left(a^2 - r^2\right)r\,dr$$
 
@@ -179,7 +178,7 @@ A vazão é, portanto, **proporcional à queda de pressão por unidade de compri
 **inversamente proporcional ao coeficiente de viscosidade** e **varia com a quarta potência do
 raio do tubo**.
 
-A (2.7.6) é a **lei de Hagen-Poiseuille**, obtida experimentalmente por Hagen e Poiseuille entre
+A lei de Hagen-Poiseuille é a **lei de Hagen-Poiseuille**, obtida experimentalmente por Hagen e Poiseuille entre
 1839 e 1846 — Poiseuille, que também era médico, estava investigando o escoamento do sangue
 através de um capilar. Uma de suas aplicações práticas importantes é **medir o coeficiente de
 viscosidade** $\eta$, determinando a vazão através de um tubo em regime laminar.
@@ -217,11 +216,11 @@ $$\boxed{\;\mathrm{Re} = \frac{\text{resistência inercial}}{\text{resistência 
 = \frac{T}{W} = \frac{\rho a v}{\eta}\;} \qquad \text{(Moysés 2.7.7)}$$
 
 que mede a razão (força de inércia)/(força de atrito viscoso). Em termos da viscosidade cinemática
-$\nu = \eta/\rho$ do tópico 3.1, $\mathrm{Re} = av/\nu$.
+$\nu = \eta/\rho$ das propriedades dos fluidos, $\mathrm{Re} = av/\nu$.
 
 Re é **adimensional** — e é essa a razão de ele, e não a velocidade ou o tamanho isoladamente,
 governar o regime. Dois escoamentos de mesma geometria e mesmo Re são o mesmo escoamento, ainda que
-com fluidos, tamanhos e velocidades completamente diferentes. Esse é o fato que o tópico 3.5 vai
+com fluidos, tamanhos e velocidades completamente diferentes. Esse é o fato que o a análise dimensional vai
 generalizar.
 
 ### Ordens de grandeza
@@ -305,9 +304,9 @@ Ou seja: Bernoulli, o Venturi, a circulação e o Kutta-Joukowski não foram des
 fora da camada limite, e é lá que está quase todo o escoamento. O que eles não podem dar é o que
 acontece *dentro* dela — e é dentro dela que nasce a resistência.
 
-A tensão de cisalhamento na parede é, pela (2.7.2), $\tau = \eta\,dv/dy$. A integração dessa tensão
+A tensão de cisalhamento na parede é, pela lei de Newton da viscosidade, $\tau = \eta\,dv/dy$. A integração dessa tensão
 sobre toda a superfície molhada do casco fornece o **arrasto de atrito**, que para navios é
-tipicamente **75 a 85% da resistência total** — assunto do tópico 3.6.
+tipicamente **75 a 85% da resistência total** — assunto do arrasto.
 
 A espessura da camada limite **cresce** ao longo do casco. Para regime turbulento,
 $\delta \approx 0{,}37\,x/\mathrm{Re}_x^{0{,}2}$; para um casco de 200 m a 15 nós, $\delta$ na popa
@@ -368,7 +367,7 @@ própria proa); no final do navio ela tem ~1,3 m de espessura.
 **(d) Análise crítica.** Quase todo o casco escoa em regime turbulento — daí o arrasto
 de atrito dominar a resistência. A rugosidade de 150 μm antecipa a transição para
 essencialmente x = 0, de modo que a hipótese de casco liso é otimista: um casco real,
-incrustado, tem arrasto de atrito ainda maior (tópico 3.6). A fórmula de $\delta$ é para
+incrustado, tem arrasto de atrito ainda maior (o arrasto). A fórmula de $\delta$ é para
 placa plana; a curvatura do casco introduz correções, mas a ordem de grandeza (metros
 na popa) está certa.
 :::
@@ -382,10 +381,10 @@ na popa) está certa.
 - **Achar que a hidrodinâmica clássica foi descartada.** Ela continua válida **fora** da
   camada limite, que é onde está quase todo o escoamento. O que ela não descreve é a fina
   camada junto à parede — e é justamente lá que nasce a resistência.
-- **Usar Hagen-Poiseuille fora do regime laminar.** A (2.7.6) supõe escoamento laminar; numa
+- **Usar Hagen-Poiseuille fora do regime laminar.** A lei de Hagen-Poiseuille supõe escoamento laminar; numa
   tubulação de lastro com Re > 4000 o perfil não é parabólico e a vazão não segue $a^4$.
 :::
-## Veja a camada limite crescer
+## Crescimento da camada limite ao longo do casco
 
 Junto ao casco a água "gruda" (velocidade nula na parede) e retoma a velocidade livre a
 uma distância $\delta$ — a camada limite, que **engrossa** ao longo do casco. Perto da
@@ -508,7 +507,7 @@ plt.tight_layout(); plt.show()
 1. Aumente a velocidade: o ponto de transição se aproxima da proa ou da popa? E a
    espessura na popa, cresce ou diminui?
 2. Troque o casco de "liso" para "incrustado": a transição salta para quase a proa.
-   Por que isso aumenta o arrasto de atrito (tópico 3.6)?
+   Por que isso aumenta o arrasto de atrito (o arrasto)?
 3. A camada limite tem ~1 m na popa de um navio de 240 m — 0,4% do comprimento. Por que,
    ainda assim, ela responde por 75–85% da resistência?
 :::
@@ -535,7 +534,7 @@ plt.tight_layout(); plt.show()
 
 ### Hagen-Poiseuille: o perfil parabólico e a lei da quarta potência
 
-A (2.7.5) e a (2.7.6) em serviço numa linha de óleo lubrificante de bordo. O perfil de
+O perfil parabólico de velocidades e a lei de Hagen-Poiseuille em serviço numa linha de óleo lubrificante de bordo. O perfil de
 velocidades é a parábola
 
 $$v(r) = \frac{(p_1-p_2)}{4l\eta}\left(a^2 - r^2\right)$$
@@ -548,7 +547,7 @@ Arraste o raio e olhe o readout: **a vazão varia com $a^4$**. Reduzir o raio à
 tubulação com metade da bitola, um filtro parcialmente obstruído, uma vasoconstrição — corta a
 vazão a **um dezesseis avos**. É a conta que a intuição sempre subestima.
 
-O painel mostra também o número de Reynolds, porque a (2.7.6) só vale em **regime laminar**:
+O painel mostra também o número de Reynolds, porque a lei de Hagen-Poiseuille só vale em **regime laminar**:
 se Re passar de ~2300, o perfil deixa de ser parabólico e a lei $a^4$ deixa de valer.
 
 ```{python}
@@ -689,10 +688,10 @@ plt.tight_layout(); plt.show()
 ::: {.pergunta}
 1. Leve o raio de 10 mm para 5 mm. A vazão cai por qual fator? Confirme com o marcador
    vermelho no gráfico e com a $V \propto a^4$.
-2. Dobre a viscosidade. A vazão cai pela metade — que expoente de $\eta$ aparece na (2.7.6)?
+2. Dobre a viscosidade. A vazão cai pela metade — que expoente de $\eta$ aparece na lei de Hagen-Poiseuille?
    Por que a dependência com $\eta$ é tão mais suave que a com $a$?
 3. Reduza a viscosidade ao mínimo com o raio no máximo: o painel avisa que Re passou de 2300.
-   Que hipótese da dedução da (2.7.5) foi violada, e o que acontece com o perfil?
+   Que hipótese da dedução do perfil parabólico de velocidades foi violada, e o que acontece com o perfil?
 4. A velocidade média é sempre metade da máxima. Isso vale para qualquer perfil ou é
    particularidade da parábola? (Integre $v(r)$ sobre a seção e verifique.)
 :::

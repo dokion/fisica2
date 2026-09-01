@@ -16,8 +16,8 @@ OE 3.25 [B4] Analisar a influência da viscosidade no arrasto de atrito
 
 {{< aula 29-30 >}}
 
-O tópico 3.7 fechou com o paradoxo de d'Alembert: **um fluido perfeito não oferece resistência
-alguma** ao deslocamento de um corpo. O tópico 3.4 mostrou de onde vem a correção — a viscosidade,
+O a sustentação fechou com o paradoxo de d'Alembert: **um fluido perfeito não oferece resistência
+alguma** ao deslocamento de um corpo. O o escoamento viscoso mostrou de onde vem a correção — a viscosidade,
 confinada a uma camada delgada junto à parede. Falta agora o passo que fecha o argumento:
 transformar a camada limite em **força**.
 
@@ -27,7 +27,7 @@ que decide a potência instalada e o consumo.
 
 ## Descolamento da camada limite e a esteira
 
-No tópico 3.4 vimos que, para velocidades de escoamento suficientemente baixas, a camada limite
+No o escoamento viscoso vimos que, para velocidades de escoamento suficientemente baixas, a camada limite
 permanece **colada** ao obstáculo, e o escoamento fora dela é praticamente o de um fluido perfeito.
 
 Para velocidades mais elevadas, isso deixa de valer: a camada limite **se descola** do obstáculo,
@@ -49,7 +49,7 @@ depende do regime de escoamento** — ou seja, do número de Reynolds.
 ### Antes do descolamento: arrasto de atrito
 
 Para baixas velocidades, **antes do descolamento da camada limite**, a resistência provém do
-**atrito na camada limite**. Pela lei de Newton da viscosidade (2.7.2), a tensão tangencial na
+**atrito na camada limite**. Pela lei de Newton da viscosidade, a tensão tangencial na
 parede é $\tau = \eta\,dv/dy$, e integrá-la sobre a superfície molhada dá uma força proporcional à
 velocidade $v$ e ao coeficiente de viscosidade $\eta$:
 
@@ -57,7 +57,7 @@ $$R_{\text{atrito}} \propto \eta\,v$$
 
 É a mesma dependência linear da resistência do ar na queda de um corpo a baixa velocidade, e é ela
 que aparece na lei de Stokes para uma esfera, $F = 6\pi\eta r v$ — a que governa o viscosímetro de
-queda do tópico 3.1.
+queda das propriedades dos fluidos.
 
 Esse é o **arrasto de atrito** (ou viscoso). Ele age **tangencialmente** à superfície, ao longo de
 toda a área molhada, e existe mesmo quando o escoamento acompanha perfeitamente a forma do corpo.
@@ -68,7 +68,7 @@ Para velocidades mais elevadas, quando se forma a esteira com vórtices, a resis
 dominada por outra coisa: a **assimetria na distribuição de pressões** entre as partes dianteira e
 traseira do obstáculo.
 
-Na parte dianteira há um **ponto de estagnação** e, como no tubo de Pitot (2.5.2), a pressão
+Na parte dianteira há um **ponto de estagnação** e, como no tubo de Pitot expressão da pressão dinâmica, a pressão
 aumenta ali por um termo proporcional a $v^2$ — a pressão dinâmica. Na esteira, atrás do corpo,
 isso **não acontece**: a pressão lá é baixa e desorganizada. A diferença é uma força resultante
 para trás, e como o termo dianteiro cresce com $v^2$:
@@ -95,7 +95,7 @@ Para um navio mercante em velocidade de serviço, a repartição típica é:
   enorme, e porque a forma é desenhada justamente para evitar o descolamento.
 - **Arrasto de pressão e de onda: 15 a 25%** — crescendo rapidamente com a velocidade.
 
-A proporção depende da velocidade (medida pelo número de Froude, tópico 3.5) e da forma do casco.
+A proporção depende da velocidade (medida pelo número de Froude, a análise dimensional) e da forma do casco.
 Num corpo rombudo — um cilindro, uma esfera, uma âncora flutuante — a relação se inverte e o
 arrasto de pressão domina.
 
@@ -125,7 +125,7 @@ $$\boxed{\;C_D = \frac{R}{q\,A}, \qquad q = \tfrac{1}{2}\rho v^2\;}$$
 
 onde $R$ é o arrasto (N), $q$ a pressão dinâmica (Pa) e $A$ a área de referência (para navios, em
 geral a área molhada). Adimensionalizar assim não é cosmético: como Re, $C_D$ é o que permite
-comparar corpos de tamanhos diferentes em fluidos diferentes — e é o objeto que o tópico 3.5 vai
+comparar corpos de tamanhos diferentes em fluidos diferentes — e é o objeto que o a análise dimensional vai
 justificar.
 
 | Corpo | $C_D$ típico |
@@ -224,7 +224,7 @@ propulsiva instalada é maior que $P$, pois há as eficiências de hélice e de 
   existe e é onde as fórmulas empíricas trocam de forma.
 :::
 
-## Veja a resistência crescer com a velocidade
+## Resistência e potência em função da velocidade
 
 O arrasto de atrito segue $R_f = \tfrac{1}{2}\rho v^2 S\,C_F$ com $C_F$ de
 Kármán–Schoenherr; some-se a ele a resistência de onda, que dispara em alto Froude. Como
@@ -534,7 +534,7 @@ plt.tight_layout(); plt.show()
 2. Suba até Re ≈ 20 e observe os pontos A e B aparecerem. O que está acontecendo com a camada
    limite ali, e por que a partir daí existe uma esteira?
 3. Em Re ≈ 140 os vórtices se destacam alternadamente. Por que o escoamento **deixa de ser
-   estacionário** — e o que isso significa para as linhas de corrente do tópico 3.3?
+   estacionário** — e o que isso significa para as linhas de corrente dos fluidos em movimento?
 4. A lei da resistência muda de $\eta v$ para $v^2$ ao longo da faixa. Em que ponto da sequência
    essa troca acontece, e qual mecanismo passa a dominar?
 :::
@@ -676,7 +676,7 @@ plt.tight_layout(); plt.show()
 
 
 **Conexão com o próximo tópico:** o arrasto acabou de ser escrito como
-$R = \tfrac{1}{2}\rho v^2 A\,C_D$, e o regime, no tópico 3.4, como $\mathrm{Re} = \rho a v/\eta$.
+$R = \tfrac{1}{2}\rho v^2 A\,C_D$, e o regime, no estudo do escoamento viscoso, como $\mathrm{Re} = \rho a v/\eta$.
 Note o que os dois têm em comum: são **números adimensionais** que capturam o comportamento de
 famílias inteiras de escoamentos, independentemente do tamanho, da velocidade e do fluido. Isso não
 foi coincidência nem sorte — há um método sistemático que produz esses agrupamentos a partir apenas

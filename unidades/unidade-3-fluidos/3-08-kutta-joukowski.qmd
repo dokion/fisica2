@@ -26,7 +26,7 @@ fundamentalmente diferentes de escoamento, e prova-se que ela **se conserva**. C
 peças, o teorema de Kutta-Joukowski liga circulação a força numa única equação — e o tópico
 seguinte a aplica ao aerofólio, à pá e ao leme.
 
-Continuamos na hipótese de **fluido perfeito** feita no tópico 3.3.
+Continuamos na hipótese de **fluido perfeito** feita no estudo dos fluidos em movimento.
 
 ## Circulação
 
@@ -46,23 +46,21 @@ Dois exemplos, que parecem semelhantes e são profundamente diferentes, organiza
 ### Exemplo 1 — líquido em rotação
 
 Um recipiente cilíndrico contendo líquido em rotação uniforme com velocidade angular $\omega$
-(tópico 3.2). O líquido gira como um **corpo rígido**, de modo que a velocidade num ponto P à
+(a estática dos fluidos). O líquido gira como um **corpo rígido**, de modo que a velocidade num ponto P à
 distância $r$ do eixo é
 
-$$\mathbf{v} = \omega r\,\hat{\boldsymbol{\theta}} = v\,\hat{\boldsymbol{\theta}}
-\qquad \text{(Moysés 2.6.2)}$$
+$$\mathbf{v} = \omega r\,\hat{\boldsymbol{\theta}} = v\,\hat{\boldsymbol{\theta}}$$
 
 Tomando para $\Gamma$ um círculo de raio $r$ centrado na origem, orientado no sentido da rotação,
 $d\mathbf{l} = r\,d\theta\,\hat{\boldsymbol{\theta}}$ e $\mathbf{v}\cdot d\mathbf{l} = v r\,d\theta$
-(2.6.3), o que resulta em
+elemento de linha ao longo do círculo, o que resulta em
 
-$$C_\Gamma = v r \oint_\Gamma d\theta = v r\int_0^{2\pi} d\theta = 2\pi r v
-\qquad \text{(Moysés 2.6.4)}$$
+$$C_\Gamma = v r \oint_\Gamma d\theta = v r\int_0^{2\pi} d\theta = 2\pi r v$$
 
 Como $\Gamma$ coincide com uma linha de corrente e $v$ é constante ao longo dela, $C_\Gamma$ é
 simplesmente o produto de $v$ pelo comprimento $2\pi r$ do caminho. Como $v = \omega r$,
 
-$$C_\Gamma = 2\pi r^2 \omega \qquad \text{(Moysés 2.6.5)}$$
+$$C_\Gamma = 2\pi r^2 \omega$$
 
 ou seja, a circulação sobre um círculo de raio $r$ **cresce com $r^2$**.
 
@@ -70,11 +68,10 @@ ou seja, a circulação sobre um círculo de raio $r$ **cresce com $r^2$**.
 
 Considere agora outro escoamento com linhas de corrente circulares e $|\mathbf{v}|$ função só de
 $r$, ao qual impomos a condição de que a circulação $C_\Gamma$ sobre **qualquer** círculo de raio
-$r$ centrado no eixo seja **constante** — independente de $r$. Pela (2.6.4), devemos ter, em lugar
-da (2.6.2),
+$r$ centrado no eixo seja **constante** — independente de $r$. Pela circulação sobre um círculo, devemos ter, em lugar
+da velocidade no líquido em rotação,
 
-$$v = \frac{C_\Gamma}{2\pi r}, \qquad \mathbf{v} = v\,\hat{\boldsymbol{\theta}}
-\qquad \text{(Moysés 2.6.6)}$$
+$$v = \frac{C_\Gamma}{2\pi r}, \qquad \mathbf{v} = v\,\hat{\boldsymbol{\theta}}$$
 
 A velocidade varia **inversamente** com $r$, em lugar de ser proporcional a $r$. Como
 $v \to \infty$ quando $r \to 0$, o eixo é uma **linha singular**, e é preciso geralmente excluir do
@@ -83,16 +80,16 @@ escoamento um entorno do eixo.
 A realização prática aproximada é o **redemoinho**: o líquido escapa do recipiente pelo orifício
 inferior, circulando em torno do eixo, com a velocidade aumentando à medida que nos aproximamos do
 eixo — como a água escoando pelo ralo de uma banheira. A superfície livre assume a forma afunilada
-característica, que a fórmula de Bernoulli (2.4.8) explica de imediato: como $p = p_0$ é constante
-sobre a superfície livre, pela (2.6.6),
+característica, que a fórmula de Bernoulli forma em alturas da equação de Bernoulli explica de imediato: como $p = p_0$ é constante
+sobre a superfície livre, pela velocidade no vórtice,
 
 $$z + \frac{v^2}{2g} = z + \frac{C_\Gamma^2}{8\pi^2 g r^2} = \text{constante}$$
 
 de modo que a equação da superfície livre é
 
-$$z = A - \frac{B}{r^2} \qquad \text{(Moysés 2.6.7)}$$
+$$z = A - \frac{B}{r^2}$$
 
-com $A$ e $B > 0$ constantes. Compare com o paraboloide $z = (\omega^2/2g)r^2$ do tópico 3.2: um
+com $A$ e $B > 0$ constantes. Compare com o paraboloide $z = (\omega^2/2g)r^2$ da estática dos fluidos: um
 sobe com $r^2$, o outro desce com $1/r^2$. São escoamentos opostos.
 
 ## Escoamentos rotacionais e irrotacionais
@@ -100,7 +97,7 @@ sobe com $r^2$, o outro desce com $1/r^2$. São escoamentos opostos.
 A circulação ao longo de um caminho tem uma **propriedade aditiva**: se decompusermos $\Gamma$ em
 dois circuitos de mesma orientação, CABC e BADB, por meio de uma partição por um arco AB, temos
 
-$$C_\Gamma = C_{\text{CABC}} + C_{\text{BADB}} \qquad \text{(Moysés 2.6.8)}$$
+$$C_\Gamma = C_{\text{CABC}} + C_{\text{BADB}}$$
 
 porque a porção comum AB é percorrida **duas vezes em sentidos opostos**
 ($d\mathbf{l} \to -d\mathbf{l}$), e as contribuições correspondentes se cancelam.
@@ -115,26 +112,25 @@ circuito infinitésimo ABCD de abertura $d\theta$, com centro no eixo, compreend
 círculos de raios $r$ e $r+dr$. Em ambos os exemplos $\mathbf{v} = v\,\hat{\boldsymbol{\theta}}$,
 com $v = v(r)$; logo, sobre os lados radiais AB e CD, $\mathbf{v}\cdot d\mathbf{l} = 0$, e vem
 
-$$C_{\text{ABCD}} = \left[(r+dr)\,v(r+dr) - r\,v(r)\right]d\theta \qquad \text{(Moysés 2.6.9)}$$
+$$C_{\text{ABCD}} = \left[(r+dr)\,v(r+dr) - r\,v(r)\right]d\theta$$
 
-**No Exemplo 1**, pela (2.6.2), $v(r) = \omega r$, de modo que
+**No Exemplo 1**, pela velocidade no líquido em rotação, $v(r) = \omega r$, de modo que
 
-$$C_{\text{ABCD}} = \omega\left[(r+dr)^2 - r^2\right]d\theta \approx 2\omega\cdot r\,dr\,d\theta
-\qquad \text{(Moysés 2.6.10)}$$
+$$C_{\text{ABCD}} = \omega\left[(r+dr)^2 - r^2\right]d\theta \approx 2\omega\cdot r\,dr\,d\theta$$
 
 desprezando infinitésimos de ordem superior. Como $r\,dr\,d\theta$ é a área envolvida pelo
 circuito,
 
-$$\frac{C_\Gamma}{\text{área}_\Gamma} = 2\omega \qquad \text{(Exemplo 1, Moysés 2.6.11)}$$
+$$\frac{C_\Gamma}{\text{área}_\Gamma} = 2\omega$$
 
 A circulação **por unidade de área** é constante e igual a $2\omega$. Pela propriedade aditiva,
-isso continua valendo para um circuito finito, como confirma a (2.6.5):
+isso continua valendo para um circuito finito, como confirma a circulação no líquido em rotação:
 $C_\Gamma/(\pi r^2) = 2\omega$.
 
-**No Exemplo 2**, pela (2.6.6), $(r+dr)\,v(r+dr) = r\,v(r) = C_\Gamma/(2\pi)$, e a (2.6.9) resulta
+**No Exemplo 2**, pela velocidade no vórtice, $(r+dr)\,v(r+dr) = r\,v(r) = C_\Gamma/(2\pi)$, e a circulação no circuito infinitésimo resulta
 em
 
-$$\frac{C_\Gamma}{\text{área}_\Gamma} = 0 \qquad \text{(Exemplo 2, Moysés 2.6.12)}$$
+$$\frac{C_\Gamma}{\text{área}_\Gamma} = 0$$
 
 Pela propriedade aditiva, este resultado se estende a qualquer circuito **que não envolve o eixo**
 (nesse caso o eixo é uma linha singular e deve ser excluído).
@@ -158,12 +154,12 @@ elemento fluido não gira sobre si mesmo.
 
 Se o escoamento é irrotacional, a propriedade aditiva implica
 
-$$C_\Gamma = \oint_\Gamma \mathbf{v}\cdot d\mathbf{l} = 0 \qquad \text{(Moysés 2.6.13)}$$
+$$C_\Gamma = \oint_\Gamma \mathbf{v}\cdot d\mathbf{l} = 0$$
 
 para **qualquer** circuito $\Gamma$ na região considerada. Por analogia com o que se viu para
-forças conservativas, a (2.6.13) implica a existência de uma função $\varphi$ tal que
+forças conservativas, a anulação da circulação em escoamento irrotacional implica a existência de uma função $\varphi$ tal que
 
-$$\mathbf{v} = \operatorname{grad}\varphi \qquad \text{(Moysés 2.6.14)}$$
+$$\mathbf{v} = \operatorname{grad}\varphi$$
 
 A função $\varphi$ chama-se **potencial de velocidades**, e um escoamento irrotacional é também
 chamado, por isso, de **escoamento potencial**. Os exemplos de escoamento vistos até aqui — o
@@ -180,13 +176,13 @@ William Thomson (Lord Kelvin) demonstrou em 1869 o seguinte teorema:
 
 > **Teorema de Thomson.** No escoamento de um fluido perfeito homogêneo sujeito apenas a forças
 > conservativas, tem-se
-> $$\frac{d}{dt}\left(C_{\Gamma_t}\right) = 0 \qquad \text{(Moysés 2.6.15)}$$
+> $$\frac{d}{dt}\left(C_{\Gamma_t}\right) = 0$$
 > ou seja, **a circulação ao longo de um circuito formado sempre das mesmas partículas fluidas se
 > conserva.**
 
 A demonstração requer recursos mais avançados, mas as consequências são imediatas e fortes. Se um
 escoamento é irrotacional num dado instante $t_0$, temos $C_{\Gamma_{t_0}} = 0$ para qualquer
-circuito no fluido. A (2.6.15) mostra então que, nessas condições, **o movimento permanece sempre
+circuito no fluido. O teorema de Thomson mostra então que, nessas condições, **o movimento permanece sempre
 irrotacional**. Em particular:
 
 > Para um fluido perfeito, homogêneo, sujeito apenas a forças conservativas, qualquer escoamento
@@ -201,9 +197,9 @@ também uma das afirmações que o fluido real vai desmentir.
 escoamentos rotacionais. Combinando os escoamentos dos Exemplos 1 e 2, obtemos o modelo de um
 **filete de vórtice retilíneo**: um núcleo cilíndrico de raio $r_0$, em que o fluido gira como um
 corpo rígido (Exemplo 1), em torno do qual se superpõe o escoamento irrotacional de circulação
-constante (2.6.6), com
+constante velocidade no vórtice, com
 
-$$C_\Gamma = 2\pi r_0^2\,\omega \qquad \text{[cf. (2.6.5)]}$$
+$$C_\Gamma = 2\pi r_0^2\,\omega \qquad \text{[cf. circulação no líquido em rotação]}$$
 
 O perfil de velocidades é, portanto, **linear na região do núcleo** ($v = \omega r$) e
 **proporcional a $1/r$** na região externa. O escoamento só é rotacional dentro do núcleo, e a
@@ -242,7 +238,7 @@ Três leituras que vale explicitar:
 2. **O resultado não depende da forma do perfil**, só de $\Gamma$ e de $v$. A forma do perfil
    entra apenas na *determinação* de $\Gamma$, não na relação entre $\Gamma$ e a força.
 3. **É uma força sem viscosidade.** O teorema vale para fluido perfeito. Isso levanta uma questão
-   incômoda que o tópico 3.7 vai enfrentar de frente: se o fluido é perfeito e o escoamento
+   incômoda que o a sustentação vai enfrentar de frente: se o fluido é perfeito e o escoamento
    começou do repouso, o teorema de Thomson diz que a circulação **deveria continuar nula**. De
    onde, então, vem o $\Gamma$?
 
@@ -257,7 +253,7 @@ A dimensão confirma: $[\rho][v][\Gamma] = (\text{kg/m}^3)(\text{m/s})(\text{m}^
 
 Aplicar o teorema exige conhecer $\Gamma$. Para uma pá de hélice ou um leme, a circulação de cada
 seção é determinada pela geometria do perfil e pelo ângulo de ataque, e cresce aproximadamente de
-forma linear com esse ângulo até o estol (tópico 3.7), quando o descolamento destrói a circulação.
+forma linear com esse ângulo até o estol (a sustentação), quando o descolamento destrói a circulação.
 
 Na prática de projeto naval, o procedimento é o inverso do que a física sugere: mede-se ou tabela-se
 o coeficiente de sustentação $C_L$ do perfil, calcula-se a força, e a circulação é obtida a
@@ -292,7 +288,7 @@ acompanha toda superfície sustentadora:
   diferença tem de escapar como vórtice livre. Na ponta da pá, onde $\Gamma$ cai a zero, forma-se
   o vórtice mais intenso.
 - **Vórtice de partida** (*starting vortex*) — largado no bordo de fuga quando a circulação se
-  estabelece. É a peça que o tópico 3.7 vai usar para resolver o problema deixado em aberto acima.
+  estabelece. É a peça que o a sustentação vai usar para resolver o problema deixado em aberto acima.
 
 Para uma hélice de $z$ pás, cada pá arrasta o seu sistema de vórtices, e a esteira resultante é um
 conjunto de **hélices de vórtice** que se afastam a ré. Isso tem três consequências operacionais:
@@ -383,18 +379,18 @@ levar a pressão local abaixo da de vapor — é a origem da cavitação de pont
 - **Achar que trajetória circular significa escoamento rotacional.** No Exemplo 2 (o vórtice), as
   partículas descrevem círculos e o escoamento é **irrotacional**: a rodinha de pás é transportada
   sem girar. O que define rotacional é a circulação **por unidade de área** no entorno do ponto,
-  (2.6.11)–(2.6.12), não a forma da trajetória.
+  circulação por unidade de área no líquido em rotação–circulação por unidade de área no vórtice, não a forma da trajetória.
 - **Confundir circulação com rotação angular:** circulação Γ tem dimensão [L²/T]; rotação angular ω tem dimensão [1/T]. Não são a mesma coisa — um hélice pode girar e ter circulação, ou estar parado (hidro-dinâmica) e ter circulação do escoamento ao seu redor.
 - **Esquecer que $L' = \rho v \Gamma$ é força por unidade de envergadura.** Para a pá inteira é
   preciso integrar ao longo do raio, com $\Gamma(r)$ e $v(r)$ variáveis.
-- **Aplicar o teorema de Thomson ao fluido real.** A (2.6.15) exige fluido **perfeito**,
+- **Aplicar o teorema de Thomson ao fluido real.** O teorema de Thomson exige fluido **perfeito**,
   homogêneo, sob forças conservativas. Num fluido real é fácil gerar vórtices — e é justamente
   essa falha que permite à asa adquirir circulação.
 - **Vórtice de Rankine vs. vórtice irrotacional:** o vórtice idealizado em Kutta-Joukowski é **irrotacional** (fluido não rotaciona globalmente, só ao redor do núcleo); fluidos reais têm um núcleo viscoso onde há rotação. Modelo de Rankine combina os dois.
 - **Esteira de vórtice é "invisível" em água:** diferentemente de aviões (onde a esteira é visível em céu claro), em água é difícil ver diretamente — mas seus efeitos (vibração, cavitação) são bem reais.
 :::
 
-## Veja a circulação virar força
+## Circulação e força sobre um cilindro
 
 Um cilindro que gira numa corrente arrasta o fluido: cria **circulação** $\Gamma$. Por
 Kutta–Joukowski, isso gera sustentação $L' = \rho v\,\Gamma$ perpendicular ao escoamento
@@ -525,7 +521,7 @@ plt.tight_layout(); plt.show()
 3. $L' = \rho v\,\Gamma$ cresce linearmente com a circulação. Ligue com o rotor de
    Flettner: como um cilindro girante pode substituir uma vela?
 4. O campo simulado é a superposição de corrente uniforme, dupleto e vórtice — todos irrotacionais.
-   Uma rodinha de pás solta nesse escoamento giraria? Justifique pela (2.6.12).
+   Uma rodinha de pás solta nesse escoamento giraria? Justifique pela circulação por unidade de área no vórtice.
 :::
 
 ## Onde o fenômeno vive
@@ -694,9 +690,9 @@ plt.tight_layout(); plt.show()
 
 ::: {.pergunta}
 1. A rodinha verde descreve um **círculo** e mesmo assim não gira sobre si mesma. Como isso é
-   possível? Ligue com a (2.6.12) e com a definição de escoamento irrotacional.
+   possível? Ligue com a circulação por unidade de área no vórtice e com a definição de escoamento irrotacional.
 2. Aumente $r_0$ mantendo $\Gamma$: o que acontece com $\omega$ e com a velocidade máxima? E se
-   $r_0 \to 0$ — o que a (2.6.6) prevê no eixo, e por que é preciso excluí-lo do escoamento?
+   $r_0 \to 0$ — o que a velocidade no vórtice prevê no eixo, e por que é preciso excluí-lo do escoamento?
 3. As duas expressões de $v(r)$ dão o mesmo valor em $r = r_0$. Verifique no painel e mostre
    que isso decorre de $\Gamma = 2\pi r_0^2\omega$.
 4. Um redemoinho no ralo, um tornado e o vórtice de ponta de uma pá de hélice compartilham

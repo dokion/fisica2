@@ -29,40 +29,39 @@ independentes: são quatro leituras da mesma equação.
 
 Considere um fluido em equilíbrio num campo de forças. Seja
 
-$$\Delta\mathbf{F} = \mathbf{f}\,\Delta V \qquad \text{(Moysés 1.3.1)}$$
+$$\Delta\mathbf{F} = \mathbf{f}\,\Delta V$$
 
 a força volumétrica que atua sobre um volume $\Delta V$ do fluido, onde $\mathbf{f}$ é a
-**densidade de força** (força por unidade de volume). No caso do campo gravitacional, pela
-(1.2.2),
+**densidade de força** (força por unidade de volume). No caso do campo gravitacional, pela expressão da força volumétrica,
 
-$$\mathbf{f} = \rho\,\mathbf{g} \qquad \text{(Moysés 1.3.2)}$$
+$$\mathbf{f} = \rho\,\mathbf{g}$$
 
 Para obter o efeito das forças volumétricas sobre o equilíbrio, tomamos um elemento de volume
 cilíndrico de base $dS$ e geratriz $dz$, com o eixo vertical. Diferentemente do que fizemos ao
 demonstrar a isotropia da pressão, agora é **preciso** incluir no cálculo os infinitésimos da
 ordem de $dS\,dz$ — é exatamente neles que a informação está.
 
-A força volumétrica na direção $z$ que atua sobre o cilindro é, pelas (1.3.1) e (1.3.2),
+A força volumétrica na direção $z$ que atua sobre o cilindro é, pelas definição de densidade de força e densidade de força gravitacional,
 
-$$f_z\,dS\,dz \qquad \text{(Moysés 1.3.3)}$$
+$$f_z\,dS\,dz$$
 
-As coordenadas dos centros das bases são $(x,y,z)$ e $(x,y,z+dz)$. Logo, pela (1.2.6), a
+As coordenadas dos centros das bases são $(x,y,z)$ e $(x,y,z+dz)$. Logo, pela contribuição das forças superficiais, a
 contribuição das forças superficiais é
 
-$$\left[-p(x,y,z+dz) + p(x,y,z)\right]dS \qquad \text{(Moysés 1.3.4)}$$
+$$\left[-p(x,y,z+dz) + p(x,y,z)\right]dS$$
 
 e aqui não podemos mais aproximar as duas pressões como iguais. A menos de infinitésimos de
 ordem superior,
 
 $$p(x,y,z+dz) - p(x,y,z) = \frac{\partial p}{\partial z}(x,y,z)\,dz$$
 
-Somando (1.3.3) e (1.3.4), a condição de equilíbrio fica
+Somando força volumétrica na direção z e contribuição das forças superficiais, a condição de equilíbrio fica
 
 $$\left(f_z - \frac{\partial p}{\partial z}\right)dS\,dz = 0$$
 
 o que resulta em
 
-$$f_z = \frac{\partial p}{\partial z} \qquad \text{(Moysés 1.3.5)}$$
+$$f_z = \frac{\partial p}{\partial z}$$
 
 ou seja: **a componente $z$ da densidade de força volumétrica é igual à taxa de variação da
 pressão com $z$**. Tomando o cilindro com eixo paralelo a $x$ ou a $y$ chega-se ao resultado
@@ -80,15 +79,15 @@ $$\boxed{\;\mathbf{f} = \operatorname{grad} p\;} \qquad \text{(Moysés 1.3.7)}$$
 
 **A densidade de força volumétrica é igual ao gradiente da pressão.** Esse resultado tem uma
 leitura geométrica imediata. As **superfícies isobáricas** — aquelas sobre as quais $p$ é
-constante — são normais ao gradiente; logo, pela (1.3.7), a força volumétrica em cada ponto é
+constante — são normais ao gradiente; logo, pela equação geral do equilíbrio, a força volumétrica em cada ponto é
 **perpendicular à superfície isobárica** que passa por ele, e aponta no sentido em que $p$
 cresce.
 
 Uma força volumétrica que sempre atua sobre o fluido é a gravitacional, cuja densidade é
 
-$$\mathbf{f} = \rho\,\mathbf{g} = -\rho g\,\mathbf{k} \qquad \text{(Moysés 1.3.8)}$$
+$$\mathbf{f} = \rho\,\mathbf{g} = -\rho g\,\mathbf{k}$$
 
-com o eixo $z$ orientado verticalmente para cima. Neste caso $f_x = f_y = 0$, e as (1.3.6)
+com o eixo $z$ orientado verticalmente para cima. Neste caso $f_x = f_y = 0$, e as equações básicas da estática dos fluidos
 mostram que **$p$ só depende da altitude** $z$, $p = p(z)$, com
 
 $$\boxed{\;\frac{dp}{dz} = -\rho g\;} \qquad \text{(Moysés 1.3.9)}$$
@@ -106,40 +105,40 @@ então, com muito boa aproximação, tratar um líquido na estática como **flui
 definido por $\rho = \text{constante}$.
 
 Em muitos casos a força volumétrica é **conservativa**, o que implica $\mathbf{F} = -\operatorname{grad} U$
-(1.4.1). Se $u$ é a densidade de energia potencial correspondente — energia potencial por unidade
-de volume —, então, pelas (1.3.1) e (1.3.7),
+condição de força conservativa. Se $u$ é a densidade de energia potencial correspondente — energia potencial por unidade
+de volume —, então, pelas definição de densidade de força e equação geral do equilíbrio,
 
-$$\mathbf{f} = -\operatorname{grad} u = \operatorname{grad} p \qquad \text{(Moysés 1.4.2)}$$
+$$\mathbf{f} = -\operatorname{grad} u = \operatorname{grad} p$$
 
 Como as derivadas parciais de $(-u)$ e de $p$ em relação a $x$, $y$ e $z$ têm de ser iguais,
 essas duas funções da posição só podem diferir por uma constante:
 
-$$p = -u + \text{constante} \qquad \text{(Moysés 1.4.3)}$$
+$$p = -u + \text{constante}$$
 
 Em particular, **as superfícies isobáricas são também superfícies equipotenciais**.
 
 Esse resultado explica por que a superfície livre de um líquido é horizontal. A superfície livre,
 em contato com a atmosfera, é isobárica — todos os seus pontos estão à pressão atmosférica.
-Logo, pela (1.4.3), ela é uma **superfície equipotencial** do campo gravitacional. Na escala do
+Logo, pela relação p = −u + constante, ela é uma **superfície equipotencial** do campo gravitacional. Na escala do
 oceano isso significa uma superfície esférica com centro no centro da Terra; na escala do
 laboratório — ou de um tanque de bordo —, um plano horizontal.
 
 Na vizinhança da superfície da Terra, a energia potencial de uma massa $m$ é $mgz$, de modo que
 a densidade de energia potencial de um fluido de densidade $\rho$ é
 
-$$u = \rho g z \qquad \text{(Moysés 1.4.4)}$$
+$$u = \rho g z$$
 
-e a (1.4.3) fica
+e a relação p = −u + constante fica
 
-$$p(z) = -\rho g z + \text{constante} \qquad \text{(Moysés 1.4.5)}$$
+$$p(z) = -\rho g z + \text{constante}$$
 
-o que também decorre diretamente de integrar a (1.3.9) em relação a $z$. A variação de pressão
+o que também decorre diretamente de integrar a equação da estática no campo gravitacional em relação a $z$. A variação de pressão
 entre as altitudes $z_1$ e $z_2$ é
 
 $$\boxed{\;p(z_2) - p(z_1) = -\rho g\,(z_2 - z_1)\;} \qquad \text{(Moysés 1.4.6)}$$
 
 Se $z_1$ corresponde à superfície livre, $p(z_1) = p_0$ é a pressão atmosférica, e
-$z_1 - z_2 = h$ é a **profundidade** abaixo da superfície livre. A (1.4.6) dá então
+$z_1 - z_2 = h$ é a **profundidade** abaixo da superfície livre. A variação de pressão entre duas altitudes dá então
 
 $$\boxed{\;p = p_0 + \rho g h\;} \qquad \text{(Moysés 1.4.7)}$$
 
@@ -154,28 +153,27 @@ sobrepressão sobre a chapa da quilha.
 
 ### Líquido em rotação: o perfil parabólico
 
-A (1.3.7) vale para qualquer força volumétrica, não só a gravidade — e um caso de bordo é o
+A equação geral do equilíbrio vale para qualquer força volumétrica, não só a gravidade — e um caso de bordo é o
 líquido girando com o recipiente. Num referencial não inercial $S'$ que gira com velocidade
 angular $\omega$, o líquido está em equilíbrio, mas além da gravidade atuam as forças
 centrífugas, dadas por
 
-$$\Delta\mathbf{F}_c = \Delta m\cdot\omega^2 r\,\hat{\mathbf{r}} \qquad \text{(Moysés 1.4.8)}$$
+$$\Delta\mathbf{F}_c = \Delta m\cdot\omega^2 r\,\hat{\mathbf{r}}$$
 
 para uma massa $\Delta m = \rho\,\Delta V$ situada à distância $r$ do eixo. A densidade de força
 centrífuga é então
 
 $$\mathbf{f}_c = \rho\,\omega^2 r\,\hat{\mathbf{r}}
-= -\operatorname{grad} u_c = -\frac{du_c}{dr}\,\hat{\mathbf{r}}
-\qquad \text{(Moysés 1.4.9)}$$
+= -\operatorname{grad} u_c = -\frac{du_c}{dr}\,\hat{\mathbf{r}}$$
 
 com a densidade de "energia potencial centrífuga"
 
-$$u_c(r) = -\tfrac{1}{2}\rho\,\omega^2 r^2 \qquad \text{(Moysés 1.4.10)}$$
+$$u_c(r) = -\tfrac{1}{2}\rho\,\omega^2 r^2$$
 
-que se soma à (1.4.4). Substituindo na (1.4.3) e tomando a origem O no ponto da superfície livre
+que se soma à densidade de energia potencial gravitacional. Substituindo na relação p = −u + constante e tomando a origem O no ponto da superfície livre
 situado no eixo (onde $r = z = 0$ e $p = p_0$):
 
-$$p = p_0 + \tfrac{1}{2}\rho\,\omega^2 r^2 - \rho g z \qquad \text{(Moysés 1.4.11)}$$
+$$p = p_0 + \tfrac{1}{2}\rho\,\omega^2 r^2 - \rho g z$$
 
 A equação da superfície livre ($p = p_0$) é portanto
 
@@ -187,7 +185,7 @@ oceanos um esferoide oblato em vez de uma esfera.
 
 ## Aplicações: Pascal, vasos comunicantes e manômetros {{< ra OE3.5 B2 >}}
 
-Pela lei de Stevin (1.4.6), a **diferença** de pressão entre dois pontos de um líquido homogêneo
+Pela lei de Stevin, a diferença de pressão entre dois pontos de um líquido homogêneo
 em equilíbrio é constante, dependendo apenas do desnível entre esses pontos. A consequência é
 imediata:
 
@@ -217,14 +215,14 @@ pequeno, e $F_2 d_2 = F_1 d_1$.
 
 Se um recipiente é formado por diversos ramos que se comunicam entre si, a superfície livre do
 líquido ocupa a mesma altura $h$ em todos os ramos — o **princípio dos vasos comunicantes**.
-Isso resulta imediatamente da lei de Stevin (1.4.7) e da igualdade da pressão $p$ em qualquer
+Isso resulta imediatamente da lei de Stevin e da igualdade da pressão $p$ em qualquer
 ponto do fundo do recipiente. A pressão também tem o mesmo valor em quaisquer pontos dos
 diferentes ramos que estejam à mesma altura $z$.
 
 Se, em dois ramos de um tubo em U, temos dois líquidos de densidades diferentes
 $\rho_1 \neq \rho_2$ que não se misturam, eles subirão a alturas diferentes $h_1$ e $h_2$ em
 relação ao plano AB que atravessa os dois ramos pelo mesmo fluido. Se $p$ é a pressão sobre AB,
-a (1.4.7) resulta em $p = p_0 + \rho_1 g h_1 = p_0 + \rho_2 g h_2$, de modo que
+a lei de Stevin resulta em $p = p_0 + \rho_1 g h_1 = p_0 + \rho_2 g h_2$, de modo que
 
 $$\frac{h_1}{h_2} = \frac{\rho_2}{\rho_1}$$
 
@@ -244,7 +242,7 @@ Se essa pressão é justamente suficiente para elevar uma coluna de água a ~10 
 que elevaria uma coluna de mercúrio (13,6 vezes mais denso) a $10/13{,}6 \approx 76$ cm. O
 experimento, realizado em 1643, confirmou: um tubo de ~1 m cheio de mercúrio, invertido numa
 cuba, tem sua coluna baixando até ~76 cm, formando acima dela o "espaço de Torricelli", um bom
-vácuo. Pela (1.4.7),
+vácuo. Pela lei de Stevin,
 
 $$p_0 = \rho g h$$
 
@@ -257,7 +255,7 @@ resultado (1648) foi que, para uma diferença de altitude da ordem de 1.000 m, a
 cerca de 8 cm.
 
 O **manômetro de tubo aberto** é um tubo em U contendo líquido, com uma extremidade aberta para a
-atmosfera e a outra ligada ao recipiente cuja pressão $p$ se quer medir. Pela (1.4.7), a pressão
+atmosfera e a outra ligada ao recipiente cuja pressão $p$ se quer medir. Pela lei de Stevin, a pressão
 num ponto C do fundo se escreve de duas maneiras:
 
 $$p_C = p + \rho g z = p_0 + \rho g\,(h + z)$$
@@ -276,7 +274,7 @@ absolutos.
 Considere um corpo sólido cilíndrico circular, de área da base $A$ e altura $h$, totalmente
 imerso num fluido em equilíbrio de densidade $\rho$. Por simetria, as forças sobre a superfície
 lateral do cilindro se equilibram duas a duas. Entretanto, a pressão $p_2$ exercida sobre a base
-inferior é **maior** do que a pressão $p_1$ sobre a base superior. Pela (1.4.7),
+inferior é **maior** do que a pressão $p_1$ sobre a base superior. Pela lei de Stevin,
 
 $$p_2 - p_1 = \rho g h$$
 
@@ -291,7 +289,7 @@ Essa força chama-se **empuxo**:
 $$\boxed{\;\mathbf{E} = mg\,\mathbf{k} = -\mathbf{P}_f\;} \qquad \text{(Moysés 1.6.2)}$$
 
 onde $\mathbf{P}_f$ é o peso da porção de fluido deslocada. O empuxo não é uma força nova: é o
-**resultado líquido da variação de pressão com a profundidade** que obtivemos na (1.4.7).
+**resultado líquido da variação de pressão com a profundidade** que obtivemos na lei de Stevin.
 
 ### O princípio de solidificação e o centro de empuxo
 
@@ -362,7 +360,7 @@ navio.
 Conforme já havia sido observado por Stevin e por Pascal: tome recipientes de formas muito
 diferentes, mas de **mesma área da base** $A$, e encha-os até a **mesma altura** $h$ de líquido.
 A força exercida sobre a base é a mesma em todos, **ainda que o peso do líquido seja muito
-diferente**. Isso resulta imediatamente da (1.4.7): as pressões sobre o fundo só dependem da
+diferente**. Isso resulta imediatamente da lei de Stevin: as pressões sobre o fundo só dependem da
 altura $h$.
 
 O paradoxo se dissolve quando se lembra que a base não é a única superfície em contato com o
@@ -379,8 +377,8 @@ recipiente de paredes verticais a força sobre a base é igual ao peso do líqui
 
 ## Extensão: a atmosfera e a lei de Halley
 
-A (1.3.9), $dp/dz = -\rho g$, vale para qualquer fluido em equilíbrio no campo gravitacional.
-Para um líquido, $\rho$ é constante e chegamos à (1.4.6). Para um **gás**, é preciso levar em
+A equação da estática no campo gravitacional, $dp/dz = -\rho g$, vale para qualquer fluido em equilíbrio no campo gravitacional.
+Para um líquido, $\rho$ é constante e chegamos à variação de pressão entre duas altitudes. Para um **gás**, é preciso levar em
 conta a compressibilidade, ou seja, o fato de que $\rho$ varia com a pressão.
 
 Num recipiente de dimensões de laboratório a variação de pressão entre o fundo e o topo de um gás
@@ -388,16 +386,15 @@ Num recipiente de dimensões de laboratório a variação de pressão entre o fu
 quilômetros. Supondo a atmosfera **isotérmica** — razoável até $\lesssim 1$ km —, a lei dos gases
 perfeitos dá que a densidade é diretamente proporcional à pressão:
 
-$$\frac{\rho(z)}{p(z)} = \frac{\rho(0)}{p(0)} = \frac{\rho_0}{p_0} \qquad \text{(Moysés 1.7.1)}$$
+$$\frac{\rho(z)}{p(z)} = \frac{\rho(0)}{p(0)} = \frac{\rho_0}{p_0}$$
 
-com $z = 0$ ao nível do mar. Substituindo na (1.3.9):
+com $z = 0$ ao nível do mar. Substituindo na equação da estática no campo gravitacional:
 
-$$\frac{dp}{p} = -\frac{\rho_0 g}{p_0}\,dz = -\lambda\,dz \qquad \text{(Moysés 1.7.2)}$$
+$$\frac{dp}{p} = -\frac{\rho_0 g}{p_0}\,dz = -\lambda\,dz$$
 
 Integrando,
 
-$$\int_{p_0}^{p}\frac{dp'}{p'} = \ln\left(\frac{p}{p_0}\right) = -\lambda\int_0^z dz' = -\lambda z
-\qquad \text{(Moysés 1.7.3)}$$
+$$\int_{p_0}^{p}\frac{dp'}{p'} = \ln\left(\frac{p}{p_0}\right) = -\lambda\int_0^z dz' = -\lambda z$$
 
 o que leva à **lei de Halley**, ou fórmula barométrica:
 
@@ -409,7 +406,7 @@ inicial numa altura $z = 1/\lambda = p_0/(\rho_0 g)$. Para o ar a 15 °C, com
 $p_0 = 1{,}013\times10^5\ \text{N/m}^2$ e $\rho_0 = 1{,}226\ \text{kg/m}^3$, isso dá
 $1/\lambda = 8{,}4$ km — a ordem de grandeza da altura da **troposfera**.
 
-Contraste com o líquido: a mesma equação (1.3.9), com $\rho$ constante, dá pressão **linear** com
+Contraste com o líquido: a mesma equação equação da estática no campo gravitacional, com $\rho$ constante, dá pressão **linear** com
 a profundidade; com $\rho \propto p$, dá **exponencial** com a altitude. A diferença entre as
 duas está inteiramente na equação de estado do fluido — assunto da UE 4.
 
@@ -463,7 +460,7 @@ tonelagem bruta (volume registrado).
 - **Reserva de flutuabilidade não cresce indefinidamente:** quanto mais se carrega, maior o calado; eventualmente, margem até o convés inferior diminui e, se chover ou houver onda, água entra.
 :::
 
-## Veja o navio buscar seu calado
+## Calado de equilíbrio
 
 O casco afunda até o empuxo igualar o peso: $\Delta = \rho\,V_{\text{imerso}}$. Para um
 casco de paredes verticais, o calado é $T = \Delta/(\rho\,L\,B)$. Aumente a carga e veja
@@ -585,8 +582,8 @@ plt.tight_layout(); plt.show()
    movendo o slider de carga e lendo o valor no painel.
 3. Um graneleiro carrega até a marca S no rio (água doce). Ao chegar ao mar, ele estará
    acima ou abaixo da marca S? É seguro?
-4. O calado da simulação sai de $\Delta = \rho V$ — a (1.6.1) resolvida para $T$. Onde, nessa
-   conta, entrou a lei de Stevin (1.4.7)?
+4. O calado da simulação sai de $\Delta = \rho V$ — a expressão do empuxo resolvida para $T$. Onde, nessa
+   conta, entrou a lei de Stevin?
 :::
 
 ## Onde o fenômeno vive
@@ -606,7 +603,7 @@ plt.tight_layout(); plt.show()
   equipotencial: ela se mantém perpendicular à resultante gravidade + aceleração. Quando o navio
   adorna, a carga líquida escorre e G sobe efetivamente — é a razão física das regras de
   superfície livre em estabilidade.
-- **Balde girante e o perfil parabólico** — a (1.4.12) num tanque em rotação; o clássico de
+- **Balde girante e o perfil parabólico** — a equação da superfície livre em rotação num tanque em rotação; o clássico de
   laboratório que também explica o esferoide oblato dos oceanos.
 
 ### Metacentro: por que o navio volta (ou não)
@@ -768,7 +765,7 @@ plt.tight_layout(); plt.show()
 2. Suba o $KG$ lentamente. Em que valor exato o binário troca de sinal? Relacione com $KM$
    lido no painel.
 3. $BM = B^2/12T$ cresce com o **quadrado da boca**. Por que alargar o navio é a forma mais
-   eficaz de ganhar estabilidade — e o que isso custa em resistência ao avanço (tópico 3.6)?
+   eficaz de ganhar estabilidade — e o que isso custa em resistência ao avanço (o arrasto)?
 4. Carga alta no convés e gelo na superestrutura elevam $G$. Água em tanque parcialmente cheio
    tem efeito equivalente (superfície livre). Em qual dos parâmetros do painel esse efeito
    aparece?
@@ -777,7 +774,7 @@ plt.tight_layout(); plt.show()
 ### Paradoxo hidrostático: mesma base, mesma altura, pesos diferentes
 
 Três recipientes de **mesma área de base** $A$ e **mesma altura de líquido** $h$, mas de formas
-muito diferentes. Pela lei de Stevin (1.4.7), a pressão no fundo é $p = p_0 + \rho g h$ em
+muito diferentes. Pela lei de Stevin, a pressão no fundo é $p = p_0 + \rho g h$ em
 todos — logo a **força sobre a base é a mesma nos três**, ainda que o peso do líquido seja
 muito diferente. A balança, no entanto, acusa o peso correto: a diferença está na resultante
 vertical das forças que o líquido exerce sobre as **paredes inclinadas**.
@@ -1031,6 +1028,6 @@ plt.tight_layout(); plt.show()
 **Conexão com o próximo tópico:** toda a estática saiu de uma única equação,
 $\mathbf{f} = \operatorname{grad} p$, que só vale porque o fluido está em **repouso** — foi o
 repouso que eliminou as tensões tangenciais. Agora o fluido vai se mover, e a pergunta muda: como
-descrever o movimento de um meio contínuo, e o que substitui a (1.3.7) quando há aceleração? Do
+descrever o movimento de um meio contínuo, e o que substitui a equação geral do equilíbrio quando há aceleração? Do
 método de descrição saem a equação da continuidade e a equação de Bernoulli — e com elas as
 bombas, o tubo de Pitot, o Venturi e a propulsão.
