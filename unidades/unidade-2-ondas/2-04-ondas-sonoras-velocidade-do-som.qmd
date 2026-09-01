@@ -13,45 +13,45 @@ OE 2.13 [B2] Comparar a velocidade do som em sólidos, líquidos e gases
 
 {{< aula 15-16 >}}
 
-O som é a onda mais comum que experimentamos — e, na navegação, é a mais importante para sensorear o ambiente submarino. Diferentemente de ondas eletromagnéticas (que não se propagam bem na água), o som se propaga com velocidade relativamente alta na água e em sólidos, permitindo que ecobatímetros e sonares "vejam" o que está embaixo. Neste tópico definimos ondas sonoras formalmente, explicamos o que determina sua velocidade e por que essa velocidade varia dramaticamente com a profundidade.
+O som é a onda mais corriqueira e, na navegação, a principal via de sondagem do ambiente submarino. As ondas eletromagnéticas não se propagam bem na água; o som, ao contrário, propaga-se nela e nos sólidos com velocidade alta, o que permite a ecobatímetros e sonares reconhecer o que está abaixo do casco.
 
 ## O que é uma onda sonora {{< ra OE2.11 B1 >}}
 
-Uma **onda sonora** é uma onda **longitudinal** de compressão e rarefação que se propaga num meio elástico (sólido, líquido ou gás). Diferentemente de uma onda transversal (que move as partículas perpendicular à propagação), o som move as partículas *paralelo* à direção de propagação — gerando regiões onde a densidade e a pressão são maiores (compressão) e menores (rarefação) que o valor de equilíbrio.
+Uma **onda sonora** é uma onda **longitudinal** de compressão e rarefação que se propaga em meio elástico, sólido, líquido ou gasoso. Enquanto a onda transversal desloca as partículas perpendicularmente à propagação, o som as desloca *paralelamente* a ela, gerando regiões de densidade e pressão acima (compressão) e abaixo (rarefação) do valor de equilíbrio.
 
-Formalmente, a **pressão acústica** $p(x, t)$ (desvio da pressão de equilíbrio) em uma onda sonora progressiva é:
+A **pressão acústica** $p(x, t)$, desvio em relação à pressão de equilíbrio, vale numa onda progressiva:
 
 $$p(x, t) = p_0\cos(kx - \omega t)$$
 
 onde $p_0$ é a amplitude de pressão e $k$ é o número de onda.
 
-A velocidade de propagação de uma onda sonora num meio elástico é determinada pelas propriedades *inerciais* (massa específica $\rho$) e *elásticas* (módulo de compressibilidade $B$) do meio:
+A velocidade num meio elástico decorre das propriedades *inerciais* (massa específica $\rho$) e *elásticas* (módulo de compressibilidade $B$) do meio:
 
 $$v_{\text{som}} = \sqrt{\frac{B}{\rho}}$$
 
-Esta fórmula é universal: vale para sólidos, líquidos e gases, desde que o som se propague linearmente.
+A fórmula vale para sólidos, líquidos e gases, desde que a propagação seja linear.
 
 ## Fatores que influenciam a velocidade do som {{< ra OE2.12 B2 >}}
 
-Na água do mar, a velocidade do som **não é constante** — varia com temperatura, salinidade e pressão (profundidade). Essas variações têm efeitos profundos nos equipamentos de navegação.
+Na água do mar a velocidade do som varia com a temperatura, a salinidade e a pressão, isto é, com a profundidade. Essas variações afetam diretamente os equipamentos de navegação.
 
-**Temperatura:** é o fator mais importante. A água mais quente tem moléculas movendo-se mais rapidamente, facilitando a propagação. Na superfície tropical, $v \approx 1540\,\text{m/s}$; em águas polares, $v \approx 1400\,\text{m/s}$.
+**Temperatura:** o fator dominante. Na água mais quente as moléculas se movem mais depressa e a propagação é facilitada. Na superfície tropical, $v \approx 1540\,\text{m/s}$; em águas polares, $v \approx 1400\,\text{m/s}$.
 
-**Salinidade:** aumenta a velocidade ligeiramente. Água destilada: $v \approx 1480\,\text{m/s}$; água salgada (35 PSU): $v \approx 1535\,\text{m/s}$ na mesma temperatura.
+**Salinidade:** eleva ligeiramente a velocidade. À mesma temperatura, água destilada dá $v \approx 1480\,\text{m/s}$ e água salgada de 35 PSU, $v \approx 1535\,\text{m/s}$.
 
-**Pressão (profundidade):** em águas profundas, a compressão aumenta a velocidade novamente. A dependência é:
+**Pressão (profundidade):** em águas profundas a compressão volta a elevar a velocidade, segundo:
 
 $$v(z) = v_{\text{sup}} + \alpha z$$
 
 onde $z$ é a profundidade, $\alpha \approx 1{,}6 \text{ (m/s)/(100\,\text{m})}$ é um coeficiente empírico.
 
-**Efeito combinado — o perfil de velocidade:** em oceanos reais, a temperatura cai com profundidade (até ~1000 m), mas a pressão sobe continuamente. Resultado: existe uma profundidade (de 400–1000 m em regiões tropicais) onde a velocidade é **mínima** — é o **canal SOFAR** (Sound Fixing And Ranging), uma zona de velocidade mínima onde o som se propaga com eficiência máxima devido à refração.
+**Efeito combinado, o perfil de velocidade:** em oceanos reais a temperatura cai com a profundidade, até cerca de 1000 m, ao passo que a pressão sobe continuamente. Existe por isso uma profundidade, entre 400 e 1000 m nas regiões tropicais, em que a velocidade é mínima: o **canal SOFAR** (*Sound Fixing And Ranging*), faixa em que a refração confina o som e a propagação atinge eficiência máxima.
 
-**Erros no ecobatímetro:** se um ecobatímetro assume velocidade constante (ex.: 1500 m/s) mas a velocidade real varia com a profundidade, o cálculo de profundidade $d = v \cdot t / 2$ **fica errado**. Em águas profundas com termoclina acentuada, o erro pode ser de 5–15% — crítico para navegação de segurança.
+**Erros no ecobatímetro:** adotada velocidade constante, 1500 m/s por exemplo, quando a real varia com a profundidade, o cálculo $d = v \cdot t / 2$ resulta errado. Em águas profundas com termoclina acentuada o erro chega a 5–15%, magnitude crítica para a segurança da navegação.
 
 ## Comparação entre sólidos, líquidos e gases {{< ra OE2.13 B2 >}}
 
-A fórmula $v = \sqrt{B/\rho}$ explica a hierarquia de velocidades. Sólidos têm módulo de compressibilidade muito maior que líquidos, que por sua vez têm módulos maiores que gases (a compressibilidade de um gás é ~10$^4$ vezes maior que a de um líquido).
+A fórmula $v = \sqrt{B/\rho}$ explica a hierarquia de velocidades: o módulo de compressibilidade dos sólidos supera de longe o dos líquidos, e este o dos gases, cuja compressibilidade é cerca de $10^4$ vezes maior que a de um líquido.
 
 | Meio | Densidade $\rho$ (kg/m³) | Módulo $B$ (Pa) | Velocidade $v$ (m/s) |
 |---|---|---|---|
@@ -59,15 +59,15 @@ A fórmula $v = \sqrt{B/\rho}$ explica a hierarquia de velocidades. Sólidos tê
 | Água (20 °C) | 998 | $2{,}2 \times 10^9$ | 1480 |
 | Aço | 7850 | $160 \times 10^9$ | 4500 |
 
-O som viaja ~4× mais rápido na água que no ar, e ~3× mais rápido no aço que na água. Consequência prática: em navios militares, o barulho se propaga muito bem pela estrutura de aço — importante para acústica de sigilo.
+O som viaja cerca de 4 vezes mais rápido na água que no ar, e cerca de 3 vezes mais rápido no aço que na água. Daí a boa propagação do ruído pela estrutura de aço do navio, questão central da acústica de sigilo.
 
 ::: {.sp}
-Um navio oceanogrăfico mede a profundidade usando ecobatímetro de frequência dupla (30 e 200 kHz). Na superfície, a temperatura é 28 °C (velocidade $v_0 = 1540\,\text{m/s}$), a profundidade real é $h = 400\,\text{m}$. A salinidade é 35 PSU (constante). Supor variação linear de temperatura com profundidade: $T(z) = 28 - 0{,}05z$ (°C), onde $z$ é profundidade em metros. Usar aproximação: $v(T) = 1540 - 2{,}1(28 - T) = 1540 - 2{,}1 \times 0{,}05z \approx 1540 - 0{,}105z$ (m/s).
+Um navio oceanográfico mede a profundidade usando ecobatímetro de frequência dupla (30 e 200 kHz). Na superfície, a temperatura é 28 °C (velocidade $v_0 = 1540\,\text{m/s}$), a profundidade real é $h = 400\,\text{m}$. A salinidade é 35 PSU (constante). Supor variação linear de temperatura com profundidade: $T(z) = 28 - 0{,}05z$ (°C), onde $z$ é profundidade em metros. Usar aproximação: $v(T) = 1540 - 2{,}1(28 - T) = 1540 - 2{,}1 \times 0{,}05z \approx 1540 - 0{,}105z$ (m/s).
 
-**(a) Modelagem.** O tempo de eco é governado pela velocidade local:
-$t = 2\int_0^h dz/v(z)$ com $v(z) = 1540 - 0{,}105\,z$. O aparelho, calibrado com
-$v_0 = 1540$ m/s constante, calcula $d_{\text{ind}} = v_0\,t/2$. Incógnitas: $t$,
-$d_{\text{ind}}$ e o erro em relação a $h = 400$ m.
+**(a) Modelagem.** A velocidade local governa o tempo de eco: $t = 2\int_0^h dz/v(z)$, com
+$v(z) = 1540 - 0{,}105\,z$. Calibrado com $v_0 = 1540$ m/s constante, o aparelho calcula
+$d_{\text{ind}} = v_0\,t/2$. Incógnitas: $t$, $d_{\text{ind}}$ e o erro em relação a
+$h = 400$ m.
 
 **(b) Desenvolvimento.**
 $$\int_0^{400}\frac{dz}{1540 - 0{,}105\,z}
@@ -79,36 +79,36 @@ $$t = 2 \times 0{,}2634 = 0{,}5267\ \text{s}
 
 $$d_{\text{ind}} = \frac{1540 \times 0{,}5267}{2} \approx 405{,}6\ \text{m}$$
 
-**(c) Resultado.** O ecobatímetro indica $\approx 406$ m para um fundo real a 400 m —
-erro sistemático de $+5{,}6$ m ($+1{,}4\%$).
+**(c) Resultado.** O ecobatímetro indica $\approx 406$ m para um fundo real a 400 m: erro
+sistemático de $+5{,}6$ m ($+1{,}4\%$).
 
-**(d) Análise crítica.** O erro tem o sinal inseguro: o aparelho assume água mais
-"rápida" do que ela é e indica **mais** profundidade do que existe — em navegação com
-folga sob a quilha crítica, é o pior sentido possível. O erro cresce com a espessura e
-a intensidade da termoclina; a correção padrão é inserir o perfil de velocidade medido
-(XBT/CTD) ou ao menos a velocidade média local. A verificação por $\bar v \approx 1519$
-m/s (média entre superfície e fundo) confirma a ordem do resultado.
+**(d) Análise crítica.** O erro tem o sinal inseguro: o aparelho supõe a água mais veloz do
+que é e indica **mais** profundidade do que existe, o pior sentido possível quando a folga
+sob a quilha é crítica. O erro cresce com a espessura e a intensidade da termoclina, e a
+correção padrão consiste em inserir o perfil de velocidade medido (XBT/CTD) ou ao menos a
+velocidade média local. A verificação por $\bar v \approx 1519$ m/s, média entre superfície
+e fundo, confirma a ordem do resultado.
 :::
 
 ::: {.callout-warning}
 ## Erros clássicos
 
-- **"Som é mais rápido no ar que na água"?** Não — é ~4× mais lento no ar (343 m/s vs. 1480 m/s). A confusão vem de confundir som com luz.
-- **Assumir velocidade constante:** especialmente em sistemas costeiros com termoclina forte, isso leva a erros grandes de profundidade.
-- **Não diferenciar frequência de som:** a velocidade de fase $v = \lambda f$ é independente de frequência no regime linear. Logo, 30 kHz e 200 kHz viajam à mesma velocidade na mesma água — a diferença está na atenuação (absorção), que cresce com frequência.
+- **"Som é mais rápido no ar que na água"?** Não: no ar é cerca de 4 vezes mais lento (343 m/s contra 1480 m/s). A confusão nasce de tratar o som como se fosse luz.
+- **Supor velocidade constante:** em águas costeiras com termoclina forte, o erro de profundidade é grande.
+- **Não diferenciar frequência de som:** no regime linear a velocidade de fase $v = \lambda f$ independe da frequência, e 30 kHz e 200 kHz viajam à mesma velocidade na mesma água. A diferença está na atenuação por absorção, que cresce com a frequência.
 :::
 
-## Veja o pulso atravessar a termoclina
+## Travessia da termoclina por um pulso de ecobatímetro
 
-À esquerda, o perfil vertical: temperatura (vermelho) cai com a profundidade até
-estabilizar em 4 °C, e a velocidade do som (azul) cai junto. O ponto preto é o pulso do
-ecobatímetro descendo e subindo **com a velocidade local** (em câmera lenta). À direita,
-o erro que o aparelho comete ao assumir a velocidade da superfície, em função da
-profundidade. Os valores iniciais reproduzem o exemplo resolvido acima
-($T_{\text{sup}} = 28$ °C, gradiente 0,05 °C/m, fundo a 400 m).
+À esquerda, o perfil vertical: a temperatura (vermelho) cai com a profundidade até
+estabilizar em 4 °C, e a velocidade do som (azul) acompanha a queda. O ponto preto é o pulso
+do ecobatímetro descendo e subindo **com a velocidade local**, em câmera lenta. À direita, o
+erro que o aparelho comete ao adotar a velocidade da superfície, em função da profundidade.
+Os valores iniciais reproduzem o exemplo resolvido acima ($T_{\text{sup}} = 28$ °C,
+gradiente 0,05 °C/m, fundo a 400 m).
 
 ```{python}
-#| fig-cap: "Esq.: perfis T(z) e v(z) = 1540 − 2,1(28 − T) para T_sup = 28 °C e gradiente 0,05 °C/m (termoclina até T = 4 °C). Dir.: erro do ecobatímetro calibrado com v(0) em função da profundidade real — no fundo a 400 m, +5,6 m, o caso do exemplo. Mesmos parâmetros da versão interativa."
+#| fig-cap: "Esq.: perfis T(z) e v(z) = 1540 − 2,1(28 − T) para T_sup = 28 °C e gradiente 0,05 °C/m (termoclina até T = 4 °C). Dir.: erro do ecobatímetro calibrado com v(0) em função da profundidade real; no fundo a 400 m, +5,6 m, o caso do exemplo. Mesmos parâmetros da versão interativa."
 #| echo: false
 # Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
 import numpy as np
@@ -266,13 +266,13 @@ plt.tight_layout(); plt.show()
 
 ::: {.pergunta}
 1. Com os valores do exemplo (28 °C, 0,05 °C/m, 400 m), confira no painel o erro
-   $+5{,}6$ m. Aumente o gradiente para 0,10 °C/m: o erro dobra? Por quê não exatamente?
-2. Reduza $T_{\text{sup}}$ para 8 °C (águas frias, termoclina fraca). O que acontece
-   com o erro? Que conclusão operacional tira disso sobre navegar em águas tropicais
+   $+5{,}6$ m. Elevado o gradiente a 0,10 °C/m, o erro dobra? Por que não exatamente?
+2. Reduzida $T_{\text{sup}}$ a 8 °C, caso de águas frias e termoclina fraca, o que ocorre
+   com o erro? Que conclusão operacional daí decorre para a navegação em águas tropicais
    estratificadas?
-3. O pulso passa mais tempo na parte funda (lenta) ou rasa (rápida) da coluna? Observe
-   o relógio na descida e explique por que o aparelho — que assume a água toda "rápida"
-   como a superfície — indica **mais** profundidade do que existe.
+3. O pulso permanece mais tempo na parte funda e lenta ou na rasa e rápida da coluna? O
+   relógio da descida responde, e daí se explica por que o aparelho, que supõe toda a coluna
+   tão veloz quanto a superfície, indica **mais** profundidade do que existe.
 :::
 
 ## Onde o fenômeno vive
@@ -280,16 +280,16 @@ plt.tight_layout(); plt.show()
 <!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
      em sessões futuras, a pedido do professor. -->
 
-- **Canal SOFAR** — o mínimo de $v(z)$ a ~1000 m aprisiona o som por refração
-  contínua: baleias se comunicam e hidrofones detectam eventos a milhares de
-  quilômetros dentro desse guia de ondas natural.
-- **Correção de sondagem por perfil de velocidade** — levantamentos hidrográficos
-  lançam XBT/CTD justamente para substituir o "1500 m/s" por $v(z)$ medido.
-- **Trovão** — o clássico: contar segundos entre relâmpago e trovão e dividir por 3
-  dá a distância em km, porque $v_{ar} \approx 340$ m/s $\ll c$.
+- **Canal SOFAR** — o mínimo de $v(z)$ a cerca de 1000 m aprisiona o som por refração
+  contínua; nesse guia de ondas natural as baleias se comunicam e os hidrofones detectam
+  eventos a milhares de quilômetros.
+- **Correção de sondagem por perfil de velocidade** — levantamentos hidrográficos lançam
+  XBT/CTD para substituir o valor nominal de 1500 m/s pelo $v(z)$ medido.
+- **Trovão** — os segundos entre o relâmpago e o trovão, divididos por 3, dão a distância
+  em quilômetros, porque $v_{ar} \approx 340$ m/s $\ll c$.
 
 <!-- EXEMPLO A SIMULAR: raio acústico curvando no canal SOFAR (p5.js): perfil v(z)
      realista e traçado de raios por lei de Snell contínua; slider do ângulo de
      lançamento. -->
 
-**Conexão com o próximo tópico:** agora que sabemos como e por que o som se propaga, aprendemos a **caracterizar uma onda sonora** de forma completa — sua equação diferencial, como escrever a solução em termos de amplitude e fase, e como relacionar frequência, comprimento de onda e velocidade.
+**Conexão com o próximo tópico:** estabelecido como e por que o som se propaga, segue-se a **caracterização completa da onda sonora**: a equação diferencial que a rege, a solução escrita em amplitude e fase, e a relação entre frequência, comprimento de onda e velocidade.

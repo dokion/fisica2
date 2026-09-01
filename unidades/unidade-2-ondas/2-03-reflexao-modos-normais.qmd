@@ -13,7 +13,7 @@ OE 2.10 [B4] Analisar exemplos de modos normais em cordas e tubos sonoros
 
 {{< aula 15-16 >}}
 
-Quando uma onda atinge uma superfície sólida ou uma mudança abrupta de meio, ela **reflete**. O ecobatímetro funciona exatamente assim: envia um pulso que reflete no fundo e retorna. Mas reflexão não é meramente um fenômeno isolado — em geometrias confinadas (como uma coluna de água entre a superfície e o fundo), as ondas refletidas somam-se às incidentes, criando padrões estacionários chamados **modos normais**. Essas estruturas podem produzir "ecos falsos" e são fundamentais para prever comportamentos inesperados de sistemas acústicos navais.
+Quando uma onda atinge uma superfície sólida ou uma mudança abrupta de meio, ela **reflete**: é o princípio do ecobatímetro, que envia um pulso e recebe o retorno do fundo. Em geometrias confinadas, como a coluna de água entre a superfície e o fundo, as ondas refletidas somam-se às incidentes e criam padrões estacionários, os **modos normais**. Deles nascem os ecos falsos e boa parte do comportamento anômalo dos sistemas acústicos de bordo.
 
 ## Reflexão de ondas {{< ra OE2.8 B2 >}}
 
@@ -23,21 +23,19 @@ Para uma onda incidente $y_i = A\cos(kx - \omega t)$ e uma refletida $y_r = A\co
 
 $$y_{\text{total}} = A[\cos(kx - \omega t) - \cos(kx + \omega t)] = -2A\sin(kx)\sin(\omega t)$$
 
-O resultado **não é uma onda progressiva** — é uma **onda estacionária**: cada ponto oscila em fase com seus vizinhos (sem "viajar"), com amplitude variando de zero (nós) a $2A$ (antinós) dependendo da posição $x$.
+O resultado é uma **onda estacionária**: cada ponto oscila em fase com os vizinhos, sem que o padrão avance, com amplitude que vai de zero (nós) a $2A$ (antinós) conforme a posição $x$.
 
 Nós estão em $x = n\frac{\lambda}{2}$ (onde a onda refletida cancela a incidente).
-Antinós estão em $x = (n + 1/2)\frac{\lambda}{2}$ (onde construtivamente se reforçam).
+Antinós estão em $x = (n + 1/2)\frac{\lambda}{2}$ (onde as duas se reforçam).
 
-Esta é a assinatura de uma onda refletida: o padrão se torna **estacionário**, não progressivo.
+## Reflexão numa extremidade confinada e numa extremidade livre
 
-## Veja a reflexão montar a onda estacionária
-
-A mesma corda, agora **presa na direita**. Com a extremidade **confinada**, o pulso volta
-*invertido* (a inversão de fase $\pi$ da fórmula acima) — use o **passo a passo** para congelar
-o instante exato da reflexão. Com a extremidade **livre** (um anel que desliza sem atrito), o
-pulso volta *em pé*. No modo **contínua**, as reflexões sucessivas se somam e montam sozinhas a
-**onda estacionária**: as contas nos **nós** quase não se mexem, as dos **antinós** varrem toda
-a amplitude.
+A mesma corda, agora presa na direita. Com a extremidade **confinada**, o pulso volta
+*invertido*, pela inversão de fase $\pi$ da fórmula acima, e o passo a passo congela o
+instante exato da reflexão. Com a extremidade **livre**, um anel que desliza sem atrito, o
+pulso volta *em pé*. No modo **contínua**, as reflexões sucessivas se somam e montam a onda
+estacionária: as contas nos **nós** quase não se mexem, e as dos **antinós** varrem toda a
+amplitude.
 
 ```{python}
 #| fig-cap: "Onda estacionária numa corda de extremidade confinada: y(x) = 2A·sin(kx), com nós (deslocamento nulo) e antinós (deslocamento 2A). As contas coloridas nos antinós varrem toda a amplitude; as próximas dos nós quase não se movem. É o padrão que a reflexão sucessiva monta no modo contínuo. Mesma física da versão interativa."
@@ -75,7 +73,7 @@ for xc, c in zip(xa, cols):
 for xx in (0, L): ax.axvline(xx, color='#3a342c', lw=3)
 ax.axhline(0, color='0.85', lw=0.7)
 ax.set_ylim(-2*A*1.5, 2*A*1.5); ax.set_xlim(-0.3, L+0.3)
-ax.set_yticks([]); ax.set_xticks([]); ax.set_xlabel('nós parados · antinós varrem 2A — padrão estacionário')
+ax.set_yticks([]); ax.set_xticks([]); ax.set_xlabel('nós parados · antinós varrem 2A: padrão estacionário')
 plt.tight_layout(); plt.show()
 ```
 
@@ -117,7 +115,7 @@ plt.tight_layout(); plt.show()
       <input type="range" id="stF" min="0.5" max="3.0" value="1.6" step="0.1"></div>
   </div>
   <div id="stSketch"></div>
-  <div class="st-cap">Confinada: o pulso volta invertido. Livre: volta em pé. Contínua: a reflexão monta a estacionária — nós parados, antinós varrendo 2A.</div>
+  <div class="st-cap">Confinada: o pulso volta invertido. Livre: volta em pé. Contínua: a reflexão monta a estacionária, com nós parados e antinós varrendo 2A.</div>
 </div>
 <script>
 (function(){
@@ -200,19 +198,19 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. No modo **pulso** com extremidade **confinada**, use o **passo** para chegar ao instante da
-   reflexão: o pulso volta para cima ou para baixo? Troque para **livre** e repita — qual a
-   diferença, e o que ela diz sobre a condição de contorno?
-2. No modo **contínua**, deixe o padrão se estabelecer: onde ficam os **nós** (contas paradas)?
-   Confira que a distância entre nós vizinhos é $\lambda/2$.
-3. Aumente a frequência aos poucos: em certos valores o padrão "trava" grande e limpo
-   (ressonância — um modo normal), em outros fica bagunçado. Por que só algumas frequências
+1. No modo **pulso** com extremidade **confinada**, o passo leva ao instante da reflexão: o
+   pulso volta para cima ou para baixo? Passada a extremidade a **livre**, qual a diferença,
+   e o que ela diz sobre a condição de contorno?
+2. No modo **contínua**, estabelecido o padrão, onde ficam os nós? Confira que a distância
+   entre nós vizinhos é $\lambda/2$.
+3. Elevada a frequência aos poucos, em certos valores o padrão se fixa amplo e limpo, na
+   ressonância de um modo normal, e em outros se desorganiza. Por que só algumas frequências
    cabem inteiras na corda?
 :::
 
 ## Modos normais em meios limitados {{< ra OE2.9 B2 >}}
 
-Considere uma camada de água entre a superfície (refletor perfeito) e o fundo (também refletor). Uma onda que se propaga para baixo reflete no fundo e volta para cima. Se a profundidade for tal que um número inteiro de meios-comprimentos de onda caiba entre os dois refletores, a onda refletida interfere *construtivamente* com novas ondas incidentes — ocorre **ressonância**. Isso é um **modo normal**.
+Seja uma camada de água entre a superfície e o fundo, ambos refletores. Uma onda que se propaga para baixo reflete no fundo e volta para cima. Se a profundidade comportar um número inteiro de meios-comprimentos de onda, a refletida interfere *construtivamente* com as novas incidentes: há **ressonância**, e o padrão resultante é um **modo normal**.
 
 A condição para um modo normal é:
 
@@ -227,23 +225,23 @@ Exemplo: água do mar com $v = 1500\,\text{m/s}$ e profundidade $h = 50\,\text{m
 - Modo 2 ($n=2$): $f_2 = 30\,\text{Hz}$
 - Modo 3 ($n=3$): $f_3 = 45\,\text{Hz}$
 
-Se o transdutor de um sonar transmite em uma frequência que coincida com um modo da coluna de água, o sinal "ressoa" — amplifica-se anormalmente e cria um eco fantasma que o operador pode confundir com um contato real.
+Se o transdutor de um sonar transmite em frequência coincidente com um modo da coluna de água, o sinal ressoa: amplifica-se anormalmente e cria um eco fantasma que o operador pode tomar por contato real.
 
 ## Exemplos: cordas e tubos sonoros {{< ra OE2.10 B4 >}}
 
-**Cordas fixas em ambas extremidades** (como uma corda de violão) formam modos normais exatamente como descritos acima. O comprimento da corda deve conter um número inteiro de meios-comprimentos de onda. As frequências são:
+**Cordas fixas nas duas extremidades**, como a de um violão, formam modos normais do mesmo modo: o comprimento da corda deve conter um número inteiro de meios-comprimentos de onda. As frequências são:
 
 $$f_n = n\frac{v}{2L}, \quad n = 1, 2, 3, \ldots$$
 
-onde $L$ é o comprimento. Modo 1 é a **frequência fundamental** (som mais grave); modos 2, 3, ... são os **harmônicos** (som mais agudo).
+onde $L$ é o comprimento. O modo 1 é a **frequência fundamental**, o som mais grave; os modos 2, 3, … são os **harmônicos**, mais agudos.
 
-**Tubos abertos ou fechados** também formam modos. Um tubo **fechado em uma extremidade** (como um cachimbo) tem nós numa extremidade e antinó na outra — a condição muda ligeiramente:
+**Tubos sonoros** também formam modos. Um tubo fechado numa extremidade tem nó nela e antinó na outra, o que altera a condição:
 
 $$f_n = (2n-1)\frac{v}{4L}, \quad n = 1, 2, 3, \ldots$$
 
-(só frequências ímpares dos modos).
+Só os harmônicos ímpares existem nesse caso.
 
-Na navegação, sistemas de tubulações de bordo, shafts e até a caverna do motor do navio podem formar modos acústicos que amplificam certos ruídos e reverberam o som — fenômeno importante para controle de ruído no navio.
+A bordo, tubulações, eixos propulsores e a própria praça de máquinas podem formar modos acústicos que amplificam certos ruídos e prolongam a reverberação, o que importa ao controle de ruído no navio.
 
 ::: {.sp}
 Um ecobatímetro mono-feixe transmite em frequência $f_0 = 50\,\text{kHz}$ numa coluna de água com profundidade $h = 200\,\text{m}$ (navegação em águas profundas), $v = 1500\,\text{m/s}$. O operador observa um eco principal em $t_1 = 0{,}267\,\text{s}$ (distância correta: $d = \frac{1500 \times 0{,}267}{2} = 200\,\text{m}$). Porém, detecta também um eco fantasma em $t_2 = 0{,}400\,\text{s}$.
@@ -254,7 +252,7 @@ comprimento $4h$); (ii) trajeto oblíquo com uma única reflexão fora da vertic
 
 **(b) Desenvolvimento.** Profundidade aparente do fantasma:
 $$d_2 = \frac{1500 \times 0{,}400}{2} = 300\ \text{m} > h = 200\ \text{m}$$
-— impossível como eco vertical direto.
+valor impossível para um eco vertical direto.
 
 Hipótese (i), múltipla vertical:
 $$t = \frac{4h}{v} = \frac{800}{1500} = 0{,}533\ \text{s} \neq 0{,}400\ \text{s}
@@ -265,35 +263,35 @@ $$L = \frac{v\,t_2}{2} = 300\ \text{m}
 \quad\Rightarrow\quad
 x = \sqrt{L^2 - h^2} = \sqrt{300^2 - 200^2} \approx 224\ \text{m}$$
 
-**(c) Resultado.** O fantasma não é múltipla vertical; é consistente com reflexão única
-em uma feição do fundo a cerca de 224 m para o través — eco de lóbulo lateral ou de
-fundo inclinado.
+**(c) Resultado.** O fantasma não é múltipla vertical: é compatível com reflexão única numa
+feição do fundo a cerca de 224 m para o través, seja eco de lóbulo lateral, seja fundo
+inclinado.
 
-**(d) Análise crítica.** Ecos com profundidade aparente maior que a real nunca devem
-ser registrados como fundo. Verificação prática: uma pequena alteração de rumo muda o
-atraso do eco oblíquo, mas não o do vertical; a múltipla vertical, se presente,
-apareceria em 0,533 s com o dobro da profundidade aparente. O modelo supõe fundo plano
-e velocidade constante — gradientes de velocidade (tópico 2.4) curvam o raio e alteram
-o valor de $x$.
+**(d) Análise crítica.** Ecos com profundidade aparente maior que a real nunca devem ser
+registrados como fundo. Verificação prática: uma pequena alteração de rumo muda o atraso do
+eco oblíquo, mas não o do vertical; a múltipla vertical, se presente, apareceria em 0,533 s
+com o dobro da profundidade aparente. O modelo supõe fundo plano e velocidade constante, ao
+passo que os gradientes de velocidade, estudados adiante na propagação do som na água,
+curvam o raio e alteram o valor de $x$.
 :::
 
 ::: {.callout-warning}
 ## Erros clássicos
 
-- **Reflexão = inversão de fase sempre?** Não: reflexão em extremidade fixa inverte fase ($+\pi$), mas reflexão em extremidade livre **não inverte**. Condições de contorno determinam o tipo.
+- **Reflexão = inversão de fase sempre?** Não: a reflexão em extremidade fixa inverte a fase ($+\pi$), e a reflexão em extremidade livre não inverte. A condição de contorno determina o tipo.
 - **Confundir "modo normal" com "frequência fundamental":** a fundamental é o modo 1 ($n=1$). Os outros são harmônicos (modos $n \geq 2$). Todos são modos normais.
 - **Assumir que ecos distantes sempre são profundidade maior:** ecos falsos por múltipla reflexão podem dar tempos muito maiores sem corresponder à realidade geométrica. Requer validação de modelo.
 :::
 
-## Veja a onda estacionária nascer de duas progressivas
+## Onda estacionária como soma de duas progressivas
 
-O eixo horizontal é a coluna d'água: superfície à esquerda, fundo à direita. A onda
-vermelha viaja para o fundo, a azul é a reflexão viajando de volta, e a preta é a soma —
-que **não viaja**: os nós (pontos laranja) ficam parados. Escolha o modo $n$ e a
-profundidade $h$; a frequência real do modo, $f_n = n\,v/2h$, aparece no painel.
+O eixo horizontal é a coluna d'água, com a superfície à esquerda e o fundo à direita. A
+onda vermelha viaja para o fundo, a azul é a reflexão que volta, e a preta é a soma, que não
+avança: os nós, em laranja, ficam parados. Fixados o modo $n$ e a profundidade $h$, a
+frequência real do modo, $f_n = n\,v/2h$, aparece no painel.
 
 ```{python}
-#| fig-cap: "Modo normal n = 3 numa coluna de h = 100 m: instantâneos da onda resultante em vários momentos do ciclo (cinza→preto) dentro da envoltória ±2A|sen(kx)| (tracejada). Os nós (laranja) não se movem — a onda é estacionária. Mesmos parâmetros da versão interativa."
+#| fig-cap: "Modo normal n = 3 numa coluna de h = 100 m: instantâneos da onda resultante em vários momentos do ciclo (cinza→preto) dentro da envoltória ±2A|sen(kx)| (tracejada). Os nós (laranja) não se movem: a onda é estacionária. Mesmos parâmetros da versão interativa."
 #| echo: false
 # Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
 import numpy as np
@@ -311,7 +309,7 @@ ax.plot(x, -2*A*np.abs(np.sin(k*x)), '--', color='#C85C2E', lw=1.4)
 nos = np.arange(0, n + 1)*h/n
 ax.plot(nos, 0*nos, 'o', ms=8, color='#C85C2E')
 ax.axhline(0, lw=0.5, color='0.8')
-ax.set_xlabel('posição na coluna (m) — 0 = superfície, 100 = fundo')
+ax.set_xlabel('posição na coluna (m): 0 = superfície, 100 = fundo')
 ax.set_ylabel('deslocamento'); ax.set_title('n = 3: nós fixos, ventres pulsando', fontsize=10)
 plt.tight_layout(); plt.show()
 ```
@@ -425,13 +423,13 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Deixe só a resultante ligada: os nós laranja se movem? Agora ligue só a incidente:
-   ela viaja. De onde "vem" a imobilidade da soma de duas ondas que viajam?
-2. Pause no instante em que a resultante fica **reta** (zero em toda parte). As ondas
-   vermelha e azul também estão zeradas nesse instante? Para onde foi a energia?
-3. Com $h = 100$ m e $v = 1500$ m/s, anote $f_n$ para $n = 1$ a $5$. Que relação os
-   valores guardam entre si? Por que um transdutor de 50 kHz não excita nenhum desses
-   modos (compare as ordens de grandeza)?
+1. Exibida apenas a resultante, os nós laranja se movem? Exibida apenas a incidente, ela
+   viaja. De onde provém a imobilidade da soma de duas ondas que viajam?
+2. No instante em que a resultante fica reta, nula em toda parte, as ondas vermelha e azul
+   também estão zeradas? Para onde foi a energia?
+3. Com $h = 100$ m e $v = 1500$ m/s, que relação guardam entre si os valores de $f_n$ para
+   $n = 1$ a $5$? Por que um transdutor de 50 kHz não excita nenhum desses modos? Confronte
+   as ordens de grandeza.
 :::
 
 ## Onde o fenômeno vive
@@ -439,15 +437,15 @@ plt.tight_layout(); plt.show()
 <!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
      em sessões futuras, a pedido do professor. -->
 
-- **Sloshing em tanque parcialmente cheio** — a superfície livre tem modos normais;
-  se o balanço do navio excita o modo fundamental, a carga líquida amplifica o roll
-  (por isso as regras de superfície livre em estabilidade).
+- **Ressonância em tanque parcialmente cheio (*sloshing*)** — a superfície livre tem modos
+  normais; se o balanço do navio excita o modo fundamental, a carga líquida o amplifica,
+  daí as regras de superfície livre em estabilidade.
 - **Tubulão de descarga do motor** — a coluna de gases tem modos acústicos; o
   silencioso é um projeto deliberado de anti-modo.
-- **Corda de instrumento** — o clássico: comprimento fixo, harmônicos $f_n = n v/2L$;
-  afinar é mudar $v$ pela tração.
+- **Corda de instrumento** — comprimento fixo e harmônicos $f_n = n v/2L$; afinar é mudar
+  $v$ pela tração.
 
 <!-- EXEMPLO A SIMULAR: sloshing em tanque retangular (p5.js, tabela Q4: movimento):
      modos n = 1 e 2 da superfície livre com slider de nível de enchimento. -->
 
-**Conexão com o próximo tópico:** sabemos agora como ondas se comportam em geometrias simples. Mas o que *é* uma onda sonora? Qual é a física microscópica que a produz, e como sua velocidade depende do meio? Essas respostas vêm no tópico 2.4.
+**Conexão com o próximo tópico:** estabelecido o comportamento das ondas em geometrias simples, resta caracterizar a onda sonora em si: a física que a produz e a dependência da sua velocidade com o meio.
