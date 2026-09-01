@@ -36,6 +36,10 @@ não reescreva, não "melhore", não resuma.
    nunca inventar.
 5. **Nada de avaliação aqui:** provas, gabaritos e questões de banco não entram em nota
    de aula.
+6. **Registro:** este template define a ESTRUTURA; `_docs/apendice-iv-registro-e-estilo.md`
+   define a PROSA. Texto impessoal e sóbrio — sem 1ª/2ª pessoa, sem conversa com o aluno,
+   sem vícios de IA, remissão a outro tópico sempre por extenso e nunca por número. Ler o
+   Apêndice IV antes de escrever.
 
 ---
 
@@ -172,3 +176,5 @@ OE n.m [Bk] {texto do objetivo}
 - [ ] Seção "Onde o fenômeno vive" presente ao final, com exemplos honestos (validade declarada)?
 - [ ] Números navais dentro das faixas SP do Mestre §6?
 - [ ] YAML válido, `title` e `categories` intactos?
+- [ ] Registro conforme o Apêndice IV (impessoal, sóbrio, sem remissão numérica, título de
+      simulação em sintagma nominal)? Checklist completo em `_docs/apendice-iv-registro-e-estilo.md` §IV7.

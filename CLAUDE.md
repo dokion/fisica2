@@ -18,6 +18,7 @@ documento vence. Sempre.
 | `apendice-i-adaptacao-institucional.md` | Apêndice I | **Pesos e calendário** (2 ciclos P1/P2; prova 80% + trabalho 20%) |
 | `apendice-ii-pladis-regua-aulas.md` | Apêndice II | **Unidade de progressão** (par de aulas, não semana) e preenchimento do PLADIS |
 | `apendice-iii-cruzamento-stcw-ra.md` | Apêndice III | **Método** de cruzar física pura → STCW / Model Course → RA navalizado |
+| `apendice-iv-registro-e-estilo.md` | Apêndice IV | **Como a prosa soa**: registro impessoal e sóbrio, concisão, vícios de IA, remissões por extenso, rótulos de equação da fonte, títulos de simulação. Vale em TODAS as unidades. Ler antes de escrever ou reescrever qualquer nota de aula |
 | `mestre_quartus.md` | Apêndice Q | **Publicação**: Quarto, libs JS, modo offline, paridade HTML/PDF |
 | `PLADIS-template.docx` | Template institucional | Layout do PLADIS — **INTOCÁVEL** (preencher células, nunca alterar estrutura) |
 | `FIS_2_RA.md` | RAs já extraídos e formatados | **Fonte oficial dos RAs de FIS-02.** NÃO reinventar nem reordenar RAs — usar estes. |
@@ -35,8 +36,9 @@ Antes de qualquer tarefa, leia o Mestre + o(s) apêndice(s) relevante(s). Não t
 2. **Régua de aulas (par de aulas, UE, tópico)** → Apêndice II vence qualquer "semana" no Mestre, I ou Q.
 3. **Redação final de RA** (formato, código Bloom, critério) → Mestre §2–3 vence (Apêndice III só manda no *método* de cruzamento e nas fontes).
 4. **Publicação** → Apêndice Q.
-5. **Em tudo o mais** → Mestre.
-6. **RAs de FIS-02** → `FIS_2_RA.md` é a fonte. Não gerar RA novo a menos que o pedido seja explicitamente "criar RA" via Apêndice III.
+5. **Registro e estilo da prosa** → Apêndice IV vence, mas SÓ sobre a forma. Ele nunca altera conteúdo, número, dedução, cobertura de OE ou layout — nesses pontos perde para o Mestre, para os Apêndices I–III e Q e para o `AULA-TEMPLATE.md`.
+6. **Em tudo o mais** → Mestre.
+7. **RAs de FIS-02** → `FIS_2_RA.md` é a fonte. Não gerar RA novo a menos que o pedido seja explicitamente "criar RA" via Apêndice III.
 
 ---
 
@@ -54,6 +56,7 @@ instruções já prontas dos documentos; siga-os literalmente.
 | **Transcrever quadro** → nota de aula | Mestre §10 | Mestre **P5** |
 | Gerar **roteiro de defesa oral** | Mestre §8 | Mestre **P6** |
 | **Adaptar rubrica** | Mestre §5.3 | Mestre **P7** |
+| **Revisar registro/estilo** de uma unidade | Apêndice IV (integral) | **IV-P1** (passada por par de tópicos) → checklist IV7 |
 | Converter nota de aula em **`.qmd`** | Apêndice Q §10 + Q2 + Q5 | **Q-P1** |
 | Gerar **visualização interativa** | Apêndice Q §Q4–Q5 | **Q-P2** |
 | Verificar **paridade HTML/PDF** | Apêndice Q §Q4 | **Q-P4** |
@@ -73,6 +76,7 @@ instruções já prontas dos documentos; siga-os literalmente.
 - **Anti-IA por design:** todo instrumento de continuada tem ≥1 mecanismo do Mestre §8 (síncrono individualizado / defesa oral / dado local).
 - **Não publicar avaliação:** provas, blueprints e banco Dokion NUNCA viram `.qmd`/Quarto (Apêndice Q §Q1).
 - **Régua = par de aulas** (`N-(N+1)`), não semana, ao tratar de cronograma/PLADIS (Apêndice II).
+- **Registro impessoal e sóbrio:** sem 1ª/2ª pessoa, sem conversa com o aluno, sem vícios de IA. Remissão a outro tópico sempre por extenso, nunca por número (Apêndice IV).
 - **Quando faltar dado de fonte:** marcar `[VERIFICAR]` — nunca inventar.
 
 ---
@@ -87,9 +91,10 @@ instruções já prontas dos documentos; siga-os literalmente.
 - **Aulas são badges, não arquivos:** o shortcode `{{< aula 3-4 >}}` marca onde um encontro
   (par de aulas, Apêndice II) começa dentro do tópico. Posicionamento livre pelo professor;
   puramente informativo — o cronograma oficial continua sendo o PLADIS.
-- **Padrão de escrita de nota de aula:** `AULA-TEMPLATE.md` (raiz). Todo agente que escrever
-  ou completar nota de aula segue o "ritmo" da Seção 3 dele e o contrato de placeholders
-  `<< >>` da Seção 5. Texto do professor fora de placeholder é INTOCÁVEL.
+- **Padrão de escrita de nota de aula:** `AULA-TEMPLATE.md` (raiz) define a ESTRUTURA;
+  o **Apêndice IV** define o REGISTRO. Todo agente que escrever ou completar nota de aula
+  segue o "ritmo" da Seção 3 do template, o contrato de placeholders `<< >>` da Seção 5 e
+  as regras de prosa do Apêndice IV. Texto do professor fora de placeholder é INTOCÁVEL.
 - **Seção "Onde o fenômeno vive":** todo tópico fecha com ela (AULA-TEMPLATE §4; Mestre §10).
   Nasce como lista de exemplos físicos honestos + comentários `EXEMPLO A SIMULAR`; cresce
   incrementalmente — exemplos são promovidos a simulação (regras Q4/paridade/pergunta)

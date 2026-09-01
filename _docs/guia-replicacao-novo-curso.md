@@ -30,6 +30,7 @@ Todo o resto se regenera a partir disso.
 | `_docs/apendice-i-adaptacao-institucional.md` | Pesos e calendário institucional (2 ciclos P1/P2) |
 | `_docs/apendice-ii-pladis-regua-aulas.md` | Régua de par de aulas + PLADIS |
 | `_docs/apendice-iii-cruzamento-stcw-ra.md` | Método de gerar RAs navalizados (usado na Fase 1) |
+| `_docs/apendice-iv-registro-e-estilo.md` | Registro e estilo da prosa das notas de aula (impessoal, sóbrio, sem vícios de IA) |
 | `_docs/mestre_quartus.md` | Publicação Quarto: libs, offline, paridade HTML/PDF |
 | `_docs/PLADIS-template.docx` | Template institucional intocável |
 | `_docs/mc-7.03-extrato.md` + `_docs/mc-7.04-extrato.md` | Extratos dos Model Courses IMO (fonte de âncoras da Fase 1 — dispensam NotebookLM) |
