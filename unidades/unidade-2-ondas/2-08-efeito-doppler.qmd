@@ -49,6 +49,234 @@ A **razão Doppler** compara a frequência percebida à emitida:
 
 $$\frac{f'}{f} = \frac{v + v_{\text{obs}}}{v - v_{\text{fonte}}}$$
 
+### As três situações numa só tela
+
+A fonte, à esquerda, emite pulsos em intervalos rigorosamente iguais; o observador, à direita,
+registra o instante em que cada frente o alcança. As duas fitas inferiores comparam os dois
+ritmos: a de cima é sempre $f_0$, a de baixo é $f'$. As frentes já emitidas avançam pelo meio
+com velocidade $v$ e não acompanham a fonte, e é dessa circunstância que decorre toda a fórmula.
+A frequência de emissão foi fixada em 4 Hz, valor baixo o bastante para que as frentes sejam
+contáveis; o que interessa é a razão $f'/f_0$, não o valor absoluto.
+
+```{python}
+#| fig-cap: "Frentes de onda emitidas a f₀ = 4 Hz por uma fonte que se desloca a v_fonte = 150 m/s no ar (v = 340 m/s), com observador parado. Cada círculo tem centro no ponto em que foi emitido: à frente da fonte o comprimento de onda cai a λ′ = (v − v_fonte)/f₀ = 47,5 m, atrás sobe a 122,5 m. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+V, F0, VS = 340.0, 4.0, 150.0       # m/s, Hz, m/s
+T0 = 1/F0
+N, t_agora = 8, 8*T0
+
+fig, ax = plt.subplots(figsize=(9, 3.6))
+for i in range(N):
+    te = i*T0
+    ax.add_patch(plt.Circle((VS*te, 0), V*(t_agora - te), fill=False,
+                            color='#1F47C8', alpha=0.25 + 0.65*i/N, lw=1.4))
+    ax.plot(VS*te, 0, '.', ms=4, color='#8A8278')
+
+xf = VS*t_agora
+ax.plot(xf, 0, 'o', ms=11, color='#C85C2E')
+ax.annotate('', xy=(xf + 190, 0), xytext=(xf, 0),
+            arrowprops=dict(arrowstyle='-|>', color='#C85C2E', lw=2))
+cx = dict(fc='#FFFFFF', ec='none', pad=1.2)
+ax.text(xf, 110, 'fonte', color='#C85C2E', fontsize=9, ha='center', bbox=cx)
+ax.plot(612, 0, 'o', ms=10, color='#C81F1F')
+ax.text(612, 210, 'observador', color='#C81F1F', fontsize=9, ha='center', bbox=cx)
+ax.text(xf + 300, -300, "à frente:\n$\\lambda' = 47{,}5$ m", fontsize=9, ha='center')
+ax.text(-560, -300, "atrás:\n$\\lambda' = 122{,}5$ m", fontsize=9, ha='center')
+ax.axhline(0, color='#D8CFC0', lw=1, ls=(0, (3, 7)))
+ax.set_xlim(-820, 1150); ax.set_ylim(-420, 420)
+ax.set_aspect('equal'); ax.axis('off')
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO contínuo — a emissão, a propagação e a
+     recepção são um processo no tempo, e o RA pede diferenciar os casos de fonte e de
+     observador em movimento). p5 de libs/ (offline, Q6). v = 340 m/s, f0 = 4 Hz,
+     v_fonte = 150 m/s de partida — mesmos parâmetros da versão matplotlib. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .fo-wrap{max-width:1000px;margin:1rem auto;}
+  .fo-wrap .fo-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .fo-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:190px;flex:1 1 190px;}
+  .fo-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .fo-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .fo-wrap .sld .est{font-size:11px;color:#8a8278;font-family:"IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase;}
+  .fo-wrap input[type=range]{width:100%;max-width:250px;accent-color:#c85c2e;}
+  .fo-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;color:#1c1208;cursor:pointer;}
+  .fo-wrap button:hover{background:#ede3da;}
+  .fo-wrap #foSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .fo-wrap #foEq{font-size:14px;margin:8px 2px 0;line-height:1.6;}
+  .fo-wrap #foEq b{color:#1f47c8;}
+  .fo-wrap #foEq .alerta{color:#7a1e1e;font-weight:700;}
+</style>
+<div class="fo-wrap sim">
+  <div class="fo-row">
+    <div class="sld"><label>Fonte: v<sub>fonte</sub> = <span class="val" id="foSv">150</span> m/s</label>
+      <span class="est" id="foSs">aproximando</span>
+      <input type="range" id="foS" min="-600" max="600" value="150" step="5"></div>
+    <div class="sld"><label>Observador: v<sub>obs</sub> = <span class="val" id="foOv">0</span> m/s</label>
+      <span class="est" id="foOs">parado</span>
+      <input type="range" id="foO" min="-600" max="600" value="0" step="5"></div>
+  </div>
+  <div class="fo-row">
+    <button id="foPlay">⏸ Pausar</button>
+    <button class="foPre" data-s="0"   data-o="0">Ambos parados</button>
+    <button class="foPre" data-s="150" data-o="0">Fonte se aproxima</button>
+    <button class="foPre" data-s="-150" data-o="0">Fonte se afasta</button>
+    <button class="foPre" data-s="0"   data-o="-150">Observador se aproxima</button>
+    <button class="foPre" data-s="120" data-o="-120">Ambos, um contra o outro</button>
+    <button class="foPre" data-s="340" data-o="0">v<sub>fonte</sub> = v (M = 1)</button>
+    <button class="foPre" data-s="510" data-o="0">Supersônico (M = 1,5)</button>
+  </div>
+  <div id="foSketch"></div>
+  <div id="foEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  const V=340, F0=4, T0=1/F0, LENTO=0.45, MUNDO=900;  // m/s, Hz, s, fator de câmera lenta, m
+  const HC=330, HF=100, HT=HC+HF;                     // alturas: cena, fitas, total
+  const TAXA=200;                                     // px por segundo de simulação nas fitas
+  let vs=150, vo=0, xs=0, xo=0, t=0, tProx=0, frentes=[], tEmit=[], tRec=[], brilho=-9;
+  let rodando=true, W=1000, mpp=1;
+  const X=m=>m/mpp;
+
+  function zera(){ xs=0.10*MUNDO; xo=0.78*MUNDO; t=0; tProx=0;
+                   frentes=[]; tEmit=[]; tRec=[]; brilho=-9; }
+  zera();
+
+  function passo(dt){
+    t+=dt; xs+=vs*dt; xo+=vo*dt;
+    while(tProx<=t){ frentes.push({x:xs-vs*(t-tProx), t0:tProx, pego:false});
+                     tEmit.push(tProx); tProx+=T0; }
+    for(const f of frentes){
+      if(!f.pego && V*(t-f.t0)>=Math.abs(xo-f.x)){ f.pego=true; tRec.push(t); brilho=t; }
+    }
+    frentes=frentes.filter(f=>V*(t-f.t0)<MUNDO*1.9);
+    const janela=W/TAXA+1;
+    tEmit=tEmit.filter(u=>t-u<janela); tRec=tRec.filter(u=>t-u<janela);
+    if(xs<30||xs>MUNDO-30||xo<30||xo>MUNDO-30||Math.abs(xs-xo)<35) zera();
+  }
+
+  const cw=()=>{ const w=el('foSketch').clientWidth||960; return Math.max(340,Math.min(1000,w)); };
+
+  new p5(p=>{
+    const seta=(x,y,v,c)=>{
+      p.noStroke(); p.fill(c); p.circle(x,y,11);
+      if(Math.abs(v)<1) return;
+      const d=Math.sign(v), L=12+Math.min(28,Math.abs(v)/16);
+      p.stroke(c); p.strokeWeight(2); p.line(x+d*9,y,x+d*(9+L),y);
+      p.noStroke(); p.triangle(x+d*(9+L),y, x+d*(4+L),y-4.5, x+d*(4+L),y+4.5);
+    };
+    p.setup=()=>{ p.createCanvas(cw(),HT).parent('foSketch'); W=p.width; mpp=MUNDO/W; };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),HT); W=p.width; mpp=MUNDO/W; };
+    p.draw=()=>{
+      W=p.width; mpp=MUNDO/W;
+      if(rodando) passo(Math.min(0.05,p.deltaTime/1000)*LENTO);
+      p.background('#faf8f4');
+      const eixo=HC*0.5;
+
+      // ── cena: frentes de onda, cone de Mach, fonte e observador ──
+      const ctx=p.drawingContext;
+      ctx.save(); ctx.beginPath(); ctx.rect(0,0,W,HC); ctx.clip();
+      p.stroke('#d8cfc0'); p.strokeWeight(1);
+      ctx.setLineDash([3,7]); p.line(0,eixo,W,eixo); ctx.setLineDash([]);
+      p.noFill();
+      for(const f of frentes){
+        const R=X(V*(t-f.t0)), a=Math.max(0,1-V*(t-f.t0)/(MUNDO*1.5));
+        p.stroke(31,71,200,255*a*0.75); p.strokeWeight(1.4);
+        p.circle(X(f.x),eixo,2*R);
+      }
+      if(Math.abs(vs)>V+1){
+        const mu=Math.asin(V/Math.abs(vs)), d=-Math.sign(vs), L=W*1.6;
+        p.stroke('#66308c'); p.strokeWeight(1.8);
+        for(const s of [-1,1])
+          p.line(X(xs),eixo, X(xs)+d*Math.cos(mu)*L, eixo+s*Math.sin(mu)*L);
+      }
+      if(t-brilho<0.12){ p.noStroke(); p.fill(200,31,31,55); p.circle(X(xo),eixo,40); }
+      seta(X(xs),eixo,vs,'#c85c2e');
+      seta(X(xo),eixo,vo,'#c81f1f');
+      p.noStroke(); p.textSize(12); p.textAlign(p.CENTER,p.TOP);
+      p.fill('#c85c2e'); p.text('fonte',X(xs),eixo+16);
+      p.fill('#c81f1f'); p.text('observador',X(xo),eixo+16);
+      ctx.restore();
+
+      // ── fitas: pulsos emitidos e recebidos ──
+      p.stroke('#e7e0d4'); p.strokeWeight(1); p.line(0,HC+6,W,HC+6);
+      const esq=104, dir=W-12;
+      const linhas=[[HC+38,tEmit,'#1f47c8','emitido   f₀'],[HC+78,tRec,'#c81f1f','recebido  f′']];
+      for(const [y,arr,c,rot] of linhas){
+        p.stroke('#e7e0d4'); p.strokeWeight(1); p.line(esq,y,dir,y);
+        p.noStroke(); p.fill('#8a8278'); p.textSize(11); p.textAlign(p.LEFT,p.CENTER);
+        p.text(rot,10,y);
+        p.stroke(c); p.strokeWeight(2);
+        for(const u of arr){ const x=dir-(t-u)*TAXA; if(x<esq||x>dir) continue;
+          p.line(x,y-11,x,y+11); }
+      }
+    };
+  });
+
+  function fisica(){
+    const sAp=vs, oAp=-vo;                       // componentes de aproximação
+    const den=V-sAp, num=V+oAp;
+    const n2=x=>x.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+    const par=x=>x<0 ? '(−'+Math.abs(x).toFixed(0)+')' : x.toFixed(0);
+    if(sAp>=V){
+      const M=Math.abs(vs)/V;
+      el('foEq').innerHTML='v − v<sub>fonte</sub> = '+den.toFixed(0).replace('-','−')+' m/s: a fórmula perde sentido. '+
+        '<span class="alerta">'+(M>1.001?'Cone de Mach':'Onda de choque')+'</span> &nbsp;|&nbsp; '+
+        'M = '+n2(M)+(M>1.001?' &nbsp;|&nbsp; sen θ = v/v<sub>fonte</sub> → θ = '+
+        (Math.asin(V/Math.abs(vs))*180/Math.PI).toFixed(0)+'°':'');
+    } else if(num<=0){
+      el('foEq').innerHTML='v + v<sub>obs</sub> = '+num.toFixed(0).replace('-','−')+' m/s ≤ 0: '+
+        '<span class="alerta">nenhuma frente alcança o observador</span>, que se afasta mais depressa que a onda.';
+    } else {
+      const f=F0*num/den, lam=den/F0;
+      el('foEq').innerHTML='f′ = f₀ (v + v<sub>obs</sub>)/(v − v<sub>fonte</sub>) = 4,00 · ('+
+        V+' + '+par(oAp)+')/('+V+' − '+par(sAp)+') = <b>'+n2(f)+' Hz</b><br>'+
+        'f′/f₀ = '+n2(f/F0)+' &nbsp;|&nbsp; λ′ = (v − v<sub>fonte</sub>)/f₀ = '+n2(lam)+
+        ' m &nbsp;|&nbsp; só a fonte em movimento altera λ; o observador altera a taxa de encontro.';
+    }
+  }
+  function rotulo(v,idv,ids,aproximaPositivo){
+    el(idv).textContent=(v>0?'→ ':v<0?'← ':'')+Math.abs(v);
+    el(ids).textContent = v===0 ? 'parado' : ((v>0)===aproximaPositivo ? 'aproximando' : 'afastando');
+  }
+  function sincroniza(){
+    vs=+el('foS').value; vo=+el('foO').value;
+    rotulo(vs,'foSv','foSs',true);    // fonte à esquerda: +x aproxima
+    rotulo(vo,'foOv','foOs',false);   // observador à direita: −x aproxima
+    fisica();
+  }
+  el('foS').addEventListener('input',sincroniza);
+  el('foO').addEventListener('input',sincroniza);
+  document.querySelectorAll('.foPre').forEach(b=>b.addEventListener('click',()=>{
+    el('foS').value=b.dataset.s; el('foO').value=b.dataset.o; sincroniza(); zera();
+  }));
+  el('foPlay').onclick=()=>{ rodando=!rodando;
+    el('foPlay').textContent=rodando?'⏸ Pausar':'▶ Reproduzir'; };
+  sincroniza();
+})();
+</script>
+```
+
+::: {.pergunta}
+1. Com a fonte parada, as frentes são círculos concêntricos e as duas fitas coincidem. Posta a
+   fonte a 150 m/s, os centros deixam de coincidir. O que se deslocou: as frentes já emitidas ou
+   os pontos de emissão? Por que só isso já altera $\lambda'$?
+2. Compare **fonte a 150 m/s** com **observador a 150 m/s**, um caso de cada vez. As frequências
+   recebidas coincidem? Confira pela fórmula geral e explique por que numerador e denominador não
+   são intercambiáveis.
+3. Com a fonte a 150 m/s, $\lambda' = 47{,}5$ m à frente. Verifique no painel que $\lambda'$ não muda
+   quando apenas o observador se move — e diga o que muda nesse caso.
+4. Levada a fonte a 340 m/s, o denominador se anula e a expressão perde sentido. O que as frentes
+   fazem na tela nesse instante, e por que nenhuma frequência finita descreve a situação?
+:::
+
 ## Casos de fonte e observador em movimento {{< ra OE2.23 B2 >}}
 
 **Situação típica do log Doppler:** o navio transmite um pulso sonoro de frequência $f_0$ (ex.: 400 kHz) para baixo, em direção ao fundo. Pelo efeito Doppler:

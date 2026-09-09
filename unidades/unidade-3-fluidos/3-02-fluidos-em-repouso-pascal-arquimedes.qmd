@@ -82,6 +82,279 @@ A densidade de força volumétrica iguala, portanto, o gradiente da pressão. A 
 gradiente, de sorte que a força volumétrica em cada ponto é perpendicular à isobárica que por ele
 passa e aponta no sentido de $p$ crescente.
 
+### O gradiente da pressão, visto no campo
+
+O campo de cores traz a pressão; as linhas, as superfícies isobáricas; as setas curtas, a
+densidade de força $\mathbf{f}$ em cada ponto. O ponto móvel exibe o vetor
+$\operatorname{grad} p$ e a tangente à isobárica que por ele passa. No fluido em repouso a
+pressão só depende da profundidade, as isobáricas são horizontais e igualmente espaçadas e o
+gradiente é o mesmo em todo ponto. O segundo campo, meramente geométrico, não corresponde a
+nenhum fluido em equilíbrio: serve para exibir a definição de gradiente onde as linhas de nível
+são curvas e o espaçamento varia.
+
+```{python}
+#| fig-cap: "Esquerda: água do mar em repouso (ρ = 1025 kg/m³), 48 m de largura por 20 m de profundidade — isobáricas horizontais a cada 25 kPa e grad p uniforme, de módulo ρg = 10,06 kPa/m. Direita: campo escalar genérico, com linhas de nível curvas; em ambos o gradiente é normal à linha de nível e aponta no sentido crescente. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesmos parâmetros da versão interativa (SVG)
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.colors import LinearSegmentedColormap
+
+RHO, G, PATM = 1025.0, 9.81, 101.3        # kg/m³, m/s², kPa
+LX, LH = 48.0, 20.0                        # largura e profundidade do domínio (m)
+cmap = LinearSegmentedColormap.from_list('terra', ['#F5F2EC', '#E9BE97', '#C85C2E'])
+
+x = np.linspace(-LX/2, LX/2, 320)
+h = np.linspace(0, LH, 200)
+X, H = np.meshgrid(x, h)
+
+# campo A — fluido em repouso: p = p_atm + rho*g*h
+PA = PATM + RHO*G*H/1000.0
+# campo B — campo escalar genérico (adimensional), centrado em (0, 10 m)
+A, B = 17.0, 7.0
+U, V = X/A, (H - 10.0)/B
+PB = np.exp(-(U**2 + V**2))
+
+fig, axs = plt.subplots(1, 2, figsize=(9.2, 3.4))
+for ax, Z, ttl, lv in [
+        (axs[0], PA, 'fluido em repouso — p (kPa)', np.arange(125, 301, 25)),
+        (axs[1], PB, 'campo escalar genérico', np.arange(0.15, 0.91, 0.15))]:
+    ax.contourf(X, H, Z, levels=24, cmap=cmap)
+    ax.contour(X, H, Z, levels=lv, colors='#1F47C8', linewidths=0.9, alpha=0.8)
+    gh, gx = np.gradient(Z, h, x)                       # (d/dh, d/dx)
+    sx, sh = X[::28, ::36], H[::28, ::36]
+    ux, uh = gx[::28, ::36], gh[::28, ::36]
+    m = np.hypot(ux, uh); m[m == 0] = 1e-12
+    # angles='uv': a componente vertical vai negada porque o eixo h aponta para baixo
+    ax.quiver(sx, sh, ux/m, -uh/m, color='#46403A', alpha=0.65,
+              scale=17, width=0.006)
+    ax.set_title(ttl, fontsize=9)
+    ax.set_xlabel('x (m)'); ax.set_ylabel('profundidade h (m)')
+    ax.invert_yaxis(); ax.set_aspect('equal')
+
+# ponto e vetor gradiente, na mesma posição relativa da versão interativa
+px, ph = 9.6, 13.0
+for ax, Z in [(axs[0], PA), (axs[1], PB)]:
+    gh_, gx_ = np.gradient(Z, h, x)
+    i = np.argmin(abs(h - ph)); j = np.argmin(abs(x - px))
+    ux, uh = gx_[i, j], gh_[i, j]
+    m = np.hypot(ux, uh) or 1e-12
+    ax.annotate('', xy=(px + ux/m*7, ph + uh/m*7), xytext=(px, ph),
+                arrowprops=dict(arrowstyle='-|>', color='#5C2A14', lw=2.2))
+    ax.plot([px - uh/m*6, px + uh/m*6], [ph + ux/m*6, ph - ux/m*6],
+            color='#1F47C8', lw=1.6, ls='--')
+    ax.plot(px, ph, 'o', ms=8, mfc='#FFFFFF', mec='#1C1208', mew=2)
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — SVG puro, sem dependência (tabela Q4: CAMPO com isolinhas, faixa
+     do D3.js; D3 não está em libs/ e o modo offline do Q6 proíbe CDN, de modo que o
+     desenho é feito em SVG nativo — mesmo produto, zero dependência). Campo A com os
+     valores navais do texto (água do mar, 1025 kg/m³, 20 m de profundidade); campo B
+     adimensional, só geometria. Mesmos parâmetros da versão matplotlib. -->
+<style>
+  .gd-wrap{max-width:1000px;margin:1rem auto;}
+  .gd-wrap .gd-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:flex-end;margin-bottom:8px;}
+  .gd-wrap .gd-grp{display:flex;flex-direction:column;gap:4px;}
+  .gd-wrap .gd-grp .cap{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8a8278;font-family:"IBM Plex Mono",monospace;}
+  .gd-wrap .gd-btns{display:flex;flex-wrap:wrap;gap:6px;}
+  .gd-wrap button{border:1px solid #c9c2b6;background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;color:#1c1208;cursor:pointer;}
+  .gd-wrap button[aria-pressed="true"]{background:#ede3da;border-color:#c85c2e;color:#5c2a14;}
+  .gd-wrap button[aria-pressed="false"]{opacity:.55;}
+  .gd-wrap #gdStage{width:100%;aspect-ratio:2.4;border-radius:8px;overflow:hidden;background:#faf8f4;}
+  .gd-wrap #gdSvg{display:block;width:100%;height:100%;touch-action:none;cursor:crosshair;}
+  .gd-wrap #gdEq{font-size:14px;margin:8px 2px 0;line-height:1.6;}
+  .gd-wrap #gdEq b{color:#5c2a14;}
+</style>
+<div class="gd-wrap sim">
+  <div class="gd-row">
+    <div class="gd-grp"><span class="cap">Campo</span>
+      <div class="gd-btns" id="gdFields">
+        <button class="gd-f" data-f="a" aria-pressed="true">Fluido em repouso</button>
+        <button class="gd-f" data-f="b" aria-pressed="false">Campo genérico</button>
+      </div>
+    </div>
+    <div class="gd-grp"><span class="cap">Camadas</span>
+      <div class="gd-btns" id="gdLayers">
+        <button class="gd-l" data-l="gdLp" aria-pressed="true">Pressão</button>
+        <button class="gd-l" data-l="gdLi" aria-pressed="true">Isobáricas</button>
+        <button class="gd-l" data-l="gdLv" aria-pressed="true">Campo f</button>
+        <button class="gd-l" data-l="gdLg" aria-pressed="true">Gradiente no ponto</button>
+      </div>
+    </div>
+  </div>
+  <div id="gdStage">
+    <svg id="gdSvg" preserveAspectRatio="none" role="img"
+         aria-label="Campo de pressão em cores, isobáricas, campo vetorial da densidade de força e o vetor gradiente num ponto móvel.">
+      <defs>
+        <marker id="gdAh" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.7"
+                stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+      <g id="gdLp"></g>
+      <g id="gdLi" fill="none" stroke="#1f47c8" stroke-width="1.2" stroke-opacity="0.8"></g>
+      <g id="gdLv" stroke="#46403a" stroke-opacity="0.65" stroke-width="1.8"></g>
+      <g id="gdLg">
+        <line id="gdTg" stroke="#1f47c8" stroke-width="2" stroke-dasharray="7 5"/>
+        <line id="gdGv" stroke="#5c2a14" stroke-width="4" marker-end="url(#gdAh)"/>
+        <circle id="gdPt" r="7" fill="#ffffff" stroke="#1c1208" stroke-width="2.5"/>
+      </g>
+    </svg>
+  </div>
+  <div id="gdEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  const RHO=1025, G=9.81, PATM=101.3;            // kg/m³, m/s², kPa
+  const LX=48, LH=20;                            // domínio: 48 m x 20 m
+  const PMAX=PATM+RHO*G*LH/1000;                 // ~302 kPa no fundo
+  const AA=17, BB=7, HC=10;                      // campo genérico: escalas e centro
+  let W=1000, H=417, modo='a', fx=0.70, fh=0.65;
+  const on={gdLp:true, gdLi:true, gdLv:true, gdLg:true};
+
+  const wx=s=>(s/W-0.5)*LX, wh=s=>s/H*LH;        // px -> mundo
+  const sx=x=>(x/LX+0.5)*W,  sh=h=>h/LH*H;       // mundo -> px
+
+  // p em kPa (campo A) ou valor adimensional (campo B)
+  function val(x,h){
+    if(modo==='a') return PATM+RHO*G*h/1000;
+    const u=x/AA, v=(h-HC)/BB;
+    return Math.exp(-(u*u+v*v));
+  }
+  // gradiente em (x,h): componentes por metro
+  function grad(x,h){
+    if(modo==='a') return [0, RHO*G/1000];
+    const u=x/AA, v=(h-HC)/BB, w=val(x,h);
+    return [w*(-2*u/AA), w*(-2*v/BB)];
+  }
+  const GREF=()=>modo==='a'? RHO*G/1000 : 2/Math.min(AA,BB)*0.37;
+
+  function cor(t){
+    t=Math.max(0,Math.min(1,t));
+    const A=[245,242,236], B=[233,190,151], C=[200,92,46];
+    let c0,c1,s;
+    if(t<0.5){ s=t/0.5; c0=A; c1=B; } else { s=(t-0.5)/0.5; c0=B; c1=C; }
+    return 'rgb('+Math.round(c0[0]+(c1[0]-c0[0])*s)+','
+                 +Math.round(c0[1]+(c1[1]-c0[1])*s)+','
+                 +Math.round(c0[2]+(c1[2]-c0[2])*s)+')';
+  }
+  const norm=v=>modo==='a' ? (v-PATM)/(PMAX-PATM) : v;
+
+  function pintaCampo(){
+    const C=Math.max(8,Math.round(W/72)), nx=Math.ceil(W/C), nh=Math.ceil(H/C);
+    let s='';
+    for(let i=0;i<nx;i++) for(let j=0;j<nh;j++){
+      const a=i*C+C/2, b=j*C+C/2;
+      s+='<rect x="'+(i*C)+'" y="'+(j*C)+'" width="'+(C+0.8)+'" height="'+(C+0.8)+
+         '" fill="'+cor(norm(val(wx(a),wh(b))))+'"/>';
+    }
+    el('gdLp').innerHTML=s;
+  }
+  function desenhaIso(){
+    let s='';
+    if(modo==='a'){
+      for(let p=125;p<=300;p+=25){
+        const y=sh((p-PATM)*1000/(RHO*G));
+        s+='<line x1="0" y1="'+y.toFixed(1)+'" x2="'+W+'" y2="'+y.toFixed(1)+'"/>';
+      }
+    } else {
+      for(const v of [0.15,0.30,0.45,0.60,0.75,0.90]){
+        const r=Math.sqrt(-Math.log(v));
+        s+='<ellipse cx="'+sx(0).toFixed(1)+'" cy="'+sh(HC).toFixed(1)+
+           '" rx="'+(AA*r/LX*W).toFixed(1)+'" ry="'+(BB*r/LH*H).toFixed(1)+'"/>';
+      }
+    }
+    el('gdLi').innerHTML=s;
+  }
+  function desenhaCampoVet(){
+    let s=''; const gx=W/10, gy=H/6, Lmax=Math.min(W,H)/9, gref=GREF();
+    for(let a=gx*0.6; a<W; a+=gx) for(let b=gy*0.55; b<H; b+=gy){
+      const g=grad(wx(a),wh(b)), m=Math.hypot(g[0],g[1]);
+      if(m<gref*0.06) continue;
+      const L=Math.min(Lmax, m/gref*Lmax*0.6+Lmax*0.32);
+      const dx=g[0]/m, dh=g[1]/m;                       // unitário no mundo
+      s+='<line x1="'+a.toFixed(1)+'" y1="'+b.toFixed(1)+'" x2="'+(a+dx*L).toFixed(1)+
+         '" y2="'+(b+dh*L).toFixed(1)+'" marker-end="url(#gdAh)"/>';
+    }
+    el('gdLv').innerHTML=s;
+  }
+  function desenhaPonto(){
+    const a=fx*W, b=fh*H, x=wx(a), h=wh(b);
+    const g=grad(x,h), m=Math.hypot(g[0],g[1])||1e-12;
+    const ux=g[0]/m, uh=g[1]/m, gref=GREF();
+    const Lm=Math.min(W,H)/3.6, L=Math.min(Lm, m/gref*Lm*0.7+Lm*0.24), T=Math.min(W,H)/6;
+    el('gdPt').setAttribute('cx',a.toFixed(1)); el('gdPt').setAttribute('cy',b.toFixed(1));
+    const gv=el('gdGv');
+    gv.setAttribute('x1',a.toFixed(1)); gv.setAttribute('y1',b.toFixed(1));
+    gv.setAttribute('x2',(a+ux*L).toFixed(1)); gv.setAttribute('y2',(b+uh*L).toFixed(1));
+    const tg=el('gdTg');
+    tg.setAttribute('x1',(a-uh*T).toFixed(1)); tg.setAttribute('y1',(b+ux*T).toFixed(1));
+    tg.setAttribute('x2',(a+uh*T).toFixed(1)); tg.setAttribute('y2',(b-ux*T).toFixed(1));
+
+    const n2=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+    const n3=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:3,maximumFractionDigits:3}).replace('-','−');
+    if(modo==='a'){
+      el('gdEq').innerHTML=
+        'x = '+n2(x)+' m &nbsp;|&nbsp; h = '+n2(h)+' m &nbsp;|&nbsp; p = <b>'+n2(val(x,h))+' kPa</b><br>'+
+        '∂p/∂x = 0 &nbsp;|&nbsp; ∂p/∂h = ρg = '+n2(RHO*G/1000)+' kPa/m &nbsp;|&nbsp; '+
+        '|grad p| = <b>'+n2(m)+' kPa/m</b>, vertical, dirigido para o fundo';
+    } else {
+      el('gdEq').innerHTML=
+        'x = '+n2(x)+' m &nbsp;|&nbsp; h = '+n2(h)+' m &nbsp;|&nbsp; valor = <b>'+n2(val(x,h))+'</b> (adimensional)<br>'+
+        '∂/∂x = '+n3(g[0])+' m⁻¹ &nbsp;|&nbsp; ∂/∂h = '+n3(g[1])+' m⁻¹ &nbsp;|&nbsp; '+
+        '|grad| = <b>'+n3(m)+' m⁻¹</b>, normal à linha de nível tracejada';
+    }
+  }
+  function redesenha(){ pintaCampo(); desenhaIso(); desenhaCampoVet(); desenhaPonto(); }
+
+  function ajusta(){
+    const r=el('gdStage').getBoundingClientRect();
+    W=Math.max(340,Math.round(r.width)); H=Math.max(150,Math.round(r.height));
+    el('gdSvg').setAttribute('viewBox','0 0 '+W+' '+H);
+    redesenha();
+  }
+  function move(ev){
+    const r=el('gdSvg').getBoundingClientRect();
+    fx=Math.min(0.985,Math.max(0.015,(ev.clientX-r.left)/r.width));
+    fh=Math.min(0.97,Math.max(0.03,(ev.clientY-r.top)/r.height));
+    desenhaPonto();
+  }
+  el('gdSvg').addEventListener('pointerdown',e=>{ el('gdSvg').setPointerCapture(e.pointerId); move(e); });
+  el('gdSvg').addEventListener('pointermove',e=>{ if(e.buttons) move(e); });
+
+  document.querySelectorAll('.gd-l').forEach(b=>b.addEventListener('click',()=>{
+    const k=b.dataset.l; on[k]=!on[k];
+    el(k).style.display=on[k]?'':'none'; b.setAttribute('aria-pressed',on[k]);
+  }));
+  document.querySelectorAll('.gd-f').forEach(b=>b.addEventListener('click',()=>{
+    modo=b.dataset.f;
+    fx=0.70; fh=modo==='a'?0.65:0.65;
+    document.querySelectorAll('.gd-f').forEach(o=>o.setAttribute('aria-pressed',o.dataset.f===modo));
+    redesenha();
+  }));
+  window.addEventListener('resize',ajusta);
+  ajusta();
+})();
+</script>
+```
+
+::: {.pergunta}
+1. No fluido em repouso, o vetor $\operatorname{grad} p$ é o mesmo em qualquer ponto que se
+   escolha. Que propriedade do campo gravitacional produz essa uniformidade, e o que mudaria se
+   a densidade crescesse com a profundidade?
+2. Desligada a camada das isobáricas, ainda é possível dizer onde elas passam observando apenas
+   as setas? Justifique pela relação entre o gradiente e as superfícies de nível.
+3. No campo genérico, arraste o ponto de uma região de linhas afastadas para outra de linhas
+   próximas. O que ocorre com o comprimento do vetor, e por que o espaçamento das linhas de
+   nível mede o módulo do gradiente?
+4. A pressão a 20 m de profundidade é cerca de 302 kPa, três vezes a atmosférica. Escrita como
+   $\mathbf{f} = \operatorname{grad} p$, essa diferença é o que sustenta o peso da coluna
+   líquida: mostre que $\rho g = 10{,}06$ kPa/m reproduz o valor lido no painel.
+:::
+
 Uma força volumétrica que sempre atua sobre o fluido é a gravitacional, cuja densidade é
 
 $$\mathbf{f} = \rho\,\mathbf{g} = -\rho g\,\mathbf{k}$$
