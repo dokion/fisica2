@@ -14,14 +14,15 @@ OE 1.22 [B4] Analisar a dissipação de energia em oscilações amortecidas
 
 {{< aula 11-12 >}}
 
-Energia é a moeda universal da física: flui, se transforma, mas nunca é criada nem destruída.
-Em um oscilador, a energia migra entre forma cinética (movimento) e forma potencial
-(deformação, altura). Quando amortecimento entra em cena, parte dessa energia é dissipada
-em calor. Ler esse fluxo energético é essencial para entender fadiga de estruturas navais.
+A energia flui e se transforma, mas não é criada nem destruída. Num oscilador ela migra
+entre a forma cinética, do movimento, e a potencial, de deformação ou de altura. Havendo
+amortecimento, parte dela é dissipada em calor. Desse fluxo energético depende a leitura da
+fadiga das estruturas navais.
 
 ## Energia cinética e potencial do oscilador {{< ra OE1.20 B3 >}}
 
-Para um MHS $x(t) = A\cos(\omega t + \varphi)$, velocidade é $v(t) = \dot{x}(t) = -A\omega\sin(\omega t + \varphi)$.
+Para um MHS $x(t) = A\cos(\omega t + \varphi)$, a velocidade é
+$v(t) = \dot{x}(t) = -A\omega\sin(\omega t + \varphi)$.
 
 **Energia cinética:**
 $$E_c(t) = \frac{1}{2}mv^2 = \frac{1}{2}mA^2\omega^2\sin^2(\omega t + \varphi)$$
@@ -32,8 +33,8 @@ $$E_p(t) = \frac{1}{2}kx^2 = \frac{1}{2}kA^2\cos^2(\omega t + \varphi)$$
 Usando $k = m\omega^2$ (relação fundamental do MHS):
 $$E_p(t) = \frac{1}{2}m\omega^2 A^2\cos^2(\omega t + \varphi)$$
 
-Ambas oscilam no tempo, mas note que quando $E_c$ é máxima (em $x=0$, velocidade no pico),
-$E_p$ é zero. E vice-versa — é uma dança: cinética e potencial trocam lugar a cada meio ciclo.
+Ambas oscilam no tempo, e quando $E_c$ é máxima, em $x=0$ e com a velocidade no pico,
+$E_p$ é nula, e reciprocamente: cinética e potencial trocam de lugar a cada meio ciclo.
 
 ## Conservação de energia sem amortecimento {{< ra OE1.21 B2 >}}
 
@@ -42,17 +43,18 @@ $$E_{\text{total}} = E_c + E_p = \frac{1}{2}mA^2\omega^2[\sin^2(\omega t + \varp
 
 $$E_{\text{total}} = \frac{1}{2}mA^2\omega^2 = \frac{1}{2}kA^2$$
 
-**A energia total é constante!** Não depende do tempo. Ela é determinada por dois parâmetros
-que não mudam no MHS ideal: amplitude $A$ e frequência $\omega$ (ou constante de mola $k$).
+A **energia total é constante** e não depende do tempo: fica determinada por dois parâmetros
+que no MHS ideal não mudam, a amplitude $A$ e a frequência $\omega$, ou a constante elástica
+$k$.
 
-Essa conservação reflete um princípio profundo: sem força dissipativa, nada pode tirar energia
-do sistema. Um pêndulo ideal bate para frente e para trás para sempre; um casco em água calma
-(idealizado sem amortecimento) balança eternamente após uma pancada.
+A conservação decorre de não haver força dissipativa para retirar energia do sistema. Um
+pêndulo ideal oscila indefinidamente, e um casco em água calma, idealizado sem
+amortecimento, balança sem fim depois de uma pancada.
 
 ## Dissipação de energia em osciladores amortecidos {{< ra OE1.22 B4 >}}
 
-Na realidade, a força dissipativa $F_{\text{damp}} = -b\dot{x}$ remove energia a cada ciclo. A taxa
-instantânea de dissipação é:
+Na realidade, a força dissipativa $F_{\text{damp}} = -b\dot{x}$ remove energia a cada ciclo.
+A **taxa instantânea de dissipação** é:
 
 $$P(t) = F_{\text{damp}} \cdot v = -b\dot{x}^2$$
 
@@ -64,19 +66,20 @@ a energia total cai exponencialmente:
 
 $$E(t) = E_0 e^{-2\gamma t}$$
 
-Tempo de decaimento de energia: $\tau_E = 1/(2\gamma)$ (metade do tempo de decaimento de amplitude).
+O **tempo de decaimento de energia** é $\tau_E = 1/(2\gamma)$, metade do tempo de decaimento
+da amplitude.
 
-**Implicação prática em navios:** um navio balançado por onda (excitação impulsiva) perde
-metade de sua energia cinética de balanço em alguns minutos a horas, dependendo do amortecimento
-estrutural. Se $\gamma = 0{,}01$ rad/s (típico), $\tau_E \approx 50$ s — o casco "esquece" da
+**Implicação prática em navios:** um navio balançado por uma pancada de onda perde metade da
+energia de balanço em alguns minutos a horas, conforme o amortecimento estrutural. Para
+$\gamma = 0{,}01$ rad/s, valor típico, $\tau_E \approx 50$ s, e o casco perde memória da
 perturbação em menos de 2 minutos.
 
-## Veja a energia migrar
+## Migração de energia entre as formas cinética e potencial
 
-A massa oscila à esquerda; as barras mostram, no mesmo instante, a energia cinética
-(vermelha), a potencial (azul) e a total (roxa). Com $\gamma = 0$ a barra roxa não se
-mexe — cinética e potencial apenas trocam de lugar. Ligue o amortecimento no slider e
-observe a total escorrer como $E_0\,e^{-2\gamma t}$.
+A massa oscila à esquerda, e as barras trazem, no mesmo instante, a energia cinética, em
+vermelho, a potencial, em azul, e a total, em roxo. Com $\gamma = 0$ a barra roxa não se
+move, pois cinética e potencial apenas trocam de lugar. Ligado o amortecimento, a total
+escorre como $E_0\,e^{-2\gamma t}$.
 
 ```{python}
 #| fig-cap: "Energias do oscilador (m = 1, T₀ = 4 s, x₀ = A, v₀ = 0). Esq.: sem amortecimento — E_c e E_p oscilam em oposição e a soma é constante. Dir.: com γ/ω₀ = 0,1 — a total decai como E₀e^(−2γt) (tracejada). Mesmos parâmetros da versão interativa."
@@ -236,13 +239,12 @@ plt.tight_layout(); plt.show()
    azul ($E_p$)? Quantas vezes por período cada barra zera?
 2. As curvas $E_c(t)$ e $E_p(t)$ oscilam duas vezes mais rápido que a massa. Mostre por
    quê, a partir de $\sin^2$ e $\cos^2$.
-3. Ligue $\gamma/\omega_0 = 0{,}1$: a total decai sobre a tracejada $e^{-2\gamma t}$.
-   Se a amplitude cai à metade em um dado tempo, quanto caiu a energia? Verifique nas
-   barras.
+3. Com $\gamma/\omega_0 = 0{,}1$, a total decai sobre a tracejada $e^{-2\gamma t}$. Se a
+   amplitude cai à metade num dado tempo, quanto caiu a energia? Verifique nas barras.
 :::
 
 ::: {.sp}
-Um navio ro-ro (roro) de 12 mil toneladas é excitado por pancada de onda, adquirindo ângulo de
+Um navio *ro-ro* de 12 mil toneladas é excitado por pancada de onda, adquirindo ângulo de
 balanço inicial $\theta_0 = 6°$. Período natural $T_0 = 11$ s. Amortecimento é estimado em
 $\gamma = 0{,}008$ rad/s. Quanto tempo leva para a energia de balanço cair a 10% do valor inicial?
 
@@ -255,12 +257,12 @@ t = \frac{\ln 10}{2\gamma} = \frac{2{,}303}{2 \times 0{,}008} \approx 144\ \text
 
 Número de ciclos de balanço nesse intervalo: $144/11 \approx 13$.
 
-**(c) Resultado.** A energia cai a 10% em cerca de 2 min 24 s — aproximadamente 13
-períodos de balanço.
+**(c) Resultado.** A energia cai a 10% em cerca de 2 min 24 s, aproximadamente 13 períodos
+de balanço.
 
 **(d) Análise crítica.** Como $E \propto \theta^2$, a amplitude nesse instante é
-$\theta = \theta_0\sqrt{0{,}1} \approx 1{,}9°$ — o navio ainda balança visivelmente
-com só 10% da energia inicial; a percepção de bordo decai mais devagar que a energia.
+$\theta = \theta_0\sqrt{0{,}1} \approx 1{,}9°$: o navio ainda balança visivelmente com
+apenas 10% da energia inicial, e a percepção de bordo decai mais devagar que a energia.
 O valor $\gamma = 0{,}008$ rad/s é representativo de casco sem apêndices; bolinas ou
 tanques estabilizadores elevam o $\gamma$ efetivo e encurtam esse tempo na mesma
 proporção.
@@ -268,26 +270,25 @@ proporção.
 
 ## Estresse reversivo em componentes {{< ra OE1.22 B4 >}}
 
-Energia dissipada em amortecimento viscoso é convertida em calor. Mas onde? Nos materiais e
-ligações que sustentam a oscilação. Cada ciclo de movimento causa deformação local seguida de
-recuperação — é o **estresse reversivo** (alternating stress).
+A energia dissipada no amortecimento viscoso converte-se em calor nos materiais e nas
+ligações que sustentam a oscilação. Cada ciclo de movimento produz deformação local seguida
+de recuperação: é o **estresse reversivo** (*alternating stress*).
 
-Componentes estruturais (costados, anteparas, nervuras) sofrem fadiga quando submetidos a
-centenas de milhares de ciclos de tensão. Quanto maior o amortecimento, mais rápida a queda
-de amplitude, mas enquanto a oscilação dura, cada ciclo adiciona dano acumulativo (integração
-de ciclos de tensão).
+Costados, anteparas e nervuras sofrem **fadiga** quando submetidos a centenas de milhares de
+ciclos de tensão. Quanto maior o amortecimento, mais rápida a queda de amplitude; enquanto a
+oscilação dura, porém, cada ciclo acrescenta dano acumulado.
 
-Engenheiros navais usam curvas S-N (Stress vs. Number of cycles) de fadiga para estimar vida
-útil sob oscilação. Um navio em operação no Atlântico Sul (ondas moderadas a pesadas) pode
-sofrer milhões de ciclos de balanço em um ano — dimensionamento inadequado de estrutura leva
-a trincas prematuras.
+A engenharia naval recorre às **curvas S-N** de fadiga (*stress vs. number of cycles*) para
+estimar a vida útil sob oscilação. Um navio em operação no Atlântico Sul, com ondas
+moderadas a pesadas, sofre milhões de ciclos de balanço num ano, e o dimensionamento
+inadequado da estrutura leva a trincas prematuras.
 
 ::: {.callout-warning}
 ## Erros clássicos
 
 - **Confundir energia total com amplitude:** energia é proporcional a $A^2$, não a $A$. Reduzir
   amplitude à metade reduz energia a um quarto.
-- **Achar que amortecimento "cria" energia:** não, apenas a retira e a transforma em calor.
+- **Supor que o amortecimento cria energia:** ele apenas a retira do oscilador e a converte em calor.
 - **Usar fórmula de conservação em sistema amortecido:** $E = \frac{1}{2}kA^2$ vale só se $A$ é
   constante. Com amortecimento, $A(t) = A_0 e^{-\gamma t}$, então $E(t) = E_0 e^{-2\gamma t}$.
 :::
@@ -297,17 +298,16 @@ a trincas prematuras.
 <!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
      em sessões futuras, a pedido do professor. -->
 
-- **Fadiga estrutural** — a energia dissipada ciclo a ciclo no material vira dano
-  acumulado; as curvas S-N traduzem "quantos ciclos de qual tensão" a estrutura
-  suporta.
+- **Fadiga estrutural** — a energia dissipada ciclo a ciclo no material vira dano acumulado,
+  e as curvas S-N dizem quantos ciclos de cada nível de tensão a estrutura suporta.
 - **Peação de carga suspensa** — o operador de guindaste amortece o pêndulo da carga
   retirando energia no instante certo do ciclo (freando quando a carga se afasta).
-- **Tanque estabilizador ativo** — bombas transferem água em fase calculada para
-  extrair energia do modo de roll: um amortecedor cuja "viscosidade" é controlada.
+- **Tanque estabilizador ativo** — bombas transferem água em fase calculada para extrair
+  energia do modo de balanço: um amortecedor de viscosidade controlada.
 
 <!-- EXEMPLO A SIMULAR: carga pendurada em guindaste (p5.js, tabela Q4: movimento):
      o aluno clica para frear no instante que escolher e vê a energia do pêndulo
      cair conforme o acerto de fase. -->
 
-**Conexão com o próximo tópico:** osciladores podem estar acoplados — a energia não flui só
-entre cinética e potencial, mas também entre osciladores vizinhos. Tópico 1.8.
+**Conexão com o próximo tópico:** osciladores podem estar acoplados, e então a energia flui
+não só entre as formas cinética e potencial, mas também entre osciladores vizinhos.

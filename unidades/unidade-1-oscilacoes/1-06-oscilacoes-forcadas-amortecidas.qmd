@@ -14,10 +14,10 @@ OE 1.19 [B2] Explicar o impacto da ressonância em sistemas amortecidos
 
 {{< aula 9-10 >}}
 
-Toda máquina e estrutura real vibram dentro de um meio dissipativo — fluido, material estrutural,
-suportes. O amortecimento sempre presente reduz a amplitude de ressonância, mas não a elimina.
-Este tópico mostra como força excitadora e amortecimento competem, e por que engenheiros de
-máquinas navais precisam entender essa dança para evitar falhas.
+Toda máquina e toda estrutura real vibram dentro de um meio dissipativo: fluido, material
+estrutural, suportes. O amortecimento sempre presente reduz a amplitude de ressonância, mas
+não a elimina. O tópico trata da competição entre força excitadora e amortecimento, e das
+consequências dela para a operação de máquinas navais.
 
 ## Equação do movimento forçado amortecido {{< ra OE1.17 B3 >}}
 
@@ -29,10 +29,12 @@ Em forma adimensional:
 
 $$\ddot{x} + 2\gamma\dot{x} + \omega_0^2 x = \frac{F_0}{m}\cos(\omega t)$$
 
-onde $\gamma = b/(2m)$ é a taxa de amortecimento e $\omega_0 = \sqrt{k/m}$ é a frequência natural.
+onde $\gamma = b/(2m)$ é a **taxa de amortecimento** e $\omega_0 = \sqrt{k/m}$, a
+**frequência natural**.
 
-A solução completa é $x(t) = x_h(t) + x_p(t)$. A parte homogênea $x_h$ decai exponencialmente
-(tópico 1.4). Em regime permanente (tempo suficientemente longo), apenas $x_p$ persiste:
+A solução completa é $x(t) = x_h(t) + x_p(t)$. A parte homogênea $x_h$ decai
+exponencialmente, como estabelecido no estudo das oscilações amortecidas. Em **regime
+permanente**, decorrido tempo suficiente, apenas $x_p$ persiste:
 
 $$x_p(t) = A(\omega)\cos(\omega t - \phi(\omega))$$
 
@@ -44,39 +46,41 @@ e **diferença de fase:**
 
 $$\tan\phi(\omega) = \frac{2\gamma\omega}{\omega_0^2 - \omega^2}$$
 
-Diferentemente do caso ideal (tópico 1.5), $A(\omega)$ não diverge em $\omega = \omega_0$ — o
-denominador sempre tem o termo $(2\gamma\omega)^2 > 0$. A máxima amplitude é:
+Diferentemente do caso ideal sem amortecimento, $A(\omega)$ não diverge em
+$\omega = \omega_0$, pois o denominador conserva o termo $(2\gamma\omega)^2 > 0$. A amplitude
+máxima é:
 
 $$A_{\max} = \frac{F_0}{2\gamma m\omega_0}$$
 
 e ocorre ligeiramente abaixo de $\omega_0$.
 
-## Resposta em frequência — fator de qualidade {{< ra OE1.18 B4 >}}
+## Resposta em frequência: fator de qualidade {{< ra OE1.18 B4 >}}
 
-A "largura" da ressonância (quão aguda é o pico) é quantificada pelo **fator de qualidade**:
+A largura da ressonância, isto é, quão agudo é o pico, mede-se pelo **fator de qualidade**:
 
 $$Q = \frac{\omega_0}{2\gamma}$$
 
-Amortecimento baixo ($\gamma$ pequeno) → $Q$ grande → pico agudo e alto (ressonância dramática).
-Amortecimento alto ($\gamma$ grande) → $Q$ pequeno → pico arredondado e baixo (ressonância suave).
+Amortecimento baixo, com $\gamma$ pequeno, dá $Q$ grande e pico agudo e alto. Amortecimento
+alto dá $Q$ pequeno e pico arredondado e baixo.
 
 Na prática naval:
-- Casco de navio em ondas: $Q \approx 5{,}0$ (moderado) — ressonância é preocupante mas não
-  catastrófica se velocidades críticas forem evitadas.
-- Motor diesel mal amortecido: $Q \approx 15$ — risco alto de vibração amplificada.
-- Sistema com absorvedores: $Q \approx 1$ — ressonância é praticamente eliminada (custo é
-  aumento de peso e custo de manutenção).
+
+- Casco de navio em ondas, $Q \approx 5{,}0$: ressonância moderada, preocupante mas não
+  destrutiva se as velocidades críticas forem evitadas.
+- Motor diesel mal amortecido, $Q \approx 15$: risco alto de vibração amplificada.
+- Sistema com absorvedores, $Q \approx 1$: ressonância praticamente eliminada, ao preço de
+  peso adicional e de mais manutenção.
 
 A **largura de banda** da ressonância (intervalo de $\omega$ onde $A > A_{\max}/\sqrt{2}$) é
 aproximadamente $\Delta\omega \approx 2\gamma$, ou em frequência: $\Delta f \approx \gamma/\pi$.
 
-## Veja o amortecimento domar o pico
+## Curva de resposta com amortecimento
 
-O mesmo sistema do tópico 1.5, agora com um amortecedor em paralelo com a mola. Dois
-sliders: $\gamma/\omega_0$ (o amortecimento) e $\omega/\omega_0$ (o ponto de operação).
-À direita, a família de curvas $A(\omega)$ — a curva do amortecimento atual em destaque
-sobre as demais. Repare que agora o pico é finito, ocorre um pouco abaixo de
-$\omega_0$, e a fase varia continuamente (não salta mais de $0$ para $\pi$).
+O mesmo sistema do oscilador forçado, agora com um amortecedor em paralelo com a mola.
+Dois controles: $\gamma/\omega_0$, o amortecimento, e $\omega/\omega_0$, o ponto de
+operação. À direita, a família de curvas $A(\omega)$, com a curva do amortecimento atual em
+destaque sobre as demais. O pico agora é finito, ocorre um pouco abaixo de $\omega_0$, e a
+fase varia continuamente, sem o salto de $0$ para $\pi$.
 
 ```{python}
 #| fig-cap: "Resposta do oscilador forçado amortecido para vários γ/ω₀: a amplitude (esq.) tem pico finito ≈ Q·A_est que se achata com o amortecimento; a fase (dir.) passa por π/2 exatamente em ω₀. Mesmos parâmetros da versão interativa."
@@ -219,23 +223,23 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Com $\gamma/\omega_0 = 0{,}05$ ($Q = 10$), leve $\omega$ até o pico. Agora aumente o
-   amortecimento até $0{,}5$. Quanto o pico caiu? Compare com a previsão
+1. Com $\gamma/\omega_0 = 0{,}05$ ($Q = 10$) e $\omega$ levado até o pico, elevado em
+   seguida o amortecimento a $0{,}5$, quanto o pico caiu? Compare com a previsão
    $A_{\max} \approx Q\,A_{\text{est}}$.
-2. Ponha $\omega/\omega_0 = 1$ e observe a fase: exatamente $90°$, qualquer que seja o
-   amortecimento. O que isso significa sobre o instante em que a força empurra a massa?
-3. A curva destacada tem largura $\Delta\omega \approx 2\gamma$. Use-a para explicar a
-   regra operacional de "transposição rápida": por que atravessar a banda crítica
-   depressa impede a amplitude de crescer?
+2. Em $\omega/\omega_0 = 1$ a fase vale $90°$, qualquer que seja o amortecimento. O que isso
+   diz sobre o instante em que a força empurra a massa?
+3. A curva destacada tem largura $\Delta\omega \approx 2\gamma$. Explique por ela a regra
+   operacional de transposição rápida: por que atravessar depressa a banda crítica impede a
+   amplitude de crescer?
 :::
 
 ::: {.sp}
 Um navio porta-contêineres tem período natural de balanço $T_0 = 14$ s ($\omega_0 = 2\pi/14 \approx 0{,}449$ rad/s).
 Motores principais podem variar RPM de 40 a 120. A frequência de excitação é (RPM/60) Hz. Amortecimento
-estrutural é avaliado como $\gamma = 0{,}01$ rad/s (correspondente a $Q \approx 22{,}5$ — bastante agudo).
+estrutural é avaliado em $\gamma = 0{,}01$ rad/s, o que corresponde a $Q \approx 22{,}5$, valor bastante agudo.
 
 **(a) Modelagem.** Resposta em regime permanente $A(\omega)$ da seção anterior.
-Velocidade crítica: RPM em que $\omega_{\text{exc}} = \omega_0$. Verificar se a faixa
+**Velocidade crítica:** a rotação em que $\omega_{\text{exc}} = \omega_0$. Verificar se a faixa
 40–120 RPM contém a crítica; quantificar a amplificação em ressonância (fator $Q$) e a
 largura da banda crítica em RPM.
 
@@ -256,25 +260,26 @@ $$\Delta\omega \approx 2\gamma = 0{,}02\ \text{rad/s}
 ($\approx 4{,}3$ RPM) fica abaixo de 40 RPM e só é atravessada nas rampas de partida e
 parada, numa banda de aproximadamente 0,2 RPM de largura.
 
-**(d) Análise crítica.** Com $Q$ alto a banda crítica é estreitíssima: na rampa de
-partida ela é cruzada em fração de segundo e o sistema não acumula amplitude — é a
-justificativa física da prescrição de *transposição rápida* de velocidades críticas,
-sem jamais estabilizar RPM dentro da banda. A análise considera só a excitação de
-1ª ordem; ordens superiores (número de pás × rotação) têm críticas ainda mais baixas.
+**(d) Análise crítica.** Com $Q$ alto a banda crítica é muito estreita: na rampa de partida
+ela é cruzada em fração de segundo e o sistema não acumula amplitude. É a justificativa
+física da prescrição de *transposição rápida* das velocidades críticas, sem jamais
+estabilizar a rotação dentro da banda. A análise considera só a **excitação de
+primeira ordem**; as ordens superiores, de número de pás × rotação, têm críticas ainda mais baixas.
 O balanço em si é excitado com mais eficiência pelo período de encontro das ondas,
-que pode coincidir com $T_0 = 14$ s — condição tratada por mudança de rumo/velocidade,
-não de RPM apenas.
+que pode coincidir com $T_0 = 14$ s, condição que se trata por mudança de rumo ou de
+velocidade, e não só de rotação.
 :::
 
 ## Impacto da ressonância em sistemas amortecidos {{< ra OE1.19 B2 >}}
 
-Mesmo com amortecimento, a ressonância deixa cicatrizes:
+Mesmo com amortecimento, a ressonância deixa consequências duradouras:
 
 1. **Parafusos e rebites:** sob vibração amplificada em ressonância, ligações mecânicas podem se afrouxar
    (fadiga por micro-deslizamento). Fixadores de casco, máquinas e equipamentos são os primeiros a sofrer.
 
-2. **Ruptura por fadiga:** estrutura metal submetida a ciclos de tensão em ressonância (mesmo que amplitude
-   final seja menor que em sistema ideal) acumula dano microestrutural — trincas nucleiam mais rápido.
+2. **Ruptura por fadiga:** a estrutura metálica submetida a ciclos de tensão em ressonância
+   acumula dano microestrutural, ainda que a amplitude final seja menor que no sistema ideal,
+   e as trincas nucleiam mais depressa.
 
 3. **Deslocamento de fases:** em ressonância, a resposta fica atrasada de $\phi = \pi/2$ em relação à
    excitação (força puxa para frente, sistema se move para trás). Isso causa distribuição de tensão
@@ -299,8 +304,8 @@ Mesmo com amortecimento, a ressonância deixa cicatrizes:
 - **Coxins de máquinas (montagem antivibratória)** — o isolamento funciona do lado
   $\omega \gg \omega_0$ da curva de resposta: escolhe-se coxim macio para que a
   frequência natural da montagem fique bem abaixo da excitação do motor.
-- **Velocidades críticas do eixo propulsor** — banda estreita (Q alto) marcada em
-  placa no passadiço da praça; atravessa-se rápido, nunca se opera dentro.
+- **Velocidades críticas do eixo propulsor** — banda estreita, de $Q$ alto, marcada em placa
+  na praça de máquinas; atravessa-se depressa e nunca se opera dentro dela.
 - **Acelerômetro e sismógrafo** — instrumentos que vivem deliberadamente num lado
   escolhido da curva $A(\omega)$: o projeto fixa $\omega_0$ conforme o que se quer
   medir.
@@ -309,5 +314,5 @@ Mesmo com amortecimento, a ressonância deixa cicatrizes:
      gráfico interativo): mostrar que isolar exige ω/ω₀ > √2 e que mais amortecimento
      piora o isolamento em alta frequência. -->
 
-**Conexão com o próximo tópico:** toda essa energia que entra no sistema (via excitação) sai
-dele (via amortecimento). O balanço energético é o assunto de 1.7.
+**Conexão com o próximo tópico:** a energia que a excitação entrega ao sistema sai dele pelo
+amortecimento. Esse balanço energético é o objeto do tópico seguinte.
