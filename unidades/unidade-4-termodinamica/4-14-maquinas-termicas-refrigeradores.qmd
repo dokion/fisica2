@@ -35,16 +35,16 @@ performance:
 
 $$\text{COP} = \frac{Q_f}{W} = \frac{Q_f}{Q_q - Q_f}$$
 
-## Ciclo ideal vs. real: o limite de Carnot {{< ra OE4.44 B4 >}}
+## Ciclo ideal e ciclo real: o limite de Carnot {{< ra OE4.44 B4 >}}
 
 O rendimento máximo entre duas temperaturas é o de **Carnot** (ciclo reversível):
 
 $$\eta_{\text{Carnot}} = 1 - \frac{T_f}{T_q}$$
 
-Nenhuma máquina real alcança esse valor, porque toda máquina real tem
-irreversibilidades. No **diagrama indicador** (P–V) de um motor diesel real, a área
-fechada — o trabalho por ciclo — é menor que a do ciclo ideal: os cantos "arredondam"
-por causa de combustão não-instantânea, troca de calor pelas paredes e atrito.
+Nenhuma máquina real alcança esse valor, porque toda máquina real tem irreversibilidades.
+No **diagrama indicador** ($P$–$V$) de um motor diesel real, a área fechada, que é o trabalho
+por ciclo, fica menor que a do ciclo ideal: os cantos se arredondam por combustão não
+instantânea, troca de calor pelas paredes e atrito.
 
 | | Ciclo ideal | Ciclo real |
 |---|---|---|
@@ -54,7 +54,8 @@ por causa de combustão não-instantânea, troca de calor pelas paredes e atrito
 
 ## Irreversibilidade e perdas {{< ra OE4.45 B4 >}}
 
-Cada fonte de irreversibilidade gera entropia (tópico 4.13) e "come" trabalho útil:
+Cada fonte de irreversibilidade gera entropia, como estabelecido no estudo dela, e consome
+trabalho útil:
 
 - **Térmicas:** combustão com gradiente finito, calor perdido pelas paredes do cilindro
   e pelos gases de exaustão quentes;
@@ -64,12 +65,12 @@ Cada fonte de irreversibilidade gera entropia (tópico 4.13) e "come" trabalho �
 O rendimento efetivo do motor é o produto de rendimentos parciais (térmico × mecânico),
 sempre abaixo do limite de Carnot.
 
-## Veja a área perdida virar rendimento perdido
+## Área do diagrama indicador e rendimento perdido
 
-O trabalho por ciclo é a **área** fechada no diagrama indicador (P–V). O ciclo ideal tem
-cantos vivos e área máxima; o ciclo real arredonda os cantos (combustão não-instantânea,
-troca de calor, atrito) e encerra área menor. Ajuste as temperaturas e a irreversibilidade
-e veja a área — e o rendimento — encolherem abaixo do teto de Carnot.
+O trabalho por ciclo é a **área** fechada no diagrama indicador ($P$–$V$). O ciclo ideal tem
+cantos vivos e área máxima; o real arredonda os cantos, por combustão não instantânea, troca
+de calor e atrito, e encerra área menor. As temperaturas e a irreversibilidade são
+ajustáveis, e com elas a área e o rendimento encolhem abaixo do teto de Carnot.
 
 ```{python}
 #| fig-cap: "Diagrama indicador P–V esquemático: ciclo ideal (cantos vivos, área cheia) e ciclo real (cantos arredondados, área hachurada menor). Com T_q = 1100 K, T_f = 550 K e irreversibilidade de 10%, η_C = 50% e η_real = 45% (90% do teto). Mesmos parâmetros da versão interativa."
@@ -187,12 +188,12 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Zere a irreversibilidade: o laço real cobre o ideal e $\eta = \eta_C$. Isso é
-   fisicamente alcançável? O que a 2ª lei diz sobre um ciclo sem nenhuma perda?
-2. Suba $T_f$ (rejeição mais quente): o teto de Carnot cai mesmo *sem* mexer na
-   irreversibilidade. Por quê? Qual mudança de projeto ataca esse termo num navio?
-3. A "área perdida" (diferença entre os dois laços) é trabalho que não saiu no eixo. Para
-   onde foi essa energia — sumiu, ou apenas mudou de forma?
+1. Anulada a irreversibilidade, o laço real cobre o ideal e $\eta = \eta_C$. Isso é
+   fisicamente alcançável? O que a 2ª lei diz de um ciclo sem perda alguma?
+2. Elevado $T_f$, com rejeição mais quente, o teto de Carnot cai mesmo *sem* alterar a
+   irreversibilidade. Por quê? Que mudança de projeto ataca esse termo num navio?
+3. A área perdida, diferença entre os dois laços, é trabalho que não saiu no eixo. Para onde
+   foi essa energia: sumiu, ou apenas mudou de forma?
 :::
 
 
@@ -211,15 +212,16 @@ $$\eta_C = 1 - \frac{T_f}{T_q} = 1 - \frac{550}{1100} = 0{,}50 = 50\%$$
 Fração do teto de Carnot alcançada:
 $$\frac{\eta_{\text{real}}}{\eta_C} = \frac{45}{50} = 0{,}90 = 90\%$$
 
-**(c) Resultado.** O teto de Carnot para essas temperaturas é $50\%$; o motor real
-entrega $45\%$ — ou seja, **90% do máximo teoricamente possível**.
+**(c) Resultado.** O teto de Carnot para essas temperaturas é $50\%$ e o motor real entrega
+$45\%$, isto é, **90% do máximo teoricamente possível**.
 
-**(d) Análise crítica.** Atingir 90% do limite de Carnot é excepcional — coloca o diesel
-lento marítimo entre as máquinas térmicas mais eficientes já construídas. Note que o teto
-aqui (50%) é menor que o do tópico 4.12 (76,7%) porque a temperatura de rejeição adotada
-é mais alta (550 K nos gases, contra 350 K): rejeitar calor mais quente encolhe o teto de
-Carnot. É por isso que sistemas de recuperação (WHR) aproveitam justamente esses gases de
-descarga ainda quentes — há trabalho a extrair entre 550 K e a temperatura do mar.
+**(d) Análise crítica.** Atingir 90% do limite de Carnot coloca o diesel lento marítimo
+entre as máquinas térmicas mais eficientes já construídas. Cabe observar que o teto aqui,
+de 50%, é menor que os 76,7% obtidos no estudo da Segunda Lei, porque a temperatura de
+rejeição adotada é mais alta: 550 K nos gases, contra 350 K. Rejeitar calor mais quente
+encolhe o teto de Carnot, e é por isso que os sistemas de recuperação (WHR) aproveitam
+justamente esses gases de descarga ainda quentes, entre cujos 550 K e a temperatura do mar
+há trabalho a extrair.
 :::
 
 ::: {.callout-warning}
@@ -227,10 +229,10 @@ descarga ainda quentes — há trabalho a extrair entre 550 K e a temperatura do
 
 - **Temperaturas em °C na fórmula de Carnot:** $T_q$ e $T_f$ são absolutas (K); usar °C
   dá rendimentos absurdos.
-- **Confundir $\eta$ com COP:** rendimento de máquina térmica é $\le 1$; COP de
-  refrigerador costuma ser $> 1$ — são grandezas diferentes, não compare diretamente.
-- **Achar que basta melhorar a máquina para bater Carnot:** o limite é imposto pelas
-  temperaturas $T_f$ e $T_q$, não pela engenharia do motor — Carnot é intransponível.
+- **Confundir $\eta$ com COP:** o rendimento de uma máquina térmica é $\le 1$, e o COP de um
+  refrigerador costuma ser $> 1$; são grandezas distintas e não se comparam diretamente.
+- **Supor que basta melhorar a máquina para bater Carnot:** o limite é imposto pelas
+  temperaturas $T_f$ e $T_q$, não pela engenharia do motor, e é intransponível.
 :::
 
 ## Onde o fenômeno vive
@@ -238,12 +240,12 @@ descarga ainda quentes — há trabalho a extrair entre 550 K e a temperatura do
 <!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
      em sessões futuras, a pedido do professor. -->
 
-- **Diesel marítimo lento** — a máquina térmica de maior rendimento em operação
-  comercial (≈50%): dois tempos, curso longo, queima lenta — cada detalhe existe
-  para colher mais área no diagrama p-V.
-- **Instalação frigorífica** — gambuza e porões refrigerados: o mesmo diagrama
-  percorrido ao contrário, com COP > 1 (move-se mais calor do que se gasta de
-  trabalho — sem violar nada).
+- **Diesel marítimo lento** — a máquina térmica de maior rendimento em operação comercial,
+  de cerca de 50%: dois tempos, curso longo e queima lenta, cada detalhe existindo para
+  colher mais área no diagrama $P$–$V$.
+- **Instalação frigorífica** — gambuza e porões refrigerados percorrem o mesmo diagrama ao
+  contrário, com COP > 1: move-se mais calor do que se gasta de trabalho, sem violação
+  alguma.
 - **Recuperação de calor (WHR)** — turbina a vapor alimentada pelos gases de descarga:
   uma segunda máquina térmica pendurada no rejeito da primeira.
 
@@ -251,5 +253,5 @@ descarga ainda quentes — há trabalho a extrair entre 550 K e a temperatura do
      temperatura da câmara (−25 a +5 °C) e da água do mar; COP de Carnot × COP real
      e potência do compressor para uma carga térmica dada. -->
 
-**Conexão com o próximo tópico:** vista a máquina do lado macroscópico, voltamos ao
-microscópico — pressão e temperatura como movimento das moléculas (4.15).
+**Conexão com o próximo tópico:** vista a máquina pelo lado macroscópico, resta o
+microscópico: a pressão e a temperatura como movimento das moléculas.
