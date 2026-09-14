@@ -16,34 +16,34 @@ OE 1.10 [B2] Interpretar as curvas de Lissajous e suas aplicações na análise 
 
 {{< aula 5-6 >}}
 
-Quando dois ou mais osciladores atuam simultaneamente sobre um mesmo corpo — como ocorre
-quando o motor e a hélice viram simultaneamente a estrutura de um navio — o movimento
-resultante não é a soma simples das amplitudes, mas sim uma interferência complexa no
-espaço e no tempo. Este tópico ensina a descrever essa superposição e a ler a "impressão
-digital" do sinal quando duas frequências próximas interagem.
+Quando dois ou mais osciladores atuam simultaneamente sobre um mesmo corpo, como o motor
+e o hélice que excitam ao mesmo tempo a estrutura de um navio, o movimento resultante não
+é a soma das amplitudes, e sim uma interferência no espaço e no tempo. O tópico trata de
+descrever essa superposição e de ler a assinatura do sinal quando duas frequências
+próximas se encontram.
 
 ## Superposição linear e interferência {{< ra OE1.7 B3 >}}
 
-O princípio da superposição diz que, se $x_1(t)$ e $x_2(t)$ são duas soluções da equação
-de movimento, então $x(t) = x_1(t) + x_2(t)$ também é solução. No caso **geral**, cada
-oscilador tem sua própria amplitude, frequência e fase:
+O **princípio da superposição** estabelece que, se $x_1(t)$ e $x_2(t)$ são soluções da
+equação de movimento, $x(t) = x_1(t) + x_2(t)$ também é solução. No caso geral, cada
+oscilador tem amplitude, frequência e fase próprias:
 
 $$x_1(t) = A_1\cos(\omega_1 t + \varphi_1), \qquad x_2(t) = A_2\cos(\omega_2 t + \varphi_2)$$
 
 $$x(t) = x_1(t) + x_2(t)$$
 
-Com frequências diferentes, a soma **não é** um MHS: é um movimento composto — periódico
+Com frequências diferentes, a soma é um **movimento composto**, e não um MHS: periódico
 apenas quando $\omega_1/\omega_2$ é racional, quase-periódico caso contrário. A simulação
-a seguir monta essa soma elemento a elemento: dois osciladores independentes e o ponto
+a seguir monta essa soma elemento a elemento, com dois osciladores independentes e o ponto
 roxo que carrega a soma dos dois.
 
-## Veja a superposição geral se formar
+## Soma de dois osciladores de frequências independentes
 
-À esquerda, dois osciladores massa–mola independentes: cada um com sua amplitude,
-frequência e fase. O ponto roxo carrega a soma $x_1 + x_2$. À direita, o gráfico da soma
-é traçado como um osciloscópio — a pena parte da **origem** ($t = 0$, à esquerda) e
-avança para a direita. Ajuste os seis parâmetros e veja quando a soma fecha uma figura
-periódica e quando ela nunca se repete.
+À esquerda, dois osciladores massa–mola independentes, cada um com amplitude, frequência
+e fase próprias. O ponto roxo carrega a soma $x_1 + x_2$. À direita, o gráfico da soma é
+traçado como num osciloscópio: a pena parte da origem ($t = 0$, à esquerda) e avança para
+a direita. Os seis parâmetros governam quando a soma fecha uma figura periódica e quando
+ela nunca se repete.
 
 ```{python}
 #| fig-cap: "Superposição geral de dois MHS independentes: A₁ = 1,0, A₂ = 0,7; ω₁ = 2,0, ω₂ = 3,0 rad/s; φ₁ = 0, φ₂ = π/2. Como ω₁/ω₂ = 2/3 é racional, a soma é periódica. Mesmos parâmetros da versão interativa."
@@ -201,13 +201,13 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Com $\omega_1 = \omega_2$ (iguais), a soma roxa é uma senoide limpa — um MHS. Agora
-   ponha $\omega_2 = 3$ e $\omega_1 = 2$: a soma ainda se repete? E com $\omega_2 = 2{,}75$?
-2. Fixe $\omega_1 = \omega_2$ e varie só $\varphi_2$. A *forma* da soma muda ou só a sua
-   amplitude e o instante em que ela passa pelos máximos?
-3. Zerando o tempo, ajuste os parâmetros e depois reproduza: para que razão
-   $\omega_1/\omega_2$ a soma tem período visível dentro da janela de 12 s? Relacione com
-   a superposição de duas fontes de vibração de bordo com rotações diferentes.
+1. Com $\omega_1 = \omega_2$, a soma roxa é uma senoide limpa, um MHS. Postos
+   $\omega_2 = 3$ e $\omega_1 = 2$, a soma ainda se repete? E com $\omega_2 = 2{,}75$?
+2. Fixados $\omega_1 = \omega_2$ e variado só $\varphi_2$, muda a *forma* da soma, ou
+   apenas a amplitude dela e o instante em que passa pelos máximos?
+3. Para que razão $\omega_1/\omega_2$ a soma tem período visível dentro da janela de 12 s?
+   Relacione com a superposição de duas fontes de vibração de bordo de rotações
+   diferentes.
 :::
 
 ### Caso particular: mesma frequência, mesma direção
@@ -226,20 +226,20 @@ e a **fase** resultante, da soma das projeções dos fasores nos eixos:
 
 $$\tan\varphi_{\text{res}} = \frac{A_1\sin\varphi_1 + A_2\sin\varphi_2}{A_1\cos\varphi_1 + A_2\cos\varphi_2}$$
 
-O termo $\cos(\varphi_1 - \varphi_2)$ captura o "atraso relativo" entre os osciladores:
-em fase ($\Delta\varphi = 0$), as amplitudes somam-se (interferência construtiva,
-$A_{\text{res}} = A_1 + A_2$); em oposição ($\Delta\varphi = \pi$), subtraem-se
-(interferência destrutiva, $A_{\text{res}} = |A_1 - A_2|$).
+O termo $\cos(\varphi_1 - \varphi_2)$ traduz o atraso relativo entre os osciladores:
+em fase ($\Delta\varphi = 0$), as amplitudes somam-se, na **interferência construtiva**,
+com $A_{\text{res}} = A_1 + A_2$; em oposição ($\Delta\varphi = \pi$), subtraem-se, na
+**interferência destrutiva**, com $A_{\text{res}} = |A_1 - A_2|$.
 
-## Veja de onde vêm $A_{\text{res}}$ e $\varphi_{\text{res}}$
+## Origem geométrica de $A_{\text{res}}$ e $\varphi_{\text{res}}$
 
-As duas fórmulas acima não caem do céu: elas são a **geometria de somar dois vetores girantes
-(fasores)**. Cada MHS $A_i\cos(\omega t+\varphi_i)$ é o fasor $A_i$ na fase $\varphi_i$; como
-os dois giram juntos (mesma $\omega$), a soma é o vetor resultante $A$ — e ele gira na mesma
-velocidade, o que é a razão de a soma ser de novo um MHS. Arraste as **pontas** $P_1$ e $P_2$
-(os vetores vão até a borda do quadro) e acompanhe, como na figura clássica de vetores
-girantes, apenas os quatro ângulos que importam: $\varphi_1$, $\varphi_2$, a fase extra
-$\beta$ e a diferença $\varphi_2-\varphi_1$.
+As duas fórmulas acima são a **geometria de somar dois vetores girantes**, os fasores.
+Cada MHS $A_i\cos(\omega t+\varphi_i)$ é o fasor $A_i$ na fase $\varphi_i$; como os dois
+giram juntos, com a mesma $\omega$, a soma é o vetor resultante $A$, que gira na mesma
+velocidade, e é por isso que a soma volta a ser um MHS. As **pontas** $P_1$ e $P_2$ são
+móveis, e os vetores vão até a borda do quadro. Quatro ângulos importam, como na figura
+clássica de vetores girantes: $\varphi_1$, $\varphi_2$, a fase extra $\beta$ e a diferença
+$\varphi_2-\varphi_1$.
 
 O passo que costuma escapar é o **sinal**. No triângulo da soma $O\,P_1\,P$, o ângulo interno
 onde $A_1$ encontra $A_2$ é o *suplemento* de $\Delta\varphi=\varphi_2-\varphi_1$, isto é
@@ -330,8 +330,8 @@ plt.tight_layout(); plt.show()
   .fs-wrap .fs-cap{font-size:12px;color:#6b6357;margin-bottom:3px;}
 </style>
 <div class="fs-wrap sim">
-  <div class="fs-hint">Arraste as pontas <b style="color:#c81f1f">P₁</b> e
-    <b style="color:#1f47c8">P₂</b> — os vetores giram em torno de O e vão até a borda do quadro.</div>
+  <div class="fs-hint">As pontas <b style="color:#c81f1f">P₁</b> e
+    <b style="color:#1f47c8">P₂</b> são móveis; os vetores giram em torno de O e vão até a borda do quadro.</div>
   <div id="fsSketch"></div>
   <div id="fsEq"></div>
 </div>
@@ -486,22 +486,23 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Arraste $P_2$ para perto de $P_1$ (fasores quase alinhados, $\Delta\varphi\to 0$): o arco
+1. Aproximado $P_2$ de $P_1$, com os fasores quase alinhados e $\Delta\varphi\to 0$, o arco
    $\varphi_2-\varphi_1$ fecha e $A\to A_1+A_2$. Por que a interferência é máxima aí?
-2. Gire os dois juntos (arraste $P_1$ e $P_2$ mantendo o arco $\varphi_2-\varphi_1$ constante):
-   $A$ e $\beta$ não mudam. Por que a amplitude depende só da *diferença* de fase, não das
-   fases absolutas?
-3. Leve $P_2$ à oposição de $P_1$ ($\Delta\varphi\to 180°$) com $A_1\approx A_2$: o triângulo
-   degenera e $A\to 0$. No painel, veja $\cos(180°-\Delta\varphi)$ tornar o produto máximo —
-   por que a forma clássica "subtrai o máximo" justo quando os fasores se cancelam?
+2. Girados os dois juntos, mantido constante o arco $\varphi_2-\varphi_1$, $A$ e $\beta$ não
+   mudam. Por que a amplitude depende só da *diferença* de fase, e não das fases absolutas?
+3. Levado $P_2$ à oposição de $P_1$ ($\Delta\varphi\to 180°$) com $A_1\approx A_2$, o
+   triângulo degenera e $A\to 0$. O painel mostra $\cos(180°-\Delta\varphi)$ tornar o
+   produto máximo: por que a forma clássica subtrai o máximo justamente quando os fasores
+   se cancelam?
 :::
 
-## Veja a soma virar um MHS único
+## Soma de dois osciladores de mesma frequência
 
-Agora os dois osciladores compartilham a **mesma frequência** $\omega$ (um só controle).
-A soma roxa é uma senoide limpa — o mesmo MHS $A_{\text{res}}\cos(\omega t + \varphi_{\text{res}})$
-da fórmula acima. O painel mostra $A_{\text{res}}$ e $\varphi_{\text{res}}$ calculados ao
-vivo; varie as fases e veja a construtiva ($A_1+A_2$) e a destrutiva ($|A_1-A_2|$).
+Aqui os dois osciladores compartilham a **mesma frequência** $\omega$, sob um só controle.
+A soma roxa é uma senoide limpa, o mesmo MHS
+$A_{\text{res}}\cos(\omega t + \varphi_{\text{res}})$ da fórmula acima. O painel traz
+$A_{\text{res}}$ e $\varphi_{\text{res}}$ calculados ao vivo, e a variação das fases
+percorre a interferência construtiva ($A_1+A_2$) e a destrutiva ($|A_1-A_2|$).
 
 ```{python}
 #| fig-cap: "Soma de dois MHS de mesma frequência (ω = 2,0 rad/s): A₁ = 1,0, A₂ = 0,7; φ₁ = 0, φ₂ = π/2. A resultante (roxa) é o MHS A_res cos(ωt + φ_res) com A_res ≈ 1,22 e φ_res ≈ 35°. Mesmos parâmetros da versão interativa."
@@ -658,7 +659,7 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Deixe $A_1 = A_2$ e leve $\varphi_2$ a $180°$ (oposição): a soma roxa some? Confira
+1. Com $A_1 = A_2$ e $\varphi_2$ levado a $180°$, em oposição, a soma roxa some? Confira
    $A_{\text{res}} = |A_1 - A_2| = 0$ no painel.
 2. Com $\varphi_1 = 0$ e $\varphi_2 = 90°$, confira $A_{\text{res}}$ e $\varphi_{\text{res}}$
    contra a fórmula $\tan\varphi_{\text{res}} = A_2/A_1$ (aqui $\approx 35°$).
@@ -666,11 +667,11 @@ plt.tight_layout(); plt.show()
    qualquer que seja a fase? O que a mesma frequência garante?
 :::
 
-## Batimentos — encontro de frequências próximas {{< ra OE1.8 B2 >}}
+## Batimentos: encontro de frequências próximas {{< ra OE1.8 B2 >}}
 
 Quando as frequências diferem ligeiramente, a superposição produz uma batida periódica na
-amplitude — o fenômeno de batimento. Isso é exatamente o que um engenheiro de máquinas de
-um navio observa ao sintonizar dois cilindros que giram desalinhados.
+amplitude, o **batimento**. É o que o engenheiro de máquinas observa ao acompanhar dois
+motores que giram com rotações ligeiramente diferentes.
 
 Somando dois MHS com frequências $\omega_1$ e $\omega_2$ muito próximas:
 
@@ -680,28 +681,28 @@ Usando identidade trigonométrica $\cos\alpha + \cos\beta = 2\cos\left(\frac{\al
 
 $$x(t) = 2A\cos\left(\frac{\omega_1-\omega_2}{2}t\right)\cos\left(\frac{\omega_1+\omega_2}{2}t\right)$$
 
-O fator lento $2A\cos\left(\frac{\omega_1-\omega_2}{2}t\right)$ é o envelope de amplitude.
-A amplitude varia no tempo, e o ouvido/sensor percebe uma "pulsação" com frequência de batimento.
+O fator lento $2A\cos\left(\frac{\omega_1-\omega_2}{2}t\right)$ é a **envoltória** de
+amplitude. A amplitude varia no tempo, e o ouvido ou o sensor registram uma pulsação com a
+frequência de batimento.
 
 ## Frequência de batimento {{< ra OE1.9 B3 >}}
 
-A frequência com que a amplitude sobe e desce é chamada frequência de batimento:
+A frequência com que a amplitude sobe e desce é a **frequência de batimento**:
 
 $$f_{\text{bat}} = \left|\frac{\omega_1 - \omega_2}{2\pi}\right| = |f_1 - f_2|$$
 
-Período de batimento: $T_{\text{bat}} = \frac{1}{f_{\text{bat}}}$.
+O **período de batimento** é $T_{\text{bat}} = \frac{1}{f_{\text{bat}}}$.
 
 Na prática naval, se dois motores oscilam a $f_1 = 20{,}0$ Hz e $f_2 = 19{,}5$ Hz,
-a vibração do casco varia com $f_{\text{bat}} = 0{,}5$ Hz, um batimento bem perceptível
-a cada 2 segundos — sinal de desalinhamento que exige ajuste.
+a vibração do casco varia com $f_{\text{bat}} = 0{,}5$ Hz, batimento perceptível a cada
+2 segundos e sinal de dessincronização que exige ajuste.
 
-## Veja o batimento acontecer
+## Batimento entre duas massas de frequências próximas
 
-À esquerda, duas massas em molas oscilam com frequências próximas ($f_1$ e $f_2$); o
-ponto roxo mostra a superposição $x_1 + x_2$ — é ele que "bate". À direita, o gráfico
-da superposição com a envoltória $\pm 2A\cos(\pi\,\Delta f\,t)$ tracejada. Observe as
-massas entrando e saindo de fase: quando estão em fase o ponto roxo tem amplitude
-máxima; em oposição, ele quase para.
+À esquerda, duas massas em molas oscilam com frequências próximas, $f_1$ e $f_2$, e o
+ponto roxo mostra a superposição $x_1 + x_2$, que é o que bate. À direita, o gráfico da
+superposição com a envoltória $\pm 2A\cos(\pi\,\Delta f\,t)$ tracejada. As massas entram
+e saem de fase: em fase, o ponto roxo tem amplitude máxima; em oposição, quase para.
 
 ```{python}
 #| fig-cap: "Batimento entre dois MHS de f₁ = 1,0 Hz e f₂ = 1,1 Hz e amplitudes iguais. Acima: as duas componentes (janela curta). Abaixo: a superposição x₁+x₂ com a envoltória ±2A cos(π Δf t); a amplitude pulsa com f_bat = 0,1 Hz. Mesmos parâmetros da versão interativa."
@@ -856,11 +857,11 @@ plt.tight_layout(); plt.show()
 
 ::: {.pergunta}
 1. As duas massas oscilam com amplitude constante o tempo todo. Por que, então, o ponto
-   roxo $x_1 + x_2$ quase para periodicamente? Onde está a "amplitude que some"?
-2. Meça na tela o intervalo entre duas paradas consecutivas do ponto roxo e compare com
-   $T_{\text{bat}} = 1/|f_1 - f_2|$.
-3. Aproxime $f_2$ de $f_1$ até igualar. O que acontece com $T_{\text{bat}}$? Relacione
-   com o procedimento de sincronizar dois geradores a bordo: o que o operador ouve/sente
+   roxo $x_1 + x_2$ quase para periodicamente? Para onde foi a amplitude que sumiu?
+2. O intervalo entre duas paradas consecutivas do ponto roxo confere com
+   $T_{\text{bat}} = 1/|f_1 - f_2|$?
+3. Aproximado $f_2$ de $f_1$ até a igualdade, o que ocorre com $T_{\text{bat}}$? Relacione
+   com o procedimento de sincronizar dois geradores a bordo: o que o operador percebe
    quando a sincronização está quase perfeita?
 :::
 
@@ -890,33 +891,33 @@ $0$ e $0{,}6\ \text{mm}$; o máximo de vibração repete-se a cada $2{,}5\ \text
 
 **(d) Análise crítica.** A condição $f_{\text{bat}} = 0{,}4\ \text{Hz} \ll f_{\text{méd}} = 50\ \text{Hz}$
 valida o tratamento como batimento. Um máximo a cada 2,5 s é perceptível ao tato e a
-qualquer sensor de vibração — assinatura direta de dessincronização entre os geradores.
+qualquer sensor de vibração, assinatura direta de dessincronização entre os geradores.
 A amplitude de pico ($0{,}6\ \text{mm}$) é o dobro da de um gerador isolado, o que agrava
 a fadiga dos suportes; a correção é sincronizar os geradores ou isolar mecanicamente as
 fontes.
 :::
 
-## Curvas de Lissajous — retrato da relação entre dois osciladores {{< ra OE1.10 B2 >}}
+## Curvas de Lissajous: retrato da relação entre dois osciladores {{< ra OE1.10 B2 >}}
 
-Quando dois osciladores atuam em direções *perpendiculares* (não na mesma linha), o ponto
-em movimento traça uma curva no plano. Essa curva é chamada **figura de Lissajous** e revela,
+Quando dois osciladores atuam em direções *perpendiculares*, e não na mesma linha, o ponto
+em movimento traça uma **curva no plano**. Essa curva é chamada **figura de Lissajous** e revela,
 à primeira vista, a razão de frequências $\omega_x / \omega_y$ e a diferença de fase entre eles.
 
 Oscilador em $x$: $x(t) = A_x \cos(\omega_x t + \varphi)$
 Oscilador em $y$: $y(t) = A_y \cos(\omega_y t)$
 
 Se $\omega_x = \omega_y = \omega$, a figura é uma elipse (ou reta, se $\varphi = 0$ ou $\pi$).
-Se as frequências diferem, a trajetória é mais complexa — por exemplo, para $\omega_x = 2\omega_y$,
-o ponto traça uma figura em forma de 8. Cada razão inteira de frequências e cada diferença de
-fase produz uma forma característica que engenheiros usam para diagnosticar o tipo de vibração
-acoplada que há no navio.
+Se as frequências diferem, a trajetória é mais complexa: para $\omega_x = 2\omega_y$, por
+exemplo, o ponto traça uma figura em forma de 8. Cada razão inteira de frequências e cada
+diferença de fase produzem uma forma característica, de que a engenharia se vale para
+diagnosticar o tipo de vibração acoplada presente no navio.
 
-## Veja a figura se formar
+## Traçado de uma figura de Lissajous
 
 A simulação traça a trajetória do ponto $(x(t),\, y(t))$ com os dois osciladores em
-direções perpendiculares. A curva completa aparece em cinza; o ponto colorido percorre a
-trajetória em tempo real. Ajuste a razão $\omega_x : \omega_y$ e a fase $\varphi$ e
-observe a forma resultante.
+direções perpendiculares. A curva completa aparece em cinza, e o ponto colorido percorre a
+trajetória em tempo real. A razão $\omega_x : \omega_y$ e a fase $\varphi$ governam a
+forma resultante.
 
 ```{python}
 #| fig-cap: "Curvas de Lissajous x(t) = A cos(ωx t + φ), y(t) = A cos(ωy t), com amplitudes iguais nos dois eixos. Cada razão de frequências e cada fase produz uma forma característica — mesma grade de parâmetros da versão interativa."
@@ -1064,10 +1065,10 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Com $\omega_x : \omega_y = 1:1$, varie a fase de $0$ a $\pi$. Para quais valores de
+1. Com $\omega_x : \omega_y = 1:1$ e a fase varrida de $0$ a $\pi$, para quais valores de
    $\varphi$ a elipse degenera em reta? Qual $\varphi$ produz circunferência?
-2. Ajuste $2:3$ e conte quantas vezes a curva tangencia a borda horizontal e a vertical
-   da moldura. Confirme que a razão entre as contagens reproduz $\omega_x/\omega_y$.
+2. Em $2:3$, conte quantas vezes a curva tangencia a borda horizontal e a vertical da
+   moldura. Confirme que a razão entre as contagens reproduz $\omega_x/\omega_y$.
 3. Compare $\omega_x : \omega_y = 2:2$ com $2:2{,}5$ (razão $4:5$): a curva continua
    fechando, mas fica mais complexa. O que aconteceria com a trajetória se a razão fosse
    irracional? Num osciloscópio de bordo, o que indica uma figura que gira lentamente,
@@ -1080,31 +1081,30 @@ plt.tight_layout(); plt.show()
 - **Confundir batimento com ressonância:** batimento é a modulação de amplitude quando duas
   frequências próximas se superpõem (fenômeno temporal, transitório ou quase-periódico);
   ressonância é a amplificação máxima quando a frequência da força iguala a frequência natural
-  (fenômeno energético, permanente — tópico 1.5).
-- **Ler "número de laços" de Lissajous errado:** a figura tem $m$ laços na direção $x$ e $n$ laços
+  (fenômeno energético e permanente, estudado adiante nesta unidade).
+- **Contar mal os laços de Lissajous:** a figura tem $m$ laços na direção $x$ e $n$ laços
   em $y$ se $\omega_x / \omega_y = n/m$. Não contar as vezes que a curva toca os eixos.
 :::
 
 ## Onde a superposição vive: exemplos físicos {{< ra OE1.7 B3 >}}
 
 O ponto roxo das simulações anteriores é uma soma matemática, não um corpo: não existe
-objeto mecânico natural cujo deslocamento seja a soma de dois massa–mola independentes.
-A superposição torna-se fisicamente real — um ponto que genuinamente vale $x_1 + x_2$ —
-em sistemas onde ela é um *teorema*, não uma conta: o valor de um **campo** num ponto
-(elevação da superfície do mar, pressão acústica) e a **resposta linear** de uma
-estrutura a duas excitações simultâneas. Os cinco exemplos a seguir percorrem esses
-casos. Ressalva de validade: a igualdade "ponto $= x_1 + x_2$" só é exata no regime
-linear — pequenas amplitudes, boia leve que segue a superfície (não o navio inteiro,
-que tem dinâmica própria), estrutura respondendo linearmente.
+objeto mecânico natural cujo deslocamento seja a soma de dois massa–mola independentes. A
+superposição torna-se fisicamente real, num ponto que de fato vale $x_1 + x_2$, nos
+sistemas em que ela é um *teorema* e não uma conta: o valor de um **campo** num ponto,
+como a elevação da superfície do mar ou a pressão acústica, e a **resposta linear** de uma
+estrutura a duas excitações simultâneas. Os cinco exemplos a seguir percorrem esses casos.
+Ressalva de validade: a igualdade $x = x_1 + x_2$ só é exata no regime linear, isto é, para pequenas
+amplitudes, boia leve que acompanha a superfície (e não o navio inteiro, que tem dinâmica
+própria) e estrutura de resposta linear.
 
 ### Boia num mar de dois trens de onda
 
 Em pequena amplitude, as ondas de gravidade são lineares: a elevação da superfície num
-ponto é a soma das elevações dos trens de onda que por ali passam. Uma boia leve segue
-a superfície — a altura dela *é* $\eta_1 + \eta_2$, fisicamente. Quando dois swells de
-períodos próximos coexistem, a soma forma **grupos de ondas**: é o "conjunto de ondas
-grandes seguido de calmaria" que qualquer marinheiro reconhece, e é exatamente a
-envoltória do batimento.
+ponto é a soma das elevações dos trens de onda que por ali passam. Uma boia leve acompanha
+a superfície, e a altura dela *é*, fisicamente, $\eta_1 + \eta_2$. Quando dois *swells* de
+períodos próximos coexistem, a soma forma **grupos de ondas**, o conjunto de ondas grandes
+seguido de calmaria que qualquer marinheiro reconhece, e que é a envoltória do batimento.
 
 ```{python}
 #| fig-cap: "Boia num mar com dois swells de T₁ = 8 s e T₂ = 10 s, amplitudes de 1 m (dispersão de águas profundas, k = ω²/g). Acima: a superfície num instante. Abaixo: a altura da boia ao longo do tempo, com a envoltória do grupo — período de grupo 1/|1/T₁ − 1/T₂| = 40 s. Mesmos parâmetros da versão interativa."
@@ -1270,22 +1270,22 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Com $T_1 = 8$ s e $T_2 = 10$ s, cronometre na tira o intervalo entre dois grupos e
-   compare com $1/|1/T_1 - 1/T_2| = 40$ s. De onde vem o dito "a cada sétima onda"?
-2. Iguale os períodos: os grupos desaparecem e o mar vira um trem regular. Por quê?
+1. Com $T_1 = 8$ s e $T_2 = 10$ s, o intervalo entre dois grupos na tira confere com
+   $1/|1/T_1 - 1/T_2| = 40$ s? De onde vem o dito da sétima onda?
+2. Igualados os períodos, os grupos desaparecem e o mar vira um trem regular. Por quê?
 3. Por que a altura da *boia* pode ser tratada como $\eta_1 + \eta_2$, mas a resposta
    de um *navio* aos mesmos dois swells não é a soma direta das elevações?
 :::
 
 ### Maré: sizígia e quadratura são batimento
 
-A altura da maré num porto é a soma de constituintes harmônicas; as duas maiores são a
+A altura da maré num porto é a soma de **constituintes harmônicas**; as duas maiores são a
 lunar principal M2 ($T = 12{,}42$ h) e a solar principal S2 ($T = 12{,}00$ h). A
-alternância entre maré de sizígia (grande) e de quadratura (pequena) a cada
+alternância entre maré de **sizígia**, a grande, e de **quadratura**, a pequena, a cada
 $\approx 14{,}8$ dias *é* o batimento entre elas:
 $T_{\text{bat}} = 1/|1/12{,}00 - 1/12{,}42| \approx 355\ \text{h} \approx 14{,}8$ dias.
-É o mesmo fenômeno das tábuas de marés usadas no cálculo de folga sob a quilha — em
-escala de dias, não de segundos.
+É o mesmo fenômeno das tábuas de marés usadas no cálculo de folga sob a quilha, em escala
+de dias em vez de segundos.
 
 ```{python}
 #| fig-cap: "Trinta dias de maré h(t) = A_M2 cos(2πt/12,42) + A_S2 cos(2πt/12,00), com A_M2 = 1,0 m e A_S2 = 0,46 m (razão real S2/M2). A envoltória tracejada alterna sizígia (A_M2+A_S2) e quadratura (A_M2−A_S2) a cada meio período de batimento — 7,4 dias. Mesmos parâmetros da versão interativa."
@@ -1426,19 +1426,19 @@ plt.tight_layout(); plt.show()
 ::: {.pergunta}
 1. Verifique na tela que entre uma sizígia e a quadratura seguinte passam ≈ 7,4 dias.
    Por que esse valor é *metade* do período de batimento?
-2. As frequências de M2 e S2 diferem em só 3,5% — e ainda assim o efeito domina o
+2. As frequências de M2 e S2 diferem em apenas 3,5%, e ainda assim o efeito domina o
    planejamento de portos. O que isso diz sobre batimentos entre frequências próximas?
-3. Com $A_{S2} \to 0$, some a alternância sizígia/quadratura. Que situação física
-   corresponderia a isso?
+3. Com $A_{S2} \to 0$, desaparece a alternância entre sizígia e quadratura. Que situação
+   física corresponderia a isso?
 :::
 
 ### Membrana com dois tons
 
-A pressão acústica num ponto é a soma das pressões que cada fonte produz ali — o ar em
-regime linear não distingue as fontes. Uma membrana leve (o tímpano, o diafragma de um
-hidrofone) é empurrada pela pressão *total*: o deslocamento dela é, fisicamente, a soma
-das duas contribuições. É este o elo com o batimento sonoro do tópico 2.7 — o que o
-ouvido percebe pulsando é a própria membrana somando os dois tons.
+A pressão acústica num ponto é a soma das pressões que cada fonte produz ali, pois o ar em
+regime linear não distingue as fontes. Uma membrana leve, como o tímpano ou o diafragma de
+um hidrofone, é empurrada pela pressão *total*, e o deslocamento dela é, fisicamente, a
+soma das duas contribuições. É este o elo com o batimento sonoro, estudado na unidade de
+ondas: o que o ouvido percebe pulsando é a própria membrana somando os dois tons.
 
 ```{python}
 #| fig-cap: "Deslocamento do centro de uma membrana sob dois tons de f₁ = 220 Hz e f₂ = 224 Hz e mesma amplitude: a soma pulsa com f_bat = 4 Hz (envoltória tracejada). Mesmos parâmetros da versão interativa."
@@ -1594,10 +1594,10 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Ligue o áudio com $f_2 = 224$ Hz e conte as pulsações por segundo. Compare com
+1. Com o áudio ligado em $f_2 = 224$ Hz, conte as pulsações por segundo. Compare com
    $|f_2 - f_1| = 4$ Hz e com o vaivém da membrana na tela.
-2. O ar transmite as duas ondas sem que uma "atrapalhe" a outra — mas a membrana pulsa.
-   Onde, então, acontece a superposição: no meio ou no detector?
+2. O ar transmite as duas ondas sem que uma interfira no trajeto da outra, e ainda assim a
+   membrana pulsa. Onde, então, acontece a superposição: no meio ou no detector?
 3. Um hidrofone de sonar recebe eco e reverberação em frequências próximas. O que o
    diafragma dele registra, segundo este modelo?
 :::
@@ -1605,11 +1605,11 @@ plt.tight_layout(); plt.show()
 ### Ponto no convés entre duas máquinas
 
 Este é o caso literal do objetivo naval deste tópico: um ponto da chapa do convés
-recebe, ao mesmo tempo, a vibração transmitida pelo motor principal ($f_1$) e pelo
-gerador ($f_2$). Em regime linear, a resposta da estrutura às duas excitações é a soma
-das respostas a cada uma — o ponto marcado vibra com $x_1 + x_2$ e "bate" com
-$f_{\text{bat}} = |f_1 - f_2|$. É exatamente o cenário do exemplo resolvido dos dois
-geradores de 50 Hz, na caixa SP acima.
+recebe, ao mesmo tempo, a vibração transmitida pelo motor principal ($f_1$) e pelo gerador
+($f_2$). Em regime linear, a resposta da estrutura às duas excitações é a soma das
+respostas a cada uma: o ponto marcado vibra com $x_1 + x_2$ e bate com
+$f_{\text{bat}} = |f_1 - f_2|$. É o cenário do exemplo resolvido dos dois geradores de
+50 Hz, na caixa SP acima.
 
 ```{python}
 #| fig-cap: "Vibração de um ponto do convés excitado pelo motor (f₁ = 20,0 Hz) e pelo gerador (f₂ = 19,5 Hz), amplitudes iguais: batimento com f_bat = 0,5 Hz — um máximo a cada 2 s, os números do texto. Mesmos parâmetros da versão interativa."
@@ -1759,23 +1759,23 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Com $f_1 = 20{,}0$ e $f_2 = 19{,}5$ Hz, o painel indica um máximo de vibração a cada
-   2 s — os números do texto. O que um técnico com a mão na chapa sentiria?
-2. A validade do modelo exige resposta *linear* da estrutura. Cite uma situação de
-   bordo em que essa hipótese falharia.
-3. Sintonize $f_2 = f_1$: o batimento some, mas a vibração não. Do ponto de vista de
+1. Com $f_1 = 20{,}0$ e $f_2 = 19{,}5$ Hz, os números do texto, o painel indica um máximo
+   de vibração a cada 2 s. O que um técnico com a mão na chapa sentiria?
+2. A validade do modelo exige resposta *linear* da estrutura. Cite uma situação de bordo
+   em que essa hipótese falharia.
+3. Levado $f_2$ a $f_1$, o batimento some, mas a vibração não. Do ponto de vista de
    manutenção, qual das duas situações é mais fácil de diagnosticar de ouvido?
 :::
 
-### Harmonógrafo — a máquina deste capítulo
+### Harmonógrafo
 
-Instrumento do século XIX: dois pêndulos movem uma pena sobre o papel, e a posição da
-pena é a combinação *física* dos dois movimentos. Pêndulos na mesma direção somam-se
-como na primeira simulação deste tópico; pêndulos perpendiculares desenham figuras de
+O **harmonógrafo** é um instrumento do século XIX: dois pêndulos movem uma pena sobre o papel, e a posição da
+pena é a combinação *física* dos dois movimentos. Pêndulos na mesma direção somam-se como
+na primeira simulação deste tópico; pêndulos perpendiculares desenham figuras de
 Lissajous. Com o amortecimento real dos pêndulos,
 $x(t) = A\,e^{-\gamma t}\cos(\omega_x t + \varphi)$ e
-$y(t) = A\,e^{-\gamma t}\cos(\omega_y t)$, a figura espirala para dentro — são os
-desenhos clássicos do aparelho. A pena é o "ponto roxo" que se pode segurar.
+$y(t) = A\,e^{-\gamma t}\cos(\omega_y t)$, a figura espirala para dentro, nos desenhos
+clássicos do aparelho. A pena materializa o ponto que carrega a soma.
 
 ```{python}
 #| fig-cap: "Harmonogramas: figuras de Lissajous com amortecimento (γ = 0,02 s⁻¹, t até 150 s) para quatro combinações de razão de frequências e fase. O decaimento das amplitudes espirala a curva para dentro. Mesmos parâmetros da versão interativa."
@@ -1899,15 +1899,16 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Com $\gamma = 0$, a pena repassa a mesma figura de Lissajous para sempre. Ligue
-   $\gamma = 0{,}02$: por que a espiral resultante nunca se cruza exatamente sobre o
-   traço anterior?
+1. Com $\gamma = 0$, a pena repassa indefinidamente a mesma figura de Lissajous. Posto
+   $\gamma = 0{,}02$, por que a espiral resultante nunca se cruza exatamente sobre o traço
+   anterior?
 2. O harmonógrafo com pêndulos na mesma direção traçaria qual das simulações
    anteriores deste tópico?
-3. A razão $\omega_x{:}\omega_y$ continua legível na figura mesmo com decaimento
-   (conte as tangências). Por que o amortecimento não altera as frequências no modelo
-   sub-amortecido com $\gamma \ll \omega$ (tópico 1.4)?
+3. A razão $\omega_x{:}\omega_y$ continua legível na figura mesmo com decaimento; conte
+   as tangências. Por que o amortecimento não altera as frequências no modelo
+   sub-amortecido com $\gamma \ll \omega$?
 :::
 
-**Conexão com o próximo tópico:** superposição sem amortecimento é uma idealização.
-Qualquer oscilador real perde energia ao vizinho — é o tópico 1.4.
+**Conexão com o próximo tópico:** a superposição sem amortecimento é uma idealização,
+pois qualquer oscilador real perde energia para o meio. É o objeto do estudo das
+oscilações amortecidas.
