@@ -52,28 +52,43 @@ sala de aula adota-se um deles para resolver a EDO.
 ## Solução da equação {{< ra OE1.6 B3 >}}
 
 Busca-se uma função cuja segunda derivada seja ela mesma com o sinal trocado, a menos de
-$\omega^2$. Seno e cosseno satisfazem essa condição, e a combinação linear de ambos
-também é solução:
+$\omega^2$. Seno e cosseno satisfazem essa condição, e a combinação linear de ambos também
+é solução. Sendo a equação de segunda ordem, bastam **duas** constantes:
 
-$$x(t) = a \cos(\omega t + \varphi) + b \sin(\omega t + \varphi)$$
+$$x(t) = a \cos(\omega t) + b\,\mathrm{sen}(\omega t)$$
 
-O passo seguinte é aplicar as condições iniciais, de modo que $a$ e $b$ fiquem
-estabelecidos a partir da interpretação física do movimento. Aqui o oscilador tem
-velocidade inicial $v_0$ e posição inicial $x_0$ em $t=0$, ou seja,
+As duas condições iniciais as fixam. Em $t=0$ o oscilador tem posição $x_0$ e velocidade
+$v_0$:
 
 $$x(t=0) = x_0 \,\, \mathrm{e}\,\, \dot{x}(t=0) = v(t=0) = v_0$$
 
+Derivando a solução e avaliando as duas em $t=0$:
+
+$$x(0) = a = x_0
+\qquad
+\dot{x}(0) = b\,\omega = v_0 \;\Longrightarrow\; b = \frac{v_0}{\omega}$$
+
 Resulta então
 
-$$ x(t) = x_0 \cos(\omega t + \varphi) + {v_0 \over \omega} \sin(\omega t + \varphi)$$
+$$ x(t) = x_0 \cos(\omega t) + {v_0 \over \omega}\,\mathrm{sen}(\omega t)$$
 
-<!-- [VERIFICAR: aplicar x(0)=x_0 e v(0)=v_0 a a·cos(ωt+φ)+b·sen(ωt+φ) não dá a=x_0 e
-     b=v_0/ω enquanto φ permanecer livre; a forma acima vale para φ=0. Idem na
-     particularização seguinte. Dedução é do professor: esta passada é só de registro. -->
+e, no caso específico de partida do afastamento máximo em repouso, com $x_0=A$ e $v_0=0$,
 
-e, no caso específico em que $x_0=A$ e $v_0=0$,
+$$ x(t) = A \cos(\omega t)$$
 
-$$ x(t) = A \cos(\omega t + \varphi)$$
+**Forma amplitude-fase.** As duas constantes podem ser agrupadas de outro modo, que é o
+adotado daqui em diante. Escrevendo $a = A\cos\varphi$ e $b = -A\,\mathrm{sen}\,\varphi$, a
+soma de seno e cosseno colapsa num único cosseno deslocado:
+
+$$x(t) = A\cos(\omega t + \varphi),
+\qquad
+A = \sqrt{x_0^2 + \left(\frac{v_0}{\omega}\right)^{2}},
+\qquad
+\tan\varphi = -\frac{v_0}{\omega\,x_0}$$
+
+As constantes continuam sendo duas, e carregam a mesma informação que $x_0$ e $v_0$. O caso
+particular acima corresponde a $\varphi = 0$: partindo do repouso na posição extrema, não há
+fase a escolher.
 
 Derivando duas vezes para conferir:
 
@@ -91,9 +106,43 @@ Cada constante da solução tem leitura física direta, retomada na seção segu
 - Período e frequência: $T = \dfrac{2\pi}{\omega}$, $f = \dfrac{1}{T} = \dfrac{\omega}{2\pi}$.
 
 
-<!-- [VERIFICAR: seção "A solução complexa" ficou como placeholder "(...)" no original.
-     Conteúdo a escrever pelo professor; esta passada é só de registro e não inventa
-     dedução. -->
+## A solução complexa {{< ra OE1.4 B2 >}}
+
+A mesma equação admite um segundo caminho de solução, que prepara a leitura geométrica da
+seção seguinte. A tentativa é a exponencial $x(t) = e^{rt}$, que substituída em
+$\ddot{x} + \omega^2 x = 0$ dá:
+
+$$r^2 e^{rt} + \omega^2 e^{rt} = 0
+\quad\Longrightarrow\quad
+r^2 = -\omega^2
+\quad\Longrightarrow\quad
+r = \pm i\omega$$
+
+As duas raízes são imaginárias puras, e a solução geral combina as duas exponenciais:
+
+$$x(t) = C_1 e^{i\omega t} + C_2 e^{-i\omega t}$$
+
+Como $x(t)$ é grandeza física real, $C_2$ é o conjugado de $C_1$; a soma de um número com o
+seu conjugado vale o dobro da parte real:
+
+$$x(t) = 2\operatorname{Re}\!\left[C_1 e^{i\omega t}\right]
+= \operatorname{Re}\!\left[\tilde{A}\,e^{i\omega t}\right],
+\qquad
+\tilde{A} \equiv 2C_1 = A\,e^{i\varphi}$$
+
+A constante $\tilde{A}$ é a **amplitude complexa**: o módulo dela é a amplitude $A$ e o
+argumento é a constante de fase $\varphi$. Um só número complexo carrega as duas constantes
+reais que as condições iniciais fixam. Desenvolvendo a parte real:
+
+$$x(t) = \operatorname{Re}\!\left[A\,e^{i(\omega t + \varphi)}\right] = A\cos(\omega t + \varphi)$$
+
+que é a solução já obtida.
+
+A forma complexa é a versão algébrica do que a próxima seção apresenta em geometria:
+$\tilde{A}e^{i\omega t}$ é um vetor de módulo $A$ que gira com velocidade angular $\omega$ a
+partir do ângulo $\varphi$, e o MHS é a projeção dele sobre o eixo real. É também a notação
+com que a unidade de ondas soma oscilações por fasores, onde somar duas exponenciais
+complexas substitui a trigonometria da superposição.
 
 ## A relação MHS ↔ MCU {{< ra OE1.4 B2 >}}
 
