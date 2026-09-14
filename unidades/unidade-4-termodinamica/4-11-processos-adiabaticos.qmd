@@ -14,13 +14,13 @@ OE 4.36 [B3] Aplicar a equação de estado em processos adiabáticos
 
 {{< aula 35-36 >}}
 
-Quando um gás é comprimido muito rapidamente (como dentro de um cilindro de motor diesel),
-não há tempo para calor sair para o ambiente — a compressão é **adiabática** (Q = 0). Nesse
-caso, toda a energia de compressão W entra na energia interna do gás, aumentando sua
-temperatura dramaticamente. É por isso que um motor diesel consegue ignição sem vela de
-ignição: a compressão adiabática aquece o ar de 27 °C até ~600 °C ou mais, o suficiente
-para inflamar diesel injetado. A relação entre P, V e T em um processo adiabático é
-governada pela **equação de Poisson** — a ferramenta central para analisar motores.
+Comprimido um gás muito rapidamente, como dentro de um cilindro de motor diesel, não há
+tempo para o calor sair para o ambiente, e a compressão é **adiabática** ($Q = 0$). Toda a
+energia de compressão $W$ entra então na energia interna do gás e lhe eleva fortemente a
+temperatura. Daí a ignição do motor diesel dispensar vela: a compressão adiabática aquece o
+ar de 27 °C a cerca de 600 °C ou mais, o bastante para inflamar o diesel injetado. A relação
+entre $P$, $V$ e $T$ num processo adiabático é governada pela **equação de Poisson**, a
+ferramenta central da análise de motores.
 
 ## Caracterização de adiabáticos {{< ra OE4.34 B2 >}}
 
@@ -31,7 +31,7 @@ $$\Delta U = Q - W = 0 - W = -W$$
 Ou seja, trabalho realizado sobre o gás (W negativo) vira integralmente aumento de energia
 interna. Trabalho realizado pelo gás (W positivo) reduz energia interna, arrefecendo o gás.
 
-Conseqüências:
+Consequências:
 
 - **Compressão adiabática:** W < 0 (trabalho entra), ΔU > 0 (temperatura sobe). Mais
   rápido e mais quente que compressão isotérmica.
@@ -53,7 +53,7 @@ $$TV^{\gamma-1} = \text{constante}$$
 
 $$P^{1-\gamma}T^\gamma = \text{constante}$$
 
-onde γ = C_P / C_V (razão de calores específicos — 1,4 para ar).
+onde γ = C_P / C_V é a razão de calores específicos, igual a 1,4 para o ar.
 
 **Derivação rápida:** na Primeira Lei diferencial, dU = −PdV (Q = 0). Para gás ideal,
 dU = n·C_V·dT. Logo:
@@ -69,7 +69,7 @@ Dividindo a primeira pela segunda:
 
 $$\frac{C_V}{R} = -\frac{P \, dV}{P \, dV + V \, dP}$$
 
-Simplificando (álgebra standard de equações diferenciais):
+Simplificando:
 
 $$\frac{dP}{P} + \gamma \frac{dV}{V} = 0$$
 
@@ -95,12 +95,12 @@ Temperatura:
 $$T_2 = T_1 \left(\frac{P_2}{P_1}\right)^{(\gamma-1)/\gamma}
 = 300 \times (50)^{0{,}286} \approx 880\ \text{K} \approx 607\ °\text{C}$$
 
-A temperatura sobe para ~880 K — suficiente para diesel inflamar (ponto de ignição de HFO
-≈ 620 K).
+A temperatura sobe a cerca de 880 K, suficiente para inflamar o diesel, cujo ponto de
+ignição, no HFO, é de aproximadamente 620 K.
 
-**Ponto 3 (após combustão):** injeção de combustível, queimadura rápida em volume
-praticamente constante (diesel com injeção direta), pressão sobe para P₃ ≈ 140 bar,
-temperatura ~2000 K.
+**Ponto 3 (após combustão):** injetado o combustível, a queima é rápida e a volume
+praticamente constante, no diesel de injeção direta; a pressão sobe a P₃ ≈ 140 bar e a
+temperatura a cerca de 2000 K.
 
 ::: {.sp}
 Um cilindro de motor 4 tempos tem volume total 500 mL. Razão de compressão r = 18.
@@ -127,7 +127,7 @@ $P_3 \approx 118\ \text{bar}$.
 
 **(d) Análise crítica.** Os $\approx 674\ °\text{C}$ ao fim da compressão são a chave do
 motor diesel: superam a temperatura de autoignição do combustível, e por isso o diesel
-**dispensa vela** — a compressão adiabática faz o trabalho da centelha. A hipótese
+**dispensa vela**, com a compressão adiabática fazendo o trabalho da centelha. A hipótese
 adiabática é boa porque a compressão é rápida frente à troca de calor com as paredes; um
 $r$ menor daria $T_2$ menor e falha de partida a frio (daí as velas aquecedoras de
 pré-partida).
@@ -136,21 +136,21 @@ pré-partida).
 ::: {.callout-warning}
 ## Erros clássicos
 
-- **Confundir "adiabático" com "isotérmico":** adiabático = Q = 0 (isolado termicamente);
-  isotérmico = T = cte (em contato com banho térmico). São processos opostos. Adiabático
-  aquece na compressão; isotérmico não.
+- **Confundir adiabático com isotérmico:** no adiabático $Q = 0$, com o sistema isolado
+  termicamente; no isotérmico $T$ é constante, com o sistema em contato com um banho
+  térmico. São processos opostos: o adiabático aquece na compressão, e o isotérmico não.
 - **Usar γ errado:** γ = 1,4 para ar diatômico. Se o gás tiver outras moléculas (CO₂ de
   combustão, vapor de água), γ pode ser ~1,3. Diferença de 7% em T resultante.
-- **Esquecer que a equação é $PV^\gamma$, não $PV^c$:** expoente é SEMPRE γ =
-  C_P/C_V, não qualquer outro c. Confundir com calor específico é erro comum.
+- **Esquecer que a equação é $PV^\gamma$, e não $PV^c$:** o expoente é sempre γ = C_P/C_V, e
+  não um calor específico qualquer.
 :::
 
-## Veja a compressão adiabática aquecer o cilindro
+## Aquecimento do cilindro pela compressão adiabática
 
-Comprimida rápido, sem tempo para trocar calor, a mistura segue a **adiabática**
-$PV^\gamma = $ const — mais íngreme que a isoterma, porque o gás também esquenta. Com razão
-de compressão $r$, a temperatura sobe a $T_2 = T_1 r^{\gamma-1}$, o suficiente para a
-autoignição do diesel. Ajuste $r$ e veja $T_2$.
+Comprimida rápido, sem tempo de trocar calor, a mistura segue a **adiabática**
+$PV^\gamma = $ const, mais íngreme que a isoterma porque o gás também esquenta. Com razão de
+compressão $r$, a temperatura sobe a $T_2 = T_1 r^{\gamma-1}$, o bastante para a autoignição
+do diesel. A razão $r$ é ajustável, e o painel devolve $T_2$.
 
 ```{python}
 #| fig-cap: "Compressão no cilindro diesel (γ = 1,4, T₁ = 298 K). A adiabática PV^γ (vermelha) sobe acima da isoterma PV (cinza) porque o gás aquece. Para r = 18, T₂ ≈ 947 K (674 °C) — acima da autoignição. Mesmos parâmetros da versão interativa."
@@ -248,11 +248,11 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. A adiabática (vermelha) sobe acima da isoterma (cinza) para a mesma compressão. Por
-   quê? O que a isoterma "não contabiliza"?
-2. A partir de que razão de compressão $r$ a temperatura $T_2$ ultrapassa a autoignição
-   (~750 K)? Ligue com o motor diesel dispensar vela.
-3. Reduza $r$ para 6 (típico de motor a gasolina): $T_2$ fica abaixo da autoignição do
+1. A adiabática, em vermelho, sobe acima da isoterma, em cinza, para a mesma compressão.
+   Por quê? O que a isoterma deixa de contabilizar?
+2. A partir de que razão de compressão $r$ a temperatura $T_2$ ultrapassa a autoignição, de
+   cerca de 750 K? Relacione com o motor diesel dispensar vela.
+3. Reduzido $r$ a 6, valor típico de motor a gasolina, $T_2$ fica abaixo da autoignição do
    diesel. Por que o motor Otto precisa de centelha, e o diesel não?
 :::
 
@@ -261,18 +261,18 @@ plt.tight_layout(); plt.show()
 <!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
      em sessões futuras, a pedido do professor. -->
 
-- **Compressão no cilindro diesel** — rápida demais para trocar calor: T sobe pela
-  adiabática até a autoignição do combustível — o motor diesel dispensa vela porque
-  este tópico funciona.
+- **Compressão no cilindro diesel** — rápida demais para trocar calor, faz $T$ subir pela
+  adiabática até a autoignição do combustível, e é por isso que o motor diesel dispensa
+  vela.
 - **Descarga rápida de garrafa de ar** — a garrafa gela e chega a suar/gear no
   gargalo: expansão quase-adiabática do gás que fica.
-- **Nuvens orográficas e a garrafa que "fumega"** — o clássico: ar subindo (ou
-  descomprimindo) esfria adiabaticamente até condensar o vapor.
+- **Nuvens orográficas** — o ar que sobe, ou que descomprime, esfria adiabaticamente até
+  condensar o vapor.
 
 <!-- EXEMPLO A SIMULAR: descarga de garrafa de ar (gráfico interativo): pressão e
      temperatura internas caindo pela politrópica durante a descarga; slider de
      rapidez da descarga interpolando isoterma ↔ adiabática. -->
 
-**Conexão com o próximo tópico:** a compressão adiabática no motor diesel é a "perna que
-sobe" do ciclo. A combustão e expansão seguem — e revelam um limite fundamental de como
-eficiência de motor melhora. Esse limite é a Segunda Lei da Termodinâmica.
+**Conexão com o próximo tópico:** a compressão adiabática é o trecho ascendente do ciclo
+diesel. A combustão e a expansão que se seguem revelam um limite fundamental à melhoria do
+rendimento de um motor: a Segunda Lei da Termodinâmica.
