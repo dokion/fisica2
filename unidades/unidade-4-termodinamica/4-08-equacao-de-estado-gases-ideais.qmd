@@ -14,12 +14,11 @@ OE 4.27 [B3] Aplicar a equação de estado em diferentes condições físicas
 
 {{< aula 33-34 >}}
 
-O gás dentro de um cilindro de motor diesel está a pressões de 40–200 bar e temperaturas
-de 400–2000 K, em volume que muda continuamente. Como saber P, V, T em cada ponto do ciclo?
-A resposta vem de uma equação simples mas poderosa, a **equação de estado dos gases ideais**
-— que relaciona pressão, volume e temperatura de forma determinística. Em máquinas navais,
-essa equação é a ponte entre o que você mede na agulha do manômetro e o que acontece
-termicamente dentro do cilindro.
+O gás dentro de um cilindro de motor diesel está a pressões de 40–200 bar e temperaturas de
+400–2000 K, num volume que muda continuamente. Conhecer $P$, $V$ e $T$ em cada ponto do
+ciclo depende da **equação de estado dos gases ideais**, que relaciona as três grandezas de
+forma determinística. Em máquinas navais ela é a ponte entre a leitura do manômetro e o que
+ocorre termicamente dentro do cilindro.
 
 ## Comportamento macroscópico de gases {{< ra OE4.25 B2 >}}
 
@@ -41,8 +40,8 @@ $$PV = nRT$$
 
 **Constante universal:** $R = 8{,}314\ \text{J/(mol·K)}$
 
-Se você tem $n$ mols de gás, pode prever P, V, T desde que conheça dois dos três. A forma
-mais prática separa massa do número de mols:
+Dados $n$ mols de gás, conhecidas duas das três grandezas, a terceira fica determinada. A
+forma mais prática separa a massa do número de mols:
 
 $$PV = mR_{\text{esp}} T$$
 
@@ -62,7 +61,7 @@ No ciclo diesel, o gás é principalmente ar + produtos de combustão (aproximad
 
 ## Aplicações práticas {{< ra OE4.27 B3 >}}
 
-**Exemplo 1 — Compressão inicial (ponto 1 do ciclo):**
+**Exemplo 1, compressão inicial (ponto 1 do ciclo):**
 
 Cilindro de motor (volume V₁ = 1000 cm³ = 0,001 m³), ar a T₁ = 300 K (27 °C), P₁ = 1 bar.
 
@@ -73,13 +72,13 @@ $$n = \frac{P_1 V_1}{RT_1} = \frac{1 \times 10^5 \times 0{,}001}{8{,}314 \times 
 
 (ou em massa: 0,040 mol × 0,029 kg/mol ≈ 0,0012 kg = 1,2 g)
 
-**Exemplo 2 — Após compressão adiabática até P₂ = 40 bar (ponto 2):**
+**Exemplo 2, após compressão adiabática até P₂ = 40 bar (ponto 2):**
 
 Volume cai para V₂ (incógnita); temperatura sobe para T₂ (incógnita). Adiabático: nenhum
 calor entra.
 
-Para gás ideal com adiabático, vale $PV^\gamma = \text{constante}$ (veremos no tópico 4.11).
-Com γ = 1,4 (ar):
+No processo adiabático de um gás ideal vale $PV^\gamma = \text{constante}$, estabelecido no
+estudo dos processos adiabáticos. Com γ = 1,4 (ar):
 
 $$P_1 V_1^{1{,}4} = P_2 V_2^{1{,}4}$$
 
@@ -92,13 +91,13 @@ Temperatura após compressão:
 $$T_2 = T_1 \left(\frac{P_2}{P_1}\right)^{(\gamma-1)/\gamma}
 = 300 \times (40)^{0{,}2857} \approx 800\ \text{K}$$
 
-(Muito quente, mas abaixo da combustão — combustível não ignita ainda em diesel, precisa de
-injeção)
+Temperatura alta, ainda abaixo da combustão: no diesel o combustível só se inflama após a
+injeção.
 
 ::: {.sp}
 Cilindro de motor diesel duplo de 2 tempos, volume total V = 500 cm³. No ponto de máxima
 compressão antes da injeção de combustível (ponto 2): P = 80 bar, T = 900 K. Após
-combustão a volume constante (queimador súbito), pressão sobe para P = 150 bar. Qual a
+combustão a volume constante, numa queima súbita, a pressão sobe para P = 150 bar. Qual a
 temperatura após a combustão (ponto 3)?
 
 **(a) Modelagem.** Combustão a **volume constante** (o pistão praticamente não se move no
@@ -124,21 +123,23 @@ exigem materiais e refrigeração especiais.
 ::: {.callout-warning}
 ## Erros clássicos
 
-- **Esquecer de usar Kelvin:** PV = nRT **exige sempre** T em Kelvin, nunca Celsius. Se você
-  usar T em °C, as contas dão valores errados de ordens de magnitude.
-- **Confundir "gás ideal" com "gás real":** a equação PV = nRT é uma aproximação. Gases
-  reais (CO₂, H₂O em vapor de alta pressão) desviam dela. Mas ar/nitrogênio em condições
-  de motor são aproximadamente ideais.
-- **Assumir que n é constante:** se queimador abre e gases escapam, n muda. Equação
-  continua válida, mas n₁ ≠ n₂. Ciclos com vazamento são mais complexos.
+- **Esquecer de usar Kelvin:** $PV = nRT$ **exige sempre** $T$ em Kelvin, nunca em Celsius.
+  Com $T$ em °C as contas erram por ordens de grandeza.
+- **Confundir gás ideal com gás real:** $PV = nRT$ é aproximação, e gases reais como CO₂ e
+  vapor de água a alta pressão desviam dela. Ar e nitrogênio em condições de motor são
+  aproximadamente ideais.
+- **Supor $n$ constante:** aberta a válvula e escapados os gases, $n$ muda. A equação
+  continua válida, mas com $n_1 \neq n_2$, e ciclos com vazamento são mais complexos.
+  <!-- [VERIFICAR: o original dizia "se queimador abre e gases escapam"; num cilindro quem
+       abre é a válvula de descarga, e foi essa a leitura adotada.] -->
 :::
 
-## Veja a combustão a volume constante
+## Combustão a volume constante e temperatura de pico
 
 No instante da queima, o pistão quase não se move: o volume é constante e a pressão sobe
 com a temperatura, $P/T = $ const (Gay-Lussac). No diagrama $P$–$T$, o processo é uma
-reta pela origem; no $P$–$V$, uma subida vertical. Ajuste a pressão pós-combustão e leia
-a temperatura de pico.
+reta pela origem; no $P$–$V$, uma subida vertical. A pressão pós-combustão é ajustável, e o
+painel devolve a temperatura de pico.
 
 ```{python}
 #| fig-cap: "Combustão a volume constante num cilindro diesel: do ponto 2 (80 bar, 900 K) ao ponto 3. A pressão e a temperatura sobem juntas (P/T constante); para P₃ = 150 bar, T₃ = 900×150/80 ≈ 1688 K. Mesmos parâmetros da versão interativa."
@@ -228,8 +229,8 @@ plt.tight_layout(); plt.show()
 ::: {.pergunta}
 1. No diagrama $P$–$T$ o processo é uma reta que passa pela origem. Por quê? O que a
    lei $P/T = $ const garante sobre a razão entre as duas grandezas?
-2. Aumente $P_3$: a temperatura de pico $T_3$ acompanha proporcionalmente. Que
-   temperatura corresponde a 200 bar?
+2. Elevado $P_3$, a temperatura de pico $T_3$ acompanha proporcionalmente. Que temperatura
+   corresponde a 200 bar?
 3. Por que a hipótese de volume constante é razoável só no *instante* da combustão? O
    que muda quando o pistão começa a descer (ciclo Diesel real)?
 :::
@@ -242,15 +243,15 @@ plt.tight_layout(); plt.show()
 - **Garrafas de ar de partida** — 30 bar nominais variam com a temperatura do
   compartimento: pV = nRT explica a leitura maior à tarde sem que ninguém tenha
   comprimido nada.
-- **Respiro de tanques** — o "respirar" diário dos tanques (admitir e expulsar ar com
-  o ciclo térmico) é a equação de estado movendo volume a pressão constante.
-- **Balão meteorológico** — o clássico: sobe, a pressão externa cai, o volume cresce
-  até estourar — a isoterma percorrida ao contrário.
+- **Respiro de tanques** — a admissão e a expulsão diárias de ar com o ciclo térmico são a
+  equação de estado movendo volume a pressão constante.
+- **Balão meteorológico** — na subida a pressão externa cai e o volume cresce até estourar:
+  a isoterma percorrida ao contrário.
 
 <!-- EXEMPLO A SIMULAR: garrafa de ar de partida (gráfico interativo): slider de
      temperatura do compartimento (10–50 °C); pressão indicada e massa de ar
      disponível para partidas. -->
 
-**Conexão com o próximo tópico:** sabendo P, V, T em cada ponto do ciclo, você quer saber
-**quanto de energia** está armazenada no gás. Resposta: energia interna, que depende de
-temperatura — e da entalpia, no caso de sistemas abertos como trocadores.
+**Conexão com o próximo tópico:** conhecidos $P$, $V$ e $T$ em cada ponto do ciclo, resta
+**quanta energia** está armazenada no gás. É a energia interna, que depende da temperatura,
+e a entalpia, no caso de sistemas abertos como os trocadores.

@@ -16,12 +16,11 @@ OE 4.24 [B4] Analisar a variação de energia interna em diferentes processos
 
 {{< aula 33-34 >}}
 
-A Primeira Lei da Termodinâmica é o enunciado formal da conservação de energia em
-contextos onde calor e trabalho interagem. Em máquinas navais, ela é a regra de ouro: todo
-joule de calor que entra no cilindro OU vira trabalho nas bielas, OU sai como calor
-rejeitado. Nada desaparece, nada é criado. Entender essa lei é entender por que não existe
-motor com eficiência > 100% e por que o balanço energético de um motor diesel real descreve
-onde vai cada unidade de combustível queimado.
+A Primeira Lei da Termodinâmica é o enunciado formal da conservação de energia onde calor e
+trabalho interagem. Em máquinas navais ela governa todo o balanço: cada joule de calor que
+entra no cilindro vira trabalho nas bielas ou sai como calor rejeitado, sem que nada se crie
+ou desapareça. Dela decorrem a inexistência de motor com eficiência acima de 100% e a
+prestação de contas de cada unidade de combustível queimado num motor diesel real.
 
 ## Enunciado da Primeira Lei {{< ra OE4.21 B1 >}}
 
@@ -44,15 +43,15 @@ Convenção de sinais:
 
 A Primeira Lei diz três coisas simultaneamente:
 
-1. **Conservação de energia:** energia não é criada nem destruída. Se você coloca calor Q
-   em um sistema e ele realiza trabalho W, a energia restante Q − W fica armazenada como
-   energia interna U.
+1. **Conservação de energia:** a energia não é criada nem destruída. Fornecido um calor $Q$
+   ao sistema, que realiza um trabalho $W$, o restante $Q - W$ fica armazenado como energia
+   interna $U$.
 
 2. **Equivalência:** calor e trabalho são intercambiáveis. Um joule de trabalho retirado
    pode ser substituído por um joule de calor, e vice-versa.
 
-3. **Impossibilidade de perpétuo:** não há máquina que transforme 100% do calor em trabalho.
-   Sempre há um resto Q₂ que escapa (veremos por quê na Segunda Lei).
+3. **Impossibilidade do moto-perpétuo:** não há máquina que converta 100% do calor em
+   trabalho. Sempre resta um $Q_2$ que escapa, pela razão que a Segunda Lei estabelece.
 
 Para um motor diesel em um ciclo completo:
 
@@ -124,10 +123,11 @@ $$\dot{W} = 0{,}45 \times 2222 \approx 1000\ \text{kW},
 $\dot{W} \approx 1000\ \text{kW}$, $\dot{Q}_2 \approx 1222\ \text{kW}$, $\eta \approx 45\%$.
 
 **(d) Análise crítica.** Os 2500 kW de eixo do enunciado *excederiam* a potência de
-combustível (2222 kW) — violação direta da primeira lei, sinal de erro de dado. Da mesma
-forma, a água de refrigeração indicada carregaria só ~24 kW, ordem de grandeza incompatível
-com $\dot{Q}_2$. A lição permanece: a energia do combustível se reparte em trabalho e
-calor rejeitado, e a soma é conservada — nenhum termo pode exceder $\dot{Q}_1$.
+combustível de 2222 kW, em violação direta da primeira lei e sinal de erro de dado. Do mesmo
+modo, a água de refrigeração indicada carregaria apenas cerca de 24 kW, ordem de grandeza
+incompatível com $\dot{Q}_2$. A lição permanece: a energia do combustível se reparte em
+trabalho e calor rejeitado, com a soma conservada, e nenhum termo pode exceder
+$\dot{Q}_1$.
 :::
 
 ::: {.callout-warning}
@@ -135,20 +135,20 @@ calor rejeitado, e a soma é conservada — nenhum termo pode exceder $\dot{Q}_1
 
 - **Confundir ΔU com Q:** ΔU é mudança de energia interna (propriedade do sistema). Q é
   calor transferido (processo). Num ciclo, ΔU = 0, mas Q ≠ 0.
-- **Esquecer de levar em conta TODOS os caminhos de saída de calor:** água de refrigeração
-  é ~30–40% do calor total. Exaustão é ~20–30%. Radiação da parede é 10–20%. Se você conta
-  só a água, perde 50% do Q₂.
-- **Usar "eficiência" como se fosse um número mágico:** η = 45% não significa que 45% do
-  combustível vira trabalho e 55% desaparece. Significa que dos 100 J de energia do
-  combustível, 45 J saem como trabalho (útil) e 55 J saem como calor (perda). Nada some.
+- **Deixar de fora algum caminho de saída do calor:** a água de refrigeração responde por
+  cerca de 30–40% do total, a exaustão por 20–30% e a radiação da parede por 10–20%.
+  Contabilizar só a água deixa de fora 50% de $Q_2$.
+- **Tomar a eficiência por número mágico:** η = 45% não significa que 45% do combustível
+  vira trabalho e 55% desaparece. Significa que, de cada 100 J de energia do combustível,
+  45 J saem como trabalho útil e 55 J saem como calor. Nada some.
 :::
 
-## Veja o balanço de energia do motor
+## Repartição do balanço energético de um motor diesel
 
-A primeira lei em forma de repartição: de cada 100 unidades de combustível, uma fração
-$\eta$ vira trabalho no eixo e o restante sai como calor — pelos gases de descarga, pela
-água de refrigeração e por radiação. Ajuste o rendimento e veja as fatias mudarem, com a
-soma sempre igual a 100.
+A primeira lei em forma de repartição: de cada 100 unidades de combustível, a fração $\eta$
+vira trabalho no eixo e o restante sai como calor, pelos gases de descarga, pela água de
+refrigeração e por radiação. O rendimento é ajustável, e as fatias acompanham, com a soma
+sempre igual a 100.
 
 ```{python}
 #| fig-cap: "Repartição típica da energia de um motor diesel: ~45% trabalho, ~30% gases de descarga, ~20% água de refrigeração, ~5% radiação. A soma é sempre 100% (primeira lei). Mesmos parâmetros da versão interativa."
@@ -226,9 +226,9 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. A soma das quatro fatias é sempre 100%. Que princípio isso representa, e o que ele
-   proíbe (uma fatia "extra" que apareça do nada)?
-2. Suba o rendimento: qual fatia diminui para compensar? A energia rejeitada some ou
+1. A soma das quatro fatias é sempre 100%. Que princípio isso representa, e que fatia
+   surgida do nada ele proíbe?
+2. Elevado o rendimento, qual fatia diminui para compensar? A energia rejeitada some ou
    apenas encolhe?
 3. Gases de descarga (~30%) e água de refrigeração (~20%) somam metade da energia. Por
    que a recuperação de calor (WHR) mira sobretudo os gases, e não a água?
@@ -251,6 +251,6 @@ plt.tight_layout(); plt.show()
 <!-- EXEMPLO A SIMULAR: compressor de partida (p5.js): pistão comprimindo com
      indicadores de W, ΔU e Q trocado com o resfriador. -->
 
-**Conexão com o próximo tópico:** a Primeira Lei aplicada a gases ideais — onde energia
-interna depende apenas de temperatura — abre o caminho para análise de ciclos reais
-(Otto, Diesel) usando diagramas P-V.
+**Conexão com o próximo tópico:** a Primeira Lei aplicada a gases ideais, cuja energia
+interna depende apenas da temperatura, abre caminho para a análise dos ciclos reais, Otto e
+Diesel, em diagramas $P$–$V$.
