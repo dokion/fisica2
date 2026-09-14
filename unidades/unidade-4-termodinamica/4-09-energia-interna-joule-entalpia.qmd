@@ -14,13 +14,12 @@ OE 4.30 [B2] Conceituar entalpia e sua importância em processos termodinâmicos
 
 {{< aula 33-34 >}}
 
-Um gás aquecido tem energia. Essa energia está inteiramente no movimento caótico das
-moléculas — é a **energia interna**. Para gases ideais, há uma relação direta: energia
-interna depende APENAS de temperatura, não de pressão ou volume. Isso simplifica enormemente
-cálculos de ciclos de motor. Além disso, em sistemas abertos como caldeiras e trocadores,
-uma grandeza chamada **entalpia** (energia + trabalho de fluxo) é mais natural que energia
-interna. Joule e Joule-Thomson descobriram experimentalmente essas propriedades, abrindo
-o caminho para a engenharia térmica moderna.
+A energia de um gás aquecido está toda no movimento caótico das moléculas: é a **energia
+interna**. Nos gases ideais ela depende *apenas* da temperatura, e não da pressão ou do
+volume, o que simplifica o cálculo dos ciclos de motor. Em sistemas abertos, como caldeiras
+e trocadores, a grandeza natural é a **entalpia**, energia interna somada ao trabalho de
+fluxo. Joule e Joule-Thomson estabeleceram experimentalmente essas propriedades, base da
+engenharia térmica moderna.
 
 ## Energia interna de um gás ideal {{< ra OE4.28 B2 >}}
 
@@ -33,15 +32,15 @@ onde:
 - $T$ é temperatura absoluta (K)
 - $n$ é número de mols
 
-Consequência crucial: **U depende APENAS de T**. Não importa se o gás é comprimido ou
-expandido — enquanto T for a mesma, U é a mesma.
+Consequência decisiva: **$U$ depende apenas de $T$**. Comprimido ou expandido o gás, se a
+temperatura for a mesma, a energia interna é a mesma.
 
 Para ar/nitrogênio (gás diatômico), $C_V = \frac{5}{2}R \approx 20{,}8$ J/(mol·K).
 
 ## Experiência de Joule {{< ra OE4.29 B2 >}}
 
-Joule fez um experimento clássico: dois frascos isolados, um com gás comprimido e outro
-vazio, conectados por uma válvula. Ao abrir a válvula, o gás expande livremente para o
+No experimento clássico de Joule, dois frascos isolados, um com gás comprimido e outro
+vazio, comunicam-se por uma válvula. Aberta a válvula, o gás expande livremente para o
 vazio.
 
 Resultado experimental: **temperatura não muda** (até a precisão dos termômetros da época).
@@ -49,21 +48,21 @@ Resultado experimental: **temperatura não muda** (até a precisão dos termôme
 Interpretação: se T não muda, ΔU = 0. Na expansão livre, W = 0 (nenhum trabalho é feito
 contra forças externas). Logo, da Primeira Lei, ΔU = Q − W = 0 − 0, confirmando Q = 0.
 
-**Conclusão:** para um gás ideal, U depende APENAS de T. Essa foi uma prova experimental de
-que a energia interna é intrínseca ao movimento microscópico das moléculas, independente da
-configuração macroscópica (P, V).
+**Conclusão:** para um gás ideal, $U$ depende apenas de $T$. Foi prova experimental de que a
+energia interna é intrínseca ao movimento microscópico das moléculas, independente da
+configuração macroscópica de $P$ e $V$.
 
 ## Experiência de Joule-Thomson {{< ra OE4.29 B2 >}}
 
-Diferente da livre: Joule-Thomson forçava o gás através de um estrangulamento (válvula
-parcialmente fechada). O gás tinha que empurrar o que estava à frente contra uma pressão.
+Diferentemente da expansão livre, Joule-Thomson forçava o gás por um estrangulamento, uma
+válvula parcialmente fechada, contra a pressão do que estava à frente.
 
 Resultado: **temperatura MUDA** (em geral, cai para gases reais; não muda para ideais).
 
 Para gases ideais, Joule-Thomson provou experimentalmente que o gás não muda de temperatura
 ao passar por uma válvula sob pressão constante (processo isentálpico). Isso é coerente com
-U(T) — o trabalho "de fluxo" (ao empurrar contra pressão) não é trabalho "mecânico" de
-expansão, e os dois se compensam em termos de energia total.
+$U(T)$: o trabalho de fluxo, o de empurrar contra a pressão, não é o trabalho mecânico de
+expansão, e os dois se compensam no total de energia.
 
 ## Entalpia {{< ra OE4.30 B2 >}}
 
@@ -87,9 +86,9 @@ $$\gamma = \frac{C_P}{C_V} = \frac{7/2}{5/2} = 1{,}4$$
 
 **Por que entalpia importa em máquinas navais:** em processos de fluxo (caldeira recebendo
 água, trocador com fluido entrando/saindo), a quantidade relevante é H, não U. A água que
-entra numa caldeira traz consigo energia interna + energia para "abrir caminho" na pressão
-(PV). Quando sai como vapor, sai com H mais alta. A entalpia é a energia verdadeiramente
-transferida em sistemas abertos.
+entra numa caldeira traz consigo a energia interna mais a energia necessária para abrir
+caminho contra a pressão, o termo $PV$. Ao sair como vapor, sai com $H$ mais alta. A entalpia
+é a energia efetivamente transferida em sistemas abertos.
 
 ::: {.sp}
 Uma caldeira de bordo recebe água líquida a 50 °C e 1 bar, transformando-a em vapor
@@ -104,8 +103,8 @@ Estimativa por parcelas, com $L_v \approx 1935\ \text{kJ/kg}$ a ~16 bar.
 $$\Delta h_{\text{líq}} = c\,\Delta T = 4{,}18 \times (200 - 50) \approx 627\ \text{kJ/kg}$$
 $$\Delta h \approx \Delta h_{\text{líq}} + L_v \approx 627 + 1935 \approx 2560\ \text{kJ/kg}$$
 
-**(c) Resultado.** A caldeira precisa fornecer $\approx 2560\ \text{kJ}$ por quilograma
-de vapor — cerca de três quartos disso só para a vaporização.
+**(c) Resultado.** A caldeira precisa fornecer $\approx 2560\ \text{kJ}$ por quilograma de
+vapor, cerca de três quartos disso só para a vaporização.
 
 **(d) Análise crítica.** O domínio do calor latente é a razão de a entalpia ser a
 grandeza natural aqui: em processos de fluxo (caldeira, turbina, condensador) o que
@@ -118,22 +117,22 @@ $\Delta h \approx 2583\ \text{kJ/kg}$) confirma a estimativa a menos de ~1%.
 ::: {.callout-warning}
 ## Erros clássicos
 
-- **Confundir U com H:** U = n·C_V·T (energia interna, depende de T). H = U + PV = n·C_P·T
-  (entalpia, também depende de T, mas com "pré-fator" maior). Em ciclos fechados (cilindro
-  de motor), use U. Em ciclos abertos (caldeira, trocador), use H.
-- **Pensar que Joule-Thomson "prova que gás não tem energia":** não. Prova que energia
-  interna é função só de T, não de P ou V para ideais. O trabalho de fluxo é internamente
-  compensado.
+- **Confundir $U$ com $H$:** $U = nC_VT$ é a energia interna e $H = U + PV = nC_PT$ é a
+  entalpia; ambas dependem de $T$, a segunda com coeficiente maior. Em ciclos fechados, no
+  cilindro de motor, aplica-se $U$; em ciclos abertos, de caldeira e trocador, aplica-se $H$.
+- **Supor que Joule-Thomson prova que o gás não tem energia:** o que ele prova é que a
+  energia interna de um gás ideal é função só de $T$, e não de $P$ ou $V$. O trabalho de
+  fluxo compensa-se internamente.
 - **Usar C_V em vez de C_P em processo isobárico:** num aquecimento a pressão constante
   (caldeira), Q = n·C_P·ΔT, não Q = n·C_V·ΔT. Diferença de 40% (C_P/C_V = 1,4).
 :::
 
-## Veja o patamar de vaporização
+## Patamar de temperatura na vaporização da água
 
 Ao aquecer a água, a temperatura sobe até a ebulição e então **estaciona**: todo o calor
 fornecido vira calor latente, quebrando ligações, sem mudar a temperatura. A entalpia
-cresce continuamente (é ela que a caldeira "paga"), mas a temperatura tem um patamar.
-Acompanhe o percurso da água líquida ao vapor.
+cresce continuamente, e é ela que a caldeira fornece, mas a temperatura tem um patamar. O
+percurso vai da água líquida ao vapor.
 
 ```{python}
 #| fig-cap: "Temperatura vs. entalpia fornecida por kg de água (50 °C → vapor a ~200 °C, 16 bar). O aquecimento sensível é a subida; a vaporização é o longo patamar horizontal (calor latente ~1935 kJ/kg). Mesmos parâmetros da versão interativa."
@@ -232,10 +231,10 @@ plt.tight_layout(); plt.show()
 ::: {.pergunta}
 1. Durante a vaporização a temperatura não sobe, mas a entalpia continua crescendo. Para
    onde vai o calor fornecido nesse patamar?
-2. Compare o comprimento do trecho vermelho (aquecer 50→200 °C) com o azul (vaporizar):
-   qual custa mais entalpia? Ligue com o calor latente ~1935 kJ/kg.
-3. Por que a caldeira "paga" a entalpia (não a temperatura)? Que grandeza a tabela de
-   vapor tabela para dimensionar o processo de fluxo?
+2. Compare o comprimento do trecho vermelho, do aquecimento de 50 a 200 °C, com o azul, da
+   vaporização: qual custa mais entalpia? Relacione com o calor latente de ~1935 kJ/kg.
+3. Por que o que a caldeira fornece é entalpia, e não temperatura? Que grandeza a tabela de
+   vapor traz para o dimensionamento de um processo de fluxo?
 :::
 
 ## Onde o fenômeno vive
@@ -246,16 +245,16 @@ plt.tight_layout(); plt.show()
 - **Tabelas de vapor** — caldeira, turbina e condensador são dimensionados por
   diferenças de entalpia lidas em tabela: h é a moeda corrente da engenharia térmica
   de fluxo.
-- **Válvula redutora (estrangulamento)** — processo de Joule–Thomson: entalpia
-  constante, pressão caindo; em gases reais a temperatura cai — é o coração da
+- **Válvula redutora (estrangulamento)** — processo de Joule–Thomson, de entalpia constante
+  e pressão em queda; nos gases reais a temperatura cai, e nisso consiste o coração da
   refrigeração.
-- **Expansão livre de Joule** — o clássico conceitual: gás expandindo para vácuo não
-  faz trabalho nem troca calor; para gás ideal, T não muda — U depende só de T.
+- **Expansão livre de Joule** — o gás que se expande para o vácuo não faz trabalho nem troca
+  calor; num gás ideal $T$ não muda, pois $U$ depende só de $T$.
 
 <!-- EXEMPLO A SIMULAR: estrangulamento numa válvula (p5.js/esquema): gás cruzando a
      restrição com h constante; sliders de pressão a montante; ΔT resultante para
      gás real × ideal. -->
 
-**Conexão com o próximo tópico:** sabendo U e H, você quer cálculos específicos dos
-aquecimentos/resfriamentos num gás. Resposta: capacidades térmicas molares — C_V e C_P —
-na base de graus de liberdade molecular.
+**Conexão com o próximo tópico:** estabelecidas $U$ e $H$, resta quantificar aquecimentos e
+resfriamentos num gás. São as capacidades térmicas molares $C_V$ e $C_P$, assentadas nos
+graus de liberdade da molécula.

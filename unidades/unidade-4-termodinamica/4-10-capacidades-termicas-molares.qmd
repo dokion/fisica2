@@ -14,21 +14,20 @@ OE 4.33 [B3] Determinar a razão entre calores específicos (γ = Cp/Cv)
 
 {{< aula 35-36 >}}
 
-Um gas pode ser aquecido de duas maneiras: a volume constante (cilindro fechado, paredes
-rígidas) ou a pressão constante (pistão livre). Os calores necessários são diferentes —
-em pressão constante, parte da energia entra em expansão, não só em temperatura. Essas duas
-capacidades — C_V e C_P — determinam completamente como um gás responde a qualquer
-processo. Além disso, há uma ligação profunda com **graus de liberdade molecular** — quantas
-maneiras independentes uma molécula tem de armazenar energia (translação, rotação,
-vibração). Entender isso é entender por que um motor diesel (ar diatômico, γ = 1,4) tem
-características diferentes de um motor operando com gás monoatômico (argônio, γ = 1,67).
+Um gás pode ser aquecido a volume constante, em cilindro de paredes rígidas, ou a pressão
+constante, com pistão livre. Os calores necessários diferem, porque a pressão constante
+parte da energia vai para a expansão. As duas capacidades, $C_V$ e $C_P$, determinam a
+resposta do gás a qualquer processo, e ligam-se aos **graus de liberdade molecular**, o
+número de maneiras independentes de a molécula armazenar energia, entre translação, rotação
+e vibração. Daí um motor diesel, de ar diatômico com γ = 1,4, diferir de um motor a gás
+monoatômico, como o argônio, de γ = 1,67.
 
 ## Definições: C_V e C_P {{< ra OE4.31 B1 >}}
 
-**Calor específico molar a volume constante** ($C_V$): quantidade de calor necessária para
-aquecer 1 mol de gás em 1 K, mantendo o volume constante.
+**Calor específico molar a volume constante** ($C_V$): o calor necessário para aquecer 1 mol
+de gás em 1 K, mantido o volume.
 
-À volume constante, W = 0 (não há expansão), logo:
+A volume constante, $W = 0$, pois não há expansão, e portanto:
 
 $$Q = \Delta U = n \cdot C_V \cdot \Delta T$$
 
@@ -36,8 +35,8 @@ Para um gás ideal, U = n·C_V·T, então:
 
 $$C_V = \left(\frac{\partial U}{\partial T}\right)_V$$
 
-**Calor específico molar a pressão constante** ($C_P$): quantidade de calor necessária para
-aquecer 1 mol em 1 K, a pressão constante.
+**Calor específico molar a pressão constante** ($C_P$): o calor necessário para aquecer
+1 mol em 1 K, mantida a pressão.
 
 A pressão constante, há expansão W = P·ΔV. Logo:
 
@@ -81,19 +80,19 @@ $$\gamma = \frac{C_P}{C_V} = \frac{C_V + R}{C_V} = 1 + \frac{R}{C_V} = 1 + \frac
 
 Para ar (f = 5): $\gamma = 1 + \frac{2}{5} = 1{,}4$
 
-Essa razão é crítica em processos adiabáticos (sem troca de calor). A equação de Poisson,
-que veremos no tópico 4.11, depende diretamente de γ.
+A razão é decisiva nos processos adiabáticos, sem troca de calor: a equação de Poisson,
+estabelecida no estudo desses processos, depende diretamente de γ.
 
-Cálculo: num cilindro com ar, se você comprime adiabaticamente:
+Cálculo para a compressão adiabática do ar num cilindro:
 
 $$T_2 = T_1 \left(\frac{P_2}{P_1}\right)^{(\gamma-1)/\gamma}$$
 
-Com γ = 1,4 (ar real), temos (γ − 1)/γ = 0,2/1,4 ≈ 0,286. Para P₂/P₁ = 16 (compressão
-usual em diesel):
+Com γ = 1,4, para o ar real, (γ − 1)/γ = 0,2/1,4 ≈ 0,286. Para P₂/P₁ = 16, compressão usual
+em diesel:
 
 $$\frac{T_2}{T_1} = 16^{0{,}286} \approx 2{,}1$$
 
-Se T₁ = 300 K (27 °C), então T₂ ≈ 630 K. Sem combustão!
+Para T₁ = 300 K (27 °C), resulta T₂ ≈ 630 K, ainda sem combustão alguma.
 
 ::: {.sp}
 Um cilindro de motor diesel contém 0,050 mol de ar a 20 °C e 1 bar. Processo 1: aquecimento
@@ -116,10 +115,10 @@ $$W_2 = 0, \qquad Q_2 = nC_v\Delta T_2 = 0{,}05 \times 20{,}8 \times 3357 \appro
 $\approx 83\ \text{J}$, vira energia interna). Processo 2: $W = 0$, todo o calor
 ($\approx 3490\ \text{J}$) vira energia interna.
 
-**(d) Análise crítica.** No isobárico, parte do calor ($nR\Delta T$) escoa como trabalho
-de empurrar a atmosfera — por isso $C_p > C_v$. No isocórico, nada escapa como trabalho:
-todo calor eleva $T$. A temperatura de 3730 K é irrealista — vem de exigir $P{\times}10$ a
-volume rigorosamente constante; num motor real a compressão não é isocórica pura, e o gás
+**(d) Análise crítica.** No isobárico, parte do calor ($nR\Delta T$) escoa como trabalho de
+empurrar a atmosfera, e daí $C_p > C_v$. No isocórico nada escapa como trabalho, e todo o
+calor eleva $T$. A temperatura de 3730 K é irrealista: decorre de exigir $P{\times}10$ a
+volume rigorosamente constante. Num motor real a compressão não é isocórica pura, e o gás
 não suportaria essa temperatura sem dissociar. O exercício é esquemático para separar
 $C_p$ de $C_v$.
 :::
@@ -129,19 +128,19 @@ $C_p$ de $C_v$.
 
 - **Confundir C_V com c (calor específico mássico):** C_V é em J/(mol·K); c é em
   J/(kg·K). Conversão: c = C_V / M (onde M é massa molar em kg/mol).
-- **Usar C_P quando deveria ser C_V:** em processo isocórico, SEMPRE use C_V, mesmo se o
-  sistema está a pressão variável. O critério é se o volume é constante, não a pressão.
-- **Esquecer que graus de liberdade podem "congelar":** a temperaturas muito baixas
-  (<100 K), vibrações molecular não contribuem; f cai. A tabela acima vale apenas em
-  faixa de temperatura usual de máquinas (~250–3000 K).
+- **Usar $C_P$ onde cabe $C_V$:** em processo isocórico aplica-se sempre $C_V$, ainda que a
+  pressão varie. O critério é a constância do volume, não a da pressão.
+- **Esquecer que graus de liberdade podem congelar:** abaixo de cerca de 100 K as vibrações
+  moleculares deixam de contribuir e $f$ cai. A tabela acima vale na faixa de temperatura
+  usual de máquinas, de cerca de 250 a 3000 K.
 :::
 
-## Veja por que C_p é maior que C_v
+## Comparação entre aquecimento isobárico e isocórico
 
-No processo **isobárico** (pistão livre), parte do calor escapa como trabalho de empurrar
-a atmosfera — por isso é preciso *mais* calor ($C_p$) para a mesma subida de temperatura.
-No **isocórico** (volume fixo), nada escapa como trabalho: todo o calor vira energia
-interna ($C_v$). Compare os dois no diagrama P–V.
+No processo **isobárico**, com pistão livre, parte do calor escapa como trabalho de empurrar
+a atmosfera, e por isso a mesma subida de temperatura exige *mais* calor ($C_p$). No
+**isocórico**, de volume fixo, nada escapa como trabalho, e todo o calor vira energia interna
+($C_v$). Os dois aparecem lado a lado no diagrama $P$–$V$.
 
 ```{python}
 #| fig-cap: "Dois processos com 0,05 mol de ar. Isobárico (1→2, pistão livre): W = nRΔT escapa como trabalho, área sob a curva. Isocórico (2→3, volume fixo): reta vertical, W = 0, todo calor vira ΔU. Mesmos parâmetros da versão interativa."
@@ -252,6 +251,6 @@ plt.tight_layout(); plt.show()
      (p5.js): mesma potência de aquecimento; termômetros divergindo na razão
      cv/cp. -->
 
-**Conexão com o próximo tópico:** sabendo C_V e γ, você consegue analisar processos
-adiabáticos de um gás ideal — o caso crítico da compressão no motor diesel antes da
-injeção de combustível.
+**Conexão com o próximo tópico:** conhecidos $C_V$ e γ, seguem-se os processos adiabáticos
+de um gás ideal, entre eles o caso crítico da compressão no motor diesel antes da injeção de
+combustível.
