@@ -26,11 +26,11 @@ elasticamente com as paredes e entre si, sem forças à distância. Nesse quadro
 
 - **pressão** é o resultado macroscópico da transferência de momento nas colisões
   contra a parede;
-- **temperatura** mede a agitação — quanto mais quente, mais rápidas as moléculas.
+- **temperatura** mede a agitação: quanto mais quente o gás, mais rápidas as moléculas.
 
 ## Equação fundamental da teoria cinética {{< ra OE4.47 B3 >}}
 
-Considere $N$ moléculas de massa $m$ num cubo de aresta $L$. Uma molécula com velocidade
+Sejam $N$ moléculas de massa $m$ num cubo de aresta $L$. Uma molécula com velocidade
 $v_x$ transfere momento $2mv_x$ a cada colisão com uma parede, e colide a cada intervalo
 $\Delta t = 2L/v_x$. A força média de uma molécula é $mv_x^2/L$; somando sobre todas e
 usando $\langle v_x^2\rangle = \tfrac{1}{3}\langle v^2\rangle$, a pressão fica:
@@ -50,21 +50,20 @@ Comparando a equação fundamental com a equação de estado $PV = Nk_B T$:
 
 $$\langle E_c \rangle = \frac{3}{2} k_B T$$
 
-O resultado é uma das ideias mais importantes da física: **temperatura é, a menos de uma
-constante, a energia cinética média de translação por molécula**. Zero absoluto seria
-o repouso translacional; aquecer o gás de trabalho é literalmente acelerar as suas
-moléculas.
+Daí o resultado central: **a temperatura é, a menos de uma constante, a energia cinética
+média de translação por molécula**. O zero absoluto seria o repouso translacional, e aquecer
+o gás de trabalho é acelerar as moléculas dele.
 
 A velocidade quadrática média correspondente:
 
 $$v_{\text{rms}} = \sqrt{\langle v^2\rangle} = \sqrt{\frac{3k_B T}{m}}$$
 
-## Veja a temperatura ser velocidade molecular
+## Temperatura como energia cinética das moléculas
 
 Temperatura *é* energia cinética de translação: $\langle E_c\rangle = \tfrac{3}{2}k_B T$.
-Aumente $T$ e as moléculas aceleram, batem mais forte e mais vezes nas paredes (a pressão
-sobe) e a distribuição de velocidades se alarga. O ar de admissão a 320 K tem
-$v_{\text{rms}} \approx 525$ m/s — quase o dobro da velocidade do som.
+Elevada $T$, as moléculas aceleram, batem mais forte e mais vezes nas paredes, a pressão
+sobe e a distribuição de velocidades se alarga. O ar de admissão a 320 K tem
+$v_{\text{rms}} \approx 525$ m/s, quase o dobro da velocidade do som.
 
 ```{python}
 #| fig-cap: "Distribuição de velocidades de Maxwell–Boltzmann do ar (M = 29 g/mol) em três temperaturas. Ao aquecer, a curva se alarga e a velocidade quadrática média cresce: v_rms = √(3RT/M). A 320 K, v_rms ≈ 525 m/s (marcada). Mesmo modelo da versão interativa."
@@ -178,13 +177,12 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Aqueça o gás: as partículas aceleram, a barra de pressão sobe e o pico da distribuição
-   desliza para a direita. Que grandeza microscópica a temperatura mede, exatamente?
-2. A distribuição *se alarga* ao aquecer — não só desloca. Por que há sempre moléculas
-   muito lentas e muito rápidas, mesmo a $T$ fixa?
-3. $v_{\text{rms}} = \sqrt{3RT/M}$ depende de $M$. Se trocássemos o ar por hidrogênio (M
-   menor) à mesma temperatura, as moléculas seriam mais rápidas ou mais lentas? E a
-   energia média?
+1. Aquecido o gás, as partículas aceleram, a barra de pressão sobe e o pico da distribuição
+   desliza para a direita. Que grandeza microscópica a temperatura mede?
+2. A distribuição *se alarga* ao aquecer, e não apenas se desloca. Por que há sempre
+   moléculas muito lentas e muito rápidas, mesmo a $T$ fixa?
+3. $v_{\text{rms}} = \sqrt{3RT/M}$ depende de $M$. Trocado o ar por hidrogênio, de $M$ menor,
+   à mesma temperatura, as moléculas ficam mais rápidas ou mais lentas? E a energia média?
 :::
 
 
@@ -206,23 +204,24 @@ $$v_{\text{rms}} = \sqrt{\frac{3RT}{M}} = \sqrt{\frac{3 \times 8{,}314 \times 32
 de energia translacional média e velocidade típica $v_{\text{rms}} \approx 525\ \text{m/s}$
 (quase o dobro da velocidade do som no ar).
 
-**(d) Análise crítica.** Temperatura é energia cinética molecular: aquecer o ar de
-admissão o deixa mais "agitado", com moléculas mais rápidas — e é por isso que a pressão
-sobe (mais colisões por segundo na parede, tópico da equação de estado). A $v_{\text{rms}}$
-da ordem da velocidade do som não é coincidência: o som se propaga pelo próprio movimento
-molecular. Note que $v_{\text{rms}}$ depende de $M$: moléculas leves (H₂, He) são muito
-mais rápidas à mesma temperatura.
+**(d) Análise crítica.** Temperatura é energia cinética molecular: aquecer o ar de admissão
+acelera as moléculas, e daí a pressão subir, por mais colisões por segundo na parede, como
+mostra a equação de estado. A $v_{\text{rms}}$ da ordem da velocidade do som não é
+coincidência, pois o som se propaga pelo próprio movimento molecular. Cabe observar que
+$v_{\text{rms}}$ depende de $M$: moléculas leves, como H₂ e He, são muito mais rápidas à
+mesma temperatura.
 :::
 
 ::: {.callout-warning}
 ## Erros clássicos
 
-- **Temperatura em °C:** $\langle E_c\rangle = \tfrac{3}{2}k_B T$ exige $T$ em kelvin;
-  °C não tem sentido cinético (não há "meia agitação" a 0 °C).
+- **Temperatura em °C:** $\langle E_c\rangle = \tfrac{3}{2}k_B T$ exige $T$ em kelvin. A
+  escala Celsius não tem sentido cinético, pois a 0 °C a agitação não é nula.
 - **Confundir $v_{\text{rms}}$ com velocidade média:** $v_{\text{rms}} = \sqrt{\langle v^2\rangle}$
   é ligeiramente maior que $\langle v\rangle$; não são a mesma coisa.
-- **Achar que moléculas mais pesadas são mais lentas "sempre":** à mesma $T$ têm a mesma
-  energia média, logo maior $m$ implica menor $v_{\text{rms}}$ — mas mesma $\langle E_c\rangle$.
+- **Supor que moléculas mais pesadas são sempre mais lentas:** à mesma $T$ têm a mesma
+  energia média, de modo que $m$ maior implica $v_{\text{rms}}$ menor, com
+  $\langle E_c\rangle$ inalterada.
 :::
 
 ## Onde o fenômeno vive
@@ -233,9 +232,9 @@ mais rápidas à mesma temperatura.
 - **Pressão na garrafa de ar** — 30 bar são colisões moleculares contadas por segundo
   por centímetro quadrado; aquecer o compartimento acelera as moléculas e o
   manômetro sobe sem entrar uma molécula a mais.
-- **Evaporação seletiva** — só as moléculas rápidas escapam da superfície: o líquido
-  que fica esfria — o suor do tripulante e o resfriamento evaporativo funcionam pela
-  cauda da distribuição de Maxwell.
+- **Evaporação seletiva** — só as moléculas rápidas escapam da superfície, e o líquido que
+  fica esfria; o suor do tripulante e o resfriamento evaporativo trabalham pela cauda da
+  distribuição de Maxwell.
 - **Vazamento farejado a distância** — o cheiro do combustível atravessa a praça por
   difusão: caminho aleatório molecular, lento comparado à convecção, mas inexorável.
 
@@ -243,5 +242,5 @@ mais rápidas à mesma temperatura.
      histograma de velocidades convergindo para Maxwell-Boltzmann; slider de
      temperatura. -->
 
-**Conexão com o próximo tópico:** a energia $\tfrac{3}{2}k_BT$ vale só para translação —
-generalizá-la aos demais graus de liberdade leva aos calores específicos (4.16).
+**Conexão com o próximo tópico:** a energia $\tfrac{3}{2}k_BT$ vale só para a translação, e
+generalizá-la aos demais graus de liberdade conduz aos calores específicos.

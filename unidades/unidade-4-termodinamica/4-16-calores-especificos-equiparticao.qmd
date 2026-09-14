@@ -14,10 +14,10 @@ OE 4.51 [B2] Explicar o comportamento dos calores específicos em diferentes fai
 
 {{< aula 39-40 >}}
 
-Este tópico fecha a unidade conectando o microscópico (4.15) ao que os motores de fato
-usam: o calor específico e a razão $\gamma$ que governam a compressão adiabática do
-ciclo diesel. A ponte é o teorema da equipartição — a regra que reparte a energia
-térmica entre os movimentos possíveis da molécula.
+Este tópico fecha a unidade ligando a descrição microscópica, estabelecida na teoria
+cinética, ao que os motores de fato usam: o calor específico e a razão $\gamma$ que governam
+a compressão adiabática do ciclo diesel. A ponte é o teorema da equipartição, regra que
+reparte a energia térmica entre os movimentos possíveis da molécula.
 
 ## Teorema da equipartição {{< ra OE4.49 B3 >}}
 
@@ -46,32 +46,32 @@ O número de graus de liberdade depende da geometria da molécula:
 | Molécula | Graus ativos $f$ | $C_V$ | $\gamma$ |
 |---|---|---|---|
 | Monoatômica (He, Ar) | 3 (translação) | $\tfrac{3}{2}R$ | 1,67 |
-| Diatômica (N₂, O₂ — ar) | 5 (3 transl. + 2 rot.) | $\tfrac{5}{2}R$ | 1,40 |
+| Diatômica (N₂ e O₂, o ar) | 5 (3 transl. + 2 rot.) | $\tfrac{5}{2}R$ | 1,40 |
 | Poliatômica | 6 ou mais | $\ge 3R$ | $\le$ 1,33 |
 
-Para o ar (gás de trabalho do motor), $\gamma \approx 1{,}4$ — o valor que entra na
-equação de Poisson da compressão adiabática (tópico 4.11) e fixa a temperatura de
-ignição por compressão do diesel.
+Para o ar, gás de trabalho do motor, $\gamma \approx 1{,}4$: é o valor que entra na equação
+de Poisson da compressão adiabática e fixa a temperatura de ignição por compressão do
+diesel.
 
 ## Variação com a temperatura {{< ra OE4.51 B2 >}}
 
-Os graus de liberdade **não estão todos ativos sempre**: eles "acordam" por faixas de
-temperatura (efeito quântico). Para uma molécula diatômica:
+Os graus de liberdade **não estão todos ativos sempre**: cada um se ativa numa faixa de
+temperatura, por efeito quântico. Para uma molécula diatômica:
 
 - **baixa T:** só translação ($f=3$, $\gamma \approx 1{,}67$);
 - **T ambiente/motor:** translação + rotação ($f=5$, $\gamma \approx 1{,}40$);
 - **alta T:** entra a vibração ($f=7$, $\gamma \approx 1{,}29$).
 
-Por isso $\gamma$ do gás de trabalho **cai** nas altas temperaturas da combustão — um
+Por isso o $\gamma$ do gás de trabalho **cai** nas altas temperaturas da combustão,
 refinamento que os cálculos de ciclo real precisam considerar.
 
-## Veja os graus de liberdade "acordarem"
+## Ativação dos graus de liberdade com a temperatura
 
 $C_V$ de um gás diatômico não é constante: os graus de liberdade se ativam por faixas de
 temperatura. A frio só há translação ($C_V = \tfrac{3}{2}R$, $\gamma = 1{,}67$); à
 temperatura do motor entra a rotação ($\tfrac{5}{2}R$, $\gamma = 1{,}40$); só acima de
-~1000 K a vibração desperta ($\tfrac{7}{2}R$, $\gamma \approx 1{,}29$). Arraste a
-temperatura e veja $\gamma$ cair — e com ele a temperatura de fim de compressão.
+~1000 K a vibração se ativa ($\tfrac{7}{2}R$, $\gamma \approx 1{,}29$). Variada a
+temperatura, $\gamma$ cai, e com ele a temperatura de fim de compressão.
 
 ```{python}
 #| fig-cap: "Capacidade térmica molar C_V/R de um gás diatômico (ar) em degraus: translação (3/2), + rotação (5/2), + vibração (7/2). Os modos ativam por faixa de T (efeito quântico). A faixa de operação do ar num motor (admissão ~300 K até combustão >1000 K) atravessa o degrau da vibração — daí γ cair de 1,40 para ~1,30. Mesma física da versão interativa."
@@ -172,12 +172,12 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Leve a temperatura de 300 K (admissão) até ~2000 K (combustão): $C_V$ sobe de degrau e
-   $\gamma$ cai de 1,40 para ~1,30. Por que a compressão adiabática esquenta *menos* quando
-   $\gamma$ é menor (tópico 4.11)?
-2. Abaixo de ~80 K a curva desce para $\tfrac{3}{2}R$ ($\gamma = 1{,}67$): a rotação
-   "congela". O que significa um grau de liberdade estar congelado — e por que isso é um
-   efeito quântico, não clássico?
+1. Levada a temperatura de 300 K, na admissão, a cerca de 2000 K, na combustão, $C_V$ sobe
+   de degrau e $\gamma$ cai de 1,40 para cerca de 1,30. Por que a compressão adiabática
+   esquenta *menos* com $\gamma$ menor?
+2. Abaixo de cerca de 80 K a curva desce para $\tfrac{3}{2}R$ ($\gamma = 1{,}67$), e a
+   rotação congela. O que significa um grau de liberdade congelado, e por que o efeito é
+   quântico, e não clássico?
 3. A equipartição clássica prevê $\tfrac{1}{2}R$ por grau de liberdade *sempre*. Por que a
    curva real tem degraus em vez de um valor fixo? O que a física clássica não captura aqui?
 :::
@@ -203,16 +203,16 @@ $$T_2(\gamma{=}1{,}40) = 298 \times 18^{0{,}40} \approx 947\ \text{K}$$
 $$T_2(\gamma{=}1{,}30) = 298 \times 18^{0{,}30} \approx 709\ \text{K}$$
 
 **(c) Resultado.** Ao ativar os modos vibracionais, $C_v$ sobe (de 20,8 para 27,7 J/(mol·K))
-e $\gamma$ cai (1,40 → 1,30); com isso a compressão adiabática esquenta **menos** — 709 K
+e $\gamma$ cai (1,40 → 1,30); com isso a compressão adiabática esquenta **menos**: 709 K
 contra 947 K para a mesma razão de compressão.
 
-**(d) Análise crítica.** Um $\gamma$ menor significa que mais da energia vai para os graus
-internos (vibração) em vez de subir a temperatura de translação — o gás "absorve" o
-aquecimento de forma menos eficiente para a pressão. Usar $\gamma = 1{,}4$ no ciclo de
-alta temperatura (após a combustão) superestima as temperaturas e pressões de pico; por
-isso cálculos precisos de motor usam $\gamma$ dependente da temperatura. A vibração só se
-ativa acima de ~1000 K (efeito quântico: os modos ficam "congelados" a frio), o que
-justifica $\gamma \approx 1{,}4$ na admissão e $\approx 1{,}30$ na combustão.
+**(d) Análise crítica.** Um $\gamma$ menor significa que mais energia vai para os graus
+internos, de vibração, em vez de elevar a temperatura de translação, e o aquecimento se
+converte menos em pressão. Usar $\gamma = 1{,}4$ no ciclo de alta temperatura, após a
+combustão, superestima as temperaturas e pressões de pico, e por isso os cálculos precisos
+de motor adotam $\gamma$ dependente da temperatura. A vibração só se ativa acima de cerca de
+1000 K, pois a frio os modos permanecem inativos por efeito quântico, o que justifica
+$\gamma \approx 1{,}4$ na admissão e $\approx 1{,}30$ na combustão.
 :::
 
 ::: {.callout-warning}
@@ -223,7 +223,7 @@ justifica $\gamma \approx 1{,}4$ na admissão e $\approx 1{,}30$ na combustão.
 - **Esquecer a relação de Mayer:** $C_P = C_V + R$ vale por mol; confundir molar com
   específico (por kg) troca $R$ por $R/M$.
 - **Tratar $\gamma$ como constante universal:** ele depende da molécula e da faixa de
-  temperatura — nas temperaturas de combustão, $\gamma$ do ar já não é 1,40.
+  temperatura, e nas temperaturas de combustão o $\gamma$ do ar já não é 1,40.
 :::
 
 **Conexão com a próxima unidade:** encerrada a termodinâmica, o curso completa o
@@ -234,11 +234,11 @@ percurso oscilações → ondas → fluidos → calor previsto no sumário ofici
 <!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
      em sessões futuras, a pedido do professor. -->
 
-- **O ar dos compressores** — cv = 5R/2 e γ = 1,4 usados em todo cálculo de compressor
-  vêm da equipartição: 3 graus de translação + 2 de rotação do N₂ e O₂, com a
-  vibração ainda "congelada" nas temperaturas de trabalho.
-- **Gases de exaustão** — o vapor d'água e o CO₂ da combustão ativam mais graus de
-  liberdade (γ menor): a mistura quente se comporta diferente do ar frio nos
+- **O ar dos compressores** — o $C_V = 5R/2$ e o γ = 1,4 usados em todo cálculo de
+  compressor vêm da equipartição: 3 graus de translação mais 2 de rotação do N₂ e do O₂, com
+  a vibração ainda inativa nas temperaturas de trabalho.
+- **Gases de exaustão** — o vapor de água e o CO₂ da combustão ativam mais graus de
+  liberdade, e γ diminui: a mistura quente se comporta de modo distinto do ar frio nos
   cálculos de turbina.
 - **Dulong–Petit no bloco do motor** — sólidos metálicos com ~3R por mol: a
   estimativa de capacidade térmica de blocos e eixos sai da equipartição antes de
