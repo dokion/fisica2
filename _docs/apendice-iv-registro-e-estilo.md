@@ -14,7 +14,9 @@ e do `AULA-TEMPLATE.md`. **Uma reescrita de estilo que altere qualquer um desses
 está errada, por definição.**
 
 Aplicado integralmente na UE 3 (commits `ce3ae4c`, `be13745`, `146de12`, `1d947bf`,
-`ddbd611`). A UE 3 é o exemplar de referência quando houver dúvida sobre o alvo.
+`ddbd611`) e na UE 2 (commits `8e70ea0`, `7513cd3`, `60e26ef`, `df23aad`, `9979101`).
+A UE 3 é o exemplar de referência quando houver dúvida sobre o alvo; a UE 2 é o segundo
+caso aplicado e a origem das três precisões marcadas abaixo como **[precisão UE 2]**.
 
 ---
 
@@ -45,8 +47,29 @@ construção absoluta ou participial:
 > ~~Aumente $\alpha$ de 0 a 15°: $C_L$ cresce como?~~
 > **Elevando $\alpha$ de 0 a 15°, como cresce $C_L$?**
 
-Exceção única: os verbos de comando dentro de enunciados de problema SP (`Calcule`,
-`Determine`, `Classifique`) — são instrução de tarefa, não conversa, e ficam.
+**Duas exceções, e só estas:**
+
+1. Os verbos de comando dentro de enunciados de problema SP (`Calcule`, `Determine`,
+   `Classifique`): são instrução de tarefa, não conversa, e ficam.
+2. **[precisão UE 2]** Nas perguntas orientadoras, os verbos que pedem **análise do
+   resultado** — `Confirme`, `Confira`, `Explique`, `Relacione`, `Justifique`,
+   `Confronte`, `Estime`, `Verifique` — são da mesma classe do item 1 e ficam.
+
+O que sai da pergunta orientadora é o verbo que **manipula a interface**: `aumente`,
+`reduza`, `arraste`, `clique`, `troque`, `solte`, `mova`, `dobre`, `fixe`, `ligue`,
+`pause`, `escolha`, `veja`, `observe`, `repare`, `varra`, `anote`, `meça`, `deslize`.
+Esses viram construção absoluta ou participial, e a pergunta analítica que vinha depois
+fica como estava:
+
+> ~~Dobre a potência de 5 para 10 kW: quantos dB o nível sobe? Confirme $r \propto \sqrt{P}$.~~
+> **Dobrada a potência de 5 para 10 kW, quantos dB o nível sobe? Confirme $r \propto \sqrt{P}$.**
+
+O critério é **o que o verbo pede do aluno**: mexer no controle é conversa e sai; pensar
+sobre o que apareceu é tarefa e fica. Ler o item 2 como licença para reintroduzir
+imperativo de manipulação é erro.
+
+Referência numérica: com esse critério, UE 3 e UE 2 ficaram, respectivamente, em 12 e 0
+verbos de manipulação remanescentes.
 
 ### R2 — Sobriedade
 
@@ -76,6 +99,22 @@ apontar, para cada frase eliminada, onde a informação dela ficou.
 Alvo prático: **redução de 15 a 25% em número de palavras na prosa**, com 100% do
 conteúdo técnico preservado.
 
+**[precisão UE 2] A faixa é alvo; a preservação é piso, e o piso vence.** Os 15–25%
+pressupõem prosa inflada — parágrafos de motivação longos, recapitulação, frase-sumário
+que repete os títulos das seções. Num tópico cuja prosa já é curta e densa em dedução,
+essa gordura não existe, e forçar o percentual só se consegue apagando física, o que a
+regra proíbe na frase anterior. Nesse caso: comprimir toda a redundância que houver,
+registrar o número obtido e seguir.
+
+Referência: a UE 3, reescrita de origem a partir do Moysés, caiu na faixa; a UE 2, já
+enxuta, fechou em **−3,5%** (10 726 → 10 351 palavras) depois de cortadas todas as
+frases-sumário, definições antecipadas na abertura e fechos recapitulativos.
+
+**O denominador é a prosa narrativa**, não o arquivo: não entram na contagem o YAML, o
+comentário de objetivos, títulos de seção, linhas de display math, tabelas e blocos de
+código. Um arquivo com 12 linhas de cabeçalho de OE congelado e 40 linhas de LaTeX dilui
+qualquer redução real.
+
 ---
 
 ## IV2. Vícios de IA a eliminar
@@ -96,8 +135,8 @@ e `<style>`):
 | Unidade | Estado atual | Alvo |
 |---|---|---|
 | UE 3 (revisada) | 1 travessão a cada **35** linhas | referência |
+| UE 2 (revisada) | 1 a cada **30** linhas (de 1 a cada 8) | atingido |
 | UE 1 | 1 a cada 10 | ≥ 25 |
-| UE 2 | 1 a cada 8 | ≥ 25 |
 | UE 4 | 1 a cada 12 | ≥ 25 |
 
 Comando para medir:
@@ -119,6 +158,42 @@ EOF
 
 O travessão do padrão de lista prescrito pelo `AULA-TEMPLATE.md`
 (`- **Nome** — descrição`) **não conta** e não deve ser removido.
+
+**[precisão UE 2] O comando acima superestima: ele conta travessões intocáveis.** Só
+exclui blocos ```` ``` ````, `<script>` e `<style>`. Continuam entrando na conta:
+
+- o `title` do YAML, que vem do sumário oficial (`2.4 — Ondas sonoras…`);
+- o cabeçalho `<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: … ═══ -->`, congelado;
+- comentários HTML de simulação e `#` de código dentro de `{=html}`;
+- o padrão de lista do template, pela regra acima.
+
+Nenhum deles pode ser removido por esta passada. A métrica que decide o trabalho é o
+**travessão livre na prosa** — o que sobra depois de descontados os quatro. Medir com:
+
+````bash
+python3 - <<'EOF'
+import io,glob,re,sys
+d = sys.argv[1] if len(sys.argv)>1 else 'unidades/unidade-*'
+tot=0
+for f in sorted(glob.glob(d+'/*.qmd')):
+    s=io.open(f,encoding='utf-8').read()
+    s=re.sub(r'```.*?```','',s,flags=re.S)
+    s=re.sub(r'<script.*?</script>','',s,flags=re.S)
+    s=re.sub(r'<style.*?</style>','',s,flags=re.S)
+    s=re.sub(r'^---\n.*?\n---\n','',s,flags=re.S)              # YAML
+    s=re.sub(r'<!-- ═══ OBJETIVOS.*?═══ -->','',s,flags=re.S)    # cabeçalho de OE
+    for l in s.split('\n'):
+        if '—' not in l: continue
+        if re.match(r'\s*[-*]\s+\*\*.+\*\*\s+—', l): continue    # padrão de lista
+        tot+=l.count('—'); print("  %-42s %s" % (f.split('/')[-1], l.strip()[:100]))
+print("travessões livres:", tot)
+EOF
+````
+
+O alvo real é **zero travessões livres**. UE 3 e UE 2 estão nesse ponto; os índices de
+1/35 e 1/30 da tabela são o resíduo intocável, não trabalho pendente. Atenção ao regex
+do padrão de lista: `\*\*[^*]+\*\*` falha quando o rótulo em negrito contém itálico
+(`- **Canto do cabo (*singing*)** — …`) e produz falso positivo.
 
 ### V2 — Negrito como decoração
 
@@ -253,13 +328,19 @@ Rodar **antes de commitar** a passada de estilo numa unidade.
 
 - [ ] Zero ocorrências de `você`, `vamos`, `veremos`, `obtemos`, `podemos`, `nosso`,
       `note que`, `considere`, `guarde`, `vale a pena` fora de comentários de código.
-- [ ] Zero imperativos de 2ª pessoa nas perguntas orientadoras e nas aberturas de simulação.
-- [ ] Travessões: ≥ 25 linhas de prosa por travessão (excluído o padrão de lista do template).
+- [ ] Zero imperativos de **manipulação de interface** nas perguntas orientadoras e nas
+      aberturas de simulação (§IV1 R1). Os verbos de análise do resultado ficam.
+- [ ] Travessões: **zero travessões livres na prosa** (§IV2 V1). O índice do comando de
+      diagnóstico (≥ 25 linhas por travessão) é indicador, não critério: ele conta o
+      `title` do YAML, o cabeçalho de OE e os comentários, que são intocáveis.
 - [ ] Negritos: 1 a cada 5–8 linhas de prosa.
 - [ ] Zero remissões numéricas a tópico/seção/unidade no texto do aluno.
 - [ ] Rótulos da fonte só em equações `\boxed`.
 - [ ] Títulos de simulação são sintagmas nominais.
 - [ ] Nenhum estrangeirismo fora de itálico.
+- [ ] Concisão: redução registrada sobre a **prosa narrativa** (§IV1 R3). A faixa de
+      15–25% é alvo; num tópico já enxuto, vale o número obtido, desde que toda a
+      redundância tenha sido cortada e nenhum conteúdo técnico tenha saído.
 
 **Integridade — nada disto pode ter mudado**
 
