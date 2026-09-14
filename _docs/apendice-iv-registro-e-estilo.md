@@ -13,10 +13,15 @@ paridade HTML/PDF. Tudo isso continua sendo do Mestre, dos Apêndices I–III, d
 e do `AULA-TEMPLATE.md`. **Uma reescrita de estilo que altere qualquer um desses itens
 está errada, por definição.**
 
-Aplicado integralmente na UE 3 (commits `ce3ae4c`, `be13745`, `146de12`, `1d947bf`,
-`ddbd611`) e na UE 2 (commits `8e70ea0`, `7513cd3`, `60e26ef`, `df23aad`, `9979101`).
-A UE 3 é o exemplar de referência quando houver dúvida sobre o alvo; a UE 2 é o segundo
-caso aplicado e a origem das três precisões marcadas abaixo como **[precisão UE 2]**.
+Aplicado às quatro unidades: UE 3 primeiro (`ce3ae4c`…`ddbd611`), depois UE 2
+(`8e70ea0`…`9979101`), UE 1 (`cde3b0d`…`73e748b`), a repescagem da UE 3 (`6188a22`) e a
+UE 4 (`bbaae49`…`42bc6b9`). Qualquer uma serve de exemplar; as três precisões marcadas
+abaixo como **[precisão UE 2]** nasceram da segunda aplicação e valem para todas.
+
+Quatro passagens não foram alteradas por estarem fora do alcance deste apêndice, e ficam
+registradas para decisão do professor: a dedução do cone de Mach em 2-09, a solução geral
+da EDO e a seção "A solução complexa" em 1-02, a descrição da fase em ressonância em 1-06,
+e a ordem entre "Onde o fenômeno vive" e a conexão final em 4-16.
 
 ---
 
@@ -134,10 +139,13 @@ e `<style>`):
 
 | Unidade | Índice do comando | Travessões livres | Estado |
 |---|---|---|---|
-| UE 1 (revisada) | 1 a cada **32** (de 1 a cada 10) | **0** | fechada |
-| UE 2 (revisada) | 1 a cada **31** (de 1 a cada 8) | **0** | fechada |
-| UE 3 (revisada) | 1 a cada **61** (de 1 a cada 36) | **0** | fechada |
-| UE 4 | 1 a cada 12 | 143 | pendente |
+| UE 1 | 1 a cada **32** (de 1 a cada 10) | **0** (de 109) | fechada |
+| UE 2 | 1 a cada **31** (de 1 a cada 8) | **0** (de 120) | fechada |
+| UE 3 | 1 a cada **61** (de 1 a cada 36) | **0** (de 42) | fechada |
+| UE 4 | 1 a cada **32** (de 1 a cada 12) | **0** (de 142) | fechada |
+
+As quatro unidades estão aplicadas. O curso inteiro está em zero termos banidos,
+zero imperativos de manipulação, zero remissões numéricas e zero travessões livres.
 
 Comando para medir:
 
