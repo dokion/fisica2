@@ -136,7 +136,7 @@ e `<style>`):
 |---|---|---|---|
 | UE 1 (revisada) | 1 a cada **32** (de 1 a cada 10) | **0** | fechada |
 | UE 2 (revisada) | 1 a cada **31** (de 1 a cada 8) | **0** | fechada |
-| UE 3 (revisada) | 1 a cada 36 | 45 | pendente |
+| UE 3 (revisada) | 1 a cada **61** (de 1 a cada 36) | **0** | fechada |
 | UE 4 | 1 a cada 12 | 143 | pendente |
 
 Comando para medir:
@@ -163,8 +163,9 @@ O travessão do padrão de lista prescrito pelo `AULA-TEMPLATE.md`
 exclui blocos ```` ``` ````, `<script>` e `<style>`. Continuam entrando na conta:
 
 - o `title` do YAML, que vem do sumário oficial (`2.4 — Ondas sonoras…`);
-- o cabeçalho `<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: … ═══ -->`, congelado;
-- comentários HTML de simulação e `#` de código dentro de `{=html}`;
+- todo comentário HTML: o cabeçalho de OE congelado, as notas `[VERIFICAR]` ao professor e
+  os comentários de especificação das simulações;
+- `#` de código dentro de `{=html}`;
 - o padrão de lista do template, pela regra acima.
 
 Nenhum deles pode ser removido por esta passada. A métrica que decide o trabalho é o
@@ -181,10 +182,10 @@ for f in sorted(glob.glob(d+'/*.qmd')):
     s=re.sub(r'<script.*?</script>','',s,flags=re.S)
     s=re.sub(r'<style.*?</style>','',s,flags=re.S)
     s=re.sub(r'^---\n.*?\n---\n','',s,flags=re.S)              # YAML
-    s=re.sub(r'<!-- ═══ OBJETIVOS.*?═══ -->','',s,flags=re.S)    # cabeçalho de OE
+    s=re.sub(r'<!--.*?-->','',s,flags=re.S)                      # comentários (OE, VERIFICAR, sim)
+    PAT=re.compile(r'\s*[-*]\s+(\*\*.+?\*\*|\$.+?\$)(\s*\([^)]*\))?\s+—')   # padrão de lista
     for l in s.split('\n'):
-        if '—' not in l: continue
-        if re.match(r'\s*[-*]\s+(\*\*.+\*\*|\$.+\$)\s+—', l): continue   # padrão de lista
+        if '—' not in l or PAT.match(l): continue
         tot+=l.count('—'); print("  %-42s %s" % (f.split('/')[-1], l.strip()[:100]))
 print("travessões livres:", tot)
 EOF
@@ -193,16 +194,17 @@ EOF
 O alvo real é **zero travessões livres**. UE 2 e UE 1 estão nesse ponto, e nelas os índices
 de 1/30 e 1/32 da tabela são resíduo intocável, não trabalho pendente.
 
-A UE 3 **não** está: apesar do índice de 1/36, o melhor da tabela, ela conserva cerca de 45
-travessões livres na prosa, concentrados em 3-02 e 3-04. É a demonstração do ponto: o índice
-do comando de diagnóstico pode ser excelente e ainda assim haver travessão livre a tratar,
-porque um arquivo longo dilui a contagem. Fica registrado como pendência da UE 3.
+A UE 3 chegou a esse ponto numa repescagem posterior. Ela é o caso que demonstra a
+necessidade da distinção: com o melhor índice da tabela (1 a cada 36), conservava 42
+travessões livres na prosa, porque um arquivo longo dilui a contagem. Índice bom não
+dispensa a medição de travessões livres.
 
-Duas armadilhas no reconhecimento do padrão de lista, ambas já embutidas no comando
-acima: `\*\*[^*]+\*\*` falha quando o rótulo em negrito contém itálico
-(`- **Canto do cabo (*singing*)** — …`), e o rótulo pode ser matemática em vez de
-negrito (`- $A$ — **amplitude**: …`, na UE 1). Os dois casos são o mesmo padrão do
-template e não devem ser removidos.
+Três armadilhas no reconhecimento do padrão de lista, todas já embutidas no comando acima:
+`\*\*[^*]+\*\*` falha quando o rótulo em negrito contém itálico
+(`- **Canto do cabo (*singing*)** — …`); o rótulo pode ser matemática em vez de negrito
+(`- $A$ — **amplitude**: …`, na UE 1); e pode haver um parêntese entre o rótulo e o
+travessão (`- **Vórtice ligado** (*bound vortex*) — …`, na UE 3). Os três casos são o mesmo
+padrão do template e não devem ser removidos.
 
 ### V2 — Negrito como decoração
 

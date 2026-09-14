@@ -43,7 +43,7 @@ apenas a **componente da velocidade ao longo do caminho**. A unidade SI é m²/s
 
 Dois exemplos, aparentemente semelhantes e profundamente distintos, organizam todo o resto.
 
-### Exemplo 1 — líquido em rotação
+### Exemplo 1: líquido em rotação
 
 Seja um recipiente cilíndrico contendo líquido em rotação uniforme com velocidade angular
 $\omega$, situação já examinada na estática dos fluidos. O líquido gira como **corpo rígido**, de
@@ -64,7 +64,7 @@ $$C_\Gamma = 2\pi r^2 \omega$$
 
 ou seja, a circulação sobre um círculo de raio $r$ **cresce com $r^2$**.
 
-### Exemplo 2 — o vórtice
+### Exemplo 2: o vórtice
 
 Seja agora outro escoamento, com linhas de corrente circulares e $|\mathbf{v}|$ função apenas de
 $r$, sujeito à condição de que a circulação $C_\Gamma$ sobre **qualquer** círculo de raio $r$
@@ -275,7 +275,7 @@ carga** da pá, objeto central do projeto de hélice.
 ## Vórtices, asas e hélices {{< ra OE3.32 B2 >}}
 
 A circulação ligada a uma pá não pode simplesmente existir sozinha: os teoremas de Helmholtz
-exigem que um **filete de vórtice não termine no interior do fluido** — ele fecha sobre si mesmo,
+exigem que um **filete de vórtice não termine no interior do fluido**: ele fecha sobre si mesmo,
 termina numa fronteira, ou se estende ao infinito. A consequência é o **sistema de vórtices** que
 acompanha toda superfície sustentadora:
 
@@ -386,7 +386,7 @@ projeto.
 - **Esquecer que $L' = \rho v \Gamma$ é força por unidade de envergadura.** Para a pá inteira é
   preciso integrar ao longo do raio, com $\Gamma(r)$ e $v(r)$ variáveis.
 - **Aplicar o teorema de Thomson ao fluido real.** O teorema de Thomson exige fluido **perfeito**,
-  homogêneo, sob forças conservativas. Num fluido real é fácil gerar vórtices — e é justamente
+  homogêneo, sob forças conservativas. Num fluido real é fácil gerar vórtices, e é justamente
   essa falha que permite à asa adquirir circulação.
 - **Confundir o vórtice de Rankine com o vórtice irrotacional.** O vórtice idealizado em
   Kutta-Joukowski é **irrotacional**; os fluidos reais têm núcleo viscoso, em que há rotação. O

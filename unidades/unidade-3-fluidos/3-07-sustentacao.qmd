@@ -114,8 +114,8 @@ passa pela ponta afilada, o bordo de fuga, gerando um vórtice. Tomem-se então 
 
 - Um circuito ABCD suficientemente distante para que o fluido possa ser tratado como perfeito. A
   circulação ao longo dele era inicialmente nula, e **permanece nula** pelo teorema de Thomson.
-- Dentro dele, a porção EBCF que envolve o vórtice largado no bordo de fuga — o **vórtice de
-  partida** —, onde há uma circulação anti-horária.
+- Dentro dele, a porção EBCF que envolve o vórtice largado no bordo de fuga, o **vórtice de
+  partida**, onde há uma circulação anti-horária.
 
 Pela propriedade aditiva da circulação, sendo nulo o total e anti-horária uma das partes, a
 outra há de compensá-la: cria-se **circulação horária no circuito AEFD, que envolve a asa**, e
@@ -154,7 +154,7 @@ ponto, o escoamento **descola-se** do dorso, a circulação se destrói e a sust
 |---|---|
 | $0$–$10°$ | $C_L$ linear; $L/D$ alto; regime de projeto |
 | $10$–$16°$ | ainda crescente, mas $C_D$ sobe rápido e $L/D$ cai |
-| $> 16°$ | descolamento; $C_L$ cai abruptamente — estol |
+| $> 16°$ | descolamento; $C_L$ cai abruptamente, no estol |
 
 A força total sobre a pá é a resultante das duas componentes, $F = \sqrt{L^2 + D^2}$, e o objeto
 de maximização no projeto é a razão $L/D$: máxima sustentação com mínimo arrasto. Num hélice, isso
@@ -613,10 +613,10 @@ plt.tight_layout(); plt.show()
    fluido perfeito não possui?
 :::
 
-**Conexão com o próximo tópico:** o fluido perfeito nos deu a sustentação — e nos deu, junto, dois
+**Conexão com o próximo tópico:** o fluido perfeito rendeu a sustentação e, com ela, dois
 absurdos: nenhuma resistência ao avanço, e nenhuma maneira de gerar o vórtice de partida de que a
 própria sustentação depende. Os dois têm a mesma origem e a mesma cura: **a viscosidade**, que
 descartamos no estudo dos fluidos em movimento e que agora precisa voltar. No tópico seguinte ela é definida
 quantitativamente, dela sai o escoamento laminar num tubo, e dela nasce o parâmetro que decide o
-regime de todo escoamento — o número de Reynolds — junto com a fina camada junto à parede onde
+regime de todo escoamento, o número de Reynolds, junto com a fina camada à parede onde
 tudo isso acontece.

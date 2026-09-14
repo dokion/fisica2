@@ -114,8 +114,8 @@ A leitura, termo a termo:
 
 | Termo | Significado |
 |---|---|
-| $\rho\,\partial\mathbf{v}/\partial t$ | inércia local — o campo mudando no tempo num ponto fixo |
-| $\rho\,(\mathbf{v}\cdot\nabla)\mathbf{v}$ | inércia convectiva — a partícula levada para uma região de velocidade diferente; é o termo **não linear**, e é dele que vem toda a dificuldade |
+| $\rho\,\partial\mathbf{v}/\partial t$ | inércia local: o campo mudando no tempo num ponto fixo |
+| $\rho\,(\mathbf{v}\cdot\nabla)\mathbf{v}$ | inércia convectiva: a partícula levada para uma região de velocidade diferente; é o termo **não linear**, e é dele que vem toda a dificuldade |
 | $-\operatorname{grad} p$ | força de pressão, a mesma da equação de movimento do fluido perfeito |
 | $\mathbf{f}$ | forças volumétricas externas (gravidade) |
 | $\eta\,\nabla^2\mathbf{v}$ | força viscosa, a novidade: derivada **segunda** da velocidade |
@@ -297,7 +297,7 @@ Daí decorre o resultado que reconcilia toda a unidade:
 > Para velocidades de escoamento suficientemente baixas, a camada limite permanece **colada** ao
 > obstáculo. O escoamento **fora dela**, com muito boa aproximação, continua sendo **irrotacional e
 > praticamente idêntico ao de um fluido perfeito**. Nessa região, a hidrodinâmica clássica pode ser
-> aplicada — o que justifica e define o seu domínio de validade.
+> aplicada, o que justifica e define o seu domínio de validade.
 
 Bernoulli, o Venturi, a circulação e o teorema de Kutta-Joukowski conservam, pois, plena
 validade fora da camada limite, região que abrange quase todo o escoamento. O que nenhum deles
@@ -385,7 +385,7 @@ a ordem de grandeza, metros na popa, se mantém.
   classificação do escoamento.
 - **Achar que a hidrodinâmica clássica foi descartada.** Ela continua válida **fora** da
   camada limite, que é onde está quase todo o escoamento. O que ela não descreve é a fina
-  camada junto à parede — e é justamente lá que nasce a resistência.
+  camada junto à parede, e é justamente lá que nasce a resistência.
 - **Usar Hagen-Poiseuille fora do regime laminar.** A lei supõe escoamento laminar; numa
   tubulação de lastro com Re > 4000 o perfil não é parabólico e a vazão não segue $a^4$.
 :::
@@ -704,5 +704,5 @@ plt.tight_layout(); plt.show()
 camada onde a viscosidade age. Falta transformar isso em **força**. A baixas velocidades, antes do
 descolamento, a resistência vem do atrito na camada limite e é proporcional a $\eta v$; a
 velocidades mais altas, quando a camada se descola e se forma a esteira com vórtices, a resistência
-passa a ser dominada pela assimetria de pressões e cresce com $v^2$. São os dois arrastos — de
-atrito e de pressão — e a sua soma é a resistência ao avanço do navio.
+passa a ser dominada pela assimetria de pressões e cresce com $v^2$. São os dois arrastos, o de
+atrito e o de pressão, cuja soma é a resistência ao avanço do navio.

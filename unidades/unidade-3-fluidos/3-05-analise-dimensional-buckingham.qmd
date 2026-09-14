@@ -38,7 +38,7 @@ de 240 m a partir de um modelo de 4 m num tanque de provas.**
 ## Análise dimensional: conceito e objetivo {{< ra OE3.18 B2 >}}
 
 A **análise dimensional** descreve um fenômeno físico a partir apenas das dimensões das variáveis
-envolvidas — comprimento L, massa M, tempo T, temperatura Θ —, sem resolver as equações
+envolvidas (comprimento L, massa M, tempo T, temperatura Θ), sem resolver as equações
 diferenciais que o regem. Funda-se no requisito de que toda equação física válida seja
 **dimensionalmente consistente**: os dois membros de uma igualdade têm as mesmas dimensões.
 
@@ -153,7 +153,7 @@ $$\nabla = \frac{45{\times}10^6}{1025} \approx 43\,900\ \text{m}^3
 C_b = \frac{43\,900}{200 \times 32 \times 10} \approx 0{,}69$$
 
 **(c) Resultado.** (a) $v_m \approx 1{,}0\ \text{m/s}$; (b) $\text{Re}_r \approx 1{,}4{\times}10^9$
-contra $\text{Re}_m \approx 4{,}1{\times}10^6$ — o modelo tem Reynolds 354 vezes menor;
+contra $\text{Re}_m \approx 4{,}1{\times}10^6$, isto é, Reynolds 354 vezes menor no modelo;
 (c) $C_b \approx 0{,}69$, típico de graneleiro.
 
 **(d) Análise crítica.** A impossibilidade de igualar Re é o cerne do ensaio de modelo:
@@ -320,7 +320,7 @@ $$\mathrm{Fr}_m = \mathrm{Fr}_s
 
 E o preço da escolha aparece na última linha do painel: o Reynolds do modelo fica
 $n^{1{,}5}$ vezes menor que o do navio. É por isso que a resistência de atrito **não** pode ser
-escalada junto — ela é extrapolada por linha de correlação (o arrasto), e só a de onda vem do
+escalada junto: ela é extrapolada por linha de correlação (o arrasto), e só a de onda vem do
 ensaio.
 
 ```{python}
@@ -457,8 +457,7 @@ Restam, para o exercício profissional: flutuabilidade e estabilidade; sistemas 
 hidrodinâmica da manobra; propulsão e governo; resistência ao avanço e previsão de potência; e o
 método de escalar do modelo para o navio.
 
-**Próxima unidade:** falta a fonte de toda essa energia. A **UE 4 — Termodinâmica** trata da
+**Próxima unidade:** falta a fonte de toda essa energia. A **unidade de termodinâmica** trata da
 conversão de combustível em trabalho mecânico pela máquina propulsiva, seja motor diesel, turbina
 ou caldeira: o trabalho que, entregue ao hélice, gera a circulação da pá e vence a resistência
 aqui calculada.
-FIM DA UNIDADE 3.

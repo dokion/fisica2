@@ -272,12 +272,12 @@ $$\Delta V = M\left(\frac{1}{\rho_{\text{doce}}} - \frac{1}{\rho_{\text{salg}}}\
 = 50{\times}10^6\left(\frac{1}{1000} - \frac{1}{1025}\right) \approx 1220\ \text{m}^3$$
 
 Para $\Delta T = 20\ \text{cm}$, a área de flutuação implícita é
-$A_f = \Delta V/\Delta T = 1220/0{,}20 \approx 6100\ \text{m}^2$ — coerente com um
+$A_f = \Delta V/\Delta T = 1220/0{,}20 \approx 6100\ \text{m}^2$, valor coerente com um
 navio-tanque de 50 mil t.
 
 **(c) Resultado.** Ao sair da água doce para a salgada, o navio **sobe** cerca de
-$20\ \text{cm}$ (calado menor no mar). O sentido inverso — entrando em água doce — é
-o que exige atenção: o navio afunda, e é por isso que existe a marca de água doce
+$20\ \text{cm}$ (calado menor no mar). O sentido inverso, a entrada em água doce, é o que
+exige atenção: o navio afunda, e é por isso que existe a marca de água doce
 (FWA) na escala de Plimsoll.
 
 **(d) Análise crítica.** A variação é pequena (2,5% de densidade → ~2% de volume), mas
@@ -436,11 +436,11 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Dobre a viscosidade de 0,5 para 1,0 Pa·s. A velocidade terminal cai à metade?
+1. Dobrada a viscosidade de 0,5 para 1,0 Pa·s, a velocidade terminal cai à metade?
    Confirme por $v_t \propto 1/\mu$.
 2. O painel mostra o Reynolds da esfera. Para que faixa de $\mu$ ele fica abaixo de 1
    (onde a lei de Stokes vale)? O que aconteceria com uma esfera grande em água?
-3. Ligue a queda: a velocidade cresce e satura. Que forças estão em jogo no início
+3. Iniciada a queda, a velocidade cresce e satura. Que forças estão em jogo no começo
    (quase queda livre) e no fim (terminal)?
 4. A esfera em queda está em movimento, e a viscosidade se manifesta. Caso parasse no meio do
    óleo, que tensões o fluido exerceria sobre ela? Confronte com o resultado obtido para a

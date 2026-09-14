@@ -347,7 +347,7 @@ plt.tight_layout(); plt.show()
    a densidade crescesse com a profundidade?
 2. Desligada a camada das isobáricas, ainda é possível dizer onde elas passam observando apenas
    as setas? Justifique pela relação entre o gradiente e as superfícies de nível.
-3. No campo genérico, arraste o ponto de uma região de linhas afastadas para outra de linhas
+3. No campo genérico, levado o ponto de uma região de linhas afastadas para outra de linhas
    próximas. O que ocorre com o comprimento do vetor, e por que o espaçamento das linhas de
    nível mede o módulo do gradiente?
 4. A pressão a 20 m de profundidade é cerca de 302 kPa, três vezes a atmosférica. Escrita como
@@ -717,7 +717,7 @@ tonelagem bruta (volume registrado).
 - **Pensar que M acima de G é o mesmo que B acima de G.** B está sempre abaixo de G num navio
   carregado; o que garante estabilidade é o **metacentro** M estar acima de G.
 - **Deslocamento vs. tonelagem bruta:** deslocamento é massa de água (em toneladas métricas, t ou ton); tonelagem bruta (GT) é medida de volume interno registrado. Não são a mesma coisa.
-- **Pressão não é força:** $P = F/A$. Em diferentes profundidades de um mesmo navio, a pressão é diferente mesmo com o mesmo fluido — pressão aumenta com profundidade.
+- **Pressão não é força:** $P = F/A$. Em profundidades diferentes de um mesmo navio a pressão é diferente, ainda que o fluido seja o mesmo, pois ela cresce com a profundidade.
 - **Achar que a força no fundo do tanque é o peso do líquido.** Só num tanque de paredes
   verticais. É o paradoxo hidrostático: a força sobre a base depende de $h$, não do peso.
 - **Reserva de flutuabilidade não cresce indefinidamente:** quanto mais se carrega, maior o calado; eventualmente, margem até o convés inferior diminui e, se chover ou houver onda, água entra.
@@ -839,14 +839,14 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Fixe o deslocamento e leve a densidade de 1025 a 1000. O calado aumenta ou diminui?
+1. Fixado o deslocamento e levada a densidade de 1025 a 1000, O calado aumenta ou diminui?
    Por que o navio sobe ao entrar em água salgada mais densa?
 2. A distância F−S (FWA) na escala de Plimsoll depende do deslocamento? Verifique
    movendo o slider de carga e lendo o valor no painel.
 3. Um graneleiro carrega até a marca S no rio (água doce). Ao chegar ao mar, ele estará
    acima ou abaixo da marca S? É seguro?
-4. O calado da simulação sai de $\Delta = \rho V$ — a expressão do empuxo resolvida para $T$. Onde, nessa
-   conta, entrou a lei de Stevin?
+4. O calado da simulação sai de $\Delta = \rho V$, a expressão do empuxo resolvida para $T$.
+   Onde, nessa conta, entrou a lei de Stevin?
 :::
 
 ## Onde o fenômeno vive
@@ -864,7 +864,7 @@ plt.tight_layout(); plt.show()
   ainda "meio flutua".
 - **Superfície livre em tanque parcialmente cheio** — a superfície do líquido é isobárica, logo
   equipotencial: ela se mantém perpendicular à resultante gravidade + aceleração. Quando o navio
-  adorna, a carga líquida escorre e G sobe efetivamente — é a razão física das regras de
+  adorna, a carga líquida escorre e G sobe efetivamente: é a razão física das regras de
   superfície livre em estabilidade.
 - **Balde girante e o perfil parabólico** — a equação da superfície livre em rotação num tanque em rotação; o clássico de
   laboratório que também explica o esferoide oblato dos oceanos.
@@ -878,7 +878,7 @@ $$KB = \frac{T}{2}, \qquad
 BM = \frac{I}{\nabla} = \frac{L B^3/12}{L B T} = \frac{B^2}{12\,T}, \qquad
 KM = KB + BM$$
 
-e a **altura metacêntrica** é $GM = KM - KG$. Adorne o casco e acompanhe: o centro de empuxo
+e a **altura metacêntrica** é $GM = KM - KG$. Com o casco adernado, o centro de empuxo
 migra de $B$ para $B'$, a vertical por $B'$ corta a linha de centro em $M$, e o braço de
 endireitamento é
 
@@ -1028,7 +1028,7 @@ plt.tight_layout(); plt.show()
 2. Elevando lentamente o $KG$, em que valor exato o binário troca de sinal? Relacione com o $KM$
    lido no painel.
 3. $BM = B^2/12T$ cresce com o **quadrado da boca**. Por que alargar o navio é a forma mais
-   eficaz de ganhar estabilidade — e o que isso custa em resistência ao avanço (o arrasto)?
+   eficaz de ganhar estabilidade, e o que isso custa em resistência ao avanço (o arrasto)?
 4. Carga alta no convés e gelo na superestrutura elevam $G$. Água em tanque parcialmente cheio
    tem efeito equivalente (superfície livre). Em qual dos parâmetros do painel esse efeito
    aparece?
@@ -1038,7 +1038,7 @@ plt.tight_layout(); plt.show()
 
 Três recipientes de **mesma área de base** $A$ e **mesma altura de líquido** $h$, mas de formas
 muito diferentes. Pela lei de Stevin, a pressão no fundo é $p = p_0 + \rho g h$ em
-todos — logo a **força sobre a base é a mesma nos três**, ainda que o peso do líquido seja
+todos, logo a **força sobre a base é a mesma nos três**, ainda que o peso do líquido seja
 muito diferente. A balança, no entanto, acusa o peso correto: a diferença está na resultante
 vertical das forças que o líquido exerce sobre as **paredes inclinadas**.
 
@@ -1158,12 +1158,12 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Mova o slider de abertura. A força sobre a base muda? E o peso do líquido? De que equação
+1. Variada a abertura, a força sobre a base muda? E o peso do líquido? De que equação
    vem cada uma das duas respostas?
 2. No vaso que **alarga**, a componente vertical nas paredes aponta para baixo; no que
    **estreita**, para cima. Some-a à força na base em cada caso e confirme que dá o peso.
-3. Se você equilibrar uma balança com o frasco vazio e depois despejar o líquido, a diferença
-   de peso é igual ao peso do líquido — nos três. Por que isso **não** contradiz a força igual
+3. Equilibrada uma balança com o frasco vazio e despejado em seguida o líquido, a diferença
+   de peso é igual ao peso do líquido, nos três. Por que isso **não** contradiz a força igual
    sobre a base?
 :::
 
@@ -1171,7 +1171,7 @@ plt.tight_layout(); plt.show()
 
 Pascal aplicado. Dois pistões de áreas $A_1$ e $A_2$ ligados pelo mesmo líquido: a variação de
 pressão se transmite integralmente, de modo que $F_1/A_1 = F_2/A_2$. A força é multiplicada por
-$A_2/A_1$ — mas o **curso** é dividido pelo mesmo fator, porque o líquido é incompressível e o
+$A_2/A_1$, mas o **curso** é dividido pelo mesmo fator, porque o líquido é incompressível e o
 volume deslocado é o mesmo: $A_1 d_1 = A_2 d_2$. O trabalho $F d$ é igual dos dois lados.
 
 ```{python}
@@ -1281,7 +1281,7 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Aumente a razão de áreas de 2 para 50. A força de saída cresce 25 vezes — e o curso? Que
+1. Elevada a razão de áreas de 2 para 50, a força de saída cresce 25 vezes. E o curso? Que
    grandeza permanece constante nos dois lados?
 2. Por que a prensa **não** viola a conservação de energia, apesar de "multiplicar força"?
 3. Um macaco hidráulico de praça de máquinas com razão 50 precisa de muitos golpes de alavanca
@@ -1289,8 +1289,8 @@ plt.tight_layout(); plt.show()
 :::
 
 **Conexão com o próximo tópico:** toda a estática saiu de uma única equação,
-$\mathbf{f} = \operatorname{grad} p$, que só vale porque o fluido está em **repouso** — foi o
+$\mathbf{f} = \operatorname{grad} p$, que só vale porque o fluido está em **repouso**: foi o
 repouso que eliminou as tensões tangenciais. Agora o fluido vai se mover, e a pergunta muda: como
 descrever o movimento de um meio contínuo, e o que substitui a equação geral do equilíbrio quando há aceleração? Do
-método de descrição saem a equação da continuidade e a equação de Bernoulli — e com elas as
+método de descrição saem a equação da continuidade e a equação de Bernoulli, e com elas as
 bombas, o tubo de Pitot, o Venturi e a propulsão.

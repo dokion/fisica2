@@ -104,8 +104,8 @@ se inverte e o arrasto de pressão predomina.
 
 A conclusão de projeto decorre diretamente do mecanismo:
 
-> Um corpo de forma aerodinâmica, **arredondado na parte dianteira e afilado na traseira** — como
-> um peixe ou uma asa de avião —, dá origem a um escoamento estacionário em que as linhas de
+> Um corpo de forma aerodinâmica, **arredondado na parte dianteira e afilado na traseira**, como
+> um peixe ou uma asa de avião, dá origem a um escoamento estacionário em que as linhas de
 > corrente acompanham a forma do corpo, **sem descolamento da camada limite**, o que minimiza a
 > resistência oposta pelo fluido ao deslocamento.
 
@@ -217,7 +217,7 @@ $P \approx 1{,}91\ \text{MW}$.
 
 **(c) Resultado.** Casco limpo: $R_{\text{atrito}} \approx 232\ \text{kN}$,
 $P \approx 1{,}4\ \text{MW}$. Casco incrustado: $R \approx 310\ \text{kN}$,
-$P \approx 1{,}9\ \text{MW}$ — aumento de **34%**.
+$P \approx 1{,}9\ \text{MW}$, aumento de **34%**.
 
 **(d) Análise crítica.** A margem de incrustação, isoladamente, custa cerca de 0,5 MW a
 mais nesta velocidade, o que se traduz em combustível a cada milha navegada e explica
@@ -383,7 +383,7 @@ percorre a sequência:
 |---|---|---|
 | $\lesssim 5$ | camada limite **colada**; linhas de corrente acompanham o corpo | atrito, $R \propto \eta v$ |
 | $5$–$40$ | camada **descola**; dois vórtices simétricos com refluxo | transição |
-| $40$–$1000$ | os vórtices se **destacam alternadamente** — fileira de vórtices; deixa de ser estacionário | pressão, $R \propto v^2$ |
+| $40$–$1000$ | os vórtices se **destacam alternadamente** numa fileira; deixa de ser estacionário | pressão, $R \propto v^2$ |
 | $\gtrsim 1000$ | esteira **turbulenta**, irregular e aparentemente caótica | pressão, $R \propto v^2$ |
 
 As fotografias clássicas reproduzidas no Moysés registram exatamente esses estágios em
@@ -699,8 +699,8 @@ plt.tight_layout(); plt.show()
 $R = \tfrac{1}{2}\rho v^2 A\,C_D$, e o regime, no estudo do escoamento viscoso, como $\mathrm{Re} = \rho a v/\eta$.
 Note o que os dois têm em comum: são **números adimensionais** que capturam o comportamento de
 famílias inteiras de escoamentos, independentemente do tamanho, da velocidade e do fluido. Isso não
-foi coincidência nem sorte — há um método sistemático que produz esses agrupamentos a partir apenas
+foi coincidência: há um método sistemático que produz esses agrupamentos a partir apenas
 das dimensões das grandezas envolvidas, e um teorema que diz quantos deles existem. É a **análise
-dimensional**, com o Teorema π de Buckingham, e ela traz junto o adimensional que ainda falta — o
-número de Froude — e a resposta para a pergunta prática que fecha a unidade: como prever a
+dimensional**, com o Teorema π de Buckingham, e ela traz junto o adimensional que ainda falta, o
+número de Froude, e a resposta para a pergunta prática que fecha a unidade: como prever a
 resistência de um navio de 240 m a partir de um modelo de 4 m num tanque de provas.
