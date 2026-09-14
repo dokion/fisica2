@@ -282,8 +282,11 @@ Mesmo com amortecimento, a ressonância deixa consequências duradouras:
    e as trincas nucleiam mais depressa.
 
 3. **Deslocamento de fases:** em ressonância, a resposta fica atrasada de $\phi = \pi/2$ em relação à
-   excitação (força puxa para frente, sistema se move para trás). Isso causa distribuição de tensão
-   desigual em componentes, aumentando concentração de tensão em cantos e furos.
+   excitação, ou seja, de um quarto de ciclo: o deslocamento é máximo quando a força é nula, e a massa
+   passa pelo equilíbrio, na velocidade máxima, no instante em que a força é máxima. A velocidade fica
+   em fase com a excitação, e é por isso que cada ciclo injeta energia no sistema. Esse descompasso
+   entre o carregamento e a deformação distribui a tensão de modo desigual pela estrutura e agrava a
+   concentração em cantos e furos.
 
 ::: {.callout-warning}
 ## Erros clássicos
