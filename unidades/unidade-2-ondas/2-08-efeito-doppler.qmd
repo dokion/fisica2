@@ -272,7 +272,7 @@ plt.tight_layout(); plt.show()
    recebidas coincidem? Confira pela fórmula geral e explique por que numerador e denominador não
    são intercambiáveis.
 3. Com a fonte a 150 m/s, $\lambda' = 47{,}5$ m à frente. Verifique no painel que $\lambda'$ não muda
-   quando apenas o observador se move — e diga o que muda nesse caso.
+   quando apenas o observador se move, e diga o que muda nesse caso.
 4. Levada a fonte a 340 m/s, o denominador se anula e a expressão perde sentido. O que as frentes
    fazem na tela nesse instante, e por que nenhuma frequência finita descreve a situação?
 :::
