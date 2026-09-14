@@ -226,9 +226,6 @@ $\gamma \approx 1{,}4$ na admissão e $\approx 1{,}30$ na combustão.
   temperatura, e nas temperaturas de combustão o $\gamma$ do ar já não é 1,40.
 :::
 
-**Conexão com a próxima unidade:** encerrada a termodinâmica, o curso completa o
-percurso oscilações → ondas → fluidos → calor previsto no sumário oficial do FIS-2.
-
 ## Onde o fenômeno vive
 
 <!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
@@ -247,3 +244,6 @@ percurso oscilações → ondas → fluidos → calor previsto no sumário ofici
 <!-- EXEMPLO A SIMULAR: graus de liberdade e γ (interativo): seletor de gás
      (monoatômico/diatômico/poliatômico) animando translação/rotação/vibração e
      atualizando cv, cp e γ. -->
+
+**Fecho do curso:** encerrada a termodinâmica, o curso completa o percurso
+oscilações → ondas → fluidos → calor previsto no sumário oficial do FIS-2.
