@@ -14,19 +14,18 @@ OE 4.11 [B2] Explicar os mecanismos de transferência de calor
 
 {{< aula 31-32 >}}
 
-Durante séculos, pensava-se que calor era um "fluido invisível" chamado flogisto. Hoje
-sabemos que calor é **energia em movimento microscópico** — o resultado macroscópico das
-colisões entre moléculas que vibram. Essa mudança conceitual é decisiva em máquinas navais:
-não há "quantidade de calor armazenada" em um corpo; há energia interna (que depende de
-temperatura), e calor é o que flui de um lado para o outro quando há diferença de
-temperatura. Compreender essa distinção é entender por que o operador monitora
-temperaturas (não "quantidade de calor") e por que um motor diesel desperdiça tanta energia
-em radiação para o ar da praça de máquinas.
+Durante séculos supôs-se que o calor fosse um fluido invisível, o calórico. Hoje está
+estabelecido que calor é **energia em movimento microscópico**, resultado macroscópico das
+colisões entre moléculas que vibram. A mudança conceitual é decisiva em máquinas navais: não
+há quantidade de calor armazenada num corpo, e sim energia interna, que depende da
+temperatura; calor é o que flui de um lado para o outro quando há diferença de temperatura.
+Da distinção decorrem o monitoramento de temperaturas pelo operador e o desperdício de
+energia por radiação de um motor diesel para o ar da praça de máquinas.
 
-## Calor e temperatura — duas grandezas diferentes {{< ra OE4.10 B2 >}}
+## Calor e temperatura: duas grandezas diferentes {{< ra OE4.10 B2 >}}
 
-**Temperatura:** propriedade intensiva do sistema — não depende da quantidade de matéria.
-Medida em K ou °C.
+**Temperatura:** propriedade intensiva do sistema, que não depende da quantidade de
+matéria. Medida em K ou °C.
 
 **Calor:** energia transferida entre dois sistemas por diferença de temperatura. Medida em
 joules (J). Depende de quanto material está envolvido.
@@ -37,10 +36,9 @@ Exemplo:
 - Uma piscina a 20 °C: baixa temperatura, **muito calor** disponível (muito mais que a
   xícara).
 
-Se você mergulhasse a xícara quente na piscina, a xícara esfriaria porque o calor flui da
-xícara para a água — apesar de a xícara ter maior temperatura. Fluxo de calor vai sempre de
-alta para baixa temperatura, independentemente de qual corpo "tem mais calor" em volume
-total.
+Mergulhada a xícara quente na piscina, ela esfria, porque o calor flui da xícara para a
+água, ainda que a xícara tenha temperatura maior. O fluxo de calor vai sempre da temperatura
+alta para a baixa, seja qual for a energia total armazenada em cada corpo.
 
 ## Conceituar calor como energia em trânsito {{< ra OE4.9 B2 >}}
 
@@ -48,13 +46,13 @@ Microscopicamente, temperatura é energia cinética média das moléculas:
 
 $$\langle E_c \rangle \propto T$$
 
-**Calor** é energia que passa de um corpo a outro porque suas moléculas têm energias
-cinéticas médias diferentes. Não é uma propriedade do corpo — é um processo.
+**Calor** é energia que passa de um corpo a outro porque as moléculas de cada um têm
+energias cinéticas médias diferentes. É um processo, e não uma propriedade do corpo.
 
-Isso tem implicação prática: não se pergunta "quanto calor tem o motor diesel?" (pergunta
-sem sentido). Pergunta-se "quanto calor o motor está gerando por hora?" (resposta: potência
-térmica em kW). Ou "quanto calor sai pela água de refrigeração?" (resposta: fluxo de calor
-em kJ/s).
+Daí uma implicação prática: perguntar quanto calor tem o motor diesel não tem sentido. As
+perguntas com sentido são quanto calor o motor gera por hora, respondida por uma potência
+térmica em kW, e quanto calor sai pela água de refrigeração, respondida por um fluxo de
+calor em kJ/s.
 
 ## Mecanismos de transferência {{< ra OE4.11 B2 >}}
 
@@ -92,39 +90,39 @@ substância armazenada. Os 500 kW são a taxa com que essa energia atravessa o t
 **(b) Desenvolvimento.** Força motriz: $\Delta T = 95 - 35 = 60\ \text{K}$. No trocador
 ideal isolado, toda a potência retirada do óleo entra na água:
 $$\dot{Q}_{\text{óleo}} = \dot{Q}_{\text{água}} = 500\ \text{kW}$$
-O que "atravessa" é energia; o óleo não perde "calor armazenado", perde **energia
-interna**, e a água ganha energia interna — calor é o nome do trânsito.
+O que atravessa é energia: o óleo não perde calor armazenado, perde **energia interna**, e
+a água ganha energia interna. Calor é o nome do trânsito.
 
 **(c) Resultado.** 500 kW fluem do óleo para a água enquanto houver os 60 K de
 diferença; o isolamento garante que quase toda essa potência chegue à água, e não ao ar
 da praça de máquinas.
 
-**(d) Análise crítica.** Tratar calor como fluido armazenado ("calórico") leva a erros:
-o óleo não "contém 500 kW de calor" — contém energia interna, e calor é a taxa de
-transferência. O mesmo joule pode passar por condução (parede), convecção (fluidos) e
-radiação (superfícies) — as três formas coexistem no trocador. Sem o $\Delta T$, não há
-calor, por mais "quente" que o óleo esteja em termos absolutos.
+**(d) Análise crítica.** Tratar calor como fluido armazenado, à maneira do calórico, leva a
+erro: o óleo não contém 500 kW de calor, contém energia interna, e calor é a taxa de
+transferência. O mesmo joule pode passar por condução na parede, convecção nos fluidos e
+radiação nas superfícies, e as três formas coexistem no trocador. Sem o $\Delta T$ não há
+calor, por mais alta que seja a temperatura absoluta do óleo.
 :::
 
 ::: {.callout-warning}
 ## Erros clássicos
 
-- **"Calor é uma propriedade do corpo":** não. Temperatura é propriedade; calor é
-  transferência. Um corpo **tem** temperatura; um corpo **troca** calor.
-- **Confundir "calor necessário para aquecer" com "temperatura do corpo":** para aquecer
+- **Tomar o calor por propriedade do corpo:** temperatura é propriedade, calor é
+  transferência. Um corpo **tem** temperatura e **troca** calor.
+- **Confundir o calor necessário para aquecer com a temperatura do corpo:** para aquecer
   um litro de água em 10 K são ~42 kJ. Para aquecer 1 m³ de água (1000 L) em 1 K são
   ~4200 kJ. Quantidades muito diferentes, mas ambas começam a 20 °C.
-- **Esquecer que radiação ocorre sempre:** a praça de máquinas está sempre irradiando
-  energia. Se não houvesse convecção (ventilação), a radiação sozinha nunca seria suficiente
-  para resfriar — daí por que ventiladores são críticos.
+- **Esquecer que a radiação ocorre sempre:** a praça de máquinas irradia energia
+  continuamente. Sem a convecção da ventilação, a radiação sozinha não bastaria para
+  resfriá-la, e daí a criticidade dos ventiladores.
 :::
 
-## Veja o calor atravessar o trocador
+## Perfis de temperatura num trocador em contracorrente
 
 Num trocador **contracorrente**, o fluido quente entra por um lado e o frio pelo outro,
 correndo em sentidos opostos. O calor flui do quente para o frio ao longo de todo o
-comprimento, sempre do maior para o menor $T$. Ajuste as vazões e veja os perfis de
-temperatura e a potência trocada.
+comprimento, sempre do maior para o menor $T$. As vazões são ajustáveis, e com elas os
+perfis de temperatura e a potência trocada.
 
 ```{python}
 #| fig-cap: "Perfis de temperatura num trocador contracorrente: óleo quente (95 °C) cede calor à água (35 °C) ao longo do comprimento. A diferença de temperatura local move o calor; a potência total é ṁc·ΔT de cada corrente. Mesmos parâmetros da versão interativa."
@@ -224,10 +222,10 @@ plt.tight_layout(); plt.show()
 ::: {.pergunta}
 1. O calor sempre flui do canal quente para o frio? Verifique que a diferença de
    temperatura local (área laranja) nunca muda de sinal num trocador bem-dimensionado.
-2. Aumente a vazão de água: ela sai mais quente ou mais fria? Por que a potência total
+2. Elevada a vazão de água, ela sai mais quente ou mais fria? Por que a potência total
    trocada pode crescer mesmo com a água aquecendo menos?
-3. Calor é energia em trânsito: o óleo não "perde calor armazenado". O que ele perde, e
-   o que a água ganha?
+3. Calor é energia em trânsito, e o óleo não perde calor armazenado. O que ele perde, e o
+   que a água ganha?
 :::
 
 ## Onde o fenômeno vive
@@ -235,12 +233,11 @@ plt.tight_layout(); plt.show()
 <!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
      em sessões futuras, a pedido do professor. -->
 
-- **Trocadores de calor do motor** — calor como energia em trânsito, nunca "substância
-  armazenada": o mesmo joule atravessa camisa → água doce → água salgada → mar, e o
-  que cada fluido "tem" é energia interna, não calor.
-- **Broca de Rumford** — o clássico histórico: mandrilar canhões esquentava sem
-  limite, incompatível com um "fluido calórico" finito — calor é transferência,
-  gerável por trabalho.
+- **Trocadores de calor do motor** — calor como energia em trânsito, nunca como substância
+  armazenada: o mesmo joule atravessa camisa → água doce → água salgada → mar, e o que cada
+  fluido possui é energia interna, não calor.
+- **Broca de Rumford** — mandrilar canhões esquentava sem limite, o que é incompatível com
+  um fluido calórico finito: calor é transferência, e o trabalho pode gerá-lo.
 - **Aquecimento por atrito em cabos e mancais** — trabalho mecânico virando energia
   interna diante dos olhos (e do termômetro).
 
@@ -248,6 +245,6 @@ plt.tight_layout(); plt.show()
      perfis de temperatura dos dois fluidos ao longo do trocador com sliders de
      vazão. -->
 
-**Conexão com o próximo tópico:** se calor é energia em trânsito, quanto de energia passa?
-Resposta: quantidade de calor (Q) em joules, que relaciona massa, temperatura e uma
-propriedade do material chamada calor específico.
+**Conexão com o próximo tópico:** sendo o calor energia em trânsito, resta quantificar
+quanta energia passa. É a quantidade de calor $Q$, em joules, que relaciona massa,
+temperatura e a propriedade do material chamada calor específico.

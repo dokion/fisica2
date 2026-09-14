@@ -14,13 +14,12 @@ OE 4.14 [B3] Aplicar o conceito de calor latente em mudanças de fase
 
 {{< aula 31-32 >}}
 
-Quanto calor é necessário para aquecer um litro de água de 20 °C a 80 °C? Quanto uma
-caldeira consome para vaporizar 1 tonelada de água? Essas são perguntas sobre **quantidade
-de calor** — a energia medida em joules que flui entre corpos. A resposta depende de três
-coisas: massa do material, mudança de temperatura, e uma propriedade chamada calor
-específico. Além disso, há processos especiais — mudanças de fase — onde o calor flui sem
-mudança de temperatura. Esses conceitos são a base do balanço térmico de um motor diesel:
-combustível entra, libera calor, parte vira trabalho, parte é rejeitada como calor perdido.
+O calor para aquecer um litro de água de 20 °C a 80 °C, ou o que uma caldeira consome para
+vaporizar 1 tonelada de água, são questões de **quantidade de calor**, a energia em joules
+que flui entre corpos. A resposta depende da massa do material, da variação de temperatura e
+da propriedade chamada calor específico. Há ainda as mudanças de fase, em que o calor flui
+sem alterar a temperatura. Sobre esses conceitos assenta o balanço térmico de um motor
+diesel: o combustível entra, libera calor, parte vira trabalho e parte é rejeitada.
 
 ## Quantidade de calor sensível {{< ra OE4.12 B3 >}}
 
@@ -31,7 +30,7 @@ $$Q = m \cdot c \cdot \Delta T$$
 onde:
 - $m$ é a massa (kg)
 - $c$ é o calor específico (J/(kg·K))
-- $\Delta T$ é a mudança de temperatura (K ou °C — mesma diferença)
+- $\Delta T$ é a variação de temperatura (K ou °C, pois a diferença é a mesma)
 
 O **calor específico** é a energia necessária para aquecer 1 kg de uma substância em 1 K.
 
@@ -44,16 +43,16 @@ Exemplos em máquinas de bordo:
 | Ar | 1,0 | Ambiente da praça de máquinas |
 | Ferro/aço | 0,46 | Estrutura de motor e cilindro |
 
-Cálculo: quantos kJ são necessários para aquecer 1000 kg de água de refrigeração de 30 °C
-a 70 °C?
+Cálculo do calor necessário para aquecer 1000 kg de água de refrigeração de 30 °C a 70 °C:
 
-$$Q = 1000 \times 4{,}18 \times (70 - 30) = 1000 \times 4{,}18 \times 40 = 167{,}2\ \text{kJ}$$
+$$Q = 1000 \times 4{,}18 \times (70 - 30) = 1000 \times 4{,}18 \times 40
+= 167\,200\ \text{kJ} = 167{,}2\ \text{MJ}$$
 
 ## Capacidade térmica e calor específico {{< ra OE4.13 B2 >}}
 
 Dois conceitos relacionados:
 
-**Calor específico** ($c$): calor por unidade de massa por unidade de temperatura. Depende
+**Calor específico** ($c$): calor por unidade de massa e por unidade de temperatura. Depende
 da substância (água tem c alto; ar tem c baixo). Unidade: J/(kg·K).
 
 **Capacidade térmica** ($C = m \cdot c$): calor por unidade de temperatura para um objeto
@@ -61,8 +60,8 @@ específico. Se uma caldeira com 500 kg de aço tem $c = 0{,}46$ kJ/(kg·K), ent
 capacidade térmica é $C = 500 \times 0{,}46 = 230$ kJ/K. Aquecer a caldeira em 1 K exige
 230 kJ.
 
-Em máquinas marinhas, combustíveis (HFO — Heavy Fuel Oil, ou MGO — Marine Gas Oil) têm
-valores caloríficos tabelados:
+Em máquinas marinhas, os combustíveis, óleo combustível pesado (*heavy fuel oil*, HFO) ou
+óleo diesel marítimo (*marine gas oil*, MGO), têm valores caloríficos tabelados:
 
 | Combustível | Valor calorífico [MJ/kg] |
 |---|---|
@@ -73,12 +72,12 @@ Isso significa: 1 kg de HFO, se completamente queimado, libera ~40 MJ de energia
 
 ## Calor latente e mudanças de fase {{< ra OE4.14 B3 >}}
 
-Em mudanças de fase (sólido ↔ líquido ↔ gás), a temperatura permanece constante enquanto o
-calor flui. A energia vai para "quebrar" as ligações entre moléculas, não para acelerá-las.
+Em mudanças de fase (sólido ↔ líquido ↔ gás) a temperatura permanece constante enquanto o
+calor flui: a energia vai para romper as ligações entre moléculas, e não para acelerá-las.
 
 $$Q = m \cdot L$$
 
-onde $L$ é o calor latente de mudança (J/kg) — específico de cada transição.
+onde $L$ é o **calor latente** de mudança (J/kg), específico de cada transição.
 
 Para água pura (a 1 atm):
 
@@ -95,7 +94,7 @@ $$Q_{\text{vap}} = 1000\ \text{kg} \times 2257\ \text{kJ/kg} = 2{,}257 \times 10
 
 $$\dot{Q}_{\text{vap}} = \frac{2{,}257 \times 10^6\ \text{kJ}}{3600\ \text{s}} \approx 627\ \text{kW}$$
 
-Apenas para evaporar, não para aquecer de 20 °C a 100 °C!
+Esse valor cobre apenas a evaporação, e não o aquecimento de 20 °C a 100 °C.
 
 ::: {.sp}
 Um motor diesel consome 50 kg/h de combustível HFO (valor calorífico 40 MJ/kg).
@@ -122,31 +121,32 @@ $$\dot{Q}_2 = \dot{Q}_1 - \dot{W} \approx 556 - 250 = 306\ \text{kW}$$
 **(c) Resultado.** Com a taxa de combustível dada, o motor entrega $\approx 250\ \text{kW}$
 e **rejeita $\approx 306\ \text{kW}$** (gases de descarga + água de refrigeração).
 
-**(d) Análise crítica.** A "potência de saída" de 1000 kW do enunciado é incompatível
-com 50 kg/h e 45% — para 1000 kW a 45% seriam necessários $\approx 200\ \text{kg/h}$ de
-combustível. Adotei a taxa de combustível como dado firme. Independentemente do número,
-a lição vale: mais da metade da energia do combustível sai como calor rejeitado — é o
-que alimenta os sistemas de recuperação de calor (WHR).
+**(d) Análise crítica.** A potência de saída de 1000 kW do enunciado é incompatível com
+50 kg/h e 45%: para 1000 kW a 45% seriam necessários $\approx 200\ \text{kg/h}$ de
+combustível. A taxa de combustível foi adotada como dado firme. Seja qual for o número, a
+lição se mantém: mais da metade da energia do combustível sai como calor rejeitado, e é dela
+que se alimentam os sistemas de recuperação de calor (*waste heat recovery*, WHR).
 :::
 
 ::: {.callout-warning}
 ## Erros clássicos
 
-- **Confundir "mudança de temperatura" com "mudança de fase":** Q = m·c·ΔT só vale se o
-  material não muda de estado. Se há vaporização, use Q = m·L, não o ΔT.
-- **Esquecer que o calor latente é enorme:** vaporizar água exige 2257 kJ/kg; aquecer água
-  em 1 K exige só 4,18 kJ/kg. Diferença de 500×! Caldeiras precisam de muita energia para
-  vapor porque quase tudo vai em L, não em aumento de T.
-- **Usar calor específico na mudança de fase:** para 1 kg de água passando de 99 °C a 100 °C
-  = vapor (em processo isobárico), use Q = 2257 kJ, não Q = 1 × 4,18 × 1 = 4,18 kJ.
+- **Confundir mudança de temperatura com mudança de fase:** $Q = mc\Delta T$ só vale se o
+  material não muda de estado. Havendo vaporização, aplica-se $Q = mL$.
+- **Esquecer a magnitude do calor latente:** vaporizar água exige 2257 kJ/kg, ao passo que
+  aquecê-la em 1 K exige 4,18 kJ/kg, uma diferença da ordem de 500 vezes. A energia que uma
+  caldeira consome vai quase toda em $L$, e não em aumento de $T$.
+- **Usar o calor específico na mudança de fase:** para 1 kg de água que passa de 99 °C a
+  vapor a 100 °C, em processo isobárico, vale $Q = 2257$ kJ, e não
+  $Q = 1 \times 4{,}18 \times 1 = 4{,}18$ kJ.
 :::
 
-## Veja a energia do combustível se repartir
+## Repartição da energia do combustível entre trabalho e calor rejeitado
 
 Toda a energia do combustível ($\dot{Q}_1 = \dot{m}\,\text{PCI}$) sai como trabalho útil
 ($\dot{W} = \eta\,\dot{Q}_1$) mais calor rejeitado ($\dot{Q}_2 = \dot{Q}_1 - \dot{W}$).
-Ajuste a vazão de combustível e o rendimento e veja as barras da repartição — nenhuma
-energia desaparece.
+A vazão de combustível e o rendimento são ajustáveis, e as barras da repartição acompanham
+os dois: nenhuma energia desaparece.
 
 ```{python}
 #| fig-cap: "Repartição da energia de um motor: combustível → trabalho + calor rejeitado. Com 50 kg/h de HFO (40 MJ/kg → 556 kW) e η = 45%, saem 250 kW de trabalho e 306 kW de calor. Mesmos parâmetros da versão interativa."
@@ -223,8 +223,8 @@ plt.tight_layout(); plt.show()
 ::: {.pergunta}
 1. As duas barras (entra / sai) têm sempre o mesmo comprimento total. Por que isso é a
    primeira lei em forma de figura?
-2. Suba o rendimento de 45% para 55%: a barra verde (trabalho) cresce — mas a vermelha
-   (calor rejeitado) desaparece? Para onde vai a diferença?
+2. Elevado o rendimento de 45% para 55%, a barra verde do trabalho cresce. A vermelha, do
+   calor rejeitado, desaparece? Para onde vai a diferença?
 3. Mesmo no melhor caso, mais de 40% sai como calor. Que sistemas de bordo aproveitam
    esse calor rejeitado?
 :::
@@ -244,5 +244,6 @@ plt.tight_layout(); plt.show()
 <!-- EXEMPLO A SIMULAR: aquecimento de tanque (gráfico interativo): sliders de
      potência, massa e ΔT desejado; curva T(t) e tempo de aquecimento. -->
 
-**Conexão com o próximo tópico:** calor flui entre dois lugares. Como ele passa através de um
-sólido (parede de cilindro, parede de trocador)? Resposta: condução térmica, regida pela Lei de Fourier.
+**Conexão com o próximo tópico:** estabelecido que o calor flui entre dois lugares, resta
+como ele atravessa um sólido, seja a parede de um cilindro ou a de um trocador. É a condução
+térmica, regida pela lei de Fourier.
