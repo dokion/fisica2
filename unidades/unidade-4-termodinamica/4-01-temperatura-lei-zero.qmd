@@ -16,49 +16,47 @@ OE 4.4 [B2] Justificar a necessidade de escalas termométricas
 
 {{< aula 31-32 >}}
 
-Antes de qualquer máquina térmica — motor diesel, caldeira ou trocador de calor — vem a
-pergunta fundamental: como a gente mede o quanto um corpo está quente? Temperatura é a
-grandeza central da termodinâmica de bordo, e entender seu significado físico é
-entender por que um termômetro funciona, por que os instrumentos de máquinas precisam
-de calibração e por que dois corpos em contato sempre trocam calor até ficarem em
-equilíbrio.
+Antes de qualquer máquina térmica, seja motor diesel, caldeira ou trocador de calor, vem a
+questão de como se mede o quanto um corpo está quente. A temperatura é a grandeza central
+da termodinâmica de bordo, e do significado físico dela dependem o funcionamento de um
+termômetro, a necessidade de calibrar os instrumentos de máquinas e a troca de calor entre
+dois corpos em contato até o equilíbrio.
 
 ## O conceito de temperatura e equilíbrio térmico {{< ra OE4.1 B2 >}}
 
-Dois corpos "próximos" trocam calor. Depois de tempo suficiente, param de trocar calor.
-Nesse momento, a gente diz que os corpos atingiram **equilíbrio térmico** — e a
-propriedade que mede essa condição é a **temperatura**. Formalmente:
+Dois corpos em contato trocam calor e, depois de tempo suficiente, param de trocar. Nesse
+momento atingiram o **equilíbrio térmico**, e a propriedade que mede essa condição é a
+**temperatura**. Formalmente:
 
 **Temperatura** é a propriedade de um sistema que determina se ele está ou não em
 equilíbrio térmico com outro sistema. Quando dois corpos têm a mesma temperatura,
 nenhum calor flui entre eles.
 
-Não é "quanto calor tem dentro". É a propriedade que governa quando a troca de calor
-para. Em trocadores de bordo, é justamente por diferença de temperatura que água quente
-passa seu calor para óleo de refrigeração.
+A temperatura não mede quanto calor há dentro do corpo: é a propriedade que governa quando
+a troca de calor cessa. Nos trocadores de bordo é a diferença de temperatura que faz a água
+quente ceder calor ao óleo de refrigeração.
 
 ## Lei Zero da Termodinâmica {{< ra OE4.2 B1 >}} {{< ra OE4.3 B2 >}}
 
-Se o corpo A está em equilíbrio térmico com B, e B está em equilíbrio com C, então A
-está em equilíbrio com C. Parece óbvio, mas é profundo — é o fundamento lógico de toda
-medição de temperatura:
+Se o corpo A está em equilíbrio térmico com B, e B com C, então A está em equilíbrio com C.
+O enunciado é o fundamento lógico de toda medição de temperatura:
 
 **Lei Zero da Termodinâmica:** Se dois sistemas estão em equilíbrio térmico com um
 terceiro, então estão em equilíbrio térmico um com o outro.
 
-Essa lei justifica por que um termômetro funciona: o termômetro (corpo B) toca o sistema
-quente (corpo A), ambos entram em equilíbrio, e depois comparamos o termômetro com uma
-escala calibrada (corpo C). A lei nos garante que se o termômetro tem a mesma
-temperatura que uma marca na escala, então o sistema original A tem essa temperatura.
+Daí o funcionamento do termômetro: o termômetro, corpo B, toca o sistema quente, corpo A,
+ambos entram em equilíbrio, e o termômetro é em seguida comparado com uma escala calibrada,
+o corpo C. A lei garante que, se o termômetro tem a mesma temperatura de uma marca da
+escala, o sistema A tem essa temperatura.
 
-Em praça de máquinas, é por isso que a calibração periódica dos termômetros é crítica —
-se o termômetro não entra em equilíbrio real com o óleo ou a água, a leitura mente, e o
-operador não sabe a temperatura verdadeira do sistema.
+Daí também a criticidade da calibração periódica dos termômetros na praça de máquinas: se o
+instrumento não entra em equilíbrio real com o óleo ou a água, a leitura é falsa e o
+operador desconhece a temperatura verdadeira do sistema.
 
 ## Escalas termométricas {{< ra OE4.4 B2 >}}
 
-A temperatura é uma propriedade, mas como medimos números? Precisamos de uma **escala
-termométrica** — uma convenção de como associar números a estados térmicos.
+A temperatura é uma propriedade, e atribuir-lhe números exige uma **escala termométrica**,
+convenção que associa números a estados térmicos.
 
 As escalas mais usadas em máquinas marítimas são:
 
@@ -85,13 +83,14 @@ pela lei zero, entrou em equilíbrio com o fluido e indica a temperatura dele.
 **(b) Desenvolvimento.**
 $$\Delta T = T_q - T_f = 75 - 45 = 30\ \text{K}$$
 
-**(c) Resultado.** Há $\Delta T = 30\ \text{K}$ favorável — o calor flui espontaneamente
-da água a 75 °C para o refrigerante a 45 °C; a troca funciona.
+**(c) Resultado.** Há $\Delta T = 30\ \text{K}$ favorável: o calor flui espontaneamente da
+água a 75 °C para o refrigerante a 45 °C, e a troca funciona.
 
 **(d) Análise crítica.** Um $\Delta T$ positivo é condição *necessária*, não suficiente:
-a potência trocada depende também da área e dos coeficientes de película (tópico 4.5).
-Se as duas temperaturas se aproximassem ($\Delta T \to 0$), a troca cessaria — por isso
-o projeto de trocadores guarda uma diferença mínima ("pinch"). A leitura só é confiável
+a potência trocada depende também da área e dos coeficientes de película, tratados no
+estudo da condução de calor. Se as duas temperaturas se aproximassem ($\Delta T \to 0$), a
+troca cessaria, e por isso o projeto de trocadores guarda uma diferença mínima, o
+*pinch*. A leitura só é confiável
 se cada sensor de fato equilibrou com o fluido (lei zero).
 :::
 
@@ -103,17 +102,17 @@ se cada sensor de fato equilibrou com o fluido (lei zero).
   litros de água a 50 °C.
 - **Esquecer de converter para Kelvin em cálculos:** razões de pressão, volume ou
   energia envolvem **sempre** Kelvin, não Celsius.
-- **Pensar que "zero Celsius = nada":** zero Celsius é uma convenção de escala (ponto de
-  fusão da água). Zero Kelvin (−273,15 °C) é o verdadeiro vazio térmico — energia
+- **Tomar zero Celsius por ausência de temperatura:** zero Celsius é convenção de escala,
+  o ponto de fusão da água. Zero Kelvin (−273,15 °C) é o limite térmico real, de energia
   cinética mínima possível.
 :::
 
-## Veja a lei zero em ação
+## Equilíbrio térmico entre dois corpos e a leitura do termômetro
 
 Dois corpos a temperaturas diferentes, postos em contato, trocam calor até atingirem uma
-**temperatura comum** — o equilíbrio térmico. Um termômetro mergulhado em qualquer um
-deles equilibra-se com ele e passa a indicar a mesma temperatura: é a lei zero que torna
-a medição possível. Ajuste as temperaturas e as capacidades térmicas e veja o equilíbrio.
+**temperatura comum**, o equilíbrio térmico. Um termômetro mergulhado em qualquer um deles
+equilibra-se com ele e passa a indicar a mesma temperatura: é a lei zero que torna a medição
+possível. As temperaturas e as capacidades térmicas são ajustáveis.
 
 ```{python}
 #| fig-cap: "Dois corpos (A quente, B frio) trocando calor até o equilíbrio. A temperatura final é a média ponderada pelas capacidades térmicas: T_eq = (C_A T_A + C_B T_B)/(C_A+C_B). Mesmos parâmetros da versão interativa (T_A = 80 °C, T_B = 20 °C, C_A = C_B)."
@@ -207,8 +206,8 @@ plt.tight_layout(); plt.show()
 ```
 
 ::: {.pergunta}
-1. Com $C_A = C_B$, a temperatura de equilíbrio fica exatamente no meio? Aumente
-   $C_A/C_B$ para 4: o equilíbrio se aproxima de qual corpo? Por quê?
+1. Com $C_A = C_B$, a temperatura de equilíbrio fica no meio? Elevado $C_A/C_B$ a 4, de
+   qual corpo o equilíbrio se aproxima? Por quê?
 2. O termômetro sempre lê a temperatura do corpo em que está mergulhado. Por que essa
    propriedade (lei zero) é o que permite *medir* temperatura?
 3. Converta a temperatura de equilíbrio para kelvin no painel. Por que intervalos em °C
@@ -224,16 +223,15 @@ plt.tight_layout(); plt.show()
   lei zero: ele entra em equilíbrio térmico com o meio e mede a *própria*
   temperatura, que então é a do meio.
 - **Calibração em banho** — padrão e instrumento mergulhados no mesmo banho: se ambos
-  equilibram com o banho, equilibram entre si — a lei zero é o fundamento lógico da
+  equilibram com o banho, equilibram entre si, e a lei zero é o fundamento lógico da
   calibração.
-- **Metal "mais frio" que madeira** — clássico: no mesmo porão, corrimão de aço e
-  caixa de madeira estão à mesma T; a mão sente fluxos de calor diferentes, não
+- **Metal que parece mais frio que madeira** — no mesmo porão, o corrimão de aço e a caixa
+  de madeira estão à mesma temperatura; a mão sente fluxos de calor diferentes, e não
   temperaturas diferentes.
 
 <!-- EXEMPLO A SIMULAR: dois corpos + termômetro trocando calor até o equilíbrio
      (p5.js): barras de temperatura convergindo, com capacidades térmicas
      ajustáveis. -->
 
-**Conexão com o próximo tópico:** sabendo medir temperatura, perguntamos: o que acontece
-com tamanhos e volumes quando um corpo é aquecido? Resposta: dilatação térmica (tópico
-4.2).
+**Conexão com o próximo tópico:** estabelecida a medição da temperatura, resta o que
+ocorre com tamanhos e volumes quando um corpo é aquecido, objeto da dilatação térmica.

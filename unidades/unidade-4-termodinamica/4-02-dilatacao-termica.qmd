@@ -18,14 +18,14 @@ OE 4.8 [B2] Explicar os efeitos da dilatação térmica em estruturas e materiai
 
 Quando a temperatura sobe, as moléculas vibram mais. Em sólidos e líquidos, essa vibração
 maior força um afastamento médio entre átomos, causando aumento de tamanho. Essa é a
-**dilatação térmica** — fenômeno crítico em máquinas navais, onde tubulações de vapor,
+**dilatação térmica**, fenômeno crítico em máquinas navais, onde tubulações de vapor,
 cilindros e estruturas de aço sofrem variações de temperatura de 20 °C (praça fria) até
 200 °C (vapores de motor). Sem levar em conta a dilatação, tubos racham, juntas vazam,
 rotores emperram.
 
 ## Três tipos de dilatação {{< ra OE4.5 B1 >}} {{< ra OE4.6 B2 >}}
 
-Conforme o que muda — comprimento, área ou volume — temos três casos:
+Conforme mude o comprimento, a área ou o volume, há três casos:
 
 **Dilatação linear:** uma barra ou tubo cresce em comprimento.
 
@@ -59,11 +59,11 @@ Para materiais comuns em máquinas marítimas:
 Exemplo: uma tubulação de aço de 10 m de comprimento passa de 20 °C (saída da praça) a
 180 °C (vapor superaquecido). A dilatação linear é:
 
-$$\Delta L = L_0 \cdot \alpha \cdot \Delta T = 10 \times 12 \times 10^{-6} \times 160 = 1{,}92\ \text{m}$$
+$$\Delta L = L_0 \cdot \alpha \cdot \Delta T = 10 \times 12 \times 10^{-6} \times 160
+= 1{,}92 \times 10^{-2}\ \text{m} = 1{,}92\ \text{cm}$$
 
-Isso não cabe — a tubulação precisa de uma **junta de expansão** para absorver esses 1,92 cm
-(arredondado), senão o tubo sofre compressão, empetra em seus apoios ou sai da linha de
-eixo.
+Quase dois centímetros: a tubulação precisa de uma **junta de expansão** para absorvê-los,
+sob pena de o tubo sofrer compressão, emperrar nos apoios ou sair da linha de eixo.
 
 ## Efeitos em estruturas {{< ra OE4.8 B2 >}}
 
@@ -76,7 +76,8 @@ onde $E$ é o módulo de Young (Pa). Para aço, $E \approx 200\ \text{GPa}$. Com
 
 $$\sigma \approx 200 \times 10^9 \times 12 \times 10^{-6} \times 160 \approx 380\ \text{MPa}$$
 
-Limite de escoamento do aço é ~250 MPa — a tubulação cede, deforma permanentemente.
+O limite de escoamento do aço é de cerca de 250 MPa, de modo que a tubulação cede e se
+deforma permanentemente.
 
 Por isso, sistemas de vapor de bordo têm juntas de expansão, ancoragens bem espaçadas e
 folgas calculadas de fábrica.
@@ -98,12 +99,12 @@ O raio cresce metade disso, $\approx 0{,}31\ \text{mm}$.
 **(c) Resultado.** O diâmetro do cilindro aumenta $\approx 0{,}62\ \text{mm}$ (folga
 radial $+0{,}31\ \text{mm}$) ao passar de 20 °C para 280 °C.
 
-**(d) Análise crítica.** O ponto-chave é que **o pistão também dilata** — e, sendo
-também de metal, na mesma ordem de grandeza. O risco de travamento não vem da dilatação
+**(d) Análise crítica.** O essencial é que **o pistão também dilata**, e, sendo igualmente
+de metal, na mesma ordem de grandeza. O risco de travamento não vem da dilatação
 absoluta do cilindro, mas da *diferença* de dilatação entre pistão e camisa (materiais e
-temperaturas distintas): por isso a folga a frio (clearance) é dimensionada justamente
-para acomodar essa diferença a quente. Um pistão de alumínio ($\alpha$ ~2× o do aço)
-exige folga a frio maior.
+temperaturas distintas): por isso a folga a frio (*clearance*) é dimensionada justamente
+para acomodar essa diferença a quente. Um pistão de alumínio, cujo $\alpha$ é cerca do dobro
+do aço, exige folga a frio maior.
 :::
 
 ::: {.callout-warning}
@@ -113,17 +114,17 @@ exige folga a frio maior.
   que 160 K (porque Celsius é uma escala de diferenças), mas α está em 1/K, não em 1/°C.
   Sempre converter.
 - **Esquecer que linear, superficial e volumétrica são interdependentes:** não há três
-  coeficientes independentes. Se você conhece α, sabe β = 2α e γ = 3α.
-- **Ignorar confinamento:** dilatação "livre" (tubulação com junta) é segura; dilatação
+  coeficientes independentes; conhecido α, seguem β = 2α e γ = 3α.
+- **Ignorar o confinamento:** a dilatação livre, de tubulação com junta, é segura; a
   confinada gera tensão. Uma junta de expansão ondulada absorve o movimento.
 :::
 
-## Veja a dilatação e a tensão que ela gera
+## Dilatação livre e tensão numa barra impedida
 
-Aquecida, a barra cresce $\Delta L = \alpha L\,\Delta T$. Se ela pode se expandir livre,
-nada acontece além do alongamento; mas se estiver **impedida** (engastada entre apoios
-rígidos), a mesma dilatação vira tensão $\sigma = E\,\alpha\,\Delta T$, que pode superar
-o limite de escoamento. Ajuste a temperatura e compare os dois casos.
+Aquecida, a barra cresce $\Delta L = \alpha L\,\Delta T$. Livre para se expandir, nada
+sofre além do alongamento; **impedida**, engastada entre apoios rígidos, a mesma dilatação
+vira tensão $\sigma = E\,\alpha\,\Delta T$, capaz de superar o limite de escoamento. A
+temperatura é ajustável, e os dois casos aparecem lado a lado.
 
 ```{python}
 #| fig-cap: "Barra de aço (α = 12×10⁻⁶/K, E = 200 GPa, L = 2 m) aquecida. Livre: alonga ΔL = αLΔT. Impedida: gera tensão σ = EαΔT, que atinge o limite de escoamento (~250 MPa) por volta de ΔT ≈ 100 K. Mesmos parâmetros da versão interativa."
@@ -216,8 +217,8 @@ plt.tight_layout(); plt.show()
    (250 MPa)? Confirme por $\sigma = E\alpha\,\Delta T$.
 2. A tensão depende do comprimento $L$ da barra? E o alongamento livre $\Delta L$?
    Explique a diferença.
-3. Ligue com as juntas de expansão em linhas de vapor: por que elas evitam exatamente a
-   situação da barra "impedida"?
+3. Relacione com as juntas de expansão das linhas de vapor: por que elas evitam justamente
+   a situação da barra impedida?
 :::
 
 ## Onde o fenômeno vive
@@ -237,6 +238,6 @@ plt.tight_layout(); plt.show()
      slider de temperatura; deslocamento livre × tensão crescente no tubo
      engastado. -->
 
-**Conexão com o próximo tópico:** a dilatação é efeito da vibração térmica das moléculas.
-Essa vibração é energia — trazendo o conceito de **calor** como forma de transferência dessa
+**Conexão com o próximo tópico:** a dilatação é efeito da vibração térmica das moléculas, e
+essa vibração é energia. Daí o conceito de **calor** como forma de transferência dessa
 energia.
