@@ -57,11 +57,209 @@ Equivalentemente:
 
 $$\alpha = \arcsin\left(\frac{1}{M}\right)$$
 
-**Interpretação:** o som emitido no instante $t_0$ da posição do objeto percorre distância $v_{\text{som}} \times \Delta t$ no tempo $\Delta t$. O objeto percorre $v_{\text{obj}} \times \Delta t = M v_{\text{som}} \times \Delta t$. A razão entre essas distâncias determina a geometria do cone:
+**Interpretação.** No instante $t_0$ o objeto está em A e emite som. Decorrido $\Delta t$,
+esse som ocupa uma esfera de raio $v_{\text{som}}\,\Delta t$ centrada em A, enquanto o objeto
+avançou até B, a $v_{\text{obj}}\,\Delta t = M\,v_{\text{som}}\,\Delta t$ de A. O cone de Mach
+é a superfície tangente a todas essas esferas, com vértice em B.
 
-$$\tan(\alpha) = \frac{v_{\text{som}} \times \Delta t}{v_{\text{obj}} \times \Delta t} = \frac{1}{M}$$
+Seja P o ponto em que o cone toca a esfera. O raio AP é perpendicular à tangente BP, e o
+triângulo $A\,P\,B$ é portanto retângulo **em P**. Com o ângulo $\alpha$ no vértice B, o raio
+da esfera é o cateto oposto e o percurso do objeto é a hipotenusa:
 
-(em realidade é seno, não tangente, porque o cone é 3D).
+$$\sin\alpha = \frac{\text{cateto oposto}}{\text{hipotenusa}}
+= \frac{v_{\text{som}}\,\Delta t}{v_{\text{obj}}\,\Delta t} = \frac{1}{M}$$
+
+O ângulo reto está no ponto de tangência, e não no de emissão: daí seno, e não tangente. A
+razão entre os dois percursos seria uma tangente apenas se o raio da esfera saísse
+perpendicular à trajetória, o que não ocorre.
+
+## Construção geométrica do ângulo do cone
+
+A esfera azul é o som emitido em A; B é a posição atual do objeto. O cone vermelho parte de
+B e tangencia a esfera em P, onde o quadrado marca o ângulo reto entre o raio AP e a
+tangente BP. Variando o número de Mach, B se afasta de A, a hipotenusa cresce, o cateto
+oposto permanece o mesmo e $\alpha$ fecha. O painel traz os dois lados e o quociente entre
+eles a cada instante.
+
+```{python}
+#| fig-cap: "Construção do ângulo do cone de Mach para M = 2. A esfera de raio v_som·Δt foi emitida em A; o objeto está em B, a v_obj·Δt = 2 v_som·Δt de A. A tangente de B toca a esfera em P, e o raio AP é perpendicular a ela: o triângulo APB é retângulo em P. Logo sen α = AP/AB = 1/M = 0,5, isto é, α = 30°. Mesmos parâmetros da versão interativa."
+#| echo: false
+# Versão estática (paridade PDF) — mesma construção da versão interativa (p5.js)
+import numpy as np
+import matplotlib.pyplot as plt
+
+M = 2.0
+R = 1.0                     # raio da esfera de som = v_som·Δt
+d = M*R                     # percurso do objeto  = v_obj·Δt
+al = np.arcsin(1/M)
+A, B = np.array([0.0, 0.0]), np.array([d, 0.0])
+P = np.array([R*np.sin(al), R*np.cos(al)])
+
+fig, ax = plt.subplots(figsize=(9, 4.0))
+ax.add_patch(plt.Circle(A, R, fill=False, color='#1F47C8', lw=1.6))
+ax.plot([A[0]-0.4, B[0]+0.9], [0, 0], ls=(0, (4, 4)), color='#b9b2a4', lw=1)
+
+# cone: reta por B tangente à esfera, e a imagem espelhada
+L = 2.6
+for s in (1, -1):
+    Q = B + L*np.array([-np.cos(al), s*np.sin(al)])
+    ax.plot([B[0], Q[0]], [B[1], Q[1]], color='#C81F1F', lw=2.4,
+            alpha=1.0 if s > 0 else 0.35)
+
+ax.plot([A[0], B[0]], [0, 0], color='#8a8073', lw=2.6)          # hipotenusa
+ax.plot([A[0], P[0]], [A[1], P[1]], color='#1F47C8', lw=2.6)    # cateto oposto
+
+# marca de ângulo reto em P, nas direções P→A e P→B
+u = (A - P)/np.linalg.norm(A - P)
+v = (B - P)/np.linalg.norm(B - P)
+q = 0.13
+ax.plot([P[0]+q*u[0], P[0]+q*(u[0]+v[0]), P[0]+q*v[0]],
+        [P[1]+q*u[1], P[1]+q*(u[1]+v[1]), P[1]+q*v[1]],
+        color='#3a342c', lw=1.2)
+
+# arco de alpha no vértice B
+th = np.linspace(np.pi - al, np.pi, 60)
+ax.plot(B[0] + 0.55*np.cos(th), B[1] + 0.55*np.sin(th), color='#c85c2e', lw=1.6)
+ax.annotate(f'α = {np.degrees(al):.0f}°', xy=(B[0]-0.78, 0.17), color='#c85c2e', fontsize=11)
+
+for pt, lb, dx, dy in ((A, 'A  (emissão em $t_0$)', -0.05, -0.22),
+                       (B, 'B  (objeto agora)', -0.10, -0.22),
+                       (P, 'P  (tangência)', 0.08, 0.06)):
+    ax.plot(*pt, 'o', ms=7, color='#3a342c')
+    ax.annotate(lb, xy=(pt[0]+dx, pt[1]+dy), fontsize=10, color='#3a342c')
+
+ax.annotate('cateto oposto\n$v_{som}\\,\\Delta t$', xy=(0.10, 0.58),
+            fontsize=10, color='#1F47C8')
+ax.annotate('hipotenusa   $v_{obj}\\,\\Delta t = M\\,v_{som}\\,\\Delta t$', xy=(0.42, -0.30),
+            fontsize=10, color='#6b6357')
+ax.set_xlim(-0.6, d+1.0); ax.set_ylim(-1.35, 1.55)
+ax.set_aspect('equal'); ax.axis('off')
+plt.tight_layout(); plt.show()
+```
+
+```{=html}
+<!-- Versão interativa — p5.js (tabela Q4: MOVIMENTO — o ponto de tangência e o ângulo se
+     deslocam com M, e é esse deslocamento que mostra por que a razão é um seno). p5 de
+     libs/ (offline, Q6). Mesma construção e mesmos parâmetros da matplotlib: raio da
+     esfera fixo, hipotenusa M vezes maior, M ajustável de 1 a 5 com padrão 2,0. -->
+<script src="../../libs/p5.min.js"></script>
+<style>
+  .cg-wrap{max-width:1000px;margin:1rem auto;}
+  .cg-wrap .cg-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:8px;}
+  .cg-wrap .sld{display:flex;flex-direction:column;gap:2px;min-width:180px;flex:1 1 180px;}
+  .cg-wrap .sld label{font-weight:600;font-size:12.5px;}
+  .cg-wrap .sld .val{color:#c85c2e;font-weight:700;}
+  .cg-wrap input[type=range]{width:100%;max-width:260px;accent-color:#c85c2e;}
+  .cg-wrap .chk{font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:5px;}
+  .cg-wrap #cgSketch canvas{display:block;border-radius:8px;max-width:100%;}
+  .cg-wrap #cgEq{font-size:14px;margin:8px 2px 0;line-height:1.6;}
+  .cg-wrap #cgEq b{color:#66308c;}
+</style>
+<div class="cg-wrap sim">
+  <div class="cg-row">
+    <div class="sld"><label>Número de Mach M = <span class="val" id="cgMv">2.0</span></label>
+      <input type="range" id="cgM" min="1" max="5" value="2" step="0.1"></div>
+    <span class="chk"><input type="checkbox" id="cgF"> frentes emitidas antes</span>
+  </div>
+  <div id="cgSketch"></div>
+  <div id="cgEq"></div>
+</div>
+<script>
+(function(){
+  const el=id=>document.getElementById(id);
+  const cw=()=>{ const w=(el('cgSketch').clientWidth)||960; return Math.max(340,Math.min(1000,w)); };
+  const ch=()=>window.innerWidth<560?270:340;
+
+  new p5((p)=>{
+    p.setup=()=>{ p.createCanvas(cw(),ch()).parent('cgSketch'); };
+    p.windowResized=()=>{ p.resizeCanvas(cw(),ch()); };
+
+    p.draw=()=>{
+      const M=+el('cgM').value; el('cgMv').textContent=M.toFixed(1);
+      const W=p.width, H=p.height, cy=H*0.56;
+      // raio fixo na tela; a hipotenusa cresce com M e o desenho encolhe para caber
+      const R=Math.min(96, (W-150)/(M+1.35));
+      const d=M*R, xA=Math.max(52,(W-d)/2-R*0.30), xB=xA+d;
+      const al=Math.asin(1/M);
+      const Px=xA+R*Math.sin(al), Py=cy-R*Math.cos(al);
+
+      p.background('#faf8f4');
+
+      // eixo da trajetória
+      p.stroke('#d9d2c4'); p.strokeWeight(1); p.drawingContext.setLineDash([5,5]);
+      p.line(xA-40,cy,Math.min(xB+70,W-8),cy); p.drawingContext.setLineDash([]);
+
+      // frentes emitidas antes (opcional): mesma envoltória, vários centros
+      if(el('cgF').checked){
+        p.noFill(); p.stroke('#1f47c8'); p.strokeWeight(1);
+        for(let k=1;k<=4;k++){
+          const f=k/5, xc=xA+d*f, rc=R*(1-f);
+          if(rc>2){ p.drawingContext.globalAlpha=0.30; p.circle(xc,cy,2*rc); }
+        }
+        p.drawingContext.globalAlpha=1;
+      }
+
+      // esfera de som emitida em A
+      p.noFill(); p.stroke('#1f47c8'); p.strokeWeight(1.6); p.circle(xA,cy,2*R);
+
+      // cone: tangentes por B, a de cima em destaque
+      const L=Math.max(d*0.85,150);
+      p.stroke('#c81f1f'); p.strokeWeight(2.4);
+      p.line(xB,cy,xB-L*Math.cos(al),cy-L*Math.sin(al));
+      p.drawingContext.globalAlpha=0.35;
+      p.line(xB,cy,xB-L*Math.cos(al),cy+L*Math.sin(al));
+      p.drawingContext.globalAlpha=1;
+
+      // hipotenusa A→B e cateto oposto A→P
+      p.stroke('#8a8073'); p.strokeWeight(2.6); p.line(xA,cy,xB,cy);
+      p.stroke('#1f47c8'); p.strokeWeight(2.6); p.line(xA,cy,Px,Py);
+
+      // quadrado do ângulo reto em P
+      const na=(a,b)=>{const m=Math.hypot(a,b);return [a/m,b/m];};
+      const [ux,uy]=na(xA-Px,cy-Py), [vx,vy]=na(xB-Px,cy-Py), q=13;
+      p.stroke('#3a342c'); p.strokeWeight(1.3); p.noFill();
+      p.beginShape(); p.vertex(Px+q*ux,Py+q*uy);
+      p.vertex(Px+q*(ux+vx),Py+q*(uy+vy)); p.vertex(Px+q*vx,Py+q*vy); p.endShape();
+
+      // arco de alpha no vértice B
+      p.stroke('#c85c2e'); p.strokeWeight(1.8); p.noFill();
+      p.arc(xB,cy,110,110,Math.PI-al,Math.PI);
+
+      // pontos e rótulos
+      p.noStroke(); p.textSize(12);
+      const dot=(x,y,lb,ax,ay)=>{ p.fill('#3a342c'); p.circle(x,y,8);
+        p.textAlign(ax,ay); p.text(lb,x+(ax===p.LEFT?8:(ax===p.RIGHT?-8:0)),y+(ay===p.TOP?9:-9)); };
+      dot(xA,cy,'A · emissão em t₀',p.CENTER,p.TOP);
+      dot(xB,cy,'B · objeto agora',p.CENTER,p.TOP);
+      dot(Px,Py,'P · tangência',p.LEFT,p.BOTTOM);
+      p.fill('#c85c2e'); p.textAlign(p.RIGHT,p.CENTER);
+      p.text('α = '+(al*180/Math.PI).toFixed(1)+'°',xB-62,cy-16);
+      p.fill('#1f47c8'); p.textAlign(p.LEFT,p.BOTTOM);
+      p.text('cateto oposto = v_som·Δt',xA+6,cy-R-8);
+      p.fill('#6b6357'); p.textAlign(p.CENTER,p.TOP);
+      p.text('hipotenusa = v_obj·Δt = M·v_som·Δt',(xA+xB)/2,cy+26);
+
+      el('cgEq').innerHTML=
+        'cateto oposto / hipotenusa = '+R.toFixed(0)+' / '+d.toFixed(0)+' px'+
+        ' &nbsp;=&nbsp; <b>sen α = 1/M = '+(1/M).toFixed(3)+'</b>'+
+        ' &nbsp;|&nbsp; α = arcsen(1/'+M.toFixed(1)+') = '+(al*180/Math.PI).toFixed(1)+'°';
+    };
+  });
+})();
+</script>
+```
+
+::: {.pergunta}
+1. O quadrado em P marca o ângulo reto entre o raio AP e a tangente BP. Elevado M, qual dos
+   dois lados do triângulo cresce, e qual permanece igual? Justifique por que isso obriga
+   $\alpha$ a fechar.
+2. Tomar a razão entre os dois percursos como uma tangente equivaleria a pôr o ângulo reto
+   em A, e não em P. Confronte as duas leituras em $M = 2$: a construção dá $30°$, e a
+   tangente daria $\arctan(1/2) \approx 26{,}6°$. Que hipótese geométrica falsa produz a
+   segunda?
+3. Com as **frentes emitidas antes** exibidas, todas as esferas tangenciam a mesma reta. Por
+   que o mesmo $\alpha$ serve para todas, ainda que os raios e os centros sejam diferentes?
+:::
 
 **Exemplos:**
 - $M = 2$: $\alpha = \arcsin(1/2) = 30°$, cone estreito, de frente muito afiada.
