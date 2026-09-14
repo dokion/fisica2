@@ -14,13 +14,13 @@ OE 4.20 [B3] Determinar a conversão entre calorias e joules
 
 {{< aula 33-34 >}}
 
-Durante séculos, calor foi considerado uma substância — o "flogisto" ou "calórico" — diferente
-de trabalho mecânico. A revolução veio em 1840 quando James Joule, em uma série de
-experimentos simples mas decisivos, mostrou que trabalho mecânico produz exatamente a mesma
-quantidade de **aquecimento** que uma quantidade equivalente de calor. Essa descoberta abriu
-caminho para a Primeira Lei da Termodinâmica: calor e trabalho são **duas formas da mesma
-coisa — energia**. Em máquinas navais, é essa equivalência que transforma combustível (energia
-química) em trabalho (propulsão) e calor residual (perdas).
+Durante séculos o calor foi tido por uma substância, o calórico, distinta do trabalho
+mecânico. A mudança veio em 1840, quando James Joule, numa série de experimentos decisivos,
+mostrou que o trabalho mecânico produz a mesma quantidade de **aquecimento** que uma
+quantidade equivalente de calor. A descoberta abriu caminho para a Primeira Lei da
+Termodinâmica: calor e trabalho são **duas formas da mesma energia**. Em máquinas navais é
+essa equivalência que converte a energia química do combustível em trabalho de propulsão e
+em calor residual.
 
 ## O experimento de Joule {{< ra OE4.19 B2 >}}
 
@@ -31,8 +31,8 @@ descobriu uma constante universal:
 
 **1 caloria ≡ 4,186 joules**
 
-Não é coincidência: é uma conversão fundamental. Trabalhar contra o atrito, compressão,
-viscosidade — tudo vira calor microscópico no final. Joule provou experimentalmente que essa
+A constante é uma conversão fundamental: trabalho contra o atrito, na compressão ou contra
+a viscosidade termina todo em calor microscópico. Joule provou experimentalmente que a
 conversão é determinística e universal.
 
 ## Equivalência entre calor e trabalho {{< ra OE4.18 B3 >}}
@@ -41,15 +41,15 @@ Se trabalho $W$ produz aquecimento de uma massa $m$ de água em $\Delta T$:
 
 $$W = m \cdot c \cdot \Delta T$$
 
-A quantidade de "calor" produzido numericamente é a mesma. Não são grandezas diferentes
-— são duas formas de medir a mesma energia. Por isso:
+A quantidade de calor produzida é numericamente a mesma: são duas formas de medir a mesma
+energia, e não grandezas diferentes. Daí:
 
 **Unidades de energia:**
 - **Joule (J):** unidade SI para energia, calor e trabalho.
-- **Caloria (cal):** 1 cal = 4,186 J. Legado histórico, ainda aparece em tabelas (valor
-  calorífico de combustíveis, "capacidade calorífica de alimentos").
+- **Caloria (cal):** 1 cal = 4,186 J. Legado histórico, ainda presente em tabelas de valor
+  calorífico de combustíveis e de conteúdo energético de alimentos.
 - **Kilocaloria (kcal):** 1 kcal = 1000 cal = 4186 J. Aparece em eficiência de caldeiras.
-- **BTU (British Thermal Unit):** 1 BTU ≈ 1055 J. Raro em navios modernos, mas em
+- **BTU (*British Thermal Unit*):** 1 BTU ≈ 1055 J. Raro em navios modernos, frequente em
   documentação antiga.
 
 Em máquinas navais, o balanço de energia é expresso como:
@@ -80,8 +80,8 @@ Calor rejeitado:
 
 $$Q_2 = 4000 - 1800 = 2200\ \text{MJ}$$
 
-Toda essa energia (W e Q₂) sai do motor em diferentes formas — trabalho mecânico nos eixos,
-calor na água de refrigeração, radiação do cilindro, etc. — mas conserva-se.
+Toda essa energia, $W$ e $Q_2$, sai do motor sob formas diversas: trabalho mecânico nos
+eixos, calor na água de refrigeração, radiação do cilindro. O total, porém, conserva-se.
 
 ::: {.sp}
 Uma caldeira de bordo aquece 2 toneladas de água de 20 °C a 100 °C (pressão 1 atm).
@@ -104,9 +104,9 @@ ideal (100%).
 
 <!-- [VERIFICAR: L_v = 2257 kJ/kg a 1 atm foi adotado (o enunciado não o fornece).] -->
 
-**(d) Análise crítica.** Chama a atenção que **vaporizar apenas 300 kg custa quase tanto
-quanto aquecer 2000 kg em 80 K** — o calor latente é enorme. Toda essa energia é medida
-em joules, sem "unidade de calor" própria: é o equivalente mecânico de Joule em serviço.
+**(d) Análise crítica.** **Vaporizar apenas 300 kg custa quase tanto quanto aquecer 2000 kg
+em 80 K**, tal é a magnitude do calor latente. Toda essa energia se mede em joules, sem
+unidade de calor própria: é o equivalente mecânico de Joule em serviço.
 No mundo real, o rendimento da caldeira (~85–90%) eleva o consumo para $\approx 36$–38 kg;
 e a vaporização a pressão maior que 1 atm muda ligeiramente $L_v$.
 :::
@@ -114,23 +114,23 @@ e a vaporização a pressão maior que 1 atm muda ligeiramente $L_v$.
 ::: {.callout-warning}
 ## Erros clássicos
 
-- **Misturar unidades:** não use calorias em cálculos de eficiência com J. Sempre converta
-  para SI (joules) ou sempre para calorias, nunca misture.
-- **Pensar que Joule "criou calor do nada":** não. Seu experimento prova que trabalho
-  mecânico se converte em calor com eficiência 100%. Energia entra (queda de peso),
-  energia sai (aquecimento). Conserva.
-- **Confundir "equivalente mecânico" (4,186 J/cal — um número de conversão) com
-  "eficiência" (porcentagem de conversão em um motor real):** Joule descobriu que 1 cal
-  SEMPRE = 4,186 J. Um motor diesel converte apenas 45% do calor em trabalho; o resto vira
-  Q₂. Não é o número de Joule que muda; é a fração do total que segue cada caminho.
+- **Misturar unidades:** calorias e joules não se somam no mesmo cálculo de eficiência.
+  Converter tudo para o SI, ou tudo para calorias.
+- **Supor que Joule criou calor do nada:** o experimento prova que o trabalho mecânico se
+  converte em calor com eficiência de 100%. A energia entra pela queda do peso e sai como
+  aquecimento; o total se conserva.
+- **Confundir o equivalente mecânico, número de conversão de 4,186 J/cal, com a eficiência,
+  fração convertida num motor real:** Joule estabeleceu que 1 cal equivale sempre a
+  4,186 J. Um motor diesel converte apenas 45% do calor em trabalho, e o resto vira $Q_2$.
+  Não muda o número de Joule, e sim a fração do total que segue cada caminho.
 :::
 
-## Veja o experimento de Joule
+## O experimento de Joule: trabalho de um peso em queda virando calor
 
-Um peso que cai gira pás dentro da água; o trabalho mecânico $W = mgh$ vira energia
-interna e aquece a água, $\Delta T = W/(m_{\text{água}}\,c)$. Foi assim que Joule mediu o
-**equivalente mecânico da caloria** — provando que calor e trabalho são a mesma moeda,
-medida em joules. Solte o peso e veja o termômetro subir.
+Um peso em queda gira pás dentro da água, e o trabalho mecânico $W = mgh$ vira energia
+interna e aquece o líquido, $\Delta T = W/(m_{\text{água}}\,c)$. Foi assim que Joule mediu o
+**equivalente mecânico da caloria** e mostrou que calor e trabalho se medem na mesma unidade,
+o joule. Solto o peso, o termômetro sobe.
 
 ```{python}
 #| fig-cap: "Experimento de Joule: um peso de 25 kg caindo 2 m (repetido) agita 1 kg de água. Cada joule de trabalho (W = mgh) vira energia interna; a temperatura sobe ΔT = W/(mc). Mesmos parâmetros da versão interativa."
@@ -226,9 +226,10 @@ plt.tight_layout(); plt.show()
 ::: {.pergunta}
 1. Cada queda aquece a água por uma fração de milikelvin. Por que Joule precisou repetir
    o experimento centenas de vezes para medir o efeito?
-2. Dobre o peso: o aquecimento por queda dobra? Confirme por $W = mgh$ e $\Delta T = W/(mc)$.
-3. O trabalho mecânico "sumiu" em calor. Isso viola a conservação de energia, ou é
-   exatamente ela? Ligue com o equivalente mecânico 1 cal = 4,186 J.
+2. Dobrado o peso, o aquecimento por queda dobra? Confirme por $W = mgh$ e
+   $\Delta T = W/(mc)$.
+3. O trabalho mecânico desapareceu como calor. Isso viola a conservação de energia, ou é
+   justamente ela? Relacione com o equivalente mecânico 1 cal = 4,186 J.
 :::
 
 ## Onde o fenômeno vive
@@ -239,14 +240,14 @@ plt.tight_layout(); plt.show()
 - **Mancal desalinhado esquentando** — o torque de atrito vezes a rotação é potência
   mecânica virando energia interna a 1 J = 1 J; o termômetro do mancal é o Joule da
   praça de máquinas.
-- **Freio do guindaste** — descer carga com o freio converte energia potencial em
-  calor no tambor — quantificável em kJ por descida.
-- **Experimento de Joule** — o clássico: pás agitando água, peso caindo; a
-  equivalência 4,186 J/cal medida com balde e termômetro.
+- **Freio do guindaste** — descer carga com o freio converte energia potencial em calor no
+  tambor, quantificável em kJ por descida.
+- **Experimento de Joule** — pás agitando água e peso caindo: a equivalência 4,186 J/cal
+  medida com balde e termômetro.
 
 <!-- EXEMPLO A SIMULAR: mancal com atrito (p5.js): sliders de torque de atrito e
      RPM; potência dissipada e taxa de subida da temperatura da carcaça. -->
 
-**Conexão com o próximo tópico:** a equivalência calor-trabalho é tão profunda que motiva a
-Primeira Lei da Termodinâmica — a conservação de energia em forma diferencial para processos
+**Conexão com o próximo tópico:** da equivalência entre calor e trabalho decorre a Primeira
+Lei da Termodinâmica, a conservação de energia em forma diferencial para processos
 termodinâmicos.
