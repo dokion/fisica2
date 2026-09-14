@@ -252,8 +252,8 @@ plt.tight_layout(); plt.show()
    registro do hidrofone ($T$)? Explique com $v = \lambda f$.
 2. Elevado $f$ com $v$ mantido, os dois retratos mudam. Qual grandeza é imposta pela fonte
    e qual pelo meio?
-3. Quanto tempo o ponto roxo, a crista, leva para cruzar a tela de 4 m? Cronometre e
-   compare com $4/v$. É esse o tempo que o ecobatímetro explora ao calcular
+3. Quanto tempo o ponto roxo, a crista, leva para cruzar a tela de 4 m? Confronte o valor
+   medido com $4/v$. É esse o tempo que o ecobatímetro explora ao calcular
    $d = v\,t/2$.
 :::
 
