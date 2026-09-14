@@ -14,25 +14,25 @@ OE 1.13 [B2] Classificar oscilações amortecidas (sub/crítico/super)
 
 {{< aula 7-8 >}}
 
-Todo oscilador real em um navio dissipa energia — pela resistência do ar, atrito nos
-mancais, conversão em calor na estrutura. Sem reposição de energia, a amplitude decresce
-e o oscilador eventualmente para. Este tópico mostra como descrever essa perda e como
-ela muda a assinatura do movimento.
+Todo oscilador real a bordo dissipa energia, pela resistência do ar, pelo atrito nos
+mancais e pela conversão em calor na estrutura. Sem reposição, a amplitude decresce e o
+oscilador acaba parando. O tópico trata de descrever essa perda e a alteração que ela
+impõe à assinatura do movimento.
 
 ## Mecanismos de amortecimento {{< ra OE1.11 B2 >}}
 
-A dissipação de energia ocorre por pelo menos três caminhos:
+A dissipação ocorre por pelo menos três caminhos:
 
-- **Atrito viscoso:** força proporcional à velocidade, $F_{\text{damp}} = -b\dot{x}$ (comum em
-  fluidos e materiais viscoelásticos — suspensões do motor, amortecedores do casco).
-- **Atrito seco (Coulomb):** força constante independente da velocidade — menos comum em
-  oscilações senoidas (e fora do escopo deste tópico).
-- **Radiação:** a estrutura que oscila emite energia sonora (vibração de hélice irradiando
-  som na água) — importante em problemas de ruído de bordo.
+- **Atrito viscoso:** força proporcional à velocidade, $F_{\text{damp}} = -b\dot{x}$, como
+  nas suspensões do motor e nos amortecedores do casco.
+- **Atrito seco (Coulomb):** força constante, independente da velocidade; rara em oscilações
+  senoidais e fora do escopo deste tópico.
+- **Radiação:** a estrutura emite energia sonora, caso do hélice que irradia som na água, o
+  que importa ao ruído de bordo.
 
-O **amortecimento viscoso** é a escolha padrão para MHS porque mantém a equação de movimento
-linear. Uma placa vibratória submersa em óleo perde força proporcional à sua velocidade; um
-casco amortecido por materiais viscoelásticos segue o mesmo padrão.
+O **amortecimento viscoso** é a escolha padrão para o MHS por manter linear a equação de
+movimento. Uma placa vibratória submersa em óleo perde força proporcionalmente à
+velocidade, e um casco com materiais viscoelásticos segue o mesmo padrão.
 
 ## Equação do movimento para oscilador amortecido {{< ra OE1.12 B3 >}}
 
@@ -40,16 +40,17 @@ Com força restauradora $F = -kx$ e força dissipativa $F = -b\dot{x}$, a segund
 
 $$m\ddot{x} + b\dot{x} + kx = 0$$
 
-Dividindo por $m$ e definindo $2\gamma \equiv b/m$ (taxa de amortecimento) e $\omega_0 \equiv \sqrt{k/m}$
-(frequência natural não-amortecida):
+Dividindo por $m$ e definindo a **taxa de amortecimento** $2\gamma \equiv b/m$ e a
+**frequência natural não amortecida** $\omega_0 \equiv \sqrt{k/m}$:
 
 $$\ddot{x} + 2\gamma\dot{x} + \omega_0^2 x = 0$$
 
-A solução depende da razão $\gamma/\omega_0$, que determina se o sistema é sub-, crítico ou sobre-amortecido.
+A razão $\gamma/\omega_0$ decide se o sistema é sub-, crítico ou sobre-amortecido.
 
 ## Classificação: sub, crítico e sobre-amortecimento {{< ra OE1.13 B2 >}}
 
-Procuramos soluções da forma $x(t) = e^{rt}$. Substituindo, chegamos à equação característica:
+Buscam-se soluções da forma $x(t) = e^{rt}$. A substituição conduz à **equação
+característica**:
 
 $$r^2 + 2\gamma r + \omega_0^2 = 0 \quad \Rightarrow \quad r = -\gamma \pm \sqrt{\gamma^2 - \omega_0^2}$$
 
@@ -57,25 +58,26 @@ Três casos:
 
 **1. Sub-amortecimento** ($\gamma < \omega_0$): Há oscilação com amplitude decrescente.
 $$x(t) = Ae^{-\gamma t}\cos(\omega_d t + \varphi)$$
-onde $\omega_d = \sqrt{\omega_0^2 - \gamma^2}$ é a frequência amortecida (menor que $\omega_0$).
-Físico: o casco bate para frente e para trás, perdendo força a cada ciclo — caso típico de navios.
+onde $\omega_d = \sqrt{\omega_0^2 - \gamma^2}$ é a **frequência amortecida**, menor que
+$\omega_0$. Fisicamente: o casco vai e volta perdendo amplitude a cada ciclo, caso típico
+dos navios.
 
-**2. Amortecimento crítico** ($\gamma = \omega_0$): Ausência de oscilação; retorno mais rápido possível
-ao equilíbrio sem overshoot.
+**2. Amortecimento crítico** ($\gamma = \omega_0$): ausência de oscilação, com o retorno
+mais rápido possível ao equilíbrio sem ultrapassá-lo.
 $$x(t) = (A + Bt)e^{-\gamma t}$$
-Físico: suspensão de automóvel bem ajustada (ou amortecedor ideal de navio).
+Fisicamente: suspensão de automóvel bem ajustada, ou amortecedor ideal de navio.
 
-**3. Sobre-amortecimento** ($\gamma > \omega_0$): Também sem oscilação, mas retorno mais lento.
+**3. Sobre-amortecimento** ($\gamma > \omega_0$): também sem oscilação, mas com retorno mais lento.
 $$x(t) = A_1 e^{r_1 t} + A_2 e^{r_2 t}, \quad r_1, r_2 = -\gamma \pm \sqrt{\gamma^2 - \omega_0^2} < 0$$
-Físico: casco em fluido muito viscoso (não realista para água salgada, mas aparece em alguns
-sistemas de absorção de choque).
+Fisicamente: casco em fluido muito viscoso, situação irreal para água salgada, mas presente
+em alguns sistemas de absorção de choque.
 
-## Veja os três regimes
+## Sub-amortecimento, amortecimento crítico e sobre-amortecimento
 
-À esquerda, uma massa presa a uma mola oscila imersa em um fluido; o slider
-$\gamma/\omega_0$ controla a viscosidade. À direita, o gráfico $x(t)$ correspondente,
-com a envoltória $\pm A\,e^{-\gamma t}$ quando há oscilação. Atravesse os três regimes
-com o slider e observe o que muda no movimento e na curva.
+À esquerda, uma massa presa a uma mola oscila imersa num fluido, e o controle de
+$\gamma/\omega_0$ fixa a viscosidade. À direita, o gráfico $x(t)$ correspondente, com a
+envoltória $\pm A\,e^{-\gamma t}$ quando há oscilação. O mesmo controle percorre os três
+regimes, e com eles a mudança no movimento e na curva.
 
 ```{python}
 #| fig-cap: "Oscilador amortecido solto de x₀ = A com v₀ = 0, para três razões γ/ω₀ (T₀ = 4 s): sub-amortecido (0,15) com a envoltória ±A e^(−γt), crítico (1) e sobre-amortecido (2). Mesmos parâmetros da versão interativa."
@@ -238,11 +240,11 @@ plt.tight_layout(); plt.show()
 ::: {.pergunta}
 1. Com $\gamma/\omega_0 = 0{,}15$, compare $T_d$ com $T_0$ no painel de valores. O
    desvio é visível no gráfico? A partir de que $\gamma/\omega_0$ ele passa a ser?
-2. Compare $\gamma/\omega_0 = 1$ (crítico) com $2$ (sobre-amortecido): qual retorna ao
-   equilíbrio mais rápido? Por que "mais amortecido" não significa "para mais rápido"?
+2. Compare $\gamma/\omega_0 = 1$, o crítico, com $2$, sobre-amortecido: qual retorna ao
+   equilíbrio mais rápido? Por que amortecer mais não significa parar mais rápido?
 3. O balanço de um navio real é sempre sub-amortecido ($\gamma/\omega_0 \sim 0{,}05$ a
-   $0{,}2$). O que seria necessário, fisicamente, para levar um casco ao regime crítico
-   — e por que isso não é viável?
+   $0{,}2$). O que seria necessário, fisicamente, para levar um casco ao regime crítico, e
+   por que isso não é viável?
 :::
 
 ::: {.sp}
@@ -265,12 +267,12 @@ $$e^{-\gamma t_{1/2}} = \tfrac{1}{2} \quad\Rightarrow\quad
 t_{1/2} = \frac{\ln 2}{\gamma} = \frac{0{,}693}{0{,}05} \approx 13{,}9\ \text{s}$$
 
 **(c) Resultado.** $\theta(t) = \theta_0\, e^{-0{,}05t}\cos(0{,}522\,t + \varphi)$:
-o período quase não muda (12,00 → 12,05 s) e a amplitude cai à metade a cada
-13,9 s — pouco mais de um ciclo.
+o período quase não muda (12,00 → 12,05 s) e a amplitude cai à metade a cada 13,9 s,
+pouco mais de um ciclo.
 
-**(d) Análise crítica.** Com $\gamma \ll \omega_0$, o amortecimento desloca o período
-em só 0,4%, mas extingue a oscilação em poucos ciclos — comportamento típico de casco
-com bolinas. Se $\gamma$ fosse dez vezes maior ($\approx \omega_0$), o regime seria
+**(d) Análise crítica.** Com $\gamma \ll \omega_0$, o amortecimento desloca o período em
+apenas 0,4%, mas extingue a oscilação em poucos ciclos, comportamento típico de casco com
+bolinas. Se $\gamma$ fosse dez vezes maior ($\approx \omega_0$), o regime seria
 quase crítico e o navio retornaria à vertical sem oscilar; nenhum casco real chega a
 esse nível de amortecimento passivo.
 :::
@@ -282,8 +284,8 @@ esse nível de amortecimento passivo.
   $\omega_d$ é a frequência real observada. Sempre $\omega_d < \omega_0$.
 - **Achar que crítico = parado:** amortecimento crítico é o que para *mais rápido* sem oscilar.
   Sobre-amortecido para ainda mais lentamente.
-- **Esquecer que amortecimento reduz período:** se seu sistema é sub-amortecido, o período
-  da oscilação aumenta (frequência diminui) em relação ao ideal.
+- **Esquecer que o amortecimento reduz a frequência:** num sistema sub-amortecido,
+  $\omega_d < \omega_0$, e portanto o período da oscilação *aumenta* em relação ao ideal.
 :::
 
 ## Onde o fenômeno vive
@@ -304,6 +306,6 @@ esse nível de amortecimento passivo.
      degrau de pressão, uma sub-amortecida e uma crítica (p5.js, tabela Q4:
      movimento); slider de γ/ω₀ da primeira. -->
 
-**Conexão com o próximo tópico:** amortecimento sem excitação externa leva ao repouso.
-Se uma força externa periódica for aplicada simultaneamente, o sistema atinge um regime
-permanente — tópico 1.5 e 1.6.
+**Conexão com o próximo tópico:** o amortecimento sem excitação externa leva ao repouso.
+Aplicada simultaneamente uma força externa periódica, o sistema atinge um regime
+permanente, objeto do estudo das oscilações forçadas.

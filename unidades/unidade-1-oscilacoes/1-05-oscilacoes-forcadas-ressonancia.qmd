@@ -14,10 +14,10 @@ OE 1.16 [B4] Analisar exemplos práticos de ressonância em estruturas
 
 {{< aula 9-10 >}}
 
-Quando um sistema é forçado por uma excitação periódica externa — como a vibração que o motor
-impõe ao casco — ocorre um fenômeno devastador se a frequência da força se aproximar da
-frequência natural do sistema. É a **ressonância**, o mecanismo por trás de falhas catastróficas
-de equipamentos, fraturas de estrutura e desconforto de tripulação em bordo.
+Quando um sistema é forçado por excitação periódica externa, como a vibração que o motor
+impõe ao casco, e a frequência da força se aproxima da frequência natural do sistema,
+instala-se a **ressonância**. Dela decorrem falhas de equipamento, fraturas de estrutura e
+desconforto da tripulação a bordo.
 
 ## Equação do oscilador forçado {{< ra OE1.14 B2 >}}
 
@@ -29,62 +29,61 @@ ou, em forma padrão:
 
 $$\ddot{x} + \omega_0^2 x = \frac{F_0}{m}\cos(\omega t)$$
 
-A solução geral é $x(t) = x_h(t) + x_p(t)$, onde $x_h$ é a solução homogênea (oscilação livre
-com frequência $\omega_0$) e $x_p$ é a solução particular (oscilação forçada na frequência da excitação $\omega$).
+A solução geral é $x(t) = x_h(t) + x_p(t)$, em que $x_h$ é a **solução homogênea**, a
+oscilação livre de frequência $\omega_0$, e $x_p$ é a **solução particular**, a oscilação
+forçada na frequência de excitação $\omega$.
 
-Para $\omega \neq \omega_0$, após o transiente inicial dissipar (em um sistema real com amortecimento),
-a solução particular é:
+Para $\omega \neq \omega_0$, dissipado o **transiente** inicial, o que ocorre em qualquer
+sistema real com amortecimento, a solução particular é:
 
 $$x_p(t) = \frac{F_0/m}{\omega_0^2 - \omega^2}\cos(\omega t)$$
 
 **Amplitude da resposta:** $A(\omega) = \left|\frac{F_0/m}{\omega_0^2 - \omega^2}\right|$
 
-Quando $\omega \to \omega_0$, o denominador tende a zero — a amplitude diverge teoricamente.
-Na prática, o amortecimento que sempre existe evita a divergência, mas permite amplitudes
-muito grandes (tópico 1.6).
+Quando $\omega \to \omega_0$, o denominador tende a zero e a amplitude diverge no modelo.
+O amortecimento, sempre presente na prática, evita a divergência, mas admite amplitudes
+muito grandes, como mostra o estudo das oscilações forçadas amortecidas.
 
-## Ressonância — amplificação na frequência natural {{< ra OE1.15 B2 >}}
+## Ressonância: amplificação na frequência natural {{< ra OE1.15 B2 >}}
 
-**Ressonância** é o fenômeno de amplificação máxima quando a frequência da força externa
-iguala (ou é muito próxima) a frequência natural do sistema. Nesta condição:
+**Ressonância** é a amplificação máxima que ocorre quando a frequência da força externa
+iguala a natural do sistema, ou dela se aproxima. Nessa condição:
 
 $$\omega = \omega_0 \quad \Rightarrow \quad A(\omega_0) \text{ é máxima}$$
 
-Fisicamente, a cada ciclo, a força externa dá um "empurrão" no momento exato em que o
-oscilador retorna — não há "desperdício" de força em fases que a contradizem. A energia
-da força se acumula no sistema.
+Fisicamente, a cada ciclo a força externa atua no instante em que o oscilador retorna,
+sem que parte dela se perca em fases que a contrariam. A energia fornecida acumula-se no
+sistema.
 
-Em um navio, as velocidades críticas são aquelas nas quais a frequência de rotação do motor
+Num navio, as **velocidades críticas** são aquelas em que a frequência de rotação do motor
 (ou de precessão de uma pá de hélice danificada) coincide com uma frequência natural da
-estrutura (balanço, arfagem, torção, etc.). Navios modernos são projetados com margens para
-evitar essas velocidades em operação normal, mas se a manutenção for negligenciada, o risco
-é real.
+estrutura, seja de balanço, arfagem ou torção. Navios modernos são projetados com margem
+para evitá-las em operação normal; manutenção negligenciada reabre o risco.
 
-## Análise prática — dano por ressonância em estruturas {{< ra OE1.16 B4 >}}
+## Análise prática: dano por ressonância em estruturas {{< ra OE1.16 B4 >}}
 
 Quando um navio é forçado a operar em velocidade crítica (ressonância):
 
-1. **Amplificação de amplitude:** ângulo de balanço pode quadruplicar ou mais em relação a
-   uma oscilação em frequência não-ressonante.
+1. **Amplificação de amplitude:** o ângulo de balanço pode quadruplicar ou mais em relação
+   à oscilação fora da ressonância.
 
-2. **Concentração de tensão:** tensões nos membros estruturais (costados, anteparas) aumentam
-   ao quadrado (proporcionais a $A^2$), acelerando fadiga.
+2. **Concentração de tensão:** as tensões em costados e anteparas crescem com $A^2$,
+   acelerando a fadiga.
 
-3. **Possível falha catastrófica:** se a velocidade não for alterada rapidamente (em operação
-   normal de máquinas, reduz-se ou aumenta-se RPM para "sair" da ressonância), fraturas por
-   fadiga podem ocorrer em horas ou dias — leme pode se soltar, costados podem desenvolver
-   trincas, e em casos extremos, estrutura pode sofrer dano permanente (colapso local).
+3. **Possível falha estrutural:** a defesa operacional é alterar a rotação para afastar-se
+   da ressonância; sem isso, fraturas por fadiga ocorrem em horas ou dias, o leme pode se
+   soltar, os costados podem trincar e, no extremo, a estrutura sofre colapso local.
 
-4. **Desconforto extremo:** tripulação sofre com a vibração amplificada (náusea, lesão de
-   tecidos moles em longos períodos).
+4. **Desconforto da tripulação:** a vibração amplificada provoca náusea e, em exposição
+   prolongada, lesão de tecidos moles.
 
-## Veja a ressonância se aproximar
+## Curva de resposta de um oscilador forçado
 
-À esquerda, o suporte (barra superior) balança com frequência $\omega$ ajustável e
-arrasta a massa pela mola; o sistema tem frequência natural $\omega_0$ fixa. À direita,
-a curva de resposta $A(\omega)/A_{\text{est}} = \omega_0^2/|\omega_0^2 - \omega^2|$ com
-o ponto de operação marcado. Aproxime $\omega$ de $\omega_0$ e observe a amplitude — e
-o que acontece com a *fase* ao cruzar a ressonância.
+À esquerda, o suporte, a barra superior, balança com frequência $\omega$ ajustável e
+arrasta a massa pela mola, num sistema de frequência natural $\omega_0$ fixa. À direita, a
+curva de resposta $A(\omega)/A_{\text{est}} = \omega_0^2/|\omega_0^2 - \omega^2|$, com o
+ponto de operação marcado. Aproximado $\omega$ de $\omega_0$, crescem a amplitude e,
+sobretudo, a mudança da *fase* na travessia da ressonância.
 
 ```{python}
 #| fig-cap: "Curva de resposta do oscilador forçado sem amortecimento: amplitude relativa à deflexão estática em função de ω/ω₀. Em ω = ω₀ o modelo diverge (assíntota tracejada) — a zona de ressonância. Mesmos parâmetros da versão interativa (T₀ = 4 s)."
@@ -226,19 +225,19 @@ plt.tight_layout(); plt.show()
 ::: {.pergunta}
 1. Compare $\omega/\omega_0 = 0{,}3$ e $2{,}0$: em qual caso a massa acompanha o
    suporte em fase? O que acontece com a fase ao cruzar $\omega_0$?
-2. Aproxime $\omega/\omega_0$ de 1 pelos dois lados. A amplitude cresce sem limite no
-   modelo — que ingrediente físico, ausente aqui, limita a amplitude em qualquer
-   sistema real (tópico 1.6)?
-3. Em $\omega/\omega_0 = 2{,}5$ a amplificação é menor que 0,2: a massa quase não se
-   move embora a força continue a mesma. Use isso para explicar por que "força grande
-   em frequência errada" é inofensiva e "força pequena em $\omega_0$" é perigosa.
+2. Aproximado $\omega/\omega_0$ de 1 pelos dois lados, a amplitude cresce sem limite no
+   modelo. Que ingrediente físico, ausente aqui, limita a amplitude em qualquer sistema
+   real?
+3. Em $\omega/\omega_0 = 2{,}5$ a amplificação é menor que 0,2, e a massa quase não se move
+   embora a força continue a mesma. Explique por daí que uma força grande em frequência
+   errada é inofensiva, ao passo que uma força pequena em $\omega_0$ é perigosa.
 :::
 
 ::: {.sp}
 Um navio cargueiro com período natural de balanço $T_0 = 12$ s ($\omega_0 = 2\pi/12 \approx 0{,}524$ rad/s)
 opera com máquinas que, em regime de 90 RPM, geram uma frequência de excitação (via desbalanceamento)
 de $f_e = 90/60 = 1{,}5$ Hz ($\omega_e = 2\pi \times 1{,}5 \approx 9{,}42$ rad/s). De repente, há uma falha
-e o motor fica preso em 0,087 Hz (aproximadamente 0,55 rad/s) — muito próximo a $\omega_0$.
+e o motor fica preso em 0,087 Hz, aproximadamente 0,55 rad/s, muito próximo de $\omega_0$.
 
 **(a) Modelagem.** Regime permanente do oscilador forçado sem amortecimento:
 $A(\omega) = \dfrac{F_0/m}{|\omega_0^2 - \omega^2|}$. O valor de $F_0/m$ não é dado,
@@ -258,24 +257,25 @@ $$\frac{A_{\text{falha}}}{A_{\text{normal}}} = \frac{88{,}5}{0{,}028} \approx 3 
 **(c) Resultado.** A amplitude de resposta cresce por um fator da ordem de $3 \times 10^3$
 em relação ao regime normal de operação.
 
-**(d) Análise crítica.** O número não é previsão quantitativa: perto de $\omega_0$ o
-modelo sem amortecimento superestima a amplitude (divergiria em $\omega = \omega_0$) —
-o valor real do pico exige $\gamma$ (tópico 1.6). Como ordem de grandeza, porém, basta
-para a decisão operacional: não se permanece com excitação próxima de $\omega_0$;
-altera-se RPM imediatamente. Observação de plausibilidade: 0,087 Hz é frequência típica
-de encontro de ondas, não de rotação de máquinas — em serviço, a ressonância de balanço
-é excitada com mais frequência pelo mar do que pelo motor.
+**(d) Análise crítica.** O número não é previsão quantitativa: perto de $\omega_0$ o modelo
+sem amortecimento superestima a amplitude, e divergiria em $\omega = \omega_0$; o valor
+real do pico exige $\gamma$, introduzido no estudo das oscilações forçadas amortecidas.
+Como ordem de grandeza, porém, basta à decisão operacional: não se permanece com excitação
+próxima de $\omega_0$, e altera-se a rotação de imediato. Quanto à plausibilidade,
+0,087 Hz é frequência típica de encontro de ondas, e não de rotação de máquinas; em
+serviço, a ressonância de balanço é excitada mais pelo mar do que pelo motor.
 :::
 
 ::: {.callout-warning}
 ## Erros clássicos
 
-- **Confundir "força grande" com "ressonância":** uma força pequena pode causar ressonância se a
-  frequência é certa. Reciprocamente, uma força gigantesca em frequência errada mal move o sistema.
-- **Achar que ressonância só existe em oscilador ideal:** sim, é mais dramática sem amortecimento,
-  mas ocorre mesmo com amortecimento moderado (tópico 1.6).
-- **Usar fórmula sem amortecimento para prever amplitude em ressonância real:** nunca. Sempre incluir
-  $\gamma$ (Seção 6).
+- **Confundir força grande com ressonância:** uma força pequena provoca ressonância se a
+  frequência for a certa, ao passo que uma força enorme em frequência errada mal move o
+  sistema.
+- **Supor que a ressonância só existe em oscilador ideal:** ela é mais pronunciada sem
+  amortecimento, mas ocorre também com amortecimento moderado.
+- **Usar a fórmula sem amortecimento para prever a amplitude em ressonância real:** o pico
+  real exige $\gamma$, e o modelo desta seção não o fornece.
 :::
 
 ## Onde o fenômeno vive
@@ -283,19 +283,20 @@ de encontro de ondas, não de rotação de máquinas — em serviço, a ressonâ
 <!-- Seção incremental (AULA-TEMPLATE §4): exemplos podem ser promovidos a simulação
      em sessões futuras, a pedido do professor. -->
 
-- **Roll ressonante em mar de través** — quando o período de *encontro* das ondas
+- **Balanço ressonante em mar de través (*roll*)** — quando o período de *encontro* das ondas
   (que depende de rumo e velocidade) coincide com o período natural de balanço, a
   amplitude cresce ciclo a ciclo; a defesa é mudar rumo ou velocidade, deslocando o
   período de encontro.
 - **Rotação crítica de máquinas** — estruturas leves (grades, corrimãos, painéis)
   vibram visivelmente quando alguma ordem do motor cruza a frequência natural delas.
-- **Balanço de parque** — o clássico: empurrões pequenos, na frequência certa, em
-  fase com a velocidade.
+- **Balanço de parque** — empurrões pequenos, na frequência certa e em fase com a
+  velocidade.
 
 <!-- EXEMPLO A SIMULAR: navio em mar de través (p5.js, tabela Q4: movimento):
      sliders de período de onda e período natural (faixa SP3, 8–25 s); amplitude de
      resposta crescendo quando os períodos coincidem. -->
 
-**Conexão com o próximo tópico:** ressonância em sistemas reais (com amortecimento) é moderada
-mas ainda perigosa. Como reduzi-la? Aumentando o amortecimento ou desviando a frequência natural
-— tópico 1.6 mostra como excitação e amortecimento se combinam.
+**Conexão com o próximo tópico:** a ressonância em sistemas reais, com amortecimento, é
+moderada mas ainda perigosa. Reduzi-la exige aumentar o amortecimento ou deslocar a
+frequência natural, e a combinação entre excitação e amortecimento é o objeto do tópico
+seguinte.
