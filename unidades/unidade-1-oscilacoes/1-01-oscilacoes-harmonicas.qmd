@@ -14,17 +14,16 @@ OE 1.3 [B2] Classificar oscilações quanto à periodicidade e amplitude
 
 {{< aula 1 >}}
 
-Neste curso, o capítulo de oscilações abre a Física-2 em posição natural: logo depois
-da Física-1, porque oscilar é, antes de tudo, **um tipo de movimento** — e todo o
-ferramental de cinemática e dinâmica que você já domina será reaproveitado aqui. A
-diferença é que agora o movimento se repete, e essa repetição tem consequências
-profundas para quem opera um navio.
+O capítulo de oscilações abre a Física-2 logo depois da Física-1 porque oscilar é,
+antes de tudo, **um tipo de movimento**: todo o ferramental de cinemática e dinâmica já
+estabelecido é reaproveitado aqui. A diferença está em que agora o movimento se repete,
+e dessa repetição decorrem as consequências que interessam a quem opera um navio.
 
 ## O que é uma oscilação harmônica {{< ra OE1.1 B1 >}}
 
 **Movimento oscilatório** é aquele em que o sistema vai e volta em torno de uma
-posição de equilíbrio. Quando o movimento acontece em intervalos de tempo iguais,
-o movimento é **periódico**. Uma **oscilação harmônica** é um movimento oscilatório 
+posição de equilíbrio. Quando esse vaivém se dá em intervalos de tempo iguais, o
+movimento é **periódico**. Uma **oscilação harmônica** é um movimento oscilatório que
 também é periódico.
 
 ## Onde o MHS vive: da natureza ao navio {{< ra OE1.2 B1 >}}
@@ -34,22 +33,21 @@ Sistemas que oscilam harmonicamente (ou aproximadamente) estão por toda parte:
 - **Na natureza e no laboratório:** pêndulo simples em pequenas amplitudes,
   sistema massa–mola, coluna de líquido em tubo em U, vibração de moléculas
   em torno da posição de equilíbrio, circuitos LC.
-- **Na área naval — e é aqui que este capítulo paga a passagem:**
-  - **Balanço (roll) do navio:** o casco oscila em torno do eixo longitudinal com
-    período típico de 8 a 25 s — é um oscilador harmônico cuja "mola" é o braço de
+- **Na área naval:**
+  - **Balanço do navio (*roll*):** o casco oscila em torno do eixo longitudinal com
+    período típico de 8 a 25 s, num oscilador harmônico cuja mola é o braço de
     endireitamento da estabilidade transversal;
   - **Vibração de máquinas com componentes recíprocos:** pistões e bielas do motor
     diesel geram excitações periódicas que se propagam pela estrutura;
   - **Vibração de hélice:** a passagem das pás gera oscilação de frequência
     proporcional à rotação × número de pás;
-  - **Mar e ondulação (swell):** a excitação que o mar impõe ao casco é
-    aproximadamente senoidal — e o encontro dela com o período natural do navio é
-    o tema de ressonância do tópico 1.5.
+  - **Mar e ondulação (*swell*):** a excitação que o mar impõe ao casco é
+    aproximadamente senoidal, e o encontro dela com o período natural do navio é o
+    objeto do estudo da ressonância, adiante nesta unidade.
 
 ## Classificando oscilações {{< ra OE1.3 B2 >}}
 
-Antes da matemática pesada, vale organizar o vocabulário. Duas classificações
-independentes:
+O vocabulário precede o tratamento quantitativo. Duas classificações independentes:
 
 **Quanto à periodicidade:**
 
@@ -57,15 +55,15 @@ independentes:
 |---|---|---|
 | Periódica | repete-se em intervalos iguais ($T$ definido) | vibração do motor em regime constante |
 | Quase-periódica | soma de componentes com períodos incomensuráveis | casco excitado por mar + máquinas |
-| Aperiódica | não se repete | resposta a um impacto isolado (slamming) |
+| Aperiódica | não se repete | resposta a um impacto isolado (*slamming*) |
 
 **Quanto à amplitude ao longo do tempo:**
 
 | Tipo | Amplitude | Onde aparece no curso |
 |---|---|---|
-| Livre (não amortecida) | constante | idealização — tópicos 1.1–1.3 |
-| Amortecida | decresce no tempo | tópico 1.4 |
-| Forçada | mantida por excitação externa | tópicos 1.5–1.6 |
+| Livre (não amortecida) | constante | idealização adotada na abertura da unidade |
+| Amortecida | decresce no tempo | estudo das oscilações amortecidas |
+| Forçada | mantida por excitação externa | estudo das oscilações forçadas |
 
 ::: {.callout-warning}
 ## Erros clássicos
@@ -76,7 +74,7 @@ independentes:
 - **Confundir período $T$ com frequência $f$:** $T$ é tempo de um ciclo (s);
   $f = 1/T$ é ciclos por segundo (Hz). No balanço do navio fala-se em período
   (ex.: $T = 12\ \text{s}$), em vibração de máquinas fala-se em frequência
-  (ex.: $f = 25\ \text{Hz}$) — são a mesma física.
+  (ex.: $f = 25\ \text{Hz}$), e a física é a mesma.
 :::
 
 ## Onde o fenômeno vive
@@ -93,17 +91,18 @@ independentes:
 - **Vibração do motor em regime constante** — periódica com o período de rotação; a
   assinatura espectral estável é a base da manutenção preditiva.
 - **Clinômetro de pêndulo** — o instrumento que mede a banda é, ele próprio, um
-  oscilador harmônico (e por isso precisa de amortecimento, tópico 1.4).
+  oscilador harmônico, e por isso precisa de amortecimento.
 
 <!-- EXEMPLO A SIMULAR: coluna d'água em tubo em U (p5.js, tabela Q4: movimento);
      slider de comprimento da coluna L; readout T = 2π√(L/2g). -->
 
 **Conexão com o próximo tópico:** 
 
-No caso unidimensional mais simples — uma única coordenada $x(t)$ oscilando harmonicamente — o movimento
-recebe o nome de **Movimento Harmônico Simples (MHS)**.
+No caso unidimensional mais simples, o de uma única coordenada $x(t)$ oscilando
+harmonicamente, o movimento recebe o nome de **Movimento Harmônico Simples (MHS)**.
 
 $$x(t) = A\cos(\omega t + \varphi)$$
 
-Essa forma trigonométrica é a resposta universal de qualquer sistema levemente perturbado em torno 
-de um equilíbrio estável. Esta equação será deduzida a partir da lei de força no no tópico 1.2.
+Essa forma trigonométrica é a resposta universal de qualquer sistema levemente
+perturbado em torno de um equilíbrio estável. A dedução a partir da lei de força vem no
+tópico seguinte.

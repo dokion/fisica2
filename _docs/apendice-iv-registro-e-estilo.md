@@ -184,16 +184,20 @@ for f in sorted(glob.glob(d+'/*.qmd')):
     s=re.sub(r'<!-- ═══ OBJETIVOS.*?═══ -->','',s,flags=re.S)    # cabeçalho de OE
     for l in s.split('\n'):
         if '—' not in l: continue
-        if re.match(r'\s*[-*]\s+\*\*.+\*\*\s+—', l): continue    # padrão de lista
+        if re.match(r'\s*[-*]\s+(\*\*.+\*\*|\$.+\$)\s+—', l): continue   # padrão de lista
         tot+=l.count('—'); print("  %-42s %s" % (f.split('/')[-1], l.strip()[:100]))
 print("travessões livres:", tot)
 EOF
 ````
 
 O alvo real é **zero travessões livres**. UE 3 e UE 2 estão nesse ponto; os índices de
-1/35 e 1/30 da tabela são o resíduo intocável, não trabalho pendente. Atenção ao regex
-do padrão de lista: `\*\*[^*]+\*\*` falha quando o rótulo em negrito contém itálico
-(`- **Canto do cabo (*singing*)** — …`) e produz falso positivo.
+1/35 e 1/30 da tabela são o resíduo intocável, não trabalho pendente.
+
+Duas armadilhas no reconhecimento do padrão de lista, ambas já embutidas no comando
+acima: `\*\*[^*]+\*\*` falha quando o rótulo em negrito contém itálico
+(`- **Canto do cabo (*singing*)** — …`), e o rótulo pode ser matemática em vez de
+negrito (`- $A$ — **amplitude**: …`, na UE 1). Os dois casos são o mesmo padrão do
+template e não devem ser removidos.
 
 ### V2 — Negrito como decoração
 
