@@ -163,7 +163,7 @@ Considere-se um cilindro infinitésimo de fluido, de bases $dS$ e $dS'$ com norm
 $\hat{\mathbf{n}}$ e $\hat{\mathbf{n}}'$, geratriz $dz$, com o eixo $z$ tomado paralelo a
 $\hat{\mathbf{n}}$, e $\theta$ o ângulo entre $\hat{\mathbf{n}}$ e $\hat{\mathbf{n}}'$. A
 condição de equilíbrio é que a resultante de todas as forças sobre o cilindro se anule;
-escrevemos a componente $z$.
+toma-se a componente $z$.
 
 As pressões sobre a superfície lateral são normais ao eixo $z$ e não contribuem. Pela expressão da
 força superficial, a contribuição da base superior é

@@ -101,7 +101,7 @@ de origem no corpo da nota de aula. Este quadro é o registro da procedência.
 | Conteúdo | OE | Arquivo | Posição escolhida e justificativa |
 |---|---|---|---|
 | Tensão superficial e capilaridade | 3.3 | `3-01` | Fecha a lista de propriedades da Parte B (que nomeia as quatro). O Moysés usa "tensão" só no sentido de força/área |
-| Equação de Navier-Stokes | 3.15 | `3-04` | Logo após §2.7(a): é a forma geral da equação que o Moysés monta em §2.3 e depois trunca para fluido perfeito. Entra como generalização, com o passo formal em callout recolhível |
+| Equação de Navier-Stokes | 3.15 | `3-04` | Logo após §2.7(a): é a forma geral da equação que o Moysés monta em §2.3 e depois trunca para fluido perfeito. Entra como generalização, em seção própria, com leitura termo a termo e o fecho que unifica as três equações da unidade |
 | Coeficiente de arrasto $C_d$ | 3.24 | `3-06` | Imediatamente após a lei ∝ v² do §2.7(c) — é a adimensionalização dela |
 | Equação da sustentação com $C_L$, estol | 3.28, 3.29 | `3-07` | Após §2.6(c): quantifica o empuxo dinâmico que o Moysés descreve qualitativamente |
 | Teorema de Kutta-Joukowski, $L' = \rho v \Gamma$ | 3.31 | `3-08` | Após §2.6(b): o Moysés constrói toda a circulação e o empuxo dinâmico sem enunciar o teorema. É o fecho formal do que ele deixa implícito |
@@ -144,8 +144,9 @@ Um caso de conteúdo repartido, também deliberado:
 - Bloco de comentário `OBJETIVOS DESTE TÓPICO` no topo de cada arquivo: intocável.
 - Cobertura 33/33 dos OE, cada um citado uma vez, ancorado num cabeçalho `##` via `{{< ra >}}`.
 - Códigos Bloom de `_docs/FIS_2_RA.md`.
-- Navalização existente, problemas SP, "Erros clássicos", "Onde o fenômeno vive" e as 8
-  simulações p5.js com sua paridade matplotlib.
+- Navalização existente, problemas SP, "Erros clássicos", "Onde o fenômeno vive" e as
+  simulações p5.js com sua paridade matplotlib (8 na reordenação; 20 depois das promoções
+  feitas na seção "Onde o fenômeno vive", que o AULA-TEMPLATE §4 permite acumular).
 - Provas, blueprints e banco Dokion continuam fora do Quarto (Apêndice Q §Q1) — os problemas
   dos capítulos 1 e 2 alimentam o banco, não a apostila.
 
@@ -175,3 +176,18 @@ Apêndice I amarra avaliação a par de aulas, não a tópico.
 - Ordem interna do `3-05`: as seções seguem 3.18, 3.19, 3.21, 3.20 — os adimensionais são
   definidos antes da semelhança dinâmica, porque não se pode falar em escala de Froude antes de
   definir Fr. Sem base no Moysés para arbitrar; mantido por coerência lógica.
+
+---
+
+## 8. Registro de escopo e de tratamento da fonte
+
+**Escopo.** Começar pela UE 3 foi decisão do professor. As demais unidades seguem a ordem
+numérica do sumário; nada aqui se aplica a elas sem documento próprio de concordância.
+
+**Tratamento da fonte.** O texto da nota de aula é **síntese**, não decalque: o Moysés dá a
+ordem, o fio condutor e os resultados, não a redação. Instrução dada pelo professor durante a
+passada de registro e aplicada em `3-02` e `3-03` (commit `be13745`); os demais tópicos
+receberam só o tratamento genérico de registro. A regra geral está no Apêndice IV §IV4.1.
+
+Os títulos de seção que coincidem com os do Moysés foram mantidos por decisão do professor:
+são nomes consagrados do assunto, não marca de transcrição.

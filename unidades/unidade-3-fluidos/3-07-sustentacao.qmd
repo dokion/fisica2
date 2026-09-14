@@ -615,8 +615,8 @@ plt.tight_layout(); plt.show()
 
 **Conexão com o próximo tópico:** o fluido perfeito rendeu a sustentação e, com ela, dois
 absurdos: nenhuma resistência ao avanço, e nenhuma maneira de gerar o vórtice de partida de que a
-própria sustentação depende. Os dois têm a mesma origem e a mesma cura: **a viscosidade**, que
-descartamos no estudo dos fluidos em movimento e que agora precisa voltar. No tópico seguinte ela é definida
+própria sustentação depende. Os dois têm a mesma origem e a mesma cura: **a viscosidade**,
+descartada no estudo dos fluidos em movimento e que agora precisa voltar. No tópico seguinte ela é definida
 quantitativamente, dela sai o escoamento laminar num tubo, e dela nasce o parâmetro que decide o
 regime de todo escoamento, o número de Reynolds, junto com a fina camada à parede onde
 tudo isso acontece.

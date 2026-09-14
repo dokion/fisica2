@@ -276,10 +276,42 @@ cabeçalhos de OE são infraestrutura, não texto do aluno — ficam como estão
 
 ---
 
-## IV4. Rótulos de equação da fonte
+## IV4. Tópico que segue um livro-texto como fio condutor
 
-Quando um tópico segue um livro-texto como fio condutor (Moysés na UE 3), a numeração da
-fonte é âncora de navegação em sala, **não** parte do texto do aluno.
+Vale quando a unidade tem documento de concordância com uma fonte (o `roteiro-moyses-ue3.md`
+para a UE 3). São duas regras independentes.
+
+### IV4.1 O texto é síntese, não decalque
+
+A fonte dá a **ordem**, o **fio condutor** e os **resultados**. Não dá a redação. O que vai
+para a nota de aula é reconstrução do argumento em texto próprio, na extensão que a aula
+pede — que é menor que a do livro, porque o livro ensina sozinho e a nota de aula acompanha
+uma exposição.
+
+**Regra: nenhum parágrafo da nota de aula pode ser reconhecível como transcrição da fonte.**
+
+| Fora | Dentro |
+|---|---|
+| Sequência de parágrafos que acompanha o livro frase a frase | O argumento reconstruído, com os passos que a aula usa |
+| Digressão, nota histórica ou exemplo que o livro traz e a aula não usa | Corte |
+| Duas páginas de dedução do livro reproduzidas | O resultado, o passo que o justifica e o que ele custa em hipótese |
+
+Permanecem legítimos, porque não são decalque: os **títulos de seção** que são nomes
+consagrados do assunto (lei de Stevin, princípio de Arquimedes, equação de Bernoulli); as
+**citações literais curtas e atribuídas** (Torricelli, Pascal), entre aspas; e os **resultados
+e sua notação**, que são da física, não do autor.
+
+Aplicar tópico a tópico, junto com a passada de registro: a compressão do §IV1 R3 e a
+de-literalização são o mesmo movimento de reescrita, e separá-las duplica o trabalho.
+
+**Precedente:** na UE 3 esta instrução chegou depois de a unidade estar escrita e foi nomeada
+num único commit (`be13745`), alcançando só `3-02` e `3-03` — que tiveram os cortes mais fundos
+da unidade, −5,2% e −7,0% de prosa, contra −2,5% da média. Os outros seis tópicos receberam só
+o tratamento genérico. Numa unidade nova, a regra entra na primeira escrita, não depois.
+
+### IV4.2 Rótulos de equação da fonte
+
+A numeração da fonte é âncora de navegação em sala, **não** parte do texto do aluno.
 
 **Regra: rótulo da fonte só nos resultados principais — os que estão em `\boxed{}`.**
 Equações intermediárias e citações internas perdem o número e passam a ser chamadas pelo
@@ -355,6 +387,8 @@ Rodar **antes de commitar** a passada de estilo numa unidade.
 - [ ] Negritos: 1 a cada 5–8 linhas de prosa.
 - [ ] Zero remissões numéricas a tópico/seção/unidade no texto do aluno.
 - [ ] Rótulos da fonte só em equações `\boxed`.
+- [ ] Nenhum parágrafo reconhecível como transcrição da fonte (IV4.1), nas unidades que têm
+      documento de concordância.
 - [ ] Títulos de simulação são sintagmas nominais.
 - [ ] Nenhum estrangeirismo fora de itálico.
 - [ ] Concisão: redução registrada sobre a **prosa narrativa** (§IV1 R3). A faixa de
