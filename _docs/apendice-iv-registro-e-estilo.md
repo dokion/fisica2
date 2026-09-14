@@ -132,12 +132,12 @@ vírgula, dois-pontos, ponto final, ou subordinação (`, que`, `, pois`, `, de 
 **Diagnóstico objetivo** (contando só a prosa, excluindo blocos ```` ``` ````, `<script>`
 e `<style>`):
 
-| Unidade | Estado atual | Alvo |
-|---|---|---|
-| UE 3 (revisada) | 1 travessão a cada **35** linhas | referência |
-| UE 2 (revisada) | 1 a cada **30** linhas (de 1 a cada 8) | atingido |
-| UE 1 | 1 a cada 10 | ≥ 25 |
-| UE 4 | 1 a cada 12 | ≥ 25 |
+| Unidade | Índice do comando | Travessões livres | Estado |
+|---|---|---|---|
+| UE 1 (revisada) | 1 a cada **32** (de 1 a cada 10) | **0** | fechada |
+| UE 2 (revisada) | 1 a cada **31** (de 1 a cada 8) | **0** | fechada |
+| UE 3 (revisada) | 1 a cada 36 | 45 | pendente |
+| UE 4 | 1 a cada 12 | 143 | pendente |
 
 Comando para medir:
 
@@ -190,8 +190,13 @@ print("travessões livres:", tot)
 EOF
 ````
 
-O alvo real é **zero travessões livres**. UE 3 e UE 2 estão nesse ponto; os índices de
-1/35 e 1/30 da tabela são o resíduo intocável, não trabalho pendente.
+O alvo real é **zero travessões livres**. UE 2 e UE 1 estão nesse ponto, e nelas os índices
+de 1/30 e 1/32 da tabela são resíduo intocável, não trabalho pendente.
+
+A UE 3 **não** está: apesar do índice de 1/36, o melhor da tabela, ela conserva cerca de 45
+travessões livres na prosa, concentrados em 3-02 e 3-04. É a demonstração do ponto: o índice
+do comando de diagnóstico pode ser excelente e ainda assim haver travessão livre a tratar,
+porque um arquivo longo dilui a contagem. Fica registrado como pendência da UE 3.
 
 Duas armadilhas no reconhecimento do padrão de lista, ambas já embutidas no comando
 acima: `\*\*[^*]+\*\*` falha quando o rótulo em negrito contém itálico
