@@ -21,6 +21,11 @@ A disciplina aborda os fenômenos físicos relacionados a oscilações, ondas, m
 > Na **UE 3**, a ordem de ensino é a dos capítulos 1 e 2 do Moysés, não a numérica da Parte B:
 > 3.1 → 3.2 → 3.3 → 3.8 → 3.7 → 3.4 → 3.6 → 3.5. A coluna de OE acima já reflete essa ordem.
 > Concordância seção a seção em `_docs/roteiro-moyses-ue3.md`.
+>
+> Na **UE 4**, a ordem é a dos capítulos 7 a 11 do Moysés, com um único deslocamento: as
+> **máquinas térmicas (4.14) vêm antes da entropia (4.13)**, porque é do ciclo de Carnot e do
+> teorema de Clausius que o livro constrói a entropia. Concordância em
+> `_docs/roteiro-moyses-ue4.md`.
 
 | Aulas | UE | Tópicos | OE (objetivos específicos) | Verificação |
 |---|---|---|---|---|
@@ -43,7 +48,7 @@ A disciplina aborda os fenômenos físicos relacionados a oscilações, ondas, m
 | 31-32 | 4 | Lei Zero; temperatura; dilatação térmica; calor | 4.1–4.14 | — |
 | 33-34 | 4 | Condução; Fourier; 1ª Lei; gases ideais; entalpia | 4.15–4.30 | C4 Projeto computacional (início) |
 | 35-36 | 4 | Calores específicos; adiabáticos; Poisson | 4.31–4.36 | — |
-| 37-38 | 4 | 2ª Lei; entropia; máquinas térmicas; refrigeradores | 4.37–4.45 | — |
+| 37-38 | 4 | 2ª Lei; Carnot; máquinas térmicas e refrigeradores; teorema de Clausius; entropia | 4.37–4.39, 4.43–4.45, 4.40–4.42 | — |
 | 39-40 | 4 | Teoria cinética; equipartição; calores específicos moleculares | 4.46–4.51 | C4 Demo ao vivo |
 | {PAR} | — | **PROVA 2 — Ciclo 2 (UE 1–4, ênfase UE 3+4)** | — | P2 |
 

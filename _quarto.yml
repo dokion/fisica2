@@ -34,7 +34,23 @@ website:
           - unidades/unidade-3-fluidos/3-06-arrasto.qmd
           - unidades/unidade-3-fluidos/3-05-analise-dimensional-buckingham.qmd
       - section: "UE 4 — Termodinâmica"
-        contents: unidades/unidade-4-termodinamica/*.qmd
+        contents:
+          - unidades/unidade-4-termodinamica/4-01-temperatura-lei-zero.qmd
+          - unidades/unidade-4-termodinamica/4-02-dilatacao-termica.qmd
+          - unidades/unidade-4-termodinamica/4-03-natureza-do-calor.qmd
+          - unidades/unidade-4-termodinamica/4-04-quantidade-de-calor.qmd
+          - unidades/unidade-4-termodinamica/4-05-conducao-de-calor.qmd
+          - unidades/unidade-4-termodinamica/4-06-equivalente-mecanico-da-caloria.qmd
+          - unidades/unidade-4-termodinamica/4-07-primeira-lei.qmd
+          - unidades/unidade-4-termodinamica/4-08-equacao-de-estado-gases-ideais.qmd
+          - unidades/unidade-4-termodinamica/4-09-energia-interna-joule-entalpia.qmd
+          - unidades/unidade-4-termodinamica/4-10-capacidades-termicas-molares.qmd
+          - unidades/unidade-4-termodinamica/4-11-processos-adiabaticos.qmd
+          - unidades/unidade-4-termodinamica/4-12-segunda-lei.qmd
+          - unidades/unidade-4-termodinamica/4-14-maquinas-termicas-refrigeradores.qmd
+          - unidades/unidade-4-termodinamica/4-13-entropia.qmd
+          - unidades/unidade-4-termodinamica/4-15-teoria-cinetica.qmd
+          - unidades/unidade-4-termodinamica/4-16-calores-especificos-equiparticao.qmd
 
 format:
   html:

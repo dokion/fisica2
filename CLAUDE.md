@@ -25,6 +25,7 @@ documento vence. Sempre.
 | `guia-replicacao-novo-curso.md` | Guia de replicação | **Como clonar esta estrutura para outro curso** (FIS-1, FIS-3): inventário de arquivos, pipeline em 5 fases, prompt de partida |
 | `mc-7.03-extrato.md` / `mc-7.04-extrato.md` | Extratos das fontes IMO | **Consulta local aos Model Courses** (learning objectives de física, literais). Substituem o ciclo NotebookLM do Apêndice III — consultar estes antes de abrir os PDFs |
 | `roteiro-moyses-ue3.md` | Concordância Moysés ↔ UE 3 | **Ordem de leitura e fio condutor da UE 3** (Mecânica dos Fluidos). Na UE 3, a sequência é a do Moysés (cap. 1–2); os tópicos da Parte B são balizas de cobertura, não de ordem. Ler antes de tocar em `unidades/unidade-3-fluidos/` |
+| `roteiro-moyses-ue4.md` | Concordância Moysés ↔ UE 4 | **Ordem de leitura e fio condutor da UE 4** (Termodinâmica). Sequência do Moysés (cap. 7–11), com um deslocamento: máquinas térmicas (4.14) antes de entropia (4.13). Registra também as 7 balizas da ementa que o livro não cobre. Ler antes de tocar em `unidades/unidade-4-termodinamica/` |
 
 Antes de qualquer tarefa, leia o Mestre + o(s) apêndice(s) relevante(s). Não trabalhe de memória.
 
