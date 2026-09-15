@@ -17,57 +17,109 @@ OE 4.4 [B2] Justificar a necessidade de escalas termométricas
 {{< aula 31-32 >}}
 
 Antes de qualquer máquina térmica, seja motor diesel, caldeira ou trocador de calor, vem a
-questão de como se mede o quanto um corpo está quente. A temperatura é a grandeza central
-da termodinâmica de bordo, e do significado físico dela dependem o funcionamento de um
-termômetro, a necessidade de calibrar os instrumentos de máquinas e a troca de calor entre
-dois corpos em contato até o equilíbrio.
+questão de como medir o quanto um corpo está quente. Deste tópico saem o que autoriza o
+termômetro a funcionar, por que a escala Kelvin existe e por que o instrumento de bordo
+precisa de calibração.
+
+A descrição é macroscópica: pressão e temperatura são valores médios de grandezas
+microscópicas, e só fazem sentido em sistemas com número enorme de partículas. Não se
+pergunta a temperatura de três átomos isolados.
 
 ## O conceito de temperatura e equilíbrio térmico {{< ra OE4.1 B2 >}}
 
-Dois corpos em contato trocam calor e, depois de tempo suficiente, param de trocar. Nesse
-momento atingiram o **equilíbrio térmico**, e a propriedade que mede essa condição é a
-**temperatura**. Formalmente:
+O que separa o sistema do ambiente é a parede. Uma **parede adiabática** isola termicamente:
+o estado do sistema não se altera quando o ambiente muda. A garrafa térmica aproxima o caso
+ideal, com vácuo entre paredes duplas para cortar a condução e superfícies metalizadas para
+cortar a radiação. Uma parede não adiabática chama-se **diatérmica**, transparente ao calor,
+e põe os dois sistemas em **contato térmico**: chapa metálica delgada é o exemplo.
 
-**Temperatura** é a propriedade de um sistema que determina se ele está ou não em
-equilíbrio térmico com outro sistema. Quando dois corpos têm a mesma temperatura,
-nenhum calor flui entre eles.
+É fato experimental que um sistema isolado evolui para um estado em que nenhuma variável
+macroscópica muda mais com o tempo. Atingido esse estado, o sistema está em **equilíbrio
+térmico**. A constância é só macroscópica: no gás em equilíbrio as moléculas seguem em
+agitação desordenada, e as grandezas medidas são médias que flutuam em escala microscópica.
 
-A temperatura não mede quanto calor há dentro do corpo: é a propriedade que governa quando
-a troca de calor cessa. Nos trocadores de bordo é a diferença de temperatura que faz a água
-quente ceder calor ao óleo de refrigeração.
+**Temperatura** é a propriedade comum a sistemas em equilíbrio térmico entre si. Ela não
+mede quanto calor o corpo contém: governa se há troca e quando a troca cessa. Nos
+trocadores de bordo é a diferença de temperatura que faz a água quente ceder calor ao óleo
+de refrigeração.
+
+A sensação térmica não serve de aferição. Num dia frio, um objeto metálico parece mais frio
+que um de madeira à mesma temperatura, porque a mão avalia a rapidez com que o calor lhe é
+retirado, e não o estado térmico do objeto. Medir exige instrumento.
 
 ## Lei Zero da Termodinâmica {{< ra OE4.2 B1 >}} {{< ra OE4.3 B2 >}}
 
-Se o corpo A está em equilíbrio térmico com B, e B com C, então A está em equilíbrio com C.
-O enunciado é o fundamento lógico de toda medição de temperatura:
+> **Lei Zero da Termodinâmica.** Dois sistemas em equilíbrio térmico com um terceiro estão
+> em equilíbrio térmico entre si.
 
-**Lei Zero da Termodinâmica:** Se dois sistemas estão em equilíbrio térmico com um
-terceiro, então estão em equilíbrio térmico um com o outro.
+O enunciado é fato experimental, não necessidade lógica, e o equilíbrio elétrico mostra que
+a propriedade poderia não valer: um eletrodo de cobre e um de zinco, cada um em equilíbrio
+elétrico com a mesma solução diluída de ácido sulfúrico, não estão em equilíbrio elétrico
+entre si: ligados por um fio de cobre, estabelece-se corrente. É a pilha voltaica.
 
-Daí o funcionamento do termômetro: o termômetro, corpo B, toca o sistema quente, corpo A,
-ambos entram em equilíbrio, e o termômetro é em seguida comparado com uma escala calibrada,
-o corpo C. A lei garante que, se o termômetro tem a mesma temperatura de uma marca da
-escala, o sistema A tem essa temperatura.
-
-Daí também a criticidade da calibração periódica dos termômetros na praça de máquinas: se o
-instrumento não entra em equilíbrio real com o óleo ou a água, a leitura é falsa e o
-operador desconhece a temperatura verdadeira do sistema.
+É a lei zero que autoriza o termômetro. Para saber se A e B estão à mesma temperatura não é
+preciso pô-los em contato: basta verificar que ambos equilibram com um terceiro corpo C, o
+instrumento. Daí a criticidade da calibração periódica na praça de máquinas: se o sensor não
+equilibra de fato com o óleo ou a água, a leitura nada informa sobre o sistema.
 
 ## Escalas termométricas {{< ra OE4.4 B2 >}}
 
-A temperatura é uma propriedade, e atribuir-lhe números exige uma **escala termométrica**,
-convenção que associa números a estados térmicos.
+Um fluido homogêneo em equilíbrio fica caracterizado pelo par $(P,V)$. Fixado um estado
+padrão do termômetro, o conjunto dos estados do sistema que equilibram com ele forma uma
+curva contínua no plano $P$-$V$, a **isoterma**. Rotular cada isoterma com um número $\theta$,
+constante sobre ela e arbitrário na escolha, define a **temperatura empírica**; a família de
+isotermas é a **equação de estado** do sistema:
 
-As escalas mais usadas em máquinas marítimas são:
+$$f(P,V) = 0$$
 
-- **Celsius (°C):** água congela em 0 °C, ferve em 100 °C (a 1 atm). Padrão em
-  instrumentos de máquinas.
-- **Kelvin (K):** começa em zero absoluto (−273,15 °C). Única escala científica para
-  gases. Diferenças em K são iguais a diferenças em °C: ΔT[K] = ΔT[°C].
-- **Fahrenheit (°F):** ainda aparece em cartas de navegação antigas; raro em máquinas
-  modernas.
+Pela lei zero o rótulo não depende de qual termômetro se usou, apenas do sistema. Resta a
+arbitrariedade da escolha dos números, e é dela que nasce o problema.
 
-Conversão essencial:
+A escala Celsius fixa dois pontos, o do gelo em fusão e o do vapor de água a 1 atm, e
+convenciona relação **linear** entre a temperatura e o comprimento $l$ da coluna de mercúrio:
+
+$$\theta = \frac{l - l_0}{l_{100} - l_0}\,(100\ °\text{C})$$
+
+Isso equivale a *definir* a dilatação do mercúrio como uniforme. Um termômetro de álcool,
+calibrado do mesmo modo, discorda do de mercúrio em até alguns décimos de grau. Nenhum dos
+dois é melhor: cada líquido deixa de se dilatar uniformemente na escala em que se
+convencionou uniformidade para o outro. **A escala depende da substância**, e é isso que
+obriga a procurar uma que não dependa.
+
+### A escala absoluta de gás ideal
+
+O gás resolve. No **termômetro de gás a volume constante**, a grandeza termométrica é a
+pressão do gás mantido num volume fixo. Medindo a razão entre as pressões no ponto de vapor
+e no ponto de gelo e repetindo a medida com massas de gás cada vez menores, os pontos caem
+sobre uma reta. Gases diferentes dão retas diferentes, mas **todas interceptam o mesmo ponto**
+quando extrapoladas ao limite de gás infinitamente rarefeito:
+
+$$\lim_{P_g \to 0}\left(\frac{P_v}{P_g}\right)_V \equiv \frac{T_v}{T_g} \approx 1{,}3661$$
+
+Impondo que o intervalo entre os dois pontos valha 100 graus, como em Celsius, a razão fixa
+os dois valores:
+
+$$T_v - T_g = 100\ \text{K}
+\quad\Longrightarrow\quad
+T_g = \frac{100}{0{,}3661} \approx 273{,}15\ \text{K}$$
+
+Na prática adota-se um único ponto fixo, o **ponto triplo da água**, em que gelo, água
+líquida e vapor coexistem, a 4,58 mmHg e 0,01 °C, ao qual se atribui $T_{tr} = 273{,}16$ K:
+
+$$\boxed{\;T = 273{,}16\ \text{K} \cdot \lim_{P_{tr} \to 0} \frac{P}{P_{tr}}\;}$$
+
+A escala é chamada **de gás ideal** porque se apoia no fato empírico de que todo gás muito
+rarefeito se comporta do mesmo modo, e esse comportamento universal é, por definição, o do
+gás ideal. O estudo da segunda lei mostra que ela coincide com uma escala termodinâmica
+definida sem referência a substância alguma, e é isso que a torna **absoluta**. O limite prático
+é da ordem de 1 K, com hélio a baixa pressão.
+
+Na instrumentação de bordo convivem três escalas:
+
+- **Celsius (°C):** padrão nos instrumentos de máquinas.
+- **Kelvin (K):** obrigatória em toda razão de pressão, volume ou energia. O grau tem o mesmo
+  tamanho do Celsius, de modo que $\Delta T[\text{K}] = \Delta T[°\text{C}]$.
+- **Fahrenheit (°F):** residual, em documentação e equipamento antigos.
 
 $$T[\text{K}] = T[°\text{C}] + 273{,}15$$
 
@@ -98,13 +150,16 @@ se cada sensor de fato equilibrou com o fluido (lei zero).
 ## Erros clássicos
 
 - **Confundir temperatura com calor:** temperatura é propriedade do corpo (K ou °C);
-  calor é energia em trânsito (J). Um litro de água a 60 °C tem menos calor que 100
-  litros de água a 50 °C.
+  calor é energia em trânsito (J), e por isso um corpo não "tem" calor. Um litro de água a
+  60 °C tem menos energia interna que 100 litros de água a 50 °C.
 - **Esquecer de converter para Kelvin em cálculos:** razões de pressão, volume ou
   energia envolvem **sempre** Kelvin, não Celsius.
 - **Tomar zero Celsius por ausência de temperatura:** zero Celsius é convenção de escala,
   o ponto de fusão da água. Zero Kelvin (−273,15 °C) é o limite térmico real, de energia
   cinética mínima possível.
+- **Supor que dois termômetros bem calibrados concordam sempre:** mercúrio e álcool,
+  calibrados nos mesmos dois pontos fixos, divergem entre eles. Só a escala de gás ideal
+  independe da substância.
 :::
 
 ## Equilíbrio térmico entre dois corpos e a leitura do termômetro

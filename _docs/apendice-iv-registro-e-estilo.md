@@ -296,10 +296,17 @@ uma exposição.
 | Digressão, nota histórica ou exemplo que o livro traz e a aula não usa | Corte |
 | Duas páginas de dedução do livro reproduzidas | O resultado, o passo que o justifica e o que ele custa em hipótese |
 
-Permanecem legítimos, porque não são decalque: os **títulos de seção** que são nomes
-consagrados do assunto (lei de Stevin, princípio de Arquimedes, equação de Bernoulli); as
-**citações literais curtas e atribuídas** (Torricelli, Pascal), entre aspas; e os **resultados
-e sua notação**, que são da física, não do autor.
+**Extensão: nota de aula, não livro.** O livro-texto desenvolve para quem estuda sozinho; a
+nota de aula acompanha uma exposição. A mesma matéria cabe em fração do espaço, e essa fração é
+o alvo. Cada seção entrega o **resultado**, o **passo que o justifica** e a **hipótese que ele
+custa**. Digressão, nota histórica e analogia do livro entram só quando carregam física que o OE
+pede; caso contrário, saem.
+
+**Fora da regra**, porque não são decalque:
+
+- **Títulos de seção** — integralmente, consagrados ou não. O índice do assunto é do assunto.
+- **Citações literais curtas e atribuídas** (Torricelli, Pascal), entre aspas.
+- **Resultados e sua notação**, que são da física, não do autor.
 
 Aplicar tópico a tópico, junto com a passada de registro: a compressão do §IV1 R3 e a
 de-literalização são o mesmo movimento de reescrita, e separá-las duplica o trabalho.

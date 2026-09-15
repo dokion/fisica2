@@ -16,34 +16,64 @@ OE 4.8 [B2] Explicar os efeitos da dilatação térmica em estruturas e materiai
 
 {{< aula 31-32 >}}
 
-Quando a temperatura sobe, as moléculas vibram mais. Em sólidos e líquidos, essa vibração
-maior força um afastamento médio entre átomos, causando aumento de tamanho. Essa é a
-**dilatação térmica**, fenômeno crítico em máquinas navais, onde tubulações de vapor,
-cilindros e estruturas de aço sofrem variações de temperatura de 20 °C (praça fria) até
-200 °C (vapores de motor). Sem levar em conta a dilatação, tubos racham, juntas vazam,
-rotores emperram.
+A subida da coluna de mercúrio no termômetro do tópico anterior é já um caso de **dilatação
+térmica**: a alteração de tamanho produzida por uma variação de temperatura. Ela corresponde,
+na escala microscópica, ao aumento do espaçamento médio da estrutura. Em máquinas navais o
+fenômeno é crítico: tubulação de vapor, camisa de cilindro e estrutura de aço passam de
+20 °C na praça fria a 200 °C em serviço, e sem folga calculada o tubo racha, a junta vaza e o
+rotor emperra.
 
 ## Três tipos de dilatação {{< ra OE4.5 B1 >}} {{< ra OE4.6 B2 >}}
 
-Conforme mude o comprimento, a área ou o volume, há três casos:
+Num sólido, a variação $\Delta l$ da distância entre dois pontos é proporcional à distância
+inicial $l_0$ e, para variação de temperatura pequena, também a $\Delta T$:
 
-**Dilatação linear:** uma barra ou tubo cresce em comprimento.
+$$\Delta l = \alpha\,l_0\,\Delta T
+\qquad\Longrightarrow\qquad
+\boxed{\;L = L_0\,[1 + \alpha(T - T_0)]\;}$$
 
-$$L = L_0 [1 + \alpha(T - T_0)]$$
+O **coeficiente de dilatação linear** $\alpha$, em K⁻¹, é a variação percentual de comprimento
+por grau. Ele varia com a temperatura, mas a variação é desprezível longe do ponto de fusão.
 
-onde $\alpha$ é o coeficiente de dilatação linear (unidade: 1/K ou 1/°C), $L_0$ é o
-comprimento inicial à temperatura $T_0$.
+Os outros dois coeficientes **não são independentes**: saem deste por geometria. Para uma
+lâmina isotrópica de lados $l_1$ e $l_2$:
 
-**Dilatação superficial:** uma chapa ou película muda de área. O coeficiente $\beta = 2\alpha$:
+$$\frac{\Delta A}{A} = \frac{\Delta(l_1 l_2)}{l_1 l_2}
+\simeq \frac{\Delta l_1}{l_1} + \frac{\Delta l_2}{l_2}
+= 2\alpha\,\Delta T$$
 
-$$A = A_0 [1 + \beta(T - T_0)]$$
+O termo $\Delta l_1 \Delta l_2$, de ordem $\alpha^2$, foi desprezado, e é legítimo desprezá-lo
+justamente porque $\alpha \sim 10^{-5}$. O mesmo cálculo num paralelepípedo de arestas $l_1$,
+$l_2$, $l_3$ dá três parcelas:
 
-**Dilatação volumétrica:** um líquido ou gás expande o volume. O coeficiente $\gamma = 3\alpha$:
+$$\frac{\Delta V}{V} = 3\alpha\,\Delta T$$
 
-$$V = V_0 [1 + \gamma(T - T_0)]$$
+O **coeficiente superficial é $2\alpha$ e o volumétrico é $3\alpha$**, e ambos valem também
+para a área de um furo e para o volume de uma cavidade: o orifício dilata como se fosse
+feito do material que o cerca, não ao contrário.
 
-Essa progressão ($1\alpha$, $2\alpha$, $3\alpha$) vem da geometria: uma mudança de 1% em cada
-dimensão causa 1% de mudança linear, $1 + 1 + 1 = 3$% de mudança volumétrica.
+**Líquidos são caso à parte.** Um líquido toma a forma do recipiente, de modo que só o
+coeficiente volumétrico tem sentido, e ele é grandeza **independente**, medida diretamente:
+
+$$\frac{\Delta V}{V} = \beta\,\Delta T$$
+
+Não vale $\beta = 3\alpha$: essa relação é de sólido isotrópico. Valores típicos de $\beta$
+para líquidos são da ordem de 10⁻³ K⁻¹, uma a duas ordens de grandeza acima de $3\alpha$ dos
+sólidos; para o mercúrio, $\beta \approx 1{,}8 \times 10^{-4}$ K⁻¹.
+
+Daí funcionar o termômetro de mercúrio. O bulbo de vidro dilata como $V_0(1 + 3\alpha\theta)$ e
+o mercúrio como $V_0(1 + \beta\theta)$; o que sobe pelo capilar é a diferença, $V_0(\beta -
+3\alpha)\theta$. A grandeza $\beta - 3\alpha$ é o **coeficiente de dilatação aparente** do
+líquido: o instrumento mede o descompasso entre líquido e recipiente, não a dilatação do
+líquido.
+
+### A anomalia da água
+
+Quase sempre $\beta > 0$, mas a água tem $\beta$ **negativo** entre 0 °C e 4 °C: resfriada
+abaixo de 4 °C, ela se expande em vez de contrair, e a densidade máxima ocorre a 4 °C. Duas
+consequências diretas: um cano cheio de água estoura ao congelar, e um lago congela pela
+superfície, porque a água mais densa a 4 °C fica no fundo e o gelo flutua sobre ela. A
+explicação microscópica está nas ligações de hidrogênio da molécula, e não é simples.
 
 ## Coeficientes e aplicações {{< ra OE4.7 B3 >}}
 

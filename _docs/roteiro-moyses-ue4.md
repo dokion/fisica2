@@ -237,6 +237,6 @@ UE 3. As UE 1 e 2 seguem a ordem numérica do sumário; nada aqui se aplica a el
 **Capítulos.** 7 a 11. O capítulo 7 entra porque os tópicos 4.1 e 4.2 dependem inteiramente dele.
 
 **Tratamento da fonte.** Apêndice IV §IV4.1, aplicado desde a primeira escrita: o Moysés dá a
-ordem, o fio condutor e os resultados, não a redação. Títulos de seção que sejam nomes consagrados
-do assunto (lei zero, ciclo de Carnot, teorema de Clausius, relação de Mayer) são legítimos e não
-contam como decalque.
+ordem, o fio condutor e os resultados, não a redação. Títulos de seção estão fora da regra. A
+extensão é a de nota de aula, não a de livro: resultado, passo que o justifica, hipótese que ele
+custa — o desenvolvimento longo pertence ao livro, que o aluno tem.
