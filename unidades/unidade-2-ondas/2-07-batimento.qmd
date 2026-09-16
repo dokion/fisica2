@@ -9,7 +9,7 @@ OE 2.20 [B2] Explicar o fenômeno do batimento sonoro
 OE 2.21 [B3] Determinar a frequência dos batimentos
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 17-18 >}}
+{{< aula 29-30 >}}
 
 Quando **duas ondas sonoras de frequências ligeiramente diferentes** se propagam simultaneamente, o ouvido percebe *uma* frequência média cuja amplitude oscila devagar, e não duas frequências distintas. O efeito chama-se **batimento**. Na navegação acústica ele aparece na sobreposição de ecos de múltiplas frequências ou de reflexões fantasmas, e reconhecê-lo permite ao operador de sonar separar sinal útil de ruído estruturado.
 

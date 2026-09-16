@@ -11,7 +11,7 @@ OE 2.19 [B3] Resolver problemas envolvendo nível sonoro e sua variação
             → naval: Log acústico de correlação
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 17-18 >}}
+{{< aula 29-30 >}}
 
 Uma onda sonora carrega energia. Emitido o pulso pelo transdutor de um sonar, essa energia se distribui em todas as direções e diminui com a distância. A **intensidade** quantifica a energia por unidade de área, e o **nível sonoro em decibéis** é a escala logarítmica com que se comparam intensidades. Desses conceitos decorrem tanto o alcance de detecção de um sonar, da ordem de 50 km, quanto o limite que o ruído de fundo do oceano lhe impõe.
 

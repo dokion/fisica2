@@ -157,11 +157,16 @@ cinco pares que a UE 3 já ocupava:
 
 | Par | Tópicos |
 |---|---|
-| 21-22 | 3.1, 3.2 |
-| 23-24 | 3.3 |
-| 25-26 | 3.8, 3.7 |
-| 27-28 | 3.4 |
-| 29-30 | 3.6, 3.5 |
+| 37-38 | 3.1 |
+| 39-40 | 3.2 |
+| 41-42 | 3.2 (continuação) |
+| 43-44 | 3.3 |
+| 45-46 | 3.8 |
+| 47-48 | 3.7 |
+| 49-50 | 3.4 |
+| 51-52 | 3.4 (continuação) |
+| 53-54 | 3.6 |
+| 55-56 | 3.5 |
 
 A linha da UE 3 no cronograma do `index.qmd` foi reescrita para bater com isso, e a verificação
 C3 (Quiz Dokion) foi mantida no par 25-26 — a posição do instrumento é decisão do professor, e o
@@ -169,9 +174,10 @@ Apêndice I amarra avaliação a par de aulas, não a tópico.
 
 ## 7. Pendências abertas (fora do escopo desta reordenação)
 
-- A UE 3 tem 16 h-aula expositivas + 4 práticas = 10 pares (Apêndice II §II1), mas os badges
-  cobrem 5 pares e as 4 h-aula práticas não têm contrapartida. A compressão é global (o
-  cronograma inteiro usa 20 pares para 40 pares de CHD), não específica da UE 3.
+- ~~Badges cobrem 5 pares para 10 devidos.~~ **Resolvido.** O cronograma foi redistribuído
+  sobre os 40 pares da CHD e a UE 3 passou a ocupar os 10 pares que lhe cabem, de 37-38 a
+  55-56, com os badges dos arquivos atualizados. Continua em aberto apenas a contrapartida
+  das 4 h-aula **práticas**, que o PLADIS trata em tabela própria (Apêndice II §II5).
 - `_quarto.yml` não declara `format: pdf`, exigido pelo CLAUDE.md §5.
 - Ordem interna do `3-05`: as seções seguem 3.18, 3.19, 3.21, 3.20 — os adimensionais são
   definidos antes da semelhança dinâmica, porque não se pode falar em escala de Froude antes de

@@ -14,7 +14,7 @@ OE 4.8 [B2] Explicar os efeitos da dilatação térmica em estruturas e materiai
             → naval: Tensões térmicas em casco e tubulações
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 31-32 >}}
+{{< aula 59-60 >}}
 
 A subida da coluna de mercúrio no termômetro do tópico anterior é já um caso de **dilatação
 térmica**: a alteração de tamanho produzida por uma variação de temperatura. Ela corresponde,

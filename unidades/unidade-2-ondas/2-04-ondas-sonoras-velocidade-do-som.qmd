@@ -11,7 +11,7 @@ OE 2.12 [B2] Explicar os fatores que influenciam a velocidade do som
 OE 2.13 [B2] Comparar a velocidade do som em sólidos, líquidos e gases
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 15-16 >}}
+{{< aula 25-26 >}}
 
 O som é a onda mais corriqueira e, na navegação, a principal via de sondagem do ambiente submarino. As ondas eletromagnéticas não se propagam bem na água; o som, ao contrário, propaga-se nela e nos sólidos com velocidade alta, o que permite a ecobatímetros e sonares reconhecer o que está abaixo do casco.
 

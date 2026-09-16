@@ -11,7 +11,7 @@ OE 1.6 [B3] Determinar amplitude, frequência e fase do MHS
             → naval: T = 8–25 s; boca 15–40 m (SP3)
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 2 >}}
+{{< aula 3-4 >}}
 
 O tópico anterior caracterizou o MHS em termos conceituais. Aqui a mesma senoide é
 obtida por dois caminhos independentes, a **lei de força** e a **projeção do movimento

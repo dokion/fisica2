@@ -14,7 +14,7 @@ OE 3.12 [B3] Resolver problemas práticos envolvendo escoamento em tubos e dutos
             → naval: Sistemas de porão e lastro; válvulas de não-retorno
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 23-24 >}}
+{{< aula 43-44 >}}
 
 A dinâmica dos fluidos é assunto de considerável complexidade, e o que segue limita-se a noções
 introdutórias. Toda a estática anterior decorreu de uma equação, $\mathbf{f} = \operatorname{grad} p$,

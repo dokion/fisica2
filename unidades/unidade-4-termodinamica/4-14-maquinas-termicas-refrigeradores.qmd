@@ -12,7 +12,7 @@ OE 4.45 [B4] Analisar o impacto da irreversibilidade em máquinas térmicas
              → naval: perdas mecânicas e térmicas no motor diesel real
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 37-38 >}}
+{{< aula 73-74 >}}
 
 Toda a termodinâmica do curso converge aqui: o motor diesel que move o navio é uma
 máquina térmica, e a planta de refrigeração da praça de máquinas é o mesmo ciclo

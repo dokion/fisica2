@@ -14,7 +14,7 @@ OE 3.4 [B2] Identificar o impacto da viscosidade no escoamento dos fluidos
             → naval: Sistemas de bombeamento; tubulações de porão
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 21-22 >}}
+{{< aula 37-38 >}}
 
 Sólidos possuem volume e forma definidos. Líquidos conservam o volume, mas não a forma:
 amoldam-se ao recipiente e apresentam **superfície livre** em contato com a atmosfera. Gases não

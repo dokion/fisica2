@@ -14,7 +14,7 @@ OE 3.25 [B4] Analisar a influência da viscosidade no arrasto de atrito
             → naval: Arrasto de atrito; incrustações no casco
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 29-30 >}}
+{{< aula 53-54 >}}
 
 O tópico da sustentação encerrou-se no paradoxo de d'Alembert: **um fluido perfeito não oferece
 resistência alguma** ao deslocamento de um corpo. O estudo do escoamento viscoso indicou a origem

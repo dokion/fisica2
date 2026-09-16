@@ -12,7 +12,7 @@ OE 1.25 [B4] Analisar a formação de modos normais em sistemas acoplados
              → naval: Modos normais em estrutura do navio
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 11-12 >}}
+{{< aula 17-18 >}}
 
 Um navio não é um oscilador único: casco, mastro, estrutura de máquinas e carga vibram
 acoplados, e quando um oscila puxa o outro. Dessa interação nascem os **modos normais**,

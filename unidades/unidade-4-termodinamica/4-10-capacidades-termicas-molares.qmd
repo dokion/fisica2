@@ -12,7 +12,7 @@ OE 4.33 [B3] Determinar a razão entre calores específicos (γ = Cp/Cv)
             → naval: γ no cálculo de processos adiabáticos (equação de Poisson)
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 35-36 >}}
+{{< aula 69-70 >}}
 
 Um gás pode ser aquecido a volume constante, em cilindro de paredes rígidas, ou a pressão
 constante, com pistão livre. Os calores necessários diferem, porque a pressão constante

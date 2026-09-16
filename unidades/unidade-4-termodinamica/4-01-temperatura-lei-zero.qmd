@@ -14,7 +14,7 @@ OE 4.4 [B2] Justificar a necessidade de escalas termométricas
             → naval: Escalas usadas em instrumentos de máquinas
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 31-32 >}}
+{{< aula 57-58 >}}
 
 Antes de qualquer máquina térmica, seja motor diesel, caldeira ou trocador de calor, vem a
 questão de como medir o quanto um corpo está quente. Deste tópico saem o que autoriza o

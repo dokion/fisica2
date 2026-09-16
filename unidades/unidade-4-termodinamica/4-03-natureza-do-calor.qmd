@@ -12,7 +12,7 @@ OE 4.11 [B2] Explicar os mecanismos de transferência de calor
              → naval: Condução/convecção/radiação em trocadores e caldeiras
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 31-32 >}}
+{{< aula 61-62 >}}
 
 No fim do século XVIII disputavam duas hipóteses sobre a natureza do calor. A dominante,
 batizada por Lavoisier, tomava o calor por uma substância fluida e indestrutível, o

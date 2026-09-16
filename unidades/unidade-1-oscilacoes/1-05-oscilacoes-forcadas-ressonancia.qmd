@@ -12,7 +12,7 @@ OE 1.16 [B4] Analisar exemplos práticos de ressonância em estruturas
              → naval: Dano permanente se operado em vel. crítica
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 9-10 >}}
+{{< aula 11-12 >}}
 
 Quando um sistema é forçado por excitação periódica externa, como a vibração que o motor
 impõe ao casco, e a frequência da força se aproxima da frequência natural do sistema,

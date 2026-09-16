@@ -12,7 +12,7 @@ OE 4.27 [B3] Aplicar a equação de estado em diferentes condições físicas
             → naval: Cálculo de pressões e temperaturas no ciclo
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 33-34 >}}
+{{< aula 67-68 >}}
 
 O gás dentro de um cilindro de motor diesel está a pressões de 40–200 bar e temperaturas de
 400–2000 K, num volume que muda continuamente. Conhecer $P$, $V$ e $T$ em cada ponto do

@@ -14,7 +14,7 @@ OE 3.21 [B3] Relacionar grandezas adimensionais como coeficiente de arrasto e n�
             → naval: Coeficiente de bloco Cb; número de Froude
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 29-30 >}}
+{{< aula 55-56 >}}
 
 Ao longo desta unidade apareceram, sem menção ao método que as produz, três grandezas
 **adimensionais** empregadas em problemas muito distintos:

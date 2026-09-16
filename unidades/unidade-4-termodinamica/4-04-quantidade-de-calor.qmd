@@ -12,7 +12,7 @@ OE 4.14 [B3] Aplicar o conceito de calor latente em mudanças de fase
             → naval: Vaporização em caldeiras; refrigeração de bordo
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 31-32 >}}
+{{< aula 61-62 >}}
 
 O calor para aquecer um litro de água de 20 °C a 80 °C, ou o que uma caldeira consome para
 vaporizar 1 tonelada de água, são questões de **quantidade de calor**, a energia em joules

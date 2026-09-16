@@ -12,7 +12,7 @@ OE 4.17 [B4] Analisar a condutividade térmica de diferentes materiais
             → naval: Materiais de isolamento térmico de bordo
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 33-34 >}}
+{{< aula 63-64 >}}
 
 A parede de um cilindro de motor diesel está quente de um lado (combustão a ~1800 K) e
 fria do outro (água de refrigeração a ~350 K). Calor flui de quente para frio por

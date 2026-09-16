@@ -12,7 +12,7 @@ OE 4.42 [B3] Aplicar a 2ª Lei na análise de processos naturais
             → naval: Análise de irreversibilidade em ciclos reais
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 37-38 >}}
+{{< aula 75-76 >}}
 
 O ciclo de Carnot deixou um resultado que vai além das máquinas. Para ele vale
 $Q_q/T_q = Q_f/T_f$, isto é, a soma de $Q/T$ sobre o ciclo se anula. Este tópico mostra que

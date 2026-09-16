@@ -14,7 +14,7 @@ OE 4.24 [B4] Analisar a variação de energia interna em diferentes processos
             → naval: Processos no ciclo Diesel/Otto/Dual — diagramas P-V
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 33-34 >}}
+{{< aula 65-66 >}}
 
 A Primeira Lei da Termodinâmica é o enunciado formal da conservação de energia onde calor e
 trabalho interagem. Em máquinas navais ela governa todo o balanço: cada joule de calor que

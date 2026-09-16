@@ -12,7 +12,7 @@ OE 2.24 [B3] Resolver problemas práticos envolvendo o efeito Doppler
             → naval: Cálculo de velocidade pelo log Doppler
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 17-18 >}}
+{{< aula 31-32 >}}
 
 Quando a **fonte** de uma onda, o transdutor de sonar por exemplo, ou o **observador** que a recebe se move em relação ao meio de propagação, a frequência percebida muda: é o **efeito Doppler**. Dele vive o log Doppler, que mede a **velocidade sobre o fundo** enviando som para baixo e lendo o deslocamento de frequência do eco. A operação dos sistemas de navegação modernos exige distinguir as situações possíveis: navio em movimento com fundo fixo, ambos móveis, fonte ou observador em deslocamento.
 

@@ -12,7 +12,7 @@ OE 1.19 [B2] Explicar o impacto da ressonância em sistemas amortecidos
              → naval: Dispositivos de fixação que se soltam por vibração
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 9-10 >}}
+{{< aula 13-14 >}}
 
 Toda máquina e toda estrutura real vibram dentro de um meio dissipativo: fluido, material
 estrutural, suportes. O amortecimento sempre presente reduz a amplitude de ressonância, mas

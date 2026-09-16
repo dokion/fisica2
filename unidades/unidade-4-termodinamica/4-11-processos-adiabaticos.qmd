@@ -12,7 +12,7 @@ OE 4.36 [B3] Aplicar a equação de estado em processos adiabáticos
             → naval: Temperatura de ignição por compressão no diesel
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 35-36 >}}
+{{< aula 71-72 >}}
 
 Comprimido um gás muito rapidamente, como dentro de um cilindro de motor diesel, não há
 tempo para o calor sair para o ambiente, e a compressão é **adiabática** ($Q = 0$). Toda a

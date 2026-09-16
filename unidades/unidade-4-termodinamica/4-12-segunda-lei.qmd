@@ -12,7 +12,7 @@ OE 4.39 [B2] Interpretar a eficiência de máquinas térmicas a partir da 2ª Le
             → naval: η = 1 − Q2/Q1; eficiência de Carnot como limite
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 37-38 >}}
+{{< aula 73-74 >}}
 
 A Primeira Lei conta energia e nada mais. Qualquer processo que a conserve é compatível com
 ela, inclusive de trás para diante. Mas os processos macroscópicos ocorrem num só sentido:

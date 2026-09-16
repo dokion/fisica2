@@ -12,7 +12,7 @@ OE 1.22 [B4] Analisar a dissipação de energia em oscilações amortecidas
              → naval: Estresse reversivo em componentes de bordo
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 11-12 >}}
+{{< aula 15-16 >}}
 
 A energia flui e se transforma, mas não é criada nem destruída. Num oscilador ela migra
 entre a forma cinética, do movimento, e a potencial, de deformação ou de altura. Havendo

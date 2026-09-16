@@ -12,7 +12,7 @@ OE 4.30 [B2] Conceituar entalpia e sua importância em processos termodinâmicos
             → naval: Entalpia em trocadores e caldeiras
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 33-34 >}}
+{{< aula 69-70 >}}
 
 A energia de um gás aquecido está toda no movimento caótico das moléculas: é a **energia
 interna**. Nos gases ideais ela depende *apenas* da temperatura, e não da pressão ou do

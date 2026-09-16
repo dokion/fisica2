@@ -14,7 +14,7 @@ OE 3.8 [B3] Resolver problemas sobre equilíbrio de corpos flutuantes
             → naval: Curva deslocamento/calado; carga/descarga e variação de calado
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 21-22 >}}
+{{< aula 39-40 >}}
 
 Ficou estabelecido que, num fluido em equilíbrio, a força superficial sobre um elemento é
 puramente normal e que a pressão num ponto independe da direção. Resta determinar como a pressão

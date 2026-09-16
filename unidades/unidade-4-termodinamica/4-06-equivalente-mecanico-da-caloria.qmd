@@ -12,7 +12,7 @@ OE 4.20 [B3] Determinar a conversão entre calorias e joules
             → naval: Conversão de unidades em balanços energéticos
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 33-34 >}}
+{{< aula 63-64 >}}
 
 Estabelecido que calor é energia, resta um problema de medida. A caloria foi definida pelo
 aquecimento que produz na água, e o joule, pelo trabalho mecânico. Se as duas medem a mesma

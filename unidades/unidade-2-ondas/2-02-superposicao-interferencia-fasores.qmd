@@ -12,7 +12,7 @@ OE 2.6 [B3] Aplicar o conceito de fasores para representar ondas
 OE 2.7 [B3] Resolver problemas de interferência
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 13-14 >}}
+{{< aula 21-22 >}}
 
 Duas ondas que viajam no mesmo meio **somam-se**, em vez de colidir e desaparecer. O princípio vale em regime linear e sustenta a leitura de dois ecos de sonar que se reforçam ou se cancelam, e daí a interpretação da assinatura acústica de um contato.
 

@@ -11,7 +11,7 @@ OE 2.16 [B4] Analisar a relação entre frequência, comprimento de onda e veloc
             → naval: Cálculo de profundidade: d = v·t/2
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 15-16 >}}
+{{< aula 27-28 >}}
 
 Uma onda sonora progressiva propaga-se numa única direção, levando energia do ponto de emissão ao de recepção. No ecobatímetro e no sonar o pulso sonoro é uma onda progressiva: emitido pelo transdutor, viaja até o fundo, reflete e retorna.
 

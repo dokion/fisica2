@@ -67,7 +67,8 @@ posterior de um conceito já dado. Invertendo os dois, a entropia chega como **c
 argumento que o aluno acompanhou, e o rendimento de Carnot — que o maquinista usa — é a origem
 dela, não um corolário.
 
-O par de aulas não muda: 4.13 e 4.14 já ocupavam ambos o par 37-38.
+A inversão é de pares vizinhos: na redistribuição do cronograma sobre os 40 pares da CHD, o
+4.14 ficou no par 73-74, junto com o 4.12, e o 4.13 no par 75-76 seguinte.
 
 ---
 
@@ -208,23 +209,31 @@ Duas seções entram **partidas** entre dois arquivos, e isso é deliberado:
 
 ## 6. Badges de aula e cronograma
 
-A inversão 4.14 ↔ 4.13 acontece **dentro** de um mesmo par de aulas, de modo que nenhum badge
-muda e o cronograma do `index.qmd` só troca a ordem dos nomes na linha 37-38:
+Distribuição sobre os 11 pares que cabem à UE 4, de 57-58 a 77-78, conforme o cronograma do
+`index.qmd`:
 
 | Par | Tópicos |
 |---|---|
-| 31-32 | 4.1, 4.2, 4.3, 4.4 |
-| 33-34 | 4.5, 4.6, 4.7, 4.8, 4.9 |
-| 35-36 | 4.10, 4.11 |
-| 37-38 | 4.12, **4.14, 4.13** |
-| 39-40 | 4.15, 4.16 |
+| 57-58 | 4.1 |
+| 59-60 | 4.2 |
+| 61-62 | 4.3, 4.4 |
+| 63-64 | 4.5, 4.6 |
+| 65-66 | 4.7 |
+| 67-68 | 4.8 |
+| 69-70 | 4.9, 4.10 |
+| 71-72 | 4.11 |
+| 73-74 | 4.12, **4.14** |
+| 75-76 | **4.13** |
+| 77-78 | 4.15, 4.16 |
 
 ---
 
 ## 7. Pendências abertas (fora do escopo desta reordenação)
 
-- A UE 4 tem 22 h-aula expositivas = 11 pares (Apêndice II §II1), mas os badges cobrem 5 pares. A
-  compressão é global, não específica da UE 4, e é a mesma pendência registrada para a UE 3.
+- ~~Badges cobrem 5 pares para 11 devidos.~~ **Resolvido.** O cronograma foi redistribuído
+  sobre os 40 pares da CHD e a UE 4 passou a ocupar os 11 pares que lhe cabem, de 57-58 a
+  77-78, com os badges dos arquivos atualizados. A inversão 4.14 ↔ 4.13 deixou de ocorrer
+  dentro de um mesmo par: agora são pares vizinhos, 73-74 e 75-76.
 - `_quarto.yml` não declara `format: pdf`, exigido pelo CLAUDE.md §5. Pendência herdada.
 - Densidade: a UE 4 partiu de 14 806 palavras de prosa, 925 por tópico, e fechou em 20 785,
   1 299 por tópico. A reescrita a partir da fonte fez a unidade **crescer** 40%, ao contrário

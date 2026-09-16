@@ -12,7 +12,7 @@ OE 4.51 [B2] Explicar o comportamento dos calores específicos em diferentes fai
              → naval: variação de γ com temperatura em motores
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 39-40 >}}
+{{< aula 77-78 >}}
 
 Este tópico fecha a unidade ligando a descrição microscópica, estabelecida na teoria
 cinética, ao que os motores de fato usam: o calor específico e a razão $\gamma$ que governam

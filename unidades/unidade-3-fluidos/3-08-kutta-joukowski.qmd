@@ -14,7 +14,7 @@ OE 3.33 [B3] Aplicar o conceito de vórtice de esteira para análise de escoamen
             → naval: Esteira do hélice; singing do hélice
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 25-26 >}}
+{{< aula 45-46 >}}
 
 A continuidade e Bernoulli descrevem o que ocorre **ao longo de** uma linha de corrente, mas nada
 dizem sobre a questão decisiva para o entendimento do leme e da pá do hélice: enquanto avança, o

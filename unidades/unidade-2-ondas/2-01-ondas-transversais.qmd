@@ -11,7 +11,7 @@ OE 2.3 [B2] Diferenciar ondas transversais de longitudinais
             → naval: Som = longitudinal; radar = transversal (EM)
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 13-14 >}}
+{{< aula 19-20 >}}
 
 Uma onda é uma perturbação que se propaga no espaço, transportando energia e informação. A unidade abre pelas **ondas transversais**, o tipo mais visível em cordas e na superfície da água, empregado pelo radar na detecção de alvos e no acionamento do escâner de ecobatímetro moderno.
 

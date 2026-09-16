@@ -11,7 +11,7 @@ OE 2.9 [B2] Explicar a formação de modos normais de vibração em meios limita
 OE 2.10 [B4] Analisar exemplos de modos normais em cordas e tubos sonoros
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 15-16 >}}
+{{< aula 23-24 >}}
 
 Quando uma onda atinge uma superfície sólida ou uma mudança abrupta de meio, ela **reflete**: é o princípio do ecobatímetro, que envia um pulso e recebe o retorno do fundo. Em geometrias confinadas, como a coluna de água entre a superfície e o fundo, as ondas refletidas somam-se às incidentes e criam padrões estacionários, os **modos normais**. Deles nascem os ecos falsos e boa parte do comportamento anômalo dos sistemas acústicos de bordo.
 

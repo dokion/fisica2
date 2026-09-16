@@ -12,7 +12,7 @@ OE 4.48 [B2] Explicar a interpretação microscópica da temperatura
              → naval: temperatura como energia cinética média das moléculas
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 39-40 >}}
+{{< aula 77-78 >}}
 
 Até aqui, pressão e temperatura foram grandezas medidas por manômetros e termômetros.
 A teoria cinética revela o que elas *são* por baixo: pressão é o tamborilar de bilhões

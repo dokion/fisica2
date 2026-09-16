@@ -11,7 +11,7 @@ OE 2.27 [B4] Analisar o cone de Mach e sua relação com a velocidade do objeto
             → naval: Erros de radar em altas latitudes
 ═══════════════════════════════════════════════════════════════════════ -->
 
-{{< aula 19-20 >}}
+{{< aula 33-34 >}}
 
 Quando um objeto se move mais rápido que a onda que ele próprio gera, o tratamento ondulatório usual deixa de valer: em vez de a onda preceder o objeto, o objeto a alcança e ultrapassa, e forma-se uma **onda de choque** de grande amplitude. O navio mercante nunca atinge regime supersônico no ar, mas na água há velocidades próximas à do som, em torpedos e em propulsores cavitantes, e as anomalias de propagação de radar em altas latitudes, que envolvem ondas eletromagnéticas na atmosfera, explicam-se em parte por mecanismos semelhantes.
 
