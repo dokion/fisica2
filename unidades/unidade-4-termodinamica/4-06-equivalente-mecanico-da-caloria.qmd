@@ -14,35 +14,46 @@ OE 4.20 [B3] Determinar a conversão entre calorias e joules
 
 {{< aula 33-34 >}}
 
-Durante séculos o calor foi tido por uma substância, o calórico, distinta do trabalho
-mecânico. A mudança veio em 1840, quando James Joule, numa série de experimentos decisivos,
-mostrou que o trabalho mecânico produz a mesma quantidade de **aquecimento** que uma
-quantidade equivalente de calor. A descoberta abriu caminho para a Primeira Lei da
-Termodinâmica: calor e trabalho são **duas formas da mesma energia**. Em máquinas navais é
-essa equivalência que converte a energia química do combustível em trabalho de propulsão e
-em calor residual.
+Estabelecido que calor é energia, resta um problema de medida. A caloria foi definida pelo
+aquecimento que produz na água, e o joule, pelo trabalho mecânico. Se as duas medem a mesma
+coisa, existe uma taxa de câmbio fixa entre elas, e determiná-la é o que fecha o argumento.
 
 ## O experimento de Joule {{< ra OE4.19 B2 >}}
 
-Joule usou um recipiente isolado com água. Dentro, um sistema de pás rotava, agitando a água.
-Um peso pendurado fornecia trabalho mecânico ao cair e girar as pás. Resultado: a água
-aquecia. Ele mediu o trabalho mecânico (m·g·h) e a quantidade de calor (m_água · c · ΔT) e
-descobriu uma constante universal:
+O aparelho é um calorímetro de paredes adiabáticas cheio de água, com um conjunto de paletas
+preso a um eixo. Dois pesos, caindo por um sistema de polias, giram o eixo; o atrito das
+paletas aquece a água. O trabalho fornecido sai da altura de queda dos pesos, e o calor
+produzido, da elevação de temperatura medida pelo termômetro.
 
-**1 caloria ≡ 4,186 joules**
+O que dá força ao resultado não é o aparelho, mas a **repetição com métodos diferentes**.
+Joule trocou o fluido aquecido, o material das paletas e o próprio processo de aquecimento:
+substituiu as paletas por uma resistência elétrica, caso em que o trabalho equivalente é o
+gasto em alimentar o gerador. Os valores concordaram entre si dentro de cerca de 5%. Fosse a
+razão dependente do mecanismo, não haveria concordância alguma.
 
-A constante é uma conversão fundamental: trabalho contra o atrito, na compressão ou contra
-a viscosidade termina todo em calor microscópico. Joule provou experimentalmente que a
-conversão é determinística e universal.
+Os primeiros resultados são de 1843 e os precisos, de 1868, ao cabo de quase trinta anos de
+medições. Rowland refez a determinação em 1879 com erro abaixo de duas partes em mil. O valor
+aceito hoje:
+
+$$\boxed{\;1\ \text{cal} = 4{,}186\ \text{J}\;}$$
 
 ## Equivalência entre calor e trabalho {{< ra OE4.18 B3 >}}
 
-Se trabalho $W$ produz aquecimento de uma massa $m$ de água em $\Delta T$:
+A equivalência se verifica igualando as duas medidas do mesmo aquecimento. Numa versão
+elétrica do experimento, uma resistência de 68 Ω imersa em 1 L de água é percorrida por
+corrente de 1 A, e a temperatura da água sobe 1 °C por minuto. A potência dissipada é
 
-$$W = m \cdot c \cdot \Delta T$$
+$$P = R\,i^2 = 68 \times 1^2 = 68\ \text{W}
+\qquad\Longrightarrow\qquad
+E = 68 \times 60 = 4\,080\ \text{J por minuto}$$
 
-A quantidade de calor produzida é numericamente a mesma: são duas formas de medir a mesma
-energia, e não grandezas diferentes. Daí:
+Elevar 1 °C a temperatura de 1 L de água exige 1 kcal. Os mesmos 1 kcal e 4 080 J descrevem o
+mesmo aquecimento, donde esta medida dá 1 cal ≈ 4,08 J, a 2% do valor aceito. A conta é a de
+qualquer determinação do equivalente: contar a energia de um jeito, contar o aquecimento de
+outro, e igualar.
+
+Trabalho contra atrito, contra viscosidade ou dissipado numa resistência termina sempre como
+agitação microscópica. Daí:
 
 **Unidades de energia:**
 - **Joule (J):** unidade SI para energia, calor e trabalho.

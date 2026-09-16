@@ -24,34 +24,65 @@ prestação de contas de cada unidade de combustível queimado num motor diesel 
 
 ## Enunciado da Primeira Lei {{< ra OE4.21 B1 >}}
 
-**Primeira Lei da Termodinâmica:** A variação da energia interna de um sistema é igual ao
-calor adicionado ao sistema menos o trabalho realizado pelo sistema.
+A lei não começa como fórmula, e sim como um fato medido. Nas experiências de Joule, a água do
+calorímetro é levada de $T_i$ a $T_f$ **sempre em isolamento térmico**, por muitas vias
+distintas: paletas acionadas por pesos, resistência alimentada por gerador, compressão do gás
+por um pistão. Trabalho realizado sobre um sistema termicamente isolado chama-se **trabalho
+adiabático**. O resultado das medições é que ele não depende de como foi feito:
 
-$$\Delta U = Q - W$$
+> **Primeira Lei, primeira forma.** O trabalho necessário para levar um sistema termicamente
+> isolado de um dado estado inicial a um dado estado final independe do caminho.
 
-ou, em forma diferencial para um processo infinitesimal:
+Daí segue uma consequência que não é a fórmula, mas a existência de um objeto. Na mecânica,
+trabalho independente do caminho implica a existência de uma energia potencial, função apenas
+da configuração. Aqui, do mesmo modo, existe uma função do estado do sistema, a **energia
+interna** $U$, cuja variação é o trabalho adiabático:
 
-$$\text{d}U = \delta Q - \delta W$$
+$$\Delta U = U_f - U_i = -W_{i \to f}^{\text{adiabático}}$$
 
-Convenção de sinais:
-- $Q > 0$: calor entra no sistema
-- $Q < 0$: calor sai do sistema
-- $W > 0$: sistema realiza trabalho (expande, faz força)
-- $W < 0$: trabalho é feito sobre o sistema (comprime, força aplica-se)
+Ser **função de estado** significa que $U$ fica determinada pelo estado, e não pela história:
+para um fluido homogêneo, $U = U(P,V) = U(P,T) = U(V,T)$, indiferentemente. Só variações são
+definidas; o nível zero é arbitrário, como na energia potencial.
+
+O passo seguinte é largar o isolamento. Levando o sistema entre os **mesmos** dois estados por
+uma parede diatérmica, o trabalho medido é outro, mas $\Delta U$ é o mesmo, porque depende só
+dos estados. A diferença é, por definição, o calor trocado:
+
+$$\boxed{\;\Delta U = Q - W_{i \to f}\;}$$
+
+Esta é a definição termodinâmica de $Q$, já em unidades de energia, e é a forma geral da lei.
+O caso adiabático é o particular em que $Q = 0$.
+
+**Convenção de sinais.** $W$ é sempre o trabalho realizado **pelo** sistema e $Q$ é sempre o
+calor fornecido **ao** sistema. A energia interna cresce quando se fornece calor ($Q > 0$) ou
+quando se realiza trabalho sobre o sistema ($W < 0$). A escolha é histórica, e vem das
+máquinas térmicas: para elas convém contar positivos o calor que entra e o trabalho que sai.
 
 ## Interpretação e aplicação {{< ra OE4.22 B2 >}} {{< ra OE4.23 B3 >}}
 
-A Primeira Lei diz três coisas simultaneamente:
+Enunciada sucintamente, a lei diz que **a energia se conserva quando se leva o calor em
+conta**. As forças ditas dissipativas da mecânica, o atrito à frente, deixam de violar a
+conservação: o que elas retiram da energia mecânica aparece como energia interna.
 
-1. **Conservação de energia:** a energia não é criada nem destruída. Fornecido um calor $Q$
-   ao sistema, que realiza um trabalho $W$, o restante $Q - W$ fica armazenado como energia
-   interna $U$.
+Duas leituras seguem daí:
 
-2. **Equivalência:** calor e trabalho são intercambiáveis. Um joule de trabalho retirado
-   pode ser substituído por um joule de calor, e vice-versa.
+1. **Conservação.** Fornecido calor $Q$ a um sistema que realiza trabalho $W$, a diferença
+   $Q - W$ fica armazenada como energia interna. Não há máquina que produza trabalho do nada:
+   é o moto-perpétuo de primeira espécie que a lei proíbe.
 
-3. **Impossibilidade do moto-perpétuo:** não há máquina que converta 100% do calor em
-   trabalho. Sempre resta um $Q_2$ que escapa, pela razão que a Segunda Lei estabelece.
+2. **Calor e trabalho não são propriedades.** A mesma variação de energia interna pode ser
+   produzida com calor e trabalho em proporções quaisquer. Por isso é impossível dizer que
+   parte da energia interna de um corpo "é calor" e que parte "é trabalho": os dois termos
+   designam **fluxos** através da fronteira, nunca conteúdo.
+
+A divisão entre um e outro depende até de onde se traça a fronteira. Aquecendo água por uma
+resistência: incluindo o gerador no sistema, há trabalho; tomando só a água, há calor.
+
+::: {.callout-warning}
+A Primeira Lei **não** proíbe converter todo o calor em trabalho. Ela apenas contabiliza. A
+impossibilidade de rendimento 100% é conteúdo da Segunda Lei, e nada no balanço $\Delta U =
+Q - W$ a antecipa.
+:::
 
 Para um motor diesel em um ciclo completo:
 
@@ -72,19 +103,74 @@ $$\eta = \frac{W}{Q_1} = \frac{Q_1 - Q_2}{Q_1} = 1 - \frac{Q_2}{Q_1}$$
 Para um motor diesel real, η ≈ 0,40–0,50 (40–50%). Os 50–60% restantes saem como Q₂ na
 água de refrigeração, gases quentes de exaustão e radiação da parede.
 
+## Processos reversíveis e o trabalho como área
+
+Para calcular $W$ é preciso primeiro garantir que ele seja calculável. Um gás sob um pistão
+carregado de areia expande-se de $\mathrm{d}x$ quando se retira **um grão**, e o trabalho que
+realiza é
+
+$$\mathrm{d}'W = F\,\mathrm{d}x = PA\,\mathrm{d}x = P\,\mathrm{d}V$$
+
+Repetido grão a grão até uma expansão finita, o processo é **reversível** se cumprir duas
+condições: ser suficientemente lento e ter atrito desprezível.
+
+A lentidão é o que garante que o gás atravesse uma sucessão de estados de **equilíbrio**, em
+cada um dos quais $P$ e $V$ estão definidos. Um processo assim chama-se **quase-estático**. O
+contraexemplo esclarece: na **expansão livre**, um gás escapa por uma válvula para um
+recipiente evacuado, e o escoamento turbulento que se estabelece torna pressão e densidade
+diferentes de ponto a ponto. Os estados intermediários não são de equilíbrio e não admitem
+descrição por $P$ e $V$, de modo que não há curva a integrar.
+
+O atrito é a segunda condição: havendo atrito, a pressão externa é menor que $P$, o trabalho
+externo é menor que $P\,\mathrm{d}V$, e a diferença vira calor.
+
+Cumpridas as duas, a transformação é uma curva no plano $P$-$V$, o **diagrama indicador**
+introduzido por Watt, e o trabalho é a integral
+
+$$W_{i \to f} = \int_{V_i}^{V_f} P\,\mathrm{d}V$$
+
+que é a **área sob a curva**. Caminhos diferentes entre os mesmos dois pontos cercam áreas
+diferentes.
+
+### Por que $\mathrm{d}'W$ e não $\mathrm{d}W$
+
+Aí está a razão do apóstrofo. Como a área depende do caminho, $W$ **não** é função de estado:
+não existe "trabalho contido no sistema". Logo $\mathrm{d}'W$ não é a diferencial de função
+alguma, e chama-se **diferencial inexata**. O mesmo vale para $\mathrm{d}'Q = C\,\mathrm{d}T$,
+já que a capacidade térmica depende do caminho, e é por isso que $c_P \neq c_V$.
+
+A forma infinitesimal da lei subtrai duas diferenciais inexatas e devolve uma exata:
+
+$$\mathrm{d}U = \mathrm{d}'Q - \mathrm{d}'W = C\,\mathrm{d}T - P\,\mathrm{d}V$$
+
+Nem o calor nem o trabalho são funções de estado; a diferença deles é.
+
 ## Análise em diferentes processos {{< ra OE4.24 B4 >}}
 
-A Primeira Lei tem forma diferente conforme o processo:
+| Processo | Vínculo | Trabalho | Primeira Lei |
+|---|---|---|---|
+| **Isocórico** | $V$ constante | $W = 0$ | $\Delta U = Q$ |
+| **Isobárico** | $P$ constante | $W = P(V_f - V_i)$ | $\Delta U = Q - P(V_f - V_i)$ |
+| **Adiabático** | $Q = 0$ | $W = -\Delta U$ | $\Delta U = -W$ |
+| **Cíclico** | volta ao estado inicial | $W = Q$ | $\Delta U = 0$ |
 
-**Processo isocórico (volume constante):** W = 0 (não há expansão), logo ΔU = Q.
+O caso cíclico é o das máquinas térmicas: como o sistema retorna ao estado inicial a cada
+volta, $\Delta U = 0$ e **todo o trabalho produzido no ciclo iguala o calor líquido
+recebido**. O caso adiabático inclui, além do sistema isolado, todo processo rápido demais
+para haver troca apreciável de calor, como a compressão e a rarefação do ar numa onda sonora.
 
-**Processo isobárico (pressão constante):** trabalho W = P·ΔV. Parte do calor vira trabalho,
-parte vira ΔU.
+### Exemplo isobárico: a vaporização na caldeira
 
-**Processo adiabático:** Q = 0 (sem troca de calor), logo ΔU = −W. Trabalho realizado sai
-integralmente de redução de energia interna (temperatura cai).
+A água da caldeira é aquecida até a ebulição e vaporizada **a pressão constante**. Para cada
+massa $m$ convertida, o calor fornecido é o calor latente, $Q = mL$, e o vapor ocupa volume
+$V_v$ muito maior que o da água líquida, $V_l$. A expansão é isobárica, e a Primeira Lei dá
 
-**Processo cíclico:** ΔU = 0 (volta ao estado inicial), logo W = Q_entrada − Q_saída.
+$$\Delta U = mL - P(V_v - V_l)$$
+
+Nem todo o calor latente vira energia interna: parte é gasta empurrando a vizinhança para
+abrir espaço ao vapor. O que sobra é a energia que rompe as forças de atração entre as
+moléculas do líquido. Para a água a 1 atm e 100 °C, $L = 539$ cal/g; numa caldeira de bordo a
+pressão e a temperatura são bem mais altas.
 
 No ciclo Diesel típico:
 
