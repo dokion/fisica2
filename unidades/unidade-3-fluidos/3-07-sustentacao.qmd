@@ -126,7 +126,7 @@ para trás na partida. Fica pendente, porém, uma peça: para que a linha de cor
 ponta afilada em vez de contorná-la, o fluido precisa **não conseguir** contornar o bordo de
 fuga, coisa que um fluido perfeito conseguiria. O ponto é retomado no fecho do tópico.
 
-## A equação da sustentação {{< ra OE3.28 B3 >}}
+## A equação da sustentação {{< ra OE3.28 B3 >}} {{< fora >}}
 
 Na prática de projeto não se calcula $\Gamma$ diretamente: adimensionaliza-se a força pela pressão
 dinâmica $\tfrac{1}{2}\rho v^2$ e por uma área de referência $A$, e tabela-se o resultado.

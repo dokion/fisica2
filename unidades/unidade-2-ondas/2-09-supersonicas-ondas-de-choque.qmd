@@ -276,9 +276,8 @@ Inversões térmicas, com camadas quentes sobre camadas frias, criam **dutos de 
 
 1. Detecção de alvos além do horizonte geométrico.
 2. **Miragens de radar**, sinais fantasma de objetos ausentes.
-3. Efeitos de interferência e foco anômalo. <!-- [VERIFICAR: o texto original acrescentava "que simula movimento supersônico local"; a refração não produz movimento aparente supersônico, e a afirmação foi retirada para conferir com o parágrafo de propagação anômala acima.] -->
-
-São efeitos bem documentados nas regiões polares, Ártico e Antártida, e nos dutos oceânicos de regiões tropicais [VERIFICAR: o original dizia "tropicodutos"; o termo corrente em português é duto evaporativo]. Em águas polares a propagação anômala é comum, e a interpretação de contatos exige cautela.
+3. Efeitos de interferência e foco anômalo.
+São efeitos bem documentados nas regiões polares, Ártico e Antártida, e nos dutos evaporativos de regiões tropicais. Em águas polares a propagação anômala é comum, e a interpretação de contatos exige cautela.
 
 ::: {.sp}
 Um navio em operação em latitudes altas (60° N) detecta um contato de radar a 50 km aparente. A altura da antena do navio é 25 m; a altura do alvo presumido é típica de navio (15 m). O horizonte óptico (linha reta sem refração) seria:

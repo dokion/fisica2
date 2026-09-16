@@ -211,7 +211,7 @@ perfeito, os filetes de vórtice, anéis inclusive, são em seu deslocamento **s
 mesmas partículas fluidas**, conservando-se a circulação em torno deles. Tais resultados se
 vinculam à lei de conservação do momento angular.
 
-## O teorema de Kutta-Joukowski {{< ra OE3.30 B2 >}}
+## O teorema de Kutta-Joukowski {{< ra OE3.30 B2 >}} {{< fora >}}
 
 Reúnem-se agora as peças. Superposto a um escoamento uniforme de velocidade $v$ um escoamento
 circulatório de circulação $\Gamma$ em torno de um corpo, a distribuição de velocidades torna-se

@@ -331,9 +331,6 @@ Um navio patrulha em aproximação ao porto usa log Doppler de banda única (400
 
 O log Doppler simples, de frequência única referida a uma profundidade fixa, cerca de 80% da total, registra velocidade média ponderada pelo padrão de reflexão.
 
-<!-- [VERIFICAR: o enunciado não informa a velocidade do navio nem o rumo; assumi
-     velocidade sobre o fundo de 6,0 nós com proa na direção da corrente (leste).] -->
-
 **(a) Modelagem.** O log com referência a cerca de 80% da profundidade fixa a medida na
 camada profunda (50–150 m), onde a corrente é desprezível, e nessa condição a leitura
 aproxima a velocidade sobre o fundo (SOG). Caso a referência caia numa camada com corrente

@@ -216,7 +216,7 @@ A unidade SI é $1\ \text{N/m}^2 = 1\ \text{pascal} = 1\ \text{Pa}$. Também se 
 
 A bordo, a conversão prática mais usada é $1\ \text{bar} \approx 1\ \text{kgf/cm}^2$.
 
-## Tensão superficial e capilaridade {{< ra OE3.3 B4 >}}
+## Tensão superficial e capilaridade {{< ra OE3.3 B4 >}} {{< fora >}}
 
 No interior de um líquido cada molécula é atraída em todas as direções pelas vizinhas; na
 superfície faltam as vizinhas de cima. A resultante dirigida para dentro torna energeticamente

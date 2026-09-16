@@ -100,7 +100,7 @@ sentido horário.
 Fica estabelecido, portanto, que **onde há viscosidade há vorticidade**. É o que faltava ao
 fluido perfeito no estudo da sustentação, e é a origem da circulação de uma asa.
 
-## A equação de Navier-Stokes {{< ra OE3.15 B2 >}}
+## A equação de Navier-Stokes {{< ra OE3.15 B2 >}} {{< fora >}}
 
 A equação de movimento do fluido perfeito, $\rho\,\mathbf{a} = \mathbf{f} - \operatorname{grad} p$,
 ignora exatamente a força viscosa. Acrescentada essa força, obtém-se a equação geral do movimento

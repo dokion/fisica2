@@ -191,3 +191,9 @@ receberam só o tratamento genérico de registro. A regra geral está no Apêndi
 
 Os títulos de seção que coincidem com os do Moysés foram mantidos por decisão do professor:
 são nomes consagrados do assunto, não marca de transcrição.
+
+**Marcas de procedência.** As cinco balizas isoladas do §3 receberam a adaga `{{< fora >}}` no
+título da seção correspondente: tensão superficial no `3-01`, Navier-Stokes no `3-04`,
+coeficiente de arrasto no `3-06`, equação da sustentação no `3-07` e teorema de Kutta-Joukowski
+no `3-08`. A sexta, a análise dimensional, ocupa o `3-05` inteiro e por isso leva uma nota de
+procedência na abertura em vez de adaga por seção, conforme a regra do CLAUDE.md §5.

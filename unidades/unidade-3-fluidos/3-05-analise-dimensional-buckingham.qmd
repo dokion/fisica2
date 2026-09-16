@@ -35,6 +35,15 @@ generalizando os adimensionais já utilizados, acrescentando o que ainda falta, 
 Froude, e respondendo à questão prática que a tudo resume: **como prever a resistência de um navio
 de 240 m a partir de um modelo de 4 m num tanque de provas.**
 
+::: {.callout-note collapse="true"}
+## Procedência do tópico
+
+Este é o único tópico da unidade **sem correspondente no Moysés**: os capítulos 1 e 2, que servem
+de fio condutor aqui, não tratam de análise dimensional. O conteúdo vem da literatura padrão de
+mecânica dos fluidos e de arquitetura naval. Por estar inteiro fora da fonte, não leva a adaga †
+seção a seção, que assinalaria o mesmo em todas.
+:::
+
 ## Análise dimensional: conceito e objetivo {{< ra OE3.18 B2 >}}
 
 A **análise dimensional** descreve um fenômeno físico a partir apenas das dimensões das variáveis

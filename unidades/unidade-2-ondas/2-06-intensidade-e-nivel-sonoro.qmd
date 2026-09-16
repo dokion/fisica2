@@ -83,9 +83,6 @@ Exemplo prático: um log acústico, que mede velocidade por correlação de micr
 ::: {.sp}
 Um sonar ativo de um navio patrulha transmite em frequência 30 kHz com potência $P_{\text{tx}} = 5\,\text{kW}$. A água tem densidade $\rho = 1025\,\text{kg/m}^3$, velocidade do som $v = 1500\,\text{m/s}$. Um alvo submarino de pequeno porte reflete cerca de 1% da potência incidente, isto é, a potência recebida de volta é $P_{\text{rx}} = 0{,}01 P_{\text{tx}}$.
 
-<!-- [VERIFICAR: interpretei "potência recebida de volta é 0,01·P_tx" como a potência
-     reirradiada pelo alvo (P_ref = 50 W), espalhando-se esfericamente no retorno.] -->
-
 **(a) Modelagem.** Espalhamento esférico nos dois trechos: a intensidade incidente no
 alvo a distância $r$ é $I(r) = P_{\text{tx}}/(4\pi r^2)$; o alvo reirradia
 $P_{\text{ref}} = 0{,}01\,P_{\text{tx}} = 50$ W, e o eco chega ao navio com

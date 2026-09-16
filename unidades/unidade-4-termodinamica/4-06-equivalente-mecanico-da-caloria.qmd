@@ -113,8 +113,6 @@ $$m_{\text{comb}} = \frac{Q_{\text{total}}}{\text{PCI}} = \frac{1347}{42} \appro
 metade para vaporizar), o que exige $\approx 32\ \text{kg}$ de combustível num queimador
 ideal (100%).
 
-<!-- [VERIFICAR: L_v = 2257 kJ/kg a 1 atm foi adotado (o enunciado não o fornece).] -->
-
 **(d) Análise crítica.** **Vaporizar apenas 300 kg custa quase tanto quanto aquecer 2000 kg
 em 80 K**, tal é a magnitude do calor latente. Toda essa energia se mede em joules, sem
 unidade de calor própria: é o equivalente mecânico de Joule em serviço.

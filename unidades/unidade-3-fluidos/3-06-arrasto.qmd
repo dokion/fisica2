@@ -139,7 +139,7 @@ dimensional justifica.
 A ordem de grandeza é eloquente: o casco tem $C_D$ **cem vezes menor** que um cilindro de mesma
 área frontal, por ser quase nulo o seu arrasto de pressão. O que resta é atrito.
 
-## Coeficiente de arrasto e fórmulas de engenharia {{< ra OE3.24 B3 >}}
+## Coeficiente de arrasto e fórmulas de engenharia {{< ra OE3.24 B3 >}} {{< fora >}}
 
 Na prática de engenharia, o arrasto é calculado separando-se atrito e pressão:
 

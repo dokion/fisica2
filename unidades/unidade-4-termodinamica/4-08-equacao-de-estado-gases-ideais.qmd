@@ -94,7 +94,7 @@ Para gases comuns:
 | Gás | M [g/mol] | R_esp [J/(kg·K)] | Aplicação de bordo |
 |---|---|---|---|
 | Ar (média) | 29 | 287 | Ciclo diesel |
-| N₂ (nitrogênio) | 28 | 297 | [VERIFICAR] |
+| N₂ (nitrogênio) | 28 | 297 | Inertização de tanques e purga de linhas |
 | O₂ (oxigênio) | 32 | 260 | Combustão |
 | H₂O (vapor) | 18 | 462 | Caldeira, condensação |
 
@@ -171,8 +171,6 @@ exigem materiais e refrigeração especiais.
   aproximadamente ideais.
 - **Supor $n$ constante:** aberta a válvula e escapados os gases, $n$ muda. A equação
   continua válida, mas com $n_1 \neq n_2$, e ciclos com vazamento são mais complexos.
-  <!-- [VERIFICAR: o original dizia "se queimador abre e gases escapam"; num cilindro quem
-       abre é a válvula de descarga, e foi essa a leitura adotada.] -->
 :::
 
 ## Combustão a volume constante e temperatura de pico

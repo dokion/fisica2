@@ -71,9 +71,6 @@ Qualquer incerteza em $v$, por termoclina ou salinidade, afeta diretamente a pro
 ::: {.sp}
 Um navio em navegação costeira usa ecobatímetro de 38 kHz para mapear o fundo. No momento da medida, a profundidade verdadeira é 150 m. A temperatura é 15 °C (velocidade $v = 1485\,\text{m/s}$), salinidade 30 PSU (pequena redução de $v$ em relação a 35 PSU).
 
-<!-- [VERIFICAR: o enunciado não informa a velocidade de calibração do aparelho;
-     interpretei como o valor-padrão 1500 m/s.] -->
-
 **(a) Modelagem.** O eco real obedece $t = 2d/v$ com a velocidade local
 $v = 1485$ m/s; o aparelho, calibrado com $v_c = 1500$ m/s, indica
 $d_{\text{ind}} = v_c\,t/2$. Incógnitas: $t$, $d_{\text{ind}}$, o erro e o comprimento
