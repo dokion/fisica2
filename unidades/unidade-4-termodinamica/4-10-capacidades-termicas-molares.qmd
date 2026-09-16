@@ -46,9 +46,27 @@ Para um gás ideal, PV = nRT, então P·ΔV = nR·ΔT. Portanto:
 
 $$Q = n(C_V + R)\Delta T \quad \Rightarrow \quad C_P = C_V + R$$
 
-Relação fundamental:
+Relação fundamental, a **fórmula de Mayer**:
 
-$$C_P - C_V = R = 8{,}314\ \text{J/(mol·K)}$$
+$$\boxed{\;C_P - C_V = R\;}$$
+
+O passo decisivo é o que autoriza usar $\Delta U = nC_V\Delta T$ **também** no processo
+isobárico: como $U$ de um gás ideal só depende da temperatura, a variação de energia interna
+entre $T$ e $T + \Delta T$ é a mesma nos dois caminhos, ainda que o calor e o trabalho sejam
+diferentes. Sem a independência de $U$ em relação ao volume, estabelecida pelas experiências
+de Joule e de Joule-Thomson, a identificação não valeria.
+
+O resultado carrega o nome de Mayer porque foi por ele que Mayer estimou o equivalente
+mecânico da caloria, em 1842, antes das medições de Joule: na igualdade, os calores podem ser
+medidos em calorias e o termo $P\,\mathrm{d}V$ em unidades mecânicas, e a comparação dá a taxa
+de câmbio.
+
+Em calorias, $R \approx 1{,}986$, de modo que
+
+$$C_P - C_V \approx 2\ \text{cal/(mol·K)}$$
+
+o que a experiência confirma com erro menor que 1% para inúmeros gases à temperatura
+ambiente. É uma das verificações mais diretas de que a aproximação de gás ideal se aplica.
 
 ## Relação com graus de liberdade {{< ra OE4.32 B2 >}}
 

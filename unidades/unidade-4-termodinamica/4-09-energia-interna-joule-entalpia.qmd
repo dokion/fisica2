@@ -39,36 +39,104 @@ Para ar/nitrogênio (gás diatômico), $C_V = \frac{5}{2}R \approx 20{,}8$ J/(mo
 
 ## Experiência de Joule {{< ra OE4.29 B2 >}}
 
-No experimento clássico de Joule, dois frascos isolados, um com gás comprimido e outro
-vazio, comunicam-se por uma válvula. Aberta a válvula, o gás expande livremente para o
-vazio.
+Que $U$ dependa só de $T$ é resultado experimental, e a pergunta que o originou era outra:
+ao aquecer um calorímetro comprimindo um gás, Joule precisava saber se todo o trabalho virava
+calor ou se parte ficava armazenada como energia interna do gás. Isso equivale a perguntar se
+$U$ varia com o volume.
 
-Resultado experimental: **temperatura não muda** (até a precisão dos termômetros da época).
+O teste foi a **expansão livre**. Dois recipientes, um com ar a cerca de 20 atm e outro
+evacuado, ligados por uma válvula, imersos num calorímetro pequeno e isolado. Aberta a
+válvula, o gás se expande para o vácuo. Não há trabalho contra o exterior nem troca de calor,
+logo $W = 0$, $Q = 0$ e $\Delta U = 0$.
 
-Interpretação: se T não muda, ΔU = 0. Na expansão livre, W = 0 (nenhum trabalho é feito
-contra forças externas). Logo, da Primeira Lei, ΔU = Q − W = 0 − 0, confirmando Q = 0.
+Tomando $U = U(V,T)$, a variação de uma função de duas variáveis é
 
-**Conclusão:** para um gás ideal, $U$ depende apenas de $T$. Foi prova experimental de que a
-energia interna é intrínseca ao movimento microscópico das moléculas, independente da
-configuração macroscópica de $P$ e $V$.
+$$\Delta U = \left(\frac{\partial U}{\partial V}\right)_T \Delta V
++ \left(\frac{\partial U}{\partial T}\right)_V \Delta T$$
+
+Joule não detectou variação de temperatura, $\Delta T = 0$. Com $\Delta U = 0$ e $\Delta V
+\neq 0$, o primeiro termo teria de anular-se sozinho:
+
+$$\left(\frac{\partial U}{\partial V}\right)_T = 0
+\qquad\Longrightarrow\qquad
+U = U(T)$$
+
+::: {.callout-warning}
+A experiência, porém, **não decide a questão**. A capacidade térmica da água e do calorímetro
+era cerca de mil vezes a do ar contido nos recipientes, de modo que uma variação de 1 °C no
+ar produziria cerca de 10⁻³ °C na água, muito abaixo da sensibilidade do termômetro. Sabe-se
+hoje que o ar deve ter variado vários graus. O resultado nulo mediu o instrumento, não o gás.
+:::
 
 ## Experiência de Joule-Thomson {{< ra OE4.29 B2 >}}
 
-Diferentemente da expansão livre, Joule-Thomson forçava o gás por um estrangulamento, uma
-válvula parcialmente fechada, contra a pressão do que estava à frente.
+A saída foi trocar o processo por outro em que o efeito fosse maior e o regime, estacionário.
+No **tampão poroso**, um compressor mantém o gás escoando através de uma parede porosa, lã de
+vidro ou válvula de orifícios finos, dentro de um envoltório adiabático. A porosidade retarda
+o escoamento e impede a turbulência. A pressão cai de $P_i$ para $P_f$ ao atravessar.
 
-Resultado: **temperatura MUDA** (em geral, cai para gases reais; não muda para ideais).
+O balanço é direto. À esquerda, o gás é empurrado isobaricamente de $V_i$ a zero, e à direita
+emerge isobaricamente de zero a $V_f$. O trabalho total realizado pelo gás é
 
-Para gases ideais, Joule-Thomson provou experimentalmente que o gás não muda de temperatura
-ao passar por uma válvula sob pressão constante (processo isentálpico). Isso é coerente com
-$U(T)$: o trabalho de fluxo, o de empurrar contra a pressão, não é o trabalho mecânico de
-expansão, e os dois se compensam no total de energia.
+$$W_{i \to f} = P_f V_f - P_i V_i$$
+
+e, com $Q = 0$, a Primeira Lei dá
+
+$$\Delta U = U_f - U_i = P_i V_i - P_f V_f$$
+
+Para o ar a 20 °C passando de 2 atm a 1 atm, mede-se $\Delta T \approx -0{,}26$ °C; para o
+hidrogênio, da ordem de 10⁻² °C. Extrapolando à rarefação extrema, $\Delta T \to 0$: é a
+mesma conclusão da expansão livre, agora com precisão muito superior. E com $T_i = T_f$, a lei de
+Boyle faz $P_iV_i = P_fV_f$, de modo que $\Delta U = 0$ com $\Delta V \neq 0$, o que devolve
+$U = U(T)$.
+
+O gás ideal fica então caracterizado por **duas** condições: a equação de estado $PV = nRT$ e
+a independência de $U$ em relação ao volume.
+
+O processo tem uso industrial direto: é por estrangulamento que se liquefazem gases em
+criogenia, e é o que ocorre na válvula de expansão de um circuito de refrigeração de bordo.
 
 ## Entalpia {{< ra OE4.30 B2 >}}
 
-**Entalpia** é uma função de estado definida como:
+A entalpia não precisa ser postulada: ela sai do resultado anterior. Reescrevendo
+$\Delta U = P_iV_i - P_fV_f$ com todos os termos de um lado,
 
-$$H = U + PV$$
+$$U_i + P_iV_i = U_f + P_fV_f$$
+
+A combinação $U + PV$ assume o **mesmo valor** antes e depois do tampão. Como $U$, $P$ e $V$
+são funções de estado, ela também é, e recebe o nome de **entalpia**:
+
+$$\boxed{\;H = U + PV\;}$$
+
+O processo de Joule-Thomson é, portanto, **isentálpico**: conserva $H$, não $T$ nem $U$.
+
+### Por que a entalpia é a grandeza natural a pressão constante
+
+Diferenciando a definição e usando a Primeira Lei, $\mathrm{d}U = \mathrm{d}'Q - P\,\mathrm{d}V$:
+
+$$\mathrm{d}H = \mathrm{d}U + P\,\mathrm{d}V + V\,\mathrm{d}P = \mathrm{d}'Q + V\,\mathrm{d}P$$
+
+Num processo **isobárico** o último termo desaparece e resta
+
+$$\mathrm{d}H = \mathrm{d}'Q \qquad (P\ \text{constante})$$
+
+isto é, **a variação de entalpia é o calor trocado**. A energia interna cumpre esse papel a
+volume constante; a entalpia o cumpre a pressão constante. Como quase todo processo de bordo
+ocorre a pressão aproximadamente constante, da caldeira ao trocador e à linha de vapor, é $H$
+que as tabelas de vapor trazem e é sobre $H$ que se fazem os balanços.
+
+### Escoamento estacionário: a ponte com a hidrodinâmica
+
+O mesmo raciocínio do tampão poroso, estendido ao escoamento estacionário de um fluido de
+densidade $\rho$ num campo gravitacional, conserva a entalpia por unidade de massa somada às
+energias cinética e potencial:
+
+$$h = u + \frac{P}{\rho} + \frac{1}{2}v^2 + gz = \text{constante}$$
+
+É a **generalização da equação de Bernoulli** estudada na unidade de fluidos. Para fluido
+incompressível a energia interna $u$ é constante e o resultado recai exatamente no Bernoulli
+conhecido. O que a termodinâmica acrescenta é o termo que falta quando o fluido é compressível
+ou troca calor, que é o caso do vapor na turbina.
 
 Para um gás ideal:
 

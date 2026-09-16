@@ -22,23 +22,64 @@ ocorre termicamente dentro do cilindro.
 
 ## Comportamento macroscópico de gases {{< ra OE4.25 B2 >}}
 
-Experimentalmente, observa-se que para um gás puro confinado em volume constante:
+Qualquer fluido homogêneo em equilíbrio fica caracterizado por duas das três variáveis
+$P$, $V$, $T$, de modo que existe entre elas uma **equação de estado**, $f(P,V,T) = 0$. Para
+o **gás ideal** essa equação assume forma especialmente simples. Trata-se de idealização do
+gás real no limite de rarefação extrema: quanto menor a pressão e quanto mais longe do ponto
+de liquefação, melhor a aproximação. Abaixo de 2 atm o erro é tipicamente de poucos por cento.
 
-- Se $T$ aumenta, $P$ aumenta proporcionalmente (Lei de Gay-Lussac).
-- Se $V$ aumenta (a $T$ constante), $P$ cai (Lei de Boyle).
-- Se $n$ (quantidade de mols) aumenta (V, T constantes), $P$ aumenta.
+Duas leis empíricas a estabelecem.
 
-Essas três leis independentes condensam-se em uma única relação:
+**Lei de Boyle** (1662). Num tubo em U fechado numa ponta, com o gás aprisionado por coluna
+de mercúrio, despejar mercúrio no ramo aberto eleva a pressão. A temperatura constante e com
+massa fixa de gás, o volume varia na razão inversa:
 
-$$PV \propto nT$$
+$$PV = \text{constante} \qquad (T\ \text{constante})$$
 
-## Derivação formal {{< ra OE4.26 B3 >}}
+No plano $P$-$V$ a isoterma é uma hipérbole.
 
-Postulando proporcionalidade e introduzindo a **constante dos gases R** (universal):
+**Lei de Charles** (1787, refinada por Gay-Lussac em 1802). Todos os gases têm
+aproximadamente o mesmo coeficiente de dilatação volumétrica, $\beta \approx 1/273{,}15$ por
+grau. Escrevendo $V_\theta = V_0(1 + \beta\theta)$ com $\theta$ em Celsius, o fator entre
+parênteses vale $(273{,}15 + \theta)/273{,}15$, que é $T/T_0$ na escala absoluta. Logo:
 
-$$PV = nRT$$
+$$\frac{V}{T} = \text{constante} \qquad (P\ \text{constante})$$
 
-**Constante universal:** $R = 8{,}314\ \text{J/(mol·K)}$
+O volume é proporcional à **temperatura absoluta**, e não à Celsius. Esse é o mesmo fato que
+sustenta o termômetro de gás do primeiro tópico desta unidade.
+
+## Derivação da equação de estado {{< ra OE4.26 B3 >}}
+
+As duas leis bastam. Para ir de um estado $(P_0, V_0, T_0)$ a outro $(P, V, T)$, faz-se o
+percurso em duas etapas, cada uma cobrindo uma das leis.
+
+Primeiro a pressão $P_0$ constante, de $T_0$ até $T$, o que por Charles leva o volume a um
+valor intermediário $V_1$:
+
+$$\frac{V_1}{T} = \frac{V_0}{T_0} \qquad\Longrightarrow\qquad V_1 = V_0\,\frac{T}{T_0}$$
+
+Depois a temperatura $T$ constante, de $P_0$ até $P$, o que por Boyle dá:
+
+$$P_0 V_1 = PV$$
+
+Eliminando $V_1$ entre as duas:
+
+$$\frac{PV}{T} = \frac{P_0 V_0}{T_0} = \text{constante}$$
+
+A constante depende só da natureza e da quantidade de gás. É a **lei de Avogadro** que fixa
+a dependência: um mol de qualquer gás, nas condições normais de 273,15 K e 1 atm, ocupa
+sempre **22,415 L**. Aplicada a 1 mol, a constante é portanto a mesma para todo gás, e
+recebe o nome de **constante universal dos gases**:
+
+$$R = \frac{1{,}013 \times 10^5 \times 0{,}0224}{273} \approx 8{,}314\ \frac{\text{J}}{\text{mol·K}}
+= 1{,}986\ \frac{\text{cal}}{\text{mol·K}}$$
+
+Como o volume é proporcional à quantidade de gás, $n$ mols ocupam $n$ vezes mais:
+
+$$\boxed{\;PV = nRT\;}$$
+
+Hidrogênio e hélio, cujos pontos de liquefação são os mais baixos (−253 °C e −269 °C), são os
+que mais se aproximam do comportamento ideal, e por isso servem de substância termométrica.
 
 Dados $n$ mols de gás, conhecidas duas das três grandezas, a terceira fica determinada. A
 forma mais prática separa a massa do número de mols:

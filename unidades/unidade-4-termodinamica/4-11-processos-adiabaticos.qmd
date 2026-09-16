@@ -55,25 +55,37 @@ $$P^{1-\gamma}T^\gamma = \text{constante}$$
 
 onde γ = C_P / C_V é a razão de calores específicos, igual a 1,4 para o ar.
 
-**Derivação rápida:** na Primeira Lei diferencial, dU = −PdV (Q = 0). Para gás ideal,
-dU = n·C_V·dT. Logo:
+**Dedução.** Com $\mathrm{d}'Q = 0$, a Primeira Lei fica $\mathrm{d}U = -P\,\mathrm{d}V$, e
+para um gás ideal $\mathrm{d}U = nC_V\,\mathrm{d}T$. Logo
 
-$$n \cdot C_V \cdot dT = -P \, dV$$
+$$-P\,\mathrm{d}V = nC_V\,\mathrm{d}T \tag{1}$$
 
-Combinando com PV = nRT (diferencial: PdV + VdP = nRdT):
+Diferenciando a equação de estado $PV = nRT$:
 
-$$n \cdot C_V \cdot dT = -P \, dV$$
-$$nR \, dT = P \, dV + V \, dP$$
+$$P\,\mathrm{d}V + V\,\mathrm{d}P = nR\,\mathrm{d}T \tag{2}$$
 
-Dividindo a primeira pela segunda:
+Levando (1) a (2) e usando a relação de Mayer, $C_V + R = C_P$:
 
-$$\frac{C_V}{R} = -\frac{P \, dV}{P \, dV + V \, dP}$$
+$$V\,\mathrm{d}P = nR\,\mathrm{d}T - P\,\mathrm{d}V
+= nR\,\mathrm{d}T + nC_V\,\mathrm{d}T
+= nC_P\,\mathrm{d}T \tag{3}$$
 
-Simplificando:
+Dividindo (3) por (1), o fator $n\,\mathrm{d}T$ some e sobra a razão das capacidades:
 
-$$\frac{dP}{P} + \gamma \frac{dV}{V} = 0$$
+$$\frac{V\,\mathrm{d}P}{-P\,\mathrm{d}V} = \frac{C_P}{C_V} = \gamma
+\qquad\Longrightarrow\qquad
+\frac{\mathrm{d}P}{P} = -\gamma\,\frac{\mathrm{d}V}{V}$$
 
-Integrando: $\ln P + \gamma \ln V = \text{const}$, ou $PV^\gamma = \text{const}$ ✓
+É a relação de Mayer, e só ela, que faz $\gamma$ aparecer. Integrando entre um estado inicial
+e um final, com $\gamma$ constante:
+
+$$\ln\frac{P}{P_0} = -\gamma \ln\frac{V}{V_0}
+\qquad\Longrightarrow\qquad
+\boxed{\;PV^\gamma = P_0V_0^{\gamma} = \text{constante}\;}$$
+
+Como $\gamma > 1$ pela relação de Mayer, a adiabática é **mais inclinada** que a isoterma no
+diagrama $P$-$V$: comprimindo o mesmo volume, a pressão sobe mais no processo adiabático,
+porque além do confinamento há o aquecimento.
 
 ## Aplicações em motor diesel {{< ra OE4.36 B3 >}}
 

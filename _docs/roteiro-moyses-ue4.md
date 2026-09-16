@@ -146,7 +146,7 @@ capítulos 7 a 11. São escritos a partir da literatura padrão de engenharia na
 termodinâmica aplicada, **em continuidade com o texto do Moysés ao redor** — sem marcação de
 origem no corpo da nota de aula. Este quadro é o registro da procedência.
 
-Ordenados por tamanho do vazio. **A leitura dos capítulos reduziu a lista**: os itens 3, 4 e 6
+Ordenados por tamanho do vazio. **A leitura dos capítulos reduziu a lista**: os itens 3, 4, 6 e 7
 foram levantados a partir do sumário e não resistiram ao texto — o livro cobre mais do que o
 índice sugeria, ou nenhum OE pede o que faltava. Os vazios grandes que restam são os dois
 primeiros, ambos no `4-14`.
@@ -159,7 +159,7 @@ primeiros, ambos no `4-14`.
 | 4 | **Tabela de condutividade de materiais navais** | 4.17 | `4-05` | Mais do que eu havia registrado: além da lei de Fourier, o livro traz a analogia com a lei de Ohm, o regime estacionário e a **parede composta** em série (eq. 8.3.6), e uma tabela de k com cobre, água, madeira, vidro, flanela e ar | Só a instanciação naval: k para aço, latão, lã de vidro, poliuretano, incrustação. O OE é B4 e analisar exige os números do contexto de bordo. Não leva †: instanciar contexto é o que a apostila faz em toda parte |
 | 5 | **Calor latente como seção** | 4.14 | `4-04` | Mudança de fase tratada como **exemplo** em §8.7 (p. 223–227), não como seção | Seção própria: calor latente de fusão e de vaporização, diagrama de mudança de fase, e o caso de bordo — evaporador de água doce, condensador principal |
 | 6 | **Efeitos da dilatação em estruturas** | 4.8 | `4-02` | Os coeficientes 2α e 3α são deduzidos (eqs. 7.5.3 e 7.5.4) e o caso do líquido é tratado; o efeito **mecânico** da dilatação impedida não aparece | Tensão de dilatação impedida σ = E α ΔT, juntas de dilatação de tubulação de vapor, folga de mancal, tanque de carga aquecido. Seção marcada com † |
-| 7 | **Entalpia desenvolvida** | 4.30 | `4-09` | **Um parágrafo** (p. 237), dentro do Joule-Thomson | H = U + pV como função de estado, por que ela é a grandeza natural em processos a pressão constante, e o uso em bordo: balanço de caldeira e tabelas de vapor |
+| 7 | ~~Entalpia desenvolvida~~ | 4.30 | — | Mais do que eu havia registrado: o livro **deduz** H = U + PV do balanço do tampão poroso, mostra que o processo é isentálpico, obtém dH = d'Q + V dP e daí dH = d'Q a pressão constante, e ainda generaliza ao escoamento estacionário, recaindo em Bernoulli | **Baixa do quadro.** Só a instanciação de bordo (tabelas de vapor, balanço de caldeira) é acréscimo, e instanciar contexto não leva † |
 
 Nenhum desses conteúdos inventa física. Onde faltar dado de fonte confiável — valor de k, COP
 típico, rendimento de ciclo real — vale a regra geral: marcar `[VERIFICAR]`, nunca arbitrar.
