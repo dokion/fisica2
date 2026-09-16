@@ -1,0 +1,92 @@
+# Perfil "apostila" — gera o PDF único do curso inteiro.
+#
+# Uso:  quarto render --profile apostila
+# O perfil é mesclado sobre _quarto.yml: troca o tipo de projeto de website
+# para book, o que é o que produz UM PDF encadernado em vez de um por página.
+#
+# O site HTML continua saindo do perfil padrão (sem --profile), intocado.
+# CLAUDE.md §5: "format: pdf é obrigatório (apostila impressa é entregável)."
+
+project:
+  type: book
+  output-dir: _apostila
+
+# A chave website: do _quarto.yml não se aplica a um projeto book e é ignorada.
+book:
+  title: "FIS-02 — Física"
+  subtitle: "Escola de Formação de Oficiais da Marinha Mercante"
+  author: "CIABA"
+  search: false
+  # sem acento nem travessão: o arquivo vira URL no site
+  output-file: "FIS-02-apostila"
+  chapters:
+    - index.qmd
+    - part: "UE 1 — Oscilações"
+      chapters:
+        - unidades/unidade-1-oscilacoes/1-01-oscilacoes-harmonicas.qmd
+        - unidades/unidade-1-oscilacoes/1-02-mhs-e-mcu.qmd
+        - unidades/unidade-1-oscilacoes/1-03-superposicao-batimentos-lissajous.qmd
+        - unidades/unidade-1-oscilacoes/1-04-oscilacoes-amortecidas.qmd
+        - unidades/unidade-1-oscilacoes/1-05-oscilacoes-forcadas-ressonancia.qmd
+        - unidades/unidade-1-oscilacoes/1-06-oscilacoes-forcadas-amortecidas.qmd
+        - unidades/unidade-1-oscilacoes/1-07-balanco-de-energia.qmd
+        - unidades/unidade-1-oscilacoes/1-08-oscilacoes-acopladas.qmd
+    - part: "UE 2 — Ondas em meios elásticos e ondas sonoras"
+      chapters:
+        - unidades/unidade-2-ondas/2-01-ondas-transversais.qmd
+        - unidades/unidade-2-ondas/2-02-superposicao-interferencia-fasores.qmd
+        - unidades/unidade-2-ondas/2-03-reflexao-modos-normais.qmd
+        - unidades/unidade-2-ondas/2-04-ondas-sonoras-velocidade-do-som.qmd
+        - unidades/unidade-2-ondas/2-05-ondas-sonoras-progressivas.qmd
+        - unidades/unidade-2-ondas/2-06-intensidade-e-nivel-sonoro.qmd
+        - unidades/unidade-2-ondas/2-07-batimento.qmd
+        - unidades/unidade-2-ondas/2-08-efeito-doppler.qmd
+        - unidades/unidade-2-ondas/2-09-supersonicas-ondas-de-choque.qmd
+    # UE 3 e UE 4 na ordem de leitura dos roteiros de concordância, igual ao site.
+    - part: "UE 3 — Mecânica dos fluidos"
+      chapters:
+        - unidades/unidade-3-fluidos/3-01-propriedades-dos-fluidos.qmd
+        - unidades/unidade-3-fluidos/3-02-fluidos-em-repouso-pascal-arquimedes.qmd
+        - unidades/unidade-3-fluidos/3-03-fluidos-em-movimento-continuidade-bernoulli.qmd
+        - unidades/unidade-3-fluidos/3-08-kutta-joukowski.qmd
+        - unidades/unidade-3-fluidos/3-07-sustentacao.qmd
+        - unidades/unidade-3-fluidos/3-04-escoamento-reynolds-navier-stokes-camada-limite.qmd
+        - unidades/unidade-3-fluidos/3-06-arrasto.qmd
+        - unidades/unidade-3-fluidos/3-05-analise-dimensional-buckingham.qmd
+    - part: "UE 4 — Termodinâmica"
+      chapters:
+        - unidades/unidade-4-termodinamica/4-01-temperatura-lei-zero.qmd
+        - unidades/unidade-4-termodinamica/4-02-dilatacao-termica.qmd
+        - unidades/unidade-4-termodinamica/4-03-natureza-do-calor.qmd
+        - unidades/unidade-4-termodinamica/4-04-quantidade-de-calor.qmd
+        - unidades/unidade-4-termodinamica/4-05-conducao-de-calor.qmd
+        - unidades/unidade-4-termodinamica/4-06-equivalente-mecanico-da-caloria.qmd
+        - unidades/unidade-4-termodinamica/4-07-primeira-lei.qmd
+        - unidades/unidade-4-termodinamica/4-08-equacao-de-estado-gases-ideais.qmd
+        - unidades/unidade-4-termodinamica/4-09-energia-interna-joule-entalpia.qmd
+        - unidades/unidade-4-termodinamica/4-10-capacidades-termicas-molares.qmd
+        - unidades/unidade-4-termodinamica/4-11-processos-adiabaticos.qmd
+        - unidades/unidade-4-termodinamica/4-12-segunda-lei.qmd
+        - unidades/unidade-4-termodinamica/4-14-maquinas-termicas-refrigeradores.qmd
+        - unidades/unidade-4-termodinamica/4-13-entropia.qmd
+        - unidades/unidade-4-termodinamica/4-15-teoria-cinetica.qmd
+        - unidades/unidade-4-termodinamica/4-16-calores-especificos-equiparticao.qmd
+
+format:
+  pdf:
+    documentclass: scrreprt
+    papersize: a4
+    lang: pt-BR
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=25mm
+      - bottom=25mm
+      - left=25mm
+      - right=25mm
+    include-in-header:
+      text: |
+        \usepackage{amsmath}
+        \usepackage{amssymb}

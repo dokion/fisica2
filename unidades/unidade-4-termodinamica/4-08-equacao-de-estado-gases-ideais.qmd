@@ -176,7 +176,7 @@ exigem materiais e refrigeração especiais.
 ## Combustão a volume constante e temperatura de pico
 
 No instante da queima, o pistão quase não se move: o volume é constante e a pressão sobe
-com a temperatura, $P/T = $ const (Gay-Lussac). No diagrama $P$–$T$, o processo é uma
+com a temperatura, $P/T = \text{const.}$ (Gay-Lussac). No diagrama $P$–$T$, o processo é uma
 reta pela origem; no $P$–$V$, uma subida vertical. A pressão pós-combustão é ajustável, e o
 painel devolve a temperatura de pico.
 
@@ -267,7 +267,7 @@ plt.tight_layout(); plt.show()
 
 ::: {.pergunta}
 1. No diagrama $P$–$T$ o processo é uma reta que passa pela origem. Por quê? O que a
-   lei $P/T = $ const garante sobre a razão entre as duas grandezas?
+   lei $P/T = \text{const.}$ garante sobre a razão entre as duas grandezas?
 2. Elevado $P_3$, a temperatura de pico $T_3$ acompanha proporcionalmente. Que temperatura
    corresponde a 200 bar?
 3. Por que a hipótese de volume constante é razoável só no *instante* da combustão? O

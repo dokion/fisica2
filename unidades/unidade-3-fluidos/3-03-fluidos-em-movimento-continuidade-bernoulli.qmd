@@ -620,7 +620,7 @@ plt.tight_layout(); plt.show()
 
 ::: {.pergunta}
 1. Onde a área é menor, a velocidade é maior ou menor? E a pressão? Relacione com
-   $Av = Q$ e com $P + \tfrac{1}{2}\rho v^2 = $ const.
+   $Av = Q$ e com $P + \tfrac{1}{2}\rho v^2 = \text{const.}$
 2. Dobrada a vazão $Q$, a queda de pressão na garganta dobra ou quadruplica? Por quê?
 3. Se a pressão na garganta cair abaixo da pressão de vapor da água, o que ocorre? Relacione
    com a cavitação de hélice, retomada no estudo da sustentação.

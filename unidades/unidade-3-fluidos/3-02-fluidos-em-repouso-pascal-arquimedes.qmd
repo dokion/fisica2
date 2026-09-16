@@ -440,7 +440,7 @@ com a densidade de "energia potencial centrífuga"
 
 $$u_c(r) = -\tfrac{1}{2}\rho\,\omega^2 r^2$$
 
-que se soma à densidade de energia potencial gravitacional. Substituindo em $p = -u + $ constante
+que se soma à densidade de energia potencial gravitacional. Substituindo em $p = -u + \text{constante}$
 e situando a origem O no ponto da superfície livre sobre o eixo, onde $r = z = 0$ e $p = p_0$:
 
 $$p = p_0 + \tfrac{1}{2}\rho\,\omega^2 r^2 - \rho g z$$

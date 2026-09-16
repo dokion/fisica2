@@ -111,7 +111,12 @@ instruções já prontas dos documentos; siga-os literalmente.
 - **Paridade HTML/PDF obrigatória:** toda visualização interativa tem equivalente estático matplotlib no `{python}`, mesmos parâmetros (Q4).
 - Escolha de lib JS **pela tabela Q4**, não por estética. Interatividade sem propósito didático é proibida; toda visualização tem pergunta orientadora (Q5.1).
 - **Offline-first:** libs em `libs/` (Q6). Pyodide nunca no header global; só em página dedicada.
-- `format: pdf` é obrigatório (apostila impressa é entregável).
+- **Apostila em PDF** (`format: pdf` do Apêndice Q, entregável impresso): sai do perfil
+  `_quarto-apostila.yml`, que troca o tipo de projeto de `website` para `book` e encaderna as
+  quatro unidades num único arquivo. Gerar com `quarto render --profile apostila --to pdf`;
+  o CI faz isso a cada push e copia o resultado para `_site/FIS-02-apostila.pdf`. O site HTML
+  continua saindo do perfil padrão, intocado. Ao criar um tópico novo, acrescentá-lo à lista
+  `chapters:` do perfil **e** ao `contents:` do `_quarto.yml` — são duas listas.
 
 ---
 

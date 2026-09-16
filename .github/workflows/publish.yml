@@ -28,6 +28,8 @@ jobs:
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          tinytex: true          # LaTeX para a apostila em PDF
 
       # ── Notas executam blocos {python} (matplotlib p/ paridade PDF) ──
       - name: Set up Python
@@ -39,6 +41,15 @@ jobs:
 
       - name: Render
         uses: quarto-dev/quarto-actions/render@v2
+
+      # ── Apostila em PDF: um só arquivo do curso inteiro (CLAUDE.md §5) ──
+      # Perfil separado, porque o projeto do site é website e um website gera um
+      # PDF por página; o perfil troca o tipo para book, que encaderna tudo.
+      - name: Render apostila (PDF)
+        run: quarto render --profile apostila --to pdf
+
+      - name: Copiar apostila para o site
+        run: cp _apostila/FIS-02-apostila.pdf _site/FIS-02-apostila.pdf
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

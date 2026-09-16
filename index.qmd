@@ -31,6 +31,12 @@ A disciplina aborda os fenômenos físicos relacionados a oscilações, ondas, m
 > conteúdo exigido pelo sumário oficial **sem correspondente no livro-texto**: é material
 > próprio do curso, e não adianta procurá-lo no Moysés.
 
+:::: {.callout-note appearance="simple"}
+**Apostila impressa.** O curso inteiro, nas quatro unidades e na ordem de leitura abaixo, sai
+num único PDF: [FIS-02-apostila.pdf](FIS-02-apostila.pdf). As simulações interativas do site
+aparecem nele como figuras estáticas equivalentes, de mesmos parâmetros.
+::::
+
 | Aulas | UE | Tópicos | OE (objetivos específicos) | Verificação |
 |---|---|---|---|---|
 | 1-2 | 1 | Oscilações harmônicas | 1.1–1.3 | — |
