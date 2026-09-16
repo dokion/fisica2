@@ -146,15 +146,15 @@ capítulos 7 a 11. São escritos a partir da literatura padrão de engenharia na
 termodinâmica aplicada, **em continuidade com o texto do Moysés ao redor** — sem marcação de
 origem no corpo da nota de aula. Este quadro é o registro da procedência.
 
-Ordenados por tamanho do vazio. **A leitura dos capítulos reduziu a lista**: os itens 3, 4, 6 e 7
+Ordenados por tamanho do vazio. **A leitura dos capítulos reduziu a lista**: os itens 2, 3, 4, 6 e 7
 foram levantados a partir do sumário e não resistiram ao texto — o livro cobre mais do que o
-índice sugeria, ou nenhum OE pede o que faltava. Os vazios grandes que restam são os dois
-primeiros, ambos no `4-14`.
+índice sugeria, ou nenhum OE pede o que faltava. O único vazio grande que resta é o item 1, os ciclos reais de
+propulsão, escrito na Fase 5 e marcado com †.
 
 | # | Conteúdo | OE | Arquivo | O que o Moysés dá | O que falta escrever |
 |---|---|---|---|---|---|
 | 1 | **Ciclos reais: Otto, Diesel, Rankine, Brayton** | 4.44, 4.45 | `4-14` | Nada no corpo do texto. O ciclo Diesel aparece **só no Problema 10.9** (p. 282) e o Otto só em problema; Rankine e Brayton **não ocorrem no livro** | O bloco inteiro. É o maior vazio da unidade e o mais naval de todos: motor diesel de propulsão, caldeira e turbina a vapor, turbina a gás. Rendimento de cada ciclo, comparação com Carnot entre as mesmas temperaturas, e de onde vem a diferença |
-| 2 | **Refrigeração: ciclo de compressão de vapor, COP, bomba de calor** | 4.43 | `4-14` | §10.3 define o refrigerador como máquina de Carnot invertida e dá a eficácia; "coeficiente de desempenho" só aparece em problema (p. 280) | O ciclo real de compressão de vapor (compressor, condensador, válvula, evaporador), COP de refrigeração e de bomba de calor, e a aplicação de bordo: câmaras frigoríficas e ar-condicionado |
+| 2 | ~~Refrigeração: ciclo de compressão de vapor~~ | 4.43 | `4-14` | Mais do que eu havia registrado: §10.3(b) descreve o **circuito completo** — evaporador, compressor, condensador e válvula de estrangulamento Joule-Thomson —, a escolha do refrigerante pelo calor latente e o papel da queda da temperatura de vaporização com a pressão | **Encolhe muito.** Resta o COP, que no livro só aparece em problema, e a instanciação de bordo. Sem †, por ser instanciação |
 | 3 | ~~Convecção e radiação em nível operacional~~ | 4.11 | — | Uma página (p. 210), qualitativa, nomeando os três mecanismos | **Baixa do quadro.** O OE 4.11 é B2, "explicar os mecanismos", e o tratamento qualitativo do livro o satisfaz. Nenhum OE da UE 4 pede lei de resfriamento de Newton, coeficiente de película ou Stefan-Boltzmann; escrevê-los seria acrescentar currículo, o que o CLAUDE.md §4 proíbe. Fica só a ressalva, no `4-05`, de que a queda de temperatura ocorre em boa parte nas películas de fluido e que quantificá-la está fora do curso |
 | 4 | **Tabela de condutividade de materiais navais** | 4.17 | `4-05` | Mais do que eu havia registrado: além da lei de Fourier, o livro traz a analogia com a lei de Ohm, o regime estacionário e a **parede composta** em série (eq. 8.3.6), e uma tabela de k com cobre, água, madeira, vidro, flanela e ar | Só a instanciação naval: k para aço, latão, lã de vidro, poliuretano, incrustação. O OE é B4 e analisar exige os números do contexto de bordo. Não leva †: instanciar contexto é o que a apostila faz em toda parte |
 | 5 | **Calor latente como seção** | 4.14 | `4-04` | Mudança de fase tratada como **exemplo** em §8.7 (p. 223–227), não como seção | Seção própria: calor latente de fusão e de vaporização, diagrama de mudança de fase, e o caso de bordo — evaporador de água doce, condensador principal |

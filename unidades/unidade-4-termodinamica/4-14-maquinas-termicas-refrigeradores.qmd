@@ -21,36 +21,167 @@ a máquina real nunca alcança a ideal.
 
 ## Máquinas térmicas e refrigeradores {{< ra OE4.43 B2 >}}
 
-Uma **máquina térmica** opera em ciclo entre uma fonte quente ($T_q$) e uma fria
-($T_f$): recebe $Q_q$, realiza trabalho $W$ e rejeita $Q_f$. Pela 1ª Lei, num ciclo
-$\Delta U = 0$, logo:
+Pelo enunciado de Kelvin, uma máquina térmica não pode operar com um só reservatório:
+são necessários **dois**, a fonte quente a $T_q$ e a fria a $T_f$. A máquina recebe $Q_q$ da
+quente, produz $W$ e rejeita $Q_f$ à fria. Como o ciclo devolve o sistema ao estado inicial,
+$\Delta U = 0$ e a Primeira Lei dá
 
 $$W = Q_q - Q_f
-\qquad
-\eta = \frac{W}{Q_q} = 1 - \frac{Q_f}{Q_q}$$
+\qquad\qquad
+\boxed{\;\eta = \frac{W}{Q_q} = 1 - \frac{Q_f}{Q_q}\;}$$
 
-O **refrigerador** é a mesma máquina invertida: consome trabalho $W$ para retirar
-$Q_f$ da fonte fria e despejar $Q_q$ na quente. Seu desempenho é o coeficiente de
-performance:
+O rendimento compara o que se obtém, $W$, com o que se paga, $Q_q$, que é o custo do
+combustível queimado na caldeira ou injetado no cilindro. E **$Q_f$ tem de ser positivo**: se fosse nulo,
+a fonte fria seria dispensável e teríamos um motor que viola (K); se fosse negativo, a
+máquina absorveria calor das duas fontes, e bastaria pôr as fontes em contato térmico para
+repor a fria e obter, no líquido, trabalho a partir de uma só fonte, violando (K) outra vez.
+Logo $Q_f > 0$ e $\eta < 1$, **sempre**. O rendimento inferior a 100% não é defeito de
+projeto: é consequência do enunciado de Kelvin.
+
+### O refrigerador
+
+É a mesma máquina ao contrário: consome $W$ para retirar $Q_f$ da fonte fria e entregar $Q_q$
+à quente, com $Q_q = W + Q_f$. Pelo enunciado de Clausius, $W$ não pode ser nulo. O
+desempenho não se mede por rendimento, e sim pelo **coeficiente de desempenho**, razão entre
+o que se quer e o que se paga:
 
 $$\text{COP} = \frac{Q_f}{W} = \frac{Q_f}{Q_q - Q_f}$$
 
-## Ciclo ideal e ciclo real: o limite de Carnot {{< ra OE4.44 B4 >}}
+Diferentemente do rendimento, o COP **pode ser maior que 1**, e em geral é: uma máquina de
+refrigeração de bordo remove vários joules de calor da câmara frigorífica por joule de
+trabalho do compressor. Não há violação alguma, porque o COP não é uma fração da energia
+fornecida: o calor removido não vem do compressor, vem da câmara.
 
-O rendimento máximo entre duas temperaturas é o de **Carnot** (ciclo reversível):
+### O circuito real
 
-$$\eta_{\text{Carnot}} = 1 - \frac{T_f}{T_q}$$
+O agente é o **refrigerante**, escolhido por ter calor latente de vaporização elevado, como a
+amônia ou os fluidos halogenados. O ciclo explora a mudança de fase, e o que o faz funcionar
+é que a temperatura de vaporização **cai com a pressão**, pelo mesmo motivo por que a água
+ferve a temperatura mais baixa em altitude.
 
-Nenhuma máquina real alcança esse valor, porque toda máquina real tem irreversibilidades.
-No **diagrama indicador** ($P$–$V$) de um motor diesel real, a área fechada, que é o trabalho
-por ciclo, fica menor que a do ciclo ideal: os cantos se arredondam por combustão não
-instantânea, troca de calor pelas paredes e atrito.
+1. **Evaporador**, na câmara fria. O líquido a baixa pressão vaporiza-se, e o calor latente
+   que absorve é $Q_f$, retirado da carga.
+2. **Compressor.** Eleva a pressão do vapor, de forma aproximadamente adiabática. É por aqui
+   que entra o trabalho $W$.
+3. **Condensador**, em contato com a água do mar ou o ar. A alta pressão, o vapor liquefaz-se
+   e cede $Q_q$, o calor latente de liquefação.
+4. **Válvula de expansão.** Para devolver o líquido à baixa pressão do evaporador, ele passa
+   por um estrangulamento, num processo de **Joule-Thomson**, o mesmo do tópico da energia
+   interna. Não se usa expansão adiabática com pistão porque a válvula é mais simples e não
+   exige recuperar trabalho de um líquido.
 
-| | Ciclo ideal | Ciclo real |
-|---|---|---|
-| Processos | reversíveis | irreversíveis |
-| Rendimento | $\eta_{\text{Carnot}}$ | $\eta < \eta_{\text{Carnot}}$ |
-| Diagrama P–V | cantos vivos | cantos arredondados, área menor |
+O ciclo de bordo é, portanto, o mesmo da caldeira e da turbina, percorrido em sentido
+inverso: ali a água vaporiza no quente e condensa no frio, aqui o refrigerante vaporiza no
+frio e condensa no quente.
+
+## O ciclo de Carnot e seu teorema {{< ra OE4.44 B4 >}}
+
+A pergunta de Carnot: dadas as duas fontes, qual é o **máximo** rendimento possível? A
+resposta se constrói por eliminação.
+
+O rendimento máximo exige que não haja irreversibilidade, porque toda irreversibilidade
+consome trabalho que poderia ser útil. Impor reversibilidade já determina o ciclo inteiro:
+
+- A **condução de calor sob diferença finita de temperatura é irreversível**. Logo a máquina
+  só pode trocar calor com uma fonte quando está **à mesma temperatura** que ela: as trocas
+  são **isotérmicas**, a $T_q$ e a $T_f$.
+- Nas etapas em que a temperatura muda, de $T_q$ para $T_f$ e de volta, não pode haver troca
+  de calor, pois não há fonte àquela temperatura: são **adiabáticas reversíveis**.
+
+Não sobra alternativa. Um ciclo reversível entre duas fontes é **necessariamente** formado
+por duas isotermas ligadas por duas adiabáticas. É o **ciclo de Carnot**, e as quatro etapas
+são: expansão isotérmica a $T_q$ absorvendo $Q_q$; expansão adiabática que esfria o agente
+até $T_f$; compressão isotérmica a $T_f$ cedendo $Q_f$; compressão adiabática que o reaquece
+até $T_q$.
+
+> **Teorema de Carnot.** (a) Nenhuma máquina operando entre duas dadas fontes tem rendimento
+> superior ao de uma máquina de Carnot entre as mesmas fontes. (b) Todas as máquinas de
+> Carnot entre essas fontes têm o mesmo rendimento.
+
+**Demonstração de (a).** Sejam $R$ uma máquina de Carnot e $I$ uma máquina qualquer entre as
+mesmas fontes, com os ciclos ajustados para que produzam o mesmo trabalho $W$, e admita-se
+$\eta_I > \eta_R$. Como $W$ é o mesmo, $\eta = W/Q_q$ maior significa $Q_q'$ menor para $I$,
+e portanto também $Q_f' = Q_q' - W$ menor. Empregando-se o trabalho de $I$ para acionar $R$
+em sentido inverso, como refrigerador, o conjunto não consome trabalho externo e, no líquido,
+transfere $Q_f - Q_f' > 0$ da fonte fria para a quente sem nenhum outro efeito. Isso viola
+(C). Logo $\eta_I \leq \eta_R$.
+
+**Demonstração de (b).** Se $I$ também for reversível, repita o argumento trocando os papéis
+das duas, o que dá a desigualdade oposta. As duas juntas forçam a igualdade.
+
+A consequência é forte: o rendimento de Carnot **não depende da substância** empregada, nem
+de o agente ser gás, líquido ou mistura de líquido e vapor. Depende apenas das duas
+temperaturas.
+
+### A escala termodinâmica de temperatura
+
+Como a razão $Q_q/Q_f$ de uma máquina de Carnot só pode depender das duas temperaturas, e de
+nada mais, ela define uma função universal. Encaixando um terceiro nível de temperatura entre
+os dois e exigindo consistência entre os três ciclos de Carnot assim formados, a função se
+fatora, e a razão dos calores passa a ser a razão de duas grandezas, uma para cada fonte.
+Essas grandezas **definem** a temperatura absoluta, agora sem referência a substância alguma:
+
+$$\frac{Q_q}{Q_f} = \frac{T_q}{T_f}
+\qquad\Longrightarrow\qquad
+\boxed{\;\eta_{\text{Carnot}} = 1 - \frac{T_f}{T_q}\;}$$
+
+Esta é a **escala termodinâmica**, e ela coincide com a escala de gás ideal definida no
+primeiro tópico desta unidade. É o que fecha a promessa deixada lá: existe uma temperatura
+absoluta que não depende de nenhuma substância termométrica, e o ciclo de Carnot é quem a
+define.
+
+A fórmula mostra também por que o rendimento cresce com $T_q$ e cai com $T_f$, e por que
+$\eta = 1$ exigiria $T_f = 0$, inatingível.
+
+## Ciclos reais de propulsão {{< fora >}}
+
+Nenhuma máquina de bordo é uma máquina de Carnot. O ciclo de Carnot é o **padrão de
+comparação**, não um projeto: as duas isotermas exigiriam troca de calor infinitamente lenta,
+e a potência de uma máquina assim seria nula. Os ciclos reais trocam rendimento por potência,
+substituindo as isotermas por processos executáveis em fração de segundo.
+
+Quatro deles interessam à praça de máquinas. Em todos, $\gamma$ é a razão de calores
+específicos do tópico dos processos adiabáticos, e $r = V_1/V_2$ é a **razão de compressão**.
+
+| Ciclo | Máquina de bordo | Como o calor entra | Rendimento ideal |
+|---|---|---|---|
+| **Otto** | motor a gasolina, geradores de emergência | a volume constante, após faísca | $\eta = 1 - r^{1-\gamma}$ |
+| **Diesel** | propulsão principal, geradores | a pressão constante, por injeção | $\eta = 1 - r^{1-\gamma}\,\dfrac{r_c^{\gamma}-1}{\gamma\,(r_c-1)}$ |
+| **Rankine** | caldeira e turbina a vapor | a pressão constante, com mudança de fase | $\eta = \dfrac{h_3 - h_4}{h_3 - h_2}$ |
+| **Brayton** | turbina a gás, turboalimentador | a pressão constante, em fluxo contínuo | $\eta = 1 - r_p^{(1-\gamma)/\gamma}$ |
+
+**Otto e Diesel** são ciclos fechados de pistão, ambos com duas adiabáticas, e diferem no
+modo como o calor entra. No Otto a combustão é tão rápida que o pistão praticamente não se
+move: o calor entra a **volume constante**. No Diesel o combustível é injetado ao longo do
+curso e queima enquanto o pistão desce: o calor entra a **pressão constante**, ao longo de
+uma razão de corte $r_c$. O rendimento do Otto depende só de $r$; o do Diesel leva o fator
+adicional, sempre maior que 1, o que significa que, **à mesma razão de compressão**, o Diesel
+rende menos. O motor diesel rende mais na prática porque dispensa a faísca e pode operar com
+razões de compressão que detonariam a gasolina: tipicamente $r$ entre 14 e 22, contra 8 a 11.
+
+**Rankine** é o ciclo da caldeira com turbina a vapor. O agente muda de fase, e é por isso que
+o rendimento se escreve em **entalpias** e não em temperaturas: a pressão constante, a
+variação de entalpia é o calor trocado, resultado do tópico da energia interna. As entalpias
+saem das tabelas de vapor. A vantagem sobre um ciclo a gás é que comprimir água líquida custa
+muito menos trabalho que comprimir vapor.
+
+**Brayton** é o ciclo da turbina a gás e, em versão parcial, o do turboalimentador que
+comprime o ar de admissão do motor principal. Opera em **fluxo contínuo**, e o rendimento
+depende da razão de pressões $r_p$ do compressor, não da razão de volumes.
+
+::: {.callout-warning}
+As quatro expressões acima são rendimentos **do ciclo ideal correspondente**, com gás ideal,
+$\gamma$ constante e processos reversíveis. Servem para comparar arquiteturas e para ver de
+que parâmetro cada uma depende, não para prever o consumo de um motor real. O rendimento
+efetivo de bordo mede-se pelo consumo específico de combustível, e valores reais devem ser
+tomados da documentação do fabricante. [VERIFICAR: faixas típicas de consumo específico para
+a planta do navio-escola, a serem confirmadas em manual.]
+:::
+
+Todos os quatro ficam **abaixo do Carnot** entre as mesmas temperaturas extremas, e a razão é
+sempre a mesma: o calor não entra nem sai isotermicamente. No Otto e no Diesel, a combustão
+aquece o gás de centenas de graus enquanto a fonte permanece à temperatura de chama; essa
+diferença finita é condução irreversível, e é ela que separa o ciclo real do teto de Carnot.
 
 ## Irreversibilidade e perdas {{< ra OE4.45 B4 >}}
 
