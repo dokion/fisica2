@@ -234,12 +234,17 @@ Distribuição sobre os 11 pares que cabem à UE 4, de 57-58 a 77-78, conforme o
   sobre os 40 pares da CHD e a UE 4 passou a ocupar os 11 pares que lhe cabem, de 57-58 a
   77-78, com os badges dos arquivos atualizados. A inversão 4.14 ↔ 4.13 deixou de ocorrer
   dentro de um mesmo par: agora são pares vizinhos, 73-74 e 75-76.
-- `_quarto.yml` não declara `format: pdf`, exigido pelo CLAUDE.md §5. Pendência herdada.
+- ~~`_quarto.yml` não declara `format: pdf`.~~ **Resolvido.** A apostila sai do perfil
+  `_quarto-apostila.yml`, que encaderna as quatro unidades num único PDF, gerado pelo CI a
+  cada push. Ver CLAUDE.md §5.
 - Densidade: a UE 4 partiu de 14 806 palavras de prosa, 925 por tópico, e fechou em 20 785,
   1 299 por tópico. A reescrita a partir da fonte fez a unidade **crescer** 40%, ao contrário
   da UE 3, que foi reescrita e depois comprimida; o §IV1 R3 não se aplicou como meta de
   redução. A densidade final fica na faixa das UE 1 e 2 (1 199 e 1 228 por tópico) e bem
   abaixo da UE 3 (3 158), o que é o esperado: são 16 tópicos curtos contra 8 longos.
+
+O que resta desta unidade está no registro central, `_docs/pendencias-e-decisoes.md`, junto
+com o das demais.
 
 ---
 
@@ -274,3 +279,7 @@ UE 3. As UE 1 e 2 seguem a ordem numérica do sumário; nada aqui se aplica a el
 ordem, o fio condutor e os resultados, não a redação. Títulos de seção estão fora da regra. A
 extensão é a de nota de aula, não a de livro: resultado, passo que o justifica, hipótese que ele
 custa — o desenvolvimento longo pertence ao livro, que o aluno tem.
+
+**Fechamento.** A unidade está completa nas seis fases do §8. Do quadro de balizas do §3, cinco
+das sete não resistiram à leitura do texto e foram baixadas; a única grande que restava, os
+ciclos reais de propulsão, foi escrita e marcada com †.

@@ -178,10 +178,15 @@ Apêndice I amarra avaliação a par de aulas, não a tópico.
   sobre os 40 pares da CHD e a UE 3 passou a ocupar os 10 pares que lhe cabem, de 37-38 a
   55-56, com os badges dos arquivos atualizados. Continua em aberto apenas a contrapartida
   das 4 h-aula **práticas**, que o PLADIS trata em tabela própria (Apêndice II §II5).
-- `_quarto.yml` não declara `format: pdf`, exigido pelo CLAUDE.md §5.
+- ~~`_quarto.yml` não declara `format: pdf`.~~ **Resolvido.** A apostila sai do perfil
+  `_quarto-apostila.yml`, que encaderna as quatro unidades num único PDF, gerado pelo CI a
+  cada push. Ver CLAUDE.md §5.
 - Ordem interna do `3-05`: as seções seguem 3.18, 3.19, 3.21, 3.20 — os adimensionais são
   definidos antes da semelhança dinâmica, porque não se pode falar em escala de Froude antes de
   definir Fr. Sem base no Moysés para arbitrar; mantido por coerência lógica.
+
+O que resta desta unidade está no registro central, `_docs/pendencias-e-decisoes.md`, junto
+com o das demais.
 
 ---
 

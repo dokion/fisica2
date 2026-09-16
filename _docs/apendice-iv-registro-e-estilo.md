@@ -139,13 +139,19 @@ e `<style>`):
 
 | Unidade | Índice do comando | Travessões livres | Estado |
 |---|---|---|---|
-| UE 1 | 1 a cada **32** (de 1 a cada 10) | **0** (de 109) | fechada |
+| UE 1 | 1 a cada **34** (de 1 a cada 10) | **0** (de 109) | fechada |
 | UE 2 | 1 a cada **31** (de 1 a cada 8) | **0** (de 120) | fechada |
-| UE 3 | 1 a cada **61** (de 1 a cada 36) | **0** (de 42) | fechada |
-| UE 4 | 1 a cada **32** (de 1 a cada 12) | **0** (de 142) | fechada |
+| UE 3 | 1 a cada **62** (de 1 a cada 36) | **0** (de 42) | fechada |
+| UE 4 | 1 a cada **40** (de 1 a cada 12) | **0** (de 142) | fechada |
 
 As quatro unidades estão aplicadas. O curso inteiro está em zero termos banidos,
 zero imperativos de manipulação, zero remissões numéricas e zero travessões livres.
+
+Os índices da UE 1, da UE 3 e da UE 4 subiram depois da medição original, porque as três
+receberam acréscimos posteriores à passada: correções de conteúdo na UE 1, marcas de
+procedência na UE 3 e a reescrita integral da UE 4 a partir do Moysés, esta última em seis
+fases e sob o §IV4.1 desde a primeira linha. Em nenhum dos casos houve nova passada de
+registro: o índice subiu porque o texto acrescentado já nasceu dentro da regra.
 
 Comando para medir:
 
