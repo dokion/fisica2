@@ -92,6 +92,12 @@ instruções já prontas dos documentos; siga-os literalmente.
 - **Aulas são badges, não arquivos:** o shortcode `{{< aula 3-4 >}}` marca onde um encontro
   (par de aulas, Apêndice II) começa dentro do tópico. Posicionamento livre pelo professor;
   puramente informativo — o cronograma oficial continua sendo o PLADIS.
+- **Marca de procedência `{{< fora >}}`:** nas unidades com roteiro de concordância (UE 3 e
+  UE 4), a adaga † ao lado de um título `##` indica seção exigida pelo sumário oficial **sem
+  correspondente no livro-texto**. Usar em seção isolada dentro de um tópico que no resto vem
+  da fonte; quando o tópico INTEIRO está fora da fonte, uma frase na abertura é mais clara que
+  uma adaga por título. A lista do que é gap está no §3 do roteiro da unidade; nunca marcar
+  por conta própria. Legenda do símbolo: nota do cronograma em `index.qmd`.
 - **Padrão de escrita de nota de aula:** `AULA-TEMPLATE.md` (raiz) define a ESTRUTURA;
   o **Apêndice IV** define o REGISTRO. Todo agente que escrever ou completar nota de aula
   segue o "ritmo" da Seção 3 do template, o contrato de placeholders `<< >>` da Seção 5 e

@@ -135,6 +135,19 @@ blockquote {
   background: $sienna;
 }
 
+// ── Marca de procedência  →  shortcode {{< fora >}} ──────────────────────────
+// Adaga discreta em título de seção: conteúdo do sumário oficial sem
+// correspondente no livro-texto da unidade. Legenda em index.qmd.
+.fora-marca {
+  font-size: 0.62em;
+  vertical-align: super;
+  line-height: 0;
+  margin-left: 0.18em;
+  color: rgba(92, 42, 20, 0.45);
+  cursor: help;
+  font-weight: 400;
+}
+
 // ── Badge de Aula  →  shortcode {{< aula 3-4 >}} ─────────────────────────────
 // Marca onde um encontro (par de aulas) começa dentro de um tópico.
 .aula-badge {

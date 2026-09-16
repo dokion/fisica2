@@ -95,7 +95,7 @@ $$\Delta L = L_0 \cdot \alpha \cdot \Delta T = 10 \times 12 \times 10^{-6} \time
 Quase dois centímetros: a tubulação precisa de uma **junta de expansão** para absorvê-los,
 sob pena de o tubo sofrer compressão, emperrar nos apoios ou sair da linha de eixo.
 
-## Efeitos em estruturas {{< ra OE4.8 B2 >}}
+## Efeitos em estruturas {{< ra OE4.8 B2 >}} {{< fora >}}
 
 A dilatação térmica gera **tensões** quando o material é confinado. Se a tubulação não pode
 se expandir livremente (fixada em ambas as pontas), surge uma tensão de compressão:

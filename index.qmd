@@ -26,6 +26,10 @@ A disciplina aborda os fenômenos físicos relacionados a oscilações, ondas, m
 > **máquinas térmicas (4.14) vêm antes da entropia (4.13)**, porque é do ciclo de Carnot e do
 > teorema de Clausius que o livro constrói a entropia. Concordância em
 > `_docs/roteiro-moyses-ue4.md`.
+>
+> Nas unidades com roteiro de concordância, a adaga † ao lado de um título de seção indica
+> conteúdo exigido pelo sumário oficial **sem correspondente no livro-texto**: é material
+> próprio do curso, e não adianta procurá-lo no Moysés.
 
 | Aulas | UE | Tópicos | OE (objetivos específicos) | Verificação |
 |---|---|---|---|---|
