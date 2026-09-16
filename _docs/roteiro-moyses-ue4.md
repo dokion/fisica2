@@ -226,13 +226,35 @@ muda e o cronograma do `index.qmd` só troca a ordem dos nomes na linha 37-38:
 - A UE 4 tem 22 h-aula expositivas = 11 pares (Apêndice II §II1), mas os badges cobrem 5 pares. A
   compressão é global, não específica da UE 4, e é a mesma pendência registrada para a UE 3.
 - `_quarto.yml` não declara `format: pdf`, exigido pelo CLAUDE.md §5. Pendência herdada.
-- Densidade: a UE 4 tem 16 tópicos e 14 806 palavras de prosa, 925 por tópico, contra 3 158 da
-  UE 3. A reescrita a partir da fonte faz a unidade **crescer**, ao contrário da UE 3, que foi
-  reescrita e depois comprimida. O §IV1 R3 não se aplica como meta de redução aqui.
+- Densidade: a UE 4 partiu de 14 806 palavras de prosa, 925 por tópico, e fechou em 20 785,
+  1 299 por tópico. A reescrita a partir da fonte fez a unidade **crescer** 40%, ao contrário
+  da UE 3, que foi reescrita e depois comprimida; o §IV1 R3 não se aplicou como meta de
+  redução. A densidade final fica na faixa das UE 1 e 2 (1 199 e 1 228 por tópico) e bem
+  abaixo da UE 3 (3 158), o que é o esperado: são 16 tópicos curtos contra 8 longos.
 
 ---
 
-## 8. Registro de escopo e de tratamento da fonte
+## 8. Fases de execução
+
+| Fase | Tópicos | Moysés | Commit |
+|---|---|---|---|
+| 0 | ordem de leitura, concordância, quadros | cap. 7–11 | `be6ddfd` |
+| 1 | 4.1, 4.2 | cap. 7 | `b9b40a2` |
+| 2 | 4.3, 4.4, 4.5 | §8.1–§8.3 | `4373270` |
+| 3 | 4.6, 4.7 | §8.4–§8.7 | `81a0d82` |
+| 4 | 4.8 a 4.11 | cap. 9 | `9044e25` |
+| 5 | 4.12, 4.14 | §10.1–§10.5 | `388b051` |
+| 6 | 4.13, 4.15, 4.16 | §10.6–§10.9, cap. 11 | — |
+
+Verificação de fechamento: 51/51 OE cobertos, cada um com badge único, Bloom conferido contra
+`FIS_2_RA.md`; posse por arquivo consistente entre comentário de OBJETIVOS, badges e YAML nos
+16; uma simulação interativa por tópico com paridade matplotlib e pergunta orientadora;
+problema SP, "Erros clássicos" e "Onde o fenômeno vive" em todos; zero travessões livres;
+índice de registro 1/40, entre o da UE 2 e o da UE 3.
+
+---
+
+## 9. Registro de escopo e de tratamento da fonte
 
 **Escopo.** A UE 4 é a segunda unidade a receber concordância, por decisão do professor, depois da
 UE 3. As UE 1 e 2 seguem a ordem numérica do sumário; nada aqui se aplica a elas.

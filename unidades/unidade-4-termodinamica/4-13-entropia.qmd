@@ -14,61 +14,126 @@ OE 4.42 [B3] Aplicar a 2ª Lei na análise de processos naturais
 
 {{< aula 37-38 >}}
 
-**Entropia** é a medida quantitativa da desordem de um sistema, ou da indisponibilidade da
-energia nele contida. Ao contrário da energia, que se conserva, a entropia cresce nos
-processos irreversíveis: um gás espalhado pela sala nunca se recolhe sozinho na caixa, e a
-entropia dele aumentou. Um motor diesel, ao converter calor em trabalho, aumenta a entropia
-total do universo. A Segunda Lei da Termodinâmica é o princípio de que essa entropia nunca
-decresce. Em máquinas navais, a análise de entropia localiza as perdas maiores e orienta a
-melhoria do rendimento.
+O ciclo de Carnot deixou um resultado que vai além das máquinas. Para ele vale
+$Q_q/T_q = Q_f/T_f$, isto é, a soma de $Q/T$ sobre o ciclo se anula. Este tópico mostra que
+o mesmo vale para **qualquer** ciclo reversível, e que dessa anulação nasce uma função de
+estado nova. A Primeira Lei correspondeu à existência da energia interna; a Segunda
+corresponde à existência da **entropia**.
 
-## Definição e significado de entropia {{< ra OE4.40 B1 >}}
+## Do teorema de Clausius à entropia {{< ra OE4.40 B1 >}}
 
-Para um processo reversível (ideal) entre dois estados:
+Adotada a convenção de que $Q$ é sempre o calor **fornecido ao** sistema, o resultado de
+Carnot escreve-se
 
-$$\Delta S = \int \frac{\delta Q_{\text{rev}}}{T}$$
+$$\frac{Q_q}{T_q} + \frac{Q_f}{T_f} = 0
+\qquad\text{(ciclo de Carnot reversível)}$$
 
-onde $Q_{\text{rev}}$ é o calor reversível e T é temperatura.
+com $Q_f$ agora negativo, por ser cedido. A generalização se obtém **decompondo um ciclo
+qualquer em ciclos de Carnot infinitésimos**. Um trecho pequeno do caminho pode ser
+substituído por um pedaço de isoterma ligado por duas adiabáticas, escolhido de modo a
+encerrar a mesma área, isto é, o mesmo trabalho; como a variação de energia interna só
+depende dos extremos, o calor trocado também é o mesmo. Recobrindo o ciclo inteiro com uma
+malha cada vez mais fina de isotermas e adiabáticas e passando ao limite, cada célula é um
+ciclo de Carnot, e a soma das contribuições dá o **teorema de Clausius**:
 
-Para um processo real (irreversível):
+$$\oint \frac{\mathrm{d}'Q}{T} = 0 \quad \text{(reversível)}
+\qquad\qquad
+\oint \frac{\mathrm{d}'Q}{T} \leq 0 \quad \text{(qualquer ciclo)}$$
 
-$$\Delta S > \int \frac{\delta Q_{\text{real}}}{T}$$
+A desigualdade no caso geral tem a mesma origem do teorema de Carnot: uma máquina
+irreversível rende menos que a de Carnot entre as mesmas fontes, logo desperdiça mais calor
+na fonte fria.
 
-A diferença é a entropia criada pela irreversibilidade.
+### A função de estado
 
-**Interpretação microscópica:** entropia mede o número de micro-estados possíveis compatíveis
-com um macro-estado observável. Um gás espalhado tem muitos mais micro-estados (moléculas
-aleatórias) que o mesmo gás confinado numa caixa (configurações mais ordenadas). Portanto,
-entropia do gás espalhado é maior.
+Da igualdade segue o passo decisivo. Indo de um estado $i$ a um estado $f$ por um caminho
+reversível 1 e voltando por outro caminho reversível 2, o percurso fecha um ciclo reversível,
+e o teorema dá
 
-**Interpretação prática em máquinas:** entropia crescente significa energia menos
-aproveitável. Num motor, a combustão libera calor a alta temperatura, com baixa entropia
-associada. Parte dele converte-se em trabalho, e o restante sai em água morna ou gases
-quentes, dispersos e portanto de entropia alta. A energia perdeu qualidade sem perder
-quantidade.
+$$\int_{i}^{f} \frac{\mathrm{d}'Q_R}{T}\bigg|_{(1)}
++ \int_{f}^{i} \frac{\mathrm{d}'Q_R}{T}\bigg|_{(2)} = 0
+\qquad\Longrightarrow\qquad
+\int_{i}^{f} \frac{\mathrm{d}'Q_R}{T}\bigg|_{(1)}
+= \int_{i}^{f} \frac{\mathrm{d}'Q_R}{T}\bigg|_{(2)}$$
 
-## Variação de entropia em sistemas {{< ra OE4.41 B2 >}}
+A integral **não depende do caminho**. É a terceira vez que o curso encontra esse argumento:
+na energia potencial da mecânica, na energia interna da Primeira Lei e agora aqui. Em todos,
+independência do caminho implica a existência de uma função de estado, definida a menos de
+uma constante aditiva:
 
-**Sistema fechado (massa fixa, volume rígido ou móvel):**
+$$\boxed{\;S_f - S_i = \int_i^f \frac{\mathrm{d}'Q_R}{T}\;}
+\qquad\qquad
+\mathrm{d}S = \frac{\mathrm{d}'Q_R}{T}$$
 
-$$\Delta S_{\text{sistema}} = \int \frac{Q}{T}$$
+É a **entropia**, nome dado por Clausius a partir do grego "transformação". A unidade é
+J/K. Note-se que $\mathrm{d}'Q_R$ é diferencial inexata e $\mathrm{d}S$ é exata: dividir
+por $T$ é o que converte uma na outra.
 
-Se Q > 0 (recebe calor), ΔS > 0. Se Q < 0 (cede calor), ΔS < 0.
+Como função de estado, $S = S(P,V) = S(P,T) = S(V,T)$, indiferentemente, tal como $U$.
 
-Exemplo: cilindro de motor diesel durante a combustão isocórica (V constante, Q entra).
-$$\Delta S > 0$$
+::: {.callout-warning}
+O subscrito $R$ não é decorativo. A integral só vale ao longo de um caminho **reversível**.
+Num processo irreversível o calor efetivamente trocado dividido por $T$ dá **menos** que
+$\Delta S$, e calcular a variação de entropia exige inventar um caminho reversível auxiliar
+entre os mesmos dois estados. É o que a próxima seção faz.
+:::
 
-e a entropia do gás sobe.
+## Variação de entropia em processos irreversíveis {{< ra OE4.41 B2 >}}
 
-**Sistema aberto (fluxo contínuo de massa, como caldeira ou trocador):**
+Como $S$ é função de estado, $\Delta S$ entre dois estados **não depende** de o processo real
+ter sido reversível ou não. O método é sempre o mesmo: esquecer o processo real e integrar
+$\mathrm{d}'Q_R/T$ ao longo de qualquer caminho reversível que ligue os mesmos extremos.
 
-Há um termo adicional, o transporte de entropia pela massa que entra e sai. Em regime
-estacionário:
+Dois casos padrão, ambos de bordo.
 
-$$\dot{S}_{\text{entrada}} - \dot{S}_{\text{saída}} + \frac{\dot{Q}}{T} = \dot{S}_{\text{gerada}}$$
+**Expansão livre de um gás ideal.** Não há troca de calor nem trabalho, e a temperatura não
+muda, mas o volume vai de $V_i$ a $V_f$. O caminho reversível auxiliar é a expansão
+**isotérmica** entre os mesmos volumes, na qual $\Delta U = 0$ e portanto
+$\mathrm{d}'Q_R = \mathrm{d}'W = P\,\mathrm{d}V$:
 
-Entropia gerada é sempre ≥ 0. Em trocador ideal (reversível), seria zero; em trocadores reais,
-sempre há perdas e geração de entropia.
+$$\Delta S = \int_{V_i}^{V_f} \frac{P\,\mathrm{d}V}{T}
+= nR \ln\frac{V_f}{V_i} > 0$$
+
+O processo real não trocou calor algum, e ainda assim a entropia aumentou. Aí está a
+diferença entre $\Delta S$ e $\int \mathrm{d}'Q/T$.
+
+**Condução entre dois corpos.** Um corpo a $T_q$ cede calor $Q$ a outro a $T_f < T_q$. Tomando
+ambos como reservatórios, o quente perde $Q/T_q$ de entropia e o frio ganha $Q/T_f$:
+
+$$\Delta S_{\text{total}} = Q\left(\frac{1}{T_f} - \frac{1}{T_q}\right) > 0$$
+
+A soma é positiva justamente porque $T_f < T_q$. É a versão quantitativa do enunciado de
+Clausius, e é a razão de todo trocador de calor de bordo gerar entropia: ele funciona **por**
+operar sob diferença finita de temperatura.
+
+### O princípio do aumento da entropia
+
+Aplicando o teorema de Clausius a um ciclo composto de um trecho irreversível de $i$ a $f$ e
+um retorno reversível de $f$ a $i$, chega-se a
+
+$$\boxed{\;\Delta S \geq \int_i^f \frac{\mathrm{d}'Q}{T}\;}$$
+
+com igualdade apenas no caso reversível. Para um sistema **isolado**, $\mathrm{d}'Q = 0$, e
+resta
+
+$$\Delta S_{\text{isolado}} \geq 0$$
+
+Tomando como sistema isolado o conjunto do sistema com a vizinhança, é o **princípio do
+aumento da entropia**: nos processos naturais a entropia do universo cresce, e só não cresce
+no limite reversível, que é idealização. É a terceira formulação da Segunda Lei, anunciada
+no tópico dos enunciados de Clausius e Kelvin, e agora deduzida em vez de postulada.
+
+A leitura prática é de **degradação**: a energia se conserva em quantidade e se degrada em
+qualidade. O calor da combustão, disponível a alta temperatura, é o que pode virar trabalho;
+o mesmo número de joules disperso na água de refrigeração a 40 °C já não pode. É esse o
+sentido em que se fala em economizar energia, embora ela nunca se destrua.
+
+::: {.callout-warning}
+A leitura da entropia como "medida da desordem" pertence à interpretação **estatística**, que
+conta os microestados compatíveis com um dado macroestado. É verdadeira e esclarecedora, mas
+não é a definição usada aqui nem é necessária para calcular coisa alguma nesta unidade: tudo
+acima sai do teorema de Clausius, sem recurso a moléculas.
+:::
 
 ## Análise de processos pela 2ª Lei {{< ra OE4.42 B3 >}}
 

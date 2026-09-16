@@ -39,6 +39,21 @@ C_P = C_V + R = \frac{f+2}{2} R
 \qquad
 \gamma = \frac{C_P}{C_V} = \frac{f+2}{f}$$
 
+### Sólidos: a lei de Dulong-Petit explicada
+
+O teorema não vale só para gases, e é aqui que se fecha a conta deixada em aberto no estudo
+da quantidade de calor. Num sólido cristalino cada átomo oscila em torno de uma posição fixa,
+e a oscilação tem **seis** termos quadráticos: três de energia cinética, um por direção, e
+três de energia potencial elástica. Logo $f = 6$ e
+
+$$C_V = \frac{6}{2}R = 3R \approx 25\ \text{J/(mol·K)}$$
+
+que é exatamente o valor medido por Dulong e Petit. Fica explicado por que metais de massas
+atômicas tão diferentes armazenam a mesma energia por mol: o que conta é o número de átomos
+e os seis modos de cada um, não a natureza deles. E fica explicado também o limite da lei, que
+vale apenas a temperatura suficientemente alta: abaixo dela os modos vibracionais congelam,
+pelo mesmo mecanismo quântico tratado a seguir.
+
 ## Graus de liberdade e a razão γ {{< ra OE4.50 B2 >}}
 
 O número de graus de liberdade depende da geometria da molécula:

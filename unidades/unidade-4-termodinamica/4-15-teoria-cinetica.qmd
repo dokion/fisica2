@@ -46,7 +46,17 @@ microscópica média.
 
 ## Interpretação microscópica da temperatura {{< ra OE4.48 B2 >}}
 
-Comparando a equação fundamental com a equação de estado $PV = Nk_B T$:
+A equação fundamental é microscópica e a equação de estado é empírica, e comparar as duas
+é o que fecha a teoria. Escrevendo $PV = nRT$ em termos do número $N$ de moléculas em vez do
+número $n$ de mols, com $N = n N_A$ e $N_A$ o número de Avogadro:
+
+$$PV = nRT = N\,\frac{R}{N_A}\,T \equiv N k_B T$$
+
+A razão $k_B = R/N_A \approx 1{,}381 \times 10^{-23}$ J/K é a **constante de Boltzmann**, e é
+simplesmente a constante dos gases **por molécula** em vez de por mol. Não é constante nova:
+é a mesma $R$, dividida pelo número de Avogadro.
+
+Comparando agora com a equação fundamental:
 
 $$\langle E_c \rangle = \frac{3}{2} k_B T$$
 

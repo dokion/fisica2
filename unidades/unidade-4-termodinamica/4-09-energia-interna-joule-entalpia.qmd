@@ -37,7 +37,9 @@ temperatura for a mesma, a energia interna é a mesma.
 
 Para ar/nitrogênio (gás diatômico), $C_V = \frac{5}{2}R \approx 20{,}8$ J/(mol·K).
 
-## Experiência de Joule {{< ra OE4.29 B2 >}}
+## As experiências de Joule e de Joule-Thomson {{< ra OE4.29 B2 >}}
+
+### A expansão livre de Joule
 
 Que $U$ dependa só de $T$ é resultado experimental, e a pergunta que o originou era outra:
 ao aquecer um calorímetro comprimindo um gás, Joule precisava saber se todo o trabalho virava
@@ -68,7 +70,7 @@ ar produziria cerca de 10⁻³ °C na água, muito abaixo da sensibilidade do te
 hoje que o ar deve ter variado vários graus. O resultado nulo mediu o instrumento, não o gás.
 :::
 
-## Experiência de Joule-Thomson {{< ra OE4.29 B2 >}}
+### O tampão poroso de Joule-Thomson
 
 A saída foi trocar o processo por outro em que o efeito fosse maior e o regime, estacionário.
 No **tampão poroso**, um compressor mantém o gás escoando através de uma parede porosa, lã de
