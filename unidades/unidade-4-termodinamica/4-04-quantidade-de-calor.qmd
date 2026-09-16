@@ -152,35 +152,31 @@ $$\dot{Q}_{\text{vap}} = \frac{2{,}257 \times 10^6\ \text{kJ}}{3600\ \text{s}} \
 Esse valor cobre apenas a evaporação, e não o aquecimento de 20 °C a 100 °C.
 
 ::: {.sp}
-Um motor diesel consome 50 kg/h de combustível HFO (valor calorífico 40 MJ/kg).
-Instrumentação mostra que apenas 45% dessa energia é convertida em trabalho mecânico
-(eficiência térmica). A potência de saída é 1000 kW. Quanto calor é rejeitado?
-
-<!-- [VERIFICAR: os dados não fecham. 50 kg/h × 40 MJ/kg = 2000 MJ/h = 556 kW de
-     energia de combustível; a 45% isso dá 250 kW de trabalho, não os 1000 kW
-     citados como "potência de saída". Resolvi com a taxa de combustível como
-     governante e sinalizo a incoerência.] -->
+Um motor diesel consome 200 kg/h de combustível HFO (poder calorífico 40 MJ/kg).
+Instrumentação mostra que 45% dessa energia é convertida em trabalho mecânico (eficiência
+térmica) e que a potência de saída é 1000 kW. Quanto calor é rejeitado?
 
 **(a) Modelagem.** A potência de combustível é $\dot{Q}_1 = \dot{m}\,\text{PCI}$; o
-trabalho é $\dot{W} = \eta\,\dot{Q}_1$; o calor rejeitado fecha a primeira lei
+trabalho é $\dot{W} = \eta\,\dot{Q}_1$; o calor rejeitado fecha a primeira lei,
 $\dot{Q}_2 = \dot{Q}_1 - \dot{W}$.
 
 **(b) Desenvolvimento.**
-$$\dot{Q}_1 = 50\ \tfrac{\text{kg}}{\text{h}} \times 40\ \tfrac{\text{MJ}}{\text{kg}}
-= 2000\ \tfrac{\text{MJ}}{\text{h}} = \frac{2000}{3{,}6} \approx 556\ \text{kW}$$
+$$\dot{Q}_1 = 200\ \tfrac{\text{kg}}{\text{h}} \times 40\ \tfrac{\text{MJ}}{\text{kg}}
+= 8000\ \tfrac{\text{MJ}}{\text{h}} = \frac{8000}{3{,}6} \approx 2222\ \text{kW}$$
 
-$$\dot{W} = \eta\,\dot{Q}_1 = 0{,}45 \times 556 \approx 250\ \text{kW}$$
+$$\dot{W} = \eta\,\dot{Q}_1 = 0{,}45 \times 2222 \approx 1000\ \text{kW}$$
 
-$$\dot{Q}_2 = \dot{Q}_1 - \dot{W} \approx 556 - 250 = 306\ \text{kW}$$
+$$\dot{Q}_2 = \dot{Q}_1 - \dot{W} \approx 2222 - 1000 = 1222\ \text{kW}$$
 
-**(c) Resultado.** Com a taxa de combustível dada, o motor entrega $\approx 250\ \text{kW}$
-e **rejeita $\approx 306\ \text{kW}$** (gases de descarga + água de refrigeração).
+**(c) Resultado.** O motor entrega os $1000\ \text{kW}$ de eixo previstos e **rejeita
+$\approx 1222\ \text{kW}$**, em gases de descarga e água de refrigeração.
 
-**(d) Análise crítica.** A potência de saída de 1000 kW do enunciado é incompatível com
-50 kg/h e 45%: para 1000 kW a 45% seriam necessários $\approx 200\ \text{kg/h}$ de
-combustível. A taxa de combustível foi adotada como dado firme. Seja qual for o número, a
-lição se mantém: mais da metade da energia do combustível sai como calor rejeitado, e é dela
-que se alimentam os sistemas de recuperação de calor (*waste heat recovery*, WHR).
+**(d) Análise crítica.** A potência de eixo confere com a taxa de combustível, e a
+verificação se faz pelo **consumo específico**: $200\ \text{kg/h} \div 1000\ \text{kW} =
+200\ \text{g/kWh}$, dentro da faixa de um diesel marítimo. Fosse a conta incoerente, o
+consumo específico denunciaria. A lição de fundo: **mais da metade da energia do combustível
+sai como calor rejeitado**, e é dela que se alimentam os sistemas de recuperação de calor
+(*waste heat recovery*, WHR).
 :::
 
 ::: {.callout-warning}

@@ -60,10 +60,7 @@ No exemplo acima, o batimento de 100 Hz informa ao operador que o retorno traz d
 Em sistemas digitais modernos a detecção de batimento se faz por análise de espectro, com transformada rápida de Fourier (FFT): componentes de frequência próximas à transmitida são identificadas, medidas e subtraídas do sinal útil.
 
 ::: {.sp}
-Um sonar ativo de navio oceanográfico opera em frequência nominal $f_0 = 120\,\text{kHz}$. O transdutor transmite um pulso curto. Em águas rasas, a reflexão múltipla (fundo + superfície + fundo novamente) cria um eco à frequência $f_0$, porém ligeiramente atenuado. Ao mesmo tempo, uma reflexão em camada de sal cria um eco em frequência $f_0 + 80\,\text{Hz} = 120{,}00008\,\text{kHz}$ (deslocamento Doppler negativo pelo movimento vertical da coluna).
-
-<!-- [VERIFICAR: o enunciado escreve f₀ + 80 Hz = 120,00008 kHz, mas 120 kHz + 80 Hz
-     = 120,08 kHz. Adotei Δf = 80 Hz como dado governante do problema.] -->
+Um sonar ativo de navio oceanográfico opera em frequência nominal $f_0 = 120\,\text{kHz}$. O transdutor transmite um pulso curto. Em águas rasas, a reflexão múltipla (fundo + superfície + fundo novamente) cria um eco à frequência $f_0$, porém ligeiramente atenuado. Ao mesmo tempo, uma reflexão em camada de sal cria um eco em frequência $f_0 + 80\,\text{Hz} = 120{,}08\,\text{kHz}$ (deslocamento Doppler negativo pelo movimento vertical da coluna).
 
 **(a) Modelagem.** Dois sinais de frequências próximas chegam simultaneamente ao
 receptor: o eco múltiplo em $f_1 = f_0 = 120\,\text{kHz}$ e o eco da camada em

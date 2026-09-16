@@ -256,12 +256,7 @@ em manômetros de coluna e a convenção de ler sempre o mesmo ponto do menisco 
 base, para água; o topo, para mercúrio.
 
 ::: {.sp}
-Um navio-tanque com deslocamento de 50 mil toneladas flutua em água salgada de densidade 1025 kg/m³. Ao sair de um porto fluvial (água doce, ρ = 1000 kg/m³) e entrar em mar aberto, observa-se que o calado aumenta em cerca de 20 cm. A transição ocorre em águas salobras (ρ intermediária) ao longo de 30 km.
-
-<!-- [VERIFICAR: o enunciado diz que ao passar de água doce para salgada o calado
-     "aumenta" — é o contrário. Água salgada é mais densa, o navio afunda menos: o
-     calado DIMINUI. Resolvi na direção fisicamente correta, mantendo os 20 cm de
-     magnitude.] -->
+Um navio-tanque com deslocamento de 50 mil toneladas flutua em água salgada de densidade 1025 kg/m³. Ao sair de um porto fluvial (água doce, ρ = 1000 kg/m³) e entrar em mar aberto, observa-se que o calado diminui em cerca de 20 cm. A transição ocorre em águas salobras (ρ intermediária) ao longo de 30 km.
 
 **(a) Modelagem.** O deslocamento (massa) é o mesmo nos dois portos; o que muda é o
 volume imerso necessário para gerar o empuxo, $V = M/\rho$. A variação de calado é a
