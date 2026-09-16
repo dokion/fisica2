@@ -23,16 +23,28 @@ diesel: o combustível entra, libera calor, parte vira trabalho e parte é rejei
 
 ## Quantidade de calor sensível {{< ra OE4.12 B3 >}}
 
-A quantidade de calor necessária para mudar a temperatura de um corpo é:
+Calor é energia e mede-se em joules, mas a unidade histórica sobreviveu: a **caloria** é o
+calor que eleva de 14,5 °C a 15,5 °C, a 1 atm, a temperatura de 1 g de água. A "caloria" da
+nutrição é na verdade a quilocaloria.
 
-$$Q = m \cdot c \cdot \Delta T$$
+O calor necessário é proporcional à massa e à variação de temperatura:
 
-onde:
-- $m$ é a massa (kg)
-- $c$ é o calor específico (J/(kg·K))
-- $\Delta T$ é a variação de temperatura (K ou °C, pois a diferença é a mesma)
+$$\boxed{\;Q = m\,c\,\Delta T = C\,\Delta T\;}$$
 
-O **calor específico** é a energia necessária para aquecer 1 kg de uma substância em 1 K.
+onde $m$ é a massa em kg, $\Delta T$ a variação em K (igual à variação em °C) e $c$ o
+**calor específico**, a energia que aquece 1 kg da substância em 1 K, em J/(kg·K).
+
+O calor específico varia com a temperatura, variação desprezível na maioria dos casos
+práticos. Quando o intervalo é largo demais para desprezá-la, o que entra na fórmula é o
+valor médio:
+
+$$Q = m\int_{T_i}^{T_f} c(T)\,\mathrm{d}T \equiv m\,\bar{c}\,(T_f - T_i)$$
+
+Falta ainda dizer **em que condições** a temperatura varia: mantida a pressão obtém-se
+$c_P$, mantido o volume obtém-se $c_V$. São os **calores específicos principais**. Em
+líquidos e sólidos a diferença entre os dois é pequena, e o valor tabelado à pressão
+atmosférica é $c_P$. Em gases os dois diferem bastante, e a razão disso é o assunto das
+capacidades térmicas molares, adiante nesta unidade.
 
 Exemplos em máquinas de bordo:
 
@@ -48,6 +60,21 @@ Cálculo do calor necessário para aquecer 1000 kg de água de refrigeração de
 $$Q = 1000 \times 4{,}18 \times (70 - 30) = 1000 \times 4{,}18 \times 40
 = 167\,200\ \text{kJ} = 167{,}2\ \text{MJ}$$
 
+### O calorímetro de misturas
+
+A fórmula serve para calcular o calor quando $c$ é conhecido, e serve também para **medir**
+$c$ quando não é. Uma amostra de massa $m_A$ e calor específico $c_A$, aquecida a $T_A$, é
+mergulhada em água de massa $m$ e calor específico $c$, dentro de um recipiente de paredes
+adiabáticas e capacidade térmica $C$, tudo inicialmente a $T_i$. As paredes adiabáticas
+impedem troca com o exterior, de modo que todo o calor perdido pela amostra é recebido pela
+água e pelo recipiente. Atingido o equilíbrio em $T_f$:
+
+$$m_A c_A (T_A - T_f) = (m c + C)(T_f - T_i)$$
+
+Conhecidos os demais termos, a igualdade dá $c_A$. Este é o princípio do **calorímetro de
+misturas**, e é também o esquema de todo balanço térmico fechado: o que um corpo cede, o
+outro recebe, desde que a fronteira não vaze.
+
 ## Capacidade térmica e calor específico {{< ra OE4.13 B2 >}}
 
 Dois conceitos relacionados:
@@ -60,15 +87,43 @@ específico. Se uma caldeira com 500 kg de aço tem $c = 0{,}46$ kJ/(kg·K), ent
 capacidade térmica é $C = 500 \times 0{,}46 = 230$ kJ/K. Aquecer a caldeira em 1 K exige
 230 kJ.
 
-Em máquinas marinhas, os combustíveis, óleo combustível pesado (*heavy fuel oil*, HFO) ou
-óleo diesel marítimo (*marine gas oil*, MGO), têm valores caloríficos tabelados:
+### Reservatório térmico
 
-| Combustível | Valor calorífico [MJ/kg] |
+Como $C$ cresce com a massa, a variação $\Delta T = Q/C$ pode ser feita arbitrariamente
+pequena aumentando a massa. No limite ideal, o sistema recebe ou cede calor sem que a
+temperatura mude de modo apreciável: é um **reservatório térmico**. A atmosfera e o oceano
+são os exemplos naturais, e para muitos fins qualquer volume grande de fluido em equilíbrio
+serve. A idealização reaparece no estudo das máquinas térmicas, onde as fontes quente e fria
+são reservatórios.
+
+### Capacidade térmica molar e a lei de Dulong-Petit
+
+Do ponto de vista da estrutura microscópica interessa a capacidade térmica de **1 mol**, e
+não de 1 g: basta multiplicar o calor específico pela massa molar. Feita a conta para os
+metais, o resultado surpreende: alumínio, cobre, ouro, prata e chumbo caem todos perto do
+mesmo valor.
+
+$$C_{\text{molar}} \approx 6\ \text{cal/(mol·K)} \approx 25\ \text{J/(mol·K)}$$
+
+É a **lei de Dulong-Petit**: a capacidade térmica molar a volume constante de todos os
+sólidos tende a esse valor a temperatura suficientemente alta. Metais de massas atômicas
+muito diferentes armazenam a mesma energia por mol, o que sugere que o que conta é o número
+de átomos, e não a natureza deles. A explicação é o teorema da equipartição, no último
+tópico desta unidade.
+
+### Poder calorífico dos combustíveis {{< fora >}}
+
+Grandeza distinta das anteriores, e a distinção importa: o calor específico diz quanta
+energia o combustível **absorve** ao ser aquecido; o **poder calorífico** diz quanta energia
+ele **libera** ao queimar. A primeira é propriedade térmica, a segunda é química.
+
+| Combustível | Poder calorífico [MJ/kg] |
 |---|---|
 | HFO 380 | ~40 |
 | MGO | ~46 |
 
-Isso significa: 1 kg de HFO, se completamente queimado, libera ~40 MJ de energia térmica.
+Um quilograma de HFO queimado por completo libera cerca de 40 MJ. É o número de entrada de
+todo balanço térmico de propulsão.
 
 ## Calor latente e mudanças de fase {{< ra OE4.14 B3 >}}
 

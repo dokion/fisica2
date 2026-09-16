@@ -14,45 +14,52 @@ OE 4.11 [B2] Explicar os mecanismos de transferência de calor
 
 {{< aula 31-32 >}}
 
-Durante séculos supôs-se que o calor fosse um fluido invisível, o calórico. Hoje está
-estabelecido que calor é **energia em movimento microscópico**, resultado macroscópico das
-colisões entre moléculas que vibram. A mudança conceitual é decisiva em máquinas navais: não
-há quantidade de calor armazenada num corpo, e sim energia interna, que depende da
-temperatura; calor é o que flui de um lado para o outro quando há diferença de temperatura.
-Da distinção decorrem o monitoramento de temperaturas pelo operador e o desperdício de
-energia por radiação de um motor diesel para o ar da praça de máquinas.
-
-## Calor e temperatura: duas grandezas diferentes {{< ra OE4.10 B2 >}}
-
-**Temperatura:** propriedade intensiva do sistema, que não depende da quantidade de
-matéria. Medida em K ou °C.
-
-**Calor:** energia transferida entre dois sistemas por diferença de temperatura. Medida em
-joules (J). Depende de quanto material está envolvido.
-
-Exemplo:
-
-- Uma xícara de água a 80 °C: alta temperatura, **pouco calor** disponível.
-- Uma piscina a 20 °C: baixa temperatura, **muito calor** disponível (muito mais que a
-  xícara).
-
-Mergulhada a xícara quente na piscina, ela esfria, porque o calor flui da xícara para a
-água, ainda que a xícara tenha temperatura maior. O fluxo de calor vai sempre da temperatura
-alta para a baixa, seja qual for a energia total armazenada em cada corpo.
+No fim do século XVIII disputavam duas hipóteses sobre a natureza do calor. A dominante,
+batizada por Lavoisier, tomava o calor por uma substância fluida e indestrutível, o
+**calórico**, que preencheria os poros dos corpos e escoaria do quente para o frio. Dela
+seguia uma lei de conservação do calor. A rival, endossada por Bacon, Hooke e Newton,
+sustentava que o calor é movimento de vibração das partículas.
 
 ## Conceituar calor como energia em trânsito {{< ra OE4.9 B2 >}}
 
-Microscopicamente, temperatura é energia cinética média das moléculas:
+O argumento que derrubou o calórico veio da oficina, não do laboratório. Supervisionando a
+perfuração de canhões de bronze no arsenal de Munique, Rumford observou em 1798 que o atrito
+da broca produzia calor **sem limite**, em fluxo constante, sem qualquer sinal de exaustão. O
+raciocínio é curto e decisivo:
+
+> Algo que um corpo isolado pode continuar fornecendo indefinidamente não pode ser uma
+> substância material.
+
+Se o calórico fosse matéria espremida para fora do metal, acabaria. Não acabava. Logo o calor
+não é substância contida no corpo: é **energia em trânsito**, transferida porque as moléculas
+de cada corpo têm energia cinética média diferente.
 
 $$\langle E_c \rangle \propto T$$
 
-**Calor** é energia que passa de um corpo a outro porque as moléculas de cada um têm
-energias cinéticas médias diferentes. É um processo, e não uma propriedade do corpo.
+A conexão quantitativa entre calor e energia veio depois, com Mayer em 1842, que a inferiu da
+diferença entre os calores específicos de um gás a pressão e a volume constantes, e com as
+medições de Joule, que levaram quase trinta anos até o resultado preciso de 1868. Helmholtz
+generalizou o princípio em 1847 a todos os fenômenos conhecidos, térmicos inclusive.
 
-Daí uma implicação prática: perguntar quanto calor tem o motor diesel não tem sentido. As
-perguntas com sentido são quanto calor o motor gera por hora, respondida por uma potência
-térmica em kW, e quanto calor sai pela água de refrigeração, respondida por um fluxo de
-calor em kJ/s.
+A consequência prática é de linguagem, e não é pedantismo: **um corpo não "tem" calor**.
+Perguntar quanto calor tem o motor diesel não tem sentido. Têm sentido quanto calor o motor
+gera por hora, que é potência térmica em kW, e quanto calor sai pela água de refrigeração,
+que é fluxo de calor em kJ/s. O que o corpo tem é **energia interna**.
+
+## Calor e temperatura: duas grandezas diferentes {{< ra OE4.10 B2 >}}
+
+**Temperatura:** propriedade intensiva, independente da quantidade de matéria, que determina
+o equilíbrio térmico. Medida em K ou °C.
+
+**Calor:** energia transferida entre dois sistemas por diferença de temperatura, medida em
+joules. Não é propriedade de nenhum dos dois: existe só durante a transferência.
+
+A confusão aparece sempre na mesma forma. Uma xícara de água a 80 °C está a temperatura
+bem mais alta que uma piscina a 20 °C, e ainda assim contém muito menos **energia interna**,
+porque a massa é milhares de vezes menor. Mergulhada a xícara na piscina, o calor flui da
+xícara para a água **porque** a xícara está mais quente, e não obstante a piscina guardar
+muito mais energia. O sentido do fluxo é fixado pela temperatura; a quantidade disponível,
+pela energia interna. São perguntas diferentes.
 
 ## Mecanismos de transferência {{< ra OE4.11 B2 >}}
 

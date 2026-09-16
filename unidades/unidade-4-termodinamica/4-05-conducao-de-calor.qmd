@@ -37,20 +37,48 @@ O fluxo de calor é chamado **fluxo condutivo** $\dot{Q}$ (potência térmica em
 
 ## Lei de Fourier {{< ra OE4.16 B3 >}}
 
-$$\dot{Q} = -\kappa \cdot A \cdot \frac{\text{d}T}{\text{d}x}$$
+A observação de uma panela ao fogo reúne todas as dependências: o calor flui do ponto quente
+para o frio, tanto mais depressa quanto maior a diferença de temperatura, quanto menor a
+espessura atravessada, quanto maior a área e quanto mais tempo decorre. Reunindo, o calor por
+unidade de tempo é proporcional à área e ao **gradiente de temperatura**:
 
-Para um caso simples (parede plana, temperatura constante de cada lado):
+$$\boxed{\;\dot{Q} = -\kappa\,A\,\frac{\mathrm{d}T}{\mathrm{d}x}\;}$$
 
-$$\dot{Q} = \kappa \cdot A \cdot \frac{\Delta T}{d}$$
+O sinal negativo carrega a física: com $\mathrm{d}T/\mathrm{d}x$ negativo, o fluxo é
+positivo, isto é, o calor desce o gradiente. A constante $\kappa$, em W/(m·K), é a
+**condutividade térmica** do material.
 
-onde:
-- $\kappa$ é a condutividade térmica (W/(m·K))
-- $A$ é a área (m²)
-- $\Delta T$ é a diferença de temperatura entre as faces (K)
-- $d$ é a espessura (m)
+A forma é a da lei de Ohm, e a analogia é exata: $\Delta T$ faz o papel da diferença de
+potencial, $\dot{Q}$ o da corrente, $\kappa$ o da condutividade elétrica. A coincidência não
+é acidental em metais: pela **lei de Wiedemann-Franz**, a condutividade térmica de um metal
+é proporcional à elétrica, porque os mesmos elétrons livres transportam as duas coisas.
 
-A condutividade térmica é propriedade do material: bons condutores têm κ alto, e isolantes,
-κ baixo.
+### Regime estacionário e parede plana
+
+Numa barra de comprimento $l$ entre dois reservatórios a $T_2$ e $T_1$, com a superfície
+lateral isolada, o **regime estacionário** é aquele em que a temperatura em cada ponto não
+muda mais com o tempo. Nele o fluxo não pode depender de $x$: se dependesse, haveria acúmulo
+ou rarefação de calor em algum ponto, cuja temperatura estaria mudando, contra a hipótese.
+Fluxo constante com $\kappa$ e $A$ constantes obriga o gradiente a ser constante, logo a
+temperatura cai **linearmente** ao longo da barra:
+
+$$\frac{\mathrm{d}T}{\mathrm{d}x} = \frac{T_2 - T_1}{l}
+\qquad\Longrightarrow\qquad
+\dot{Q} = \kappa A\,\frac{T_2 - T_1}{l}$$
+
+### Parede composta
+
+Duas camadas em série, de espessuras $l_1$ e $l_2$ e condutividades $\kappa_1$ e $\kappa_2$,
+partilham a mesma área e, em regime estacionário, o mesmo fluxo. A junção assume uma
+temperatura intermediária $T_0$, e igualar os fluxos das duas camadas permite eliminá-la:
+
+$$\dot{Q} = \kappa_2 A\,\frac{T_2 - T_0}{l_2} = \kappa_1 A\,\frac{T_0 - T_1}{l_1}
+\qquad\Longrightarrow\qquad
+\dot{Q} = \frac{A\,(T_2 - T_1)}{\dfrac{l_1}{\kappa_1} + \dfrac{l_2}{\kappa_2}}$$
+
+As espessuras divididas pelas condutividades **somam-se**, exatamente como resistências
+elétricas em série. É o resultado que governa toda parede isolada de bordo: chapa de aço mais
+lã de rocha mais forro, cada camada acrescentando a sua parcela.
 
 ## Condutividade térmica de materiais {{< ra OE4.17 B4 >}}
 
@@ -78,15 +106,24 @@ $$\dot{Q} = \frac{\Delta T}{R_{\text{t}}}$$
 onde $R_{\text{t}} = \frac{d}{\kappa \cdot A}$ é a **resistência térmica** (K/W), em analogia
 com a lei de Ohm, $V = I \cdot R$.
 
-Exemplo: parede de cilindro de aço (d = 8 mm, A = 0,5 m² de superfície interna),
-κ = 50 W/(m·K), com ΔT = 1450 K entre interior e exterior:
+Exemplo: parede de cilindro de aço com $d = 8$ mm, $A = 0{,}5$ m² de superfície interna e
+$\kappa = 50$ W/(m·K). A face interna do metal está a cerca de 200 °C e a externa, em contato
+com a água de refrigeração, a cerca de 150 °C:
 
-$$R_{\text{t}} = \frac{0{,}008}{50 \times 0{,}5} = \frac{0{,}008}{25} = 0{,}00032\ \text{K/W}$$
+$$R_{\text{t}} = \frac{0{,}008}{50 \times 0{,}5} = 3{,}2 \times 10^{-4}\ \text{K/W}
+\qquad
+\dot{Q} = \frac{50}{3{,}2 \times 10^{-4}} \approx 1{,}6 \times 10^{5}\ \text{W} \approx 160\ \text{kW}$$
 
-$$\dot{Q} = \frac{1450}{0{,}00032} \approx 4{,}5 \times 10^6\ \text{W} = 4{,}5\ \text{MW}$$
+Daí a criticidade da água de refrigeração: interrompida a circulação, a face externa sobe, o
+gradiente colapsa e o calor deixa de sair na taxa em que entra.
 
-O fluxo é dessa ordem, e daí a criticidade da água de refrigeração: sem ela o cilindro
-funde em minutos.
+::: {.callout-warning}
+A diferença que entra na conta é entre as **faces do metal**, e não entre o gás de combustão
+e a água. O gás chega a 1800 K, mas quase toda a queda de temperatura ocorre nas finas
+camadas de fluido junto a cada face, não no aço: usar $\Delta T = 1450$ K daria um fluxo
+dezenas de vezes maior do que o real. Quantificar essa queda exige o coeficiente de película,
+que pertence à transferência de calor por convecção e está fora do alcance deste curso.
+:::
 
 ::: {.sp}
 Um trocador de calor de bordo tem tubos de latão (κ = 120 W/(m·K)) com diâmetro externo
